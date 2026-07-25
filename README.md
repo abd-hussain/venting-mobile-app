@@ -1,6 +1,8 @@
-# venting_mobile_app
+# Venting Mobile Application
 
-A new Flutter project.
+A safe place to be heard.
+
+Venting is a mobile platform that connects people who need someone to talk to (Venters) with compassionate, verified listeners (Listeners) through secure, private voice conversations.
 
 ## Getting Started
 
