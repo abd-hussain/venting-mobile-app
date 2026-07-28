@@ -1,0 +1,19 @@
+name: internet_connection
+version: 1.0.0
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+environment:
+  sdk: '>=3.9.2 <4.0.0'
+resolution: workspace
+
+dependencies:
+  connectivity_plus: 7.0.0
+
+dev_dependencies:
+  venting_lint:
+    path: ../venting_lint
+  dependency_validator: 5.0.5
+  flutter_test:
+    sdk: flutter
+  mocktail: 1.0.4
+  connectivity_plus_platform_interface: any
+  plugin_platform_interface: any

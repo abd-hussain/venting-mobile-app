@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Network Logs Viewer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f8f9fa;
+            color: #1a1a1a;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #1a1a1a;
+        }
+
+        .file-input-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .file-input {
+            padding: 8px 16px;
+            border: 2px dashed #d1d5db;
+            border-radius: 8px;
+            background: #f9fafb;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .file-input:hover {
+            border-color: #3b82f6;
+            background: #eff6ff;
+        }
+
+        .stats {
+            display: flex;
+            gap: 20px;
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        .main-content {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #e5e7eb;
+            background: #f9fafb;
+        }
+
+        .tab {
+            padding: 16px 24px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tab.active {
+            background: white;
+            border-bottom-color: #3b82f6;
+            color: #3b82f6;
+        }
+
+        .tab:hover:not(.active) {
+            background: #f3f4f6;
+        }
+
+        .badge {
+            background: #e5e7eb;
+            color: #6b7280;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .tab.active .badge {
+            background: #dbeafe;
+            color: #3b82f6;
+        }
+
+        .search-container {
+            padding: 16px 24px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .content {
+            min-height: 400px;
+        }
+
+        .logs-list {
+            max-height: 600px;
+            overflow-y: auto;
+        }
+
+        .log-item {
+            padding: 16px 24px;
+            border-bottom: 1px solid #f3f4f6;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .log-item:hover {
+            background: #f9fafb;
+        }
+
+        .log-item:last-child {
+            border-bottom: none;
+        }
+
+        .log-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .method {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .method.get {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .method.post {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .method.put {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .method.delete {
+            background: #fecaca;
+            color: #991b1b;
+        }
+
+        .method.socket {
+            background: #e0e7ff;
+            color: #3730a3;
+        }
+
+        .status {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status.success {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .status.error {
+            background: #fecaca;
+            color: #991b1b;
+        }
+
+        .status.pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .url {
+            font-weight: 500;
+            color: #1a1a1a;
+            flex: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .timestamp {
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        .log-details {
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #6b7280;
+        }
+
+        .empty-state .icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90%;
+            overflow: hidden;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .modal-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #6b7280;
+            margin-left: auto;
+        }
+
+        .modal-body {
+            padding: 24px;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .detail-section {
+            margin-bottom: 24px;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #374151;
+        }
+
+        .detail-value {
+            background: #f9fafb;
+            padding: 12px;
+            border-radius: 6px;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 13px;
+            white-space: pre-wrap;
+            word-break: break-all;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .json-viewer {
+            background: #1f2937;
+            color: #f9fafb;
+            padding: 16px;
+            border-radius: 8px;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 13px;
+            overflow-x: auto;
+            position: relative;
+        }
+
+        .json-container {
+            position: relative;
+        }
+
+        .copy-button {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: #374151;
+            border: 1px solid #4b5563;
+            color: #f9fafb;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            z-index: 10;
+        }
+
+        .copy-button:hover {
+            background: #4b5563;
+            border-color: #6b7280;
+        }
+
+        .copy-button.copied {
+            background: #059669;
+            border-color: #10b981;
+        }
+
+        .json-string {
+            color: #34d399;
+        }
+
+        .json-number {
+            color: #fbbf24;
+        }
+
+        .json-boolean {
+            color: #f87171;
+        }
+
+        .json-null {
+            color: #9ca3af;
+        }
+
+        .json-key {
+            color: #60a5fa;
+        }
+
+        .json-punctuation {
+            color: #d1d5db;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Network Logs Viewer</h1>
+            <div class="file-input-container">
+                <input type="file" id="fileInput" accept=".json" class="file-input">
+                <label for="fileInput">Select network_logs.json file</label>
+            </div>
+            <div class="stats" id="stats">
+                <span>No logs loaded</span>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="tabs">
+                <div class="tab active" data-tab="http">
+                    HTTP Requests
+                    <span class="badge" id="httpCount">0</span>
+                </div>
+                <div class="tab" data-tab="socket">
+                    Socket Events
+                    <span class="badge" id="socketCount">0</span>
+                </div>
+            </div>
+
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Search logs..." id="searchInput">
+            </div>
+
+            <div class="content">
+                <div id="httpContent" class="logs-list">
+                    <div class="empty-state">
+                        <div class="icon">🌐</div>
+                        <h3>No HTTP requests loaded</h3>
+                        <p>Select a network_logs.json file to view HTTP requests</p>
+                    </div>
+                </div>
+                <div id="socketContent" class="logs-list" style="display: none;">
+                    <div class="empty-state">
+                        <div class="icon">🔌</div>
+                        <h3>No socket events loaded</h3>
+                        <p>Select a network_logs.json file to view socket events</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for log details -->
+    <div id="logModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle">Request Details</h2>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Content will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let networkData = null;
+        let currentTab = 'http';
+        let filteredHttpLogs = [];
+        let filteredSocketLogs = [];
+
+        // Initialize event listeners
+        document.getElementById('fileInput').addEventListener('change', handleFileSelect);
+        document.getElementById('searchInput').addEventListener('input', handleSearch);
+
+        // Tab switching
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => switchTab(tab.dataset.tab));
+        });
+
+        // Modal close on outside click
+        document.getElementById('logModal').addEventListener('click', (e) => {
+            if (e.target.id === 'logModal') closeModal();
+        });
+
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                try {
+                    networkData = JSON.parse(e.target.result);
+                    processNetworkData();
+                    updateStats();
+                    renderCurrentTab();
+                } catch (error) {
+                    alert('Error parsing JSON file: ' + error.message);
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function processNetworkData() {
+            if (!networkData) return;
+
+            // Process HTTP requests
+            filteredHttpLogs = [];
+            if (networkData.http_events) {
+                filteredHttpLogs = networkData.http_events;
+            } else if (networkData.http_requests) {
+                filteredHttpLogs = networkData.http_requests;
+            }
+
+            // Process Socket events
+            filteredSocketLogs = [];
+            if (networkData.socket_events) {
+                filteredSocketLogs = networkData.socket_events;
+            }
+        }
+
+        function updateStats() {
+            const httpCount = filteredHttpLogs.length;
+            const socketCount = filteredSocketLogs.length;
+            const totalCount = httpCount + socketCount;
+
+            document.getElementById('httpCount').textContent = httpCount;
+            document.getElementById('socketCount').textContent = socketCount;
+
+            const exportInfo = networkData.export_info || {};
+            const timestamp = exportInfo.timestamp ? new Date(exportInfo.timestamp).toLocaleString() : 'Unknown';
+            const appVersion = exportInfo.app_version || 'Unknown';
+
+            document.getElementById('stats').innerHTML = `
+                <span>Total: ${totalCount} events</span>
+                <span>HTTP: ${httpCount}</span>
+                <span>Socket: ${socketCount}</span>
+                <span>Exported: ${timestamp}</span>
+                <span>App Version: ${appVersion}</span>
+            `;
+        }
+
+        function switchTab(tab) {
+            currentTab = tab;
+
+            // Update tab appearance
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
+
+            // Show/hide content
+            document.getElementById('httpContent').style.display = tab === 'http' ? 'block' : 'none';
+            document.getElementById('socketContent').style.display = tab === 'socket' ? 'block' : 'none';
+
+            renderCurrentTab();
+        }
+
+        function renderCurrentTab() {
+            if (currentTab === 'http') {
+                renderHttpLogs();
+            } else {
+                renderSocketLogs();
+            }
+        }
+
+        function renderHttpLogs() {
+            const container = document.getElementById('httpContent');
+
+            if (filteredHttpLogs.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="icon">🌐</div>
+                        <h3>No HTTP requests found</h3>
+                        <p>No HTTP requests match your search criteria</p>
+                    </div>
+                `;
+                return;
+            }
+
+            const html = filteredHttpLogs.map((log, index) => {
+                const method = log.method || 'GET';
+                const url = log.url || '';
+                const timestamp = log.requestTimestamp ? new Date(log.requestTimestamp).toLocaleString() : '';
+                const duration = log.duration ? `${log.duration}ms` : '';
+                const statusCode = log.statusCode || log.responseStatus || '';
+
+                const statusClass = getStatusClass(statusCode);
+
+                return `
+                    <div class="log-item" onclick="showHttpDetails(${index})">
+                        <div class="log-header">
+                            <span class="method ${method.toLowerCase()}">${method}</span>
+                            ${statusCode ? `<span class="status ${statusClass}">${statusCode}</span>` : ''}
+                            <span class="url" title="${url}">${url}</span>
+                            <span class="timestamp">${timestamp}</span>
+                        </div>
+                        <div class="log-details">
+                            ${duration ? `Duration: ${duration}` : ''}
+                            ${log.isSensitive ? ' • Sensitive' : ''}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            container.innerHTML = html;
+        }
+
+        function renderSocketLogs() {
+            const container = document.getElementById('socketContent');
+
+            if (filteredSocketLogs.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="icon">🔌</div>
+                        <h3>No socket events found</h3>
+                        <p>No socket events match your search criteria</p>
+                    </div>
+                `;
+                return;
+            }
+
+            const html = filteredSocketLogs.map((socketEvent, index) => {
+                const request = socketEvent.request || {};
+                const responses = socketEvent.responses || [];
+                const eventName = request.eventName || 'Unknown';
+                const url = request.url || '';
+                const timestamp = request.timestamp ? new Date(request.timestamp).toLocaleString() : '';
+                const direction = request.direction || 'unknown';
+                const category = request.category || '';
+
+                return `
+                    <div class="log-item" onclick="showSocketDetails(${index})">
+                        <div class="log-header">
+                            <span class="method socket">SOCKET</span>
+                            <span class="status ${direction === 'outgoing' ? 'pending' : 'success'}">${direction.toUpperCase()}</span>
+                            <span class="url" title="${url}">${eventName} - ${url}</span>
+                            <span class="timestamp">${timestamp}</span>
+                        </div>
+                        <div class="log-details">
+                            Category: ${category} • Responses: ${responses.length}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            container.innerHTML = html;
+        }
+
+        function getStatusClass(statusCode) {
+            if (!statusCode) return '';
+            const code = parseInt(statusCode);
+            if (code >= 200 && code < 300) return 'success';
+            if (code >= 400) return 'error';
+            return 'pending';
+        }
+
+        function handleSearch() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+
+            if (currentTab === 'http') {
+                const httpEvents = networkData.http_events || networkData.http_requests || [];
+                filteredHttpLogs = httpEvents.filter(log => {
+                    const searchableText = `${log.method || ''} ${log.url || ''} ${log.responseBody || ''}`.toLowerCase();
+                    return searchableText.includes(searchTerm);
+                });
+                renderHttpLogs();
+            } else {
+                filteredSocketLogs = (networkData.socket_events || []).filter(socketEvent => {
+                    const request = socketEvent.request || {};
+                    const searchableText = `${request.eventName || ''} ${request.url || ''} ${request.category || ''}`.toLowerCase();
+                    return searchableText.includes(searchTerm);
+                });
+                renderSocketLogs();
+            }
+        }
+
+        function showHttpDetails(index) {
+            const log = filteredHttpLogs[index];
+            if (!log) return;
+
+            const modalTitle = document.getElementById('modalTitle');
+            const modalBody = document.getElementById('modalBody');
+
+            modalTitle.textContent = 'HTTP Request Details';
+
+            const requestHeaders = log.requestHeaders ? formatHeaders(log.requestHeaders) : 'None';
+            const responseHeaders = log.responseHeaders ? formatHeaders(log.responseHeaders) : 'None';
+            const responseBody = log.responseBody ? formatJson(log.responseBody) : 'None';
+
+            const requestBodyContent = log.requestBody ? createJsonViewer(log.requestBody) : '<div class="detail-value">None</div>';
+            const responseBodyContent = log.responseBody ? createJsonViewer(log.responseBody) : '<div class="detail-value">None</div>';
+            const requestHeadersContent = log.requestHeaders ? createJsonViewer(log.requestHeaders) : '<div class="detail-value">None</div>';
+            const responseHeadersContent = log.responseHeaders ? createJsonViewer(log.responseHeaders) : '<div class="detail-value">None</div>';
+
+            modalBody.innerHTML = `
+                <div class="detail-section">
+                    <div class="detail-label">URL</div>
+                    <div class="detail-value">${log.url || 'N/A'}</div>
+                </div>
+                <div class="detail-section">
+                    <div class="detail-label">Method</div>
+                    <div class="detail-value">${log.method || 'N/A'}</div>
+                </div>
+                <div class="detail-section">
+                    <div class="detail-label">Status Code</div>
+                    <div class="detail-value">${log.statusCode || log.responseStatus || 'N/A'}</div>
+                </div>
+                <div class="detail-section">
+                    <div class="detail-label">Duration</div>
+                    <div class="detail-value">${log.duration ? log.duration + 'ms' : 'N/A'}</div>
+                </div>
+                <div class="detail-section">
+                    <div class="detail-label">Request Timestamp</div>
+                    <div class="detail-value">${log.requestTimestamp ? new Date(log.requestTimestamp).toISOString() : 'N/A'}</div>
+                </div>
+                <div class="detail-section">
+                    <div class="detail-label">Response Timestamp</div>
+                    <div class="detail-value">${log.responseTimestamp ? new Date(log.responseTimestamp).toISOString() : 'N/A'}</div>
+                </div>
+                <div class="detail-section">
+                    <div class="detail-label">Request Headers</div>
+                    ${requestHeadersContent}
+                </div>
+                <div class="detail-section">
+                    <div class="detail-label">Request Body</div>
+                    ${requestBodyContent}
+                </div>
+                <div class="detail-section">
+                    <div class="detail-label">Response Headers</div>
+                    ${responseHeadersContent}
+                </div>
+                <div class="detail-section">
+                    <div class="detail-label">Response Body</div>
+                    ${responseBodyContent}
+                </div>
+            `;
+
+            document.getElementById('logModal').style.display = 'block';
+        }
+
+        function showSocketDetails(index) {
+            const socketEvent = filteredSocketLogs[index];
+            if (!socketEvent) return;
+
+            const modalTitle = document.getElementById('modalTitle');
+            const modalBody = document.getElementById('modalBody');
+
+            modalTitle.textContent = 'Socket Event Details';
+
+            const request = socketEvent.request || {};
+            const responses = socketEvent.responses || [];
+
+            let responsesHtml = '';
+            if (responses.length > 0) {
+                responsesHtml = responses.map((response, idx) => {
+                    const responseDataContent = createJsonViewer(response.data || {});
+                    return `
+                        <div class="detail-section">
+                            <div class="detail-label">Response ${idx + 1}</div>
+                            <div class="detail-value">
+                                <strong>Timestamp:</strong> ${response.timestamp ? new Date(response.timestamp).toISOString() : 'N/A'}<br>
+                                <strong>Direction:</strong> ${response.direction || 'N/A'}<br>
+                                <strong>Category:</strong> ${response.category || 'N/A'}
+                            </div>
+                            ${responseDataContent}
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            const requestMetadataContent = createJsonViewer(request.metadata || {});
+            const requestDataContent = request.data ? createJsonViewer(request.data) : '';
+
+            modalBody.innerHTML = `
+                <div class="detail-section">
+                    <div class="detail-label">Event Name</div>
+                    <div class="detail-value">${request.eventName || 'N/A'}</div>
+                </div>
+                <div class="detail-section">
+                    <div class="detail-label">URL</div>
+                    <div class="detail-value">${request.url || 'N/A'}</div>
+                </div>
+                <div class="detail-section">
+                    <div class="detail-label">Direction</div>
+                    <div class="detail-value">${request.direction || 'N/A'}</div>
+                </div>
+                <div class="detail-section">
+                    <div class="detail-label">Category</div>
+                    <div class="detail-value">${request.category || 'N/A'}</div>
+                </div>
+                <div class="detail-section">
+                    <div class="detail-label">Request Timestamp</div>
+                    <div class="detail-value">${request.timestamp ? new Date(request.timestamp).toISOString() : 'N/A'}</div>
+                </div>
+                ${request.data ? `
+                <div class="detail-section">
+                    <div class="detail-label">Request Data</div>
+                    ${requestDataContent}
+                </div>
+                ` : ''}
+                <div class="detail-section">
+                    <div class="detail-label">Metadata</div>
+                    ${requestMetadataContent}
+                </div>
+                ${responsesHtml}
+            `;
+
+            document.getElementById('logModal').style.display = 'block';
+        }
+
+        function formatHeaders(headers) {
+            if (typeof headers === 'string') return headers;
+            if (typeof headers === 'object') {
+                return Object.entries(headers)
+                    .map(([key, value]) => `${key}: ${Array.isArray(value) ? value.join(', ') : value}`)
+                    .join('\n');
+            }
+            return 'Invalid format';
+        }
+
+        function formatJson(jsonString) {
+            try {
+                const parsed = typeof jsonString === 'string' ? JSON.parse(jsonString) : jsonString;
+                return JSON.stringify(parsed, null, 2);
+            } catch (e) {
+                return jsonString;
+            }
+        }
+
+        function beautifyJson(jsonString) {
+            try {
+                const parsed = typeof jsonString === 'string' ? JSON.parse(jsonString) : jsonString;
+                const formatted = JSON.stringify(parsed, null, 2);
+
+                // Add syntax highlighting
+                return formatted
+                    .replace(/(".*?")(\s*:)/g, '<span class="json-key">$1</span><span class="json-punctuation">$2</span>')
+                    .replace(/:\s*(".*?")/g, ': <span class="json-string">$1</span>')
+                    .replace(/:\s*(\d+\.?\d*)/g, ': <span class="json-number">$1</span>')
+                    .replace(/:\s*(true|false)/g, ': <span class="json-boolean">$1</span>')
+                    .replace(/:\s*(null)/g, ': <span class="json-null">$1</span>')
+                    .replace(/([{}[\],])/g, '<span class="json-punctuation">$1</span>');
+            } catch (e) {
+                return jsonString;
+            }
+        }
+
+        function createJsonViewer(content, rawContent = null) {
+            const containerId = 'json-container-' + Math.random().toString(36).substr(2, 9);
+            const beautified = beautifyJson(content);
+            const copyContent = rawContent || (typeof content === 'string' ? content : JSON.stringify(content, null, 2));
+
+            return `
+                <div class="json-container" id="${containerId}">
+                    <button class="copy-button" onclick="copyToClipboard('${containerId}', \`${copyContent.replace(/`/g, '\\`').replace(/\$/g, '\\$')}\`)">
+                        Copy
+                    </button>
+                    <div class="json-viewer">${beautified}</div>
+                </div>
+            `;
+        }
+
+        function copyToClipboard(containerId, content) {
+            navigator.clipboard.writeText(content).then(() => {
+                const button = document.querySelector(`#${containerId} .copy-button`);
+                const originalText = button.textContent;
+                button.textContent = 'Copied!';
+                button.classList.add('copied');
+
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.classList.remove('copied');
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = content;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+
+                const button = document.querySelector(`#${containerId} .copy-button`);
+                const originalText = button.textContent;
+                button.textContent = 'Copied!';
+                button.classList.add('copied');
+
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.classList.remove('copied');
+                }, 2000);
+            });
+        }
+
+        function closeModal() {
+            document.getElementById('logModal').style.display = 'none';
+        }
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+
+</html>

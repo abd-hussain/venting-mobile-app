@@ -1,0 +1,22 @@
+name: shimmer_manager
+description: "A new Flutter package project."
+version: 0.0.1
+publish_to: none
+
+environment:
+  sdk: '>=3.9.2 <4.0.0'
+resolution: workspace
+
+dependencies:
+  shimmer: ^3.0.0
+
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  dependency_validator: 5.0.5
+  venting_lint:
+    path: ../venting_lint
+  flutter_test:
+    sdk: flutter
+  dart_code_metrics_presets: 2.22.0

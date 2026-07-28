@@ -1,0 +1,35 @@
+name: network_logging
+description: Network request logging system for Venting
+version: 0.0.1
+publish_to: none
+
+resolution: workspace
+
+environment:
+  sdk: ^3.9.2
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  dio: 5.8.0+1
+  freezed_annotation: 3.1.0
+  get_it: 8.0.3
+  uuid: ^4.5.1
+  intl: 0.20.2
+  path_provider: ^2.1.5
+  flutter_email_sender: ^6.0.3
+  share_plus: ^10.1.2
+  logger_manager: any
+  package_info_plus: ^9.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  mocktail: 1.0.4
+  build_runner: ^2.8.0
+  freezed: 3.2.3
+  json_serializable: ^6.11.2
+  injectable_generator: ^2.9.0
+  dependency_validator: 5.0.5
+  venting_lint: any

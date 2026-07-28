@@ -1,0 +1,23 @@
+name: preferences
+description: "A new Flutter package project."
+version: 0.0.1
+publish_to: none
+
+resolution: workspace
+
+environment:
+  sdk: '>=3.9.2 <4.0.0'
+  flutter: '>=3.41.7'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  shared_preferences: 2.3.2
+
+dev_dependencies:
+  dependency_validator: 5.0.5
+  venting_lint:
+    path: ../venting_lint
+  flutter_test:
+    sdk: flutter
+  dart_code_metrics_presets: 2.22.0

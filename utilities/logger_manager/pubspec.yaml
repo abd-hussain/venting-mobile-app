@@ -1,0 +1,24 @@
+name: logger_manager
+version: 1.0.0
+publish_to: none
+
+environment:
+  sdk: '>=3.9.2 <4.0.0'
+
+resolution: workspace
+
+dependencies:
+  logger: ^2.4.0
+  path_provider: ^2.1.2
+
+dev_dependencies:
+  flutter:
+    sdk: flutter
+  venting_lint:
+    path: ../venting_lint
+  flutter_test:
+    sdk: flutter
+  json_serializable: ^6.11.2
+  dependency_validator: 5.0.5
+
+flutter:
