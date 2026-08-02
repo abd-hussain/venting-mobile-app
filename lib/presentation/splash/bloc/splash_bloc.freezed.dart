@@ -519,15 +519,14 @@ extension SplashProcessStatePatterns on SplashProcessState {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( SplashProcessIdle value)?  idle,TResult Function( SplashProcessNeedOnboarding value)?  needOnboarding,TResult Function( SplashProcessAutherizedForApp value)?  autherizedForApp,TResult Function( SplashProcessNeedToLogIn value)?  needToLogIn,TResult Function( SplashProcessNeedToRegister value)?  needToRegister,TResult Function( SplashProcessError value)?  error,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( SplashProcessIdle value)?  idle,TResult Function( SplashProcessNeedOnboarding value)?  needOnboarding,TResult Function( SplashProcessAutherizedForApp value)?  autherizedForApp,TResult Function( SplashProcessNeedAuthenticate value)?  needAuthenticate,TResult Function( SplashProcessError value)?  error,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case SplashProcessIdle() when idle != null:
 return idle(_that);case SplashProcessNeedOnboarding() when needOnboarding != null:
 return needOnboarding(_that);case SplashProcessAutherizedForApp() when autherizedForApp != null:
-return autherizedForApp(_that);case SplashProcessNeedToLogIn() when needToLogIn != null:
-return needToLogIn(_that);case SplashProcessNeedToRegister() when needToRegister != null:
-return needToRegister(_that);case SplashProcessError() when error != null:
+return autherizedForApp(_that);case SplashProcessNeedAuthenticate() when needAuthenticate != null:
+return needAuthenticate(_that);case SplashProcessError() when error != null:
 return error(_that);case _:
   return orElse();
 
@@ -546,15 +545,14 @@ return error(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( SplashProcessIdle value)  idle,required TResult Function( SplashProcessNeedOnboarding value)  needOnboarding,required TResult Function( SplashProcessAutherizedForApp value)  autherizedForApp,required TResult Function( SplashProcessNeedToLogIn value)  needToLogIn,required TResult Function( SplashProcessNeedToRegister value)  needToRegister,required TResult Function( SplashProcessError value)  error,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( SplashProcessIdle value)  idle,required TResult Function( SplashProcessNeedOnboarding value)  needOnboarding,required TResult Function( SplashProcessAutherizedForApp value)  autherizedForApp,required TResult Function( SplashProcessNeedAuthenticate value)  needAuthenticate,required TResult Function( SplashProcessError value)  error,}){
 final _that = this;
 switch (_that) {
 case SplashProcessIdle():
 return idle(_that);case SplashProcessNeedOnboarding():
 return needOnboarding(_that);case SplashProcessAutherizedForApp():
-return autherizedForApp(_that);case SplashProcessNeedToLogIn():
-return needToLogIn(_that);case SplashProcessNeedToRegister():
-return needToRegister(_that);case SplashProcessError():
+return autherizedForApp(_that);case SplashProcessNeedAuthenticate():
+return needAuthenticate(_that);case SplashProcessError():
 return error(_that);}
 }
 /// A variant of `map` that fallback to returning `null`.
@@ -569,15 +567,14 @@ return error(_that);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( SplashProcessIdle value)?  idle,TResult? Function( SplashProcessNeedOnboarding value)?  needOnboarding,TResult? Function( SplashProcessAutherizedForApp value)?  autherizedForApp,TResult? Function( SplashProcessNeedToLogIn value)?  needToLogIn,TResult? Function( SplashProcessNeedToRegister value)?  needToRegister,TResult? Function( SplashProcessError value)?  error,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( SplashProcessIdle value)?  idle,TResult? Function( SplashProcessNeedOnboarding value)?  needOnboarding,TResult? Function( SplashProcessAutherizedForApp value)?  autherizedForApp,TResult? Function( SplashProcessNeedAuthenticate value)?  needAuthenticate,TResult? Function( SplashProcessError value)?  error,}){
 final _that = this;
 switch (_that) {
 case SplashProcessIdle() when idle != null:
 return idle(_that);case SplashProcessNeedOnboarding() when needOnboarding != null:
 return needOnboarding(_that);case SplashProcessAutherizedForApp() when autherizedForApp != null:
-return autherizedForApp(_that);case SplashProcessNeedToLogIn() when needToLogIn != null:
-return needToLogIn(_that);case SplashProcessNeedToRegister() when needToRegister != null:
-return needToRegister(_that);case SplashProcessError() when error != null:
+return autherizedForApp(_that);case SplashProcessNeedAuthenticate() when needAuthenticate != null:
+return needAuthenticate(_that);case SplashProcessError() when error != null:
 return error(_that);case _:
   return null;
 
@@ -595,14 +592,13 @@ return error(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  idle,TResult Function()?  needOnboarding,TResult Function()?  autherizedForApp,TResult Function()?  needToLogIn,TResult Function()?  needToRegister,TResult Function()?  error,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  idle,TResult Function()?  needOnboarding,TResult Function()?  autherizedForApp,TResult Function()?  needAuthenticate,TResult Function()?  error,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case SplashProcessIdle() when idle != null:
 return idle();case SplashProcessNeedOnboarding() when needOnboarding != null:
 return needOnboarding();case SplashProcessAutherizedForApp() when autherizedForApp != null:
-return autherizedForApp();case SplashProcessNeedToLogIn() when needToLogIn != null:
-return needToLogIn();case SplashProcessNeedToRegister() when needToRegister != null:
-return needToRegister();case SplashProcessError() when error != null:
+return autherizedForApp();case SplashProcessNeedAuthenticate() when needAuthenticate != null:
+return needAuthenticate();case SplashProcessError() when error != null:
 return error();case _:
   return orElse();
 
@@ -621,14 +617,13 @@ return error();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  idle,required TResult Function()  needOnboarding,required TResult Function()  autherizedForApp,required TResult Function()  needToLogIn,required TResult Function()  needToRegister,required TResult Function()  error,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  idle,required TResult Function()  needOnboarding,required TResult Function()  autherizedForApp,required TResult Function()  needAuthenticate,required TResult Function()  error,}) {final _that = this;
 switch (_that) {
 case SplashProcessIdle():
 return idle();case SplashProcessNeedOnboarding():
 return needOnboarding();case SplashProcessAutherizedForApp():
-return autherizedForApp();case SplashProcessNeedToLogIn():
-return needToLogIn();case SplashProcessNeedToRegister():
-return needToRegister();case SplashProcessError():
+return autherizedForApp();case SplashProcessNeedAuthenticate():
+return needAuthenticate();case SplashProcessError():
 return error();}
 }
 /// A variant of `when` that fallback to returning `null`
@@ -643,14 +638,13 @@ return error();}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  idle,TResult? Function()?  needOnboarding,TResult? Function()?  autherizedForApp,TResult? Function()?  needToLogIn,TResult? Function()?  needToRegister,TResult? Function()?  error,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  idle,TResult? Function()?  needOnboarding,TResult? Function()?  autherizedForApp,TResult? Function()?  needAuthenticate,TResult? Function()?  error,}) {final _that = this;
 switch (_that) {
 case SplashProcessIdle() when idle != null:
 return idle();case SplashProcessNeedOnboarding() when needOnboarding != null:
 return needOnboarding();case SplashProcessAutherizedForApp() when autherizedForApp != null:
-return autherizedForApp();case SplashProcessNeedToLogIn() when needToLogIn != null:
-return needToLogIn();case SplashProcessNeedToRegister() when needToRegister != null:
-return needToRegister();case SplashProcessError() when error != null:
+return autherizedForApp();case SplashProcessNeedAuthenticate() when needAuthenticate != null:
+return needAuthenticate();case SplashProcessError() when error != null:
 return error();case _:
   return null;
 
@@ -758,8 +752,8 @@ String toString() {
 /// @nodoc
 
 
-class SplashProcessNeedToLogIn implements SplashProcessState {
-  const SplashProcessNeedToLogIn();
+class SplashProcessNeedAuthenticate implements SplashProcessState {
+  const SplashProcessNeedAuthenticate();
   
 
 
@@ -769,7 +763,7 @@ class SplashProcessNeedToLogIn implements SplashProcessState {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SplashProcessNeedToLogIn);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SplashProcessNeedAuthenticate);
 }
 
 
@@ -778,39 +772,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'SplashProcessState.needToLogIn()';
-}
-
-
-}
-
-
-
-
-/// @nodoc
-
-
-class SplashProcessNeedToRegister implements SplashProcessState {
-  const SplashProcessNeedToRegister();
-  
-
-
-
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SplashProcessNeedToRegister);
-}
-
-
-@override
-int get hashCode => runtimeType.hashCode;
-
-@override
-String toString() {
-  return 'SplashProcessState.needToRegister()';
+  return 'SplashProcessState.needAuthenticate()';
 }
 
 

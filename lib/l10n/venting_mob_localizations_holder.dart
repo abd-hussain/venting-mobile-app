@@ -45,7 +45,7 @@ abstract final class VentingMobLocalizationsHolder {
     String languageCode,
     VentingMobLocalizations instance,
   ) {
-    _currentLanguageCode = normalizeLanguageCode(languageCode);
+    _currentLanguageCode = languageCode;
     _instance = instance;
   }
 
@@ -54,13 +54,13 @@ abstract final class VentingMobLocalizationsHolder {
   }
 
   static Future<void> _loadActiveLocale(String languageCode) async {
-    final code = normalizeLanguageCode(languageCode);
+    final code = languageCode;
     _currentLanguageCode = code;
     _instance = lookupVentingMobLocalizations(Locale(code));
   }
 
   static void syncCurrentLanguage(String languageCode) {
-    _currentLanguageCode = normalizeLanguageCode(languageCode);
+    _currentLanguageCode = languageCode;
     _instance = lookupVentingMobLocalizations(Locale(_currentLanguageCode));
   }
 
@@ -73,18 +73,7 @@ abstract final class VentingMobLocalizationsHolder {
       SavedConstants.selectedLanguageCode,
       '',
     );
-    return normalizeLanguageCode(
-      saved.isNotEmpty ? saved : defaultLanguageCode,
-    );
-  }
-
-  static String normalizeLanguageCode(String languageCode) {
-    switch (languageCode) {
-      case 'ar':
-        return 'ar';
-      default:
-        return 'en';
-    }
+    return saved.isNotEmpty ? saved : defaultLanguageCode;
   }
 
   /// Resolves [message] for [languageCode].
@@ -92,7 +81,6 @@ abstract final class VentingMobLocalizationsHolder {
     String languageCode,
     T Function(VentingMobLocalizations localizations) message,
   ) {
-    final code = normalizeLanguageCode(languageCode);
-    return message(lookupVentingMobLocalizations(Locale(code)));
+    return message(lookupVentingMobLocalizations(Locale(languageCode)));
   }
 }

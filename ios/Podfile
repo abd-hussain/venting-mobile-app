@@ -30,7 +30,6 @@ flutter_ios_podfile_setup
 target 'Runner' do
   use_frameworks!
   use_modular_headers!
-  pod 'GoogleTagManager'
   pod 'Alamofire', '~> 5.4.4' , :inhibit_warnings => true
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
   target 'RunnerTests' do

@@ -3232,4 +3232,19 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get welcome_tagline => 'A safe space to be lighter';
+
+  @override
+  String get welcome_need_someone_to_talk_to => 'I need someone to talk to';
+
+  @override
+  String get welcome_want_to_be_listener => 'I want to be a listener';
+
+  @override
+  String get welcome_already_have_account => 'Already have an account?';
+
+  @override
+  String get welcome_sign_in => 'Sign in';
 }

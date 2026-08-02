@@ -2263,5 +2263,15 @@
         "type": "int"
       }
     }
-  }
+  },
+  "welcome_tagline": "مساحة آمنة لتشعر بخفة أكثر",
+  "@welcome_tagline": {},
+  "welcome_need_someone_to_talk_to": "أحتاج شخصًا للتحدث معه",
+  "@welcome_need_someone_to_talk_to": {},
+  "welcome_want_to_be_listener": "أريد أن أكون مستمعًا",
+  "@welcome_want_to_be_listener": {},
+  "welcome_already_have_account": "هل لديك حساب بالفعل؟",
+  "@welcome_already_have_account": {},
+  "welcome_sign_in": "تسجيل الدخول",
+  "@welcome_sign_in": {}
 }

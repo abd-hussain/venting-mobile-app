@@ -15,8 +15,7 @@ sealed class SplashProcessState with _$SplashProcessState {
       SplashProcessNeedOnboarding;
   const factory SplashProcessState.autherizedForApp() =
       SplashProcessAutherizedForApp;
-  const factory SplashProcessState.needToLogIn() = SplashProcessNeedToLogIn;
-  const factory SplashProcessState.needToRegister() =
-      SplashProcessNeedToRegister;
+  const factory SplashProcessState.needAuthenticate() =
+      SplashProcessNeedAuthenticate;
   const factory SplashProcessState.error() = SplashProcessError;
 }

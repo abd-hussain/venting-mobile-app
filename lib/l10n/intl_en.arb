@@ -2263,6 +2263,16 @@
         "type": "int"
       }
     }
-  }
+  },
+  "welcome_tagline": "A safe space to be lighter",
+  "@welcome_tagline": {},
+  "welcome_need_someone_to_talk_to": "I need someone to talk to",
+  "@welcome_need_someone_to_talk_to": {},
+  "welcome_want_to_be_listener": "I want to be a listener",
+  "@welcome_want_to_be_listener": {},
+  "welcome_already_have_account": "Already have an account?",
+  "@welcome_already_have_account": {},
+  "welcome_sign_in": "Sign in",
+  "@welcome_sign_in": {}
 
 }

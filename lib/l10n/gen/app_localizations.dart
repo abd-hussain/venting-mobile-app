@@ -6,7 +6,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 
 import 'app_localizations_ar.dart';
-import 'app_localizations_ckb.dart';
 import 'app_localizations_en.dart';
 
 // ignore_for_file: type=lint
@@ -99,7 +98,6 @@ abstract class VentingMobLocalizations {
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[
     Locale('ar'),
-    Locale('ckb'),
     Locale('en'),
   ];
 
@@ -5784,6 +5782,36 @@ abstract class VentingMobLocalizations {
   /// In en, this message translates to:
   /// **'{days, plural, =0 {0 Days} =1 {1 Day} other {{days} Days}}'**
   String bundle_validity_days(int days);
+
+  /// No description provided for @welcome_tagline.
+  ///
+  /// In en, this message translates to:
+  /// **'A safe space to be lighter'**
+  String get welcome_tagline;
+
+  /// No description provided for @welcome_need_someone_to_talk_to.
+  ///
+  /// In en, this message translates to:
+  /// **'I need someone to talk to'**
+  String get welcome_need_someone_to_talk_to;
+
+  /// No description provided for @welcome_want_to_be_listener.
+  ///
+  /// In en, this message translates to:
+  /// **'I want to be a listener'**
+  String get welcome_want_to_be_listener;
+
+  /// No description provided for @welcome_already_have_account.
+  ///
+  /// In en, this message translates to:
+  /// **'Already have an account?'**
+  String get welcome_already_have_account;
+
+  /// No description provided for @welcome_sign_in.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in'**
+  String get welcome_sign_in;
 }
 
 class _VentingMobLocalizationsDelegate
@@ -5799,7 +5827,7 @@ class _VentingMobLocalizationsDelegate
 
   @override
   bool isSupported(Locale locale) =>
-      <String>['ar', 'ckb', 'en'].contains(locale.languageCode);
+      <String>['ar', 'en'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_VentingMobLocalizationsDelegate old) => false;
@@ -5810,8 +5838,6 @@ VentingMobLocalizations lookupVentingMobLocalizations(Locale locale) {
   switch (locale.languageCode) {
     case 'ar':
       return VentingMobLocalizationsAr();
-    case 'ckb':
-      return VentingMobLocalizationsCkb();
     case 'en':
       return VentingMobLocalizationsEn();
   }

@@ -22,7 +22,7 @@ Language is synced once from preferences at startup, on language change, and whe
 
 ## Adding a new string
 
-1. Add the key to all ARB files (`intl_en.arb`, `intl_ar.arb`, `intl_ckb.arb`).
+1. Add the key to all ARB files (`intl_en.arb`, `intl_ar.arb`).
 2. Run `flutter gen-l10n`.
 
 ## Regenerate

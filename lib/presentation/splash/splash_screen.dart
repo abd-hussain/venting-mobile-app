@@ -80,10 +80,9 @@ class _SplashScreenState extends State<SplashScreen>
               autherizedForApp: () {
                 context.go(AppRoutes.tabHome);
               },
-              needToLogIn: () {
-                context.go(AppRoutes.loginOptions, extra: {});
+              needAuthenticate: () {
+                context.go(AppRoutes.welcome);
               },
-              needToRegister: () => context.go(AppRoutes.fillMobileNumber),
               error: () => LoggerManagerBase.logInfo(
                 message:
                     'SplashBloc: Authentication check failed - navigating to returning user',

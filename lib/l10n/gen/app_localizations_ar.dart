@@ -3217,4 +3217,19 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get welcome_tagline => 'مساحة آمنة لتشعر بخفة أكثر';
+
+  @override
+  String get welcome_need_someone_to_talk_to => 'أحتاج شخصًا للتحدث معه';
+
+  @override
+  String get welcome_want_to_be_listener => 'أريد أن أكون مستمعًا';
+
+  @override
+  String get welcome_already_have_account => 'هل لديك حساب بالفعل؟';
+
+  @override
+  String get welcome_sign_in => 'تسجيل الدخول';
 }

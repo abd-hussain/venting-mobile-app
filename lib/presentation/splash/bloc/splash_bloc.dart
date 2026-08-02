@@ -47,7 +47,7 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
 
       if (compleateRegistration == "false") {
         await _ensureMinimumSplashDuration(stopwatch);
-        _emitNeedToRegister(emit);
+        _emitNeedAuthenticate(emit);
         return;
       }
 
@@ -56,7 +56,7 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
 
       if (alreadyUser.isEmpty) {
         await _ensureMinimumSplashDuration(stopwatch);
-        _emitNeedToRegister(emit);
+        _emitNeedAuthenticate(emit);
         return;
       }
 
@@ -68,7 +68,7 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
         _emitAuthorizedForApp(emit);
       } else {
         await _ensureMinimumSplashDuration(stopwatch);
-        _emitNeedToLogin(emit);
+        _emitNeedAuthenticate(emit);
       }
     } catch (e) {
       await _ensureMinimumSplashDuration(stopwatch);
@@ -109,24 +109,20 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
     );
   }
 
-  void _emitNeedToLogin(Emitter<SplashState> emit) {
+  void _emitNeedAuthenticate(Emitter<SplashState> emit) {
     LoggerManagerBase.logInfo(
       message:
-          'SplashBloc: User is not authenticated - token is empty or invalid',
+          'SplashBloc: User needs authentication - token empty/invalid or registration incomplete',
     );
 
-    emit(state.copyWith(processState: const SplashProcessState.needToLogIn()));
+    emit(
+      state.copyWith(processState: const SplashProcessState.needAuthenticate()),
+    );
   }
 
   void _emitNeedOnboarding(Emitter<SplashState> emit) {
     emit(
       state.copyWith(processState: const SplashProcessState.needOnboarding()),
-    );
-  }
-
-  void _emitNeedToRegister(Emitter<SplashState> emit) {
-    emit(
-      state.copyWith(processState: const SplashProcessState.needToRegister()),
     );
   }
 

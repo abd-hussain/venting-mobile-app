@@ -3,33 +3,16 @@ import 'package:go_router/go_router.dart';
 import 'package:logger_manager/logger_manager.dart';
 import 'package:venting_mobile_app/di/di_container.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
+import 'package:venting_mobile_app/presentation/onboarding/onboarding_screen.dart';
 import 'package:venting_mobile_app/presentation/splash/splash_screen.dart';
+import 'package:venting_mobile_app/presentation/welcome/welcome_screen.dart';
 
 /// Route constants for better maintainability
 class AppRoutes {
   static const String initialRoute = '/';
+  static const String welcome = '/welcome';
   static const String tabHome = '/tab-home';
-  static const String loginOptions = '/login-options';
-  static const String fillMobileNumber = '/fill-mobile-number';
   static const String onboarding = '/onboarding';
-}
-
-/// Parses `GoRoute` `state.extra` for the OTP authentication block route.
-///
-/// Supported values:
-/// - `(int remainingSeconds, String msisdn)` from `AppRouter.goToOtpAuthenticationBlock`.
-/// - `int` legacy soft-lock seconds only (empty msisdn; prefer the record at call sites).
-/// - `null` or any other type → `(900, '')`.
-@visibleForTesting
-(int remainingSeconds, String msisdn) parseOtpAuthenticationBlockExtra(
-  Object? extra,
-) {
-  return switch (extra) {
-    (final int seconds, final String phone) => (seconds, phone),
-    final int onlySeconds => (onlySeconds, ''),
-    null => (900, ''),
-    _ => (900, ''),
-  };
 }
 
 class VentingNavigationObserver extends NavigatorObserver {
@@ -82,6 +65,16 @@ class VentingRouterConfig {
         name: 'splash',
         builder: (context, state) => const SplashScreen(),
       ),
+      GoRoute(
+        path: AppRoutes.welcome,
+        name: 'welcome',
+        builder: (context, state) => const WelcomeScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.onboarding,
+        name: 'onboarding',
+        builder: (context, state) => const OnboardingScreen(),
+      ),
     ],
     errorBuilder: (context, state) {
       final l10n = VentingMobLocalizations.of(context);
@@ -116,11 +109,6 @@ class VentingRouterConfig {
 
 /// Navigation helper methods for common navigation patterns
 class AppRouter {
-  /// Navigate to welcome screen
-  static void goToWelcome(BuildContext context) {
-    context.go(AppRoutes.initialRoute);
-  }
-
   /// Navigate back to previous screen
   static void goBack<T>(BuildContext context, [T? result]) {
     context.pop(result);

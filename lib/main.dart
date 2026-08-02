@@ -4,6 +4,8 @@ void main() {
   runApp(const MyApp());
 }
 
+//TODO: Build Pipline for this project Dev + Prod
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 

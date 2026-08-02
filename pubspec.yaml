@@ -52,6 +52,10 @@ dependencies:
   network_logging: any
   preferences: any
 
+dependency_overrides:
+  # Workaround for iOS simulator crash: DOBJC_initializeApi / objective_c.framework
+  # https://github.com/flutter/flutter/issues/186794
+  objective_c: 9.3.0
 
 dev_dependencies:
   flutter_test:
