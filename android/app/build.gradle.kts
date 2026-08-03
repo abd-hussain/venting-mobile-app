@@ -36,10 +36,14 @@ android {
             dimension = "default"
             applicationIdSuffix = ".dev"
             resValue("string", "app_name", "Venting Dev")
+            manifestPlaceholders["appIcon"] = "@mipmap/ic_launcher_dev"
+            manifestPlaceholders["appIconRound"] = "@mipmap/ic_launcher_dev_round"
         }
         create("prod") {
             dimension = "default"
             resValue("string", "app_name", "Venting")
+            manifestPlaceholders["appIcon"] = "@mipmap/ic_launcher"
+            manifestPlaceholders["appIconRound"] = "@mipmap/ic_launcher_round"
         }
     }
 
