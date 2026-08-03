@@ -5812,6 +5812,84 @@ abstract class VentingMobLocalizations {
   /// In en, this message translates to:
   /// **'Sign in'**
   String get welcome_sign_in;
+
+  /// No description provided for @onboarding_skip.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip'**
+  String get onboarding_skip;
+
+  /// No description provided for @onboarding_next.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get onboarding_next;
+
+  /// No description provided for @onboarding_page1_title.
+  ///
+  /// In en, this message translates to:
+  /// **'venting'**
+  String get onboarding_page1_title;
+
+  /// No description provided for @onboarding_page1_tagline.
+  ///
+  /// In en, this message translates to:
+  /// **'BE HEARD. FEEL BETTER.'**
+  String get onboarding_page1_tagline;
+
+  /// No description provided for @onboarding_page1_description.
+  ///
+  /// In en, this message translates to:
+  /// **'A safe place to share your thoughts and feel understood.'**
+  String get onboarding_page1_description;
+
+  /// No description provided for @onboarding_page2_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Talk Freely. We\'re Here to Listen.'**
+  String get onboarding_page2_title;
+
+  /// No description provided for @onboarding_page2_description.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect with compassionate listeners who truly care.'**
+  String get onboarding_page2_description;
+
+  /// No description provided for @onboarding_page3_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Privacy Comes First'**
+  String get onboarding_page3_title;
+
+  /// No description provided for @onboarding_page3_description.
+  ///
+  /// In en, this message translates to:
+  /// **'Your conversations are private and secure. You stay in control.'**
+  String get onboarding_page3_description;
+
+  /// No description provided for @onboarding_page4_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Invite Friends. Earn Rewards.'**
+  String get onboarding_page4_title;
+
+  /// No description provided for @onboarding_page4_description.
+  ///
+  /// In en, this message translates to:
+  /// **'Invite your friends and earn points, discounts, and exclusive perks.'**
+  String get onboarding_page4_description;
+
+  /// No description provided for @onboarding_page5_title.
+  ///
+  /// In en, this message translates to:
+  /// **'A Community That Cares'**
+  String get onboarding_page5_title;
+
+  /// No description provided for @onboarding_page5_description.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'re not alone. Join a community that listens and supports.'**
+  String get onboarding_page5_description;
 }
 
 class _VentingMobLocalizationsDelegate

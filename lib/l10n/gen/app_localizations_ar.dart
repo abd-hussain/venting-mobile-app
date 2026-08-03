@@ -3232,4 +3232,48 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
 
   @override
   String get welcome_sign_in => 'تسجيل الدخول';
+
+  @override
+  String get onboarding_skip => 'تخطي';
+
+  @override
+  String get onboarding_next => 'التالي';
+
+  @override
+  String get onboarding_page1_title => 'venting';
+
+  @override
+  String get onboarding_page1_tagline => 'أُسْمَع. اشعر بتحسن.';
+
+  @override
+  String get onboarding_page1_description =>
+      'مكان آمن لمشاركة أفكارك والشعور بأنك مفهوم.';
+
+  @override
+  String get onboarding_page2_title => 'تحدث بحرية. نحن هنا لنستمع.';
+
+  @override
+  String get onboarding_page2_description =>
+      'تواصل مع مستمعين متعاطفين يهتمون حقًا.';
+
+  @override
+  String get onboarding_page3_title => 'خصوصيتك تأتي أولًا';
+
+  @override
+  String get onboarding_page3_description =>
+      'محادثاتك خاصة وآمنة. وأنت تبقى المتحكم.';
+
+  @override
+  String get onboarding_page4_title => 'ادعُ أصدقاءك. واكسب مكافآت.';
+
+  @override
+  String get onboarding_page4_description =>
+      'ادعُ أصدقاءك واكسب نقاطًا وخصومات ومزايا حصرية.';
+
+  @override
+  String get onboarding_page5_title => 'مجتمع يهتم';
+
+  @override
+  String get onboarding_page5_description =>
+      'لست وحدك. انضم إلى مجتمع يستمع ويدعم.';
 }
