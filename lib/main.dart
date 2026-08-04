@@ -5,6 +5,7 @@ void main() {
 }
 
 //TODO: Build Pipline for this project Dev + Prod
+//TODO: Add Firebase / FCM
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
