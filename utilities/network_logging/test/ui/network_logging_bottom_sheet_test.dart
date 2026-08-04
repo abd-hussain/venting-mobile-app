@@ -146,8 +146,8 @@ void main() {
 
   setUpAll(() {
     PackageInfo.setMockInitialValues(
-      appName: 'Zalleon',
-      packageName: 'com.zain.iraq',
+      appName: 'Venting Mobile App',
+      packageName: 'com.vent.venting_mobile_app',
       version: '2.0.0',
       buildNumber: '42',
       buildSignature: '',

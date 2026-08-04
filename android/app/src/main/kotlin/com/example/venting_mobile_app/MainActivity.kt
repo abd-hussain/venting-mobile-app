@@ -1,4 +1,4 @@
-package com.example.venting_mobile_app
+package com.vent.venting_mobile_app
 
 import io.flutter.embedding.android.FlutterActivity
 

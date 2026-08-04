@@ -589,7 +589,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.ventingMobileApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vent.venting_mobile_app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -619,7 +619,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.ventingMobileApp.dev;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vent.venting_mobile_app.dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -642,7 +642,7 @@
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "$(inherited) x86_64";
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.ventingMobileApp.RunnerTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vent.venting_mobile_app.RunnerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -661,7 +661,7 @@
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "$(inherited) x86_64";
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.ventingMobileApp.RunnerTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vent.venting_mobile_app.RunnerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -680,7 +680,7 @@
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "$(inherited) x86_64";
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.ventingMobileApp.RunnerTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vent.venting_mobile_app.RunnerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Runner.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Runner";
@@ -697,7 +697,7 @@
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "$(inherited) x86_64";
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.ventingMobileApp.RunnerTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vent.venting_mobile_app.RunnerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Runner.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Runner";
@@ -766,7 +766,7 @@
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "$(inherited) x86_64";
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.ventingMobileApp.RunnerTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vent.venting_mobile_app.RunnerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Runner.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Runner";
@@ -783,7 +783,7 @@
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "$(inherited) x86_64";
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.ventingMobileApp.dev.RunnerTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vent.venting_mobile_app.dev.RunnerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -856,7 +856,7 @@
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "$(inherited) x86_64";
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.ventingMobileApp.dev.RunnerTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vent.venting_mobile_app.dev.RunnerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Runner.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Runner";
@@ -880,7 +880,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.ventingMobileApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vent.venting_mobile_app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -1020,7 +1020,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.ventingMobileApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vent.venting_mobile_app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -1050,7 +1050,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.ventingMobileApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vent.venting_mobile_app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -1137,7 +1137,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.ventingMobileApp.dev;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vent.venting_mobile_app.dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -1168,7 +1168,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.ventingMobileApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vent.venting_mobile_app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -1191,7 +1191,7 @@
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "$(inherited) x86_64";
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.ventingMobileApp.RunnerTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vent.venting_mobile_app.RunnerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Runner.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Runner";
@@ -1215,7 +1215,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.ventingMobileApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vent.venting_mobile_app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -1246,7 +1246,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.ventingMobileApp.dev;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vent.venting_mobile_app.dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -1269,7 +1269,7 @@
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "$(inherited) x86_64";
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.ventingMobileApp.dev.RunnerTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vent.venting_mobile_app.dev.RunnerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Runner.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Runner";
