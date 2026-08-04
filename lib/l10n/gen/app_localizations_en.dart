@@ -3291,4 +3291,54 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
   @override
   String get onboarding_page5_description =>
       'You\'re not alone. Join a community that listens and supports.';
+
+  @override
+  String get change_language => 'Change Language';
+
+  @override
+  String get ventor_onboarding_page1_title => 'A Safe Place to Be Heard';
+
+  @override
+  String get ventor_onboarding_page1_description =>
+      'Sometimes all you need is someone who listens.';
+
+  @override
+  String get ventor_onboarding_page2_title => 'Express Yourself';
+
+  @override
+  String get ventor_onboarding_page2_description =>
+      'Talk freely with verified listeners in a private and judgment-free environment.';
+
+  @override
+  String get ventor_onboarding_page3_title => 'Find the Right Listener';
+
+  @override
+  String get ventor_onboarding_page3_description =>
+      'Choose a listener based on language, expertise, personality, reviews, and voice introduction.';
+
+  @override
+  String get ventor_onboarding_page4_title => 'Your Privacy Comes First';
+
+  @override
+  String get ventor_onboarding_page4_description =>
+      'Stay anonymous. You decide what to share. Every conversation is private.';
+
+  @override
+  String get sign_up_lets_get_started => 'Let\'s Get Started';
+
+  @override
+  String get sign_up_create_account_subtitle =>
+      'Create an account to begin your journey.';
+
+  @override
+  String get sign_up_continue_with_apple => 'Continue with Apple';
+
+  @override
+  String get sign_up_continue_with_google => 'Continue with Google';
+
+  @override
+  String get sign_up_continue_with_email => 'Continue with Email';
+
+  @override
+  String get sign_up_or => 'or';
 }

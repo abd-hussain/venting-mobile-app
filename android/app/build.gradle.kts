@@ -41,7 +41,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    namespace = "com.vent.venting_mobile_app"
+    namespace = "com.vent.ventingMobileApp"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -56,7 +56,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.vent.venting_mobile_app"
+        applicationId = "com.vent.ventingMobileApp"
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = convertToValidVersionCode(

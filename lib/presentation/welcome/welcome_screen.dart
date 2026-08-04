@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
-import 'package:venting_mobile_app/presentation/common/widgets/app_language_selector.dart';
 import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dart';
 import 'package:venting_mobile_app/presentation/welcome/widgets/welcome_illustration_painter.dart';
+import 'package:venting_mobile_app/shared_widgets/app_language_selector.dart';
+import 'package:venting_mobile_app/utils/router_config.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
@@ -73,7 +75,7 @@ class WelcomeScreen extends StatelessWidget {
                   _WelcomePrimaryButton(
                     label: l10n.welcome_need_someone_to_talk_to,
                     onPressed: () {
-                      // TODO: navigate to talker onboarding / role selection
+                      context.push(AppRoutes.ventorOnboarding);
                     },
                   ),
                   const SizedBox(height: 12),

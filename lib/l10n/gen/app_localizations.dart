@@ -5890,6 +5890,96 @@ abstract class VentingMobLocalizations {
   /// In en, this message translates to:
   /// **'You\'re not alone. Join a community that listens and supports.'**
   String get onboarding_page5_description;
+
+  /// No description provided for @change_language.
+  ///
+  /// In en, this message translates to:
+  /// **'Change Language'**
+  String get change_language;
+
+  /// No description provided for @ventor_onboarding_page1_title.
+  ///
+  /// In en, this message translates to:
+  /// **'A Safe Place to Be Heard'**
+  String get ventor_onboarding_page1_title;
+
+  /// No description provided for @ventor_onboarding_page1_description.
+  ///
+  /// In en, this message translates to:
+  /// **'Sometimes all you need is someone who listens.'**
+  String get ventor_onboarding_page1_description;
+
+  /// No description provided for @ventor_onboarding_page2_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Express Yourself'**
+  String get ventor_onboarding_page2_title;
+
+  /// No description provided for @ventor_onboarding_page2_description.
+  ///
+  /// In en, this message translates to:
+  /// **'Talk freely with verified listeners in a private and judgment-free environment.'**
+  String get ventor_onboarding_page2_description;
+
+  /// No description provided for @ventor_onboarding_page3_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Find the Right Listener'**
+  String get ventor_onboarding_page3_title;
+
+  /// No description provided for @ventor_onboarding_page3_description.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a listener based on language, expertise, personality, reviews, and voice introduction.'**
+  String get ventor_onboarding_page3_description;
+
+  /// No description provided for @ventor_onboarding_page4_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Privacy Comes First'**
+  String get ventor_onboarding_page4_title;
+
+  /// No description provided for @ventor_onboarding_page4_description.
+  ///
+  /// In en, this message translates to:
+  /// **'Stay anonymous. You decide what to share. Every conversation is private.'**
+  String get ventor_onboarding_page4_description;
+
+  /// No description provided for @sign_up_lets_get_started.
+  ///
+  /// In en, this message translates to:
+  /// **'Let\'s Get Started'**
+  String get sign_up_lets_get_started;
+
+  /// No description provided for @sign_up_create_account_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Create an account to begin your journey.'**
+  String get sign_up_create_account_subtitle;
+
+  /// No description provided for @sign_up_continue_with_apple.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue with Apple'**
+  String get sign_up_continue_with_apple;
+
+  /// No description provided for @sign_up_continue_with_google.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue with Google'**
+  String get sign_up_continue_with_google;
+
+  /// No description provided for @sign_up_continue_with_email.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue with Email'**
+  String get sign_up_continue_with_email;
+
+  /// No description provided for @sign_up_or.
+  ///
+  /// In en, this message translates to:
+  /// **'or'**
+  String get sign_up_or;
 }
 
 class _VentingMobLocalizationsDelegate

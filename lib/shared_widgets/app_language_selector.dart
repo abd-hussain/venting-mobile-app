@@ -36,6 +36,9 @@ class AppLanguageSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final language = _currentLanguage;
+    final foreground = Colors.white.withValues(alpha: 0.9);
+    final border = Colors.white.withValues(alpha: 0.14);
+    final fill = Colors.white.withValues(alpha: 0.08);
 
     return Material(
       color: Colors.transparent,
@@ -45,25 +48,19 @@ class AppLanguageSelector extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
           decoration: BoxDecoration(
-            color: Colors.white.withValues(alpha: 0.08),
+            color: fill,
             borderRadius: BorderRadius.circular(20),
-            border: Border.all(
-              color: Colors.white.withValues(alpha: 0.14),
-            ),
+            border: Border.all(color: border),
           ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(
-                Icons.language_rounded,
-                size: 18,
-                color: Colors.white.withValues(alpha: 0.85),
-              ),
+              Icon(Icons.language_rounded, size: 18, color: foreground),
               const SizedBox(width: 6),
               Text(
                 language.languageCode.toUpperCase(),
                 style: GoogleFonts.inter(
-                  color: Colors.white.withValues(alpha: 0.9),
+                  color: foreground,
                   fontSize: 13,
                   fontWeight: FontWeight.w600,
                   letterSpacing: 0.4,
@@ -73,7 +70,7 @@ class AppLanguageSelector extends StatelessWidget {
               Icon(
                 Icons.keyboard_arrow_down_rounded,
                 size: 18,
-                color: Colors.white.withValues(alpha: 0.7),
+                color: foreground.withValues(alpha: 0.75),
               ),
             ],
           ),
@@ -197,11 +194,7 @@ class _LanguageOptionTile extends StatelessWidget {
           ),
           child: Row(
             children: [
-              SvgPicture.asset(
-                language.svgIcon,
-                width: 32,
-                height: 32,
-              ),
+              SvgPicture.asset(language.svgIcon, width: 32, height: 32),
               const SizedBox(width: 12),
               Expanded(
                 child: Column(

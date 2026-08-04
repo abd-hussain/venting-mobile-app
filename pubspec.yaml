@@ -51,6 +51,9 @@ dependencies:
   logger_manager: any
   network_logging: any
   preferences: any
+  firebase_core: ^4.13.0
+  firebase_messaging: ^16.5.0
+  firebase_analytics: ^12.4.6
 
 dependency_overrides:
   # Workaround for iOS simulator crash: DOBJC_initializeApi / objective_c.framework

@@ -1,7 +1,6 @@
-package com.vent.venting_mobile_app
+package com.vent.ventingMobileApp
 
 import io.flutter.embedding.android.FlutterActivity
-import io.flutter.embedding.android.FlutterFragmentActivity
 import android.content.Intent
 import android.net.Uri
 import android.provider.Settings
@@ -12,7 +11,7 @@ import android.os.Bundle
 import androidx.core.view.WindowCompat
 
 class MainActivity : FlutterActivity() {
-    private val CHANNEL = "com.vent.venting_mobile_app/settings"
+    private val CHANNEL = "com.vent.ventingMobileApp/settings"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

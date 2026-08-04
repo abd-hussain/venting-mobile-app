@@ -147,7 +147,7 @@ void main() {
   setUpAll(() {
     PackageInfo.setMockInitialValues(
       appName: 'Venting Mobile App',
-      packageName: 'com.vent.venting_mobile_app',
+      packageName: 'com.vent.ventingMobileApp',
       version: '2.0.0',
       buildNumber: '42',
       buildSignature: '',

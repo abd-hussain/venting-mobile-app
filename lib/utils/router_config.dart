@@ -3,8 +3,10 @@ import 'package:go_router/go_router.dart';
 import 'package:logger_manager/logger_manager.dart';
 import 'package:venting_mobile_app/di/di_container.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
-import 'package:venting_mobile_app/presentation/onboarding/onboarding_screen.dart';
+import 'package:venting_mobile_app/presentation/auth/auth_screen.dart';
+import 'package:venting_mobile_app/presentation/main_onboarding/main_onboarding_screen.dart';
 import 'package:venting_mobile_app/presentation/splash/splash_screen.dart';
+import 'package:venting_mobile_app/presentation/ventor_onboarding/ventor_onboarding_screen.dart';
 import 'package:venting_mobile_app/presentation/welcome/welcome_screen.dart';
 
 /// Route constants for better maintainability
@@ -12,7 +14,9 @@ class AppRoutes {
   static const String initialRoute = '/';
   static const String welcome = '/welcome';
   static const String tabHome = '/tab-home';
-  static const String onboarding = '/onboarding';
+  static const String mainOnboarding = '/main-onboarding';
+  static const String ventorOnboarding = '/ventor-onboarding';
+  static const String auth = '/auth';
 }
 
 class VentingNavigationObserver extends NavigatorObserver {
@@ -71,9 +75,19 @@ class VentingRouterConfig {
         builder: (context, state) => const WelcomeScreen(),
       ),
       GoRoute(
-        path: AppRoutes.onboarding,
-        name: 'onboarding',
-        builder: (context, state) => const OnboardingScreen(),
+        path: AppRoutes.mainOnboarding,
+        name: 'main-onboarding',
+        builder: (context, state) => const MainOnboardingScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.ventorOnboarding,
+        name: 'ventor-onboarding',
+        builder: (context, state) => const VentorOnboardingScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.auth,
+        name: 'auth',
+        builder: (context, state) => const AuthScreen(),
       ),
     ],
     errorBuilder: (context, state) {

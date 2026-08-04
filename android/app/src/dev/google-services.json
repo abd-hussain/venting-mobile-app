@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "890250243615",
+    "project_id": "venting-e1510",
+    "storage_bucket": "venting-e1510.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:890250243615:android:a8b4cdd9a0983c4fb3ef2a",
+        "android_client_info": {
+          "package_name": "com.vent.ventingMobileApp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBYOrUkN5v9ZSmMizufPYH6NkugZJOMKUg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:890250243615:android:986673053168b187b3ef2a",
+        "android_client_info": {
+          "package_name": "com.vent.ventingMobileApp.dev"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBYOrUkN5v9ZSmMizufPYH6NkugZJOMKUg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

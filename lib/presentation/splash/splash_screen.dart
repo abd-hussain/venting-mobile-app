@@ -76,7 +76,7 @@ class _SplashScreenState extends State<SplashScreen>
             state.processState.when(
               idle: () =>
                   LoggerManagerBase.logInfo(message: 'SplashScreen: Idle'),
-              needOnboarding: () => context.go(AppRoutes.onboarding),
+              needOnboarding: () => context.go(AppRoutes.mainOnboarding),
               autherizedForApp: () {
                 context.go(AppRoutes.tabHome);
               },

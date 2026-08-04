@@ -5,19 +5,19 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:preferences/preferences.dart';
 import 'package:venting_mobile_app/di/di_container.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
-import 'package:venting_mobile_app/presentation/common/widgets/app_language_selector.dart';
-import 'package:venting_mobile_app/presentation/onboarding/widgets/onboarding_illustrations.dart';
+import 'package:venting_mobile_app/presentation/main_onboarding/widgets/onboarding_illustrations.dart';
 import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dart';
+import 'package:venting_mobile_app/shared_widgets/app_language_selector.dart';
 import 'package:venting_mobile_app/utils/router_config.dart';
 
-class OnboardingScreen extends StatefulWidget {
-  const OnboardingScreen({super.key});
+class MainOnboardingScreen extends StatefulWidget {
+  const MainOnboardingScreen({super.key});
 
   @override
-  State<OnboardingScreen> createState() => _OnboardingScreenState();
+  State<MainOnboardingScreen> createState() => _MainOnboardingScreenState();
 }
 
-class _OnboardingScreenState extends State<OnboardingScreen> {
+class _MainOnboardingScreenState extends State<MainOnboardingScreen> {
   static const _overlayStyle = SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
     statusBarBrightness: Brightness.dark,
