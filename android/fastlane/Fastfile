@@ -1,0 +1,43 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+default_platform(:android)
+
+platform :android do
+  desc "Set Gradle Version and Build Number"
+  lane :set_full_version do 
+		version = flutter_version()
+
+    android_set_version_name(version_name: version['version_name'])
+    android_set_version_code(version_code: version['version_code'])
+	end
+
+  desc "Deploy a new version to the Google Play"
+  lane :deploy do
+    version = flutter_version()
+
+    gradle(
+      task: "clean bundle",
+      properties: {
+        "versionCode" => version['version_code'],
+        "versionName" => version['version_name']
+      }
+    )
+
+    upload_to_play_store(
+      aab: "../build/app/outputs/bundle/release/app-release.aab",
+      track: "alpha", # production: Deploys to Production, beta: Deploys to Open testing, alpha: Deploys to Closed testing, internal: Deploys to Internal testing
+      release_status: 'draft', # Use draft for a draft app status
+      skip_upload_metadata: false
+    )
+  end
+end
