@@ -88,7 +88,7 @@ class VentingAppState extends State<VentingApp> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    // the default language should be Arabic , no matter the current device locale
+    // Prefer the saved preference; fall back to the device language when unset.
     final selectedLanguageCode = diContainer<VentingPreferences>().getValue(
       SavedConstants.selectedLanguageCode,
       "",
@@ -96,7 +96,7 @@ class VentingAppState extends State<VentingApp> with WidgetsBindingObserver {
 
     final effectiveLanguageCode = selectedLanguageCode.isNotEmpty
         ? selectedLanguageCode
-        : "ar";
+        : VentingMobLocalizationsHolder.resolveDeviceLanguageCode();
 
     VentingMobLocalizationsHolder.syncCurrentLanguage(effectiveLanguageCode);
 

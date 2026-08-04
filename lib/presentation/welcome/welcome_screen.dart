@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
+import 'package:venting_mobile_app/presentation/common/widgets/app_language_selector.dart';
 import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dart';
 import 'package:venting_mobile_app/presentation/welcome/widgets/welcome_illustration_painter.dart';
 
@@ -41,7 +42,11 @@ class WelcomeScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 28),
               child: Column(
                 children: [
-                  const SizedBox(height: 28),
+                  const Align(
+                    alignment: AlignmentDirectional.centerStart,
+                    child: AppLanguageSelector(),
+                  ),
+                  const SizedBox(height: 12),
                   const _VentingBrandHeader(),
                   const SizedBox(height: 8),
                   Text(

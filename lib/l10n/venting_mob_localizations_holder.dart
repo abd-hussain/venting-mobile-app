@@ -1,3 +1,5 @@
+import 'dart:ui' as ui;
+
 import 'package:flutter/material.dart';
 import 'package:preferences/preferences.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
@@ -22,6 +24,16 @@ abstract final class VentingMobLocalizationsHolder {
     return instance;
   }
 
+  /// Uses the device language when supported; otherwise [defaultLanguageCode].
+  static String resolveDeviceLanguageCode() {
+    final deviceCode = ui.PlatformDispatcher.instance.locale.languageCode
+        .toLowerCase();
+    if (supportedLanguageCodes.contains(deviceCode)) {
+      return deviceCode;
+    }
+    return defaultLanguageCode;
+  }
+
   static Future<void> ensureDefaultLanguageSaved(
     VentingPreferences preferences,
   ) async {
@@ -32,7 +44,7 @@ abstract final class VentingMobLocalizationsHolder {
     if (saved.isEmpty) {
       await preferences.setValue(
         SavedConstants.selectedLanguageCode,
-        defaultLanguageCode,
+        resolveDeviceLanguageCode(),
       );
     }
   }
@@ -73,7 +85,7 @@ abstract final class VentingMobLocalizationsHolder {
       SavedConstants.selectedLanguageCode,
       '',
     );
-    return saved.isNotEmpty ? saved : defaultLanguageCode;
+    return saved.isNotEmpty ? saved : resolveDeviceLanguageCode();
   }
 
   /// Resolves [message] for [languageCode].
