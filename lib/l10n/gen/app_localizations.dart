@@ -5957,6 +5957,30 @@ abstract class VentingMobLocalizations {
   /// **'Create an account to begin your journey.'**
   String get sign_up_create_account_subtitle;
 
+  /// No description provided for @sign_in_welcome_back.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome Back'**
+  String get sign_in_welcome_back;
+
+  /// No description provided for @sign_in_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in to continue your journey.'**
+  String get sign_in_subtitle;
+
+  /// No description provided for @sign_in_dont_have_account.
+  ///
+  /// In en, this message translates to:
+  /// **'Don\'t have an account?'**
+  String get sign_in_dont_have_account;
+
+  /// No description provided for @sign_in_sign_up.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign Up'**
+  String get sign_in_sign_up;
+
   /// No description provided for @sign_up_continue_with_apple.
   ///
   /// In en, this message translates to:
@@ -5975,11 +5999,131 @@ abstract class VentingMobLocalizations {
   /// **'Continue with Email'**
   String get sign_up_continue_with_email;
 
+  /// No description provided for @sign_in_continue_with_apple.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in with Apple'**
+  String get sign_in_continue_with_apple;
+
+  /// No description provided for @sign_in_continue_with_google.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in with Google'**
+  String get sign_in_continue_with_google;
+
+  /// No description provided for @sign_in_continue_with_email.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in with Email'**
+  String get sign_in_continue_with_email;
+
   /// No description provided for @sign_up_or.
   ///
   /// In en, this message translates to:
   /// **'or'**
   String get sign_up_or;
+
+  /// No description provided for @email_registration_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue with Email'**
+  String get email_registration_title;
+
+  /// No description provided for @email_registration_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter your details to create your account.'**
+  String get email_registration_subtitle;
+
+  /// No description provided for @email_registration_email_label.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get email_registration_email_label;
+
+  /// No description provided for @email_registration_email_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your email'**
+  String get email_registration_email_hint;
+
+  /// No description provided for @email_registration_password_label.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get email_registration_password_label;
+
+  /// No description provided for @email_registration_password_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Create a password'**
+  String get email_registration_password_hint;
+
+  /// No description provided for @email_registration_password_must_contain.
+  ///
+  /// In en, this message translates to:
+  /// **'Password must contain:'**
+  String get email_registration_password_must_contain;
+
+  /// No description provided for @email_registration_rule_min_length.
+  ///
+  /// In en, this message translates to:
+  /// **'At least 8 characters'**
+  String get email_registration_rule_min_length;
+
+  /// No description provided for @email_registration_rule_uppercase.
+  ///
+  /// In en, this message translates to:
+  /// **'One uppercase letter'**
+  String get email_registration_rule_uppercase;
+
+  /// No description provided for @email_registration_rule_number.
+  ///
+  /// In en, this message translates to:
+  /// **'One number'**
+  String get email_registration_rule_number;
+
+  /// No description provided for @email_registration_create_account.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Account'**
+  String get email_registration_create_account;
+
+  /// No description provided for @email_registration_invalid_email.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid email address'**
+  String get email_registration_invalid_email;
+
+  /// No description provided for @account_created_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Account Created!'**
+  String get account_created_title;
+
+  /// No description provided for @account_created_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'We\'ve sent a verification link to your email address.'**
+  String get account_created_subtitle;
+
+  /// No description provided for @account_created_check_email.
+  ///
+  /// In en, this message translates to:
+  /// **'Check Your Email'**
+  String get account_created_check_email;
+
+  /// No description provided for @account_created_resend_email.
+  ///
+  /// In en, this message translates to:
+  /// **'Resend Email'**
+  String get account_created_resend_email;
+
+  /// No description provided for @account_created_resend_email_countdown.
+  ///
+  /// In en, this message translates to:
+  /// **'Resend Email ({time})'**
+  String account_created_resend_email_countdown(String time);
 }
 
 class _VentingMobLocalizationsDelegate

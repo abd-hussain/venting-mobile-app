@@ -3,7 +3,9 @@ import 'package:go_router/go_router.dart';
 import 'package:logger_manager/logger_manager.dart';
 import 'package:venting_mobile_app/di/di_container.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
+import 'package:venting_mobile_app/presentation/auth/account_created_screen.dart';
 import 'package:venting_mobile_app/presentation/auth/auth_screen.dart';
+import 'package:venting_mobile_app/presentation/auth/email_registration_screen.dart';
 import 'package:venting_mobile_app/presentation/main_onboarding/main_onboarding_screen.dart';
 import 'package:venting_mobile_app/presentation/splash/splash_screen.dart';
 import 'package:venting_mobile_app/presentation/ventor_onboarding/ventor_onboarding_screen.dart';
@@ -16,7 +18,10 @@ class AppRoutes {
   static const String tabHome = '/tab-home';
   static const String mainOnboarding = '/main-onboarding';
   static const String ventorOnboarding = '/ventor-onboarding';
-  static const String auth = '/auth';
+  static const String authRegister = '/auth-register';
+  static const String authLogin = '/auth-login';
+  static const String emailRegistration = '/email-registration';
+  static const String accountCreated = '/account-created';
 }
 
 class VentingNavigationObserver extends NavigatorObserver {
@@ -85,9 +90,25 @@ class VentingRouterConfig {
         builder: (context, state) => const VentorOnboardingScreen(),
       ),
       GoRoute(
-        path: AppRoutes.auth,
-        name: 'auth',
-        builder: (context, state) => const AuthScreen(),
+        path: AppRoutes.authRegister,
+        name: 'auth-register',
+        builder: (context, state) =>
+            const AuthScreen(authType: AuthType.register),
+      ),
+      GoRoute(
+        path: AppRoutes.authLogin,
+        name: 'auth-login',
+        builder: (context, state) => const AuthScreen(authType: AuthType.login),
+      ),
+      GoRoute(
+        path: AppRoutes.emailRegistration,
+        name: 'email-registration',
+        builder: (context, state) => const EmailRegistrationScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.accountCreated,
+        name: 'account-created',
+        builder: (context, state) => const AccountCreatedScreen(),
       ),
     ],
     errorBuilder: (context, state) {

@@ -3315,6 +3315,18 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
   String get sign_up_create_account_subtitle => 'أنشئ حسابًا لتبدأ رحلتك.';
 
   @override
+  String get sign_in_welcome_back => 'مرحبًا بعودتك';
+
+  @override
+  String get sign_in_subtitle => 'سجّل الدخول لمتابعة رحلتك.';
+
+  @override
+  String get sign_in_dont_have_account => 'ليس لديك حساب؟';
+
+  @override
+  String get sign_in_sign_up => 'إنشاء حساب';
+
+  @override
   String get sign_up_continue_with_apple => 'المتابعة مع Apple';
 
   @override
@@ -3324,5 +3336,70 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
   String get sign_up_continue_with_email => 'المتابعة بالبريد الإلكتروني';
 
   @override
+  String get sign_in_continue_with_apple => 'تسجيل الدخول مع Apple';
+
+  @override
+  String get sign_in_continue_with_google => 'تسجيل الدخول مع Google';
+
+  @override
+  String get sign_in_continue_with_email => 'تسجيل الدخول بالبريد الإلكتروني';
+
+  @override
   String get sign_up_or => 'أو';
+
+  @override
+  String get email_registration_title => 'المتابعة بالبريد الإلكتروني';
+
+  @override
+  String get email_registration_subtitle => 'يرجى إدخال بياناتك لإنشاء حسابك.';
+
+  @override
+  String get email_registration_email_label => 'البريد الإلكتروني';
+
+  @override
+  String get email_registration_email_hint => 'أدخل بريدك الإلكتروني';
+
+  @override
+  String get email_registration_password_label => 'كلمة المرور';
+
+  @override
+  String get email_registration_password_hint => 'أنشئ كلمة مرور';
+
+  @override
+  String get email_registration_password_must_contain =>
+      'يجب أن تحتوي كلمة المرور على:';
+
+  @override
+  String get email_registration_rule_min_length => '8 أحرف على الأقل';
+
+  @override
+  String get email_registration_rule_uppercase => 'حرف كبير واحد';
+
+  @override
+  String get email_registration_rule_number => 'رقم واحد';
+
+  @override
+  String get email_registration_create_account => 'إنشاء حساب';
+
+  @override
+  String get email_registration_invalid_email =>
+      'يرجى إدخال بريد إلكتروني صالح';
+
+  @override
+  String get account_created_title => 'تم إنشاء الحساب!';
+
+  @override
+  String get account_created_subtitle =>
+      'لقد أرسلنا رابط تحقق إلى بريدك الإلكتروني.';
+
+  @override
+  String get account_created_check_email => 'تحقق من بريدك';
+
+  @override
+  String get account_created_resend_email => 'إعادة إرسال البريد';
+
+  @override
+  String account_created_resend_email_countdown(String time) {
+    return 'إعادة إرسال البريد ($time)';
+  }
 }

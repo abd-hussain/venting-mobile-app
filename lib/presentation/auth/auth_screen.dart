@@ -5,10 +5,15 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
 import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dart';
 import 'package:venting_mobile_app/shared_widgets/app_language_selector.dart';
+import 'package:venting_mobile_app/utils/router_config.dart';
 
-/// Auth method picker at the end of the ventor registration journey.
+enum AuthType { login, register }
+
+/// Auth method picker for login or register.
 class AuthScreen extends StatelessWidget {
-  const AuthScreen({super.key});
+  const AuthScreen({super.key, required this.authType});
+
+  final AuthType authType;
 
   static const _overlayStyle = SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
@@ -22,9 +27,27 @@ class AuthScreen extends StatelessWidget {
   static const _bodyColor = Color(0xFF6B6280);
   static const _border = Color(0xFFE4DCEF);
 
+  bool get _isLogin => authType == AuthType.login;
+
   @override
   Widget build(BuildContext context) {
     final l10n = VentingMobLocalizations.of(context);
+
+    final title = _isLogin
+        ? l10n.sign_in_welcome_back
+        : l10n.sign_up_lets_get_started;
+    final subtitle = _isLogin
+        ? l10n.sign_in_subtitle
+        : l10n.sign_up_create_account_subtitle;
+    final appleLabel = _isLogin
+        ? l10n.sign_in_continue_with_apple
+        : l10n.sign_up_continue_with_apple;
+    final googleLabel = _isLogin
+        ? l10n.sign_in_continue_with_google
+        : l10n.sign_up_continue_with_google;
+    final emailLabel = _isLogin
+        ? l10n.sign_in_continue_with_email
+        : l10n.sign_up_continue_with_email;
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: _overlayStyle,
@@ -39,7 +62,7 @@ class AuthScreen extends StatelessWidget {
                 Row(
                   children: [
                     IconButton(
-                      onPressed: () => context.pop(),
+                      onPressed: () => context.go(AppRoutes.welcome),
                       icon: const Icon(
                         Icons.arrow_back_ios_new_rounded,
                         size: 20,
@@ -52,7 +75,7 @@ class AuthScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 28),
                 Text(
-                  l10n.sign_up_lets_get_started,
+                  title,
                   textAlign: TextAlign.center,
                   style: GoogleFonts.inter(
                     color: _titleColor,
@@ -63,7 +86,7 @@ class AuthScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 10),
                 Text(
-                  l10n.sign_up_create_account_subtitle,
+                  subtitle,
                   textAlign: TextAlign.center,
                   style: GoogleFonts.inter(
                     color: _bodyColor,
@@ -78,9 +101,9 @@ class AuthScreen extends StatelessWidget {
                   foregroundColor: Colors.white,
                   borderColor: Colors.black,
                   icon: Icons.apple,
-                  label: l10n.sign_up_continue_with_apple,
+                  label: appleLabel,
                   onPressed: () {
-                    // TODO: Apple Sign-In for ventor
+                    // TODO: Apple Sign-In / Sign-Up
                   },
                 ),
                 const SizedBox(height: 12),
@@ -89,9 +112,9 @@ class AuthScreen extends StatelessWidget {
                   foregroundColor: _titleColor,
                   borderColor: _border,
                   iconWidget: const _GoogleMark(),
-                  label: l10n.sign_up_continue_with_google,
+                  label: googleLabel,
                   onPressed: () {
-                    // TODO: Google Sign-In for ventor
+                    // TODO: Google Sign-In / Sign-Up
                   },
                 ),
                 const SizedBox(height: 12),
@@ -100,12 +123,16 @@ class AuthScreen extends StatelessWidget {
                   foregroundColor: SplashColors.purpleMid,
                   borderColor: SplashColors.purpleMid.withValues(alpha: 0.55),
                   icon: Icons.mail_outline_rounded,
-                  label: l10n.sign_up_continue_with_email,
+                  label: emailLabel,
                   onPressed: () {
-                    // TODO: navigate to email/password registration
+                    if (_isLogin) {
+                      // TODO: navigate to email login screen
+                    } else {
+                      context.push(AppRoutes.emailRegistration);
+                    }
                   },
                 ),
-                const SizedBox(height: 28),
+                const Spacer(),
                 Row(
                   children: [
                     const Expanded(child: Divider(color: _border)),
@@ -123,13 +150,15 @@ class AuthScreen extends StatelessWidget {
                     const Expanded(child: Divider(color: _border)),
                   ],
                 ),
-                const SizedBox(height: 24),
+                const SizedBox(height: 20),
                 Wrap(
                   alignment: WrapAlignment.center,
                   crossAxisAlignment: WrapCrossAlignment.center,
                   children: [
                     Text(
-                      '${l10n.welcome_already_have_account} ',
+                      _isLogin
+                          ? '${l10n.sign_in_dont_have_account} '
+                          : '${l10n.welcome_already_have_account} ',
                       style: GoogleFonts.inter(
                         color: _bodyColor,
                         fontSize: 14,
@@ -138,10 +167,14 @@ class AuthScreen extends StatelessWidget {
                     ),
                     GestureDetector(
                       onTap: () {
-                        // TODO: navigate to sign-in
+                        if (_isLogin) {
+                          context.push(AppRoutes.authRegister);
+                        } else {
+                          context.push(AppRoutes.authLogin);
+                        }
                       },
                       child: Text(
-                        l10n.welcome_sign_in,
+                        _isLogin ? l10n.sign_in_sign_up : l10n.welcome_sign_in,
                         style: GoogleFonts.inter(
                           color: SplashColors.purpleMid,
                           fontSize: 14,
@@ -151,6 +184,7 @@ class AuthScreen extends StatelessWidget {
                     ),
                   ],
                 ),
+                const SizedBox(height: 16),
               ],
             ),
           ),
@@ -219,7 +253,6 @@ class _GoogleMark extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Simple multicolor "G" mark without extra assets.
     return SizedBox(
       width: 22,
       height: 22,

@@ -64,7 +64,7 @@ class _VentorOnboardingScreenState extends State<VentorOnboardingScreen> {
   ];
 
   void _goToSignUp() {
-    context.push(AppRoutes.auth);
+    context.push(AppRoutes.authRegister);
   }
 
   void _onNext(int pageCount) {

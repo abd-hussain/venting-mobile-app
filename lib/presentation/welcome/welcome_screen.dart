@@ -90,7 +90,7 @@ class WelcomeScreen extends StatelessWidget {
                     prompt: l10n.welcome_already_have_account,
                     action: l10n.welcome_sign_in,
                     onSignIn: () {
-                      // TODO: navigate to sign-in
+                      context.push(AppRoutes.authLogin);
                     },
                   ),
                   const SizedBox(height: 12),

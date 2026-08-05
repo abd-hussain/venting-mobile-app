@@ -3331,6 +3331,18 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
       'Create an account to begin your journey.';
 
   @override
+  String get sign_in_welcome_back => 'Welcome Back';
+
+  @override
+  String get sign_in_subtitle => 'Sign in to continue your journey.';
+
+  @override
+  String get sign_in_dont_have_account => 'Don\'t have an account?';
+
+  @override
+  String get sign_in_sign_up => 'Sign Up';
+
+  @override
   String get sign_up_continue_with_apple => 'Continue with Apple';
 
   @override
@@ -3340,5 +3352,71 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
   String get sign_up_continue_with_email => 'Continue with Email';
 
   @override
+  String get sign_in_continue_with_apple => 'Sign in with Apple';
+
+  @override
+  String get sign_in_continue_with_google => 'Sign in with Google';
+
+  @override
+  String get sign_in_continue_with_email => 'Sign in with Email';
+
+  @override
   String get sign_up_or => 'or';
+
+  @override
+  String get email_registration_title => 'Continue with Email';
+
+  @override
+  String get email_registration_subtitle =>
+      'Please enter your details to create your account.';
+
+  @override
+  String get email_registration_email_label => 'Email';
+
+  @override
+  String get email_registration_email_hint => 'Enter your email';
+
+  @override
+  String get email_registration_password_label => 'Password';
+
+  @override
+  String get email_registration_password_hint => 'Create a password';
+
+  @override
+  String get email_registration_password_must_contain =>
+      'Password must contain:';
+
+  @override
+  String get email_registration_rule_min_length => 'At least 8 characters';
+
+  @override
+  String get email_registration_rule_uppercase => 'One uppercase letter';
+
+  @override
+  String get email_registration_rule_number => 'One number';
+
+  @override
+  String get email_registration_create_account => 'Create Account';
+
+  @override
+  String get email_registration_invalid_email =>
+      'Please enter a valid email address';
+
+  @override
+  String get account_created_title => 'Account Created!';
+
+  @override
+  String get account_created_subtitle =>
+      'We\'ve sent a verification link to your email address.';
+
+  @override
+  String get account_created_check_email => 'Check Your Email';
+
+  @override
+  String get account_created_resend_email => 'Resend Email';
+
+  @override
+  String account_created_resend_email_countdown(String time) {
+    return 'Resend Email ($time)';
+  }
 }
