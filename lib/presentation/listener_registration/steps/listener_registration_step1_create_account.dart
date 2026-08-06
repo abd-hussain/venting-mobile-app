@@ -1,13 +1,21 @@
+import 'dart:io';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:phone_numbers_parser/phone_numbers_parser.dart';
+import 'package:venting_mobile_app/config/app_config.dart';
+import 'package:venting_mobile_app/di/di_container.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
+import 'package:venting_mobile_app/presentation/common/app_webview_screen.dart';
 import 'package:venting_mobile_app/presentation/listener_registration/widgets/phone_country_picker.dart';
 import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dart';
+import 'package:venting_mobile_app/utils/router_config.dart';
 
-/// Step 1 — Create Account (full name, locked email, phone).
+/// Step 1 — Create Account (profile photo, full name, locked email, phone).
 class ListenerRegistrationStep1CreateAccount extends StatefulWidget {
   const ListenerRegistrationStep1CreateAccount({
     super.key,
@@ -31,14 +39,19 @@ class _ListenerRegistrationStep1CreateAccountState
   static const _label = Color(0xFFC8C0D8);
   static const _disabledFill = Color(0xFF14101C);
 
+  final _picker = ImagePicker();
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _phoneController = TextEditingController();
 
   final _nameFocus = FocusNode();
   final _phoneFocus = FocusNode();
+  late final TapGestureRecognizer _termsRecognizer;
+  late final TapGestureRecognizer _privacyRecognizer;
 
   IsoCode _country = IsoCode.JO;
+  String? _profilePhotoPath;
+  bool _pickingPhoto = false;
   bool _agreedToTerms = false;
   bool _submitted = false;
 
@@ -49,6 +62,8 @@ class _ListenerRegistrationStep1CreateAccountState
     for (final c in [_nameController, _phoneController]) {
       c.addListener(_onChanged);
     }
+    _termsRecognizer = TapGestureRecognizer()..onTap = _openTerms;
+    _privacyRecognizer = TapGestureRecognizer()..onTap = _openPrivacy;
   }
 
   @override
@@ -90,6 +105,7 @@ class _ListenerRegistrationStep1CreateAccountState
   }
 
   bool get _canContinue =>
+      _profilePhotoPath != null &&
       _nameController.text.trim().isNotEmpty &&
       widget.email.trim().isNotEmpty &&
       _isPhoneValid &&
@@ -112,6 +128,51 @@ class _ListenerRegistrationStep1CreateAccountState
     _applyCountry(selected);
   }
 
+  Future<void> _pickProfilePhoto() async {
+    if (_pickingPhoto) return;
+    setState(() => _pickingPhoto = true);
+    try {
+      final file = await _picker.pickImage(
+        source: ImageSource.gallery,
+        imageQuality: 85,
+      );
+      if (!mounted || file == null) return;
+      setState(() => _profilePhotoPath = file.path);
+    } catch (_) {
+      if (!mounted) return;
+      final l10n = VentingMobLocalizations.of(context);
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(l10n.camera_init_failed_generic)));
+    } finally {
+      if (mounted) setState(() => _pickingPhoto = false);
+    }
+  }
+
+  void _openTerms() {
+    final l10n = VentingMobLocalizations.of(context);
+    final config = diContainer<AppConfig>();
+    context.push(
+      AppRoutes.webView,
+      extra: AppWebViewArgs(
+        title: l10n.listener_reg_terms,
+        url: config.termsOfServiceUrl,
+      ),
+    );
+  }
+
+  void _openPrivacy() {
+    final l10n = VentingMobLocalizations.of(context);
+    final config = diContainer<AppConfig>();
+    context.push(
+      AppRoutes.webView,
+      extra: AppWebViewArgs(
+        title: l10n.listener_reg_privacy,
+        url: config.privacyPolicyUrl,
+      ),
+    );
+  }
+
   void _submit() {
     setState(() => _submitted = true);
     if (!_canContinue) return;
@@ -123,6 +184,7 @@ class _ListenerRegistrationStep1CreateAccountState
     final l10n = VentingMobLocalizations.of(context);
     final dialCode = countryDialCode(_country);
     final showPhoneError = _submitted && !_isPhoneValid;
+    final showPhotoError = _submitted && _profilePhotoPath == null;
 
     return Column(
       children: [
@@ -162,9 +224,30 @@ class _ListenerRegistrationStep1CreateAccountState
                       ),
                     ),
                     const SizedBox(width: 12),
-                    const _ListenerAvatarBadge(),
+                    _ProfilePhotoPicker(
+                      imagePath: _profilePhotoPath,
+                      isLoading: _pickingPhoto,
+                      hasError: showPhotoError,
+                      addLabel: l10n.listener_reg_add_profile_photo,
+                      changeLabel: l10n.listener_reg_change_profile_photo,
+                      onTap: _pickProfilePhoto,
+                    ),
                   ],
                 ),
+                if (showPhotoError) ...[
+                  const SizedBox(height: 8),
+                  Align(
+                    alignment: AlignmentDirectional.centerEnd,
+                    child: Text(
+                      l10n.listener_reg_profile_photo_required,
+                      style: GoogleFonts.inter(
+                        color: const Color(0xFFE11D48),
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                ],
                 const SizedBox(height: 28),
                 _DarkField(
                   controller: _nameController,
@@ -292,10 +375,7 @@ class _ListenerRegistrationStep1CreateAccountState
                                 color: SplashColors.purpleMid,
                                 fontWeight: FontWeight.w600,
                               ),
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () {
-                                  // TODO: open Terms of Service
-                                },
+                              recognizer: _termsRecognizer,
                             ),
                             TextSpan(text: l10n.listener_reg_agree_and),
                             TextSpan(
@@ -304,10 +384,7 @@ class _ListenerRegistrationStep1CreateAccountState
                                 color: SplashColors.purpleMid,
                                 fontWeight: FontWeight.w600,
                               ),
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () {
-                                  // TODO: open Privacy Policy
-                                },
+                              recognizer: _privacyRecognizer,
                             ),
                             const TextSpan(text: '.'),
                           ],
@@ -348,63 +425,143 @@ class _ListenerRegistrationStep1CreateAccountState
   }
 }
 
-class _ListenerAvatarBadge extends StatelessWidget {
-  const _ListenerAvatarBadge();
+class _ProfilePhotoPicker extends StatelessWidget {
+  const _ProfilePhotoPicker({
+    required this.imagePath,
+    required this.isLoading,
+    required this.hasError,
+    required this.addLabel,
+    required this.changeLabel,
+    required this.onTap,
+  });
+
+  final String? imagePath;
+  final bool isLoading;
+  final bool hasError;
+  final String addLabel;
+  final String changeLabel;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 88,
-      height: 88,
-      child: Stack(
-        clipBehavior: Clip.none,
-        children: [
-          Container(
-            width: 88,
-            height: 88,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  SplashColors.purpleMid.withValues(alpha: 0.45),
-                  SplashColors.purpleDeep.withValues(alpha: 0.9),
+    final hasPhoto = imagePath != null;
+
+    return Column(
+      children: [
+        Material(
+          color: Colors.transparent,
+          child: InkWell(
+            onTap: isLoading ? null : onTap,
+            customBorder: const CircleBorder(),
+            child: SizedBox(
+              width: 88,
+              height: 88,
+              child: Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  Container(
+                    width: 88,
+                    height: 88,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: hasError
+                            ? const Color(0xFFE11D48)
+                            : SplashColors.purpleMid.withValues(alpha: 0.7),
+                        width: 2,
+                      ),
+                      gradient: hasPhoto
+                          ? null
+                          : LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: [
+                                SplashColors.purpleMid.withValues(alpha: 0.45),
+                                SplashColors.purpleDeep.withValues(alpha: 0.9),
+                              ],
+                            ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: SplashColors.purpleGlow.withValues(
+                            alpha: 0.35,
+                          ),
+                          blurRadius: 18,
+                          offset: const Offset(0, 6),
+                        ),
+                      ],
+                      image: hasPhoto
+                          ? DecorationImage(
+                              image: FileImage(File(imagePath!)),
+                              fit: BoxFit.cover,
+                            )
+                          : null,
+                    ),
+                    child: hasPhoto
+                        ? null
+                        : const Icon(
+                            Icons.add_a_photo_outlined,
+                            color: Colors.white,
+                            size: 32,
+                          ),
+                  ),
+                  if (isLoading)
+                    Container(
+                      width: 88,
+                      height: 88,
+                      decoration: BoxDecoration(
+                        color: Colors.black.withValues(alpha: 0.45),
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Center(
+                        child: SizedBox(
+                          width: 24,
+                          height: 24,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2.2,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    )
+                  else
+                    Positioned(
+                      right: -2,
+                      bottom: -2,
+                      child: Container(
+                        width: 28,
+                        height: 28,
+                        decoration: BoxDecoration(
+                          color: SplashColors.purpleMid,
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: SplashColors.backgroundTop,
+                            width: 2,
+                          ),
+                        ),
+                        child: Icon(
+                          hasPhoto
+                              ? Icons.edit_rounded
+                              : Icons.photo_library_outlined,
+                          color: Colors.white,
+                          size: 14,
+                        ),
+                      ),
+                    ),
                 ],
               ),
-              boxShadow: [
-                BoxShadow(
-                  color: SplashColors.purpleGlow.withValues(alpha: 0.35),
-                  blurRadius: 18,
-                  offset: const Offset(0, 6),
-                ),
-              ],
-            ),
-            child: const Icon(
-              Icons.headset_mic_rounded,
-              color: Colors.white,
-              size: 36,
             ),
           ),
-          Positioned(
-            top: -2,
-            right: -2,
-            child: Container(
-              width: 28,
-              height: 28,
-              decoration: const BoxDecoration(
-                color: SplashColors.purpleMid,
-                shape: BoxShape.circle,
-              ),
-              child: const Icon(
-                Icons.chat_bubble_rounded,
-                color: Colors.white,
-                size: 14,
-              ),
-            ),
+        ),
+        const SizedBox(height: 8),
+        Text(
+          hasPhoto ? changeLabel : addLabel,
+          style: GoogleFonts.inter(
+            color: hasError ? const Color(0xFFE11D48) : SplashColors.purpleMid,
+            fontSize: 12,
+            fontWeight: FontWeight.w600,
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

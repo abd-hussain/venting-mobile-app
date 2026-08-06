@@ -9,4 +9,11 @@ class ProdConfig implements AppConfig {
 
   @override
   VentingEnv get env => VentingEnv.prod;
+
+  // TODO: Replace with real production Terms / Privacy URLs.
+  @override
+  String get termsOfServiceUrl => 'https://venting.app/terms';
+
+  @override
+  String get privacyPolicyUrl => 'https://venting.app/privacy';
 }

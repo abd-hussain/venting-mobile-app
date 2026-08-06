@@ -3510,6 +3510,16 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
       'Create your account to begin your journey as a listener.';
 
   @override
+  String get listener_reg_add_profile_photo => 'Add photo';
+
+  @override
+  String get listener_reg_change_profile_photo => 'Change photo';
+
+  @override
+  String get listener_reg_profile_photo_required =>
+      'Please add a profile photo';
+
+  @override
   String get listener_reg_full_name => 'Full name';
 
   @override

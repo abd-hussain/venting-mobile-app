@@ -9,4 +9,11 @@ class DevConfig implements AppConfig {
 
   @override
   VentingEnv get env => VentingEnv.dev;
+
+  // TODO: Replace with real dev Terms / Privacy URLs.
+  @override
+  String get termsOfServiceUrl => 'https://dev.venting.app/terms';
+
+  @override
+  String get privacyPolicyUrl => 'https://dev.venting.app/privacy';
 }

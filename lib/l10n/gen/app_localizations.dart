@@ -6275,6 +6275,24 @@ abstract class VentingMobLocalizations {
   /// **'Create your account to begin your journey as a listener.'**
   String get listener_reg_step1_subtitle;
 
+  /// No description provided for @listener_reg_add_profile_photo.
+  ///
+  /// In en, this message translates to:
+  /// **'Add photo'**
+  String get listener_reg_add_profile_photo;
+
+  /// No description provided for @listener_reg_change_profile_photo.
+  ///
+  /// In en, this message translates to:
+  /// **'Change photo'**
+  String get listener_reg_change_profile_photo;
+
+  /// No description provided for @listener_reg_profile_photo_required.
+  ///
+  /// In en, this message translates to:
+  /// **'Please add a profile photo'**
+  String get listener_reg_profile_photo_required;
+
   /// No description provided for @listener_reg_full_name.
   ///
   /// In en, this message translates to:

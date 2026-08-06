@@ -1,10 +1,13 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
 import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dart';
 
-/// Step 2 — Identity verification intro (ID, selfie, liveness).
-class ListenerRegistrationStep2IdentityVerification extends StatelessWidget {
+/// Step 2 — Identity verification (government ID + selfie).
+class ListenerRegistrationStep2IdentityVerification extends StatefulWidget {
   const ListenerRegistrationStep2IdentityVerification({
     super.key,
     required this.onContinue,
@@ -12,8 +15,70 @@ class ListenerRegistrationStep2IdentityVerification extends StatelessWidget {
 
   final VoidCallback onContinue;
 
+  @override
+  State<ListenerRegistrationStep2IdentityVerification> createState() =>
+      _ListenerRegistrationStep2IdentityVerificationState();
+}
+
+class _ListenerRegistrationStep2IdentityVerificationState
+    extends State<ListenerRegistrationStep2IdentityVerification> {
   static const _cardFill = Color(0xFF1C1826);
   static const _muted = Color(0xFF9B93AB);
+
+  final _picker = ImagePicker();
+
+  String? _idImagePath;
+  String? _selfieImagePath;
+  bool _capturingId = false;
+  bool _capturingSelfie = false;
+
+  bool get _canContinue => _idImagePath != null && _selfieImagePath != null;
+
+  Future<void> _captureId() async {
+    if (_capturingId || _capturingSelfie) return;
+    setState(() => _capturingId = true);
+    try {
+      // Prefer back camera for government ID (rear is ImagePicker default).
+      final file = await _picker.pickImage(
+        source: ImageSource.camera,
+        // ignore: avoid_redundant_argument_values
+        preferredCameraDevice: CameraDevice.rear,
+        imageQuality: 85,
+      );
+      if (!mounted || file == null) return;
+      setState(() => _idImagePath = file.path);
+    } catch (_) {
+      if (!mounted) return;
+      final l10n = VentingMobLocalizations.of(context);
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(l10n.camera_init_failed_generic)));
+    } finally {
+      if (mounted) setState(() => _capturingId = false);
+    }
+  }
+
+  Future<void> _captureSelfie() async {
+    if (_capturingId || _capturingSelfie) return;
+    setState(() => _capturingSelfie = true);
+    try {
+      final file = await _picker.pickImage(
+        source: ImageSource.camera,
+        preferredCameraDevice: CameraDevice.front,
+        imageQuality: 85,
+      );
+      if (!mounted || file == null) return;
+      setState(() => _selfieImagePath = file.path);
+    } catch (_) {
+      if (!mounted) return;
+      final l10n = VentingMobLocalizations.of(context);
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(l10n.camera_init_failed_generic)));
+    } finally {
+      if (mounted) setState(() => _capturingSelfie = false);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,21 +114,27 @@ class ListenerRegistrationStep2IdentityVerification extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 28),
-                  _VerificationInfoCard(
+                  _VerificationCaptureCard(
                     title: l10n.listener_reg_identity_upload_id_title,
                     subtitle: l10n.listener_reg_identity_upload_id_subtitle,
                     icon: Icons.badge_outlined,
+                    imagePath: _idImagePath,
+                    isLoading: _capturingId,
                     cardFill: _cardFill,
                     muted: _muted,
+                    onTap: _captureId,
                   ),
                   const SizedBox(height: 12),
-                  _VerificationInfoCard(
+                  _VerificationCaptureCard(
                     title: l10n.listener_reg_identity_selfie_title,
                     subtitle: l10n.listener_reg_identity_selfie_subtitle,
                     icon: Icons.person_rounded,
+                    imagePath: _selfieImagePath,
+                    isLoading: _capturingSelfie,
                     cardFill: _cardFill,
                     muted: _muted,
-                    circularIcon: true,
+                    circularPreview: true,
+                    onTap: _captureSelfie,
                   ),
                 ],
               ),
@@ -72,10 +143,14 @@ class ListenerRegistrationStep2IdentityVerification extends StatelessWidget {
           SizedBox(
             height: 54,
             child: FilledButton(
-              onPressed: onContinue,
+              onPressed: _canContinue ? widget.onContinue : null,
               style: FilledButton.styleFrom(
                 backgroundColor: SplashColors.purpleMid,
+                disabledBackgroundColor: SplashColors.purpleMid.withValues(
+                  alpha: 0.35,
+                ),
                 foregroundColor: Colors.white,
+                disabledForegroundColor: Colors.white,
                 elevation: 0,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16),
@@ -85,7 +160,7 @@ class ListenerRegistrationStep2IdentityVerification extends StatelessWidget {
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              child: Text(l10n.listener_reg_identity_start),
+              child: Text(l10n.listener_reg_continue),
             ),
           ),
           const SizedBox(height: 14),
@@ -104,70 +179,156 @@ class ListenerRegistrationStep2IdentityVerification extends StatelessWidget {
   }
 }
 
-class _VerificationInfoCard extends StatelessWidget {
-  const _VerificationInfoCard({
+class _VerificationCaptureCard extends StatelessWidget {
+  const _VerificationCaptureCard({
     required this.title,
     required this.subtitle,
     required this.icon,
+    required this.imagePath,
+    required this.isLoading,
     required this.cardFill,
     required this.muted,
-    this.circularIcon = false,
+    required this.onTap,
+    this.circularPreview = false,
   });
 
   final String title;
   final String subtitle;
   final IconData icon;
+  final String? imagePath;
+  final bool isLoading;
   final Color cardFill;
   final Color muted;
-  final bool circularIcon;
+  final VoidCallback onTap;
+  final bool circularPreview;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: cardFill,
+    final hasImage = imagePath != null;
+
+    return Material(
+      color: cardFill,
+      borderRadius: BorderRadius.circular(16),
+      child: InkWell(
+        onTap: isLoading ? null : onTap,
         borderRadius: BorderRadius.circular(16),
-      ),
-      child: Row(
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: GoogleFonts.inter(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700,
-                  ),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: GoogleFonts.inter(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      subtitle,
+                      style: GoogleFonts.inter(
+                        color: muted,
+                        fontSize: 13,
+                        fontWeight: FontWeight.w400,
+                        height: 1.35,
+                      ),
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 4),
-                Text(
-                  subtitle,
-                  style: GoogleFonts.inter(
-                    color: muted,
-                    fontSize: 13,
-                    fontWeight: FontWeight.w400,
-                    height: 1.35,
-                  ),
-                ),
-              ],
-            ),
+              ),
+              const SizedBox(width: 12),
+              _PreviewTile(
+                icon: icon,
+                imagePath: imagePath,
+                isLoading: isLoading,
+                circular: circularPreview,
+                hasImage: hasImage,
+              ),
+            ],
           ),
-          const SizedBox(width: 12),
+        ),
+      ),
+    );
+  }
+}
+
+class _PreviewTile extends StatelessWidget {
+  const _PreviewTile({
+    required this.icon,
+    required this.imagePath,
+    required this.isLoading,
+    required this.circular,
+    required this.hasImage,
+  });
+
+  final IconData icon;
+  final String? imagePath;
+  final bool isLoading;
+  final bool circular;
+  final bool hasImage;
+
+  @override
+  Widget build(BuildContext context) {
+    final radius = BorderRadius.circular(circular ? 24 : 14);
+
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        ClipRRect(
+          borderRadius: radius,
+          child: Container(
+            width: 56,
+            height: 56,
+            color: SplashColors.purpleMid,
+            child: hasImage
+                ? Image.file(
+                    File(imagePath!),
+                    fit: BoxFit.cover,
+                    width: 56,
+                    height: 56,
+                  )
+                : Icon(icon, color: Colors.white, size: 26),
+          ),
+        ),
+        if (isLoading)
           Container(
-            width: 48,
-            height: 48,
+            width: 56,
+            height: 56,
             decoration: BoxDecoration(
-              color: SplashColors.purpleMid,
-              borderRadius: BorderRadius.circular(circularIcon ? 24 : 14),
+              color: Colors.black.withValues(alpha: 0.45),
+              borderRadius: radius,
             ),
-            child: Icon(icon, color: Colors.white, size: 26),
+            child: const Center(
+              child: SizedBox(
+                width: 22,
+                height: 22,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2.2,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          )
+        else if (hasImage)
+          Positioned(
+            right: 0,
+            bottom: 0,
+            child: Container(
+              width: 20,
+              height: 20,
+              decoration: const BoxDecoration(
+                color: Color(0xFF22C55E),
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(Icons.check, size: 14, color: Colors.white),
+            ),
           ),
-        ],
-      ),
+      ],
     );
   }
 }

@@ -3492,6 +3492,16 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
   String get listener_reg_step1_subtitle => 'أنشئ حسابك لتبدأ رحلتك كمستمع.';
 
   @override
+  String get listener_reg_add_profile_photo => 'أضف صورة';
+
+  @override
+  String get listener_reg_change_profile_photo => 'تغيير الصورة';
+
+  @override
+  String get listener_reg_profile_photo_required =>
+      'يرجى إضافة صورة للملف الشخصي';
+
+  @override
   String get listener_reg_full_name => 'الاسم الكامل';
 
   @override

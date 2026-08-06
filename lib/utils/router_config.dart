@@ -5,6 +5,7 @@ import 'package:venting_mobile_app/di/di_container.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
 import 'package:venting_mobile_app/presentation/auth/auth_screen.dart';
 import 'package:venting_mobile_app/presentation/auth/email_registration_screen.dart';
+import 'package:venting_mobile_app/presentation/common/app_webview_screen.dart';
 import 'package:venting_mobile_app/presentation/homescreen.dart';
 import 'package:venting_mobile_app/presentation/listener_onboarding/listener_onboarding_screen.dart';
 import 'package:venting_mobile_app/presentation/listener_registration/listener_registration_screen.dart';
@@ -26,6 +27,7 @@ class AppRoutes {
   static const String authListenerRegister = '/auth-listener-register';
   static const String authUserUnknown = '/auth-user-unknown';
   static const String emailRegistration = '/email-registration';
+  static const String webView = '/web-view';
 }
 
 class VentingNavigationObserver extends NavigatorObserver {
@@ -155,6 +157,18 @@ class VentingRouterConfig {
             userType: args.userType,
             authType: args.authType,
           );
+        },
+      ),
+      GoRoute(
+        path: AppRoutes.webView,
+        name: 'web-view',
+        builder: (context, state) {
+          final extra = state.extra;
+          final args = extra is AppWebViewArgs
+              ? extra
+              : const AppWebViewArgs(title: '', url: 'about:blank');
+
+          return AppWebViewScreen(title: args.title, url: args.url);
         },
       ),
     ],
