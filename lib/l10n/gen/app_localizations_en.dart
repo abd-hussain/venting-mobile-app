@@ -3576,6 +3576,54 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
   String get listener_reg_step_about_you => 'About You';
 
   @override
+  String get listener_reg_about_title => 'Tell us about yourself';
+
+  @override
+  String get listener_reg_about_subtitle =>
+      'This helps us match you with the right conversations.';
+
+  @override
+  String get listener_reg_date_of_birth => 'Date of birth';
+
+  @override
+  String get listener_reg_select_date => 'Select date';
+
+  @override
+  String get listener_reg_country => 'Country';
+
+  @override
+  String get listener_reg_city => 'City';
+
+  @override
+  String get listener_reg_enter_city => 'Enter your city';
+
+  @override
+  String get listener_reg_select_city => 'Select city';
+
+  @override
+  String get listener_reg_search_city => 'Search or type a city';
+
+  @override
+  String get listener_reg_type_city => 'Type your city name above to continue.';
+
+  @override
+  String listener_reg_use_city(String city) {
+    return 'Use \"$city\"';
+  }
+
+  @override
+  String get listener_reg_languages_you_speak => 'Languages you speak';
+
+  @override
+  String get listener_reg_select_languages => 'Select languages';
+
+  @override
+  String get listener_reg_search_language => 'Search languages';
+
+  @override
+  String get listener_reg_done => 'Done';
+
+  @override
   String get listener_reg_step_languages => 'Languages';
 
   @override

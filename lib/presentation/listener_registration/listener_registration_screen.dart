@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:venting_mobile_app/presentation/listener_registration/listener_registration_step.dart';
 import 'package:venting_mobile_app/presentation/listener_registration/steps/listener_registration_step1_create_account.dart';
 import 'package:venting_mobile_app/presentation/listener_registration/steps/listener_registration_step2_identity_verification.dart';
+import 'package:venting_mobile_app/presentation/listener_registration/steps/listener_registration_step3_about_you.dart';
 import 'package:venting_mobile_app/presentation/listener_registration/steps/listener_registration_step_placeholder.dart';
 import 'package:venting_mobile_app/presentation/listener_registration/widgets/listener_registration_header.dart';
 import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dart';
@@ -74,6 +75,9 @@ class _ListenerRegistrationScreenState
         ),
       ListenerRegistrationStep.identityVerification =>
         ListenerRegistrationStep2IdentityVerification(onContinue: _onContinue),
+      ListenerRegistrationStep.aboutYou => ListenerRegistrationStep3AboutYou(
+        onContinue: _onContinue,
+      ),
       _ => ListenerRegistrationStepPlaceholder(
         step: _step,
         onContinue: _onContinue,

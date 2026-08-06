@@ -3558,6 +3558,54 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
   String get listener_reg_step_about_you => 'عنك';
 
   @override
+  String get listener_reg_about_title => 'أخبرنا عن نفسك';
+
+  @override
+  String get listener_reg_about_subtitle =>
+      'هذا يساعدنا على مطابقتك مع المحادثات المناسبة.';
+
+  @override
+  String get listener_reg_date_of_birth => 'تاريخ الميلاد';
+
+  @override
+  String get listener_reg_select_date => 'اختر التاريخ';
+
+  @override
+  String get listener_reg_country => 'الدولة';
+
+  @override
+  String get listener_reg_city => 'المدينة';
+
+  @override
+  String get listener_reg_enter_city => 'أدخل مدينتك';
+
+  @override
+  String get listener_reg_select_city => 'اختر المدينة';
+
+  @override
+  String get listener_reg_search_city => 'ابحث أو اكتب اسم المدينة';
+
+  @override
+  String get listener_reg_type_city => 'اكتب اسم مدينتك أعلاه للمتابعة.';
+
+  @override
+  String listener_reg_use_city(String city) {
+    return 'استخدم \"$city\"';
+  }
+
+  @override
+  String get listener_reg_languages_you_speak => 'اللغات التي تتحدثها';
+
+  @override
+  String get listener_reg_select_languages => 'اختر اللغات';
+
+  @override
+  String get listener_reg_search_language => 'ابحث عن لغة';
+
+  @override
+  String get listener_reg_done => 'تم';
+
+  @override
   String get listener_reg_step_languages => 'اللغات';
 
   @override

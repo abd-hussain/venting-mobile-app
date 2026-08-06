@@ -2,8 +2,8 @@
 enum ListenerRegistrationStep {
   createAccount,
   identityVerification,
-  profilePhoto,
   aboutYou,
+  profilePhoto,
   languages,
   expertise,
   voiceIntro,

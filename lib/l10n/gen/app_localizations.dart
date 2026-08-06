@@ -6401,6 +6401,96 @@ abstract class VentingMobLocalizations {
   /// **'About You'**
   String get listener_reg_step_about_you;
 
+  /// No description provided for @listener_reg_about_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Tell us about yourself'**
+  String get listener_reg_about_title;
+
+  /// No description provided for @listener_reg_about_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'This helps us match you with the right conversations.'**
+  String get listener_reg_about_subtitle;
+
+  /// No description provided for @listener_reg_date_of_birth.
+  ///
+  /// In en, this message translates to:
+  /// **'Date of birth'**
+  String get listener_reg_date_of_birth;
+
+  /// No description provided for @listener_reg_select_date.
+  ///
+  /// In en, this message translates to:
+  /// **'Select date'**
+  String get listener_reg_select_date;
+
+  /// No description provided for @listener_reg_country.
+  ///
+  /// In en, this message translates to:
+  /// **'Country'**
+  String get listener_reg_country;
+
+  /// No description provided for @listener_reg_city.
+  ///
+  /// In en, this message translates to:
+  /// **'City'**
+  String get listener_reg_city;
+
+  /// No description provided for @listener_reg_enter_city.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your city'**
+  String get listener_reg_enter_city;
+
+  /// No description provided for @listener_reg_select_city.
+  ///
+  /// In en, this message translates to:
+  /// **'Select city'**
+  String get listener_reg_select_city;
+
+  /// No description provided for @listener_reg_search_city.
+  ///
+  /// In en, this message translates to:
+  /// **'Search or type a city'**
+  String get listener_reg_search_city;
+
+  /// No description provided for @listener_reg_type_city.
+  ///
+  /// In en, this message translates to:
+  /// **'Type your city name above to continue.'**
+  String get listener_reg_type_city;
+
+  /// No description provided for @listener_reg_use_city.
+  ///
+  /// In en, this message translates to:
+  /// **'Use \"{city}\"'**
+  String listener_reg_use_city(String city);
+
+  /// No description provided for @listener_reg_languages_you_speak.
+  ///
+  /// In en, this message translates to:
+  /// **'Languages you speak'**
+  String get listener_reg_languages_you_speak;
+
+  /// No description provided for @listener_reg_select_languages.
+  ///
+  /// In en, this message translates to:
+  /// **'Select languages'**
+  String get listener_reg_select_languages;
+
+  /// No description provided for @listener_reg_search_language.
+  ///
+  /// In en, this message translates to:
+  /// **'Search languages'**
+  String get listener_reg_search_language;
+
+  /// No description provided for @listener_reg_done.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get listener_reg_done;
+
   /// No description provided for @listener_reg_step_languages.
   ///
   /// In en, this message translates to:
