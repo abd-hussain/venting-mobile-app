@@ -6107,6 +6107,30 @@ abstract class VentingMobLocalizations {
   /// **'Please enter your details to create your account.'**
   String get email_registration_subtitle;
 
+  /// No description provided for @email_registration_ventor_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your details to create your ventor account.'**
+  String get email_registration_ventor_subtitle;
+
+  /// No description provided for @email_registration_listener_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your details to create your listener account.'**
+  String get email_registration_listener_subtitle;
+
+  /// No description provided for @email_sign_in_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in with Email'**
+  String get email_sign_in_title;
+
+  /// No description provided for @email_sign_in_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your email and password to continue.'**
+  String get email_sign_in_subtitle;
+
   /// No description provided for @email_registration_email_label.
   ///
   /// In en, this message translates to:
@@ -6130,6 +6154,12 @@ abstract class VentingMobLocalizations {
   /// In en, this message translates to:
   /// **'Create a password'**
   String get email_registration_password_hint;
+
+  /// No description provided for @email_sign_in_password_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your password'**
+  String get email_sign_in_password_hint;
 
   /// No description provided for @email_registration_password_must_contain.
   ///
@@ -6160,6 +6190,12 @@ abstract class VentingMobLocalizations {
   /// In en, this message translates to:
   /// **'Create Account'**
   String get email_registration_create_account;
+
+  /// No description provided for @email_sign_in_button.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign In'**
+  String get email_sign_in_button;
 
   /// No description provided for @email_registration_invalid_email.
   ///

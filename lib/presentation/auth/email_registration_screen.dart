@@ -3,12 +3,20 @@ import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
+import 'package:venting_mobile_app/presentation/auth/auth_screen.dart';
 import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dart';
 import 'package:venting_mobile_app/shared_widgets/app_language_selector.dart';
 
-/// Manual email/password registration for the ventor journey.
+/// Email auth form for sign-in or registration (ventor / listener).
 class EmailRegistrationScreen extends StatefulWidget {
-  const EmailRegistrationScreen({super.key});
+  const EmailRegistrationScreen({
+    super.key,
+    required this.userType,
+    required this.authType,
+  });
+
+  final AuthUserType userType;
+  final AuthType authType;
 
   @override
   State<EmailRegistrationScreen> createState() =>
@@ -36,6 +44,10 @@ class _EmailRegistrationScreenState extends State<EmailRegistrationScreen> {
   bool _obscurePassword = true;
   bool _submitted = false;
 
+  bool get _isLogin =>
+      widget.authType == AuthType.login ||
+      widget.userType == AuthUserType.unknown;
+
   @override
   void initState() {
     super.initState();
@@ -58,7 +70,12 @@ class _EmailRegistrationScreenState extends State<EmailRegistrationScreen> {
   bool get _hasUppercase => RegExp('[A-Z]').hasMatch(_passwordController.text);
   bool get _hasNumber => RegExp('[0-9]').hasMatch(_passwordController.text);
 
-  bool get _isPasswordValid => _hasMinLength && _hasUppercase && _hasNumber;
+  bool get _isPasswordValid {
+    if (_isLogin) {
+      return _passwordController.text.isNotEmpty;
+    }
+    return _hasMinLength && _hasUppercase && _hasNumber;
+  }
 
   bool get _isEmailValid {
     final email = _emailController.text.trim();
@@ -67,15 +84,42 @@ class _EmailRegistrationScreenState extends State<EmailRegistrationScreen> {
 
   bool get _canSubmit => _isEmailValid && _isPasswordValid;
 
-  void _onCreateAccount() {
+  ({String title, String subtitle, String passwordHint, String button}) _copy(
+    VentingMobLocalizations l10n,
+  ) {
+    if (_isLogin) {
+      return (
+        title: l10n.email_sign_in_title,
+        subtitle: l10n.email_sign_in_subtitle,
+        passwordHint: l10n.email_sign_in_password_hint,
+        button: l10n.email_sign_in_button,
+      );
+    }
+
+    final subtitle = switch (widget.userType) {
+      AuthUserType.ventor => l10n.email_registration_ventor_subtitle,
+      AuthUserType.lissener => l10n.email_registration_listener_subtitle,
+      AuthUserType.unknown => l10n.email_registration_subtitle,
+    };
+
+    return (
+      title: l10n.email_registration_title,
+      subtitle: subtitle,
+      passwordHint: l10n.email_registration_password_hint,
+      button: l10n.email_registration_create_account,
+    );
+  }
+
+  void _onSubmit() {
     setState(() => _submitted = true);
     if (!_canSubmit) return;
-    // TODO: call
+    // TODO: call sign-in or register API based on authType / userType
   }
 
   @override
   Widget build(BuildContext context) {
     final l10n = VentingMobLocalizations.of(context);
+    final copy = _copy(l10n);
     final showEmailError =
         _submitted && _emailController.text.isNotEmpty && !_isEmailValid;
 
@@ -110,7 +154,7 @@ class _EmailRegistrationScreenState extends State<EmailRegistrationScreen> {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       Text(
-                        l10n.email_registration_title,
+                        copy.title,
                         textAlign: TextAlign.center,
                         style: GoogleFonts.inter(
                           color: _titleColor,
@@ -121,7 +165,7 @@ class _EmailRegistrationScreenState extends State<EmailRegistrationScreen> {
                       ),
                       const SizedBox(height: 10),
                       Text(
-                        l10n.email_registration_subtitle,
+                        copy.subtitle,
                         textAlign: TextAlign.center,
                         style: GoogleFonts.inter(
                           color: _bodyColor,
@@ -152,10 +196,10 @@ class _EmailRegistrationScreenState extends State<EmailRegistrationScreen> {
                       _AuthTextField(
                         controller: _passwordController,
                         focusNode: _passwordFocus,
-                        hint: l10n.email_registration_password_hint,
+                        hint: copy.passwordHint,
                         obscureText: _obscurePassword,
                         textInputAction: TextInputAction.done,
-                        onSubmitted: (_) => _onCreateAccount(),
+                        onSubmitted: (_) => _onSubmit(),
                         suffix: IconButton(
                           onPressed: () {
                             setState(
@@ -171,38 +215,40 @@ class _EmailRegistrationScreenState extends State<EmailRegistrationScreen> {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 16),
-                      Text(
-                        l10n.email_registration_password_must_contain,
-                        style: GoogleFonts.inter(
-                          color: _titleColor,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
+                      if (!_isLogin) ...[
+                        const SizedBox(height: 16),
+                        Text(
+                          l10n.email_registration_password_must_contain,
+                          style: GoogleFonts.inter(
+                            color: _titleColor,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 10),
-                      _PasswordRule(
-                        label: l10n.email_registration_rule_min_length,
-                        met: _hasMinLength,
-                        successColor: _success,
-                      ),
-                      const SizedBox(height: 8),
-                      _PasswordRule(
-                        label: l10n.email_registration_rule_uppercase,
-                        met: _hasUppercase,
-                        successColor: _success,
-                      ),
-                      const SizedBox(height: 8),
-                      _PasswordRule(
-                        label: l10n.email_registration_rule_number,
-                        met: _hasNumber,
-                        successColor: _success,
-                      ),
+                        const SizedBox(height: 10),
+                        _PasswordRule(
+                          label: l10n.email_registration_rule_min_length,
+                          met: _hasMinLength,
+                          successColor: _success,
+                        ),
+                        const SizedBox(height: 8),
+                        _PasswordRule(
+                          label: l10n.email_registration_rule_uppercase,
+                          met: _hasUppercase,
+                          successColor: _success,
+                        ),
+                        const SizedBox(height: 8),
+                        _PasswordRule(
+                          label: l10n.email_registration_rule_number,
+                          met: _hasNumber,
+                          successColor: _success,
+                        ),
+                      ],
                       const SizedBox(height: 28),
                       SizedBox(
                         height: 54,
                         child: FilledButton(
-                          onPressed: _canSubmit ? _onCreateAccount : null,
+                          onPressed: _canSubmit ? _onSubmit : null,
                           style: FilledButton.styleFrom(
                             backgroundColor: SplashColors.purpleMid,
                             disabledBackgroundColor: SplashColors.purpleMid
@@ -218,37 +264,10 @@ class _EmailRegistrationScreenState extends State<EmailRegistrationScreen> {
                               fontWeight: FontWeight.w700,
                             ),
                           ),
-                          child: Text(l10n.email_registration_create_account),
+                          child: Text(copy.button),
                         ),
                       ),
                       const SizedBox(height: 28),
-                      Wrap(
-                        alignment: WrapAlignment.center,
-                        crossAxisAlignment: WrapCrossAlignment.center,
-                        children: [
-                          Text(
-                            '${l10n.welcome_already_have_account} ',
-                            style: GoogleFonts.inter(
-                              color: _bodyColor,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              // TODO: navigate to sign-in
-                            },
-                            child: Text(
-                              l10n.welcome_sign_in,
-                              style: GoogleFonts.inter(
-                                color: SplashColors.purpleMid,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
                     ],
                   ),
                 ),

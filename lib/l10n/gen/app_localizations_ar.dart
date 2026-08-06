@@ -3396,6 +3396,21 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
   String get email_registration_subtitle => 'يرجى إدخال بياناتك لإنشاء حسابك.';
 
   @override
+  String get email_registration_ventor_subtitle =>
+      'أدخل بياناتك لإنشاء حسابك كمتحدث.';
+
+  @override
+  String get email_registration_listener_subtitle =>
+      'أدخل بياناتك لإنشاء حسابك كمستمع.';
+
+  @override
+  String get email_sign_in_title => 'تسجيل الدخول بالبريد الإلكتروني';
+
+  @override
+  String get email_sign_in_subtitle =>
+      'أدخل بريدك الإلكتروني وكلمة المرور للمتابعة.';
+
+  @override
   String get email_registration_email_label => 'البريد الإلكتروني';
 
   @override
@@ -3406,6 +3421,9 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
 
   @override
   String get email_registration_password_hint => 'أنشئ كلمة مرور';
+
+  @override
+  String get email_sign_in_password_hint => 'أدخل كلمة المرور';
 
   @override
   String get email_registration_password_must_contain =>
@@ -3422,6 +3440,9 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
 
   @override
   String get email_registration_create_account => 'إنشاء حساب';
+
+  @override
+  String get email_sign_in_button => 'تسجيل الدخول';
 
   @override
   String get email_registration_invalid_email =>

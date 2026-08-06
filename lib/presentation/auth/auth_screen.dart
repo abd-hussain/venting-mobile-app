@@ -11,6 +11,13 @@ enum AuthType { login, register }
 
 enum AuthUserType { ventor, lissener, unknown }
 
+class AuthRouteArgs {
+  const AuthRouteArgs({required this.userType, required this.authType});
+
+  final AuthUserType userType;
+  final AuthType authType;
+}
+
 /// Auth method picker for login or register.
 class AuthScreen extends StatelessWidget {
   final AuthUserType userType;
@@ -145,7 +152,13 @@ class AuthScreen extends StatelessWidget {
                   icon: Icons.mail_outline_rounded,
                   label: emailLabel,
                   onPressed: () {
-                    context.push(AppRoutes.emailRegistration);
+                    context.push(
+                      AppRoutes.emailRegistration,
+                      extra: AuthRouteArgs(
+                        userType: userType,
+                        authType: authType,
+                      ),
+                    );
                   },
                 ),
               ],

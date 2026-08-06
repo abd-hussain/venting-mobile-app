@@ -122,7 +122,20 @@ class VentingRouterConfig {
       GoRoute(
         path: AppRoutes.emailRegistration,
         name: 'email-registration',
-        builder: (context, state) => const EmailRegistrationScreen(),
+        builder: (context, state) {
+          final extra = state.extra;
+          final args = extra is AuthRouteArgs
+              ? extra
+              : const AuthRouteArgs(
+                  userType: AuthUserType.unknown,
+                  authType: AuthType.login,
+                );
+
+          return EmailRegistrationScreen(
+            userType: args.userType,
+            authType: args.authType,
+          );
+        },
       ),
     ],
     errorBuilder: (context, state) {

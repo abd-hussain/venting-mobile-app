@@ -3413,6 +3413,21 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
       'Please enter your details to create your account.';
 
   @override
+  String get email_registration_ventor_subtitle =>
+      'Enter your details to create your ventor account.';
+
+  @override
+  String get email_registration_listener_subtitle =>
+      'Enter your details to create your listener account.';
+
+  @override
+  String get email_sign_in_title => 'Sign in with Email';
+
+  @override
+  String get email_sign_in_subtitle =>
+      'Enter your email and password to continue.';
+
+  @override
   String get email_registration_email_label => 'Email';
 
   @override
@@ -3423,6 +3438,9 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
 
   @override
   String get email_registration_password_hint => 'Create a password';
+
+  @override
+  String get email_sign_in_password_hint => 'Enter your password';
 
   @override
   String get email_registration_password_must_contain =>
@@ -3439,6 +3457,9 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
 
   @override
   String get email_registration_create_account => 'Create Account';
+
+  @override
+  String get email_sign_in_button => 'Sign In';
 
   @override
   String get email_registration_invalid_email =>
