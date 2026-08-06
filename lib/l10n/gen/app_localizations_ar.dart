@@ -3555,6 +3555,40 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
   String get listener_reg_step_profile_photo => 'صورة الملف';
 
   @override
+  String get listener_reg_step_boundaries => 'أشياء لا تريدها';
+
+  @override
+  String get listener_reg_boundaries_title => 'حدد حدودك';
+
+  @override
+  String get listener_reg_boundaries_subtitle =>
+      'مواضيع لا تريد مناقشتها. سنحترم اختيارك.';
+
+  @override
+  String get listener_reg_boundary_suicide => 'الانتحار أو إيذاء النفس';
+
+  @override
+  String get listener_reg_boundary_domestic_violence => 'العنف الأسري';
+
+  @override
+  String get listener_reg_boundary_sexual => 'مواضيع جنسية';
+
+  @override
+  String get listener_reg_boundary_addiction => 'الإدمان';
+
+  @override
+  String get listener_reg_boundary_politics => 'السياسة';
+
+  @override
+  String get listener_reg_boundary_religion => 'الدين';
+
+  @override
+  String get listener_reg_boundary_illegal => 'أنشطة غير قانونية';
+
+  @override
+  String get listener_reg_boundary_other => 'أخرى';
+
+  @override
   String get listener_reg_step_about_you => 'عنك';
 
   @override
@@ -3609,16 +3643,265 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
   String get listener_reg_step_languages => 'اللغات';
 
   @override
-  String get listener_reg_step_expertise => 'الخبرة';
+  String get listener_reg_step_expertise => 'المجالات التي ترتاح لها';
+
+  @override
+  String get listener_reg_areas_title => 'بماذا تود الاستماع؟';
+
+  @override
+  String get listener_reg_areas_subtitle =>
+      'اختر المواضيع التي تشعر بالراحة في دعم الآخرين فيها.';
+
+  @override
+  String get listener_reg_area_relationships => 'العلاقات';
+
+  @override
+  String get listener_reg_area_marriage => 'الزواج';
+
+  @override
+  String get listener_reg_area_parenting => 'الأبوة والأمومة';
+
+  @override
+  String get listener_reg_area_career_work => 'العمل والمسيرة المهنية';
+
+  @override
+  String get listener_reg_area_stress_anxiety => 'التوتر والقلق';
+
+  @override
+  String get listener_reg_area_loneliness => 'الوحدة';
+
+  @override
+  String get listener_reg_area_student_life => 'حياة الطالب';
+
+  @override
+  String get listener_reg_area_financial_stress => 'الضغط المالي';
+
+  @override
+  String get listener_reg_area_health_wellness => 'الصحة والعافية';
+
+  @override
+  String get listener_reg_area_other => 'أخرى';
 
   @override
   String get listener_reg_step_voice_intro => 'مقدمة صوتية';
 
   @override
+  String get listener_reg_voice_title => 'سجّل مقدمة قصيرة';
+
+  @override
+  String get listener_reg_voice_subtitle =>
+      'قدّم نفسك حتى يتمكن المستخدمون من التعرف عليك.';
+
+  @override
+  String get listener_reg_voice_speak_hint => 'تحدث لمدة حوالي 60 ثانية';
+
+  @override
+  String get listener_reg_voice_record => 'تسجيل';
+
+  @override
+  String get listener_reg_voice_stop => 'إيقاف';
+
+  @override
+  String get listener_reg_voice_play => 'تشغيل';
+
+  @override
+  String get listener_reg_voice_tip => 'نصيحة: كن طبيعيًا ولطيفًا وأصيلًا.';
+
+  @override
+  String get listener_reg_voice_tips_title => 'نصائح التسجيل';
+
+  @override
+  String get listener_reg_voice_tip_1 => 'تحدث بشكل طبيعي.';
+
+  @override
+  String get listener_reg_voice_tip_2 =>
+      'ابتسم أثناء الكلام—فهذا يغيّر نبرة صوتك.';
+
+  @override
+  String get listener_reg_voice_tip_3 => 'لا تتسرّع.';
+
+  @override
+  String get listener_reg_voice_tip_4 => 'تجنّب القراءة بأسلوب آلي.';
+
+  @override
+  String get listener_reg_voice_tip_5 => 'اجعل المدة بين 45 و60 ثانية.';
+
+  @override
+  String get listener_reg_voice_tip_6 => 'سجّل في مكان هادئ.';
+
+  @override
+  String get listener_reg_voice_example_title =>
+      'يمكنك الاستعانة بالنموذج التالي:';
+
+  @override
+  String get listener_reg_voice_example_body =>
+      'مرحبًا! اسمي [اسم العرض].\n\nشكرًا لأخذك لحظة للاستماع إلى مقدمتي.\n\nأنا هنا لأنني أستمتع حقًا بالاستماع إلى الناس وخلق مساحة آمنة خالية من الأحكام يمكنك فيها التعبير عن نفسك بصراحة.\n\nسواء كنت تشعر بالتوتر أو الإرهاق أو الوحدة، أو تحتاج ببساطة إلى شخص تتحدث معه، فأنا هنا لأستمع إليك بتعاطف واحترام.\n\nلست بحاجة إلى تحضير أي شيء قبل محادثتنا. فقط تعال كما أنت، وسنأخذ الأمر خطوة بخطوة.\n\nإذا شعرت أننا مناسبة جيدة، سأكون سعيدًا بالحديث معك.\n\nأتطلع للقائك، وأتمنى لك يومًا رائعًا.';
+
+  @override
+  String get listener_reg_voice_mic_permission =>
+      'إذن الميكروفون مطلوب لتسجيل مقدمتك.';
+
+  @override
+  String get listener_reg_voice_mic_permission_settings =>
+      'إذن الميكروفون مطلوب. يرجى تفعيله من الإعدادات.';
+
+  @override
+  String get listener_reg_voice_record_failed =>
+      'تعذّر بدء التسجيل. يرجى المحاولة مرة أخرى.';
+
+  @override
+  String get listener_reg_voice_plugin_restart =>
+      'إضافة التسجيل غير جاهزة. أوقف التطبيق بالكامل ثم شغّله من جديد (إعادة التشغيل السريع لا تكفي).';
+
+  @override
   String get listener_reg_step_availability => 'التوفر';
 
   @override
-  String get listener_reg_step_experience => 'التجربة';
+  String get listener_reg_avail_title => 'حدد توفرك';
+
+  @override
+  String get listener_reg_avail_subtitle =>
+      'اختر الأوقات التي تكون متاحًا فيها عادة للحديث.';
+
+  @override
+  String get listener_reg_avail_timezone => 'المنطقة الزمنية';
+
+  @override
+  String get listener_reg_avail_search_timezone => 'ابحث عن المنطقة الزمنية';
+
+  @override
+  String get listener_reg_avail_weekly => 'التوفر الأسبوعي';
+
+  @override
+  String get listener_reg_avail_hours => 'ساعات التوفر';
+
+  @override
+  String get listener_reg_avail_from => 'من';
+
+  @override
+  String get listener_reg_avail_to => 'إلى';
+
+  @override
+  String get listener_reg_avail_instant_call => 'قبول المكالمات الفورية';
+
+  @override
+  String get listener_reg_avail_instant_call_hint =>
+      'المكالمات الفورية تساعدك على زيادة دخلك.';
+
+  @override
+  String get listener_reg_avail_session_length => 'مدة الجلسة';
+
+  @override
+  String listener_reg_avail_session_min(int minutes) {
+    return '$minutes دقيقة';
+  }
+
+  @override
+  String get listener_reg_avail_day_mon => 'ن';
+
+  @override
+  String get listener_reg_avail_day_tue => 'ث';
+
+  @override
+  String get listener_reg_avail_day_wed => 'ر';
+
+  @override
+  String get listener_reg_avail_day_thu => 'خ';
+
+  @override
+  String get listener_reg_avail_day_fri => 'ج';
+
+  @override
+  String get listener_reg_avail_day_sat => 'س';
+
+  @override
+  String get listener_reg_avail_day_sun => 'ح';
+
+  @override
+  String get listener_reg_step_experience => 'تجربة الحياة';
+
+  @override
+  String get listener_reg_experience_title => 'شارك تجاربك في الحياة';
+
+  @override
+  String get listener_reg_experience_subtitle =>
+      'اختر ما ينطبق عليك. هذا يساعد الآخرين في العثور على من يفهمهم.';
+
+  @override
+  String get listener_reg_exp_section_relationship => 'العلاقة';
+
+  @override
+  String get listener_reg_exp_section_family => 'العائلة';
+
+  @override
+  String get listener_reg_exp_section_experiences =>
+      'التجارب (اختر كل ما ينطبق)';
+
+  @override
+  String get listener_reg_exp_single => 'أعزب/عزباء';
+
+  @override
+  String get listener_reg_exp_in_relationship => 'في علاقة';
+
+  @override
+  String get listener_reg_exp_married => 'متزوج/متزوجة';
+
+  @override
+  String get listener_reg_exp_divorced => 'مطلق/مطلقة';
+
+  @override
+  String get listener_reg_exp_widowed => 'أرمل/أرملة';
+
+  @override
+  String get listener_reg_exp_parent => 'والد/والدة';
+
+  @override
+  String get listener_reg_exp_single_parent => 'والد/والدة بمفرده';
+
+  @override
+  String get listener_reg_exp_caregiver => 'مقدّم رعاية';
+
+  @override
+  String get listener_reg_exp_career_change => 'تغيير المسار المهني';
+
+  @override
+  String get listener_reg_exp_job_loss => 'فقدان الوظيفة';
+
+  @override
+  String get listener_reg_exp_startup_founder => 'مؤسس شركة ناشئة';
+
+  @override
+  String get listener_reg_exp_financial_struggle => 'صعوبات مالية';
+
+  @override
+  String get listener_reg_exp_life_stages => 'مراحل الحياة';
+
+  @override
+  String get listener_reg_exp_grief_loss => 'الحزن / الفقد';
+
+  @override
+  String get listener_reg_exp_anxiety_stress => 'القلق / التوتر';
+
+  @override
+  String get listener_reg_exp_health_challenge => 'تحدٍ صحي';
+
+  @override
+  String get listener_reg_exp_addiction_recovery => 'التعافي من الإدمان';
+
+  @override
+  String get listener_reg_exp_add_more => 'أضف المزيد';
+
+  @override
+  String get listener_reg_add_experience_title => 'إضافة تجربة';
+
+  @override
+  String get listener_reg_add_experience_hint => 'أدخل تجربة';
+
+  @override
+  String get listener_reg_add => 'إضافة';
+
+  @override
+  String get listener_reg_cancel => 'إلغاء';
 
   @override
   String get listener_reg_step_guidelines => 'إرشادات المجتمع';
@@ -3662,4 +3945,70 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
 
   @override
   String get listener_reg_step_review_submit => 'مراجعة وإرسال';
+
+  @override
+  String get listener_profile_under_review_title => 'ملفك قيد المراجعة';
+
+  @override
+  String get listener_profile_under_review_subtitle =>
+      'يقوم فريقنا بمراجعة معلوماتك لضمان مجتمع آمن وموثوق.';
+
+  @override
+  String get listener_profile_review_time_title => 'مدة المراجعة';
+
+  @override
+  String get listener_profile_review_time_body =>
+      'عادةً ما تستغرق من 2–3 أيام عمل. سنُعلمك فور وجود أي تحديث.';
+
+  @override
+  String get listener_profile_got_it => 'حسنًا';
+
+  @override
+  String get listener_profile_go_to_dashboard => 'الذهاب إلى لوحة التحكم';
+
+  @override
+  String get listener_profile_approved_title => 'تمت الموافقة على ملفك!';
+
+  @override
+  String get listener_profile_approved_subtitle =>
+      'تهانينا! أنت الآن جزء من مجتمع المستمعين في Venting.';
+
+  @override
+  String get listener_profile_approved_badge => 'تمت الموافقة';
+
+  @override
+  String get listener_profile_rejected_title => 'لم تتم الموافقة على ملفك';
+
+  @override
+  String get listener_profile_rejected_subtitle =>
+      'تعذر الموافقة على ملفك في الوقت الحالي للأسباب التالية.';
+
+  @override
+  String get listener_profile_reasons_title => 'الأسباب';
+
+  @override
+  String get listener_profile_reject_reason_voice =>
+      'المقدمة الصوتية قصيرة جدًا.';
+
+  @override
+  String get listener_profile_reject_reason_experience =>
+      'يرجى تقديم مزيد من التفاصيل حول خبرتك.';
+
+  @override
+  String get listener_profile_reject_reason_id => 'الهوية المرفوعة غير واضحة.';
+
+  @override
+  String get listener_profile_what_you_can_do => 'ماذا يمكنك أن تفعل؟';
+
+  @override
+  String get listener_profile_what_you_can_do_body =>
+      'يمكنك العودة وتحديث المعلومات التي تحتاج إلى انتباه.';
+
+  @override
+  String get listener_profile_review_edit => 'مراجعة وتعديل';
+
+  @override
+  String listener_profile_edit_step_hint(String step) {
+    return 'يمكنك تعديل خطوة $step.';
+  }
 }

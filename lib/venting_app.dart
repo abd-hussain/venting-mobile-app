@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get_it/get_it.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:internet_connection/internet_connection_checkup.dart';
 import 'package:network_logging/network_logging.dart';
 import 'package:overlay_support/overlay_support.dart';
@@ -20,6 +21,9 @@ import 'package:venting_mobile_app/utils/router_config.dart';
 
 Future<void> runMainApp(GetIt getIt, AppConfig config) async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Use bundled assets/google_fonts — avoid runtime fetches (offline / DNS failures).
+  GoogleFonts.config.allowRuntimeFetching = false;
 
   Bloc.observer = CustomBlocObserver();
 

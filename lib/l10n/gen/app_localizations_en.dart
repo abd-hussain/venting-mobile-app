@@ -3573,6 +3573,40 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
   String get listener_reg_step_profile_photo => 'Profile Photo';
 
   @override
+  String get listener_reg_step_boundaries => 'Things You Don\'t Want';
+
+  @override
+  String get listener_reg_boundaries_title => 'Set your boundaries';
+
+  @override
+  String get listener_reg_boundaries_subtitle =>
+      'Topics you don\'t want to discuss. We will respect your choice.';
+
+  @override
+  String get listener_reg_boundary_suicide => 'Suicide or self-harm';
+
+  @override
+  String get listener_reg_boundary_domestic_violence => 'Domestic violence';
+
+  @override
+  String get listener_reg_boundary_sexual => 'Sexual topics';
+
+  @override
+  String get listener_reg_boundary_addiction => 'Addiction';
+
+  @override
+  String get listener_reg_boundary_politics => 'Politics';
+
+  @override
+  String get listener_reg_boundary_religion => 'Religion';
+
+  @override
+  String get listener_reg_boundary_illegal => 'Illegal activities';
+
+  @override
+  String get listener_reg_boundary_other => 'Other';
+
+  @override
   String get listener_reg_step_about_you => 'About You';
 
   @override
@@ -3627,16 +3661,265 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
   String get listener_reg_step_languages => 'Languages';
 
   @override
-  String get listener_reg_step_expertise => 'Expertise';
+  String get listener_reg_step_expertise => 'Areas You\'re Comfortable With';
+
+  @override
+  String get listener_reg_areas_title => 'What would you like to listen to?';
+
+  @override
+  String get listener_reg_areas_subtitle =>
+      'Choose the topics you feel comfortable supporting others with.';
+
+  @override
+  String get listener_reg_area_relationships => 'Relationships';
+
+  @override
+  String get listener_reg_area_marriage => 'Marriage';
+
+  @override
+  String get listener_reg_area_parenting => 'Parenting';
+
+  @override
+  String get listener_reg_area_career_work => 'Career & Work';
+
+  @override
+  String get listener_reg_area_stress_anxiety => 'Stress & Anxiety';
+
+  @override
+  String get listener_reg_area_loneliness => 'Loneliness';
+
+  @override
+  String get listener_reg_area_student_life => 'Student Life';
+
+  @override
+  String get listener_reg_area_financial_stress => 'Financial Stress';
+
+  @override
+  String get listener_reg_area_health_wellness => 'Health & Wellness';
+
+  @override
+  String get listener_reg_area_other => 'Other';
 
   @override
   String get listener_reg_step_voice_intro => 'Voice Introduction';
 
   @override
+  String get listener_reg_voice_title => 'Record a short introduction';
+
+  @override
+  String get listener_reg_voice_subtitle =>
+      'Introduce yourself so users can get to know you.';
+
+  @override
+  String get listener_reg_voice_speak_hint => 'Speak for about 60 seconds';
+
+  @override
+  String get listener_reg_voice_record => 'Record';
+
+  @override
+  String get listener_reg_voice_stop => 'Stop';
+
+  @override
+  String get listener_reg_voice_play => 'Play';
+
+  @override
+  String get listener_reg_voice_tip => 'Tip: Be natural, kind, and authentic.';
+
+  @override
+  String get listener_reg_voice_tips_title => 'Recording Tips';
+
+  @override
+  String get listener_reg_voice_tip_1 => 'Speak naturally.';
+
+  @override
+  String get listener_reg_voice_tip_2 =>
+      'Smile while speaking—it changes your tone.';
+
+  @override
+  String get listener_reg_voice_tip_3 => 'Don\'t rush.';
+
+  @override
+  String get listener_reg_voice_tip_4 => 'Avoid reading like a robot.';
+
+  @override
+  String get listener_reg_voice_tip_5 => 'Keep it between 45 and 60 seconds.';
+
+  @override
+  String get listener_reg_voice_tip_6 => 'Record in a quiet place.';
+
+  @override
+  String get listener_reg_voice_example_title =>
+      'You may use the following structure:';
+
+  @override
+  String get listener_reg_voice_example_body =>
+      'Hello! My name is [Display Name].\n\nThank you for taking a moment to listen to my introduction.\n\nI\'m here because I genuinely enjoy listening to people and creating a safe, judgment-free space where you can express yourself openly.\n\nWhether you\'re feeling stressed, overwhelmed, lonely, or simply need someone to talk to, I\'m here to listen with empathy and respect.\n\nYou don\'t need to prepare anything before our conversation. Just come as you are, and we\'ll take it one step at a time.\n\nIf you think we\'d be a good match, I\'d be happy to talk with you.\n\nI look forward to meeting you, and I hope you have a wonderful day.';
+
+  @override
+  String get listener_reg_voice_mic_permission =>
+      'Microphone permission is required to record your introduction.';
+
+  @override
+  String get listener_reg_voice_mic_permission_settings =>
+      'Microphone permission is required. Please enable it in Settings.';
+
+  @override
+  String get listener_reg_voice_record_failed =>
+      'Could not start recording. Please try again.';
+
+  @override
+  String get listener_reg_voice_plugin_restart =>
+      'Recording plugin is not ready. Fully stop the app and run it again (hot restart is not enough).';
+
+  @override
   String get listener_reg_step_availability => 'Availability';
 
   @override
-  String get listener_reg_step_experience => 'Experience';
+  String get listener_reg_avail_title => 'Set your availability';
+
+  @override
+  String get listener_reg_avail_subtitle =>
+      'Choose when you are usually available to talk.';
+
+  @override
+  String get listener_reg_avail_timezone => 'Time zone';
+
+  @override
+  String get listener_reg_avail_search_timezone => 'Search time zones';
+
+  @override
+  String get listener_reg_avail_weekly => 'Weekly availability';
+
+  @override
+  String get listener_reg_avail_hours => 'Available hours';
+
+  @override
+  String get listener_reg_avail_from => 'From';
+
+  @override
+  String get listener_reg_avail_to => 'To';
+
+  @override
+  String get listener_reg_avail_instant_call => 'Accept instant call';
+
+  @override
+  String get listener_reg_avail_instant_call_hint =>
+      'Instant calls can help you earn more income.';
+
+  @override
+  String get listener_reg_avail_session_length => 'Session length';
+
+  @override
+  String listener_reg_avail_session_min(int minutes) {
+    return '$minutes min';
+  }
+
+  @override
+  String get listener_reg_avail_day_mon => 'M';
+
+  @override
+  String get listener_reg_avail_day_tue => 'T';
+
+  @override
+  String get listener_reg_avail_day_wed => 'W';
+
+  @override
+  String get listener_reg_avail_day_thu => 'T';
+
+  @override
+  String get listener_reg_avail_day_fri => 'F';
+
+  @override
+  String get listener_reg_avail_day_sat => 'S';
+
+  @override
+  String get listener_reg_avail_day_sun => 'S';
+
+  @override
+  String get listener_reg_step_experience => 'Life Experience';
+
+  @override
+  String get listener_reg_experience_title => 'Share your life experiences';
+
+  @override
+  String get listener_reg_experience_subtitle =>
+      'Select what applies to you. This helps people find someone who understands.';
+
+  @override
+  String get listener_reg_exp_section_relationship => 'Relationship';
+
+  @override
+  String get listener_reg_exp_section_family => 'Family';
+
+  @override
+  String get listener_reg_exp_section_experiences =>
+      'Experiences (select all that apply)';
+
+  @override
+  String get listener_reg_exp_single => 'Single';
+
+  @override
+  String get listener_reg_exp_in_relationship => 'In a relationship';
+
+  @override
+  String get listener_reg_exp_married => 'Married';
+
+  @override
+  String get listener_reg_exp_divorced => 'Divorced';
+
+  @override
+  String get listener_reg_exp_widowed => 'Widowed';
+
+  @override
+  String get listener_reg_exp_parent => 'Parent';
+
+  @override
+  String get listener_reg_exp_single_parent => 'Single parent';
+
+  @override
+  String get listener_reg_exp_caregiver => 'Caregiver';
+
+  @override
+  String get listener_reg_exp_career_change => 'Career change';
+
+  @override
+  String get listener_reg_exp_job_loss => 'Job loss';
+
+  @override
+  String get listener_reg_exp_startup_founder => 'Startup founder';
+
+  @override
+  String get listener_reg_exp_financial_struggle => 'Financial struggle';
+
+  @override
+  String get listener_reg_exp_life_stages => 'Life stages';
+
+  @override
+  String get listener_reg_exp_grief_loss => 'Grief / Loss';
+
+  @override
+  String get listener_reg_exp_anxiety_stress => 'Anxiety / Stress';
+
+  @override
+  String get listener_reg_exp_health_challenge => 'Health challenge';
+
+  @override
+  String get listener_reg_exp_addiction_recovery => 'Addiction recovery';
+
+  @override
+  String get listener_reg_exp_add_more => 'Add more';
+
+  @override
+  String get listener_reg_add_experience_title => 'Add experience';
+
+  @override
+  String get listener_reg_add_experience_hint => 'Enter an experience';
+
+  @override
+  String get listener_reg_add => 'Add';
+
+  @override
+  String get listener_reg_cancel => 'Cancel';
 
   @override
   String get listener_reg_step_guidelines => 'Community Guidelines';
@@ -3681,4 +3964,73 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
 
   @override
   String get listener_reg_step_review_submit => 'Review & Submit';
+
+  @override
+  String get listener_profile_under_review_title =>
+      'Your profile is under review';
+
+  @override
+  String get listener_profile_under_review_subtitle =>
+      'Our team is reviewing your information to ensure a safe and trusted community.';
+
+  @override
+  String get listener_profile_review_time_title => 'Review time';
+
+  @override
+  String get listener_profile_review_time_body =>
+      'It usually takes 2–3 working days. We\'ll notify you as soon as there\'s an update.';
+
+  @override
+  String get listener_profile_got_it => 'Got it';
+
+  @override
+  String get listener_profile_go_to_dashboard => 'Go to Dashboard';
+
+  @override
+  String get listener_profile_approved_title =>
+      'Your profile has been approved!';
+
+  @override
+  String get listener_profile_approved_subtitle =>
+      'Congratulations! You are now part of the Venting listener community.';
+
+  @override
+  String get listener_profile_approved_badge => 'Approved';
+
+  @override
+  String get listener_profile_rejected_title => 'Your profile was not approved';
+
+  @override
+  String get listener_profile_rejected_subtitle =>
+      'We\'re unable to approve your profile at this time for the following reason(s).';
+
+  @override
+  String get listener_profile_reasons_title => 'Reason(s)';
+
+  @override
+  String get listener_profile_reject_reason_voice =>
+      'The voice introduction is too short.';
+
+  @override
+  String get listener_profile_reject_reason_experience =>
+      'Please provide more details about your experience.';
+
+  @override
+  String get listener_profile_reject_reason_id =>
+      'The uploaded ID is not clear.';
+
+  @override
+  String get listener_profile_what_you_can_do => 'What can you do?';
+
+  @override
+  String get listener_profile_what_you_can_do_body =>
+      'You can go back and update the information that needs attention.';
+
+  @override
+  String get listener_profile_review_edit => 'Review & Edit';
+
+  @override
+  String listener_profile_edit_step_hint(String step) {
+    return 'You can edit the $step step.';
+  }
 }

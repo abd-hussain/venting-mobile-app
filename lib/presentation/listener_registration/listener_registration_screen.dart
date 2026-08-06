@@ -2,10 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:venting_mobile_app/presentation/listener_registration/listener_registration_step.dart';
+import 'package:venting_mobile_app/presentation/listener_registration/status/listener_profile_status.dart';
+import 'package:venting_mobile_app/presentation/listener_registration/status/listener_profile_status_screen.dart';
 import 'package:venting_mobile_app/presentation/listener_registration/steps/listener_registration_step1_create_account.dart';
 import 'package:venting_mobile_app/presentation/listener_registration/steps/listener_registration_step2_identity_verification.dart';
 import 'package:venting_mobile_app/presentation/listener_registration/steps/listener_registration_step3_about_you.dart';
-import 'package:venting_mobile_app/presentation/listener_registration/steps/listener_registration_step_placeholder.dart';
+import 'package:venting_mobile_app/presentation/listener_registration/steps/listener_registration_step4_life_experience.dart';
+import 'package:venting_mobile_app/presentation/listener_registration/steps/listener_registration_step5_comfort_areas.dart';
+import 'package:venting_mobile_app/presentation/listener_registration/steps/listener_registration_step6_boundaries.dart';
+import 'package:venting_mobile_app/presentation/listener_registration/steps/listener_registration_step7_voice_intro.dart';
+import 'package:venting_mobile_app/presentation/listener_registration/steps/listener_registration_step8_availability.dart';
 import 'package:venting_mobile_app/presentation/listener_registration/widgets/listener_registration_header.dart';
 import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dart';
 import 'package:venting_mobile_app/utils/router_config.dart';
@@ -16,7 +22,7 @@ class ListenerRegistrationArgs {
   final String email;
 }
 
-/// Multi-step listener registration flow (12 steps).
+/// Multi-step listener registration flow (8 steps).
 class ListenerRegistrationScreen extends StatefulWidget {
   const ListenerRegistrationScreen({super.key, required this.email});
 
@@ -38,12 +44,17 @@ class _ListenerRegistrationScreenState
   );
 
   ListenerRegistrationStep _step = ListenerRegistrationStep.createAccount;
+  bool _showUnderReview = false;
 
   void _goTo(ListenerRegistrationStep step) {
     setState(() => _step = step);
   }
 
   void _onBack() {
+    if (_showUnderReview) {
+      setState(() => _showUnderReview = false);
+      return;
+    }
     final previous = _step.previous;
     if (previous == null) {
       context.pop();
@@ -53,12 +64,12 @@ class _ListenerRegistrationScreenState
   }
 
   void _onContinue() {
-    final next = _step.next;
-    if (next == null) {
-      // TODO: finish registration
-      context.go(AppRoutes.welcome);
+    if (_step == ListenerRegistrationStep.availability) {
+      setState(() => _showUnderReview = true);
       return;
     }
+    final next = _step.next;
+    if (next == null) return;
     _goTo(next);
   }
 
@@ -78,15 +89,27 @@ class _ListenerRegistrationScreenState
       ListenerRegistrationStep.aboutYou => ListenerRegistrationStep3AboutYou(
         onContinue: _onContinue,
       ),
-      _ => ListenerRegistrationStepPlaceholder(
-        step: _step,
-        onContinue: _onContinue,
-      ),
+      ListenerRegistrationStep.experience =>
+        ListenerRegistrationStep4LifeExperience(onContinue: _onContinue),
+      ListenerRegistrationStep.expertise =>
+        ListenerRegistrationStep5ComfortAreas(onContinue: _onContinue),
+      ListenerRegistrationStep.boundaries =>
+        ListenerRegistrationStep6Boundaries(onContinue: _onContinue),
+      ListenerRegistrationStep.voiceIntro =>
+        ListenerRegistrationStep7VoiceIntro(onContinue: _onContinue),
+      ListenerRegistrationStep.availability =>
+        ListenerRegistrationStep8Availability(onContinue: _onContinue),
     };
   }
 
   @override
   Widget build(BuildContext context) {
+    if (_showUnderReview) {
+      return const ListenerProfileStatusScreen(
+        status: ListenerProfileStatus.underReview,
+      );
+    }
+
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: _overlayStyle,
       child: Scaffold(

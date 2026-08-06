@@ -56,6 +56,10 @@ dependencies:
   firebase_analytics: ^12.4.6
   phone_numbers_parser: ^9.0.25
   webview_flutter: ^4.14.1
+  record: ^6.2.1
+  audioplayers: ^6.7.1
+  path_provider: ^2.1.6
+  timezone: ^0.11.1
 
 dependency_overrides:
   # Workaround for iOS simulator crash: DOBJC_initializeApi / objective_c.framework
@@ -190,3 +194,4 @@ flutter:
   assets:
     - assets/images/
     - assets/fonts/
+    - assets/google_fonts/

@@ -36,6 +36,7 @@
         android:name="${applicationName}"
         android:icon="${appIcon}"
         android:roundIcon="${appIconRound}">
+        <!-- Add when flutter_local_notifications is a dependency:
         <receiver
             android:exported="false"
             android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationReceiver" />
@@ -52,6 +53,7 @@
         <receiver
             android:exported="false"
             android:name="com.dexterous.flutterlocalnotifications.ActionBroadcastReceiver" />
+        -->
         <activity
             android:name=".MainActivity"
             android:exported="true"

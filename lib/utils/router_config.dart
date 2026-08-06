@@ -9,6 +9,8 @@ import 'package:venting_mobile_app/presentation/common/app_webview_screen.dart';
 import 'package:venting_mobile_app/presentation/homescreen.dart';
 import 'package:venting_mobile_app/presentation/listener_onboarding/listener_onboarding_screen.dart';
 import 'package:venting_mobile_app/presentation/listener_registration/listener_registration_screen.dart';
+import 'package:venting_mobile_app/presentation/listener_registration/status/listener_profile_status.dart';
+import 'package:venting_mobile_app/presentation/listener_registration/status/listener_profile_status_screen.dart';
 import 'package:venting_mobile_app/presentation/main_onboarding/main_onboarding_screen.dart';
 import 'package:venting_mobile_app/presentation/splash/splash_screen.dart';
 import 'package:venting_mobile_app/presentation/ventor_onboarding/ventor_onboarding_screen.dart';
@@ -23,6 +25,10 @@ class AppRoutes {
   static const String ventorOnboarding = '/ventor-onboarding';
   static const String listenerOnboarding = '/listener-onboarding';
   static const String listenerRegistration = '/listener-registration';
+  static const String listenerProfileUnderReview =
+      '/listener-profile-under-review';
+  static const String listenerProfileApproved = '/listener-profile-approved';
+  static const String listenerProfileRejected = '/listener-profile-rejected';
   static const String autVentorRegister = '/auth-ventor-register';
   static const String authListenerRegister = '/auth-listener-register';
   static const String authUserUnknown = '/auth-user-unknown';
@@ -115,6 +121,38 @@ class VentingRouterConfig {
               : const ListenerRegistrationArgs(email: '');
 
           return ListenerRegistrationScreen(email: args.email);
+        },
+      ),
+      GoRoute(
+        path: AppRoutes.listenerProfileUnderReview,
+        name: 'listener-profile-under-review',
+        builder: (context, state) => const ListenerProfileStatusScreen(
+          status: ListenerProfileStatus.underReview,
+        ),
+      ),
+      GoRoute(
+        path: AppRoutes.listenerProfileApproved,
+        name: 'listener-profile-approved',
+        builder: (context, state) => const ListenerProfileStatusScreen(
+          status: ListenerProfileStatus.approved,
+        ),
+      ),
+      GoRoute(
+        path: AppRoutes.listenerProfileRejected,
+        name: 'listener-profile-rejected',
+        builder: (context, state) {
+          final extra = state.extra;
+          final args = extra is ListenerProfileStatusArgs
+              ? extra
+              : const ListenerProfileStatusArgs(
+                  status: ListenerProfileStatus.rejected,
+                );
+
+          return ListenerProfileStatusScreen(
+            status: ListenerProfileStatus.rejected,
+            rejectionReasons: args.rejectionReasons,
+            editStepLabel: args.editStepLabel,
+          );
         },
       ),
       GoRoute(

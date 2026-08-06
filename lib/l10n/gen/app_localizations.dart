@@ -6395,6 +6395,72 @@ abstract class VentingMobLocalizations {
   /// **'Profile Photo'**
   String get listener_reg_step_profile_photo;
 
+  /// No description provided for @listener_reg_step_boundaries.
+  ///
+  /// In en, this message translates to:
+  /// **'Things You Don\'t Want'**
+  String get listener_reg_step_boundaries;
+
+  /// No description provided for @listener_reg_boundaries_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Set your boundaries'**
+  String get listener_reg_boundaries_title;
+
+  /// No description provided for @listener_reg_boundaries_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Topics you don\'t want to discuss. We will respect your choice.'**
+  String get listener_reg_boundaries_subtitle;
+
+  /// No description provided for @listener_reg_boundary_suicide.
+  ///
+  /// In en, this message translates to:
+  /// **'Suicide or self-harm'**
+  String get listener_reg_boundary_suicide;
+
+  /// No description provided for @listener_reg_boundary_domestic_violence.
+  ///
+  /// In en, this message translates to:
+  /// **'Domestic violence'**
+  String get listener_reg_boundary_domestic_violence;
+
+  /// No description provided for @listener_reg_boundary_sexual.
+  ///
+  /// In en, this message translates to:
+  /// **'Sexual topics'**
+  String get listener_reg_boundary_sexual;
+
+  /// No description provided for @listener_reg_boundary_addiction.
+  ///
+  /// In en, this message translates to:
+  /// **'Addiction'**
+  String get listener_reg_boundary_addiction;
+
+  /// No description provided for @listener_reg_boundary_politics.
+  ///
+  /// In en, this message translates to:
+  /// **'Politics'**
+  String get listener_reg_boundary_politics;
+
+  /// No description provided for @listener_reg_boundary_religion.
+  ///
+  /// In en, this message translates to:
+  /// **'Religion'**
+  String get listener_reg_boundary_religion;
+
+  /// No description provided for @listener_reg_boundary_illegal.
+  ///
+  /// In en, this message translates to:
+  /// **'Illegal activities'**
+  String get listener_reg_boundary_illegal;
+
+  /// No description provided for @listener_reg_boundary_other.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get listener_reg_boundary_other;
+
   /// No description provided for @listener_reg_step_about_you.
   ///
   /// In en, this message translates to:
@@ -6500,8 +6566,80 @@ abstract class VentingMobLocalizations {
   /// No description provided for @listener_reg_step_expertise.
   ///
   /// In en, this message translates to:
-  /// **'Expertise'**
+  /// **'Areas You\'re Comfortable With'**
   String get listener_reg_step_expertise;
+
+  /// No description provided for @listener_reg_areas_title.
+  ///
+  /// In en, this message translates to:
+  /// **'What would you like to listen to?'**
+  String get listener_reg_areas_title;
+
+  /// No description provided for @listener_reg_areas_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the topics you feel comfortable supporting others with.'**
+  String get listener_reg_areas_subtitle;
+
+  /// No description provided for @listener_reg_area_relationships.
+  ///
+  /// In en, this message translates to:
+  /// **'Relationships'**
+  String get listener_reg_area_relationships;
+
+  /// No description provided for @listener_reg_area_marriage.
+  ///
+  /// In en, this message translates to:
+  /// **'Marriage'**
+  String get listener_reg_area_marriage;
+
+  /// No description provided for @listener_reg_area_parenting.
+  ///
+  /// In en, this message translates to:
+  /// **'Parenting'**
+  String get listener_reg_area_parenting;
+
+  /// No description provided for @listener_reg_area_career_work.
+  ///
+  /// In en, this message translates to:
+  /// **'Career & Work'**
+  String get listener_reg_area_career_work;
+
+  /// No description provided for @listener_reg_area_stress_anxiety.
+  ///
+  /// In en, this message translates to:
+  /// **'Stress & Anxiety'**
+  String get listener_reg_area_stress_anxiety;
+
+  /// No description provided for @listener_reg_area_loneliness.
+  ///
+  /// In en, this message translates to:
+  /// **'Loneliness'**
+  String get listener_reg_area_loneliness;
+
+  /// No description provided for @listener_reg_area_student_life.
+  ///
+  /// In en, this message translates to:
+  /// **'Student Life'**
+  String get listener_reg_area_student_life;
+
+  /// No description provided for @listener_reg_area_financial_stress.
+  ///
+  /// In en, this message translates to:
+  /// **'Financial Stress'**
+  String get listener_reg_area_financial_stress;
+
+  /// No description provided for @listener_reg_area_health_wellness.
+  ///
+  /// In en, this message translates to:
+  /// **'Health & Wellness'**
+  String get listener_reg_area_health_wellness;
+
+  /// No description provided for @listener_reg_area_other.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get listener_reg_area_other;
 
   /// No description provided for @listener_reg_step_voice_intro.
   ///
@@ -6509,17 +6647,413 @@ abstract class VentingMobLocalizations {
   /// **'Voice Introduction'**
   String get listener_reg_step_voice_intro;
 
+  /// No description provided for @listener_reg_voice_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Record a short introduction'**
+  String get listener_reg_voice_title;
+
+  /// No description provided for @listener_reg_voice_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Introduce yourself so users can get to know you.'**
+  String get listener_reg_voice_subtitle;
+
+  /// No description provided for @listener_reg_voice_speak_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Speak for about 60 seconds'**
+  String get listener_reg_voice_speak_hint;
+
+  /// No description provided for @listener_reg_voice_record.
+  ///
+  /// In en, this message translates to:
+  /// **'Record'**
+  String get listener_reg_voice_record;
+
+  /// No description provided for @listener_reg_voice_stop.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop'**
+  String get listener_reg_voice_stop;
+
+  /// No description provided for @listener_reg_voice_play.
+  ///
+  /// In en, this message translates to:
+  /// **'Play'**
+  String get listener_reg_voice_play;
+
+  /// No description provided for @listener_reg_voice_tip.
+  ///
+  /// In en, this message translates to:
+  /// **'Tip: Be natural, kind, and authentic.'**
+  String get listener_reg_voice_tip;
+
+  /// No description provided for @listener_reg_voice_tips_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Recording Tips'**
+  String get listener_reg_voice_tips_title;
+
+  /// No description provided for @listener_reg_voice_tip_1.
+  ///
+  /// In en, this message translates to:
+  /// **'Speak naturally.'**
+  String get listener_reg_voice_tip_1;
+
+  /// No description provided for @listener_reg_voice_tip_2.
+  ///
+  /// In en, this message translates to:
+  /// **'Smile while speaking—it changes your tone.'**
+  String get listener_reg_voice_tip_2;
+
+  /// No description provided for @listener_reg_voice_tip_3.
+  ///
+  /// In en, this message translates to:
+  /// **'Don\'t rush.'**
+  String get listener_reg_voice_tip_3;
+
+  /// No description provided for @listener_reg_voice_tip_4.
+  ///
+  /// In en, this message translates to:
+  /// **'Avoid reading like a robot.'**
+  String get listener_reg_voice_tip_4;
+
+  /// No description provided for @listener_reg_voice_tip_5.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep it between 45 and 60 seconds.'**
+  String get listener_reg_voice_tip_5;
+
+  /// No description provided for @listener_reg_voice_tip_6.
+  ///
+  /// In en, this message translates to:
+  /// **'Record in a quiet place.'**
+  String get listener_reg_voice_tip_6;
+
+  /// No description provided for @listener_reg_voice_example_title.
+  ///
+  /// In en, this message translates to:
+  /// **'You may use the following structure:'**
+  String get listener_reg_voice_example_title;
+
+  /// No description provided for @listener_reg_voice_example_body.
+  ///
+  /// In en, this message translates to:
+  /// **'Hello! My name is [Display Name].\n\nThank you for taking a moment to listen to my introduction.\n\nI\'m here because I genuinely enjoy listening to people and creating a safe, judgment-free space where you can express yourself openly.\n\nWhether you\'re feeling stressed, overwhelmed, lonely, or simply need someone to talk to, I\'m here to listen with empathy and respect.\n\nYou don\'t need to prepare anything before our conversation. Just come as you are, and we\'ll take it one step at a time.\n\nIf you think we\'d be a good match, I\'d be happy to talk with you.\n\nI look forward to meeting you, and I hope you have a wonderful day.'**
+  String get listener_reg_voice_example_body;
+
+  /// No description provided for @listener_reg_voice_mic_permission.
+  ///
+  /// In en, this message translates to:
+  /// **'Microphone permission is required to record your introduction.'**
+  String get listener_reg_voice_mic_permission;
+
+  /// No description provided for @listener_reg_voice_mic_permission_settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Microphone permission is required. Please enable it in Settings.'**
+  String get listener_reg_voice_mic_permission_settings;
+
+  /// No description provided for @listener_reg_voice_record_failed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not start recording. Please try again.'**
+  String get listener_reg_voice_record_failed;
+
+  /// No description provided for @listener_reg_voice_plugin_restart.
+  ///
+  /// In en, this message translates to:
+  /// **'Recording plugin is not ready. Fully stop the app and run it again (hot restart is not enough).'**
+  String get listener_reg_voice_plugin_restart;
+
   /// No description provided for @listener_reg_step_availability.
   ///
   /// In en, this message translates to:
   /// **'Availability'**
   String get listener_reg_step_availability;
 
+  /// No description provided for @listener_reg_avail_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Set your availability'**
+  String get listener_reg_avail_title;
+
+  /// No description provided for @listener_reg_avail_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose when you are usually available to talk.'**
+  String get listener_reg_avail_subtitle;
+
+  /// No description provided for @listener_reg_avail_timezone.
+  ///
+  /// In en, this message translates to:
+  /// **'Time zone'**
+  String get listener_reg_avail_timezone;
+
+  /// No description provided for @listener_reg_avail_search_timezone.
+  ///
+  /// In en, this message translates to:
+  /// **'Search time zones'**
+  String get listener_reg_avail_search_timezone;
+
+  /// No description provided for @listener_reg_avail_weekly.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly availability'**
+  String get listener_reg_avail_weekly;
+
+  /// No description provided for @listener_reg_avail_hours.
+  ///
+  /// In en, this message translates to:
+  /// **'Available hours'**
+  String get listener_reg_avail_hours;
+
+  /// No description provided for @listener_reg_avail_from.
+  ///
+  /// In en, this message translates to:
+  /// **'From'**
+  String get listener_reg_avail_from;
+
+  /// No description provided for @listener_reg_avail_to.
+  ///
+  /// In en, this message translates to:
+  /// **'To'**
+  String get listener_reg_avail_to;
+
+  /// No description provided for @listener_reg_avail_instant_call.
+  ///
+  /// In en, this message translates to:
+  /// **'Accept instant call'**
+  String get listener_reg_avail_instant_call;
+
+  /// No description provided for @listener_reg_avail_instant_call_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Instant calls can help you earn more income.'**
+  String get listener_reg_avail_instant_call_hint;
+
+  /// No description provided for @listener_reg_avail_session_length.
+  ///
+  /// In en, this message translates to:
+  /// **'Session length'**
+  String get listener_reg_avail_session_length;
+
+  /// No description provided for @listener_reg_avail_session_min.
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes} min'**
+  String listener_reg_avail_session_min(int minutes);
+
+  /// No description provided for @listener_reg_avail_day_mon.
+  ///
+  /// In en, this message translates to:
+  /// **'M'**
+  String get listener_reg_avail_day_mon;
+
+  /// No description provided for @listener_reg_avail_day_tue.
+  ///
+  /// In en, this message translates to:
+  /// **'T'**
+  String get listener_reg_avail_day_tue;
+
+  /// No description provided for @listener_reg_avail_day_wed.
+  ///
+  /// In en, this message translates to:
+  /// **'W'**
+  String get listener_reg_avail_day_wed;
+
+  /// No description provided for @listener_reg_avail_day_thu.
+  ///
+  /// In en, this message translates to:
+  /// **'T'**
+  String get listener_reg_avail_day_thu;
+
+  /// No description provided for @listener_reg_avail_day_fri.
+  ///
+  /// In en, this message translates to:
+  /// **'F'**
+  String get listener_reg_avail_day_fri;
+
+  /// No description provided for @listener_reg_avail_day_sat.
+  ///
+  /// In en, this message translates to:
+  /// **'S'**
+  String get listener_reg_avail_day_sat;
+
+  /// No description provided for @listener_reg_avail_day_sun.
+  ///
+  /// In en, this message translates to:
+  /// **'S'**
+  String get listener_reg_avail_day_sun;
+
   /// No description provided for @listener_reg_step_experience.
   ///
   /// In en, this message translates to:
-  /// **'Experience'**
+  /// **'Life Experience'**
   String get listener_reg_step_experience;
+
+  /// No description provided for @listener_reg_experience_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Share your life experiences'**
+  String get listener_reg_experience_title;
+
+  /// No description provided for @listener_reg_experience_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Select what applies to you. This helps people find someone who understands.'**
+  String get listener_reg_experience_subtitle;
+
+  /// No description provided for @listener_reg_exp_section_relationship.
+  ///
+  /// In en, this message translates to:
+  /// **'Relationship'**
+  String get listener_reg_exp_section_relationship;
+
+  /// No description provided for @listener_reg_exp_section_family.
+  ///
+  /// In en, this message translates to:
+  /// **'Family'**
+  String get listener_reg_exp_section_family;
+
+  /// No description provided for @listener_reg_exp_section_experiences.
+  ///
+  /// In en, this message translates to:
+  /// **'Experiences (select all that apply)'**
+  String get listener_reg_exp_section_experiences;
+
+  /// No description provided for @listener_reg_exp_single.
+  ///
+  /// In en, this message translates to:
+  /// **'Single'**
+  String get listener_reg_exp_single;
+
+  /// No description provided for @listener_reg_exp_in_relationship.
+  ///
+  /// In en, this message translates to:
+  /// **'In a relationship'**
+  String get listener_reg_exp_in_relationship;
+
+  /// No description provided for @listener_reg_exp_married.
+  ///
+  /// In en, this message translates to:
+  /// **'Married'**
+  String get listener_reg_exp_married;
+
+  /// No description provided for @listener_reg_exp_divorced.
+  ///
+  /// In en, this message translates to:
+  /// **'Divorced'**
+  String get listener_reg_exp_divorced;
+
+  /// No description provided for @listener_reg_exp_widowed.
+  ///
+  /// In en, this message translates to:
+  /// **'Widowed'**
+  String get listener_reg_exp_widowed;
+
+  /// No description provided for @listener_reg_exp_parent.
+  ///
+  /// In en, this message translates to:
+  /// **'Parent'**
+  String get listener_reg_exp_parent;
+
+  /// No description provided for @listener_reg_exp_single_parent.
+  ///
+  /// In en, this message translates to:
+  /// **'Single parent'**
+  String get listener_reg_exp_single_parent;
+
+  /// No description provided for @listener_reg_exp_caregiver.
+  ///
+  /// In en, this message translates to:
+  /// **'Caregiver'**
+  String get listener_reg_exp_caregiver;
+
+  /// No description provided for @listener_reg_exp_career_change.
+  ///
+  /// In en, this message translates to:
+  /// **'Career change'**
+  String get listener_reg_exp_career_change;
+
+  /// No description provided for @listener_reg_exp_job_loss.
+  ///
+  /// In en, this message translates to:
+  /// **'Job loss'**
+  String get listener_reg_exp_job_loss;
+
+  /// No description provided for @listener_reg_exp_startup_founder.
+  ///
+  /// In en, this message translates to:
+  /// **'Startup founder'**
+  String get listener_reg_exp_startup_founder;
+
+  /// No description provided for @listener_reg_exp_financial_struggle.
+  ///
+  /// In en, this message translates to:
+  /// **'Financial struggle'**
+  String get listener_reg_exp_financial_struggle;
+
+  /// No description provided for @listener_reg_exp_life_stages.
+  ///
+  /// In en, this message translates to:
+  /// **'Life stages'**
+  String get listener_reg_exp_life_stages;
+
+  /// No description provided for @listener_reg_exp_grief_loss.
+  ///
+  /// In en, this message translates to:
+  /// **'Grief / Loss'**
+  String get listener_reg_exp_grief_loss;
+
+  /// No description provided for @listener_reg_exp_anxiety_stress.
+  ///
+  /// In en, this message translates to:
+  /// **'Anxiety / Stress'**
+  String get listener_reg_exp_anxiety_stress;
+
+  /// No description provided for @listener_reg_exp_health_challenge.
+  ///
+  /// In en, this message translates to:
+  /// **'Health challenge'**
+  String get listener_reg_exp_health_challenge;
+
+  /// No description provided for @listener_reg_exp_addiction_recovery.
+  ///
+  /// In en, this message translates to:
+  /// **'Addiction recovery'**
+  String get listener_reg_exp_addiction_recovery;
+
+  /// No description provided for @listener_reg_exp_add_more.
+  ///
+  /// In en, this message translates to:
+  /// **'Add more'**
+  String get listener_reg_exp_add_more;
+
+  /// No description provided for @listener_reg_add_experience_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Add experience'**
+  String get listener_reg_add_experience_title;
+
+  /// No description provided for @listener_reg_add_experience_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter an experience'**
+  String get listener_reg_add_experience_hint;
+
+  /// No description provided for @listener_reg_add.
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get listener_reg_add;
+
+  /// No description provided for @listener_reg_cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get listener_reg_cancel;
 
   /// No description provided for @listener_reg_step_guidelines.
   ///
@@ -6598,6 +7132,120 @@ abstract class VentingMobLocalizations {
   /// In en, this message translates to:
   /// **'Review & Submit'**
   String get listener_reg_step_review_submit;
+
+  /// No description provided for @listener_profile_under_review_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Your profile is under review'**
+  String get listener_profile_under_review_title;
+
+  /// No description provided for @listener_profile_under_review_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Our team is reviewing your information to ensure a safe and trusted community.'**
+  String get listener_profile_under_review_subtitle;
+
+  /// No description provided for @listener_profile_review_time_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Review time'**
+  String get listener_profile_review_time_title;
+
+  /// No description provided for @listener_profile_review_time_body.
+  ///
+  /// In en, this message translates to:
+  /// **'It usually takes 2–3 working days. We\'ll notify you as soon as there\'s an update.'**
+  String get listener_profile_review_time_body;
+
+  /// No description provided for @listener_profile_got_it.
+  ///
+  /// In en, this message translates to:
+  /// **'Got it'**
+  String get listener_profile_got_it;
+
+  /// No description provided for @listener_profile_go_to_dashboard.
+  ///
+  /// In en, this message translates to:
+  /// **'Go to Dashboard'**
+  String get listener_profile_go_to_dashboard;
+
+  /// No description provided for @listener_profile_approved_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Your profile has been approved!'**
+  String get listener_profile_approved_title;
+
+  /// No description provided for @listener_profile_approved_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Congratulations! You are now part of the Venting listener community.'**
+  String get listener_profile_approved_subtitle;
+
+  /// No description provided for @listener_profile_approved_badge.
+  ///
+  /// In en, this message translates to:
+  /// **'Approved'**
+  String get listener_profile_approved_badge;
+
+  /// No description provided for @listener_profile_rejected_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Your profile was not approved'**
+  String get listener_profile_rejected_title;
+
+  /// No description provided for @listener_profile_rejected_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'We\'re unable to approve your profile at this time for the following reason(s).'**
+  String get listener_profile_rejected_subtitle;
+
+  /// No description provided for @listener_profile_reasons_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Reason(s)'**
+  String get listener_profile_reasons_title;
+
+  /// No description provided for @listener_profile_reject_reason_voice.
+  ///
+  /// In en, this message translates to:
+  /// **'The voice introduction is too short.'**
+  String get listener_profile_reject_reason_voice;
+
+  /// No description provided for @listener_profile_reject_reason_experience.
+  ///
+  /// In en, this message translates to:
+  /// **'Please provide more details about your experience.'**
+  String get listener_profile_reject_reason_experience;
+
+  /// No description provided for @listener_profile_reject_reason_id.
+  ///
+  /// In en, this message translates to:
+  /// **'The uploaded ID is not clear.'**
+  String get listener_profile_reject_reason_id;
+
+  /// No description provided for @listener_profile_what_you_can_do.
+  ///
+  /// In en, this message translates to:
+  /// **'What can you do?'**
+  String get listener_profile_what_you_can_do;
+
+  /// No description provided for @listener_profile_what_you_can_do_body.
+  ///
+  /// In en, this message translates to:
+  /// **'You can go back and update the information that needs attention.'**
+  String get listener_profile_what_you_can_do_body;
+
+  /// No description provided for @listener_profile_review_edit.
+  ///
+  /// In en, this message translates to:
+  /// **'Review & Edit'**
+  String get listener_profile_review_edit;
+
+  /// No description provided for @listener_profile_edit_step_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'You can edit the {step} step.'**
+  String listener_profile_edit_step_hint(String step);
 }
 
 class _VentingMobLocalizationsDelegate
