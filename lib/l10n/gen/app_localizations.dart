@@ -5945,6 +5945,54 @@ abstract class VentingMobLocalizations {
   /// **'Stay anonymous. You decide what to share. Every conversation is private.'**
   String get ventor_onboarding_page4_description;
 
+  /// No description provided for @listener_onboarding_page1_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Be the Listener Someone Needs'**
+  String get listener_onboarding_page1_title;
+
+  /// No description provided for @listener_onboarding_page1_description.
+  ///
+  /// In en, this message translates to:
+  /// **'Your empathy can help someone feel lighter, heard, and less alone.'**
+  String get listener_onboarding_page1_description;
+
+  /// No description provided for @listener_onboarding_page2_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Listen with Compassion'**
+  String get listener_onboarding_page2_title;
+
+  /// No description provided for @listener_onboarding_page2_description.
+  ///
+  /// In en, this message translates to:
+  /// **'Support people through tough moments in a private, judgment-free space.'**
+  String get listener_onboarding_page2_description;
+
+  /// No description provided for @listener_onboarding_page3_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Build Your Listener Profile'**
+  String get listener_onboarding_page3_title;
+
+  /// No description provided for @listener_onboarding_page3_description.
+  ///
+  /// In en, this message translates to:
+  /// **'Share your languages, expertise, personality, and a voice introduction.'**
+  String get listener_onboarding_page3_description;
+
+  /// No description provided for @listener_onboarding_page4_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Support on Your Schedule'**
+  String get listener_onboarding_page4_title;
+
+  /// No description provided for @listener_onboarding_page4_description.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose when you\'re available and make a difference whenever it works for you.'**
+  String get listener_onboarding_page4_description;
+
   /// No description provided for @sign_up_lets_get_started.
   ///
   /// In en, this message translates to:
@@ -5956,6 +6004,30 @@ abstract class VentingMobLocalizations {
   /// In en, this message translates to:
   /// **'Create an account to begin your journey.'**
   String get sign_up_create_account_subtitle;
+
+  /// No description provided for @auth_register_ventor_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Let\'s Get Started'**
+  String get auth_register_ventor_title;
+
+  /// No description provided for @auth_register_ventor_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Create an account to start talking and feel heard.'**
+  String get auth_register_ventor_subtitle;
+
+  /// No description provided for @auth_register_listener_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Let\'s Get Started'**
+  String get auth_register_listener_title;
+
+  /// No description provided for @auth_register_listener_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Create an account to start listening and supporting others.'**
+  String get auth_register_listener_subtitle;
 
   /// No description provided for @sign_in_welcome_back.
   ///

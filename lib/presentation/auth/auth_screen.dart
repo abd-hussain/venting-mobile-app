@@ -9,11 +9,13 @@ import 'package:venting_mobile_app/utils/router_config.dart';
 
 enum AuthType { login, register }
 
+enum AuthUserType { ventor, lissener, unknown }
+
 /// Auth method picker for login or register.
 class AuthScreen extends StatelessWidget {
-  const AuthScreen({super.key, required this.authType});
-
+  final AuthUserType userType;
   final AuthType authType;
+  const AuthScreen({super.key, required this.userType, required this.authType});
 
   static const _overlayStyle = SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
@@ -29,16 +31,34 @@ class AuthScreen extends StatelessWidget {
 
   bool get _isLogin => authType == AuthType.login;
 
+  ({String title, String subtitle}) _copy(VentingMobLocalizations l10n) {
+    if (_isLogin || userType == AuthUserType.unknown) {
+      return (
+        title: l10n.sign_in_welcome_back,
+        subtitle: l10n.sign_in_subtitle,
+      );
+    }
+
+    return switch (userType) {
+      AuthUserType.ventor => (
+        title: l10n.auth_register_ventor_title,
+        subtitle: l10n.auth_register_ventor_subtitle,
+      ),
+      AuthUserType.lissener => (
+        title: l10n.auth_register_listener_title,
+        subtitle: l10n.auth_register_listener_subtitle,
+      ),
+      AuthUserType.unknown => (
+        title: l10n.sign_in_welcome_back,
+        subtitle: l10n.sign_in_subtitle,
+      ),
+    };
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = VentingMobLocalizations.of(context);
-
-    final title = _isLogin
-        ? l10n.sign_in_welcome_back
-        : l10n.sign_up_lets_get_started;
-    final subtitle = _isLogin
-        ? l10n.sign_in_subtitle
-        : l10n.sign_up_create_account_subtitle;
+    final copy = _copy(l10n);
     final appleLabel = _isLogin
         ? l10n.sign_in_continue_with_apple
         : l10n.sign_up_continue_with_apple;
@@ -75,7 +95,7 @@ class AuthScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 28),
                 Text(
-                  title,
+                  copy.title,
                   textAlign: TextAlign.center,
                   style: GoogleFonts.inter(
                     color: _titleColor,
@@ -86,7 +106,7 @@ class AuthScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 10),
                 Text(
-                  subtitle,
+                  copy.subtitle,
                   textAlign: TextAlign.center,
                   style: GoogleFonts.inter(
                     color: _bodyColor,
@@ -125,66 +145,9 @@ class AuthScreen extends StatelessWidget {
                   icon: Icons.mail_outline_rounded,
                   label: emailLabel,
                   onPressed: () {
-                    if (_isLogin) {
-                      // TODO: navigate to email login screen
-                    } else {
-                      context.push(AppRoutes.emailRegistration);
-                    }
+                    context.push(AppRoutes.emailRegistration);
                   },
                 ),
-                const Spacer(),
-                Row(
-                  children: [
-                    const Expanded(child: Divider(color: _border)),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 14),
-                      child: Text(
-                        l10n.sign_up_or,
-                        style: GoogleFonts.inter(
-                          color: _bodyColor,
-                          fontSize: 13,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                    const Expanded(child: Divider(color: _border)),
-                  ],
-                ),
-                const SizedBox(height: 20),
-                Wrap(
-                  alignment: WrapAlignment.center,
-                  crossAxisAlignment: WrapCrossAlignment.center,
-                  children: [
-                    Text(
-                      _isLogin
-                          ? '${l10n.sign_in_dont_have_account} '
-                          : '${l10n.welcome_already_have_account} ',
-                      style: GoogleFonts.inter(
-                        color: _bodyColor,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        if (_isLogin) {
-                          context.push(AppRoutes.authRegister);
-                        } else {
-                          context.push(AppRoutes.authLogin);
-                        }
-                      },
-                      child: Text(
-                        _isLogin ? l10n.sign_in_sign_up : l10n.welcome_sign_in,
-                        style: GoogleFonts.inter(
-                          color: SplashColors.purpleMid,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 16),
               ],
             ),
           ),

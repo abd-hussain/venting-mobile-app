@@ -3,21 +3,22 @@ import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
+import 'package:venting_mobile_app/presentation/listener_onboarding/widgets/listener_onboarding_illustrations.dart';
 import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dart';
-import 'package:venting_mobile_app/presentation/ventor_onboarding/widgets/ventor_onboarding_illustrations.dart';
 import 'package:venting_mobile_app/shared_widgets/app_language_selector.dart';
 import 'package:venting_mobile_app/utils/router_config.dart';
 
-/// Ventor (talker) onboarding shown after choosing
-/// "I need someone to talk to" on the welcome screen.
-class VentorOnboardingScreen extends StatefulWidget {
-  const VentorOnboardingScreen({super.key});
+/// Listener onboarding shown after choosing
+/// "I want to be a listener" on the welcome screen.
+class ListenerOnboardingScreen extends StatefulWidget {
+  const ListenerOnboardingScreen({super.key});
 
   @override
-  State<VentorOnboardingScreen> createState() => _VentorOnboardingScreenState();
+  State<ListenerOnboardingScreen> createState() =>
+      _ListenerOnboardingScreenState();
 }
 
-class _VentorOnboardingScreenState extends State<VentorOnboardingScreen> {
+class _ListenerOnboardingScreenState extends State<ListenerOnboardingScreen> {
   static const _overlayStyle = SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
     statusBarBrightness: Brightness.light,
@@ -39,32 +40,32 @@ class _VentorOnboardingScreenState extends State<VentorOnboardingScreen> {
     super.dispose();
   }
 
-  List<_VentorPageData> _pages(VentingMobLocalizations l10n) => [
-    _VentorPageData(
-      kind: VentorOnboardingIllustrationKind.safePlace,
-      title: l10n.ventor_onboarding_page1_title,
-      description: l10n.ventor_onboarding_page1_description,
+  List<_ListenerPageData> _pages(VentingMobLocalizations l10n) => [
+    _ListenerPageData(
+      kind: ListenerOnboardingIllustrationKind.makeDifference,
+      title: l10n.listener_onboarding_page1_title,
+      description: l10n.listener_onboarding_page1_description,
       isLanding: true,
     ),
-    _VentorPageData(
-      kind: VentorOnboardingIllustrationKind.expressYourself,
-      title: l10n.ventor_onboarding_page2_title,
-      description: l10n.ventor_onboarding_page2_description,
+    _ListenerPageData(
+      kind: ListenerOnboardingIllustrationKind.listenWithEmpathy,
+      title: l10n.listener_onboarding_page2_title,
+      description: l10n.listener_onboarding_page2_description,
     ),
-    _VentorPageData(
-      kind: VentorOnboardingIllustrationKind.findListener,
-      title: l10n.ventor_onboarding_page3_title,
-      description: l10n.ventor_onboarding_page3_description,
+    _ListenerPageData(
+      kind: ListenerOnboardingIllustrationKind.buildProfile,
+      title: l10n.listener_onboarding_page3_title,
+      description: l10n.listener_onboarding_page3_description,
     ),
-    _VentorPageData(
-      kind: VentorOnboardingIllustrationKind.privacy,
-      title: l10n.ventor_onboarding_page4_title,
-      description: l10n.ventor_onboarding_page4_description,
+    _ListenerPageData(
+      kind: ListenerOnboardingIllustrationKind.flexibleSupport,
+      title: l10n.listener_onboarding_page4_title,
+      description: l10n.listener_onboarding_page4_description,
     ),
   ];
 
   void _goToSignUp() {
-    context.push(AppRoutes.autVentorRegister);
+    context.push(AppRoutes.authListenerRegister);
   }
 
   void _onNext(int pageCount) {
@@ -105,7 +106,7 @@ class _VentorOnboardingScreenState extends State<VentorOnboardingScreen> {
                       setState(() => _currentPage = index);
                     },
                     itemBuilder: (context, index) {
-                      return _VentorPageView(data: pages[index]);
+                      return _ListenerPageView(data: pages[index]);
                     },
                   ),
                 ),
@@ -184,24 +185,24 @@ class _VentorOnboardingScreenState extends State<VentorOnboardingScreen> {
   }
 }
 
-class _VentorPageData {
-  const _VentorPageData({
+class _ListenerPageData {
+  const _ListenerPageData({
     required this.kind,
     required this.title,
     required this.description,
     this.isLanding = false,
   });
 
-  final VentorOnboardingIllustrationKind kind;
+  final ListenerOnboardingIllustrationKind kind;
   final String title;
   final String description;
   final bool isLanding;
 }
 
-class _VentorPageView extends StatelessWidget {
-  const _VentorPageView({required this.data});
+class _ListenerPageView extends StatelessWidget {
+  const _ListenerPageView({required this.data});
 
-  final _VentorPageData data;
+  final _ListenerPageData data;
 
   @override
   Widget build(BuildContext context) {
@@ -212,7 +213,7 @@ class _VentorPageView extends StatelessWidget {
           child: Center(
             child: ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 300, maxHeight: 300),
-              child: VentorOnboardingIllustration(kind: data.kind),
+              child: ListenerOnboardingIllustration(kind: data.kind),
             ),
           ),
         ),
@@ -221,7 +222,7 @@ class _VentorPageView extends StatelessWidget {
           textAlign: TextAlign.center,
           style: GoogleFonts.inter(
             color: data.isLanding
-                ? _VentorOnboardingScreenState._titleColor
+                ? _ListenerOnboardingScreenState._titleColor
                 : SplashColors.purpleMid,
             fontSize: data.isLanding ? 28 : 26,
             fontWeight: FontWeight.w700,
@@ -233,7 +234,7 @@ class _VentorPageView extends StatelessWidget {
           data.description,
           textAlign: TextAlign.center,
           style: GoogleFonts.inter(
-            color: _VentorOnboardingScreenState._bodyColor,
+            color: _ListenerOnboardingScreenState._bodyColor,
             fontSize: 15,
             fontWeight: FontWeight.w400,
             height: 1.45,

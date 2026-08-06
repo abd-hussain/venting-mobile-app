@@ -3309,10 +3309,52 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
       'ابقَ مجهول الهوية. أنت تقرر ماذا تشارك. كل محادثة خاصة.';
 
   @override
+  String get listener_onboarding_page1_title => 'كُن المستمع الذي يحتاجه أحدهم';
+
+  @override
+  String get listener_onboarding_page1_description =>
+      'تعاطفك يمكن أن يساعد شخصًا ليشعر بخفة أكبر، وأن يُسمَع، وألا يكون وحيدًا.';
+
+  @override
+  String get listener_onboarding_page2_title => 'استمع بتعاطف';
+
+  @override
+  String get listener_onboarding_page2_description =>
+      'ادعم الآخرين في اللحظات الصعبة ضمن مساحة خاصة وخالية من الأحكام.';
+
+  @override
+  String get listener_onboarding_page3_title => 'ابنِ ملفك كمستمع';
+
+  @override
+  String get listener_onboarding_page3_description =>
+      'شارك لغاتك وخبرتك وشخصيتك ومقدمة صوتية تعريفية.';
+
+  @override
+  String get listener_onboarding_page4_title => 'ادعم وفق جدولك';
+
+  @override
+  String get listener_onboarding_page4_description =>
+      'اختر أوقات تواجدك واصنع فرقًا متى ما ناسبك ذلك.';
+
+  @override
   String get sign_up_lets_get_started => 'لنبدأ';
 
   @override
   String get sign_up_create_account_subtitle => 'أنشئ حسابًا لتبدأ رحلتك.';
+
+  @override
+  String get auth_register_ventor_title => 'لنبدأ';
+
+  @override
+  String get auth_register_ventor_subtitle =>
+      'أنشئ حسابًا لتبدأ بالتحدث وتشعر بأنك مسموع.';
+
+  @override
+  String get auth_register_listener_title => 'لنبدأ';
+
+  @override
+  String get auth_register_listener_subtitle =>
+      'أنشئ حسابًا لتبدأ بالاستماع ودعم الآخرين.';
 
   @override
   String get sign_in_welcome_back => 'مرحبًا بعودتك';

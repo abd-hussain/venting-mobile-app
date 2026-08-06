@@ -82,7 +82,7 @@ class WelcomeScreen extends StatelessWidget {
                   _WelcomeSecondaryButton(
                     label: l10n.welcome_want_to_be_listener,
                     onPressed: () {
-                      // TODO: navigate to listener onboarding / role selection
+                      context.push(AppRoutes.listenerOnboarding);
                     },
                   ),
                   const SizedBox(height: 20),
@@ -90,7 +90,7 @@ class WelcomeScreen extends StatelessWidget {
                     prompt: l10n.welcome_already_have_account,
                     action: l10n.welcome_sign_in,
                     onSignIn: () {
-                      context.push(AppRoutes.authLogin);
+                      context.push(AppRoutes.authUserUnknown);
                     },
                   ),
                   const SizedBox(height: 12),

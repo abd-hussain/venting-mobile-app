@@ -3324,11 +3324,53 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
       'Stay anonymous. You decide what to share. Every conversation is private.';
 
   @override
+  String get listener_onboarding_page1_title => 'Be the Listener Someone Needs';
+
+  @override
+  String get listener_onboarding_page1_description =>
+      'Your empathy can help someone feel lighter, heard, and less alone.';
+
+  @override
+  String get listener_onboarding_page2_title => 'Listen with Compassion';
+
+  @override
+  String get listener_onboarding_page2_description =>
+      'Support people through tough moments in a private, judgment-free space.';
+
+  @override
+  String get listener_onboarding_page3_title => 'Build Your Listener Profile';
+
+  @override
+  String get listener_onboarding_page3_description =>
+      'Share your languages, expertise, personality, and a voice introduction.';
+
+  @override
+  String get listener_onboarding_page4_title => 'Support on Your Schedule';
+
+  @override
+  String get listener_onboarding_page4_description =>
+      'Choose when you\'re available and make a difference whenever it works for you.';
+
+  @override
   String get sign_up_lets_get_started => 'Let\'s Get Started';
 
   @override
   String get sign_up_create_account_subtitle =>
       'Create an account to begin your journey.';
+
+  @override
+  String get auth_register_ventor_title => 'Let\'s Get Started';
+
+  @override
+  String get auth_register_ventor_subtitle =>
+      'Create an account to start talking and feel heard.';
+
+  @override
+  String get auth_register_listener_title => 'Let\'s Get Started';
+
+  @override
+  String get auth_register_listener_subtitle =>
+      'Create an account to start listening and supporting others.';
 
   @override
   String get sign_in_welcome_back => 'Welcome Back';

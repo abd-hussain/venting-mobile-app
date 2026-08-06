@@ -5,7 +5,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
 import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dart';
 import 'package:venting_mobile_app/shared_widgets/app_language_selector.dart';
-import 'package:venting_mobile_app/utils/router_config.dart';
 
 /// Manual email/password registration for the ventor journey.
 class EmailRegistrationScreen extends StatefulWidget {
@@ -71,9 +70,7 @@ class _EmailRegistrationScreenState extends State<EmailRegistrationScreen> {
   void _onCreateAccount() {
     setState(() => _submitted = true);
     if (!_canSubmit) return;
-
-    // TODO: call backend / Firebase Auth createUserWithEmailAndPassword
-    context.push(AppRoutes.accountCreated);
+    // TODO: call
   }
 
   @override

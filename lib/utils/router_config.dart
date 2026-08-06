@@ -3,9 +3,9 @@ import 'package:go_router/go_router.dart';
 import 'package:logger_manager/logger_manager.dart';
 import 'package:venting_mobile_app/di/di_container.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
-import 'package:venting_mobile_app/presentation/auth/account_created_screen.dart';
 import 'package:venting_mobile_app/presentation/auth/auth_screen.dart';
 import 'package:venting_mobile_app/presentation/auth/email_registration_screen.dart';
+import 'package:venting_mobile_app/presentation/listener_onboarding/listener_onboarding_screen.dart';
 import 'package:venting_mobile_app/presentation/main_onboarding/main_onboarding_screen.dart';
 import 'package:venting_mobile_app/presentation/splash/splash_screen.dart';
 import 'package:venting_mobile_app/presentation/ventor_onboarding/ventor_onboarding_screen.dart';
@@ -18,10 +18,11 @@ class AppRoutes {
   static const String tabHome = '/tab-home';
   static const String mainOnboarding = '/main-onboarding';
   static const String ventorOnboarding = '/ventor-onboarding';
-  static const String authRegister = '/auth-register';
-  static const String authLogin = '/auth-login';
+  static const String listenerOnboarding = '/listener-onboarding';
+  static const String autVentorRegister = '/auth-ventor-register';
+  static const String authListenerRegister = '/auth-listener-register';
+  static const String authUserUnknown = '/auth-user-unknown';
   static const String emailRegistration = '/email-registration';
-  static const String accountCreated = '/account-created';
 }
 
 class VentingNavigationObserver extends NavigatorObserver {
@@ -90,25 +91,38 @@ class VentingRouterConfig {
         builder: (context, state) => const VentorOnboardingScreen(),
       ),
       GoRoute(
-        path: AppRoutes.authRegister,
-        name: 'auth-register',
-        builder: (context, state) =>
-            const AuthScreen(authType: AuthType.register),
+        path: AppRoutes.listenerOnboarding,
+        name: 'listener-onboarding',
+        builder: (context, state) => const ListenerOnboardingScreen(),
       ),
       GoRoute(
-        path: AppRoutes.authLogin,
-        name: 'auth-login',
-        builder: (context, state) => const AuthScreen(authType: AuthType.login),
+        path: AppRoutes.autVentorRegister,
+        name: 'auth-ventor-register',
+        builder: (context, state) => const AuthScreen(
+          userType: AuthUserType.ventor,
+          authType: AuthType.register,
+        ),
+      ),
+      GoRoute(
+        path: AppRoutes.authListenerRegister,
+        name: 'auth-listener-register',
+        builder: (context, state) => const AuthScreen(
+          userType: AuthUserType.lissener,
+          authType: AuthType.register,
+        ),
+      ),
+      GoRoute(
+        path: AppRoutes.authUserUnknown,
+        name: 'auth-user-unknown',
+        builder: (context, state) => const AuthScreen(
+          userType: AuthUserType.unknown,
+          authType: AuthType.login,
+        ),
       ),
       GoRoute(
         path: AppRoutes.emailRegistration,
         name: 'email-registration',
         builder: (context, state) => const EmailRegistrationScreen(),
-      ),
-      GoRoute(
-        path: AppRoutes.accountCreated,
-        name: 'account-created',
-        builder: (context, state) => const AccountCreatedScreen(),
       ),
     ],
     errorBuilder: (context, state) {
