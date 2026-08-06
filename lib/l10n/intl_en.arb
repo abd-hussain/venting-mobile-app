@@ -2419,6 +2419,107 @@
         "type": "String"
       }
     }
-  }
+  },
+  "listener_reg_continue": "Continue",
+  "@listener_reg_continue": {},
+  "listener_reg_skip_for_now": "Skip for now",
+  "@listener_reg_skip_for_now": {},
+  "listener_reg_step_of": "Step {current} of {total}",
+  "@listener_reg_step_of": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "listener_reg_steps_remaining": "{count} steps remaining",
+  "@listener_reg_steps_remaining": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "listener_reg_last_step": "Last step",
+  "@listener_reg_last_step": {},
+  "listener_reg_step1_title": "Welcome! Let's get you started",
+  "@listener_reg_step1_title": {},
+  "listener_reg_step1_subtitle": "Create your account to begin your journey as a listener.",
+  "@listener_reg_step1_subtitle": {},
+  "listener_reg_full_name": "Full name",
+  "@listener_reg_full_name": {},
+  "listener_reg_email": "Email",
+  "@listener_reg_email": {},
+  "listener_reg_phone": "Phone number",
+  "@listener_reg_phone": {},
+  "listener_reg_invalid_phone": "Please enter a valid phone number for the selected country",
+  "@listener_reg_invalid_phone": {},
+  "listener_reg_select_country": "Select country",
+  "@listener_reg_select_country": {},
+  "listener_reg_search_country": "Search by country or code",
+  "@listener_reg_search_country": {},
+  "listener_reg_password": "Password",
+  "@listener_reg_password": {},
+  "listener_reg_agree_prefix": "I agree to the ",
+  "@listener_reg_agree_prefix": {},
+  "listener_reg_terms": "Terms of Service",
+  "@listener_reg_terms": {},
+  "listener_reg_agree_and": " and ",
+  "@listener_reg_agree_and": {},
+  "listener_reg_privacy": "Privacy Policy",
+  "@listener_reg_privacy": {},
+  "listener_reg_already_have": "Already have an account?",
+  "@listener_reg_already_have": {},
+  "listener_reg_sign_in": "Sign in",
+  "@listener_reg_sign_in": {},
+  "listener_reg_step_coming_soon": "This step is coming next. Continue to preview the flow.",
+  "@listener_reg_step_coming_soon": {},
+  "listener_reg_step_create_account": "Create Account",
+  "@listener_reg_step_create_account": {},
+  "listener_reg_step_verify_email": "Verify Email",
+  "@listener_reg_step_verify_email": {},
+  "listener_reg_step_profile_photo": "Profile Photo",
+  "@listener_reg_step_profile_photo": {},
+  "listener_reg_step_about_you": "About You",
+  "@listener_reg_step_about_you": {},
+  "listener_reg_step_languages": "Languages",
+  "@listener_reg_step_languages": {},
+  "listener_reg_step_expertise": "Expertise",
+  "@listener_reg_step_expertise": {},
+  "listener_reg_step_voice_intro": "Voice Introduction",
+  "@listener_reg_step_voice_intro": {},
+  "listener_reg_step_availability": "Availability",
+  "@listener_reg_step_availability": {},
+  "listener_reg_step_experience": "Experience",
+  "@listener_reg_step_experience": {},
+  "listener_reg_step_guidelines": "Community Guidelines",
+  "@listener_reg_step_guidelines": {},
+  "listener_reg_step_identity": "Identity Verification",
+  "@listener_reg_step_identity": {},
+  "listener_reg_identity_title": "Verify your identity",
+  "@listener_reg_identity_title": {},
+  "listener_reg_identity_subtitle": "This helps us keep our community safe and trusted.",
+  "@listener_reg_identity_subtitle": {},
+  "listener_reg_identity_upload_id_title": "Upload Government ID",
+  "@listener_reg_identity_upload_id_title": {},
+  "listener_reg_identity_upload_id_subtitle": "Passport, Driver's License or National ID.",
+  "@listener_reg_identity_upload_id_subtitle": {},
+  "listener_reg_identity_selfie_title": "Take a selfie",
+  "@listener_reg_identity_selfie_title": {},
+  "listener_reg_identity_selfie_subtitle": "Make sure your face is clearly visible",
+  "@listener_reg_identity_selfie_subtitle": {},
+  "listener_reg_identity_liveness_title": "Liveness check",
+  "@listener_reg_identity_liveness_title": {},
+  "listener_reg_identity_liveness_subtitle": "We'll ask you to move your head slightly",
+  "@listener_reg_identity_liveness_subtitle": {},
+  "listener_reg_identity_start": "Start Verification",
+  "@listener_reg_identity_start": {},
+  "listener_reg_identity_secure_note": "Your data is encrypted and secure",
+  "@listener_reg_identity_secure_note": {},
+  "listener_reg_step_review_submit": "Review & Submit",
+  "@listener_reg_step_review_submit": {}
 
 }

@@ -5,7 +5,9 @@ import 'package:venting_mobile_app/di/di_container.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
 import 'package:venting_mobile_app/presentation/auth/auth_screen.dart';
 import 'package:venting_mobile_app/presentation/auth/email_registration_screen.dart';
+import 'package:venting_mobile_app/presentation/homescreen.dart';
 import 'package:venting_mobile_app/presentation/listener_onboarding/listener_onboarding_screen.dart';
+import 'package:venting_mobile_app/presentation/listener_registration/listener_registration_screen.dart';
 import 'package:venting_mobile_app/presentation/main_onboarding/main_onboarding_screen.dart';
 import 'package:venting_mobile_app/presentation/splash/splash_screen.dart';
 import 'package:venting_mobile_app/presentation/ventor_onboarding/ventor_onboarding_screen.dart';
@@ -19,6 +21,7 @@ class AppRoutes {
   static const String mainOnboarding = '/main-onboarding';
   static const String ventorOnboarding = '/ventor-onboarding';
   static const String listenerOnboarding = '/listener-onboarding';
+  static const String listenerRegistration = '/listener-registration';
   static const String autVentorRegister = '/auth-ventor-register';
   static const String authListenerRegister = '/auth-listener-register';
   static const String authUserUnknown = '/auth-user-unknown';
@@ -81,6 +84,11 @@ class VentingRouterConfig {
         builder: (context, state) => const WelcomeScreen(),
       ),
       GoRoute(
+        path: AppRoutes.tabHome,
+        name: 'tab-home',
+        builder: (context, state) => const HomeScreen(),
+      ),
+      GoRoute(
         path: AppRoutes.mainOnboarding,
         name: 'main-onboarding',
         builder: (context, state) => const MainOnboardingScreen(),
@@ -94,6 +102,18 @@ class VentingRouterConfig {
         path: AppRoutes.listenerOnboarding,
         name: 'listener-onboarding',
         builder: (context, state) => const ListenerOnboardingScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.listenerRegistration,
+        name: 'listener-registration',
+        builder: (context, state) {
+          final extra = state.extra;
+          final args = extra is ListenerRegistrationArgs
+              ? extra
+              : const ListenerRegistrationArgs(email: '');
+
+          return ListenerRegistrationScreen(email: args.email);
+        },
       ),
       GoRoute(
         path: AppRoutes.autVentorRegister,

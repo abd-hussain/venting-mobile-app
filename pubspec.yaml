@@ -54,6 +54,7 @@ dependencies:
   firebase_core: ^4.13.0
   firebase_messaging: ^16.5.0
   firebase_analytics: ^12.4.6
+  phone_numbers_parser: ^9.0.25
 
 dependency_overrides:
   # Workaround for iOS simulator crash: DOBJC_initializeApi / objective_c.framework

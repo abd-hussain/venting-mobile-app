@@ -6232,6 +6232,264 @@ abstract class VentingMobLocalizations {
   /// In en, this message translates to:
   /// **'Resend Email ({time})'**
   String account_created_resend_email_countdown(String time);
+
+  /// No description provided for @listener_reg_continue.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get listener_reg_continue;
+
+  /// No description provided for @listener_reg_skip_for_now.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip for now'**
+  String get listener_reg_skip_for_now;
+
+  /// No description provided for @listener_reg_step_of.
+  ///
+  /// In en, this message translates to:
+  /// **'Step {current} of {total}'**
+  String listener_reg_step_of(int current, int total);
+
+  /// No description provided for @listener_reg_steps_remaining.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} steps remaining'**
+  String listener_reg_steps_remaining(int count);
+
+  /// No description provided for @listener_reg_last_step.
+  ///
+  /// In en, this message translates to:
+  /// **'Last step'**
+  String get listener_reg_last_step;
+
+  /// No description provided for @listener_reg_step1_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome! Let\'s get you started'**
+  String get listener_reg_step1_title;
+
+  /// No description provided for @listener_reg_step1_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Create your account to begin your journey as a listener.'**
+  String get listener_reg_step1_subtitle;
+
+  /// No description provided for @listener_reg_full_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Full name'**
+  String get listener_reg_full_name;
+
+  /// No description provided for @listener_reg_email.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get listener_reg_email;
+
+  /// No description provided for @listener_reg_phone.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number'**
+  String get listener_reg_phone;
+
+  /// No description provided for @listener_reg_invalid_phone.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid phone number for the selected country'**
+  String get listener_reg_invalid_phone;
+
+  /// No description provided for @listener_reg_select_country.
+  ///
+  /// In en, this message translates to:
+  /// **'Select country'**
+  String get listener_reg_select_country;
+
+  /// No description provided for @listener_reg_search_country.
+  ///
+  /// In en, this message translates to:
+  /// **'Search by country or code'**
+  String get listener_reg_search_country;
+
+  /// No description provided for @listener_reg_password.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get listener_reg_password;
+
+  /// No description provided for @listener_reg_agree_prefix.
+  ///
+  /// In en, this message translates to:
+  /// **'I agree to the '**
+  String get listener_reg_agree_prefix;
+
+  /// No description provided for @listener_reg_terms.
+  ///
+  /// In en, this message translates to:
+  /// **'Terms of Service'**
+  String get listener_reg_terms;
+
+  /// No description provided for @listener_reg_agree_and.
+  ///
+  /// In en, this message translates to:
+  /// **' and '**
+  String get listener_reg_agree_and;
+
+  /// No description provided for @listener_reg_privacy.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy Policy'**
+  String get listener_reg_privacy;
+
+  /// No description provided for @listener_reg_already_have.
+  ///
+  /// In en, this message translates to:
+  /// **'Already have an account?'**
+  String get listener_reg_already_have;
+
+  /// No description provided for @listener_reg_sign_in.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in'**
+  String get listener_reg_sign_in;
+
+  /// No description provided for @listener_reg_step_coming_soon.
+  ///
+  /// In en, this message translates to:
+  /// **'This step is coming next. Continue to preview the flow.'**
+  String get listener_reg_step_coming_soon;
+
+  /// No description provided for @listener_reg_step_create_account.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Account'**
+  String get listener_reg_step_create_account;
+
+  /// No description provided for @listener_reg_step_verify_email.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify Email'**
+  String get listener_reg_step_verify_email;
+
+  /// No description provided for @listener_reg_step_profile_photo.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile Photo'**
+  String get listener_reg_step_profile_photo;
+
+  /// No description provided for @listener_reg_step_about_you.
+  ///
+  /// In en, this message translates to:
+  /// **'About You'**
+  String get listener_reg_step_about_you;
+
+  /// No description provided for @listener_reg_step_languages.
+  ///
+  /// In en, this message translates to:
+  /// **'Languages'**
+  String get listener_reg_step_languages;
+
+  /// No description provided for @listener_reg_step_expertise.
+  ///
+  /// In en, this message translates to:
+  /// **'Expertise'**
+  String get listener_reg_step_expertise;
+
+  /// No description provided for @listener_reg_step_voice_intro.
+  ///
+  /// In en, this message translates to:
+  /// **'Voice Introduction'**
+  String get listener_reg_step_voice_intro;
+
+  /// No description provided for @listener_reg_step_availability.
+  ///
+  /// In en, this message translates to:
+  /// **'Availability'**
+  String get listener_reg_step_availability;
+
+  /// No description provided for @listener_reg_step_experience.
+  ///
+  /// In en, this message translates to:
+  /// **'Experience'**
+  String get listener_reg_step_experience;
+
+  /// No description provided for @listener_reg_step_guidelines.
+  ///
+  /// In en, this message translates to:
+  /// **'Community Guidelines'**
+  String get listener_reg_step_guidelines;
+
+  /// No description provided for @listener_reg_step_identity.
+  ///
+  /// In en, this message translates to:
+  /// **'Identity Verification'**
+  String get listener_reg_step_identity;
+
+  /// No description provided for @listener_reg_identity_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify your identity'**
+  String get listener_reg_identity_title;
+
+  /// No description provided for @listener_reg_identity_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'This helps us keep our community safe and trusted.'**
+  String get listener_reg_identity_subtitle;
+
+  /// No description provided for @listener_reg_identity_upload_id_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload Government ID'**
+  String get listener_reg_identity_upload_id_title;
+
+  /// No description provided for @listener_reg_identity_upload_id_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Passport, Driver\'s License or National ID.'**
+  String get listener_reg_identity_upload_id_subtitle;
+
+  /// No description provided for @listener_reg_identity_selfie_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Take a selfie'**
+  String get listener_reg_identity_selfie_title;
+
+  /// No description provided for @listener_reg_identity_selfie_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Make sure your face is clearly visible'**
+  String get listener_reg_identity_selfie_subtitle;
+
+  /// No description provided for @listener_reg_identity_liveness_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Liveness check'**
+  String get listener_reg_identity_liveness_title;
+
+  /// No description provided for @listener_reg_identity_liveness_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'We\'ll ask you to move your head slightly'**
+  String get listener_reg_identity_liveness_subtitle;
+
+  /// No description provided for @listener_reg_identity_start.
+  ///
+  /// In en, this message translates to:
+  /// **'Start Verification'**
+  String get listener_reg_identity_start;
+
+  /// No description provided for @listener_reg_identity_secure_note.
+  ///
+  /// In en, this message translates to:
+  /// **'Your data is encrypted and secure'**
+  String get listener_reg_identity_secure_note;
+
+  /// No description provided for @listener_reg_step_review_submit.
+  ///
+  /// In en, this message translates to:
+  /// **'Review & Submit'**
+  String get listener_reg_step_review_submit;
 }
 
 class _VentingMobLocalizationsDelegate

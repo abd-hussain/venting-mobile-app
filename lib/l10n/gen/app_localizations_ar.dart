@@ -3465,4 +3465,143 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
   String account_created_resend_email_countdown(String time) {
     return 'إعادة إرسال البريد ($time)';
   }
+
+  @override
+  String get listener_reg_continue => 'متابعة';
+
+  @override
+  String get listener_reg_skip_for_now => 'تخطِّ الآن';
+
+  @override
+  String listener_reg_step_of(int current, int total) {
+    return 'الخطوة $current من $total';
+  }
+
+  @override
+  String listener_reg_steps_remaining(int count) {
+    return '$count خطوات متبقية';
+  }
+
+  @override
+  String get listener_reg_last_step => 'الخطوة الأخيرة';
+
+  @override
+  String get listener_reg_step1_title => 'مرحبًا! لنبدأ معًا';
+
+  @override
+  String get listener_reg_step1_subtitle => 'أنشئ حسابك لتبدأ رحلتك كمستمع.';
+
+  @override
+  String get listener_reg_full_name => 'الاسم الكامل';
+
+  @override
+  String get listener_reg_email => 'البريد الإلكتروني';
+
+  @override
+  String get listener_reg_phone => 'رقم الهاتف';
+
+  @override
+  String get listener_reg_invalid_phone =>
+      'يرجى إدخال رقم هاتف صالح للدولة المحددة';
+
+  @override
+  String get listener_reg_select_country => 'اختر الدولة';
+
+  @override
+  String get listener_reg_search_country => 'ابحث بالدولة أو الرمز';
+
+  @override
+  String get listener_reg_password => 'كلمة المرور';
+
+  @override
+  String get listener_reg_agree_prefix => 'أوافق على ';
+
+  @override
+  String get listener_reg_terms => 'شروط الخدمة';
+
+  @override
+  String get listener_reg_agree_and => ' و';
+
+  @override
+  String get listener_reg_privacy => 'سياسة الخصوصية';
+
+  @override
+  String get listener_reg_already_have => 'لديك حساب بالفعل؟';
+
+  @override
+  String get listener_reg_sign_in => 'تسجيل الدخول';
+
+  @override
+  String get listener_reg_step_coming_soon =>
+      'هذه الخطوة قادمة قريبًا. تابع لمعاينة المسار.';
+
+  @override
+  String get listener_reg_step_create_account => 'إنشاء الحساب';
+
+  @override
+  String get listener_reg_step_verify_email => 'تأكيد البريد';
+
+  @override
+  String get listener_reg_step_profile_photo => 'صورة الملف';
+
+  @override
+  String get listener_reg_step_about_you => 'عنك';
+
+  @override
+  String get listener_reg_step_languages => 'اللغات';
+
+  @override
+  String get listener_reg_step_expertise => 'الخبرة';
+
+  @override
+  String get listener_reg_step_voice_intro => 'مقدمة صوتية';
+
+  @override
+  String get listener_reg_step_availability => 'التوفر';
+
+  @override
+  String get listener_reg_step_experience => 'التجربة';
+
+  @override
+  String get listener_reg_step_guidelines => 'إرشادات المجتمع';
+
+  @override
+  String get listener_reg_step_identity => 'التحقق من الهوية';
+
+  @override
+  String get listener_reg_identity_title => 'تحقق من هويتك';
+
+  @override
+  String get listener_reg_identity_subtitle =>
+      'هذا يساعدنا على إبقاء مجتمعنا آمنًا وموثوقًا.';
+
+  @override
+  String get listener_reg_identity_upload_id_title => 'ارفع هوية حكومية';
+
+  @override
+  String get listener_reg_identity_upload_id_subtitle =>
+      'جواز السفر أو رخصة القيادة أو الهوية الوطنية.';
+
+  @override
+  String get listener_reg_identity_selfie_title => 'التقط صورة شخصية';
+
+  @override
+  String get listener_reg_identity_selfie_subtitle =>
+      'تأكد من أن وجهك واضح تمامًا';
+
+  @override
+  String get listener_reg_identity_liveness_title => 'فحص الحيوية';
+
+  @override
+  String get listener_reg_identity_liveness_subtitle =>
+      'سنطلب منك تحريك رأسك قليلاً';
+
+  @override
+  String get listener_reg_identity_start => 'ابدأ التحقق';
+
+  @override
+  String get listener_reg_identity_secure_note => 'بياناتك مشفّرة وآمنة';
+
+  @override
+  String get listener_reg_step_review_submit => 'مراجعة وإرسال';
 }

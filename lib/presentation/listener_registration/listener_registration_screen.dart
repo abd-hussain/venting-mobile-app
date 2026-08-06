@@ -1,0 +1,117 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:go_router/go_router.dart';
+import 'package:venting_mobile_app/presentation/listener_registration/listener_registration_step.dart';
+import 'package:venting_mobile_app/presentation/listener_registration/steps/listener_registration_step1_create_account.dart';
+import 'package:venting_mobile_app/presentation/listener_registration/steps/listener_registration_step2_identity_verification.dart';
+import 'package:venting_mobile_app/presentation/listener_registration/steps/listener_registration_step_placeholder.dart';
+import 'package:venting_mobile_app/presentation/listener_registration/widgets/listener_registration_header.dart';
+import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dart';
+import 'package:venting_mobile_app/utils/router_config.dart';
+
+class ListenerRegistrationArgs {
+  const ListenerRegistrationArgs({required this.email});
+
+  final String email;
+}
+
+/// Multi-step listener registration flow (12 steps).
+class ListenerRegistrationScreen extends StatefulWidget {
+  const ListenerRegistrationScreen({super.key, required this.email});
+
+  final String email;
+
+  @override
+  State<ListenerRegistrationScreen> createState() =>
+      _ListenerRegistrationScreenState();
+}
+
+class _ListenerRegistrationScreenState
+    extends State<ListenerRegistrationScreen> {
+  static const _overlayStyle = SystemUiOverlayStyle(
+    statusBarColor: Colors.transparent,
+    statusBarBrightness: Brightness.dark,
+    statusBarIconBrightness: Brightness.light,
+    systemNavigationBarColor: SplashColors.backgroundBottom,
+    systemNavigationBarIconBrightness: Brightness.light,
+  );
+
+  ListenerRegistrationStep _step = ListenerRegistrationStep.createAccount;
+
+  void _goTo(ListenerRegistrationStep step) {
+    setState(() => _step = step);
+  }
+
+  void _onBack() {
+    final previous = _step.previous;
+    if (previous == null) {
+      context.pop();
+      return;
+    }
+    _goTo(previous);
+  }
+
+  void _onContinue() {
+    final next = _step.next;
+    if (next == null) {
+      // TODO: finish registration
+      context.go(AppRoutes.welcome);
+      return;
+    }
+    _goTo(next);
+  }
+
+  void _onSkipForNow() {
+    context.go(AppRoutes.tabHome);
+  }
+
+  Widget _buildStep() {
+    return switch (_step) {
+      ListenerRegistrationStep.createAccount =>
+        ListenerRegistrationStep1CreateAccount(
+          email: widget.email,
+          onContinue: _onContinue,
+        ),
+      ListenerRegistrationStep.identityVerification =>
+        ListenerRegistrationStep2IdentityVerification(onContinue: _onContinue),
+      _ => ListenerRegistrationStepPlaceholder(
+        step: _step,
+        onContinue: _onContinue,
+      ),
+    };
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: _overlayStyle,
+      child: Scaffold(
+        backgroundColor: SplashColors.backgroundTop,
+        body: DecoratedBox(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                SplashColors.backgroundTop,
+                SplashColors.backgroundBottom,
+              ],
+            ),
+          ),
+          child: SafeArea(
+            child: Column(
+              children: [
+                ListenerRegistrationHeader(
+                  step: _step,
+                  onBack: _onBack,
+                  onSkip: _onSkipForNow,
+                ),
+                Expanded(child: _buildStep()),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}

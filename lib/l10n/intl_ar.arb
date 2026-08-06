@@ -2419,5 +2419,106 @@
         "type": "String"
       }
     }
-  }
+  },
+  "listener_reg_continue": "متابعة",
+  "@listener_reg_continue": {},
+  "listener_reg_skip_for_now": "تخطِّ الآن",
+  "@listener_reg_skip_for_now": {},
+  "listener_reg_step_of": "الخطوة {current} من {total}",
+  "@listener_reg_step_of": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "listener_reg_steps_remaining": "{count} خطوات متبقية",
+  "@listener_reg_steps_remaining": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "listener_reg_last_step": "الخطوة الأخيرة",
+  "@listener_reg_last_step": {},
+  "listener_reg_step1_title": "مرحبًا! لنبدأ معًا",
+  "@listener_reg_step1_title": {},
+  "listener_reg_step1_subtitle": "أنشئ حسابك لتبدأ رحلتك كمستمع.",
+  "@listener_reg_step1_subtitle": {},
+  "listener_reg_full_name": "الاسم الكامل",
+  "@listener_reg_full_name": {},
+  "listener_reg_email": "البريد الإلكتروني",
+  "@listener_reg_email": {},
+  "listener_reg_phone": "رقم الهاتف",
+  "@listener_reg_phone": {},
+  "listener_reg_invalid_phone": "يرجى إدخال رقم هاتف صالح للدولة المحددة",
+  "@listener_reg_invalid_phone": {},
+  "listener_reg_select_country": "اختر الدولة",
+  "@listener_reg_select_country": {},
+  "listener_reg_search_country": "ابحث بالدولة أو الرمز",
+  "@listener_reg_search_country": {},
+  "listener_reg_password": "كلمة المرور",
+  "@listener_reg_password": {},
+  "listener_reg_agree_prefix": "أوافق على ",
+  "@listener_reg_agree_prefix": {},
+  "listener_reg_terms": "شروط الخدمة",
+  "@listener_reg_terms": {},
+  "listener_reg_agree_and": " و",
+  "@listener_reg_agree_and": {},
+  "listener_reg_privacy": "سياسة الخصوصية",
+  "@listener_reg_privacy": {},
+  "listener_reg_already_have": "لديك حساب بالفعل؟",
+  "@listener_reg_already_have": {},
+  "listener_reg_sign_in": "تسجيل الدخول",
+  "@listener_reg_sign_in": {},
+  "listener_reg_step_coming_soon": "هذه الخطوة قادمة قريبًا. تابع لمعاينة المسار.",
+  "@listener_reg_step_coming_soon": {},
+  "listener_reg_step_create_account": "إنشاء الحساب",
+  "@listener_reg_step_create_account": {},
+  "listener_reg_step_verify_email": "تأكيد البريد",
+  "@listener_reg_step_verify_email": {},
+  "listener_reg_step_profile_photo": "صورة الملف",
+  "@listener_reg_step_profile_photo": {},
+  "listener_reg_step_about_you": "عنك",
+  "@listener_reg_step_about_you": {},
+  "listener_reg_step_languages": "اللغات",
+  "@listener_reg_step_languages": {},
+  "listener_reg_step_expertise": "الخبرة",
+  "@listener_reg_step_expertise": {},
+  "listener_reg_step_voice_intro": "مقدمة صوتية",
+  "@listener_reg_step_voice_intro": {},
+  "listener_reg_step_availability": "التوفر",
+  "@listener_reg_step_availability": {},
+  "listener_reg_step_experience": "التجربة",
+  "@listener_reg_step_experience": {},
+  "listener_reg_step_guidelines": "إرشادات المجتمع",
+  "@listener_reg_step_guidelines": {},
+  "listener_reg_step_identity": "التحقق من الهوية",
+  "@listener_reg_step_identity": {},
+  "listener_reg_identity_title": "تحقق من هويتك",
+  "@listener_reg_identity_title": {},
+  "listener_reg_identity_subtitle": "هذا يساعدنا على إبقاء مجتمعنا آمنًا وموثوقًا.",
+  "@listener_reg_identity_subtitle": {},
+  "listener_reg_identity_upload_id_title": "ارفع هوية حكومية",
+  "@listener_reg_identity_upload_id_title": {},
+  "listener_reg_identity_upload_id_subtitle": "جواز السفر أو رخصة القيادة أو الهوية الوطنية.",
+  "@listener_reg_identity_upload_id_subtitle": {},
+  "listener_reg_identity_selfie_title": "التقط صورة شخصية",
+  "@listener_reg_identity_selfie_title": {},
+  "listener_reg_identity_selfie_subtitle": "تأكد من أن وجهك واضح تمامًا",
+  "@listener_reg_identity_selfie_subtitle": {},
+  "listener_reg_identity_liveness_title": "فحص الحيوية",
+  "@listener_reg_identity_liveness_title": {},
+  "listener_reg_identity_liveness_subtitle": "سنطلب منك تحريك رأسك قليلاً",
+  "@listener_reg_identity_liveness_subtitle": {},
+  "listener_reg_identity_start": "ابدأ التحقق",
+  "@listener_reg_identity_start": {},
+  "listener_reg_identity_secure_note": "بياناتك مشفّرة وآمنة",
+  "@listener_reg_identity_secure_note": {},
+  "listener_reg_step_review_submit": "مراجعة وإرسال",
+  "@listener_reg_step_review_submit": {}
 }

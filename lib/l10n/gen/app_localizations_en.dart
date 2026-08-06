@@ -3482,4 +3482,145 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
   String account_created_resend_email_countdown(String time) {
     return 'Resend Email ($time)';
   }
+
+  @override
+  String get listener_reg_continue => 'Continue';
+
+  @override
+  String get listener_reg_skip_for_now => 'Skip for now';
+
+  @override
+  String listener_reg_step_of(int current, int total) {
+    return 'Step $current of $total';
+  }
+
+  @override
+  String listener_reg_steps_remaining(int count) {
+    return '$count steps remaining';
+  }
+
+  @override
+  String get listener_reg_last_step => 'Last step';
+
+  @override
+  String get listener_reg_step1_title => 'Welcome! Let\'s get you started';
+
+  @override
+  String get listener_reg_step1_subtitle =>
+      'Create your account to begin your journey as a listener.';
+
+  @override
+  String get listener_reg_full_name => 'Full name';
+
+  @override
+  String get listener_reg_email => 'Email';
+
+  @override
+  String get listener_reg_phone => 'Phone number';
+
+  @override
+  String get listener_reg_invalid_phone =>
+      'Please enter a valid phone number for the selected country';
+
+  @override
+  String get listener_reg_select_country => 'Select country';
+
+  @override
+  String get listener_reg_search_country => 'Search by country or code';
+
+  @override
+  String get listener_reg_password => 'Password';
+
+  @override
+  String get listener_reg_agree_prefix => 'I agree to the ';
+
+  @override
+  String get listener_reg_terms => 'Terms of Service';
+
+  @override
+  String get listener_reg_agree_and => ' and ';
+
+  @override
+  String get listener_reg_privacy => 'Privacy Policy';
+
+  @override
+  String get listener_reg_already_have => 'Already have an account?';
+
+  @override
+  String get listener_reg_sign_in => 'Sign in';
+
+  @override
+  String get listener_reg_step_coming_soon =>
+      'This step is coming next. Continue to preview the flow.';
+
+  @override
+  String get listener_reg_step_create_account => 'Create Account';
+
+  @override
+  String get listener_reg_step_verify_email => 'Verify Email';
+
+  @override
+  String get listener_reg_step_profile_photo => 'Profile Photo';
+
+  @override
+  String get listener_reg_step_about_you => 'About You';
+
+  @override
+  String get listener_reg_step_languages => 'Languages';
+
+  @override
+  String get listener_reg_step_expertise => 'Expertise';
+
+  @override
+  String get listener_reg_step_voice_intro => 'Voice Introduction';
+
+  @override
+  String get listener_reg_step_availability => 'Availability';
+
+  @override
+  String get listener_reg_step_experience => 'Experience';
+
+  @override
+  String get listener_reg_step_guidelines => 'Community Guidelines';
+
+  @override
+  String get listener_reg_step_identity => 'Identity Verification';
+
+  @override
+  String get listener_reg_identity_title => 'Verify your identity';
+
+  @override
+  String get listener_reg_identity_subtitle =>
+      'This helps us keep our community safe and trusted.';
+
+  @override
+  String get listener_reg_identity_upload_id_title => 'Upload Government ID';
+
+  @override
+  String get listener_reg_identity_upload_id_subtitle =>
+      'Passport, Driver\'s License or National ID.';
+
+  @override
+  String get listener_reg_identity_selfie_title => 'Take a selfie';
+
+  @override
+  String get listener_reg_identity_selfie_subtitle =>
+      'Make sure your face is clearly visible';
+
+  @override
+  String get listener_reg_identity_liveness_title => 'Liveness check';
+
+  @override
+  String get listener_reg_identity_liveness_subtitle =>
+      'We\'ll ask you to move your head slightly';
+
+  @override
+  String get listener_reg_identity_start => 'Start Verification';
+
+  @override
+  String get listener_reg_identity_secure_note =>
+      'Your data is encrypted and secure';
+
+  @override
+  String get listener_reg_step_review_submit => 'Review & Submit';
 }
