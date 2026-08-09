@@ -7246,6 +7246,36 @@ abstract class VentingMobLocalizations {
   /// In en, this message translates to:
   /// **'You can edit the {step} step.'**
   String listener_profile_edit_step_hint(String step);
+
+  /// No description provided for @listener_reg_step_notifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get listener_reg_step_notifications;
+
+  /// No description provided for @listener_reg_notif_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Stay Updated'**
+  String get listener_reg_notif_title;
+
+  /// No description provided for @listener_reg_notif_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Get notified when your profile review is complete, and about sessions, rewards, and important updates.'**
+  String get listener_reg_notif_subtitle;
+
+  /// No description provided for @listener_reg_notif_enable.
+  ///
+  /// In en, this message translates to:
+  /// **'Enable Notifications'**
+  String get listener_reg_notif_enable;
+
+  /// No description provided for @listener_reg_notif_skip.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip'**
+  String get listener_reg_notif_skip;
 }
 
 class _VentingMobLocalizationsDelegate

@@ -4011,4 +4011,20 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
   String listener_profile_edit_step_hint(String step) {
     return 'يمكنك تعديل خطوة $step.';
   }
+
+  @override
+  String get listener_reg_step_notifications => 'الإشعارات';
+
+  @override
+  String get listener_reg_notif_title => 'ابقَ على اطلاع';
+
+  @override
+  String get listener_reg_notif_subtitle =>
+      'احصل على إشعار عند اكتمال مراجعة ملفك، وكذلك حول الجلسات والمكافآت والتحديثات المهمة.';
+
+  @override
+  String get listener_reg_notif_enable => 'تفعيل الإشعارات';
+
+  @override
+  String get listener_reg_notif_skip => 'تخطي';
 }

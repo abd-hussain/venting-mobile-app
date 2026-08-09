@@ -2790,5 +2790,15 @@
         "type": "String"
       }
     }
-  }
+  },
+  "listener_reg_step_notifications": "Notifications",
+  "@listener_reg_step_notifications": {},
+  "listener_reg_notif_title": "Stay Updated",
+  "@listener_reg_notif_title": {},
+  "listener_reg_notif_subtitle": "Get notified when your profile review is complete, and about sessions, rewards, and important updates.",
+  "@listener_reg_notif_subtitle": {},
+  "listener_reg_notif_enable": "Enable Notifications",
+  "@listener_reg_notif_enable": {},
+  "listener_reg_notif_skip": "Skip",
+  "@listener_reg_notif_skip": {}
 }

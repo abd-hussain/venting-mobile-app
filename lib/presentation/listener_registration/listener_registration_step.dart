@@ -1,4 +1,4 @@
-/// Ordered steps for listener registration (8 total).
+/// Ordered steps for listener registration (9 total).
 enum ListenerRegistrationStep {
   createAccount,
   identityVerification,
@@ -8,12 +8,13 @@ enum ListenerRegistrationStep {
   boundaries,
   voiceIntro,
   availability,
+  notifications,
 }
 
 extension ListenerRegistrationStepX on ListenerRegistrationStep {
   int get number => index + 1;
 
-  static const total = 8;
+  static const total = 9;
 
   ListenerRegistrationStep? get next {
     final i = index + 1;

@@ -2790,5 +2790,15 @@
         "type": "String"
       }
     }
-  }
+  },
+  "listener_reg_step_notifications": "الإشعارات",
+  "@listener_reg_step_notifications": {},
+  "listener_reg_notif_title": "ابقَ على اطلاع",
+  "@listener_reg_notif_title": {},
+  "listener_reg_notif_subtitle": "احصل على إشعار عند اكتمال مراجعة ملفك، وكذلك حول الجلسات والمكافآت والتحديثات المهمة.",
+  "@listener_reg_notif_subtitle": {},
+  "listener_reg_notif_enable": "تفعيل الإشعارات",
+  "@listener_reg_notif_enable": {},
+  "listener_reg_notif_skip": "تخطي",
+  "@listener_reg_notif_skip": {}
 }

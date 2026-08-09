@@ -4033,4 +4033,20 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
   String listener_profile_edit_step_hint(String step) {
     return 'You can edit the $step step.';
   }
+
+  @override
+  String get listener_reg_step_notifications => 'Notifications';
+
+  @override
+  String get listener_reg_notif_title => 'Stay Updated';
+
+  @override
+  String get listener_reg_notif_subtitle =>
+      'Get notified when your profile review is complete, and about sessions, rewards, and important updates.';
+
+  @override
+  String get listener_reg_notif_enable => 'Enable Notifications';
+
+  @override
+  String get listener_reg_notif_skip => 'Skip';
 }

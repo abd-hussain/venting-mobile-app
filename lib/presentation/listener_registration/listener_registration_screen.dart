@@ -12,6 +12,7 @@ import 'package:venting_mobile_app/presentation/listener_registration/steps/list
 import 'package:venting_mobile_app/presentation/listener_registration/steps/listener_registration_step6_boundaries.dart';
 import 'package:venting_mobile_app/presentation/listener_registration/steps/listener_registration_step7_voice_intro.dart';
 import 'package:venting_mobile_app/presentation/listener_registration/steps/listener_registration_step8_availability.dart';
+import 'package:venting_mobile_app/presentation/listener_registration/steps/listener_registration_step9_notifications.dart';
 import 'package:venting_mobile_app/presentation/listener_registration/widgets/listener_registration_header.dart';
 import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dart';
 import 'package:venting_mobile_app/utils/router_config.dart';
@@ -22,7 +23,7 @@ class ListenerRegistrationArgs {
   final String email;
 }
 
-/// Multi-step listener registration flow (8 steps).
+/// Multi-step listener registration flow (9 steps).
 class ListenerRegistrationScreen extends StatefulWidget {
   const ListenerRegistrationScreen({super.key, required this.email});
 
@@ -64,7 +65,7 @@ class _ListenerRegistrationScreenState
   }
 
   void _onContinue() {
-    if (_step == ListenerRegistrationStep.availability) {
+    if (_step == ListenerRegistrationStep.notifications) {
       setState(() => _showUnderReview = true);
       return;
     }
@@ -99,6 +100,8 @@ class _ListenerRegistrationScreenState
         ListenerRegistrationStep7VoiceIntro(onContinue: _onContinue),
       ListenerRegistrationStep.availability =>
         ListenerRegistrationStep8Availability(onContinue: _onContinue),
+      ListenerRegistrationStep.notifications =>
+        ListenerRegistrationStep9Notifications(onContinue: _onContinue),
     };
   }
 
