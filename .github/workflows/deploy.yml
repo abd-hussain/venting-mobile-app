@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - dev
 
 env:
   BUILD_TIMESTAMP: ${{ github.run_number }}
@@ -17,7 +18,38 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 1
-      
+
+      - name: 🧭 Resolve Android flavor from branch
+        run: |
+          set -euo pipefail
+          BRANCH="${{ github.ref_name }}"
+          if [ "$BRANCH" = "main" ]; then
+            FLAVOR="prod"
+            ENTRYPOINT="lib/main_prod.dart"
+            DART_DEFINE_FILE=".env/config.prod.json"
+            PACKAGE_NAME="com.vent.ventingMobileApp"
+            AAB_PATH="build/app/outputs/bundle/prodRelease/app-prod-release.aab"
+          elif [ "$BRANCH" = "dev" ]; then
+            FLAVOR="dev"
+            ENTRYPOINT="lib/main_dev.dart"
+            DART_DEFINE_FILE=".env/config.dev.json"
+            PACKAGE_NAME="com.vent.ventingMobileApp.dev"
+            AAB_PATH="build/app/outputs/bundle/devRelease/app-dev-release.aab"
+          else
+            echo "❌ Unsupported branch for Android deploy: $BRANCH"
+            exit 1
+          fi
+
+          {
+            echo "FLAVOR=$FLAVOR"
+            echo "ENTRYPOINT=$ENTRYPOINT"
+            echo "DART_DEFINE_FILE=$DART_DEFINE_FILE"
+            echo "PACKAGE_NAME=$PACKAGE_NAME"
+            echo "AAB_PATH=$AAB_PATH"
+          } >> "$GITHUB_ENV"
+
+          echo "🌿 Branch=$BRANCH → flavor=$FLAVOR package=$PACKAGE_NAME"
+
       - name: 🧹 Free disk space (Android & tooling)
         run: |
           echo "Before cleanup:" && df -h
@@ -42,6 +74,9 @@ jobs:
           echo "📝 Commit: ${{ github.sha }}"
           echo "👤 Author: ${{ github.actor }}"
           echo "🌿 Branch: ${{ github.ref_name }}"
+          echo "📦 Flavor: $FLAVOR"
+          echo "🎯 Entrypoint: $ENTRYPOINT"
+          echo "📱 Package: $PACKAGE_NAME"
 
       - name: 🔥 Set Up Java
         uses: actions/setup-java@v4
@@ -55,6 +90,7 @@ jobs:
       - name: 🐦 Setup Flutter
         uses: subosito/flutter-action@v2
         with:
+          # Keep in sync with .fvmrc (Flutter 3.41.7)
           flutter-version-file: .fvmrc
           channel: 'stable'
           cache: true
@@ -68,7 +104,7 @@ jobs:
       - name: 🗳️ Flutter Pub Get
         run: flutter pub get
 
-      - name: 🗃️ Generate code (Optional)
+      - name: 🗃️ Generate code (build_runner)
         run: flutter pub run build_runner build --delete-conflicting-outputs
 
       - name: 🔑 Set up key.properties
@@ -82,7 +118,7 @@ jobs:
             echo "storePassword=$ANDROID_KEY_PASSWORD" >> android/key.properties
             echo "keyAlias=$ANDROID_KEY_ALIAS" >> android/key.properties
             echo "$ANDROID_KEY_CONTENT" | base64 --decode > android/androidkeystore.jks
-            ls -la android/
+            ls -la android/key.properties android/androidkeystore.jks
           else
             echo "Warning: Android signing secrets not found. Skipping key setup."
           fi
@@ -98,6 +134,7 @@ jobs:
         run: |
           if [ -n "$PLAY_STORE_SECRET" ]; then
             echo "$PLAY_STORE_SECRET" | base64 --decode > android/play_store_secret.json
+            ls -la android/play_store_secret.json
           else
             echo "Warning: Play Store secret not found. Skipping Play Store setup."
           fi
@@ -116,9 +153,6 @@ jobs:
           rm -rf $HOME/.gradle/caches
           flutter pub get
 
-      - name: 🔍 Dump full dependency tree
-        run: flutter pub deps --style=compact
-
       - name: 📦 Install Android SDK 35/36 + Build-Tools
         run: |
           sudo ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager \
@@ -133,11 +167,15 @@ jobs:
           chmod -R u+rwX "$HOME/.android" "$HOME/.config"
 
       # ✅ Fast & reliable verification using a debug APK + aapt
-      - name: 🔍 Verify targetSdk with aapt (must be 35)
+      # Flutter 3.41.x defaults to targetSdk 36 for this project.
+      - name: 🔍 Verify targetSdk with aapt (must be 36)
         run: |
           set -euo pipefail
-          flutter build apk --debug
-          APK="build/app/outputs/flutter-apk/app-debug.apk"
+          flutter build apk --debug \
+            --flavor "$FLAVOR" \
+            -t "$ENTRYPOINT" \
+            --dart-define-from-file="$DART_DEFINE_FILE"
+          APK="build/app/outputs/flutter-apk/app-${FLAVOR}-debug.apk"
           test -f "$APK" || { echo "❌ Not found: $APK"; exit 1; }
           INFO="$(${ANDROID_HOME}/build-tools/36.0.0/aapt dump badging "$APK")"
           echo "$INFO" | grep -E "sdkVersion|targetSdkVersion" || true
@@ -147,8 +185,8 @@ jobs:
             echo "❌ Could not parse targetSdkVersion from aapt output"
             exit 2
           fi
-          if [ "$TSDK" != "35" ]; then
-            echo "❌ Expected targetSdkVersion=35 but found: $TSDK"
+          if [ "$TSDK" != "36" ]; then
+            echo "❌ Expected targetSdkVersion=36 but found: $TSDK"
             exit 2
           fi
           echo "🎯 targetSdkVersion=$TSDK (OK)"
@@ -156,185 +194,25 @@ jobs:
       - name: 🛠️ Build and Deploy
         id: build
         run: |
+          if [ ! -f android/androidkeystore.jks ] || [ ! -f android/key.properties ]; then
+            echo "❌ Missing Android signing files. Set secrets ANDROID_KEY_PASSWORD, ANDROID_KEY_ALIAS, ANDROID_KEY_CONTENT."
+            exit 1
+          fi
+          if [ ! -f android/play_store_secret.json ]; then
+            echo "❌ Missing Play Store credentials. Set secret PLAY_STORE_SECRET."
+            exit 1
+          fi
           make deploy-android
           # Extract build number from pubspec.yaml for commit message
           BUILD_NUMBER=$(grep "^version:" pubspec.yaml | sed 's/version: .*+//')
-          echo "build_number=$BUILD_NUMBER" >> $GITHUB_OUTPUT
-          echo "Build completed with build number: $BUILD_NUMBER"
+          echo "build_number=$BUILD_NUMBER" >> "$GITHUB_OUTPUT"
+          echo "flavor=$FLAVOR" >> "$GITHUB_OUTPUT"
+          echo "Build completed with flavor=$FLAVOR build number=$BUILD_NUMBER"
 
       - name: 📝 Update commit message with build number
         if: success()
         run: |
           BUILD_NUMBER="${{ steps.build.outputs.build_number }}"
-          COMMIT_MSG="🚀 Deploy build $BUILD_NUMBER - $(date '+%Y-%m-%d %H:%M:%S')"
+          FLAVOR_NAME="${{ steps.build.outputs.flavor }}"
+          COMMIT_MSG="🚀 Deploy $FLAVOR_NAME build $BUILD_NUMBER - $(date '+%Y-%m-%d %H:%M:%S')"
           echo "Updated commit message: $COMMIT_MSG"
-
-
-
-  ios:
-    runs-on: 'macos-15'
-
-    steps:
-        - name: 📚 Set up git and fetch all history for all branches and tags
-          uses: actions/checkout@v4
-          with:
-            fetch-depth: 0
-
-        - name: 📊 Display iOS Build Information
-          run: |
-              echo "🍎 Starting iOS CI/CD Deploy #${{ github.run_number }}"
-              echo "📅 Build Date: $(date '+%Y-%m-%d %H:%M UTC')"
-              echo "🔢 Run Number: ${{ github.run_number }}"
-              echo "📝 Commit: ${{ github.sha }}"
-              echo "👤 Author: ${{ github.actor }}"
-              echo "🌿 Branch: ${{ github.ref_name }}"
-
-        - name: 🧰 Finalize Xcode components
-          run: |
-            sudo xcode-select -s /Applications/Xcode_16.app
-            sudo xcodebuild -runFirstLaunch
-  
-        - name: 🧪 Check Xcode Version
-          run: xcodebuild -version
-
-        - name: 🐦 Setup Flutter
-          uses: subosito/flutter-action@v2
-          with:
-            flutter-version-file: .fvmrc
-            channel: 'stable'
-            cache: true
-
-        - name: 🗳️ Flutter gen-l10n
-          run: flutter gen-l10n
-
-        - name: 🗳️ Flutter Pub Get
-          run: flutter pub get
-  
-        - name: 🗃️ Generate code (Optional)
-          run: flutter pub run build_runner build --delete-conflicting-outputs
-
-        - name: 🧰 Set up App Store Connect (place where Fastlane expects it)
-          env:
-            APPSTORE_CONNECT: ${{ secrets.APPSTORE_CONNECT }}
-          run: |
-            if [ -n "$APPSTORE_CONNECT" ]; then
-              mkdir -p ios/fastlane
-              echo "$APPSTORE_CONNECT" | base64 --decode > ios/app_store_connect.json
-            else
-              echo "Warning: App Store Connect secret not found. Skipping App Store setup."
-            fi
-        
-        - name: 🎯 Setup Ruby
-          uses: ruby/setup-ruby@v1
-          with:
-            ruby-version: '3.2'
-            bundler-cache: true   # will cache gems in the runner toolcache
-          env:
-            RUNNER_TOOL_CACHE: /Users/runner/hostedtoolcache
-            RUNNER_TEMP: /Users/runner/work/_temp
-  
-        - name: 📦 Install fastlane (no global writes)
-          run: |
-            gem install fastlane --no-document
-            ruby -v
-            which ruby
-            fastlane -v
-
-        # ✅ Wire xcconfigs BEFORE pods
-        - name: 🧩 Ensure Flutter xcconfigs include Pods
-          run: |
-           ensure_line () { FILE="$1"; LINE="$2"; grep -qF "$LINE" "$FILE" || echo "$LINE" >> "$FILE"; }
-           ensure_line ios/Flutter/Debug.xcconfig   '#include? "Pods/Target Support Files/Pods-Runner/Pods-Runner.debug.xcconfig"'
-           ensure_line ios/Flutter/Release.xcconfig '#include? "Pods/Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"'
-           ensure_line ios/Flutter/Profile.xcconfig '#include? "Pods/Target Support Files/Pods-Runner/Pods-Runner.profile.xcconfig"'
-          
-        - name: 🧹 Pods clean install
-          run: |
-            pushd ios
-            pod deintegrate
-            rm -f Podfile.lock
-            pod install
-            popd
-
-        - name: 🔀 Select Xcode with iPhoneOS SDK
-          shell: bash
-          run: |
-            set -euo pipefail
-        
-            choose_xcode() {
-              for X in "$@"; do
-                DS="$X/Contents/Developer/Platforms/iPhoneOS.platform/DeviceSupport"
-                SDK="$X/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iphoneos.sdk"
-                [[ -d "$SDK" ]] || continue
-        
-                # Debug to STDERR only:
-                >&2 echo "Checking $X"
-                [[ -d "$DS" ]] && >&2 ls "$DS" | tail -5 || true
-        
-                # Prefer an SDK that reports iOS 18 (fallback to any iOS SDK present)
-                if /usr/libexec/PlistBuddy -c 'Print :DTPlatformVersion' "$SDK/SDKSettings.plist" 2>/dev/null | grep -q '^18'; then
-                  echo "$X"; return 0
-                fi
-                # fallback acceptable
-                echo "$X"; return 0
-              done
-              return 1
-            }
-        
-            PICK="$(choose_xcode \
-              /Applications/Xcode_16.4.app \
-              /Applications/Xcode_16.3.app \
-              /Applications/Xcode_16.2.app \
-              /Applications/Xcode_16.1.app \
-              /Applications/Xcode_16.app \
-              /Applications/Xcode.app)"
-        
-            if [[ -z "$PICK" ]]; then
-              echo "❌ No suitable Xcode found" >&2
-              exit 1
-            fi
-        
-            echo "Using Xcode: $PICK" >&2
-            echo "DEVELOPER_DIR=$PICK/Contents/Developer" >> "$GITHUB_ENV"
-        
-            # Sanity:
-            xcodebuild -version
-            xcodebuild -showsdks || true
-
-        - name: 🧪 Pre-warm xcodebuild & validate scheme
-          run: |
-            xcodebuild -version
-            xcodebuild -list -workspace ios/Runner.xcworkspace
-            xcodebuild -resolvePackageDependencies \
-              -workspace ios/Runner.xcworkspace \
-              -scheme Runner \
-              -destination 'generic/platform=iOS'
-          
-        - name: 🛠️ Build and Deploy
-          id: build-ios
-          env:
-            MATCH_PASSWORD: ${{ secrets.IOS_MATCH_PASSWORD }}
-            MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.GIT_BASIC_AUTHORIZATION }}
-            FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT: "120"
-            FASTLANE_XCODEBUILD_SETTINGS_RETRIES: "6"
-          run: |
-            if [ -n "$MATCH_PASSWORD" ] && [ -n "$MATCH_GIT_BASIC_AUTHORIZATION" ]; then
-              make deploy-ios
-              # Extract build number from pubspec.yaml for commit message
-              BUILD_NUMBER=$(grep "^version:" pubspec.yaml | sed 's/version: .*+//')
-              echo "build_number=$BUILD_NUMBER" >> $GITHUB_OUTPUT
-              echo "iOS build completed with build number: $BUILD_NUMBER"
-            else
-              echo "Warning: iOS deployment secrets not found. Skipping iOS deployment."
-              exit 1
-            fi
-
-        - name: 📝 Update commit message with build number
-          if: success()
-          run: |
-              BUILD_NUMBER="${{ steps.build-ios.outputs.build_number }}"
-              COMMIT_MSG="🍎 iOS Deploy build $BUILD_NUMBER - $(date '+%Y-%m-%d %H:%M')"
-              echo "Updated commit message: $COMMIT_MSG"
-              # Note: This will be visible in the workflow run summary
-
-  

@@ -12,3 +12,6 @@ GeneratedPluginRegistrant.java
 key.properties
 **/*.keystore
 **/*.jks
+androidkeystore.jks
+play_store_secret.json
+keystore/SIGNING_CREDENTIALS.txt

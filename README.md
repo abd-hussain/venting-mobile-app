@@ -280,3 +280,61 @@ I also recommend adding one final section that many projects miss but investors 
 🚀 Project Vision
 
 Venting is more than a communication app—it is a platform built to create meaningful human connections through empathy. By combining thoughtful design, secure technology, and a premium user experience, Venting aims to become the most trusted place for people to feel heard, while empowering listeners to make a positive impact and earn from their time.
+
+## Android CI/CD (Google Play alpha draft)
+
+`.github/workflows/deploy.yml` builds a signed App Bundle and uploads it to Google Play **Closed testing (alpha)** as a **draft** via Fastlane (`make deploy-android`).
+
+| Branch | Flavor | Entrypoint | Package name |
+| --- | --- | --- | --- |
+| `main` | `prod` | `lib/main_prod.dart` | `com.vent.ventingMobileApp` |
+| `dev` | `dev` | `lib/main_dev.dart` | `com.vent.ventingMobileApp.dev` |
+
+### Required GitHub secrets
+
+| Secret | Description |
+| --- | --- |
+| `ANDROID_KEY_PASSWORD` | Keystore **and** key password (same value written to `keyPassword` / `storePassword`) |
+| `ANDROID_KEY_ALIAS` | Key alias inside the `.jks` (e.g. `venting`) |
+| `ANDROID_KEY_CONTENT` | Base64-encoded Android keystore (`.jks`) |
+| `PLAY_STORE_SECRET` | Base64-encoded Google Play Console service-account JSON |
+
+### Encode secrets (macOS / Linux)
+
+```bash
+# Keystore → ANDROID_KEY_CONTENT
+base64 -i android/keystore/venting.jks | pbcopy   # macOS
+# or: base64 -w 0 android/keystore/venting.jks
+
+# Play service account JSON → PLAY_STORE_SECRET
+base64 -i path/to/play-service-account.json | pbcopy
+# or: base64 -w 0 path/to/play-service-account.json
+```
+
+Paste the clipboard / output into the matching GitHub repository secret.
+
+### Local / CI signing layout
+
+- CI writes `android/key.properties` (`keyAlias`, `keyPassword`, `storePassword`) and `android/androidkeystore.jks`.
+- Play credentials land at `android/play_store_secret.json` (gitignored).
+- Same signing key is used for both flavors; package id differs by flavor (`.dev` suffix).
+- AAB paths:
+  - prod: `build/app/outputs/bundle/prodRelease/app-prod-release.aab`
+  - dev: `build/app/outputs/bundle/devRelease/app-dev-release.aab`
+
+### Manual deploy
+
+```bash
+# Production (default)
+make deploy-android
+
+# Dev flavor
+FLAVOR=dev \
+ENTRYPOINT=lib/main_dev.dart \
+DART_DEFINE_FILE=.env/config.dev.json \
+PACKAGE_NAME=com.vent.ventingMobileApp.dev \
+AAB_PATH=build/app/outputs/bundle/devRelease/app-dev-release.aab \
+make deploy-android
+```
+
+Requires Flutter, Ruby/Bundler, signing files, and Play JSON already in place under `android/`.

@@ -1,0 +1,5 @@
+# Local release signing keystores — never commit these files.
+# See ../key.properties.example for the expected property names.
+*.jks
+*.keystore
+SIGNING_CREDENTIALS.txt

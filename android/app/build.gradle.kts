@@ -1,3 +1,4 @@
+import java.io.File
 import java.util.Properties
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
@@ -40,6 +41,26 @@ if (keystorePropertiesFile.exists()) {
     keystorePropertiesFile.inputStream().use { keystoreProperties.load(it) }
 }
 
+/**
+ * Shared release keystore for both flavors.
+ * Prefer CI file `android/androidkeystore.jks`, else `storeFile` from key.properties.
+ */
+fun resolveReleaseStoreFile(): File? {
+    val ciStore = rootProject.file("androidkeystore.jks")
+    if (ciStore.exists()) return ciStore
+    val fromProp = keystoreProperties.getProperty("storeFile") ?: return null
+    val file = rootProject.file(fromProp)
+    return file.takeIf { it.exists() }
+}
+
+fun hasReleaseSigning(): Boolean {
+    if (!keystorePropertiesFile.exists()) return false
+    return !keystoreProperties.getProperty("keyAlias").isNullOrBlank() &&
+        !keystoreProperties.getProperty("keyPassword").isNullOrBlank() &&
+        !keystoreProperties.getProperty("storePassword").isNullOrBlank() &&
+        resolveReleaseStoreFile() != null
+}
+
 android {
     namespace = "com.vent.ventingMobileApp"
     compileSdk = flutter.compileSdkVersion
@@ -66,6 +87,17 @@ android {
         multiDexEnabled = true
     }
 
+    signingConfigs {
+        if (hasReleaseSigning()) {
+            create("release") {
+                keyAlias = keystoreProperties.getProperty("keyAlias")
+                keyPassword = keystoreProperties.getProperty("keyPassword")
+                storePassword = keystoreProperties.getProperty("storePassword")
+                storeFile = resolveReleaseStoreFile()
+            }
+        }
+    }
+
     flavorDimensions += "default"
     productFlavors {
         create("dev") {
@@ -74,22 +106,17 @@ android {
             resValue("string", "app_name", "Venting Dev")
             manifestPlaceholders["appIcon"] = "@mipmap/ic_launcher_dev"
             manifestPlaceholders["appIconRound"] = "@mipmap/ic_launcher_dev_round"
+            if (hasReleaseSigning()) {
+                signingConfig = signingConfigs.getByName("release")
+            }
         }
         create("prod") {
             dimension = "default"
             resValue("string", "app_name", "Venting")
             manifestPlaceholders["appIcon"] = "@mipmap/ic_launcher"
             manifestPlaceholders["appIconRound"] = "@mipmap/ic_launcher_round"
-        }
-    }
-
-    signingConfigs {
-        create("release") {
-            if (keystorePropertiesFile.exists()) {
-                keyAlias = keystoreProperties.getProperty("keyAlias")
-                keyPassword = keystoreProperties.getProperty("keyPassword")
-                storePassword = keystoreProperties.getProperty("storePassword")
-                storeFile = rootProject.file("androidkeystore.jks")
+            if (hasReleaseSigning()) {
+                signingConfig = signingConfigs.getByName("release")
             }
         }
     }
@@ -100,7 +127,7 @@ android {
             isShrinkResources = true
             isDebuggable = false
             signingConfig =
-                if (keystorePropertiesFile.exists()) {
+                if (hasReleaseSigning()) {
                     signingConfigs.getByName("release")
                 } else {
                     // Local `flutter run --release` without a keystore still works.
@@ -119,6 +146,8 @@ android {
             isDebuggable = true
             isMinifyEnabled = false
             isShrinkResources = false
+            // Keep debug installs easy — always use the Android debug keystore.
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
 
