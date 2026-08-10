@@ -4046,4 +4046,58 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
   @override
   String get ventor_reg_change_anytime =>
       'يمكنك تغييره في أي وقت من إعدادات ملفك';
+
+  @override
+  String get home_tab_dashboard => 'لوحة التحكم';
+
+  @override
+  String get home_tab_sessions => 'الجلسات';
+
+  @override
+  String get home_tab_availability => 'التوفر';
+
+  @override
+  String get home_tab_earnings => 'الأرباح';
+
+  @override
+  String get home_tab_rewards => 'المكافآت';
+
+  @override
+  String get home_tab_profile => 'الملف';
+
+  @override
+  String get listener_home_dashboard_placeholder =>
+      'ستظهر نظرة عامة على حساب المستمع هنا.';
+
+  @override
+  String get listener_home_sessions_placeholder =>
+      'ستظهر جلسات الاستماع القادمة والسابقة هنا.';
+
+  @override
+  String get listener_home_availability_placeholder =>
+      'أدِر أوقات توفرك لاستقبال المكالمات.';
+
+  @override
+  String get listener_home_earnings_placeholder =>
+      'تتبّع أرباحك ومدفوعاتك كمستمع هنا.';
+
+  @override
+  String get listener_home_profile_placeholder =>
+      'سيظهر ملف المستمع والإعدادات هنا.';
+
+  @override
+  String get ventor_home_dashboard_placeholder =>
+      'ابحث عن المستمعين وابدأ محادثة من هنا.';
+
+  @override
+  String get ventor_home_sessions_placeholder =>
+      'ستظهر جلسات التفريغ وسجلك هنا.';
+
+  @override
+  String get ventor_home_rewards_placeholder =>
+      'ستظهر مكافآت وإنجازات المتحدث هنا.';
+
+  @override
+  String get ventor_home_profile_placeholder =>
+      'سيظهر ملف المتحدث والإعدادات هنا.';
 }

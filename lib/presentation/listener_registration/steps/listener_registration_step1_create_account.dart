@@ -10,9 +10,9 @@ import 'package:phone_numbers_parser/phone_numbers_parser.dart';
 import 'package:venting_mobile_app/config/app_config.dart';
 import 'package:venting_mobile_app/di/di_container.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
-import 'package:venting_mobile_app/presentation/common/app_webview_screen.dart';
 import 'package:venting_mobile_app/presentation/listener_registration/widgets/phone_country_picker.dart';
 import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dart';
+import 'package:venting_mobile_app/shared_widgets/app_webview_screen.dart';
 import 'package:venting_mobile_app/utils/router_config.dart';
 
 /// Step 1 — Create Account (profile photo, full name, locked email, phone).

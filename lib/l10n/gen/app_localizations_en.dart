@@ -4068,4 +4068,58 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
   @override
   String get ventor_reg_change_anytime =>
       'You can change it anytime from your profile settings';
+
+  @override
+  String get home_tab_dashboard => 'Dashboard';
+
+  @override
+  String get home_tab_sessions => 'Sessions';
+
+  @override
+  String get home_tab_availability => 'Availability';
+
+  @override
+  String get home_tab_earnings => 'Earnings';
+
+  @override
+  String get home_tab_rewards => 'Rewards';
+
+  @override
+  String get home_tab_profile => 'Profile';
+
+  @override
+  String get listener_home_dashboard_placeholder =>
+      'Your listener overview will appear here.';
+
+  @override
+  String get listener_home_sessions_placeholder =>
+      'Upcoming and past listening sessions will appear here.';
+
+  @override
+  String get listener_home_availability_placeholder =>
+      'Manage when you are available to take calls.';
+
+  @override
+  String get listener_home_earnings_placeholder =>
+      'Track your listener earnings and payouts here.';
+
+  @override
+  String get listener_home_profile_placeholder =>
+      'Your listener profile and settings will appear here.';
+
+  @override
+  String get ventor_home_dashboard_placeholder =>
+      'Find listeners and start a conversation from here.';
+
+  @override
+  String get ventor_home_sessions_placeholder =>
+      'Your venting sessions and history will appear here.';
+
+  @override
+  String get ventor_home_rewards_placeholder =>
+      'Rewards and achievements for ventors will appear here.';
+
+  @override
+  String get ventor_home_profile_placeholder =>
+      'Your ventor profile and settings will appear here.';
 }

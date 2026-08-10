@@ -7,4 +7,5 @@ class SavedConstants {
   static const String onboardingShown = "onboardingShown";
   static const String compleateRegistration = "compleateRegistration";
   static const String alreadyUser = "alreadyUser";
+  static const String userType = "userType";
 }

@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
+import 'package:venting_mobile_app/presentation/auth/auth_screen.dart';
+import 'package:venting_mobile_app/presentation/homescreen.dart';
 import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dart';
 import 'package:venting_mobile_app/utils/router_config.dart';
 
@@ -67,7 +69,10 @@ class _VentorRegistrationScreenState extends State<VentorRegistrationScreen> {
     if (!_canContinue) return;
 
     // TODO: submit nickname + optional avatar with widget.email
-    context.go(AppRoutes.tabHome);
+    context.go(
+      AppRoutes.tabHome,
+      extra: const HomeScreenArgs(userType: AuthUserType.ventor),
+    );
   }
 
   @override

@@ -7312,6 +7312,96 @@ abstract class VentingMobLocalizations {
   /// In en, this message translates to:
   /// **'You can change it anytime from your profile settings'**
   String get ventor_reg_change_anytime;
+
+  /// No description provided for @home_tab_dashboard.
+  ///
+  /// In en, this message translates to:
+  /// **'Dashboard'**
+  String get home_tab_dashboard;
+
+  /// No description provided for @home_tab_sessions.
+  ///
+  /// In en, this message translates to:
+  /// **'Sessions'**
+  String get home_tab_sessions;
+
+  /// No description provided for @home_tab_availability.
+  ///
+  /// In en, this message translates to:
+  /// **'Availability'**
+  String get home_tab_availability;
+
+  /// No description provided for @home_tab_earnings.
+  ///
+  /// In en, this message translates to:
+  /// **'Earnings'**
+  String get home_tab_earnings;
+
+  /// No description provided for @home_tab_rewards.
+  ///
+  /// In en, this message translates to:
+  /// **'Rewards'**
+  String get home_tab_rewards;
+
+  /// No description provided for @home_tab_profile.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get home_tab_profile;
+
+  /// No description provided for @listener_home_dashboard_placeholder.
+  ///
+  /// In en, this message translates to:
+  /// **'Your listener overview will appear here.'**
+  String get listener_home_dashboard_placeholder;
+
+  /// No description provided for @listener_home_sessions_placeholder.
+  ///
+  /// In en, this message translates to:
+  /// **'Upcoming and past listening sessions will appear here.'**
+  String get listener_home_sessions_placeholder;
+
+  /// No description provided for @listener_home_availability_placeholder.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage when you are available to take calls.'**
+  String get listener_home_availability_placeholder;
+
+  /// No description provided for @listener_home_earnings_placeholder.
+  ///
+  /// In en, this message translates to:
+  /// **'Track your listener earnings and payouts here.'**
+  String get listener_home_earnings_placeholder;
+
+  /// No description provided for @listener_home_profile_placeholder.
+  ///
+  /// In en, this message translates to:
+  /// **'Your listener profile and settings will appear here.'**
+  String get listener_home_profile_placeholder;
+
+  /// No description provided for @ventor_home_dashboard_placeholder.
+  ///
+  /// In en, this message translates to:
+  /// **'Find listeners and start a conversation from here.'**
+  String get ventor_home_dashboard_placeholder;
+
+  /// No description provided for @ventor_home_sessions_placeholder.
+  ///
+  /// In en, this message translates to:
+  /// **'Your venting sessions and history will appear here.'**
+  String get ventor_home_sessions_placeholder;
+
+  /// No description provided for @ventor_home_rewards_placeholder.
+  ///
+  /// In en, this message translates to:
+  /// **'Rewards and achievements for ventors will appear here.'**
+  String get ventor_home_rewards_placeholder;
+
+  /// No description provided for @ventor_home_profile_placeholder.
+  ///
+  /// In en, this message translates to:
+  /// **'Your ventor profile and settings will appear here.'**
+  String get ventor_home_profile_placeholder;
 }
 
 class _VentingMobLocalizationsDelegate

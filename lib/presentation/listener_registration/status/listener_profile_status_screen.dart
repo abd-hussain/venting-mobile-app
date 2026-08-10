@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
+import 'package:venting_mobile_app/presentation/auth/auth_screen.dart';
+import 'package:venting_mobile_app/presentation/homescreen.dart';
 import 'package:venting_mobile_app/presentation/listener_registration/status/listener_profile_status.dart';
 import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dart';
 import 'package:venting_mobile_app/utils/router_config.dart';
@@ -35,7 +37,10 @@ class ListenerProfileStatusScreen extends StatelessWidget {
   static const _dangerSoft = Color(0xFFFF6B6B);
 
   void _goDashboard(BuildContext context) {
-    context.go(AppRoutes.tabHome);
+    context.go(
+      AppRoutes.tabHome,
+      extra: const HomeScreenArgs(userType: AuthUserType.lissener),
+    );
   }
 
   void _onPrimary(BuildContext context) {

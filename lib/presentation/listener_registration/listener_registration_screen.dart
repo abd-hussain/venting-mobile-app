@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
+import 'package:venting_mobile_app/presentation/auth/auth_screen.dart';
+import 'package:venting_mobile_app/presentation/homescreen.dart';
 import 'package:venting_mobile_app/presentation/listener_registration/listener_registration_step.dart';
 import 'package:venting_mobile_app/presentation/listener_registration/status/listener_profile_status.dart';
 import 'package:venting_mobile_app/presentation/listener_registration/status/listener_profile_status_screen.dart';
@@ -75,7 +77,10 @@ class _ListenerRegistrationScreenState
   }
 
   void _onSkipForNow() {
-    context.go(AppRoutes.tabHome);
+    context.go(
+      AppRoutes.tabHome,
+      extra: const HomeScreenArgs(userType: AuthUserType.lissener),
+    );
   }
 
   Widget _buildStep() {

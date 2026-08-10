@@ -5,7 +5,6 @@ import 'package:venting_mobile_app/di/di_container.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
 import 'package:venting_mobile_app/presentation/auth/auth_screen.dart';
 import 'package:venting_mobile_app/presentation/auth/email_registration_screen.dart';
-import 'package:venting_mobile_app/presentation/common/app_webview_screen.dart';
 import 'package:venting_mobile_app/presentation/homescreen.dart';
 import 'package:venting_mobile_app/presentation/listener_onboarding/listener_onboarding_screen.dart';
 import 'package:venting_mobile_app/presentation/listener_registration/listener_registration_screen.dart';
@@ -16,6 +15,7 @@ import 'package:venting_mobile_app/presentation/splash/splash_screen.dart';
 import 'package:venting_mobile_app/presentation/ventor_onboarding/ventor_onboarding_screen.dart';
 import 'package:venting_mobile_app/presentation/ventor_registration/ventor_registration_screen.dart';
 import 'package:venting_mobile_app/presentation/welcome/welcome_screen.dart';
+import 'package:venting_mobile_app/shared_widgets/app_webview_screen.dart';
 
 /// Route constants for better maintainability
 class AppRoutes {
@@ -96,7 +96,11 @@ class VentingRouterConfig {
       GoRoute(
         path: AppRoutes.tabHome,
         name: 'tab-home',
-        builder: (context, state) => const HomeScreen(),
+        builder: (context, state) {
+          final extra = state.extra;
+          final args = extra is HomeScreenArgs ? extra : null;
+          return HomeScreen(userType: args?.userType);
+        },
       ),
       GoRoute(
         path: AppRoutes.mainOnboarding,
