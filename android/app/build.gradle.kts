@@ -23,16 +23,53 @@ if (hasGoogleServices) {
 
 fun convertToValidVersionCode(versionCodeStr: String): Int {
     return try {
-        val versionCode = versionCodeStr.toLong()
-        // Date-based codes (YYYYMMDDHHMM) can exceed Int.MAX_VALUE — use last 9 digits.
+        val digits = versionCodeStr.filter { it.isDigit() }
+        if (digits.isEmpty()) return 1
+        val versionCode = digits.toLong()
+        // Date-based codes (YYYYMMDDHHMM) exceed Int.MAX_VALUE — use last 9 digits.
         if (versionCode > Int.MAX_VALUE) {
-            versionCodeStr.takeLast(9).toInt()
+            digits.takeLast(9).toInt()
         } else {
             versionCode.toInt()
         }
     } catch (_: Exception) {
         1
     }
+}
+
+/**
+ * Read versionCode as a String. Do NOT use [flutter.versionCode] — its Int getter
+ * throws when the pubspec build number is missing or larger than Int.MAX_VALUE
+ * (e.g. YYYYMMDDHHMM from update_build_date.sh).
+ */
+fun resolveVersionCodeString(): String {
+    project.findProperty("versionCode")?.toString()?.takeIf { it.isNotBlank() }?.let { return it }
+    project.findProperty("flutter.versionCode")?.toString()?.takeIf { it.isNotBlank() }?.let { return it }
+
+    // Raw property on the Flutter extension (String), before Int conversion.
+    flutter.flutterVersionCode?.takeIf { it.isNotBlank() }?.let { return it }
+
+    val localProps = Properties()
+    val localFile = rootProject.file("local.properties")
+    if (localFile.exists()) {
+        localFile.inputStream().use { localProps.load(it) }
+        localProps.getProperty("flutter.versionCode")?.takeIf { it.isNotBlank() }?.let { return it }
+    }
+    return "1"
+}
+
+fun resolveVersionNameString(): String {
+    project.findProperty("versionName")?.toString()?.takeIf { it.isNotBlank() }?.let { return it }
+    project.findProperty("flutter.versionName")?.toString()?.takeIf { it.isNotBlank() }?.let { return it }
+    runCatching { flutter.versionName }.getOrNull()?.takeIf { it.isNotBlank() }?.let { return it }
+
+    val localProps = Properties()
+    val localFile = rootProject.file("local.properties")
+    if (localFile.exists()) {
+        localFile.inputStream().use { localProps.load(it) }
+        localProps.getProperty("flutter.versionName")?.takeIf { it.isNotBlank() }?.let { return it }
+    }
+    return "1.0.0"
 }
 
 val keystoreProperties = Properties()
@@ -80,10 +117,8 @@ android {
         applicationId = "com.vent.ventingMobileApp"
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
-        versionCode = convertToValidVersionCode(
-            (project.findProperty("versionCode") ?: flutter.versionCode).toString(),
-        )
-        versionName = (project.findProperty("versionName") ?: flutter.versionName).toString()
+        versionCode = convertToValidVersionCode(resolveVersionCodeString())
+        versionName = resolveVersionNameString()
         multiDexEnabled = true
     }
 
