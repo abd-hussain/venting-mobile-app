@@ -72,11 +72,11 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
   String get common_generalErrorMsg => 'An error occurred';
 
   @override
-  String get common_connectionLost => 'Connection Lost';
+  String get common_connectionLost => 'No Internet Connection';
 
   @override
   String get common_connectionLostMessage =>
-      'Internet connection lost. Please check your data or Wi-Fi connection and try again.';
+      'Looks like you\'re offline. Please check your connection and try again.';
 
   @override
   String get common_rechargeRequired => 'Recharge Required';

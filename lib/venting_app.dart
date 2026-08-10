@@ -76,6 +76,15 @@ class VentingAppState extends State<VentingApp> with WidgetsBindingObserver {
         unawaited(ConnectivityInterceptor.showNoInternetPopupIfNeeded());
       }
     });
+    // Catch already-offline launches — the stream only emits on changes.
+    unawaited(_showOfflineGateIfNeeded());
+  }
+
+  Future<void> _showOfflineGateIfNeeded() async {
+    final hasInternet = await NetworkUseCase.checkInternetConnection();
+    if (!hasInternet) {
+      await ConnectivityInterceptor.showNoInternetPopupIfNeeded();
+    }
   }
 
   @override

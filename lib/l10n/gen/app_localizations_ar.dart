@@ -72,11 +72,11 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
   String get common_generalErrorMsg => 'حدث خطأ';
 
   @override
-  String get common_connectionLost => 'فقدان الاتصال';
+  String get common_connectionLost => 'لا يوجد اتصال بالإنترنت';
 
   @override
   String get common_connectionLostMessage =>
-      'فقدت الاتصال بالإنترنت. يرجى التحقق من اتصال البيانات أو Wi-Fi والمحاولة مرة أخرى.';
+      'يبدو أنك غير متصل. يرجى التحقق من اتصالك والمحاولة مرة أخرى.';
 
   @override
   String get common_rechargeRequired => 'إعادة الشحن مطلوبة';

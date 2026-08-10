@@ -230,13 +230,13 @@ abstract class VentingMobLocalizations {
   /// No description provided for @common_connectionLost.
   ///
   /// In en, this message translates to:
-  /// **'Connection Lost'**
+  /// **'No Internet Connection'**
   String get common_connectionLost;
 
   /// No description provided for @common_connectionLostMessage.
   ///
   /// In en, this message translates to:
-  /// **'Internet connection lost. Please check your data or Wi-Fi connection and try again.'**
+  /// **'Looks like you\'re offline. Please check your connection and try again.'**
   String get common_connectionLostMessage;
 
   /// No description provided for @common_rechargeRequired.
