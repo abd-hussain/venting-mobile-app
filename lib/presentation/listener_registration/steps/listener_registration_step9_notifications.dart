@@ -262,3 +262,5 @@ class _NotificationBellArt extends StatelessWidget {
     );
   }
 }
+
+//TODO: lessenor should always have skip button to contine later

@@ -4027,4 +4027,23 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
 
   @override
   String get listener_reg_notif_skip => 'تخطي';
+
+  @override
+  String get ventor_reg_title => 'اختر اسمًا مستعارًا';
+
+  @override
+  String get ventor_reg_subtitle => 'هكذا سيراك المستمعون.';
+
+  @override
+  String get ventor_reg_nickname_hint => 'مثال: QuietSoul';
+
+  @override
+  String get ventor_reg_nickname_required => 'يرجى إدخال اسم مستعار';
+
+  @override
+  String get ventor_reg_avatar_label => 'أضف صورة رمزية للملف (اختياري)';
+
+  @override
+  String get ventor_reg_change_anytime =>
+      'يمكنك تغييره في أي وقت من إعدادات ملفك';
 }

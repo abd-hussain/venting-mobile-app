@@ -14,6 +14,7 @@ import 'package:venting_mobile_app/presentation/listener_registration/status/lis
 import 'package:venting_mobile_app/presentation/main_onboarding/main_onboarding_screen.dart';
 import 'package:venting_mobile_app/presentation/splash/splash_screen.dart';
 import 'package:venting_mobile_app/presentation/ventor_onboarding/ventor_onboarding_screen.dart';
+import 'package:venting_mobile_app/presentation/ventor_registration/ventor_registration_screen.dart';
 import 'package:venting_mobile_app/presentation/welcome/welcome_screen.dart';
 
 /// Route constants for better maintainability
@@ -33,6 +34,7 @@ class AppRoutes {
   static const String authListenerRegister = '/auth-listener-register';
   static const String authUserUnknown = '/auth-user-unknown';
   static const String emailRegistration = '/email-registration';
+  static const String ventorRegistration = '/ventor-registration';
   static const String webView = '/web-view';
 }
 
@@ -195,6 +197,18 @@ class VentingRouterConfig {
             userType: args.userType,
             authType: args.authType,
           );
+        },
+      ),
+      GoRoute(
+        path: AppRoutes.ventorRegistration,
+        name: 'ventor-registration',
+        builder: (context, state) {
+          final extra = state.extra;
+          final args = extra is VentorRegistrationArgs
+              ? extra
+              : const VentorRegistrationArgs(email: '');
+
+          return VentorRegistrationScreen(email: args.email);
         },
       ),
       GoRoute(

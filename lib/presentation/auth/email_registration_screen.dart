@@ -6,6 +6,7 @@ import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
 import 'package:venting_mobile_app/presentation/auth/auth_screen.dart';
 import 'package:venting_mobile_app/presentation/listener_registration/listener_registration_screen.dart';
 import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dart';
+import 'package:venting_mobile_app/presentation/ventor_registration/ventor_registration_screen.dart';
 import 'package:venting_mobile_app/shared_widgets/app_language_selector.dart';
 import 'package:venting_mobile_app/utils/router_config.dart';
 
@@ -116,13 +117,21 @@ class _EmailRegistrationScreenState extends State<EmailRegistrationScreen> {
     setState(() => _submitted = true);
     if (!_canSubmit) return;
 
-    if (widget.userType == AuthUserType.lissener &&
-        widget.authType == AuthType.register) {
-      context.push(
-        AppRoutes.listenerRegistration,
-        extra: ListenerRegistrationArgs(email: _emailController.text.trim()),
-      );
-      return;
+    if (widget.authType == AuthType.register) {
+      if (widget.userType == AuthUserType.lissener) {
+        context.push(
+          AppRoutes.listenerRegistration,
+          extra: ListenerRegistrationArgs(email: _emailController.text.trim()),
+        );
+        return;
+      }
+      if (widget.userType == AuthUserType.ventor) {
+        context.push(
+          AppRoutes.ventorRegistration,
+          extra: VentorRegistrationArgs(email: _emailController.text.trim()),
+        );
+        return;
+      }
     }
     // TODO: call sign-in or register API based on authType / userType
   }

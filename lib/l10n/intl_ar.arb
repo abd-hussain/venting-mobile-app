@@ -2800,5 +2800,17 @@
   "listener_reg_notif_enable": "تفعيل الإشعارات",
   "@listener_reg_notif_enable": {},
   "listener_reg_notif_skip": "تخطي",
-  "@listener_reg_notif_skip": {}
+  "@listener_reg_notif_skip": {},
+  "ventor_reg_title": "اختر اسمًا مستعارًا",
+  "@ventor_reg_title": {},
+  "ventor_reg_subtitle": "هكذا سيراك المستمعون.",
+  "@ventor_reg_subtitle": {},
+  "ventor_reg_nickname_hint": "مثال: QuietSoul",
+  "@ventor_reg_nickname_hint": {},
+  "ventor_reg_nickname_required": "يرجى إدخال اسم مستعار",
+  "@ventor_reg_nickname_required": {},
+  "ventor_reg_avatar_label": "أضف صورة رمزية للملف (اختياري)",
+  "@ventor_reg_avatar_label": {},
+  "ventor_reg_change_anytime": "يمكنك تغييره في أي وقت من إعدادات ملفك",
+  "@ventor_reg_change_anytime": {}
 }

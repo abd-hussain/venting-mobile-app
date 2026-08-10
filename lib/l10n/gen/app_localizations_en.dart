@@ -4049,4 +4049,23 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
 
   @override
   String get listener_reg_notif_skip => 'Skip';
+
+  @override
+  String get ventor_reg_title => 'Choose a nickname';
+
+  @override
+  String get ventor_reg_subtitle => 'This is how listeners will see you.';
+
+  @override
+  String get ventor_reg_nickname_hint => 'e.g. QuietSoul';
+
+  @override
+  String get ventor_reg_nickname_required => 'Please enter a nickname';
+
+  @override
+  String get ventor_reg_avatar_label => 'Add a profile avatar (optional)';
+
+  @override
+  String get ventor_reg_change_anytime =>
+      'You can change it anytime from your profile settings';
 }

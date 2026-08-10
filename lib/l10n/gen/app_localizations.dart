@@ -7276,6 +7276,42 @@ abstract class VentingMobLocalizations {
   /// In en, this message translates to:
   /// **'Skip'**
   String get listener_reg_notif_skip;
+
+  /// No description provided for @ventor_reg_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a nickname'**
+  String get ventor_reg_title;
+
+  /// No description provided for @ventor_reg_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'This is how listeners will see you.'**
+  String get ventor_reg_subtitle;
+
+  /// No description provided for @ventor_reg_nickname_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. QuietSoul'**
+  String get ventor_reg_nickname_hint;
+
+  /// No description provided for @ventor_reg_nickname_required.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a nickname'**
+  String get ventor_reg_nickname_required;
+
+  /// No description provided for @ventor_reg_avatar_label.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a profile avatar (optional)'**
+  String get ventor_reg_avatar_label;
+
+  /// No description provided for @ventor_reg_change_anytime.
+  ///
+  /// In en, this message translates to:
+  /// **'You can change it anytime from your profile settings'**
+  String get ventor_reg_change_anytime;
 }
 
 class _VentingMobLocalizationsDelegate
