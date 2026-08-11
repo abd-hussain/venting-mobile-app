@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
 import 'package:venting_mobile_app/presentation/auth/auth_screen.dart';
+import 'package:venting_mobile_app/presentation/homescreen.dart';
 import 'package:venting_mobile_app/presentation/listener_registration/listener_registration_screen.dart';
 import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dart';
 import 'package:venting_mobile_app/presentation/ventor_registration/ventor_registration_screen.dart';
@@ -133,6 +134,27 @@ class _EmailRegistrationScreenState extends State<EmailRegistrationScreen> {
         return;
       }
     }
+
+    if (_isLogin) {
+      // TODO(temp-mock): remove when real email/password sign-in API exists.
+      // Temporary role shortcuts for local testing:
+      //   v@v.com → ventor home
+      //   l@l.com → listener home
+      final email = _emailController.text.trim().toLowerCase();
+      final mockRole = switch (email) {
+        'v@v.com' => AuthUserType.ventor,
+        'l@l.com' => AuthUserType.lissener,
+        _ => null,
+      };
+      if (mockRole != null) {
+        context.go(
+          AppRoutes.tabHome,
+          extra: HomeScreenArgs(userType: mockRole),
+        );
+        return;
+      }
+    }
+
     // TODO: call sign-in or register API based on authType / userType
   }
 

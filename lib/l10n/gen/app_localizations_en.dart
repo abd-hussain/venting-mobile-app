@@ -4111,6 +4111,155 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
       'Your listener profile and settings will appear here.';
 
   @override
+  String get listener_profile_title => 'My Profile';
+
+  @override
+  String get listener_profile_email => 'Email';
+
+  @override
+  String get listener_profile_date_of_birth => 'Date of birth';
+
+  @override
+  String get listener_profile_view_profile => 'View Profile';
+
+  @override
+  String get listener_profile_active_now => 'Active now';
+
+  @override
+  String listener_profile_reviews_count(int count) {
+    return '$count reviews';
+  }
+
+  @override
+  String get listener_profile_voice_introduction => 'Voice Introduction';
+
+  @override
+  String get listener_profile_edit_voice_title => 'Edit Voice Introduction';
+
+  @override
+  String get listener_profile_edit_voice_subtitle =>
+      'Re-record a short introduction so ventors can get to know you.';
+
+  @override
+  String get listener_profile_edit_voice_re_record => 'Re-record';
+
+  @override
+  String get listener_profile_about_me => 'About Me';
+
+  @override
+  String get listener_profile_edit_about_me_title => 'Edit About Me';
+
+  @override
+  String get listener_profile_edit_about_me_subtitle =>
+      'Share a short introduction so ventors know what to expect from you.';
+
+  @override
+  String get listener_profile_edit_about_me_hint =>
+      'Write something about yourself...';
+
+  @override
+  String listener_profile_edit_about_me_counter(int current, int max) {
+    return '$current/$max';
+  }
+
+  @override
+  String get listener_profile_see_more => 'See more';
+
+  @override
+  String get listener_profile_see_less => 'See less';
+
+  @override
+  String get listener_profile_good_at => 'What I\'m Good At';
+
+  @override
+  String get listener_profile_add_more => '+ Add more';
+
+  @override
+  String get listener_profile_languages => 'Languages';
+
+  @override
+  String get listener_profile_experience => 'Experience';
+
+  @override
+  String get listener_profile_availability_label => 'Availability';
+
+  @override
+  String get listener_profile_response_time => 'Response Time';
+
+  @override
+  String get listener_profile_reviews => 'Reviews';
+
+  @override
+  String listener_profile_view_all_reviews(int count) {
+    return 'View all ($count)';
+  }
+
+  @override
+  String get listener_profile_next_availability => 'Next Availability';
+
+  @override
+  String get listener_profile_available_now => 'Available Now';
+
+  @override
+  String listener_profile_until_time(String time) {
+    return 'Until $time';
+  }
+
+  @override
+  String get listener_profile_tomorrow => 'Tomorrow';
+
+  @override
+  String get listener_profile_account_settings => 'Account & Settings';
+
+  @override
+  String get listener_profile_notification_preferences =>
+      'Notification Preferences';
+
+  @override
+  String get listener_profile_privacy_visibility => 'Privacy & Visibility';
+
+  @override
+  String get listener_profile_payment_payouts => 'Payment & Payouts';
+
+  @override
+  String get listener_profile_help_support => 'Help & Support';
+
+  @override
+  String get listener_profile_edit => 'Edit';
+
+  @override
+  String get listener_profile_about_me_body =>
+      'I\'m here to listen and support you in a safe, judgment-free space. I truly believe that sometimes all we need is someone who listens with an open heart.';
+
+  @override
+  String listener_profile_experience_value(int years) {
+    return '$years+ years';
+  }
+
+  @override
+  String get listener_profile_usually_available => 'Usually available';
+
+  @override
+  String listener_profile_response_within(int minutes) {
+    return 'Usually within $minutes min';
+  }
+
+  @override
+  String get listener_profile_tag_stress_anxiety => 'Stress & Anxiety';
+
+  @override
+  String get listener_profile_tag_relationships => 'Relationships';
+
+  @override
+  String get listener_profile_tag_overthinking => 'Overthinking';
+
+  @override
+  String get listener_profile_tag_life_transitions => 'Life Transitions';
+
+  @override
+  String get listener_profile_tag_parenting => 'Parenting';
+
+  @override
   String get ventor_home_dashboard_placeholder =>
       'Find listeners and start a conversation from here.';
 

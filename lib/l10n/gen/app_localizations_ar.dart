@@ -4089,6 +4089,153 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
       'سيظهر ملف المستمع والإعدادات هنا.';
 
   @override
+  String get listener_profile_title => 'ملفي الشخصي';
+
+  @override
+  String get listener_profile_email => 'البريد الإلكتروني';
+
+  @override
+  String get listener_profile_date_of_birth => 'تاريخ الميلاد';
+
+  @override
+  String get listener_profile_view_profile => 'عرض الملف';
+
+  @override
+  String get listener_profile_active_now => 'متاح الآن';
+
+  @override
+  String listener_profile_reviews_count(int count) {
+    return '$count تقييم';
+  }
+
+  @override
+  String get listener_profile_voice_introduction => 'المقدمة الصوتية';
+
+  @override
+  String get listener_profile_edit_voice_title => 'تعديل المقدمة الصوتية';
+
+  @override
+  String get listener_profile_edit_voice_subtitle =>
+      'أعد تسجيل مقدمة قصيرة ليتعرّف المتنفّسون عليك.';
+
+  @override
+  String get listener_profile_edit_voice_re_record => 'إعادة التسجيل';
+
+  @override
+  String get listener_profile_about_me => 'نبذة عني';
+
+  @override
+  String get listener_profile_edit_about_me_title => 'تعديل نبذة عني';
+
+  @override
+  String get listener_profile_edit_about_me_subtitle =>
+      'اكتب مقدمة قصيرة ليتعرّف المتنفّسون على ما يمكن توقعه منك.';
+
+  @override
+  String get listener_profile_edit_about_me_hint => 'اكتب شيئاً عن نفسك...';
+
+  @override
+  String listener_profile_edit_about_me_counter(int current, int max) {
+    return '$current/$max';
+  }
+
+  @override
+  String get listener_profile_see_more => 'عرض المزيد';
+
+  @override
+  String get listener_profile_see_less => 'عرض أقل';
+
+  @override
+  String get listener_profile_good_at => 'ما أجيد الاستماع فيه';
+
+  @override
+  String get listener_profile_add_more => '+ إضافة المزيد';
+
+  @override
+  String get listener_profile_languages => 'اللغات';
+
+  @override
+  String get listener_profile_experience => 'الخبرة';
+
+  @override
+  String get listener_profile_availability_label => 'التوفر';
+
+  @override
+  String get listener_profile_response_time => 'وقت الاستجابة';
+
+  @override
+  String get listener_profile_reviews => 'التقييمات';
+
+  @override
+  String listener_profile_view_all_reviews(int count) {
+    return 'عرض الكل ($count)';
+  }
+
+  @override
+  String get listener_profile_next_availability => 'التوفر القادم';
+
+  @override
+  String get listener_profile_available_now => 'متاح الآن';
+
+  @override
+  String listener_profile_until_time(String time) {
+    return 'حتى $time';
+  }
+
+  @override
+  String get listener_profile_tomorrow => 'غداً';
+
+  @override
+  String get listener_profile_account_settings => 'الحساب والإعدادات';
+
+  @override
+  String get listener_profile_notification_preferences => 'تفضيلات الإشعارات';
+
+  @override
+  String get listener_profile_privacy_visibility => 'الخصوصية والظهور';
+
+  @override
+  String get listener_profile_payment_payouts => 'المدفوعات والتحويلات';
+
+  @override
+  String get listener_profile_help_support => 'المساعدة والدعم';
+
+  @override
+  String get listener_profile_edit => 'تعديل';
+
+  @override
+  String get listener_profile_about_me_body =>
+      'أنا هنا للاستماع ودعمك في مساحة آمنة وخالية من الأحكام. أؤمن حقاً أننا أحياناً نحتاج فقط إلى شخص يستمع بقلب مفتوح.';
+
+  @override
+  String listener_profile_experience_value(int years) {
+    return '$years+ سنوات';
+  }
+
+  @override
+  String get listener_profile_usually_available => 'متاح عادةً';
+
+  @override
+  String listener_profile_response_within(int minutes) {
+    return 'عادةً خلال $minutes د';
+  }
+
+  @override
+  String get listener_profile_tag_stress_anxiety => 'التوتر والقلق';
+
+  @override
+  String get listener_profile_tag_relationships => 'العلاقات';
+
+  @override
+  String get listener_profile_tag_overthinking => 'كثرة التفكير';
+
+  @override
+  String get listener_profile_tag_life_transitions => 'تحولات الحياة';
+
+  @override
+  String get listener_profile_tag_parenting => 'التربية';
+
+  @override
   String get ventor_home_dashboard_placeholder =>
       'ابحث عن المستمعين وابدأ محادثة من هنا.';
 

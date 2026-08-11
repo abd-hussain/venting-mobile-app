@@ -7385,6 +7385,270 @@ abstract class VentingMobLocalizations {
   /// **'Your listener profile and settings will appear here.'**
   String get listener_home_profile_placeholder;
 
+  /// No description provided for @listener_profile_title.
+  ///
+  /// In en, this message translates to:
+  /// **'My Profile'**
+  String get listener_profile_title;
+
+  /// No description provided for @listener_profile_email.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get listener_profile_email;
+
+  /// No description provided for @listener_profile_date_of_birth.
+  ///
+  /// In en, this message translates to:
+  /// **'Date of birth'**
+  String get listener_profile_date_of_birth;
+
+  /// No description provided for @listener_profile_view_profile.
+  ///
+  /// In en, this message translates to:
+  /// **'View Profile'**
+  String get listener_profile_view_profile;
+
+  /// No description provided for @listener_profile_active_now.
+  ///
+  /// In en, this message translates to:
+  /// **'Active now'**
+  String get listener_profile_active_now;
+
+  /// No description provided for @listener_profile_reviews_count.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} reviews'**
+  String listener_profile_reviews_count(int count);
+
+  /// No description provided for @listener_profile_voice_introduction.
+  ///
+  /// In en, this message translates to:
+  /// **'Voice Introduction'**
+  String get listener_profile_voice_introduction;
+
+  /// No description provided for @listener_profile_edit_voice_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Voice Introduction'**
+  String get listener_profile_edit_voice_title;
+
+  /// No description provided for @listener_profile_edit_voice_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Re-record a short introduction so ventors can get to know you.'**
+  String get listener_profile_edit_voice_subtitle;
+
+  /// No description provided for @listener_profile_edit_voice_re_record.
+  ///
+  /// In en, this message translates to:
+  /// **'Re-record'**
+  String get listener_profile_edit_voice_re_record;
+
+  /// No description provided for @listener_profile_about_me.
+  ///
+  /// In en, this message translates to:
+  /// **'About Me'**
+  String get listener_profile_about_me;
+
+  /// No description provided for @listener_profile_edit_about_me_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit About Me'**
+  String get listener_profile_edit_about_me_title;
+
+  /// No description provided for @listener_profile_edit_about_me_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Share a short introduction so ventors know what to expect from you.'**
+  String get listener_profile_edit_about_me_subtitle;
+
+  /// No description provided for @listener_profile_edit_about_me_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Write something about yourself...'**
+  String get listener_profile_edit_about_me_hint;
+
+  /// No description provided for @listener_profile_edit_about_me_counter.
+  ///
+  /// In en, this message translates to:
+  /// **'{current}/{max}'**
+  String listener_profile_edit_about_me_counter(int current, int max);
+
+  /// No description provided for @listener_profile_see_more.
+  ///
+  /// In en, this message translates to:
+  /// **'See more'**
+  String get listener_profile_see_more;
+
+  /// No description provided for @listener_profile_see_less.
+  ///
+  /// In en, this message translates to:
+  /// **'See less'**
+  String get listener_profile_see_less;
+
+  /// No description provided for @listener_profile_good_at.
+  ///
+  /// In en, this message translates to:
+  /// **'What I\'m Good At'**
+  String get listener_profile_good_at;
+
+  /// No description provided for @listener_profile_add_more.
+  ///
+  /// In en, this message translates to:
+  /// **'+ Add more'**
+  String get listener_profile_add_more;
+
+  /// No description provided for @listener_profile_languages.
+  ///
+  /// In en, this message translates to:
+  /// **'Languages'**
+  String get listener_profile_languages;
+
+  /// No description provided for @listener_profile_experience.
+  ///
+  /// In en, this message translates to:
+  /// **'Experience'**
+  String get listener_profile_experience;
+
+  /// No description provided for @listener_profile_availability_label.
+  ///
+  /// In en, this message translates to:
+  /// **'Availability'**
+  String get listener_profile_availability_label;
+
+  /// No description provided for @listener_profile_response_time.
+  ///
+  /// In en, this message translates to:
+  /// **'Response Time'**
+  String get listener_profile_response_time;
+
+  /// No description provided for @listener_profile_reviews.
+  ///
+  /// In en, this message translates to:
+  /// **'Reviews'**
+  String get listener_profile_reviews;
+
+  /// No description provided for @listener_profile_view_all_reviews.
+  ///
+  /// In en, this message translates to:
+  /// **'View all ({count})'**
+  String listener_profile_view_all_reviews(int count);
+
+  /// No description provided for @listener_profile_next_availability.
+  ///
+  /// In en, this message translates to:
+  /// **'Next Availability'**
+  String get listener_profile_next_availability;
+
+  /// No description provided for @listener_profile_available_now.
+  ///
+  /// In en, this message translates to:
+  /// **'Available Now'**
+  String get listener_profile_available_now;
+
+  /// No description provided for @listener_profile_until_time.
+  ///
+  /// In en, this message translates to:
+  /// **'Until {time}'**
+  String listener_profile_until_time(String time);
+
+  /// No description provided for @listener_profile_tomorrow.
+  ///
+  /// In en, this message translates to:
+  /// **'Tomorrow'**
+  String get listener_profile_tomorrow;
+
+  /// No description provided for @listener_profile_account_settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Account & Settings'**
+  String get listener_profile_account_settings;
+
+  /// No description provided for @listener_profile_notification_preferences.
+  ///
+  /// In en, this message translates to:
+  /// **'Notification Preferences'**
+  String get listener_profile_notification_preferences;
+
+  /// No description provided for @listener_profile_privacy_visibility.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy & Visibility'**
+  String get listener_profile_privacy_visibility;
+
+  /// No description provided for @listener_profile_payment_payouts.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment & Payouts'**
+  String get listener_profile_payment_payouts;
+
+  /// No description provided for @listener_profile_help_support.
+  ///
+  /// In en, this message translates to:
+  /// **'Help & Support'**
+  String get listener_profile_help_support;
+
+  /// No description provided for @listener_profile_edit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get listener_profile_edit;
+
+  /// No description provided for @listener_profile_about_me_body.
+  ///
+  /// In en, this message translates to:
+  /// **'I\'m here to listen and support you in a safe, judgment-free space. I truly believe that sometimes all we need is someone who listens with an open heart.'**
+  String get listener_profile_about_me_body;
+
+  /// No description provided for @listener_profile_experience_value.
+  ///
+  /// In en, this message translates to:
+  /// **'{years}+ years'**
+  String listener_profile_experience_value(int years);
+
+  /// No description provided for @listener_profile_usually_available.
+  ///
+  /// In en, this message translates to:
+  /// **'Usually available'**
+  String get listener_profile_usually_available;
+
+  /// No description provided for @listener_profile_response_within.
+  ///
+  /// In en, this message translates to:
+  /// **'Usually within {minutes} min'**
+  String listener_profile_response_within(int minutes);
+
+  /// No description provided for @listener_profile_tag_stress_anxiety.
+  ///
+  /// In en, this message translates to:
+  /// **'Stress & Anxiety'**
+  String get listener_profile_tag_stress_anxiety;
+
+  /// No description provided for @listener_profile_tag_relationships.
+  ///
+  /// In en, this message translates to:
+  /// **'Relationships'**
+  String get listener_profile_tag_relationships;
+
+  /// No description provided for @listener_profile_tag_overthinking.
+  ///
+  /// In en, this message translates to:
+  /// **'Overthinking'**
+  String get listener_profile_tag_overthinking;
+
+  /// No description provided for @listener_profile_tag_life_transitions.
+  ///
+  /// In en, this message translates to:
+  /// **'Life Transitions'**
+  String get listener_profile_tag_life_transitions;
+
+  /// No description provided for @listener_profile_tag_parenting.
+  ///
+  /// In en, this message translates to:
+  /// **'Parenting'**
+  String get listener_profile_tag_parenting;
+
   /// No description provided for @ventor_home_dashboard_placeholder.
   ///
   /// In en, this message translates to:

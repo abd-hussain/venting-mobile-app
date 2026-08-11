@@ -2837,6 +2837,133 @@
   "@listener_home_earnings_placeholder": {},
   "listener_home_profile_placeholder": "Your listener profile and settings will appear here.",
   "@listener_home_profile_placeholder": {},
+  "listener_profile_title": "My Profile",
+  "@listener_profile_title": {},
+  "listener_profile_email": "Email",
+  "@listener_profile_email": {},
+  "listener_profile_date_of_birth": "Date of birth",
+  "@listener_profile_date_of_birth": {},
+  "listener_profile_view_profile": "View Profile",
+  "@listener_profile_view_profile": {},
+  "listener_profile_active_now": "Active now",
+  "@listener_profile_active_now": {},
+  "listener_profile_reviews_count": "{count} reviews",
+  "@listener_profile_reviews_count": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "listener_profile_voice_introduction": "Voice Introduction",
+  "@listener_profile_voice_introduction": {},
+  "listener_profile_edit_voice_title": "Edit Voice Introduction",
+  "@listener_profile_edit_voice_title": {},
+  "listener_profile_edit_voice_subtitle": "Re-record a short introduction so ventors can get to know you.",
+  "@listener_profile_edit_voice_subtitle": {},
+  "listener_profile_edit_voice_re_record": "Re-record",
+  "@listener_profile_edit_voice_re_record": {},
+  "listener_profile_about_me": "About Me",
+  "@listener_profile_about_me": {},
+  "listener_profile_edit_about_me_title": "Edit About Me",
+  "@listener_profile_edit_about_me_title": {},
+  "listener_profile_edit_about_me_subtitle": "Share a short introduction so ventors know what to expect from you.",
+  "@listener_profile_edit_about_me_subtitle": {},
+  "listener_profile_edit_about_me_hint": "Write something about yourself...",
+  "@listener_profile_edit_about_me_hint": {},
+  "listener_profile_edit_about_me_counter": "{current}/{max}",
+  "@listener_profile_edit_about_me_counter": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "listener_profile_see_more": "See more",
+  "@listener_profile_see_more": {},
+  "listener_profile_see_less": "See less",
+  "@listener_profile_see_less": {},
+  "listener_profile_good_at": "What I'm Good At",
+  "@listener_profile_good_at": {},
+  "listener_profile_add_more": "+ Add more",
+  "@listener_profile_add_more": {},
+  "listener_profile_languages": "Languages",
+  "@listener_profile_languages": {},
+  "listener_profile_experience": "Experience",
+  "@listener_profile_experience": {},
+  "listener_profile_availability_label": "Availability",
+  "@listener_profile_availability_label": {},
+  "listener_profile_response_time": "Response Time",
+  "@listener_profile_response_time": {},
+  "listener_profile_reviews": "Reviews",
+  "@listener_profile_reviews": {},
+  "listener_profile_view_all_reviews": "View all ({count})",
+  "@listener_profile_view_all_reviews": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "listener_profile_next_availability": "Next Availability",
+  "@listener_profile_next_availability": {},
+  "listener_profile_available_now": "Available Now",
+  "@listener_profile_available_now": {},
+  "listener_profile_until_time": "Until {time}",
+  "@listener_profile_until_time": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "listener_profile_tomorrow": "Tomorrow",
+  "@listener_profile_tomorrow": {},
+  "listener_profile_account_settings": "Account & Settings",
+  "@listener_profile_account_settings": {},
+  "listener_profile_notification_preferences": "Notification Preferences",
+  "@listener_profile_notification_preferences": {},
+  "listener_profile_privacy_visibility": "Privacy & Visibility",
+  "@listener_profile_privacy_visibility": {},
+  "listener_profile_payment_payouts": "Payment & Payouts",
+  "@listener_profile_payment_payouts": {},
+  "listener_profile_help_support": "Help & Support",
+  "@listener_profile_help_support": {},
+  "listener_profile_edit": "Edit",
+  "@listener_profile_edit": {},
+  "listener_profile_about_me_body": "I'm here to listen and support you in a safe, judgment-free space. I truly believe that sometimes all we need is someone who listens with an open heart.",
+  "@listener_profile_about_me_body": {},
+  "listener_profile_experience_value": "{years}+ years",
+  "@listener_profile_experience_value": {
+    "placeholders": {
+      "years": {
+        "type": "int"
+      }
+    }
+  },
+  "listener_profile_usually_available": "Usually available",
+  "@listener_profile_usually_available": {},
+  "listener_profile_response_within": "Usually within {minutes} min",
+  "@listener_profile_response_within": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "listener_profile_tag_stress_anxiety": "Stress & Anxiety",
+  "@listener_profile_tag_stress_anxiety": {},
+  "listener_profile_tag_relationships": "Relationships",
+  "@listener_profile_tag_relationships": {},
+  "listener_profile_tag_overthinking": "Overthinking",
+  "@listener_profile_tag_overthinking": {},
+  "listener_profile_tag_life_transitions": "Life Transitions",
+  "@listener_profile_tag_life_transitions": {},
+  "listener_profile_tag_parenting": "Parenting",
+  "@listener_profile_tag_parenting": {},
   "ventor_home_dashboard_placeholder": "Find listeners and start a conversation from here.",
   "@ventor_home_dashboard_placeholder": {},
   "ventor_home_sessions_placeholder": "Your venting sessions and history will appear here.",

@@ -2837,6 +2837,133 @@
   "@listener_home_earnings_placeholder": {},
   "listener_home_profile_placeholder": "سيظهر ملف المستمع والإعدادات هنا.",
   "@listener_home_profile_placeholder": {},
+  "listener_profile_title": "ملفي الشخصي",
+  "@listener_profile_title": {},
+  "listener_profile_email": "البريد الإلكتروني",
+  "@listener_profile_email": {},
+  "listener_profile_date_of_birth": "تاريخ الميلاد",
+  "@listener_profile_date_of_birth": {},
+  "listener_profile_view_profile": "عرض الملف",
+  "@listener_profile_view_profile": {},
+  "listener_profile_active_now": "متاح الآن",
+  "@listener_profile_active_now": {},
+  "listener_profile_reviews_count": "{count} تقييم",
+  "@listener_profile_reviews_count": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "listener_profile_voice_introduction": "المقدمة الصوتية",
+  "@listener_profile_voice_introduction": {},
+  "listener_profile_edit_voice_title": "تعديل المقدمة الصوتية",
+  "@listener_profile_edit_voice_title": {},
+  "listener_profile_edit_voice_subtitle": "أعد تسجيل مقدمة قصيرة ليتعرّف المتنفّسون عليك.",
+  "@listener_profile_edit_voice_subtitle": {},
+  "listener_profile_edit_voice_re_record": "إعادة التسجيل",
+  "@listener_profile_edit_voice_re_record": {},
+  "listener_profile_about_me": "نبذة عني",
+  "@listener_profile_about_me": {},
+  "listener_profile_edit_about_me_title": "تعديل نبذة عني",
+  "@listener_profile_edit_about_me_title": {},
+  "listener_profile_edit_about_me_subtitle": "اكتب مقدمة قصيرة ليتعرّف المتنفّسون على ما يمكن توقعه منك.",
+  "@listener_profile_edit_about_me_subtitle": {},
+  "listener_profile_edit_about_me_hint": "اكتب شيئاً عن نفسك...",
+  "@listener_profile_edit_about_me_hint": {},
+  "listener_profile_edit_about_me_counter": "{current}/{max}",
+  "@listener_profile_edit_about_me_counter": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "listener_profile_see_more": "عرض المزيد",
+  "@listener_profile_see_more": {},
+  "listener_profile_see_less": "عرض أقل",
+  "@listener_profile_see_less": {},
+  "listener_profile_good_at": "ما أجيد الاستماع فيه",
+  "@listener_profile_good_at": {},
+  "listener_profile_add_more": "+ إضافة المزيد",
+  "@listener_profile_add_more": {},
+  "listener_profile_languages": "اللغات",
+  "@listener_profile_languages": {},
+  "listener_profile_experience": "الخبرة",
+  "@listener_profile_experience": {},
+  "listener_profile_availability_label": "التوفر",
+  "@listener_profile_availability_label": {},
+  "listener_profile_response_time": "وقت الاستجابة",
+  "@listener_profile_response_time": {},
+  "listener_profile_reviews": "التقييمات",
+  "@listener_profile_reviews": {},
+  "listener_profile_view_all_reviews": "عرض الكل ({count})",
+  "@listener_profile_view_all_reviews": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "listener_profile_next_availability": "التوفر القادم",
+  "@listener_profile_next_availability": {},
+  "listener_profile_available_now": "متاح الآن",
+  "@listener_profile_available_now": {},
+  "listener_profile_until_time": "حتى {time}",
+  "@listener_profile_until_time": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "listener_profile_tomorrow": "غداً",
+  "@listener_profile_tomorrow": {},
+  "listener_profile_account_settings": "الحساب والإعدادات",
+  "@listener_profile_account_settings": {},
+  "listener_profile_notification_preferences": "تفضيلات الإشعارات",
+  "@listener_profile_notification_preferences": {},
+  "listener_profile_privacy_visibility": "الخصوصية والظهور",
+  "@listener_profile_privacy_visibility": {},
+  "listener_profile_payment_payouts": "المدفوعات والتحويلات",
+  "@listener_profile_payment_payouts": {},
+  "listener_profile_help_support": "المساعدة والدعم",
+  "@listener_profile_help_support": {},
+  "listener_profile_edit": "تعديل",
+  "@listener_profile_edit": {},
+  "listener_profile_about_me_body": "أنا هنا للاستماع ودعمك في مساحة آمنة وخالية من الأحكام. أؤمن حقاً أننا أحياناً نحتاج فقط إلى شخص يستمع بقلب مفتوح.",
+  "@listener_profile_about_me_body": {},
+  "listener_profile_experience_value": "{years}+ سنوات",
+  "@listener_profile_experience_value": {
+    "placeholders": {
+      "years": {
+        "type": "int"
+      }
+    }
+  },
+  "listener_profile_usually_available": "متاح عادةً",
+  "@listener_profile_usually_available": {},
+  "listener_profile_response_within": "عادةً خلال {minutes} د",
+  "@listener_profile_response_within": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "listener_profile_tag_stress_anxiety": "التوتر والقلق",
+  "@listener_profile_tag_stress_anxiety": {},
+  "listener_profile_tag_relationships": "العلاقات",
+  "@listener_profile_tag_relationships": {},
+  "listener_profile_tag_overthinking": "كثرة التفكير",
+  "@listener_profile_tag_overthinking": {},
+  "listener_profile_tag_life_transitions": "تحولات الحياة",
+  "@listener_profile_tag_life_transitions": {},
+  "listener_profile_tag_parenting": "التربية",
+  "@listener_profile_tag_parenting": {},
   "ventor_home_dashboard_placeholder": "ابحث عن المستمعين وابدأ محادثة من هنا.",
   "@ventor_home_dashboard_placeholder": {},
   "ventor_home_sessions_placeholder": "ستظهر جلسات التفريغ وسجلك هنا.",
