@@ -4318,6 +4318,53 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
   String get listener_profile_help_support => 'Help & Support';
 
   @override
+  String get listener_help_topics => 'Help Topics';
+
+  @override
+  String get listener_help_getting_started => 'Getting Started';
+
+  @override
+  String get listener_help_managing_sessions => 'Managing Sessions';
+
+  @override
+  String get listener_help_earnings_payouts => 'Earnings & Payouts';
+
+  @override
+  String get listener_help_account_profile => 'Account & Profile';
+
+  @override
+  String get listener_help_safety_boundaries => 'Safety & Boundaries';
+
+  @override
+  String get listener_help_community_guidelines => 'Community Guidelines';
+
+  @override
+  String get listener_help_faqs => 'FAQs';
+
+  @override
+  String get listener_help_app_technical => 'App & Technical';
+
+  @override
+  String get listener_help_contact_us => 'Contact Us';
+
+  @override
+  String get listener_help_whatsapp => 'WhatsApp';
+
+  @override
+  String get listener_help_whatsapp_subtitle => 'Chat with our support team';
+
+  @override
+  String get listener_help_whatsapp_failed =>
+      'Could not open WhatsApp. Please try again.';
+
+  @override
+  String get listener_help_email_support => 'Email Support';
+
+  @override
+  String get listener_help_email_failed =>
+      'Could not open email. Please try again.';
+
+  @override
   String get listener_profile_settings_section_account => 'Account';
 
   @override
@@ -4347,6 +4394,99 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
 
   @override
   String get listener_profile_settings_about => 'About Venting';
+
+  @override
+  String get listener_confirm_logout_title => 'Log Out';
+
+  @override
+  String get listener_confirm_logout_heading =>
+      'Are you sure you want to log out?';
+
+  @override
+  String get listener_confirm_logout_subtitle =>
+      'You will need to sign in again to access your account.';
+
+  @override
+  String get listener_confirm_logout_confirm => 'Log Out';
+
+  @override
+  String get listener_confirm_delete_title => 'Delete Account';
+
+  @override
+  String get listener_confirm_delete_heading =>
+      'Are you sure you want to delete your account?';
+
+  @override
+  String get listener_confirm_delete_subtitle =>
+      'This permanently removes your listener profile and data. You will need to register again.';
+
+  @override
+  String get listener_confirm_delete_confirm => 'Delete';
+
+  @override
+  String get listener_confirm_cancel => 'Cancel';
+
+  @override
+  String get listener_about_tagline =>
+      'The safe place to be heard and make a real impact.';
+
+  @override
+  String listener_about_version(String version, String build) {
+    return 'Version $version ($build)';
+  }
+
+  @override
+  String get listener_about_whats_new => 'What\'s New';
+
+  @override
+  String get listener_about_terms => 'Terms of Service';
+
+  @override
+  String get listener_about_privacy => 'Privacy Policy';
+
+  @override
+  String get listener_about_community_guidelines => 'Community Guidelines';
+
+  @override
+  String get listener_about_licenses => 'Licenses';
+
+  @override
+  String get listener_whats_new_subtitle =>
+      'Highlights from the latest Venting updates.';
+
+  @override
+  String get listener_whats_new_date_aug_2026 => 'August 2026';
+
+  @override
+  String get listener_whats_new_date_jul_2026 => 'July 2026';
+
+  @override
+  String get listener_whats_new_1_2_0_item_1 =>
+      'New listener Account & Settings experience.';
+
+  @override
+  String get listener_whats_new_1_2_0_item_2 =>
+      'Payment & Payouts with bank details and history.';
+
+  @override
+  String get listener_whats_new_1_2_0_item_3 =>
+      'Privacy controls for countries and profile visibility.';
+
+  @override
+  String get listener_whats_new_1_2_0_item_4 =>
+      'Help & Support with WhatsApp and help topics.';
+
+  @override
+  String get listener_whats_new_1_1_0_item_1 =>
+      'Improved session reminders and notification preferences.';
+
+  @override
+  String get listener_whats_new_1_1_0_item_2 =>
+      'Faster profile editing for languages, city, and bio.';
+
+  @override
+  String get listener_whats_new_1_1_0_item_3 =>
+      'Stability and performance improvements.';
 
   @override
   String get listener_profile_settings_on => 'On';
@@ -4513,6 +4653,97 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
 
   @override
   String get listener_privacy_save => 'Save Changes';
+
+  @override
+  String get listener_payout_your_balance => 'Your Balance';
+
+  @override
+  String get listener_payout_available => 'Available for payout';
+
+  @override
+  String get listener_payout_total_earnings => 'Total Earnings';
+
+  @override
+  String get listener_payout_this_month => 'This Month';
+
+  @override
+  String get listener_payout_add_method => 'Add method';
+
+  @override
+  String get listener_payout_history => 'Payout History';
+
+  @override
+  String get listener_payout_history_empty => 'No payout history yet.';
+
+  @override
+  String get listener_payout_detail_date => 'Date';
+
+  @override
+  String get listener_payout_detail_method => 'Method';
+
+  @override
+  String get listener_payout_detail_reference => 'Reference';
+
+  @override
+  String get listener_payout_status_completed => 'Completed';
+
+  @override
+  String get listener_payout_status_pending => 'Pending';
+
+  @override
+  String get listener_payout_status_failed => 'Failed';
+
+  @override
+  String get listener_payout_min_hint =>
+      'You can request a payout when your available balance reaches at least \$100.';
+
+  @override
+  String get listener_payout_need_method =>
+      'Please add a bank account before requesting a payout.';
+
+  @override
+  String get listener_payout_request_submitted => 'Payout request submitted.';
+
+  @override
+  String get listener_payout_bank_subtitle =>
+      'Enter your bank account details to receive payouts.';
+
+  @override
+  String get listener_payout_bank_holder => 'Account holder name';
+
+  @override
+  String get listener_payout_bank_holder_hint => 'Full name on the account';
+
+  @override
+  String get listener_payout_bank_name => 'Bank name';
+
+  @override
+  String get listener_payout_bank_name_hint => 'Enter bank name';
+
+  @override
+  String get listener_payout_bank_iban => 'IBAN / Account number';
+
+  @override
+  String get listener_payout_bank_iban_hint => 'Enter IBAN or account number';
+
+  @override
+  String get listener_payout_bank_swift => 'SWIFT / BIC';
+
+  @override
+  String get listener_payout_bank_swift_hint => 'Optional';
+
+  @override
+  String get listener_payout_bank_optional => '(optional)';
+
+  @override
+  String get listener_payout_bank_required => 'This field is required';
+
+  @override
+  String get listener_payout_bank_iban_invalid =>
+      'Enter a valid IBAN or account number';
+
+  @override
+  String get listener_payout_request => 'Request Payout';
 
   @override
   String get listener_profile_edit => 'Edit';

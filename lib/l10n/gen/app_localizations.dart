@@ -7739,6 +7739,96 @@ abstract class VentingMobLocalizations {
   /// **'Help & Support'**
   String get listener_profile_help_support;
 
+  /// No description provided for @listener_help_topics.
+  ///
+  /// In en, this message translates to:
+  /// **'Help Topics'**
+  String get listener_help_topics;
+
+  /// No description provided for @listener_help_getting_started.
+  ///
+  /// In en, this message translates to:
+  /// **'Getting Started'**
+  String get listener_help_getting_started;
+
+  /// No description provided for @listener_help_managing_sessions.
+  ///
+  /// In en, this message translates to:
+  /// **'Managing Sessions'**
+  String get listener_help_managing_sessions;
+
+  /// No description provided for @listener_help_earnings_payouts.
+  ///
+  /// In en, this message translates to:
+  /// **'Earnings & Payouts'**
+  String get listener_help_earnings_payouts;
+
+  /// No description provided for @listener_help_account_profile.
+  ///
+  /// In en, this message translates to:
+  /// **'Account & Profile'**
+  String get listener_help_account_profile;
+
+  /// No description provided for @listener_help_safety_boundaries.
+  ///
+  /// In en, this message translates to:
+  /// **'Safety & Boundaries'**
+  String get listener_help_safety_boundaries;
+
+  /// No description provided for @listener_help_community_guidelines.
+  ///
+  /// In en, this message translates to:
+  /// **'Community Guidelines'**
+  String get listener_help_community_guidelines;
+
+  /// No description provided for @listener_help_faqs.
+  ///
+  /// In en, this message translates to:
+  /// **'FAQs'**
+  String get listener_help_faqs;
+
+  /// No description provided for @listener_help_app_technical.
+  ///
+  /// In en, this message translates to:
+  /// **'App & Technical'**
+  String get listener_help_app_technical;
+
+  /// No description provided for @listener_help_contact_us.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact Us'**
+  String get listener_help_contact_us;
+
+  /// No description provided for @listener_help_whatsapp.
+  ///
+  /// In en, this message translates to:
+  /// **'WhatsApp'**
+  String get listener_help_whatsapp;
+
+  /// No description provided for @listener_help_whatsapp_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Chat with our support team'**
+  String get listener_help_whatsapp_subtitle;
+
+  /// No description provided for @listener_help_whatsapp_failed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not open WhatsApp. Please try again.'**
+  String get listener_help_whatsapp_failed;
+
+  /// No description provided for @listener_help_email_support.
+  ///
+  /// In en, this message translates to:
+  /// **'Email Support'**
+  String get listener_help_email_support;
+
+  /// No description provided for @listener_help_email_failed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not open email. Please try again.'**
+  String get listener_help_email_failed;
+
   /// No description provided for @listener_profile_settings_section_account.
   ///
   /// In en, this message translates to:
@@ -7798,6 +7888,162 @@ abstract class VentingMobLocalizations {
   /// In en, this message translates to:
   /// **'About Venting'**
   String get listener_profile_settings_about;
+
+  /// No description provided for @listener_confirm_logout_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Log Out'**
+  String get listener_confirm_logout_title;
+
+  /// No description provided for @listener_confirm_logout_heading.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to log out?'**
+  String get listener_confirm_logout_heading;
+
+  /// No description provided for @listener_confirm_logout_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'You will need to sign in again to access your account.'**
+  String get listener_confirm_logout_subtitle;
+
+  /// No description provided for @listener_confirm_logout_confirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Log Out'**
+  String get listener_confirm_logout_confirm;
+
+  /// No description provided for @listener_confirm_delete_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Account'**
+  String get listener_confirm_delete_title;
+
+  /// No description provided for @listener_confirm_delete_heading.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete your account?'**
+  String get listener_confirm_delete_heading;
+
+  /// No description provided for @listener_confirm_delete_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'This permanently removes your listener profile and data. You will need to register again.'**
+  String get listener_confirm_delete_subtitle;
+
+  /// No description provided for @listener_confirm_delete_confirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get listener_confirm_delete_confirm;
+
+  /// No description provided for @listener_confirm_cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get listener_confirm_cancel;
+
+  /// No description provided for @listener_about_tagline.
+  ///
+  /// In en, this message translates to:
+  /// **'The safe place to be heard and make a real impact.'**
+  String get listener_about_tagline;
+
+  /// No description provided for @listener_about_version.
+  ///
+  /// In en, this message translates to:
+  /// **'Version {version} ({build})'**
+  String listener_about_version(String version, String build);
+
+  /// No description provided for @listener_about_whats_new.
+  ///
+  /// In en, this message translates to:
+  /// **'What\'s New'**
+  String get listener_about_whats_new;
+
+  /// No description provided for @listener_about_terms.
+  ///
+  /// In en, this message translates to:
+  /// **'Terms of Service'**
+  String get listener_about_terms;
+
+  /// No description provided for @listener_about_privacy.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy Policy'**
+  String get listener_about_privacy;
+
+  /// No description provided for @listener_about_community_guidelines.
+  ///
+  /// In en, this message translates to:
+  /// **'Community Guidelines'**
+  String get listener_about_community_guidelines;
+
+  /// No description provided for @listener_about_licenses.
+  ///
+  /// In en, this message translates to:
+  /// **'Licenses'**
+  String get listener_about_licenses;
+
+  /// No description provided for @listener_whats_new_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Highlights from the latest Venting updates.'**
+  String get listener_whats_new_subtitle;
+
+  /// No description provided for @listener_whats_new_date_aug_2026.
+  ///
+  /// In en, this message translates to:
+  /// **'August 2026'**
+  String get listener_whats_new_date_aug_2026;
+
+  /// No description provided for @listener_whats_new_date_jul_2026.
+  ///
+  /// In en, this message translates to:
+  /// **'July 2026'**
+  String get listener_whats_new_date_jul_2026;
+
+  /// No description provided for @listener_whats_new_1_2_0_item_1.
+  ///
+  /// In en, this message translates to:
+  /// **'New listener Account & Settings experience.'**
+  String get listener_whats_new_1_2_0_item_1;
+
+  /// No description provided for @listener_whats_new_1_2_0_item_2.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment & Payouts with bank details and history.'**
+  String get listener_whats_new_1_2_0_item_2;
+
+  /// No description provided for @listener_whats_new_1_2_0_item_3.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy controls for countries and profile visibility.'**
+  String get listener_whats_new_1_2_0_item_3;
+
+  /// No description provided for @listener_whats_new_1_2_0_item_4.
+  ///
+  /// In en, this message translates to:
+  /// **'Help & Support with WhatsApp and help topics.'**
+  String get listener_whats_new_1_2_0_item_4;
+
+  /// No description provided for @listener_whats_new_1_1_0_item_1.
+  ///
+  /// In en, this message translates to:
+  /// **'Improved session reminders and notification preferences.'**
+  String get listener_whats_new_1_1_0_item_1;
+
+  /// No description provided for @listener_whats_new_1_1_0_item_2.
+  ///
+  /// In en, this message translates to:
+  /// **'Faster profile editing for languages, city, and bio.'**
+  String get listener_whats_new_1_1_0_item_2;
+
+  /// No description provided for @listener_whats_new_1_1_0_item_3.
+  ///
+  /// In en, this message translates to:
+  /// **'Stability and performance improvements.'**
+  String get listener_whats_new_1_1_0_item_3;
 
   /// No description provided for @listener_profile_settings_on.
   ///
@@ -8098,6 +8344,180 @@ abstract class VentingMobLocalizations {
   /// In en, this message translates to:
   /// **'Save Changes'**
   String get listener_privacy_save;
+
+  /// No description provided for @listener_payout_your_balance.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Balance'**
+  String get listener_payout_your_balance;
+
+  /// No description provided for @listener_payout_available.
+  ///
+  /// In en, this message translates to:
+  /// **'Available for payout'**
+  String get listener_payout_available;
+
+  /// No description provided for @listener_payout_total_earnings.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Earnings'**
+  String get listener_payout_total_earnings;
+
+  /// No description provided for @listener_payout_this_month.
+  ///
+  /// In en, this message translates to:
+  /// **'This Month'**
+  String get listener_payout_this_month;
+
+  /// No description provided for @listener_payout_add_method.
+  ///
+  /// In en, this message translates to:
+  /// **'Add method'**
+  String get listener_payout_add_method;
+
+  /// No description provided for @listener_payout_history.
+  ///
+  /// In en, this message translates to:
+  /// **'Payout History'**
+  String get listener_payout_history;
+
+  /// No description provided for @listener_payout_history_empty.
+  ///
+  /// In en, this message translates to:
+  /// **'No payout history yet.'**
+  String get listener_payout_history_empty;
+
+  /// No description provided for @listener_payout_detail_date.
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get listener_payout_detail_date;
+
+  /// No description provided for @listener_payout_detail_method.
+  ///
+  /// In en, this message translates to:
+  /// **'Method'**
+  String get listener_payout_detail_method;
+
+  /// No description provided for @listener_payout_detail_reference.
+  ///
+  /// In en, this message translates to:
+  /// **'Reference'**
+  String get listener_payout_detail_reference;
+
+  /// No description provided for @listener_payout_status_completed.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get listener_payout_status_completed;
+
+  /// No description provided for @listener_payout_status_pending.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending'**
+  String get listener_payout_status_pending;
+
+  /// No description provided for @listener_payout_status_failed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed'**
+  String get listener_payout_status_failed;
+
+  /// No description provided for @listener_payout_min_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'You can request a payout when your available balance reaches at least \$100.'**
+  String get listener_payout_min_hint;
+
+  /// No description provided for @listener_payout_need_method.
+  ///
+  /// In en, this message translates to:
+  /// **'Please add a bank account before requesting a payout.'**
+  String get listener_payout_need_method;
+
+  /// No description provided for @listener_payout_request_submitted.
+  ///
+  /// In en, this message translates to:
+  /// **'Payout request submitted.'**
+  String get listener_payout_request_submitted;
+
+  /// No description provided for @listener_payout_bank_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your bank account details to receive payouts.'**
+  String get listener_payout_bank_subtitle;
+
+  /// No description provided for @listener_payout_bank_holder.
+  ///
+  /// In en, this message translates to:
+  /// **'Account holder name'**
+  String get listener_payout_bank_holder;
+
+  /// No description provided for @listener_payout_bank_holder_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Full name on the account'**
+  String get listener_payout_bank_holder_hint;
+
+  /// No description provided for @listener_payout_bank_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Bank name'**
+  String get listener_payout_bank_name;
+
+  /// No description provided for @listener_payout_bank_name_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter bank name'**
+  String get listener_payout_bank_name_hint;
+
+  /// No description provided for @listener_payout_bank_iban.
+  ///
+  /// In en, this message translates to:
+  /// **'IBAN / Account number'**
+  String get listener_payout_bank_iban;
+
+  /// No description provided for @listener_payout_bank_iban_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter IBAN or account number'**
+  String get listener_payout_bank_iban_hint;
+
+  /// No description provided for @listener_payout_bank_swift.
+  ///
+  /// In en, this message translates to:
+  /// **'SWIFT / BIC'**
+  String get listener_payout_bank_swift;
+
+  /// No description provided for @listener_payout_bank_swift_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Optional'**
+  String get listener_payout_bank_swift_hint;
+
+  /// No description provided for @listener_payout_bank_optional.
+  ///
+  /// In en, this message translates to:
+  /// **'(optional)'**
+  String get listener_payout_bank_optional;
+
+  /// No description provided for @listener_payout_bank_required.
+  ///
+  /// In en, this message translates to:
+  /// **'This field is required'**
+  String get listener_payout_bank_required;
+
+  /// No description provided for @listener_payout_bank_iban_invalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid IBAN or account number'**
+  String get listener_payout_bank_iban_invalid;
+
+  /// No description provided for @listener_payout_request.
+  ///
+  /// In en, this message translates to:
+  /// **'Request Payout'**
+  String get listener_payout_request;
 
   /// No description provided for @listener_profile_edit.
   ///

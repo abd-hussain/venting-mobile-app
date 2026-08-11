@@ -5,4 +5,5 @@ abstract interface class AppConfig {
   VentingEnv get env;
   String get termsOfServiceUrl;
   String get privacyPolicyUrl;
+  String get helpCenterBaseUrl;
 }

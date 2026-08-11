@@ -16,4 +16,8 @@ class DevConfig implements AppConfig {
 
   @override
   String get privacyPolicyUrl => 'https://dev.venting.app/privacy';
+
+  // TODO: Replace with real listener help center URLs.
+  @override
+  String get helpCenterBaseUrl => 'https://dev.venting.app/help';
 }

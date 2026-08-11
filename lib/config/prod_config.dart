@@ -16,4 +16,8 @@ class ProdConfig implements AppConfig {
 
   @override
   String get privacyPolicyUrl => 'https://venting.app/privacy';
+
+  // TODO: Replace with real listener help center URLs.
+  @override
+  String get helpCenterBaseUrl => 'https://venting.app/help';
 }

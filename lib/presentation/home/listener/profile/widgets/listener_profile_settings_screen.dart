@@ -9,8 +9,12 @@ import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
 import 'package:venting_mobile_app/l10n/venting_mob_localizations_holder.dart';
 import 'package:venting_mobile_app/presentation/home/listener/profile/listener_profile_theme.dart';
 import 'package:venting_mobile_app/presentation/home/listener/profile/widgets/edit_phone_bottom_sheet.dart';
+import 'package:venting_mobile_app/presentation/home/listener/profile/widgets/listener_about_screen.dart';
 import 'package:venting_mobile_app/presentation/home/listener/profile/widgets/listener_change_password_screen.dart';
+import 'package:venting_mobile_app/presentation/home/listener/profile/widgets/listener_destructive_confirm_bottom_sheet.dart';
+import 'package:venting_mobile_app/presentation/home/listener/profile/widgets/listener_help_support_screen.dart';
 import 'package:venting_mobile_app/presentation/home/listener/profile/widgets/listener_notification_preferences_screen.dart';
+import 'package:venting_mobile_app/presentation/home/listener/profile/widgets/listener_payment_payouts_screen.dart';
 import 'package:venting_mobile_app/presentation/home/listener/profile/widgets/listener_privacy_visibility_screen.dart';
 import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dart';
 import 'package:venting_mobile_app/utils/app_language.dart';
@@ -116,39 +120,9 @@ class _ListenerProfileSettingsScreenState
   String get _languageCode => VentingMobLocalizationsHolder.currentLanguageCode;
 
   Future<void> _onLogout() async {
-    final l10n = VentingMobLocalizations.of(context);
-    final confirmed = await showDialog<bool>(
+    final confirmed = await showListenerDestructiveConfirmBottomSheet(
       context: context,
-      builder: (context) => AlertDialog(
-        backgroundColor: ListenerProfileTheme.cardFill,
-        title: Text(
-          l10n.account_tab_confirm_logout_title,
-          style: GoogleFonts.inter(
-            color: Colors.white,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-        content: Text(
-          l10n.account_tab_confirm_logout_description,
-          style: GoogleFonts.inter(color: ListenerProfileTheme.muted),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(false),
-            style: TextButton.styleFrom(
-              foregroundColor: ListenerProfileTheme.muted,
-            ),
-            child: Text(l10n.account_tab_confirm_logout_cancel_button_title),
-          ),
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(true),
-            style: TextButton.styleFrom(
-              foregroundColor: const Color(0xFFEF4444),
-            ),
-            child: Text(l10n.account_tab_confirm_logout_confirm_button_title),
-          ),
-        ],
-      ),
+      kind: ListenerDestructiveConfirmKind.logout,
     );
     if (!mounted || confirmed != true) return;
     // TODO: Call logout API / clear session and navigate to auth.
@@ -156,39 +130,9 @@ class _ListenerProfileSettingsScreenState
   }
 
   Future<void> _onDeleteAccount() async {
-    final l10n = VentingMobLocalizations.of(context);
-    final confirmed = await showDialog<bool>(
+    final confirmed = await showListenerDestructiveConfirmBottomSheet(
       context: context,
-      builder: (context) => AlertDialog(
-        backgroundColor: ListenerProfileTheme.cardFill,
-        title: Text(
-          l10n.account_tab_confirm_delete_account_title,
-          style: GoogleFonts.inter(
-            color: Colors.white,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-        content: Text(
-          l10n.account_tab_confirm_delete_account_description,
-          style: GoogleFonts.inter(color: ListenerProfileTheme.muted),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(false),
-            style: TextButton.styleFrom(
-              foregroundColor: ListenerProfileTheme.muted,
-            ),
-            child: Text(l10n.account_tab_delete_account_cancel_button_title),
-          ),
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(true),
-            style: TextButton.styleFrom(
-              foregroundColor: const Color(0xFFEF4444),
-            ),
-            child: Text(l10n.account_tab_delete_account_confirm_button_title),
-          ),
-        ],
-      ),
+      kind: ListenerDestructiveConfirmKind.deleteAccount,
     );
     if (!mounted || confirmed != true) return;
     // TODO: Call delete-account API / clear session and navigate to auth.
@@ -277,7 +221,8 @@ class _ListenerProfileSettingsScreenState
                 _SettingsTile(
                   icon: Icons.credit_card_rounded,
                   label: l10n.listener_profile_payment_payouts,
-                  onTap: () => _todoAction('payment & payouts'),
+                  onTap: () =>
+                      openListenerPaymentPayoutsScreen(context: context),
                 ),
               ],
             ),
@@ -288,13 +233,13 @@ class _ListenerProfileSettingsScreenState
                 _SettingsTile(
                   icon: Icons.help_outline_rounded,
                   label: l10n.listener_profile_help_support,
-                  onTap: () => _todoAction('help & support'),
+                  onTap: () => openListenerHelpSupportScreen(context: context),
                 ),
                 _SettingsTile(
                   icon: Icons.info_outline_rounded,
                   label: l10n.listener_profile_settings_about,
                   value: versionLabel,
-                  onTap: () => _todoAction('about venting'),
+                  onTap: () => openListenerAboutScreen(context: context),
                   showDivider: false,
                 ),
               ],

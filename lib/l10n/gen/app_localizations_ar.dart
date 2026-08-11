@@ -4294,6 +4294,53 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
   String get listener_profile_help_support => 'المساعدة والدعم';
 
   @override
+  String get listener_help_topics => 'مواضيع المساعدة';
+
+  @override
+  String get listener_help_getting_started => 'البداية';
+
+  @override
+  String get listener_help_managing_sessions => 'إدارة الجلسات';
+
+  @override
+  String get listener_help_earnings_payouts => 'الأرباح والتحويلات';
+
+  @override
+  String get listener_help_account_profile => 'الحساب والملف الشخصي';
+
+  @override
+  String get listener_help_safety_boundaries => 'السلامة والحدود';
+
+  @override
+  String get listener_help_community_guidelines => 'إرشادات المجتمع';
+
+  @override
+  String get listener_help_faqs => 'الأسئلة الشائعة';
+
+  @override
+  String get listener_help_app_technical => 'التطبيق والمشاكل التقنية';
+
+  @override
+  String get listener_help_contact_us => 'تواصل معنا';
+
+  @override
+  String get listener_help_whatsapp => 'واتساب';
+
+  @override
+  String get listener_help_whatsapp_subtitle => 'تحدث مع فريق الدعم';
+
+  @override
+  String get listener_help_whatsapp_failed =>
+      'تعذر فتح واتساب. يرجى المحاولة مرة أخرى.';
+
+  @override
+  String get listener_help_email_support => 'الدعم عبر البريد';
+
+  @override
+  String get listener_help_email_failed =>
+      'تعذر فتح البريد. يرجى المحاولة مرة أخرى.';
+
+  @override
   String get listener_profile_settings_section_account => 'الحساب';
 
   @override
@@ -4322,6 +4369,98 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
 
   @override
   String get listener_profile_settings_about => 'حول Venting';
+
+  @override
+  String get listener_confirm_logout_title => 'تسجيل الخروج';
+
+  @override
+  String get listener_confirm_logout_heading =>
+      'هل أنت متأكد أنك تريد تسجيل الخروج؟';
+
+  @override
+  String get listener_confirm_logout_subtitle =>
+      'ستحتاج إلى تسجيل الدخول مجددًا للوصول إلى حسابك.';
+
+  @override
+  String get listener_confirm_logout_confirm => 'تسجيل الخروج';
+
+  @override
+  String get listener_confirm_delete_title => 'حذف الحساب';
+
+  @override
+  String get listener_confirm_delete_heading =>
+      'هل أنت متأكد أنك تريد حذف حسابك؟';
+
+  @override
+  String get listener_confirm_delete_subtitle =>
+      'سيؤدي هذا إلى حذف ملف المستمع وبياناتك نهائيًا. ستحتاج إلى التسجيل مجددًا.';
+
+  @override
+  String get listener_confirm_delete_confirm => 'حذف';
+
+  @override
+  String get listener_confirm_cancel => 'إلغاء';
+
+  @override
+  String get listener_about_tagline =>
+      'المكان الآمن لتُسمَع وتُحدث أثرًا حقيقيًا.';
+
+  @override
+  String listener_about_version(String version, String build) {
+    return 'الإصدار $version ($build)';
+  }
+
+  @override
+  String get listener_about_whats_new => 'ما الجديد';
+
+  @override
+  String get listener_about_terms => 'شروط الخدمة';
+
+  @override
+  String get listener_about_privacy => 'سياسة الخصوصية';
+
+  @override
+  String get listener_about_community_guidelines => 'إرشادات المجتمع';
+
+  @override
+  String get listener_about_licenses => 'التراخيص';
+
+  @override
+  String get listener_whats_new_subtitle =>
+      'أبرز التحديثات في أحدث إصدارات Venting.';
+
+  @override
+  String get listener_whats_new_date_aug_2026 => 'أغسطس 2026';
+
+  @override
+  String get listener_whats_new_date_jul_2026 => 'يوليو 2026';
+
+  @override
+  String get listener_whats_new_1_2_0_item_1 =>
+      'تجربة جديدة لحساب وإعدادات المستمع.';
+
+  @override
+  String get listener_whats_new_1_2_0_item_2 =>
+      'المدفوعات والتحويلات مع بيانات البنك والسجل.';
+
+  @override
+  String get listener_whats_new_1_2_0_item_3 =>
+      'إعدادات خصوصية للدول وظهور الملف الشخصي.';
+
+  @override
+  String get listener_whats_new_1_2_0_item_4 =>
+      'المساعدة والدعم مع واتساب ومواضيع المساعدة.';
+
+  @override
+  String get listener_whats_new_1_1_0_item_1 =>
+      'تحسين تذكيرات الجلسات وتفضيلات الإشعارات.';
+
+  @override
+  String get listener_whats_new_1_1_0_item_2 =>
+      'تعديل أسرع للغات والمدينة والنبذة الشخصية.';
+
+  @override
+  String get listener_whats_new_1_1_0_item_3 => 'تحسينات في الاستقرار والأداء.';
 
   @override
   String get listener_profile_settings_on => 'مفعل';
@@ -4488,6 +4627,96 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
 
   @override
   String get listener_privacy_save => 'حفظ التغييرات';
+
+  @override
+  String get listener_payout_your_balance => 'رصيدك';
+
+  @override
+  String get listener_payout_available => 'متاح للسحب';
+
+  @override
+  String get listener_payout_total_earnings => 'إجمالي الأرباح';
+
+  @override
+  String get listener_payout_this_month => 'هذا الشهر';
+
+  @override
+  String get listener_payout_add_method => 'إضافة طريقة';
+
+  @override
+  String get listener_payout_history => 'سجل السحب';
+
+  @override
+  String get listener_payout_history_empty => 'لا يوجد سجل سحب بعد.';
+
+  @override
+  String get listener_payout_detail_date => 'التاريخ';
+
+  @override
+  String get listener_payout_detail_method => 'الطريقة';
+
+  @override
+  String get listener_payout_detail_reference => 'المرجع';
+
+  @override
+  String get listener_payout_status_completed => 'مكتمل';
+
+  @override
+  String get listener_payout_status_pending => 'قيد المعالجة';
+
+  @override
+  String get listener_payout_status_failed => 'فشل';
+
+  @override
+  String get listener_payout_min_hint =>
+      'يمكنك طلب السحب عندما يصل رصيدك المتاح إلى 100\$ على الأقل.';
+
+  @override
+  String get listener_payout_need_method =>
+      'يرجى إضافة حساب بنكي قبل طلب السحب.';
+
+  @override
+  String get listener_payout_request_submitted => 'تم إرسال طلب السحب.';
+
+  @override
+  String get listener_payout_bank_subtitle =>
+      'أدخل بيانات حسابك البنكي لاستلام المدفوعات.';
+
+  @override
+  String get listener_payout_bank_holder => 'اسم صاحب الحساب';
+
+  @override
+  String get listener_payout_bank_holder_hint => 'الاسم الكامل كما في الحساب';
+
+  @override
+  String get listener_payout_bank_name => 'اسم البنك';
+
+  @override
+  String get listener_payout_bank_name_hint => 'أدخل اسم البنك';
+
+  @override
+  String get listener_payout_bank_iban => 'IBAN / رقم الحساب';
+
+  @override
+  String get listener_payout_bank_iban_hint => 'أدخل رقم الآيبان أو الحساب';
+
+  @override
+  String get listener_payout_bank_swift => 'SWIFT / BIC';
+
+  @override
+  String get listener_payout_bank_swift_hint => 'اختياري';
+
+  @override
+  String get listener_payout_bank_optional => '(اختياري)';
+
+  @override
+  String get listener_payout_bank_required => 'هذا الحقل مطلوب';
+
+  @override
+  String get listener_payout_bank_iban_invalid => 'أدخل رقم آيبان أو حساب صالح';
+
+  @override
+  String get listener_payout_request => 'طلب سحب';
 
   @override
   String get listener_profile_edit => 'تعديل';
