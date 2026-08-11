@@ -4768,4 +4768,225 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
   @override
   String get ventor_home_profile_placeholder =>
       'سيظهر ملف المتحدث والإعدادات هنا.';
+
+  @override
+  String get ventor_profile_anonymous => 'مجهول';
+
+  @override
+  String get ventor_profile_sessions => 'الجلسات';
+
+  @override
+  String get ventor_profile_avg_rating => 'متوسط التقييم';
+
+  @override
+  String get ventor_profile_day_streak => 'سلسلة الأيام';
+
+  @override
+  String get ventor_profile_mood_journey => 'رحلة المزاج';
+
+  @override
+  String get ventor_profile_today => 'اليوم';
+
+  @override
+  String get ventor_profile_day_mon => 'الإثنين';
+
+  @override
+  String get ventor_profile_day_tue => 'الثلاثاء';
+
+  @override
+  String get ventor_profile_day_wed => 'الأربعاء';
+
+  @override
+  String get ventor_profile_day_thu => 'الخميس';
+
+  @override
+  String get ventor_profile_day_fri => 'الجمعة';
+
+  @override
+  String get ventor_profile_day_sat => 'السبت';
+
+  @override
+  String get ventor_profile_day_sun => 'الأحد';
+
+  @override
+  String get ventor_profile_achievements => 'الإنجازات';
+
+  @override
+  String get ventor_profile_see_all => 'عرض الكل';
+
+  @override
+  String get ventor_profile_achievement_first_step => 'الخطوة الأولى';
+
+  @override
+  String get ventor_profile_achievement_first_step_desc => 'جلسة واحدة';
+
+  @override
+  String get ventor_profile_achievement_be_heard => 'أن تُسمَع';
+
+  @override
+  String get ventor_profile_achievement_be_heard_desc => '5 جلسات';
+
+  @override
+  String get ventor_profile_achievement_week_warrior => 'محارب الأسبوع';
+
+  @override
+  String get ventor_profile_achievement_week_warrior_desc => 'سلسلة 7 أيام';
+
+  @override
+  String get ventor_profile_achievement_active_mind => 'عقل نشط';
+
+  @override
+  String get ventor_profile_achievement_active_mind_desc => '20 جلسة';
+
+  @override
+  String get ventor_profile_achievement_first_step_detail =>
+      'أكمل أول جلسة تنفيس. اتخاذ هذه الخطوة الأولى يدل على شجاعة، وهو بداية رحلتك في Venting.';
+
+  @override
+  String get ventor_profile_achievement_be_heard_detail =>
+      'أنهِ 5 جلسات شاركت فيها مشاعرك. الاستماع المتكرر يبني الثقة والوضوح العاطفي.';
+
+  @override
+  String get ventor_profile_achievement_week_warrior_detail =>
+      'حافظ على سلسلة 7 أيام عبر تسجيل الدخول أو إكمال الجلسات. العادات اليومية الصغيرة تصنع فرقًا كبيرًا.';
+
+  @override
+  String get ventor_profile_achievement_active_mind_detail =>
+      'اوصل إلى 20 جلسة إجمالاً. هذه الشارة تحتفي باستمرارك في الاهتمام بنفسك.';
+
+  @override
+  String ventor_profile_achievements_subtitle(int unlocked, int total) {
+    return '$unlocked من $total مفتوحة';
+  }
+
+  @override
+  String get ventor_profile_achievement_unlocked => 'مفتوحة';
+
+  @override
+  String get ventor_profile_achievement_locked => 'مقفلة';
+
+  @override
+  String ventor_profile_total_points(String points) {
+    return '$points نقطة إجمالية';
+  }
+
+  @override
+  String get ventor_profile_view_rewards => 'عرض المكافآت';
+
+  @override
+  String get ventor_profile_my_listeners => 'مستمعوّي';
+
+  @override
+  String get ventor_profile_add_favorite => 'إضافة مفضل';
+
+  @override
+  String get ventor_profile_quote =>
+      'من الطبيعي ألا تكون بخير. لست مضطرًا لمواجهة ذلك وحدك.';
+
+  @override
+  String get ventor_profile_edit_title => 'تعديل الملف الشخصي';
+
+  @override
+  String get ventor_profile_edit_subtitle =>
+      'حدّث اسم العرض وصورة الملف الشخصي.';
+
+  @override
+  String get ventor_profile_edit_name_label => 'اسم العرض';
+
+  @override
+  String get ventor_profile_edit_name_hint => 'أدخل اسمك';
+
+  @override
+  String get ventor_profile_edit_change_photo => 'تغيير الصورة';
+
+  @override
+  String get ventor_profile_edit_photo_gallery => 'اختيار من المعرض';
+
+  @override
+  String get ventor_profile_edit_photo_camera => 'التقاط صورة';
+
+  @override
+  String get ventor_profile_settings_title => 'الإعدادات';
+
+  @override
+  String get ventor_profile_settings_privacy => 'الخصوصية';
+
+  @override
+  String get ventor_profile_settings_privacy_sub => 'تحكم بخصوصيتك';
+
+  @override
+  String get ventor_profile_settings_notifications => 'الإشعارات';
+
+  @override
+  String get ventor_profile_settings_notifications_sub => 'إدارة ما يصلك';
+
+  @override
+  String get ventor_profile_settings_help_sub => 'نحن هنا لمساعدتك';
+
+  @override
+  String get ventor_notif_section_push => 'إشعارات الدفع';
+
+  @override
+  String get ventor_notif_receive_push => 'استلام إشعارات الدفع';
+
+  @override
+  String get ventor_notif_section_session_reminders => 'تذكيرات الجلسات';
+
+  @override
+  String get ventor_notif_session_reminder_30 => 'قبل 30 دقيقة';
+
+  @override
+  String get ventor_notif_session_reminder_15 => 'قبل 15 دقيقة';
+
+  @override
+  String get ventor_notif_session_reminder_10 => 'قبل 10 دقائق';
+
+  @override
+  String get ventor_notif_session_reminder_5 => 'قبل 5 دقائق';
+
+  @override
+  String get ventor_notif_section_activity => 'أبلغني عن';
+
+  @override
+  String get ventor_notif_rewards_updates => 'المكافآت والنقاط';
+
+  @override
+  String get ventor_notif_promotions => 'العروض والنصائح';
+
+  @override
+  String get ventor_notif_section_email => 'البريد الإلكتروني';
+
+  @override
+  String get ventor_notif_receive_email => 'استلام تحديثات عبر البريد';
+
+  @override
+  String get ventor_notif_save => 'حفظ';
+
+  @override
+  String get ventor_privacy_section_profile => 'ظهور الملف الشخصي';
+
+  @override
+  String get ventor_privacy_show_mood_journey => 'إظهار رحلة المزاج';
+
+  @override
+  String get ventor_privacy_show_achievements => 'إظهار الإنجازات';
+
+  @override
+  String get ventor_privacy_show_stats => 'إظهار الجلسات والسلسلة';
+
+  @override
+  String get ventor_privacy_show_favorite_listeners => 'إظهار مستمعيّ';
+
+  @override
+  String get ventor_privacy_section_discovery => 'الاكتشاف';
+
+  @override
+  String get ventor_privacy_allow_discovery => 'السماح للمستمعين بإيجادي';
+
+  @override
+  String get ventor_privacy_allow_discovery_sub =>
+      'اسمح للمستمعين المطابقين باكتشاف ملفك عند البحث عن شخص للتحدث معه.';
+
+  @override
+  String get ventor_privacy_save => 'حفظ';
 }

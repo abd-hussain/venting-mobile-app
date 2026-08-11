@@ -8602,6 +8602,426 @@ abstract class VentingMobLocalizations {
   /// In en, this message translates to:
   /// **'Your ventor profile and settings will appear here.'**
   String get ventor_home_profile_placeholder;
+
+  /// No description provided for @ventor_profile_anonymous.
+  ///
+  /// In en, this message translates to:
+  /// **'Anonymous'**
+  String get ventor_profile_anonymous;
+
+  /// No description provided for @ventor_profile_sessions.
+  ///
+  /// In en, this message translates to:
+  /// **'Sessions'**
+  String get ventor_profile_sessions;
+
+  /// No description provided for @ventor_profile_avg_rating.
+  ///
+  /// In en, this message translates to:
+  /// **'Avg. Rating'**
+  String get ventor_profile_avg_rating;
+
+  /// No description provided for @ventor_profile_day_streak.
+  ///
+  /// In en, this message translates to:
+  /// **'Day Streak'**
+  String get ventor_profile_day_streak;
+
+  /// No description provided for @ventor_profile_mood_journey.
+  ///
+  /// In en, this message translates to:
+  /// **'Mood Journey'**
+  String get ventor_profile_mood_journey;
+
+  /// No description provided for @ventor_profile_today.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get ventor_profile_today;
+
+  /// No description provided for @ventor_profile_day_mon.
+  ///
+  /// In en, this message translates to:
+  /// **'Mon'**
+  String get ventor_profile_day_mon;
+
+  /// No description provided for @ventor_profile_day_tue.
+  ///
+  /// In en, this message translates to:
+  /// **'Tue'**
+  String get ventor_profile_day_tue;
+
+  /// No description provided for @ventor_profile_day_wed.
+  ///
+  /// In en, this message translates to:
+  /// **'Wed'**
+  String get ventor_profile_day_wed;
+
+  /// No description provided for @ventor_profile_day_thu.
+  ///
+  /// In en, this message translates to:
+  /// **'Thu'**
+  String get ventor_profile_day_thu;
+
+  /// No description provided for @ventor_profile_day_fri.
+  ///
+  /// In en, this message translates to:
+  /// **'Fri'**
+  String get ventor_profile_day_fri;
+
+  /// No description provided for @ventor_profile_day_sat.
+  ///
+  /// In en, this message translates to:
+  /// **'Sat'**
+  String get ventor_profile_day_sat;
+
+  /// No description provided for @ventor_profile_day_sun.
+  ///
+  /// In en, this message translates to:
+  /// **'Sun'**
+  String get ventor_profile_day_sun;
+
+  /// No description provided for @ventor_profile_achievements.
+  ///
+  /// In en, this message translates to:
+  /// **'Achievements'**
+  String get ventor_profile_achievements;
+
+  /// No description provided for @ventor_profile_see_all.
+  ///
+  /// In en, this message translates to:
+  /// **'See all'**
+  String get ventor_profile_see_all;
+
+  /// No description provided for @ventor_profile_achievement_first_step.
+  ///
+  /// In en, this message translates to:
+  /// **'First Step'**
+  String get ventor_profile_achievement_first_step;
+
+  /// No description provided for @ventor_profile_achievement_first_step_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'1 Session'**
+  String get ventor_profile_achievement_first_step_desc;
+
+  /// No description provided for @ventor_profile_achievement_be_heard.
+  ///
+  /// In en, this message translates to:
+  /// **'Be Heard'**
+  String get ventor_profile_achievement_be_heard;
+
+  /// No description provided for @ventor_profile_achievement_be_heard_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'5 Sessions'**
+  String get ventor_profile_achievement_be_heard_desc;
+
+  /// No description provided for @ventor_profile_achievement_week_warrior.
+  ///
+  /// In en, this message translates to:
+  /// **'Week Warrior'**
+  String get ventor_profile_achievement_week_warrior;
+
+  /// No description provided for @ventor_profile_achievement_week_warrior_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'7 Day Streak'**
+  String get ventor_profile_achievement_week_warrior_desc;
+
+  /// No description provided for @ventor_profile_achievement_active_mind.
+  ///
+  /// In en, this message translates to:
+  /// **'Active Mind'**
+  String get ventor_profile_achievement_active_mind;
+
+  /// No description provided for @ventor_profile_achievement_active_mind_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'20 Sessions'**
+  String get ventor_profile_achievement_active_mind_desc;
+
+  /// No description provided for @ventor_profile_achievement_first_step_detail.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete your first venting session. Taking that first step shows courage — and it unlocks your journey on Venting.'**
+  String get ventor_profile_achievement_first_step_detail;
+
+  /// No description provided for @ventor_profile_achievement_be_heard_detail.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish 5 sessions where you shared how you feel. Being heard consistently helps build trust and emotional clarity.'**
+  String get ventor_profile_achievement_be_heard_detail;
+
+  /// No description provided for @ventor_profile_achievement_week_warrior_detail.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep a 7-day streak by checking in or completing sessions. Small daily habits can make a big difference.'**
+  String get ventor_profile_achievement_week_warrior_detail;
+
+  /// No description provided for @ventor_profile_achievement_active_mind_detail.
+  ///
+  /// In en, this message translates to:
+  /// **'Reach 20 total sessions. This badge celebrates showing up for yourself again and again.'**
+  String get ventor_profile_achievement_active_mind_detail;
+
+  /// No description provided for @ventor_profile_achievements_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{unlocked} of {total} unlocked'**
+  String ventor_profile_achievements_subtitle(int unlocked, int total);
+
+  /// No description provided for @ventor_profile_achievement_unlocked.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlocked'**
+  String get ventor_profile_achievement_unlocked;
+
+  /// No description provided for @ventor_profile_achievement_locked.
+  ///
+  /// In en, this message translates to:
+  /// **'Locked'**
+  String get ventor_profile_achievement_locked;
+
+  /// No description provided for @ventor_profile_total_points.
+  ///
+  /// In en, this message translates to:
+  /// **'{points} Total Points'**
+  String ventor_profile_total_points(String points);
+
+  /// No description provided for @ventor_profile_view_rewards.
+  ///
+  /// In en, this message translates to:
+  /// **'View Rewards'**
+  String get ventor_profile_view_rewards;
+
+  /// No description provided for @ventor_profile_my_listeners.
+  ///
+  /// In en, this message translates to:
+  /// **'My Listeners'**
+  String get ventor_profile_my_listeners;
+
+  /// No description provided for @ventor_profile_add_favorite.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Favorite'**
+  String get ventor_profile_add_favorite;
+
+  /// No description provided for @ventor_profile_quote.
+  ///
+  /// In en, this message translates to:
+  /// **'It\'s okay to not be okay. You don\'t have to go through it alone.'**
+  String get ventor_profile_quote;
+
+  /// No description provided for @ventor_profile_edit_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Profile'**
+  String get ventor_profile_edit_title;
+
+  /// No description provided for @ventor_profile_edit_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Update your display name and profile photo.'**
+  String get ventor_profile_edit_subtitle;
+
+  /// No description provided for @ventor_profile_edit_name_label.
+  ///
+  /// In en, this message translates to:
+  /// **'Display name'**
+  String get ventor_profile_edit_name_label;
+
+  /// No description provided for @ventor_profile_edit_name_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your name'**
+  String get ventor_profile_edit_name_hint;
+
+  /// No description provided for @ventor_profile_edit_change_photo.
+  ///
+  /// In en, this message translates to:
+  /// **'Change photo'**
+  String get ventor_profile_edit_change_photo;
+
+  /// No description provided for @ventor_profile_edit_photo_gallery.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose from gallery'**
+  String get ventor_profile_edit_photo_gallery;
+
+  /// No description provided for @ventor_profile_edit_photo_camera.
+  ///
+  /// In en, this message translates to:
+  /// **'Take a photo'**
+  String get ventor_profile_edit_photo_camera;
+
+  /// No description provided for @ventor_profile_settings_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get ventor_profile_settings_title;
+
+  /// No description provided for @ventor_profile_settings_privacy.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy'**
+  String get ventor_profile_settings_privacy;
+
+  /// No description provided for @ventor_profile_settings_privacy_sub.
+  ///
+  /// In en, this message translates to:
+  /// **'Control your privacy'**
+  String get ventor_profile_settings_privacy_sub;
+
+  /// No description provided for @ventor_profile_settings_notifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get ventor_profile_settings_notifications;
+
+  /// No description provided for @ventor_profile_settings_notifications_sub.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage what you get'**
+  String get ventor_profile_settings_notifications_sub;
+
+  /// No description provided for @ventor_profile_settings_help_sub.
+  ///
+  /// In en, this message translates to:
+  /// **'We\'re here for you'**
+  String get ventor_profile_settings_help_sub;
+
+  /// No description provided for @ventor_notif_section_push.
+  ///
+  /// In en, this message translates to:
+  /// **'Push notifications'**
+  String get ventor_notif_section_push;
+
+  /// No description provided for @ventor_notif_receive_push.
+  ///
+  /// In en, this message translates to:
+  /// **'Receive push notifications'**
+  String get ventor_notif_receive_push;
+
+  /// No description provided for @ventor_notif_section_session_reminders.
+  ///
+  /// In en, this message translates to:
+  /// **'Session reminders'**
+  String get ventor_notif_section_session_reminders;
+
+  /// No description provided for @ventor_notif_session_reminder_30.
+  ///
+  /// In en, this message translates to:
+  /// **'30 minutes before'**
+  String get ventor_notif_session_reminder_30;
+
+  /// No description provided for @ventor_notif_session_reminder_15.
+  ///
+  /// In en, this message translates to:
+  /// **'15 minutes before'**
+  String get ventor_notif_session_reminder_15;
+
+  /// No description provided for @ventor_notif_session_reminder_10.
+  ///
+  /// In en, this message translates to:
+  /// **'10 minutes before'**
+  String get ventor_notif_session_reminder_10;
+
+  /// No description provided for @ventor_notif_session_reminder_5.
+  ///
+  /// In en, this message translates to:
+  /// **'5 minutes before'**
+  String get ventor_notif_session_reminder_5;
+
+  /// No description provided for @ventor_notif_section_activity.
+  ///
+  /// In en, this message translates to:
+  /// **'Notify me about'**
+  String get ventor_notif_section_activity;
+
+  /// No description provided for @ventor_notif_rewards_updates.
+  ///
+  /// In en, this message translates to:
+  /// **'Rewards & points'**
+  String get ventor_notif_rewards_updates;
+
+  /// No description provided for @ventor_notif_promotions.
+  ///
+  /// In en, this message translates to:
+  /// **'Promotions & tips'**
+  String get ventor_notif_promotions;
+
+  /// No description provided for @ventor_notif_section_email.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get ventor_notif_section_email;
+
+  /// No description provided for @ventor_notif_receive_email.
+  ///
+  /// In en, this message translates to:
+  /// **'Receive email updates'**
+  String get ventor_notif_receive_email;
+
+  /// No description provided for @ventor_notif_save.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get ventor_notif_save;
+
+  /// No description provided for @ventor_privacy_section_profile.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile visibility'**
+  String get ventor_privacy_section_profile;
+
+  /// No description provided for @ventor_privacy_show_mood_journey.
+  ///
+  /// In en, this message translates to:
+  /// **'Show Mood Journey'**
+  String get ventor_privacy_show_mood_journey;
+
+  /// No description provided for @ventor_privacy_show_achievements.
+  ///
+  /// In en, this message translates to:
+  /// **'Show Achievements'**
+  String get ventor_privacy_show_achievements;
+
+  /// No description provided for @ventor_privacy_show_stats.
+  ///
+  /// In en, this message translates to:
+  /// **'Show Sessions & Streak'**
+  String get ventor_privacy_show_stats;
+
+  /// No description provided for @ventor_privacy_show_favorite_listeners.
+  ///
+  /// In en, this message translates to:
+  /// **'Show My Listeners'**
+  String get ventor_privacy_show_favorite_listeners;
+
+  /// No description provided for @ventor_privacy_section_discovery.
+  ///
+  /// In en, this message translates to:
+  /// **'Discovery'**
+  String get ventor_privacy_section_discovery;
+
+  /// No description provided for @ventor_privacy_allow_discovery.
+  ///
+  /// In en, this message translates to:
+  /// **'Allow listeners to find me'**
+  String get ventor_privacy_allow_discovery;
+
+  /// No description provided for @ventor_privacy_allow_discovery_sub.
+  ///
+  /// In en, this message translates to:
+  /// **'Let matching listeners discover your profile when looking for someone to talk to.'**
+  String get ventor_privacy_allow_discovery_sub;
+
+  /// No description provided for @ventor_privacy_save.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get ventor_privacy_save;
 }
 
 class _VentingMobLocalizationsDelegate

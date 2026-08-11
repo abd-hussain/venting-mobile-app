@@ -4795,4 +4795,225 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
   @override
   String get ventor_home_profile_placeholder =>
       'Your ventor profile and settings will appear here.';
+
+  @override
+  String get ventor_profile_anonymous => 'Anonymous';
+
+  @override
+  String get ventor_profile_sessions => 'Sessions';
+
+  @override
+  String get ventor_profile_avg_rating => 'Avg. Rating';
+
+  @override
+  String get ventor_profile_day_streak => 'Day Streak';
+
+  @override
+  String get ventor_profile_mood_journey => 'Mood Journey';
+
+  @override
+  String get ventor_profile_today => 'Today';
+
+  @override
+  String get ventor_profile_day_mon => 'Mon';
+
+  @override
+  String get ventor_profile_day_tue => 'Tue';
+
+  @override
+  String get ventor_profile_day_wed => 'Wed';
+
+  @override
+  String get ventor_profile_day_thu => 'Thu';
+
+  @override
+  String get ventor_profile_day_fri => 'Fri';
+
+  @override
+  String get ventor_profile_day_sat => 'Sat';
+
+  @override
+  String get ventor_profile_day_sun => 'Sun';
+
+  @override
+  String get ventor_profile_achievements => 'Achievements';
+
+  @override
+  String get ventor_profile_see_all => 'See all';
+
+  @override
+  String get ventor_profile_achievement_first_step => 'First Step';
+
+  @override
+  String get ventor_profile_achievement_first_step_desc => '1 Session';
+
+  @override
+  String get ventor_profile_achievement_be_heard => 'Be Heard';
+
+  @override
+  String get ventor_profile_achievement_be_heard_desc => '5 Sessions';
+
+  @override
+  String get ventor_profile_achievement_week_warrior => 'Week Warrior';
+
+  @override
+  String get ventor_profile_achievement_week_warrior_desc => '7 Day Streak';
+
+  @override
+  String get ventor_profile_achievement_active_mind => 'Active Mind';
+
+  @override
+  String get ventor_profile_achievement_active_mind_desc => '20 Sessions';
+
+  @override
+  String get ventor_profile_achievement_first_step_detail =>
+      'Complete your first venting session. Taking that first step shows courage — and it unlocks your journey on Venting.';
+
+  @override
+  String get ventor_profile_achievement_be_heard_detail =>
+      'Finish 5 sessions where you shared how you feel. Being heard consistently helps build trust and emotional clarity.';
+
+  @override
+  String get ventor_profile_achievement_week_warrior_detail =>
+      'Keep a 7-day streak by checking in or completing sessions. Small daily habits can make a big difference.';
+
+  @override
+  String get ventor_profile_achievement_active_mind_detail =>
+      'Reach 20 total sessions. This badge celebrates showing up for yourself again and again.';
+
+  @override
+  String ventor_profile_achievements_subtitle(int unlocked, int total) {
+    return '$unlocked of $total unlocked';
+  }
+
+  @override
+  String get ventor_profile_achievement_unlocked => 'Unlocked';
+
+  @override
+  String get ventor_profile_achievement_locked => 'Locked';
+
+  @override
+  String ventor_profile_total_points(String points) {
+    return '$points Total Points';
+  }
+
+  @override
+  String get ventor_profile_view_rewards => 'View Rewards';
+
+  @override
+  String get ventor_profile_my_listeners => 'My Listeners';
+
+  @override
+  String get ventor_profile_add_favorite => 'Add Favorite';
+
+  @override
+  String get ventor_profile_quote =>
+      'It\'s okay to not be okay. You don\'t have to go through it alone.';
+
+  @override
+  String get ventor_profile_edit_title => 'Edit Profile';
+
+  @override
+  String get ventor_profile_edit_subtitle =>
+      'Update your display name and profile photo.';
+
+  @override
+  String get ventor_profile_edit_name_label => 'Display name';
+
+  @override
+  String get ventor_profile_edit_name_hint => 'Enter your name';
+
+  @override
+  String get ventor_profile_edit_change_photo => 'Change photo';
+
+  @override
+  String get ventor_profile_edit_photo_gallery => 'Choose from gallery';
+
+  @override
+  String get ventor_profile_edit_photo_camera => 'Take a photo';
+
+  @override
+  String get ventor_profile_settings_title => 'Settings';
+
+  @override
+  String get ventor_profile_settings_privacy => 'Privacy';
+
+  @override
+  String get ventor_profile_settings_privacy_sub => 'Control your privacy';
+
+  @override
+  String get ventor_profile_settings_notifications => 'Notifications';
+
+  @override
+  String get ventor_profile_settings_notifications_sub => 'Manage what you get';
+
+  @override
+  String get ventor_profile_settings_help_sub => 'We\'re here for you';
+
+  @override
+  String get ventor_notif_section_push => 'Push notifications';
+
+  @override
+  String get ventor_notif_receive_push => 'Receive push notifications';
+
+  @override
+  String get ventor_notif_section_session_reminders => 'Session reminders';
+
+  @override
+  String get ventor_notif_session_reminder_30 => '30 minutes before';
+
+  @override
+  String get ventor_notif_session_reminder_15 => '15 minutes before';
+
+  @override
+  String get ventor_notif_session_reminder_10 => '10 minutes before';
+
+  @override
+  String get ventor_notif_session_reminder_5 => '5 minutes before';
+
+  @override
+  String get ventor_notif_section_activity => 'Notify me about';
+
+  @override
+  String get ventor_notif_rewards_updates => 'Rewards & points';
+
+  @override
+  String get ventor_notif_promotions => 'Promotions & tips';
+
+  @override
+  String get ventor_notif_section_email => 'Email';
+
+  @override
+  String get ventor_notif_receive_email => 'Receive email updates';
+
+  @override
+  String get ventor_notif_save => 'Save';
+
+  @override
+  String get ventor_privacy_section_profile => 'Profile visibility';
+
+  @override
+  String get ventor_privacy_show_mood_journey => 'Show Mood Journey';
+
+  @override
+  String get ventor_privacy_show_achievements => 'Show Achievements';
+
+  @override
+  String get ventor_privacy_show_stats => 'Show Sessions & Streak';
+
+  @override
+  String get ventor_privacy_show_favorite_listeners => 'Show My Listeners';
+
+  @override
+  String get ventor_privacy_section_discovery => 'Discovery';
+
+  @override
+  String get ventor_privacy_allow_discovery => 'Allow listeners to find me';
+
+  @override
+  String get ventor_privacy_allow_discovery_sub =>
+      'Let matching listeners discover your profile when looking for someone to talk to.';
+
+  @override
+  String get ventor_privacy_save => 'Save';
 }
