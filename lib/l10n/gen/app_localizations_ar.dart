@@ -2087,11 +2087,14 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
       'هل أنت متأكد من رغبتك في حذف الصورة الحالية؟';
 
   @override
-  String get common_something_went_wrong => 'حدث خطأ ما.';
+  String get common_something_went_wrong => 'حدث خطأ ما';
 
   @override
   String get common_something_went_wrong_message =>
-      'حدث خطأ ما. يرجى المحاولة مرة أخرى أو الاتصال بدعم العملاء إذا استمرت المشكلة.';
+      'لم نتوقع حدوث ذلك. يرجى المحاولة مرة أخرى بعد لحظات.';
+
+  @override
+  String get common_contact_support => 'تواصل مع الدعم';
 
   @override
   String get zain_near_me_list_of_stores => 'قائمة المتاجر';

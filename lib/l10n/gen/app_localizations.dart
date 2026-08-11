@@ -3833,14 +3833,20 @@ abstract class VentingMobLocalizations {
   /// No description provided for @common_something_went_wrong.
   ///
   /// In en, this message translates to:
-  /// **'Something Went Wrong'**
+  /// **'Something went wrong'**
   String get common_something_went_wrong;
 
   /// No description provided for @common_something_went_wrong_message.
   ///
   /// In en, this message translates to:
-  /// **'Something went wrong. Please try again or contact customer support if the issue persists.'**
+  /// **'We didn\'t see that coming. Please try again in a moment.'**
   String get common_something_went_wrong_message;
+
+  /// No description provided for @common_contact_support.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact Support'**
+  String get common_contact_support;
 
   /// No description provided for @zain_near_me_list_of_stores.
   ///

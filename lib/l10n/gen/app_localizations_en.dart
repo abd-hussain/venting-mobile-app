@@ -2101,11 +2101,14 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
       'Are you sure you want to remove Current Photo?';
 
   @override
-  String get common_something_went_wrong => 'Something Went Wrong';
+  String get common_something_went_wrong => 'Something went wrong';
 
   @override
   String get common_something_went_wrong_message =>
-      'Something went wrong. Please try again or contact customer support if the issue persists.';
+      'We didn\'t see that coming. Please try again in a moment.';
+
+  @override
+  String get common_contact_support => 'Contact Support';
 
   @override
   String get zain_near_me_list_of_stores => 'List of Store';
