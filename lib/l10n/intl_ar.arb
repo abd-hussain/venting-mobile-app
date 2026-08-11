@@ -2888,10 +2888,42 @@
   "@listener_profile_see_less": {},
   "listener_profile_good_at": "ما أجيد الاستماع فيه",
   "@listener_profile_good_at": {},
+  "listener_profile_experiences": "الخبرات",
+  "@listener_profile_experiences": {},
+  "listener_profile_edit_experiences_title": "تعديل الخبرات",
+  "@listener_profile_edit_experiences_title": {},
+  "listener_profile_edit_experiences_subtitle": "حدّث خبرات الحياة التي تشكّل طريقة استماعك ودعمك للآخرين.",
+  "@listener_profile_edit_experiences_subtitle": {},
+  "listener_profile_experiences_empty": "لا توجد خبرات بعد. اضغط تعديل لإضافة بعضها.",
+  "@listener_profile_experiences_empty": {},
+  "listener_profile_comfort_areas": "ما أجيد الاستماع فيه",
+  "@listener_profile_comfort_areas": {},
+  "listener_profile_edit_comfort_areas_title": "تعديل مجالات الراحة",
+  "@listener_profile_edit_comfort_areas_title": {},
+  "listener_profile_edit_comfort_areas_subtitle": "اختر المواضيع التي تشعر بالراحة في الاستماع إليها ودعم الآخرين فيها.",
+  "@listener_profile_edit_comfort_areas_subtitle": {},
+  "listener_profile_comfort_areas_empty": "لا توجد مجالات راحة بعد. اضغط تعديل لاختيار المواضيع.",
+  "@listener_profile_comfort_areas_empty": {},
+  "listener_profile_boundaries": "الحدود",
+  "@listener_profile_boundaries": {},
+  "listener_profile_edit_boundaries_title": "تعديل الحدود",
+  "@listener_profile_edit_boundaries_title": {},
+  "listener_profile_edit_boundaries_subtitle": "مواضيع لا ترغب بمناقشتها. سنحترم اختيارك.",
+  "@listener_profile_edit_boundaries_subtitle": {},
+  "listener_profile_boundaries_empty": "لا توجد حدود بعد. اضغط تعديل لاختيار المواضيع التي تفضّل تجنبها.",
+  "@listener_profile_boundaries_empty": {},
   "listener_profile_add_more": "+ إضافة المزيد",
   "@listener_profile_add_more": {},
   "listener_profile_languages": "اللغات",
   "@listener_profile_languages": {},
+  "listener_profile_country": "الدولة",
+  "@listener_profile_country": {},
+  "listener_profile_city": "المدينة",
+  "@listener_profile_city": {},
+  "listener_profile_edit_city_title": "تعديل المدينة",
+  "@listener_profile_edit_city_title": {},
+  "listener_profile_edit_city_subtitle": "حدّث المدينة الظاهرة في ملف المستمع الخاص بك.",
+  "@listener_profile_edit_city_subtitle": {},
   "listener_profile_experience": "الخبرة",
   "@listener_profile_experience": {},
   "listener_profile_availability_label": "التوفر",
@@ -2902,6 +2934,57 @@
   "@listener_profile_reviews": {},
   "listener_profile_view_all_reviews": "عرض الكل ({count})",
   "@listener_profile_view_all_reviews": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "listener_profile_all_reviews_title": "كل التقييمات",
+  "@listener_profile_all_reviews_title": {},
+  "listener_profile_all_reviews_subtitle": "{rating} · {count} تقييم",
+  "@listener_profile_all_reviews_subtitle": {
+    "placeholders": {
+      "rating": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "listener_profile_all_reviews_empty": "لا توجد تقييمات بعد. ستظهر تقييمات المستفيدين هنا.",
+  "@listener_profile_all_reviews_empty": {},
+  "listener_profile_review_today": "اليوم",
+  "@listener_profile_review_today": {},
+  "listener_profile_review_yesterday": "أمس",
+  "@listener_profile_review_yesterday": {},
+  "listener_profile_review_days_ago": "منذ {count} أيام",
+  "@listener_profile_review_days_ago": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "listener_profile_review_weeks_ago": "منذ {count} أسابيع",
+  "@listener_profile_review_weeks_ago": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "listener_profile_review_months_ago": "منذ {count} أشهر",
+  "@listener_profile_review_months_ago": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "listener_profile_review_years_ago": "منذ {count} سنوات",
+  "@listener_profile_review_years_ago": {
     "placeholders": {
       "count": {
         "type": "int"
@@ -2932,6 +3015,138 @@
   "@listener_profile_payment_payouts": {},
   "listener_profile_help_support": "المساعدة والدعم",
   "@listener_profile_help_support": {},
+  "listener_profile_settings_section_account": "الحساب",
+  "@listener_profile_settings_section_account": {},
+  "listener_profile_settings_section_preferences": "التفضيلات",
+  "@listener_profile_settings_section_preferences": {},
+  "listener_profile_settings_section_earnings": "الأرباح والمدفوعات",
+  "@listener_profile_settings_section_earnings": {},
+  "listener_profile_settings_section_support": "الدعم",
+  "@listener_profile_settings_section_support": {},
+  "listener_profile_settings_email": "البريد الإلكتروني",
+  "@listener_profile_settings_email": {},
+  "listener_profile_settings_phone": "رقم الهاتف",
+  "@listener_profile_settings_phone": {},
+  "listener_profile_settings_two_factor": "المصادقة الثنائية",
+  "@listener_profile_settings_two_factor": {},
+  "listener_profile_settings_payout_methods": "طرق السحب",
+  "@listener_profile_settings_payout_methods": {},
+  "listener_profile_settings_feedback": "أرسل لنا ملاحظاتك",
+  "@listener_profile_settings_feedback": {},
+  "listener_profile_settings_about": "حول Venting",
+  "@listener_profile_settings_about": {},
+  "listener_profile_settings_on": "مفعل",
+  "@listener_profile_settings_on": {},
+  "listener_profile_settings_off": "إيقاف",
+  "@listener_profile_settings_off": {},
+  "listener_profile_settings_version": "الإصدار {version}",
+  "@listener_profile_settings_version": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "listener_change_password_current_label": "كلمة المرور الحالية",
+  "@listener_change_password_current_label": {},
+  "listener_change_password_current_hint": "أدخل كلمة المرور الحالية",
+  "@listener_change_password_current_hint": {},
+  "listener_change_password_new_label": "كلمة المرور الجديدة",
+  "@listener_change_password_new_label": {},
+  "listener_change_password_new_hint": "أدخل كلمة المرور الجديدة",
+  "@listener_change_password_new_hint": {},
+  "listener_change_password_confirm_label": "تأكيد كلمة المرور الجديدة",
+  "@listener_change_password_confirm_label": {},
+  "listener_change_password_confirm_hint": "أكد كلمة المرور الجديدة",
+  "@listener_change_password_confirm_hint": {},
+  "listener_change_password_rule_hint": "8 أحرف على الأقل مع رقم ورمز",
+  "@listener_change_password_rule_hint": {},
+  "listener_change_password_update": "تحديث كلمة المرور",
+  "@listener_change_password_update": {},
+  "listener_change_password_current_required": "يرجى إدخال كلمة المرور الحالية",
+  "@listener_change_password_current_required": {},
+  "listener_change_password_mismatch": "كلمتا المرور غير متطابقتين",
+  "@listener_change_password_mismatch": {},
+  "listener_change_password_same_as_current": "يجب أن تختلف كلمة المرور الجديدة عن الحالية",
+  "@listener_change_password_same_as_current": {},
+  "listener_edit_phone_title": "رقم الهاتف",
+  "@listener_edit_phone_title": {},
+  "listener_edit_phone_subtitle": "حدّث رقم الهاتف المرتبط بحساب المستمع الخاص بك.",
+  "@listener_edit_phone_subtitle": {},
+  "listener_notif_section_push": "إشعارات الدفع",
+  "@listener_notif_section_push": {},
+  "listener_notif_receive_push": "استلام إشعارات الدفع",
+  "@listener_notif_receive_push": {},
+  "listener_notif_section_notify_about": "أبلغني عن",
+  "@listener_notif_section_notify_about": {},
+  "listener_notif_new_session_requests": "طلبات الجلسات الجديدة",
+  "@listener_notif_new_session_requests": {},
+  "listener_notif_section_session_reminders": "تذكيرات الجلسات",
+  "@listener_notif_section_session_reminders": {},
+  "listener_notif_session_reminder_15": "تذكير بالجلسة قبل 15 دقيقة",
+  "@listener_notif_session_reminder_15": {},
+  "listener_notif_session_reminder_10": "تذكير بالجلسة قبل 10 دقائق",
+  "@listener_notif_session_reminder_10": {},
+  "listener_notif_session_reminder_5": "تذكير بالجلسة قبل 5 دقائق",
+  "@listener_notif_session_reminder_5": {},
+  "listener_notif_messages": "الرسائل",
+  "@listener_notif_messages": {},
+  "listener_notif_reviews_feedback": "التقييمات والملاحظات",
+  "@listener_notif_reviews_feedback": {},
+  "listener_notif_tips_earnings": "الإكراميات والأرباح",
+  "@listener_notif_tips_earnings": {},
+  "listener_notif_promotions_updates": "العروض والتحديثات",
+  "@listener_notif_promotions_updates": {},
+  "listener_notif_section_email": "إشعارات البريد الإلكتروني",
+  "@listener_notif_section_email": {},
+  "listener_notif_receive_email": "استلام إشعارات البريد الإلكتروني",
+  "@listener_notif_receive_email": {},
+  "listener_notif_save": "حفظ التفضيلات",
+  "@listener_notif_save": {},
+  "listener_privacy_section_visibility": "ظهور الملف",
+  "@listener_privacy_section_visibility": {},
+  "listener_privacy_online_status": "حالة الاتصال",
+  "@listener_privacy_online_status": {},
+  "listener_privacy_show_when_online": "إظهار عندما أكون متصلاً",
+  "@listener_privacy_show_when_online": {},
+  "listener_privacy_show_profile_in": "إظهار ملفي في",
+  "@listener_privacy_show_profile_in": {},
+  "listener_privacy_all_countries": "جميع الدول",
+  "@listener_privacy_all_countries": {},
+  "listener_privacy_specific_countries": "دول محددة",
+  "@listener_privacy_specific_countries": {},
+  "listener_privacy_select_countries": "اختر الدول",
+  "@listener_privacy_select_countries": {},
+  "listener_privacy_countries_count": "{count} دول",
+  "@listener_privacy_countries_count": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "listener_privacy_countries_required": "يرجى اختيار دولة واحدة على الأقل",
+  "@listener_privacy_countries_required": {},
+  "listener_privacy_visible_countries_title": "ظهور الملف حسب الدولة",
+  "@listener_privacy_visible_countries_title": {},
+  "listener_privacy_section_information": "معلومات الملف",
+  "@listener_privacy_section_information": {},
+  "listener_privacy_show_languages": "إظهار اللغات التي أتحدثها",
+  "@listener_privacy_show_languages": {},
+  "listener_privacy_show_comfort_areas": "إظهار المواضيع التي أجيدها",
+  "@listener_privacy_show_comfort_areas": {},
+  "listener_privacy_show_experience_ratings": "إظهار الخبرة والتقييمات",
+  "@listener_privacy_show_experience_ratings": {},
+  "listener_privacy_show_boundaries": "إظهار حدودي",
+  "@listener_privacy_show_boundaries": {},
+  "listener_privacy_section_activity": "النشاط والبيانات",
+  "@listener_privacy_section_activity": {},
+  "listener_privacy_allow_search_indexing": "السماح بفهرسة محركات البحث",
+  "@listener_privacy_allow_search_indexing": {},
+  "listener_privacy_search_indexing_hint": "أوقف هذا الخيار لإبقاء ملفك خارج نتائج البحث.",
+  "@listener_privacy_search_indexing_hint": {},
+  "listener_privacy_save": "حفظ التغييرات",
+  "@listener_privacy_save": {},
   "listener_profile_edit": "تعديل",
   "@listener_profile_edit": {},
   "listener_profile_about_me_body": "أنا هنا للاستماع ودعمك في مساحة آمنة وخالية من الأحكام. أؤمن حقاً أننا أحياناً نحتاج فقط إلى شخص يستمع بقلب مفتوح.",

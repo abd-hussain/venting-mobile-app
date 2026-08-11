@@ -7493,6 +7493,78 @@ abstract class VentingMobLocalizations {
   /// **'What I\'m Good At'**
   String get listener_profile_good_at;
 
+  /// No description provided for @listener_profile_experiences.
+  ///
+  /// In en, this message translates to:
+  /// **'Experiences'**
+  String get listener_profile_experiences;
+
+  /// No description provided for @listener_profile_edit_experiences_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Experiences'**
+  String get listener_profile_edit_experiences_title;
+
+  /// No description provided for @listener_profile_edit_experiences_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Update the life experiences that shape how you listen and support others.'**
+  String get listener_profile_edit_experiences_subtitle;
+
+  /// No description provided for @listener_profile_experiences_empty.
+  ///
+  /// In en, this message translates to:
+  /// **'No experiences added yet. Tap Edit to add some.'**
+  String get listener_profile_experiences_empty;
+
+  /// No description provided for @listener_profile_comfort_areas.
+  ///
+  /// In en, this message translates to:
+  /// **'What I\'m Good At'**
+  String get listener_profile_comfort_areas;
+
+  /// No description provided for @listener_profile_edit_comfort_areas_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Comfort Areas'**
+  String get listener_profile_edit_comfort_areas_title;
+
+  /// No description provided for @listener_profile_edit_comfort_areas_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose topics you\'re comfortable listening to and supporting.'**
+  String get listener_profile_edit_comfort_areas_subtitle;
+
+  /// No description provided for @listener_profile_comfort_areas_empty.
+  ///
+  /// In en, this message translates to:
+  /// **'No comfort areas selected yet. Tap Edit to choose topics.'**
+  String get listener_profile_comfort_areas_empty;
+
+  /// No description provided for @listener_profile_boundaries.
+  ///
+  /// In en, this message translates to:
+  /// **'Boundaries'**
+  String get listener_profile_boundaries;
+
+  /// No description provided for @listener_profile_edit_boundaries_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Boundaries'**
+  String get listener_profile_edit_boundaries_title;
+
+  /// No description provided for @listener_profile_edit_boundaries_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Topics you don\'t want to discuss. We will respect your choice.'**
+  String get listener_profile_edit_boundaries_subtitle;
+
+  /// No description provided for @listener_profile_boundaries_empty.
+  ///
+  /// In en, this message translates to:
+  /// **'No boundaries set yet. Tap Edit to choose topics you prefer to avoid.'**
+  String get listener_profile_boundaries_empty;
+
   /// No description provided for @listener_profile_add_more.
   ///
   /// In en, this message translates to:
@@ -7504,6 +7576,30 @@ abstract class VentingMobLocalizations {
   /// In en, this message translates to:
   /// **'Languages'**
   String get listener_profile_languages;
+
+  /// No description provided for @listener_profile_country.
+  ///
+  /// In en, this message translates to:
+  /// **'Country'**
+  String get listener_profile_country;
+
+  /// No description provided for @listener_profile_city.
+  ///
+  /// In en, this message translates to:
+  /// **'City'**
+  String get listener_profile_city;
+
+  /// No description provided for @listener_profile_edit_city_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit City'**
+  String get listener_profile_edit_city_title;
+
+  /// No description provided for @listener_profile_edit_city_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Update the city shown on your listener profile.'**
+  String get listener_profile_edit_city_subtitle;
 
   /// No description provided for @listener_profile_experience.
   ///
@@ -7534,6 +7630,60 @@ abstract class VentingMobLocalizations {
   /// In en, this message translates to:
   /// **'View all ({count})'**
   String listener_profile_view_all_reviews(int count);
+
+  /// No description provided for @listener_profile_all_reviews_title.
+  ///
+  /// In en, this message translates to:
+  /// **'All Reviews'**
+  String get listener_profile_all_reviews_title;
+
+  /// No description provided for @listener_profile_all_reviews_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{rating} · {count} reviews'**
+  String listener_profile_all_reviews_subtitle(String rating, int count);
+
+  /// No description provided for @listener_profile_all_reviews_empty.
+  ///
+  /// In en, this message translates to:
+  /// **'No reviews yet. Reviews from ventors will appear here.'**
+  String get listener_profile_all_reviews_empty;
+
+  /// No description provided for @listener_profile_review_today.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get listener_profile_review_today;
+
+  /// No description provided for @listener_profile_review_yesterday.
+  ///
+  /// In en, this message translates to:
+  /// **'Yesterday'**
+  String get listener_profile_review_yesterday;
+
+  /// No description provided for @listener_profile_review_days_ago.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} days ago'**
+  String listener_profile_review_days_ago(int count);
+
+  /// No description provided for @listener_profile_review_weeks_ago.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} weeks ago'**
+  String listener_profile_review_weeks_ago(int count);
+
+  /// No description provided for @listener_profile_review_months_ago.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} months ago'**
+  String listener_profile_review_months_ago(int count);
+
+  /// No description provided for @listener_profile_review_years_ago.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} years ago'**
+  String listener_profile_review_years_ago(int count);
 
   /// No description provided for @listener_profile_next_availability.
   ///
@@ -7588,6 +7738,366 @@ abstract class VentingMobLocalizations {
   /// In en, this message translates to:
   /// **'Help & Support'**
   String get listener_profile_help_support;
+
+  /// No description provided for @listener_profile_settings_section_account.
+  ///
+  /// In en, this message translates to:
+  /// **'Account'**
+  String get listener_profile_settings_section_account;
+
+  /// No description provided for @listener_profile_settings_section_preferences.
+  ///
+  /// In en, this message translates to:
+  /// **'Preferences'**
+  String get listener_profile_settings_section_preferences;
+
+  /// No description provided for @listener_profile_settings_section_earnings.
+  ///
+  /// In en, this message translates to:
+  /// **'Earnings & Payouts'**
+  String get listener_profile_settings_section_earnings;
+
+  /// No description provided for @listener_profile_settings_section_support.
+  ///
+  /// In en, this message translates to:
+  /// **'Support'**
+  String get listener_profile_settings_section_support;
+
+  /// No description provided for @listener_profile_settings_email.
+  ///
+  /// In en, this message translates to:
+  /// **'Email Address'**
+  String get listener_profile_settings_email;
+
+  /// No description provided for @listener_profile_settings_phone.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone Number'**
+  String get listener_profile_settings_phone;
+
+  /// No description provided for @listener_profile_settings_two_factor.
+  ///
+  /// In en, this message translates to:
+  /// **'Two-Factor Authentication'**
+  String get listener_profile_settings_two_factor;
+
+  /// No description provided for @listener_profile_settings_payout_methods.
+  ///
+  /// In en, this message translates to:
+  /// **'Payout Methods'**
+  String get listener_profile_settings_payout_methods;
+
+  /// No description provided for @listener_profile_settings_feedback.
+  ///
+  /// In en, this message translates to:
+  /// **'Give Us Feedback'**
+  String get listener_profile_settings_feedback;
+
+  /// No description provided for @listener_profile_settings_about.
+  ///
+  /// In en, this message translates to:
+  /// **'About Venting'**
+  String get listener_profile_settings_about;
+
+  /// No description provided for @listener_profile_settings_on.
+  ///
+  /// In en, this message translates to:
+  /// **'On'**
+  String get listener_profile_settings_on;
+
+  /// No description provided for @listener_profile_settings_off.
+  ///
+  /// In en, this message translates to:
+  /// **'Off'**
+  String get listener_profile_settings_off;
+
+  /// No description provided for @listener_profile_settings_version.
+  ///
+  /// In en, this message translates to:
+  /// **'Version {version}'**
+  String listener_profile_settings_version(String version);
+
+  /// No description provided for @listener_change_password_current_label.
+  ///
+  /// In en, this message translates to:
+  /// **'Current Password'**
+  String get listener_change_password_current_label;
+
+  /// No description provided for @listener_change_password_current_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter current password'**
+  String get listener_change_password_current_hint;
+
+  /// No description provided for @listener_change_password_new_label.
+  ///
+  /// In en, this message translates to:
+  /// **'New Password'**
+  String get listener_change_password_new_label;
+
+  /// No description provided for @listener_change_password_new_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter new password'**
+  String get listener_change_password_new_hint;
+
+  /// No description provided for @listener_change_password_confirm_label.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm New Password'**
+  String get listener_change_password_confirm_label;
+
+  /// No description provided for @listener_change_password_confirm_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm new password'**
+  String get listener_change_password_confirm_hint;
+
+  /// No description provided for @listener_change_password_rule_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Min. 8 characters with a number and symbol'**
+  String get listener_change_password_rule_hint;
+
+  /// No description provided for @listener_change_password_update.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Password'**
+  String get listener_change_password_update;
+
+  /// No description provided for @listener_change_password_current_required.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter your current password'**
+  String get listener_change_password_current_required;
+
+  /// No description provided for @listener_change_password_mismatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Passwords do not match'**
+  String get listener_change_password_mismatch;
+
+  /// No description provided for @listener_change_password_same_as_current.
+  ///
+  /// In en, this message translates to:
+  /// **'New password must be different from your current password'**
+  String get listener_change_password_same_as_current;
+
+  /// No description provided for @listener_edit_phone_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone Number'**
+  String get listener_edit_phone_title;
+
+  /// No description provided for @listener_edit_phone_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Update the phone number linked to your listener account.'**
+  String get listener_edit_phone_subtitle;
+
+  /// No description provided for @listener_notif_section_push.
+  ///
+  /// In en, this message translates to:
+  /// **'Push Notifications'**
+  String get listener_notif_section_push;
+
+  /// No description provided for @listener_notif_receive_push.
+  ///
+  /// In en, this message translates to:
+  /// **'Receive push notifications'**
+  String get listener_notif_receive_push;
+
+  /// No description provided for @listener_notif_section_notify_about.
+  ///
+  /// In en, this message translates to:
+  /// **'Notify me about'**
+  String get listener_notif_section_notify_about;
+
+  /// No description provided for @listener_notif_new_session_requests.
+  ///
+  /// In en, this message translates to:
+  /// **'New session requests'**
+  String get listener_notif_new_session_requests;
+
+  /// No description provided for @listener_notif_section_session_reminders.
+  ///
+  /// In en, this message translates to:
+  /// **'Session reminders'**
+  String get listener_notif_section_session_reminders;
+
+  /// No description provided for @listener_notif_session_reminder_15.
+  ///
+  /// In en, this message translates to:
+  /// **'Session reminder before 15 min'**
+  String get listener_notif_session_reminder_15;
+
+  /// No description provided for @listener_notif_session_reminder_10.
+  ///
+  /// In en, this message translates to:
+  /// **'Session reminder before 10 min'**
+  String get listener_notif_session_reminder_10;
+
+  /// No description provided for @listener_notif_session_reminder_5.
+  ///
+  /// In en, this message translates to:
+  /// **'Session reminder before 5 min'**
+  String get listener_notif_session_reminder_5;
+
+  /// No description provided for @listener_notif_messages.
+  ///
+  /// In en, this message translates to:
+  /// **'Messages'**
+  String get listener_notif_messages;
+
+  /// No description provided for @listener_notif_reviews_feedback.
+  ///
+  /// In en, this message translates to:
+  /// **'Reviews & feedback'**
+  String get listener_notif_reviews_feedback;
+
+  /// No description provided for @listener_notif_tips_earnings.
+  ///
+  /// In en, this message translates to:
+  /// **'Tips & earnings'**
+  String get listener_notif_tips_earnings;
+
+  /// No description provided for @listener_notif_promotions_updates.
+  ///
+  /// In en, this message translates to:
+  /// **'Promotions & updates'**
+  String get listener_notif_promotions_updates;
+
+  /// No description provided for @listener_notif_section_email.
+  ///
+  /// In en, this message translates to:
+  /// **'Email Notifications'**
+  String get listener_notif_section_email;
+
+  /// No description provided for @listener_notif_receive_email.
+  ///
+  /// In en, this message translates to:
+  /// **'Receive email notifications'**
+  String get listener_notif_receive_email;
+
+  /// No description provided for @listener_notif_save.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Preferences'**
+  String get listener_notif_save;
+
+  /// No description provided for @listener_privacy_section_visibility.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile Visibility'**
+  String get listener_privacy_section_visibility;
+
+  /// No description provided for @listener_privacy_online_status.
+  ///
+  /// In en, this message translates to:
+  /// **'Online status'**
+  String get listener_privacy_online_status;
+
+  /// No description provided for @listener_privacy_show_when_online.
+  ///
+  /// In en, this message translates to:
+  /// **'Show when I\'m online'**
+  String get listener_privacy_show_when_online;
+
+  /// No description provided for @listener_privacy_show_profile_in.
+  ///
+  /// In en, this message translates to:
+  /// **'Show my profile in'**
+  String get listener_privacy_show_profile_in;
+
+  /// No description provided for @listener_privacy_all_countries.
+  ///
+  /// In en, this message translates to:
+  /// **'All countries'**
+  String get listener_privacy_all_countries;
+
+  /// No description provided for @listener_privacy_specific_countries.
+  ///
+  /// In en, this message translates to:
+  /// **'Specific countries'**
+  String get listener_privacy_specific_countries;
+
+  /// No description provided for @listener_privacy_select_countries.
+  ///
+  /// In en, this message translates to:
+  /// **'Select countries'**
+  String get listener_privacy_select_countries;
+
+  /// No description provided for @listener_privacy_countries_count.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} countries'**
+  String listener_privacy_countries_count(int count);
+
+  /// No description provided for @listener_privacy_countries_required.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select at least one country'**
+  String get listener_privacy_countries_required;
+
+  /// No description provided for @listener_privacy_visible_countries_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile visibility by country'**
+  String get listener_privacy_visible_countries_title;
+
+  /// No description provided for @listener_privacy_section_information.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile Information'**
+  String get listener_privacy_section_information;
+
+  /// No description provided for @listener_privacy_show_languages.
+  ///
+  /// In en, this message translates to:
+  /// **'Show languages I speak'**
+  String get listener_privacy_show_languages;
+
+  /// No description provided for @listener_privacy_show_comfort_areas.
+  ///
+  /// In en, this message translates to:
+  /// **'Show topics I\'m good at'**
+  String get listener_privacy_show_comfort_areas;
+
+  /// No description provided for @listener_privacy_show_experience_ratings.
+  ///
+  /// In en, this message translates to:
+  /// **'Show experience & ratings'**
+  String get listener_privacy_show_experience_ratings;
+
+  /// No description provided for @listener_privacy_show_boundaries.
+  ///
+  /// In en, this message translates to:
+  /// **'Show my boundaries'**
+  String get listener_privacy_show_boundaries;
+
+  /// No description provided for @listener_privacy_section_activity.
+  ///
+  /// In en, this message translates to:
+  /// **'Activity & Data'**
+  String get listener_privacy_section_activity;
+
+  /// No description provided for @listener_privacy_allow_search_indexing.
+  ///
+  /// In en, this message translates to:
+  /// **'Allow search engine indexing'**
+  String get listener_privacy_allow_search_indexing;
+
+  /// No description provided for @listener_privacy_search_indexing_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn off to keep your profile out of search engines.'**
+  String get listener_privacy_search_indexing_hint;
+
+  /// No description provided for @listener_privacy_save.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Changes'**
+  String get listener_privacy_save;
 
   /// No description provided for @listener_profile_edit.
   ///

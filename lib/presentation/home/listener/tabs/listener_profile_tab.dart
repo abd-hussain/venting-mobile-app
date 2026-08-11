@@ -5,11 +5,22 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:phone_numbers_parser/phone_numbers_parser.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
 import 'package:venting_mobile_app/presentation/home/listener/profile/listener_profile_theme.dart';
 import 'package:venting_mobile_app/presentation/home/listener/profile/widgets/edit_about_me_bottom_sheet.dart';
+import 'package:venting_mobile_app/presentation/home/listener/profile/widgets/edit_boundaries_bottom_sheet.dart';
+import 'package:venting_mobile_app/presentation/home/listener/profile/widgets/edit_city_bottom_sheet.dart';
+import 'package:venting_mobile_app/presentation/home/listener/profile/widgets/edit_comfort_areas_bottom_sheet.dart';
+import 'package:venting_mobile_app/presentation/home/listener/profile/widgets/edit_experiences_bottom_sheet.dart';
 import 'package:venting_mobile_app/presentation/home/listener/profile/widgets/edit_voice_intro_bottom_sheet.dart';
+import 'package:venting_mobile_app/presentation/home/listener/profile/widgets/listener_profile_reviews_bottom_sheet.dart';
+import 'package:venting_mobile_app/presentation/home/listener/profile/widgets/listener_profile_settings_screen.dart';
 import 'package:venting_mobile_app/presentation/home/listener/profile/widgets/listener_profile_widgets.dart';
+import 'package:venting_mobile_app/presentation/listener_registration/widgets/country_display_names.dart';
+import 'package:venting_mobile_app/presentation/listener_registration/widgets/language_options.dart';
+import 'package:venting_mobile_app/presentation/listener_registration/widgets/phone_country_picker.dart';
+import 'package:venting_mobile_app/presentation/listener_registration/widgets/spoken_languages_picker.dart';
 import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dart';
 
 class ListenerProfileTab extends StatefulWidget {
@@ -34,12 +45,63 @@ class _ListenerProfileTabState extends State<ListenerProfileTab> {
   static const _mockDateOfBirth = 'Mar 15, 1995';
   static const _mockRating = 4.9;
   static const _mockReviewCount = 342;
-  static const _mockExperienceYears = 4;
-  static const _mockResponseMinutes = 2;
-  static const _mockLanguages = 'English, Arabic';
-  static const _mockUntilTime = '11:00 PM';
-  static const _mockTomorrowRange = '10:00 AM – 10:00 PM';
   static const _mockReviewDistribution = [280, 42, 12, 5, 3];
+
+  // TODO: Load reviews from listener profile API / repository.
+  static final _mockReviews = <ListenerProfileReview>[
+    ListenerProfileReview(
+      id: '1',
+      reviewerName: 'Sara M.',
+      rating: 5,
+      comment:
+          'Nour made me feel heard without judgment. I left the session lighter and more hopeful.',
+      createdAt: DateTime.now().subtract(const Duration(days: 1)),
+    ),
+    ListenerProfileReview(
+      id: '2',
+      reviewerName: 'Omar K.',
+      rating: 5,
+      comment:
+          'Really patient listener. Helped me untangle a lot of overthinking around work stress.',
+      createdAt: DateTime.now().subtract(const Duration(days: 4)),
+    ),
+    ListenerProfileReview(
+      id: '3',
+      reviewerName: 'Lina A.',
+      rating: 4,
+      comment:
+          'Warm and thoughtful. Would have loved a bit more time, but still very helpful.',
+      createdAt: DateTime.now().subtract(const Duration(days: 12)),
+    ),
+    ListenerProfileReview(
+      id: '4',
+      reviewerName: 'Hassan R.',
+      rating: 5,
+      comment:
+          'Felt safe talking about family pressure. Clear boundaries and genuine empathy.',
+      createdAt: DateTime.now().subtract(const Duration(days: 28)),
+    ),
+    ListenerProfileReview(
+      id: '5',
+      reviewerName: 'Maya S.',
+      rating: 5,
+      comment:
+          'One of the best listening experiences I have had. Highly recommend.',
+      createdAt: DateTime.now().subtract(const Duration(days: 45)),
+    ),
+    ListenerProfileReview(
+      id: '6',
+      reviewerName: 'Yousef T.',
+      rating: 4,
+      comment: 'Supportive and calm. Helped me process a tough breakup.',
+      createdAt: DateTime.now().subtract(const Duration(days: 90)),
+    ),
+  ];
+
+  // TODO: Load location / languages from listener profile API / repository.
+  IsoCode _country = IsoCode.JO;
+  var _city = 'Amman';
+  Set<String> _languageIds = {'en', 'ar'};
 
   var _aboutExpanded = false;
   var _isPlayingVoice = false;
@@ -47,6 +109,21 @@ class _ListenerProfileTabState extends State<ListenerProfileTab> {
   String? _voiceFilePath;
   var _voiceDurationLabel = '01:02';
   var _voiceDurationSeconds = 62;
+  // TODO: Load experiences from listener profile API / repository.
+  EditExperiencesResult _experiences = const EditExperiencesResult(
+    relationshipId: 'married',
+    familyIds: {'parent'},
+    experienceIds: {'anxiety_stress', 'life_stages', 'grief_loss'},
+    customExperiences: [],
+  );
+  // TODO: Load comfort areas from listener profile API / repository.
+  EditComfortAreasResult _comfortAreas = const EditComfortAreasResult(
+    selectedIds: {'stress_anxiety', 'relationships', 'parenting'},
+  );
+  // TODO: Load boundaries from listener profile API / repository.
+  EditBoundariesResult _boundaries = const EditBoundariesResult(
+    selectedIds: {'politics', 'religion'},
+  );
 
   final _voicePlayer = AudioPlayer();
   StreamSubscription<void>? _voiceCompleteSub;
@@ -138,28 +215,97 @@ class _ListenerProfileTabState extends State<ListenerProfileTab> {
     }
   }
 
-  List<({IconData icon, String label})> _goodAtTags(
-    VentingMobLocalizations l10n,
-  ) {
-    return [
-      (
-        icon: Icons.psychology_alt_outlined,
-        label: l10n.listener_profile_tag_stress_anxiety,
-      ),
-      (
-        icon: Icons.favorite_border_rounded,
-        label: l10n.listener_profile_tag_relationships,
-      ),
-      (icon: Icons.hub_outlined, label: l10n.listener_profile_tag_overthinking),
-      (
-        icon: Icons.spa_outlined,
-        label: l10n.listener_profile_tag_life_transitions,
-      ),
-      (
-        icon: Icons.family_restroom_outlined,
-        label: l10n.listener_profile_tag_parenting,
-      ),
-    ];
+  Future<void> _onEditExperiences() async {
+    final updated = await showEditExperiencesBottomSheet(
+      context: context,
+      initial: _experiences,
+    );
+    if (!mounted || updated == null) return;
+    setState(() => _experiences = updated);
+  }
+
+  Future<void> _onEditComfortAreas() async {
+    final updated = await showEditComfortAreasBottomSheet(
+      context: context,
+      initial: _comfortAreas,
+    );
+    if (!mounted || updated == null) return;
+    setState(() => _comfortAreas = updated);
+  }
+
+  Future<void> _onEditBoundaries() async {
+    final updated = await showEditBoundariesBottomSheet(
+      context: context,
+      initial: _boundaries,
+    );
+    if (!mounted || updated == null) return;
+    setState(() => _boundaries = updated);
+  }
+
+  Future<void> _onEditCountry() async {
+    final selected = await showPhoneCountryPicker(
+      context: context,
+      selected: _country,
+    );
+    if (!mounted || selected == null || selected == _country) return;
+    // TODO: Persist country via listener profile API / repository.
+    setState(() => _country = selected);
+  }
+
+  Future<void> _onEditCity() async {
+    final updated = await showEditCityBottomSheet(
+      context: context,
+      initialCity: _city,
+    );
+    if (!mounted || updated == null) return;
+    setState(() => _city = updated);
+  }
+
+  Future<void> _onEditLanguages() async {
+    final selected = await showSpokenLanguagesPicker(
+      context: context,
+      selectedIds: _languageIds,
+    );
+    if (!mounted || selected == null) return;
+    if (selected.isEmpty) return;
+    // TODO: Persist languages via listener profile API / repository.
+    setState(() => _languageIds = {...selected});
+  }
+
+  Future<void> _onViewAllReviews() {
+    return showListenerProfileReviewsBottomSheet(
+      context: context,
+      rating: _mockRating,
+      reviewCount: _mockReviewCount,
+      reviews: _mockReviews,
+    );
+  }
+
+  Future<void> _onOpenSettings() {
+    return openListenerProfileSettingsScreen(
+      context: context,
+      email: _mockEmail,
+      // TODO: Pass real phone from listener profile API / repository.
+      phoneNumber: '+1 (555) 123-4567',
+    );
+  }
+
+  String _countryLabel(BuildContext context) {
+    return countryDisplayName(
+      _country,
+      languageCode: Localizations.localeOf(context).languageCode,
+    );
+  }
+
+  String _languagesLabel(BuildContext context) {
+    final languageCode = Localizations.localeOf(context).languageCode;
+    final labels = _languageIds
+        .map(spokenLanguageById)
+        .whereType<SpokenLanguage>()
+        .map((lang) => lang.label(languageCode))
+        .toList();
+    if (labels.isEmpty) return '—';
+    return labels.join(', ');
   }
 
   @override
@@ -178,7 +324,10 @@ class _ListenerProfileTabState extends State<ListenerProfileTab> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              _ProfileTopBar(title: l10n.listener_profile_title),
+              _ProfileTopBar(
+                title: l10n.listener_profile_title,
+                onSettingsTap: _onOpenSettings,
+              ),
               Expanded(
                 child: SingleChildScrollView(
                   padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
@@ -218,12 +367,36 @@ class _ListenerProfileTabState extends State<ListenerProfileTab> {
                       ),
                       const SizedBox(height: 12),
                       ProfileGoodAtSection(
-                        title: l10n.listener_profile_good_at,
+                        title: l10n.listener_profile_experiences,
                         editLabel: editLabel,
-                        addMoreLabel: l10n.listener_profile_add_more,
-                        tags: _goodAtTags(l10n),
-                        onEdit: () => _todoAction('edit comfort areas'),
-                        onAddMore: () => _todoAction('add comfort area'),
+                        emptyLabel: l10n.listener_profile_experiences_empty,
+                        tags: ListenerExperienceOptions.displayLabels(
+                          l10n: l10n,
+                          selection: _experiences,
+                        ),
+                        onEdit: _onEditExperiences,
+                      ),
+                      const SizedBox(height: 12),
+                      ProfileGoodAtSection(
+                        title: l10n.listener_profile_comfort_areas,
+                        editLabel: editLabel,
+                        emptyLabel: l10n.listener_profile_comfort_areas_empty,
+                        tags: ListenerComfortAreaOptions.displayLabels(
+                          l10n: l10n,
+                          selection: _comfortAreas,
+                        ),
+                        onEdit: _onEditComfortAreas,
+                      ),
+                      const SizedBox(height: 12),
+                      ProfileGoodAtSection(
+                        title: l10n.listener_profile_boundaries,
+                        editLabel: editLabel,
+                        emptyLabel: l10n.listener_profile_boundaries_empty,
+                        tags: ListenerBoundaryOptions.displayLabels(
+                          l10n: l10n,
+                          selection: _boundaries,
+                        ),
+                        onEdit: _onEditBoundaries,
                       ),
                       const SizedBox(height: 12),
                       ProfileSectionCard(
@@ -231,36 +404,25 @@ class _ListenerProfileTabState extends State<ListenerProfileTab> {
                         child: Column(
                           children: [
                             ProfileDetailRow(
+                              icon: Icons.public_rounded,
+                              label: l10n.listener_profile_country,
+                              value: _countryLabel(context),
+                              editLabel: editLabel,
+                              onEdit: _onEditCountry,
+                            ),
+                            ProfileDetailRow(
+                              icon: Icons.location_city_rounded,
+                              label: l10n.listener_profile_city,
+                              value: _city,
+                              editLabel: editLabel,
+                              onEdit: _onEditCity,
+                            ),
+                            ProfileDetailRow(
                               icon: Icons.language_rounded,
                               label: l10n.listener_profile_languages,
-                              value: _mockLanguages,
+                              value: _languagesLabel(context),
                               editLabel: editLabel,
-                              onEdit: () => _todoAction('edit languages'),
-                            ),
-                            ProfileDetailRow(
-                              icon: Icons.military_tech_outlined,
-                              label: l10n.listener_profile_experience,
-                              value: l10n.listener_profile_experience_value(
-                                _mockExperienceYears,
-                              ),
-                              editLabel: editLabel,
-                              onEdit: () => _todoAction('edit experience'),
-                            ),
-                            ProfileDetailRow(
-                              icon: Icons.calendar_month_outlined,
-                              label: l10n.listener_profile_availability_label,
-                              value: l10n.listener_profile_usually_available,
-                              editLabel: editLabel,
-                              onEdit: () => _todoAction('edit availability'),
-                            ),
-                            ProfileDetailRow(
-                              icon: Icons.schedule_rounded,
-                              label: l10n.listener_profile_response_time,
-                              value: l10n.listener_profile_response_within(
-                                _mockResponseMinutes,
-                              ),
-                              editLabel: editLabel,
-                              onEdit: () => _todoAction('edit response time'),
+                              onEdit: _onEditLanguages,
                               showDivider: false,
                             ),
                           ],
@@ -275,47 +437,7 @@ class _ListenerProfileTabState extends State<ListenerProfileTab> {
                         rating: _mockRating,
                         reviewCount: _mockReviewCount,
                         distribution: _mockReviewDistribution,
-                        onViewAll: () => _todoAction('view all reviews'),
-                      ),
-                      const SizedBox(height: 12),
-                      ProfileNextAvailabilitySection(
-                        title: l10n.listener_profile_next_availability,
-                        editLabel: editLabel,
-                        availableNowLabel: l10n.listener_profile_available_now,
-                        untilLabel: l10n.listener_profile_until_time(
-                          _mockUntilTime,
-                        ),
-                        tomorrowLabel: l10n.listener_profile_tomorrow,
-                        tomorrowTimeRange: _mockTomorrowRange,
-                        onEdit: () => _todoAction('edit next availability'),
-                      ),
-                      const SizedBox(height: 12),
-                      ProfileSettingsSection(
-                        title: l10n.listener_profile_account_settings,
-                        items: [
-                          (
-                            icon: Icons.notifications_none_rounded,
-                            label:
-                                l10n.listener_profile_notification_preferences,
-                            onTap: () =>
-                                _todoAction('notification preferences'),
-                          ),
-                          (
-                            icon: Icons.visibility_outlined,
-                            label: l10n.listener_profile_privacy_visibility,
-                            onTap: () => _todoAction('privacy & visibility'),
-                          ),
-                          (
-                            icon: Icons.account_balance_wallet_outlined,
-                            label: l10n.listener_profile_payment_payouts,
-                            onTap: () => _todoAction('payment & payouts'),
-                          ),
-                          (
-                            icon: Icons.help_outline_rounded,
-                            label: l10n.listener_profile_help_support,
-                            onTap: () => _todoAction('help & support'),
-                          ),
-                        ],
+                        onViewAll: _onViewAllReviews,
                       ),
                     ],
                   ),
@@ -330,21 +452,43 @@ class _ListenerProfileTabState extends State<ListenerProfileTab> {
 }
 
 class _ProfileTopBar extends StatelessWidget {
-  const _ProfileTopBar({required this.title});
+  const _ProfileTopBar({required this.title, required this.onSettingsTap});
 
   final String title;
+  final VoidCallback onSettingsTap;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(8, 4, 8, 8),
-      child: Text(
-        title,
-        textAlign: TextAlign.center,
-        style: GoogleFonts.inter(
-          color: Colors.white,
-          fontSize: 18,
-          fontWeight: FontWeight.w700,
+      child: SizedBox(
+        height: 44,
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            Text(
+              title,
+              textAlign: TextAlign.center,
+              style: GoogleFonts.inter(
+                color: Colors.white,
+                fontSize: 18,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+            Align(
+              alignment: AlignmentDirectional.centerEnd,
+              child: IconButton(
+                onPressed: onSettingsTap,
+                tooltip: VentingMobLocalizations.of(
+                  context,
+                ).listener_profile_account_settings,
+                icon: Icon(
+                  Icons.settings_outlined,
+                  color: Colors.white.withValues(alpha: 0.9),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

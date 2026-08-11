@@ -4172,10 +4172,65 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
   String get listener_profile_good_at => 'What I\'m Good At';
 
   @override
+  String get listener_profile_experiences => 'Experiences';
+
+  @override
+  String get listener_profile_edit_experiences_title => 'Edit Experiences';
+
+  @override
+  String get listener_profile_edit_experiences_subtitle =>
+      'Update the life experiences that shape how you listen and support others.';
+
+  @override
+  String get listener_profile_experiences_empty =>
+      'No experiences added yet. Tap Edit to add some.';
+
+  @override
+  String get listener_profile_comfort_areas => 'What I\'m Good At';
+
+  @override
+  String get listener_profile_edit_comfort_areas_title => 'Edit Comfort Areas';
+
+  @override
+  String get listener_profile_edit_comfort_areas_subtitle =>
+      'Choose topics you\'re comfortable listening to and supporting.';
+
+  @override
+  String get listener_profile_comfort_areas_empty =>
+      'No comfort areas selected yet. Tap Edit to choose topics.';
+
+  @override
+  String get listener_profile_boundaries => 'Boundaries';
+
+  @override
+  String get listener_profile_edit_boundaries_title => 'Edit Boundaries';
+
+  @override
+  String get listener_profile_edit_boundaries_subtitle =>
+      'Topics you don\'t want to discuss. We will respect your choice.';
+
+  @override
+  String get listener_profile_boundaries_empty =>
+      'No boundaries set yet. Tap Edit to choose topics you prefer to avoid.';
+
+  @override
   String get listener_profile_add_more => '+ Add more';
 
   @override
   String get listener_profile_languages => 'Languages';
+
+  @override
+  String get listener_profile_country => 'Country';
+
+  @override
+  String get listener_profile_city => 'City';
+
+  @override
+  String get listener_profile_edit_city_title => 'Edit City';
+
+  @override
+  String get listener_profile_edit_city_subtitle =>
+      'Update the city shown on your listener profile.';
 
   @override
   String get listener_profile_experience => 'Experience';
@@ -4192,6 +4247,44 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
   @override
   String listener_profile_view_all_reviews(int count) {
     return 'View all ($count)';
+  }
+
+  @override
+  String get listener_profile_all_reviews_title => 'All Reviews';
+
+  @override
+  String listener_profile_all_reviews_subtitle(String rating, int count) {
+    return '$rating · $count reviews';
+  }
+
+  @override
+  String get listener_profile_all_reviews_empty =>
+      'No reviews yet. Reviews from ventors will appear here.';
+
+  @override
+  String get listener_profile_review_today => 'Today';
+
+  @override
+  String get listener_profile_review_yesterday => 'Yesterday';
+
+  @override
+  String listener_profile_review_days_ago(int count) {
+    return '$count days ago';
+  }
+
+  @override
+  String listener_profile_review_weeks_ago(int count) {
+    return '$count weeks ago';
+  }
+
+  @override
+  String listener_profile_review_months_ago(int count) {
+    return '$count months ago';
+  }
+
+  @override
+  String listener_profile_review_years_ago(int count) {
+    return '$count years ago';
   }
 
   @override
@@ -4223,6 +4316,203 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
 
   @override
   String get listener_profile_help_support => 'Help & Support';
+
+  @override
+  String get listener_profile_settings_section_account => 'Account';
+
+  @override
+  String get listener_profile_settings_section_preferences => 'Preferences';
+
+  @override
+  String get listener_profile_settings_section_earnings => 'Earnings & Payouts';
+
+  @override
+  String get listener_profile_settings_section_support => 'Support';
+
+  @override
+  String get listener_profile_settings_email => 'Email Address';
+
+  @override
+  String get listener_profile_settings_phone => 'Phone Number';
+
+  @override
+  String get listener_profile_settings_two_factor =>
+      'Two-Factor Authentication';
+
+  @override
+  String get listener_profile_settings_payout_methods => 'Payout Methods';
+
+  @override
+  String get listener_profile_settings_feedback => 'Give Us Feedback';
+
+  @override
+  String get listener_profile_settings_about => 'About Venting';
+
+  @override
+  String get listener_profile_settings_on => 'On';
+
+  @override
+  String get listener_profile_settings_off => 'Off';
+
+  @override
+  String listener_profile_settings_version(String version) {
+    return 'Version $version';
+  }
+
+  @override
+  String get listener_change_password_current_label => 'Current Password';
+
+  @override
+  String get listener_change_password_current_hint => 'Enter current password';
+
+  @override
+  String get listener_change_password_new_label => 'New Password';
+
+  @override
+  String get listener_change_password_new_hint => 'Enter new password';
+
+  @override
+  String get listener_change_password_confirm_label => 'Confirm New Password';
+
+  @override
+  String get listener_change_password_confirm_hint => 'Confirm new password';
+
+  @override
+  String get listener_change_password_rule_hint =>
+      'Min. 8 characters with a number and symbol';
+
+  @override
+  String get listener_change_password_update => 'Update Password';
+
+  @override
+  String get listener_change_password_current_required =>
+      'Please enter your current password';
+
+  @override
+  String get listener_change_password_mismatch => 'Passwords do not match';
+
+  @override
+  String get listener_change_password_same_as_current =>
+      'New password must be different from your current password';
+
+  @override
+  String get listener_edit_phone_title => 'Phone Number';
+
+  @override
+  String get listener_edit_phone_subtitle =>
+      'Update the phone number linked to your listener account.';
+
+  @override
+  String get listener_notif_section_push => 'Push Notifications';
+
+  @override
+  String get listener_notif_receive_push => 'Receive push notifications';
+
+  @override
+  String get listener_notif_section_notify_about => 'Notify me about';
+
+  @override
+  String get listener_notif_new_session_requests => 'New session requests';
+
+  @override
+  String get listener_notif_section_session_reminders => 'Session reminders';
+
+  @override
+  String get listener_notif_session_reminder_15 =>
+      'Session reminder before 15 min';
+
+  @override
+  String get listener_notif_session_reminder_10 =>
+      'Session reminder before 10 min';
+
+  @override
+  String get listener_notif_session_reminder_5 =>
+      'Session reminder before 5 min';
+
+  @override
+  String get listener_notif_messages => 'Messages';
+
+  @override
+  String get listener_notif_reviews_feedback => 'Reviews & feedback';
+
+  @override
+  String get listener_notif_tips_earnings => 'Tips & earnings';
+
+  @override
+  String get listener_notif_promotions_updates => 'Promotions & updates';
+
+  @override
+  String get listener_notif_section_email => 'Email Notifications';
+
+  @override
+  String get listener_notif_receive_email => 'Receive email notifications';
+
+  @override
+  String get listener_notif_save => 'Save Preferences';
+
+  @override
+  String get listener_privacy_section_visibility => 'Profile Visibility';
+
+  @override
+  String get listener_privacy_online_status => 'Online status';
+
+  @override
+  String get listener_privacy_show_when_online => 'Show when I\'m online';
+
+  @override
+  String get listener_privacy_show_profile_in => 'Show my profile in';
+
+  @override
+  String get listener_privacy_all_countries => 'All countries';
+
+  @override
+  String get listener_privacy_specific_countries => 'Specific countries';
+
+  @override
+  String get listener_privacy_select_countries => 'Select countries';
+
+  @override
+  String listener_privacy_countries_count(int count) {
+    return '$count countries';
+  }
+
+  @override
+  String get listener_privacy_countries_required =>
+      'Please select at least one country';
+
+  @override
+  String get listener_privacy_visible_countries_title =>
+      'Profile visibility by country';
+
+  @override
+  String get listener_privacy_section_information => 'Profile Information';
+
+  @override
+  String get listener_privacy_show_languages => 'Show languages I speak';
+
+  @override
+  String get listener_privacy_show_comfort_areas => 'Show topics I\'m good at';
+
+  @override
+  String get listener_privacy_show_experience_ratings =>
+      'Show experience & ratings';
+
+  @override
+  String get listener_privacy_show_boundaries => 'Show my boundaries';
+
+  @override
+  String get listener_privacy_section_activity => 'Activity & Data';
+
+  @override
+  String get listener_privacy_allow_search_indexing =>
+      'Allow search engine indexing';
+
+  @override
+  String get listener_privacy_search_indexing_hint =>
+      'Turn off to keep your profile out of search engines.';
+
+  @override
+  String get listener_privacy_save => 'Save Changes';
 
   @override
   String get listener_profile_edit => 'Edit';

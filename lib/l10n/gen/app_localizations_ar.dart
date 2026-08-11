@@ -4149,10 +4149,65 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
   String get listener_profile_good_at => 'ما أجيد الاستماع فيه';
 
   @override
+  String get listener_profile_experiences => 'الخبرات';
+
+  @override
+  String get listener_profile_edit_experiences_title => 'تعديل الخبرات';
+
+  @override
+  String get listener_profile_edit_experiences_subtitle =>
+      'حدّث خبرات الحياة التي تشكّل طريقة استماعك ودعمك للآخرين.';
+
+  @override
+  String get listener_profile_experiences_empty =>
+      'لا توجد خبرات بعد. اضغط تعديل لإضافة بعضها.';
+
+  @override
+  String get listener_profile_comfort_areas => 'ما أجيد الاستماع فيه';
+
+  @override
+  String get listener_profile_edit_comfort_areas_title => 'تعديل مجالات الراحة';
+
+  @override
+  String get listener_profile_edit_comfort_areas_subtitle =>
+      'اختر المواضيع التي تشعر بالراحة في الاستماع إليها ودعم الآخرين فيها.';
+
+  @override
+  String get listener_profile_comfort_areas_empty =>
+      'لا توجد مجالات راحة بعد. اضغط تعديل لاختيار المواضيع.';
+
+  @override
+  String get listener_profile_boundaries => 'الحدود';
+
+  @override
+  String get listener_profile_edit_boundaries_title => 'تعديل الحدود';
+
+  @override
+  String get listener_profile_edit_boundaries_subtitle =>
+      'مواضيع لا ترغب بمناقشتها. سنحترم اختيارك.';
+
+  @override
+  String get listener_profile_boundaries_empty =>
+      'لا توجد حدود بعد. اضغط تعديل لاختيار المواضيع التي تفضّل تجنبها.';
+
+  @override
   String get listener_profile_add_more => '+ إضافة المزيد';
 
   @override
   String get listener_profile_languages => 'اللغات';
+
+  @override
+  String get listener_profile_country => 'الدولة';
+
+  @override
+  String get listener_profile_city => 'المدينة';
+
+  @override
+  String get listener_profile_edit_city_title => 'تعديل المدينة';
+
+  @override
+  String get listener_profile_edit_city_subtitle =>
+      'حدّث المدينة الظاهرة في ملف المستمع الخاص بك.';
 
   @override
   String get listener_profile_experience => 'الخبرة';
@@ -4169,6 +4224,44 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
   @override
   String listener_profile_view_all_reviews(int count) {
     return 'عرض الكل ($count)';
+  }
+
+  @override
+  String get listener_profile_all_reviews_title => 'كل التقييمات';
+
+  @override
+  String listener_profile_all_reviews_subtitle(String rating, int count) {
+    return '$rating · $count تقييم';
+  }
+
+  @override
+  String get listener_profile_all_reviews_empty =>
+      'لا توجد تقييمات بعد. ستظهر تقييمات المستفيدين هنا.';
+
+  @override
+  String get listener_profile_review_today => 'اليوم';
+
+  @override
+  String get listener_profile_review_yesterday => 'أمس';
+
+  @override
+  String listener_profile_review_days_ago(int count) {
+    return 'منذ $count أيام';
+  }
+
+  @override
+  String listener_profile_review_weeks_ago(int count) {
+    return 'منذ $count أسابيع';
+  }
+
+  @override
+  String listener_profile_review_months_ago(int count) {
+    return 'منذ $count أشهر';
+  }
+
+  @override
+  String listener_profile_review_years_ago(int count) {
+    return 'منذ $count سنوات';
   }
 
   @override
@@ -4199,6 +4292,202 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
 
   @override
   String get listener_profile_help_support => 'المساعدة والدعم';
+
+  @override
+  String get listener_profile_settings_section_account => 'الحساب';
+
+  @override
+  String get listener_profile_settings_section_preferences => 'التفضيلات';
+
+  @override
+  String get listener_profile_settings_section_earnings => 'الأرباح والمدفوعات';
+
+  @override
+  String get listener_profile_settings_section_support => 'الدعم';
+
+  @override
+  String get listener_profile_settings_email => 'البريد الإلكتروني';
+
+  @override
+  String get listener_profile_settings_phone => 'رقم الهاتف';
+
+  @override
+  String get listener_profile_settings_two_factor => 'المصادقة الثنائية';
+
+  @override
+  String get listener_profile_settings_payout_methods => 'طرق السحب';
+
+  @override
+  String get listener_profile_settings_feedback => 'أرسل لنا ملاحظاتك';
+
+  @override
+  String get listener_profile_settings_about => 'حول Venting';
+
+  @override
+  String get listener_profile_settings_on => 'مفعل';
+
+  @override
+  String get listener_profile_settings_off => 'إيقاف';
+
+  @override
+  String listener_profile_settings_version(String version) {
+    return 'الإصدار $version';
+  }
+
+  @override
+  String get listener_change_password_current_label => 'كلمة المرور الحالية';
+
+  @override
+  String get listener_change_password_current_hint =>
+      'أدخل كلمة المرور الحالية';
+
+  @override
+  String get listener_change_password_new_label => 'كلمة المرور الجديدة';
+
+  @override
+  String get listener_change_password_new_hint => 'أدخل كلمة المرور الجديدة';
+
+  @override
+  String get listener_change_password_confirm_label =>
+      'تأكيد كلمة المرور الجديدة';
+
+  @override
+  String get listener_change_password_confirm_hint => 'أكد كلمة المرور الجديدة';
+
+  @override
+  String get listener_change_password_rule_hint =>
+      '8 أحرف على الأقل مع رقم ورمز';
+
+  @override
+  String get listener_change_password_update => 'تحديث كلمة المرور';
+
+  @override
+  String get listener_change_password_current_required =>
+      'يرجى إدخال كلمة المرور الحالية';
+
+  @override
+  String get listener_change_password_mismatch => 'كلمتا المرور غير متطابقتين';
+
+  @override
+  String get listener_change_password_same_as_current =>
+      'يجب أن تختلف كلمة المرور الجديدة عن الحالية';
+
+  @override
+  String get listener_edit_phone_title => 'رقم الهاتف';
+
+  @override
+  String get listener_edit_phone_subtitle =>
+      'حدّث رقم الهاتف المرتبط بحساب المستمع الخاص بك.';
+
+  @override
+  String get listener_notif_section_push => 'إشعارات الدفع';
+
+  @override
+  String get listener_notif_receive_push => 'استلام إشعارات الدفع';
+
+  @override
+  String get listener_notif_section_notify_about => 'أبلغني عن';
+
+  @override
+  String get listener_notif_new_session_requests => 'طلبات الجلسات الجديدة';
+
+  @override
+  String get listener_notif_section_session_reminders => 'تذكيرات الجلسات';
+
+  @override
+  String get listener_notif_session_reminder_15 => 'تذكير بالجلسة قبل 15 دقيقة';
+
+  @override
+  String get listener_notif_session_reminder_10 => 'تذكير بالجلسة قبل 10 دقائق';
+
+  @override
+  String get listener_notif_session_reminder_5 => 'تذكير بالجلسة قبل 5 دقائق';
+
+  @override
+  String get listener_notif_messages => 'الرسائل';
+
+  @override
+  String get listener_notif_reviews_feedback => 'التقييمات والملاحظات';
+
+  @override
+  String get listener_notif_tips_earnings => 'الإكراميات والأرباح';
+
+  @override
+  String get listener_notif_promotions_updates => 'العروض والتحديثات';
+
+  @override
+  String get listener_notif_section_email => 'إشعارات البريد الإلكتروني';
+
+  @override
+  String get listener_notif_receive_email => 'استلام إشعارات البريد الإلكتروني';
+
+  @override
+  String get listener_notif_save => 'حفظ التفضيلات';
+
+  @override
+  String get listener_privacy_section_visibility => 'ظهور الملف';
+
+  @override
+  String get listener_privacy_online_status => 'حالة الاتصال';
+
+  @override
+  String get listener_privacy_show_when_online => 'إظهار عندما أكون متصلاً';
+
+  @override
+  String get listener_privacy_show_profile_in => 'إظهار ملفي في';
+
+  @override
+  String get listener_privacy_all_countries => 'جميع الدول';
+
+  @override
+  String get listener_privacy_specific_countries => 'دول محددة';
+
+  @override
+  String get listener_privacy_select_countries => 'اختر الدول';
+
+  @override
+  String listener_privacy_countries_count(int count) {
+    return '$count دول';
+  }
+
+  @override
+  String get listener_privacy_countries_required =>
+      'يرجى اختيار دولة واحدة على الأقل';
+
+  @override
+  String get listener_privacy_visible_countries_title =>
+      'ظهور الملف حسب الدولة';
+
+  @override
+  String get listener_privacy_section_information => 'معلومات الملف';
+
+  @override
+  String get listener_privacy_show_languages => 'إظهار اللغات التي أتحدثها';
+
+  @override
+  String get listener_privacy_show_comfort_areas =>
+      'إظهار المواضيع التي أجيدها';
+
+  @override
+  String get listener_privacy_show_experience_ratings =>
+      'إظهار الخبرة والتقييمات';
+
+  @override
+  String get listener_privacy_show_boundaries => 'إظهار حدودي';
+
+  @override
+  String get listener_privacy_section_activity => 'النشاط والبيانات';
+
+  @override
+  String get listener_privacy_allow_search_indexing =>
+      'السماح بفهرسة محركات البحث';
+
+  @override
+  String get listener_privacy_search_indexing_hint =>
+      'أوقف هذا الخيار لإبقاء ملفك خارج نتائج البحث.';
+
+  @override
+  String get listener_privacy_save => 'حفظ التغييرات';
 
   @override
   String get listener_profile_edit => 'تعديل';

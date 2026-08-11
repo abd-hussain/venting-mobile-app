@@ -2888,10 +2888,42 @@
   "@listener_profile_see_less": {},
   "listener_profile_good_at": "What I'm Good At",
   "@listener_profile_good_at": {},
+  "listener_profile_experiences": "Experiences",
+  "@listener_profile_experiences": {},
+  "listener_profile_edit_experiences_title": "Edit Experiences",
+  "@listener_profile_edit_experiences_title": {},
+  "listener_profile_edit_experiences_subtitle": "Update the life experiences that shape how you listen and support others.",
+  "@listener_profile_edit_experiences_subtitle": {},
+  "listener_profile_experiences_empty": "No experiences added yet. Tap Edit to add some.",
+  "@listener_profile_experiences_empty": {},
+  "listener_profile_comfort_areas": "What I'm Good At",
+  "@listener_profile_comfort_areas": {},
+  "listener_profile_edit_comfort_areas_title": "Edit Comfort Areas",
+  "@listener_profile_edit_comfort_areas_title": {},
+  "listener_profile_edit_comfort_areas_subtitle": "Choose topics you're comfortable listening to and supporting.",
+  "@listener_profile_edit_comfort_areas_subtitle": {},
+  "listener_profile_comfort_areas_empty": "No comfort areas selected yet. Tap Edit to choose topics.",
+  "@listener_profile_comfort_areas_empty": {},
+  "listener_profile_boundaries": "Boundaries",
+  "@listener_profile_boundaries": {},
+  "listener_profile_edit_boundaries_title": "Edit Boundaries",
+  "@listener_profile_edit_boundaries_title": {},
+  "listener_profile_edit_boundaries_subtitle": "Topics you don't want to discuss. We will respect your choice.",
+  "@listener_profile_edit_boundaries_subtitle": {},
+  "listener_profile_boundaries_empty": "No boundaries set yet. Tap Edit to choose topics you prefer to avoid.",
+  "@listener_profile_boundaries_empty": {},
   "listener_profile_add_more": "+ Add more",
   "@listener_profile_add_more": {},
   "listener_profile_languages": "Languages",
   "@listener_profile_languages": {},
+  "listener_profile_country": "Country",
+  "@listener_profile_country": {},
+  "listener_profile_city": "City",
+  "@listener_profile_city": {},
+  "listener_profile_edit_city_title": "Edit City",
+  "@listener_profile_edit_city_title": {},
+  "listener_profile_edit_city_subtitle": "Update the city shown on your listener profile.",
+  "@listener_profile_edit_city_subtitle": {},
   "listener_profile_experience": "Experience",
   "@listener_profile_experience": {},
   "listener_profile_availability_label": "Availability",
@@ -2902,6 +2934,57 @@
   "@listener_profile_reviews": {},
   "listener_profile_view_all_reviews": "View all ({count})",
   "@listener_profile_view_all_reviews": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "listener_profile_all_reviews_title": "All Reviews",
+  "@listener_profile_all_reviews_title": {},
+  "listener_profile_all_reviews_subtitle": "{rating} · {count} reviews",
+  "@listener_profile_all_reviews_subtitle": {
+    "placeholders": {
+      "rating": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "listener_profile_all_reviews_empty": "No reviews yet. Reviews from ventors will appear here.",
+  "@listener_profile_all_reviews_empty": {},
+  "listener_profile_review_today": "Today",
+  "@listener_profile_review_today": {},
+  "listener_profile_review_yesterday": "Yesterday",
+  "@listener_profile_review_yesterday": {},
+  "listener_profile_review_days_ago": "{count} days ago",
+  "@listener_profile_review_days_ago": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "listener_profile_review_weeks_ago": "{count} weeks ago",
+  "@listener_profile_review_weeks_ago": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "listener_profile_review_months_ago": "{count} months ago",
+  "@listener_profile_review_months_ago": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "listener_profile_review_years_ago": "{count} years ago",
+  "@listener_profile_review_years_ago": {
     "placeholders": {
       "count": {
         "type": "int"
@@ -2932,6 +3015,138 @@
   "@listener_profile_payment_payouts": {},
   "listener_profile_help_support": "Help & Support",
   "@listener_profile_help_support": {},
+  "listener_profile_settings_section_account": "Account",
+  "@listener_profile_settings_section_account": {},
+  "listener_profile_settings_section_preferences": "Preferences",
+  "@listener_profile_settings_section_preferences": {},
+  "listener_profile_settings_section_earnings": "Earnings & Payouts",
+  "@listener_profile_settings_section_earnings": {},
+  "listener_profile_settings_section_support": "Support",
+  "@listener_profile_settings_section_support": {},
+  "listener_profile_settings_email": "Email Address",
+  "@listener_profile_settings_email": {},
+  "listener_profile_settings_phone": "Phone Number",
+  "@listener_profile_settings_phone": {},
+  "listener_profile_settings_two_factor": "Two-Factor Authentication",
+  "@listener_profile_settings_two_factor": {},
+  "listener_profile_settings_payout_methods": "Payout Methods",
+  "@listener_profile_settings_payout_methods": {},
+  "listener_profile_settings_feedback": "Give Us Feedback",
+  "@listener_profile_settings_feedback": {},
+  "listener_profile_settings_about": "About Venting",
+  "@listener_profile_settings_about": {},
+  "listener_profile_settings_on": "On",
+  "@listener_profile_settings_on": {},
+  "listener_profile_settings_off": "Off",
+  "@listener_profile_settings_off": {},
+  "listener_profile_settings_version": "Version {version}",
+  "@listener_profile_settings_version": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "listener_change_password_current_label": "Current Password",
+  "@listener_change_password_current_label": {},
+  "listener_change_password_current_hint": "Enter current password",
+  "@listener_change_password_current_hint": {},
+  "listener_change_password_new_label": "New Password",
+  "@listener_change_password_new_label": {},
+  "listener_change_password_new_hint": "Enter new password",
+  "@listener_change_password_new_hint": {},
+  "listener_change_password_confirm_label": "Confirm New Password",
+  "@listener_change_password_confirm_label": {},
+  "listener_change_password_confirm_hint": "Confirm new password",
+  "@listener_change_password_confirm_hint": {},
+  "listener_change_password_rule_hint": "Min. 8 characters with a number and symbol",
+  "@listener_change_password_rule_hint": {},
+  "listener_change_password_update": "Update Password",
+  "@listener_change_password_update": {},
+  "listener_change_password_current_required": "Please enter your current password",
+  "@listener_change_password_current_required": {},
+  "listener_change_password_mismatch": "Passwords do not match",
+  "@listener_change_password_mismatch": {},
+  "listener_change_password_same_as_current": "New password must be different from your current password",
+  "@listener_change_password_same_as_current": {},
+  "listener_edit_phone_title": "Phone Number",
+  "@listener_edit_phone_title": {},
+  "listener_edit_phone_subtitle": "Update the phone number linked to your listener account.",
+  "@listener_edit_phone_subtitle": {},
+  "listener_notif_section_push": "Push Notifications",
+  "@listener_notif_section_push": {},
+  "listener_notif_receive_push": "Receive push notifications",
+  "@listener_notif_receive_push": {},
+  "listener_notif_section_notify_about": "Notify me about",
+  "@listener_notif_section_notify_about": {},
+  "listener_notif_new_session_requests": "New session requests",
+  "@listener_notif_new_session_requests": {},
+  "listener_notif_section_session_reminders": "Session reminders",
+  "@listener_notif_section_session_reminders": {},
+  "listener_notif_session_reminder_15": "Session reminder before 15 min",
+  "@listener_notif_session_reminder_15": {},
+  "listener_notif_session_reminder_10": "Session reminder before 10 min",
+  "@listener_notif_session_reminder_10": {},
+  "listener_notif_session_reminder_5": "Session reminder before 5 min",
+  "@listener_notif_session_reminder_5": {},
+  "listener_notif_messages": "Messages",
+  "@listener_notif_messages": {},
+  "listener_notif_reviews_feedback": "Reviews & feedback",
+  "@listener_notif_reviews_feedback": {},
+  "listener_notif_tips_earnings": "Tips & earnings",
+  "@listener_notif_tips_earnings": {},
+  "listener_notif_promotions_updates": "Promotions & updates",
+  "@listener_notif_promotions_updates": {},
+  "listener_notif_section_email": "Email Notifications",
+  "@listener_notif_section_email": {},
+  "listener_notif_receive_email": "Receive email notifications",
+  "@listener_notif_receive_email": {},
+  "listener_notif_save": "Save Preferences",
+  "@listener_notif_save": {},
+  "listener_privacy_section_visibility": "Profile Visibility",
+  "@listener_privacy_section_visibility": {},
+  "listener_privacy_online_status": "Online status",
+  "@listener_privacy_online_status": {},
+  "listener_privacy_show_when_online": "Show when I'm online",
+  "@listener_privacy_show_when_online": {},
+  "listener_privacy_show_profile_in": "Show my profile in",
+  "@listener_privacy_show_profile_in": {},
+  "listener_privacy_all_countries": "All countries",
+  "@listener_privacy_all_countries": {},
+  "listener_privacy_specific_countries": "Specific countries",
+  "@listener_privacy_specific_countries": {},
+  "listener_privacy_select_countries": "Select countries",
+  "@listener_privacy_select_countries": {},
+  "listener_privacy_countries_count": "{count} countries",
+  "@listener_privacy_countries_count": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "listener_privacy_countries_required": "Please select at least one country",
+  "@listener_privacy_countries_required": {},
+  "listener_privacy_visible_countries_title": "Profile visibility by country",
+  "@listener_privacy_visible_countries_title": {},
+  "listener_privacy_section_information": "Profile Information",
+  "@listener_privacy_section_information": {},
+  "listener_privacy_show_languages": "Show languages I speak",
+  "@listener_privacy_show_languages": {},
+  "listener_privacy_show_comfort_areas": "Show topics I'm good at",
+  "@listener_privacy_show_comfort_areas": {},
+  "listener_privacy_show_experience_ratings": "Show experience & ratings",
+  "@listener_privacy_show_experience_ratings": {},
+  "listener_privacy_show_boundaries": "Show my boundaries",
+  "@listener_privacy_show_boundaries": {},
+  "listener_privacy_section_activity": "Activity & Data",
+  "@listener_privacy_section_activity": {},
+  "listener_privacy_allow_search_indexing": "Allow search engine indexing",
+  "@listener_privacy_allow_search_indexing": {},
+  "listener_privacy_search_indexing_hint": "Turn off to keep your profile out of search engines.",
+  "@listener_privacy_search_indexing_hint": {},
+  "listener_privacy_save": "Save Changes",
+  "@listener_privacy_save": {},
   "listener_profile_edit": "Edit",
   "@listener_profile_edit": {},
   "listener_profile_about_me_body": "I'm here to listen and support you in a safe, judgment-free space. I truly believe that sometimes all we need is someone who listens with an open heart.",

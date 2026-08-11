@@ -488,21 +488,23 @@ class ProfileGoodAtSection extends StatelessWidget {
     super.key,
     required this.title,
     required this.editLabel,
-    required this.addMoreLabel,
     required this.tags,
     required this.onEdit,
-    required this.onAddMore,
+    this.emptyLabel,
   });
 
   final String title;
   final String editLabel;
-  final String addMoreLabel;
-  final List<({IconData icon, String label})> tags;
+  final List<String> tags;
   final VoidCallback onEdit;
-  final VoidCallback onAddMore;
+  final String? emptyLabel;
 
   @override
   Widget build(BuildContext context) {
+    final resolvedEmpty =
+        emptyLabel ??
+        VentingMobLocalizations.of(context).listener_profile_experiences_empty;
+
     return ProfileSectionCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -513,20 +515,21 @@ class ProfileGoodAtSection extends StatelessWidget {
             onEdit: onEdit,
           ),
           const SizedBox(height: 14),
-          Wrap(
-            spacing: 8,
-            runSpacing: 8,
-            children: [
-              for (final tag in tags)
-                _TagChip(icon: tag.icon, label: tag.label),
-              _TagChip(
-                icon: Icons.add_rounded,
-                label: addMoreLabel,
-                onTap: onAddMore,
-                outlined: true,
+          if (tags.isEmpty)
+            Text(
+              resolvedEmpty,
+              style: GoogleFonts.inter(
+                color: ListenerProfileTheme.muted,
+                fontSize: 13,
+                height: 1.4,
               ),
-            ],
-          ),
+            )
+          else
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: [for (final tag in tags) _TagChip(label: tag)],
+            ),
         ],
       ),
     );
@@ -534,49 +537,26 @@ class ProfileGoodAtSection extends StatelessWidget {
 }
 
 class _TagChip extends StatelessWidget {
-  const _TagChip({
-    required this.icon,
-    required this.label,
-    this.onTap,
-    this.outlined = false,
-  });
+  const _TagChip({required this.label});
 
-  final IconData icon;
   final String label;
-  final VoidCallback? onTap;
-  final bool outlined;
 
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: outlined ? Colors.transparent : const Color(0xFF241E32),
+      color: const Color(0xFF241E32),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(24),
-        side: BorderSide(
-          color: outlined
-              ? ListenerProfileTheme.accent.withValues(alpha: 0.45)
-              : ListenerProfileTheme.cardBorder,
-        ),
+        side: const BorderSide(color: ListenerProfileTheme.cardBorder),
       ),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(24),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(icon, size: 16, color: ListenerProfileTheme.accent),
-              const SizedBox(width: 6),
-              Text(
-                label,
-                style: GoogleFonts.inter(
-                  color: Colors.white.withValues(alpha: 0.9),
-                  fontSize: 13,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ],
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        child: Text(
+          label,
+          style: GoogleFonts.inter(
+            color: Colors.white.withValues(alpha: 0.9),
+            fontSize: 13,
+            fontWeight: FontWeight.w500,
           ),
         ),
       ),
@@ -612,22 +592,26 @@ class ProfileDetailRow extends StatelessWidget {
             children: [
               Icon(icon, size: 20, color: ListenerProfileTheme.accent),
               const SizedBox(width: 12),
-              Expanded(
-                child: Text(
-                  label,
-                  style: GoogleFonts.inter(
-                    color: Colors.white,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                  ),
+              Text(
+                label,
+                style: GoogleFonts.inter(
+                  color: Colors.white,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
-              Text(
-                value,
-                style: GoogleFonts.inter(
-                  color: ListenerProfileTheme.muted,
-                  fontSize: 13,
-                  fontWeight: FontWeight.w500,
+              const SizedBox(width: 12),
+              Expanded(
+                child: Text(
+                  value,
+                  textAlign: TextAlign.end,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: GoogleFonts.inter(
+                    color: ListenerProfileTheme.muted,
+                    fontSize: 13,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ),
               const SizedBox(width: 10),
@@ -783,223 +767,6 @@ class ProfileReviewsSection extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-}
-
-class ProfileNextAvailabilitySection extends StatelessWidget {
-  const ProfileNextAvailabilitySection({
-    super.key,
-    required this.title,
-    required this.editLabel,
-    required this.availableNowLabel,
-    required this.untilLabel,
-    required this.tomorrowLabel,
-    required this.tomorrowTimeRange,
-    required this.onEdit,
-  });
-
-  final String title;
-  final String editLabel;
-  final String availableNowLabel;
-  final String untilLabel;
-  final String tomorrowLabel;
-  final String tomorrowTimeRange;
-  final VoidCallback onEdit;
-
-  @override
-  Widget build(BuildContext context) {
-    return ProfileSectionCard(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          ProfileSectionHeader(
-            title: title,
-            editLabel: editLabel,
-            onEdit: onEdit,
-          ),
-          const SizedBox(height: 14),
-          Row(
-            children: [
-              Expanded(
-                child: _AvailabilityCard(
-                  highlighted: true,
-                  icon: Icons.sensors_rounded,
-                  iconColor: ListenerProfileTheme.success,
-                  title: availableNowLabel,
-                  subtitle: untilLabel,
-                  borderColor: ListenerProfileTheme.success.withValues(
-                    alpha: 0.45,
-                  ),
-                ),
-              ),
-              const SizedBox(width: 10),
-              Expanded(
-                child: _AvailabilityCard(
-                  icon: Icons.calendar_today_rounded,
-                  iconColor: ListenerProfileTheme.accent,
-                  title: tomorrowLabel,
-                  subtitle: tomorrowTimeRange,
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _AvailabilityCard extends StatelessWidget {
-  const _AvailabilityCard({
-    required this.icon,
-    required this.iconColor,
-    required this.title,
-    required this.subtitle,
-    this.highlighted = false,
-    this.borderColor,
-  });
-
-  final IconData icon;
-  final Color iconColor;
-  final String title;
-  final String subtitle;
-  final bool highlighted;
-  final Color? borderColor;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: const Color(0xFF241E32),
-        borderRadius: BorderRadius.circular(14),
-        border: Border.all(
-          color: borderColor ?? ListenerProfileTheme.cardBorder,
-        ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              if (highlighted) ...[
-                Container(
-                  width: 8,
-                  height: 8,
-                  decoration: const BoxDecoration(
-                    color: ListenerProfileTheme.success,
-                    shape: BoxShape.circle,
-                  ),
-                ),
-                const SizedBox(width: 6),
-              ],
-              Expanded(
-                child: Text(
-                  title,
-                  style: GoogleFonts.inter(
-                    color: highlighted
-                        ? ListenerProfileTheme.success
-                        : Colors.white,
-                    fontSize: 13,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ),
-              Icon(icon, size: 18, color: iconColor),
-            ],
-          ),
-          const SizedBox(height: 8),
-          Text(
-            subtitle,
-            style: GoogleFonts.inter(
-              color: ListenerProfileTheme.muted,
-              fontSize: 12,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class ProfileSettingsSection extends StatelessWidget {
-  const ProfileSettingsSection({
-    super.key,
-    required this.title,
-    required this.items,
-  });
-
-  final String title;
-  final List<({IconData icon, String label, VoidCallback? onTap})> items;
-
-  @override
-  Widget build(BuildContext context) {
-    return ProfileSectionCard(
-      padding: const EdgeInsets.fromLTRB(16, 16, 8, 8),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text(
-            title,
-            style: GoogleFonts.inter(
-              color: Colors.white,
-              fontSize: 16,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-          const SizedBox(height: 8),
-          for (var i = 0; i < items.length; i++)
-            _SettingsTile(
-              icon: items[i].icon,
-              label: items[i].label,
-              onTap: items[i].onTap,
-              showDivider: i < items.length - 1,
-            ),
-        ],
-      ),
-    );
-  }
-}
-
-class _SettingsTile extends StatelessWidget {
-  const _SettingsTile({
-    required this.icon,
-    required this.label,
-    required this.onTap,
-    required this.showDivider,
-  });
-
-  final IconData icon;
-  final String label;
-  final VoidCallback? onTap;
-  final bool showDivider;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        ListTile(
-          onTap: onTap,
-          contentPadding: EdgeInsets.zero,
-          leading: Icon(icon, color: Colors.white.withValues(alpha: 0.85)),
-          title: Text(
-            label,
-            style: GoogleFonts.inter(
-              color: Colors.white,
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-          trailing: Icon(
-            Icons.chevron_right_rounded,
-            color: Colors.white.withValues(alpha: 0.35),
-          ),
-        ),
-        if (showDivider)
-          Divider(height: 1, color: Colors.white.withValues(alpha: 0.06)),
-      ],
     );
   }
 }

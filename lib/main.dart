@@ -4,7 +4,7 @@ void main() {
   runApp(const MyApp());
 }
 
-//TODO: Build Pipline for this project Dev + Prod
+//TODO: Build Pipline for this project Dev + Prod (iOS)
 //TODO: Add Firebase / FCM
 
 class MyApp extends StatelessWidget {
