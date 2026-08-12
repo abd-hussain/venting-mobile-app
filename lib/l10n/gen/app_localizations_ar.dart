@@ -5026,4 +5026,49 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
 
   @override
   String get ventor_privacy_save => 'حفظ';
+
+  @override
+  String get listener_avail_title => 'التوفر';
+
+  @override
+  String get listener_avail_weekly_schedule => 'تعيين الجدول الأسبوعي';
+
+  @override
+  String get listener_avail_weekly_subtitle => 'اختر متى تكون متاحاً للمساعدة.';
+
+  @override
+  String get listener_avail_day_off => 'يوم إجازة';
+
+  @override
+  String get listener_avail_session_settings => 'إعدادات الجلسة';
+
+  @override
+  String get listener_avail_session_length => 'مدة الجلسة المفضلة';
+
+  @override
+  String get listener_avail_break_between => 'استراحة بين الجلسات';
+
+  @override
+  String get listener_avail_languages => 'اللغات';
+
+  @override
+  String listener_avail_min_value(int minutes) {
+    return '$minutes دقيقة';
+  }
+
+  @override
+  String get listener_avail_instant_calls => 'قبول المكالمات الفورية';
+
+  @override
+  String get listener_avail_instant_calls_hint =>
+      'اسمح للمتحدثين بالوصول إليك لجلسات فورية بدون حجز مسبق.';
+
+  @override
+  String get listener_avail_day_available => 'متاح في هذا اليوم';
+
+  @override
+  String get listener_avail_add_slot => 'إضافة فترة زمنية';
+
+  @override
+  String get listener_avail_remove_slot => 'إزالة';
 }

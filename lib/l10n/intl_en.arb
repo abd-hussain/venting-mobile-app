@@ -3524,5 +3524,38 @@
   "ventor_privacy_allow_discovery_sub": "Let matching listeners discover your profile when looking for someone to talk to.",
   "@ventor_privacy_allow_discovery_sub": {},
   "ventor_privacy_save": "Save",
-  "@ventor_privacy_save": {}
+  "@ventor_privacy_save": {},
+
+  "listener_avail_title": "Availability",
+  "@listener_avail_title": {},
+  "listener_avail_weekly_schedule": "Set Weekly Schedule",
+  "@listener_avail_weekly_schedule": {},
+  "listener_avail_weekly_subtitle": "Choose when you're available to help.",
+  "@listener_avail_weekly_subtitle": {},
+  "listener_avail_day_off": "Day off",
+  "@listener_avail_day_off": {},
+  "listener_avail_session_settings": "Session Settings",
+  "@listener_avail_session_settings": {},
+  "listener_avail_session_length": "Preferred Session Length",
+  "@listener_avail_session_length": {},
+  "listener_avail_break_between": "Break Between Sessions",
+  "@listener_avail_break_between": {},
+  "listener_avail_languages": "Languages",
+  "@listener_avail_languages": {},
+  "listener_avail_min_value": "{minutes} min",
+  "@listener_avail_min_value": {
+    "placeholders": {
+      "minutes": { "type": "int" }
+    }
+  },
+  "listener_avail_instant_calls": "Accept Instant Calls",
+  "@listener_avail_instant_calls": {},
+  "listener_avail_instant_calls_hint": "Allow ventors to reach you for immediate sessions without scheduling.",
+  "@listener_avail_instant_calls_hint": {},
+  "listener_avail_day_available": "Available on this day",
+  "@listener_avail_day_available": {},
+  "listener_avail_add_slot": "Add time slot",
+  "@listener_avail_add_slot": {},
+  "listener_avail_remove_slot": "Remove",
+  "@listener_avail_remove_slot": {}
 }

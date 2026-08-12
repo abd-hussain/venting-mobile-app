@@ -5053,4 +5053,50 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
 
   @override
   String get ventor_privacy_save => 'Save';
+
+  @override
+  String get listener_avail_title => 'Availability';
+
+  @override
+  String get listener_avail_weekly_schedule => 'Set Weekly Schedule';
+
+  @override
+  String get listener_avail_weekly_subtitle =>
+      'Choose when you\'re available to help.';
+
+  @override
+  String get listener_avail_day_off => 'Day off';
+
+  @override
+  String get listener_avail_session_settings => 'Session Settings';
+
+  @override
+  String get listener_avail_session_length => 'Preferred Session Length';
+
+  @override
+  String get listener_avail_break_between => 'Break Between Sessions';
+
+  @override
+  String get listener_avail_languages => 'Languages';
+
+  @override
+  String listener_avail_min_value(int minutes) {
+    return '$minutes min';
+  }
+
+  @override
+  String get listener_avail_instant_calls => 'Accept Instant Calls';
+
+  @override
+  String get listener_avail_instant_calls_hint =>
+      'Allow ventors to reach you for immediate sessions without scheduling.';
+
+  @override
+  String get listener_avail_day_available => 'Available on this day';
+
+  @override
+  String get listener_avail_add_slot => 'Add time slot';
+
+  @override
+  String get listener_avail_remove_slot => 'Remove';
 }

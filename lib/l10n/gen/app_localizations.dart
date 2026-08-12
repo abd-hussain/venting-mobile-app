@@ -9088,6 +9088,90 @@ abstract class VentingMobLocalizations {
   /// In en, this message translates to:
   /// **'Save'**
   String get ventor_privacy_save;
+
+  /// No description provided for @listener_avail_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Availability'**
+  String get listener_avail_title;
+
+  /// No description provided for @listener_avail_weekly_schedule.
+  ///
+  /// In en, this message translates to:
+  /// **'Set Weekly Schedule'**
+  String get listener_avail_weekly_schedule;
+
+  /// No description provided for @listener_avail_weekly_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose when you\'re available to help.'**
+  String get listener_avail_weekly_subtitle;
+
+  /// No description provided for @listener_avail_day_off.
+  ///
+  /// In en, this message translates to:
+  /// **'Day off'**
+  String get listener_avail_day_off;
+
+  /// No description provided for @listener_avail_session_settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Session Settings'**
+  String get listener_avail_session_settings;
+
+  /// No description provided for @listener_avail_session_length.
+  ///
+  /// In en, this message translates to:
+  /// **'Preferred Session Length'**
+  String get listener_avail_session_length;
+
+  /// No description provided for @listener_avail_break_between.
+  ///
+  /// In en, this message translates to:
+  /// **'Break Between Sessions'**
+  String get listener_avail_break_between;
+
+  /// No description provided for @listener_avail_languages.
+  ///
+  /// In en, this message translates to:
+  /// **'Languages'**
+  String get listener_avail_languages;
+
+  /// No description provided for @listener_avail_min_value.
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes} min'**
+  String listener_avail_min_value(int minutes);
+
+  /// No description provided for @listener_avail_instant_calls.
+  ///
+  /// In en, this message translates to:
+  /// **'Accept Instant Calls'**
+  String get listener_avail_instant_calls;
+
+  /// No description provided for @listener_avail_instant_calls_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Allow ventors to reach you for immediate sessions without scheduling.'**
+  String get listener_avail_instant_calls_hint;
+
+  /// No description provided for @listener_avail_day_available.
+  ///
+  /// In en, this message translates to:
+  /// **'Available on this day'**
+  String get listener_avail_day_available;
+
+  /// No description provided for @listener_avail_add_slot.
+  ///
+  /// In en, this message translates to:
+  /// **'Add time slot'**
+  String get listener_avail_add_slot;
+
+  /// No description provided for @listener_avail_remove_slot.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get listener_avail_remove_slot;
 }
 
 class _VentingMobLocalizationsDelegate

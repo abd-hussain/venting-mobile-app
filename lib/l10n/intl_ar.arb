@@ -3524,5 +3524,38 @@
   "ventor_privacy_allow_discovery_sub": "اسمح للمستمعين المطابقين باكتشاف ملفك عند البحث عن شخص للتحدث معه.",
   "@ventor_privacy_allow_discovery_sub": {},
   "ventor_privacy_save": "حفظ",
-  "@ventor_privacy_save": {}
+  "@ventor_privacy_save": {},
+
+  "listener_avail_title": "التوفر",
+  "@listener_avail_title": {},
+  "listener_avail_weekly_schedule": "تعيين الجدول الأسبوعي",
+  "@listener_avail_weekly_schedule": {},
+  "listener_avail_weekly_subtitle": "اختر متى تكون متاحاً للمساعدة.",
+  "@listener_avail_weekly_subtitle": {},
+  "listener_avail_day_off": "يوم إجازة",
+  "@listener_avail_day_off": {},
+  "listener_avail_session_settings": "إعدادات الجلسة",
+  "@listener_avail_session_settings": {},
+  "listener_avail_session_length": "مدة الجلسة المفضلة",
+  "@listener_avail_session_length": {},
+  "listener_avail_break_between": "استراحة بين الجلسات",
+  "@listener_avail_break_between": {},
+  "listener_avail_languages": "اللغات",
+  "@listener_avail_languages": {},
+  "listener_avail_min_value": "{minutes} دقيقة",
+  "@listener_avail_min_value": {
+    "placeholders": {
+      "minutes": { "type": "int" }
+    }
+  },
+  "listener_avail_instant_calls": "قبول المكالمات الفورية",
+  "@listener_avail_instant_calls": {},
+  "listener_avail_instant_calls_hint": "اسمح للمتحدثين بالوصول إليك لجلسات فورية بدون حجز مسبق.",
+  "@listener_avail_instant_calls_hint": {},
+  "listener_avail_day_available": "متاح في هذا اليوم",
+  "@listener_avail_day_available": {},
+  "listener_avail_add_slot": "إضافة فترة زمنية",
+  "@listener_avail_add_slot": {},
+  "listener_avail_remove_slot": "إزالة",
+  "@listener_avail_remove_slot": {}
 }
