@@ -2835,6 +2835,40 @@
   "@listener_home_availability_placeholder": {},
   "listener_home_earnings_placeholder": "Track your listener earnings and payouts here.",
   "@listener_home_earnings_placeholder": {},
+  "listener_earnings_total": "Total Earnings",
+  "@listener_earnings_total": {},
+  "listener_earnings_trend_up": "+{percent}% from last month",
+  "@listener_earnings_trend_up": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "listener_earnings_sessions": "Sessions",
+  "@listener_earnings_sessions": {},
+  "listener_earnings_hours": "Hours",
+  "@listener_earnings_hours": {},
+  "listener_earnings_hours_value": "{hours}h",
+  "@listener_earnings_hours_value": {
+    "placeholders": {
+      "hours": {
+        "type": "String"
+      }
+    }
+  },
+  "listener_earnings_rate": "Rate / 30 min",
+  "@listener_earnings_rate": {},
+  "listener_earnings_overview": "Earnings Overview",
+  "@listener_earnings_overview": {},
+  "listener_earnings_recent_payout": "Recent Payout",
+  "@listener_earnings_recent_payout": {},
+  "listener_earnings_status_paid": "Paid",
+  "@listener_earnings_status_paid": {},
+  "listener_earnings_payout_methods": "Payout Methods",
+  "@listener_earnings_payout_methods": {},
+  "listener_earnings_default": "Default",
+  "@listener_earnings_default": {},
   "listener_home_profile_placeholder": "Your listener profile and settings will appear here.",
   "@listener_home_profile_placeholder": {},
   "listener_profile_title": "My Profile",

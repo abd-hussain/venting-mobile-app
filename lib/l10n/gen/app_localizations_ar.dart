@@ -4085,6 +4085,43 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
       'تتبّع أرباحك ومدفوعاتك كمستمع هنا.';
 
   @override
+  String get listener_earnings_total => 'إجمالي الأرباح';
+
+  @override
+  String listener_earnings_trend_up(int percent) {
+    return '+$percent% عن الشهر الماضي';
+  }
+
+  @override
+  String get listener_earnings_sessions => 'الجلسات';
+
+  @override
+  String get listener_earnings_hours => 'الساعات';
+
+  @override
+  String listener_earnings_hours_value(String hours) {
+    return '$hoursس';
+  }
+
+  @override
+  String get listener_earnings_rate => 'الأجر / 30 د';
+
+  @override
+  String get listener_earnings_overview => 'نظرة عامة على الأرباح';
+
+  @override
+  String get listener_earnings_recent_payout => 'آخر تحويل';
+
+  @override
+  String get listener_earnings_status_paid => 'مدفوع';
+
+  @override
+  String get listener_earnings_payout_methods => 'طرق السحب';
+
+  @override
+  String get listener_earnings_default => 'افتراضي';
+
+  @override
   String get listener_home_profile_placeholder =>
       'سيظهر ملف المستمع والإعدادات هنا.';
 

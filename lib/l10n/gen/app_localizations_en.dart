@@ -4107,6 +4107,43 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
       'Track your listener earnings and payouts here.';
 
   @override
+  String get listener_earnings_total => 'Total Earnings';
+
+  @override
+  String listener_earnings_trend_up(int percent) {
+    return '+$percent% from last month';
+  }
+
+  @override
+  String get listener_earnings_sessions => 'Sessions';
+
+  @override
+  String get listener_earnings_hours => 'Hours';
+
+  @override
+  String listener_earnings_hours_value(String hours) {
+    return '${hours}h';
+  }
+
+  @override
+  String get listener_earnings_rate => 'Rate / 30 min';
+
+  @override
+  String get listener_earnings_overview => 'Earnings Overview';
+
+  @override
+  String get listener_earnings_recent_payout => 'Recent Payout';
+
+  @override
+  String get listener_earnings_status_paid => 'Paid';
+
+  @override
+  String get listener_earnings_payout_methods => 'Payout Methods';
+
+  @override
+  String get listener_earnings_default => 'Default';
+
+  @override
   String get listener_home_profile_placeholder =>
       'Your listener profile and settings will appear here.';
 

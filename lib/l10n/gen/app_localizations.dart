@@ -7379,6 +7379,72 @@ abstract class VentingMobLocalizations {
   /// **'Track your listener earnings and payouts here.'**
   String get listener_home_earnings_placeholder;
 
+  /// No description provided for @listener_earnings_total.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Earnings'**
+  String get listener_earnings_total;
+
+  /// No description provided for @listener_earnings_trend_up.
+  ///
+  /// In en, this message translates to:
+  /// **'+{percent}% from last month'**
+  String listener_earnings_trend_up(int percent);
+
+  /// No description provided for @listener_earnings_sessions.
+  ///
+  /// In en, this message translates to:
+  /// **'Sessions'**
+  String get listener_earnings_sessions;
+
+  /// No description provided for @listener_earnings_hours.
+  ///
+  /// In en, this message translates to:
+  /// **'Hours'**
+  String get listener_earnings_hours;
+
+  /// No description provided for @listener_earnings_hours_value.
+  ///
+  /// In en, this message translates to:
+  /// **'{hours}h'**
+  String listener_earnings_hours_value(String hours);
+
+  /// No description provided for @listener_earnings_rate.
+  ///
+  /// In en, this message translates to:
+  /// **'Rate / 30 min'**
+  String get listener_earnings_rate;
+
+  /// No description provided for @listener_earnings_overview.
+  ///
+  /// In en, this message translates to:
+  /// **'Earnings Overview'**
+  String get listener_earnings_overview;
+
+  /// No description provided for @listener_earnings_recent_payout.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent Payout'**
+  String get listener_earnings_recent_payout;
+
+  /// No description provided for @listener_earnings_status_paid.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid'**
+  String get listener_earnings_status_paid;
+
+  /// No description provided for @listener_earnings_payout_methods.
+  ///
+  /// In en, this message translates to:
+  /// **'Payout Methods'**
+  String get listener_earnings_payout_methods;
+
+  /// No description provided for @listener_earnings_default.
+  ///
+  /// In en, this message translates to:
+  /// **'Default'**
+  String get listener_earnings_default;
+
   /// No description provided for @listener_home_profile_placeholder.
   ///
   /// In en, this message translates to:
