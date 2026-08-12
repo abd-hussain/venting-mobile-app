@@ -4079,11 +4079,90 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
   String get ventor_reg_nickname_required => 'Please enter a nickname';
 
   @override
+  String get ventor_reg_suggestions_label => 'Try one of these';
+
+  @override
+  String get ventor_reg_suggestion_1 => 'QuietSoul';
+
+  @override
+  String get ventor_reg_suggestion_2 => 'SoftRain';
+
+  @override
+  String get ventor_reg_suggestion_3 => 'NightOwl';
+
+  @override
+  String get ventor_reg_suggestion_4 => 'CalmWave';
+
+  @override
+  String get ventor_reg_suggestion_5 => 'GentleSky';
+
+  @override
+  String get ventor_reg_gender_label => 'Gender';
+
+  @override
+  String get ventor_reg_gender_male => 'Male';
+
+  @override
+  String get ventor_reg_gender_female => 'Female';
+
+  @override
+  String get ventor_reg_gender_prefer_not => 'Prefer not to say';
+
+  @override
+  String get ventor_reg_gender_required => 'Please select a gender option';
+
+  @override
   String get ventor_reg_avatar_label => 'Add a profile avatar (optional)';
+
+  @override
+  String get ventor_reg_avatar_gallery => 'Gallery';
 
   @override
   String get ventor_reg_change_anytime =>
       'You can change it anytime from your profile settings';
+
+  @override
+  String get ventor_reg_interests_title => 'What do you want to vent about?';
+
+  @override
+  String get ventor_reg_interests_subtitle =>
+      'Choose one or more topics. This helps us match you with the right listeners.';
+
+  @override
+  String get ventor_reg_interest_relationships => 'Relationships';
+
+  @override
+  String get ventor_reg_interest_marriage => 'Marriage';
+
+  @override
+  String get ventor_reg_interest_parenting => 'Parenting';
+
+  @override
+  String get ventor_reg_interest_career_work => 'Career & Work';
+
+  @override
+  String get ventor_reg_interest_stress_anxiety => 'Stress & Anxiety';
+
+  @override
+  String get ventor_reg_interest_loneliness => 'Loneliness';
+
+  @override
+  String get ventor_reg_interest_student_life => 'Student Life';
+
+  @override
+  String get ventor_reg_interest_financial_stress => 'Financial Stress';
+
+  @override
+  String get ventor_reg_interest_health_wellness => 'Health & Wellness';
+
+  @override
+  String get ventor_reg_interest_other => 'Other';
+
+  @override
+  String get ventor_reg_interest_other_hint => 'Please specify';
+
+  @override
+  String get ventor_reg_finish => 'Go to Dashboard';
 
   @override
   String get home_tab_dashboard => 'Dashboard';

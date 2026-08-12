@@ -7331,17 +7331,173 @@ abstract class VentingMobLocalizations {
   /// **'Please enter a nickname'**
   String get ventor_reg_nickname_required;
 
+  /// No description provided for @ventor_reg_suggestions_label.
+  ///
+  /// In en, this message translates to:
+  /// **'Try one of these'**
+  String get ventor_reg_suggestions_label;
+
+  /// No description provided for @ventor_reg_suggestion_1.
+  ///
+  /// In en, this message translates to:
+  /// **'QuietSoul'**
+  String get ventor_reg_suggestion_1;
+
+  /// No description provided for @ventor_reg_suggestion_2.
+  ///
+  /// In en, this message translates to:
+  /// **'SoftRain'**
+  String get ventor_reg_suggestion_2;
+
+  /// No description provided for @ventor_reg_suggestion_3.
+  ///
+  /// In en, this message translates to:
+  /// **'NightOwl'**
+  String get ventor_reg_suggestion_3;
+
+  /// No description provided for @ventor_reg_suggestion_4.
+  ///
+  /// In en, this message translates to:
+  /// **'CalmWave'**
+  String get ventor_reg_suggestion_4;
+
+  /// No description provided for @ventor_reg_suggestion_5.
+  ///
+  /// In en, this message translates to:
+  /// **'GentleSky'**
+  String get ventor_reg_suggestion_5;
+
+  /// No description provided for @ventor_reg_gender_label.
+  ///
+  /// In en, this message translates to:
+  /// **'Gender'**
+  String get ventor_reg_gender_label;
+
+  /// No description provided for @ventor_reg_gender_male.
+  ///
+  /// In en, this message translates to:
+  /// **'Male'**
+  String get ventor_reg_gender_male;
+
+  /// No description provided for @ventor_reg_gender_female.
+  ///
+  /// In en, this message translates to:
+  /// **'Female'**
+  String get ventor_reg_gender_female;
+
+  /// No description provided for @ventor_reg_gender_prefer_not.
+  ///
+  /// In en, this message translates to:
+  /// **'Prefer not to say'**
+  String get ventor_reg_gender_prefer_not;
+
+  /// No description provided for @ventor_reg_gender_required.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a gender option'**
+  String get ventor_reg_gender_required;
+
   /// No description provided for @ventor_reg_avatar_label.
   ///
   /// In en, this message translates to:
   /// **'Add a profile avatar (optional)'**
   String get ventor_reg_avatar_label;
 
+  /// No description provided for @ventor_reg_avatar_gallery.
+  ///
+  /// In en, this message translates to:
+  /// **'Gallery'**
+  String get ventor_reg_avatar_gallery;
+
   /// No description provided for @ventor_reg_change_anytime.
   ///
   /// In en, this message translates to:
   /// **'You can change it anytime from your profile settings'**
   String get ventor_reg_change_anytime;
+
+  /// No description provided for @ventor_reg_interests_title.
+  ///
+  /// In en, this message translates to:
+  /// **'What do you want to vent about?'**
+  String get ventor_reg_interests_title;
+
+  /// No description provided for @ventor_reg_interests_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose one or more topics. This helps us match you with the right listeners.'**
+  String get ventor_reg_interests_subtitle;
+
+  /// No description provided for @ventor_reg_interest_relationships.
+  ///
+  /// In en, this message translates to:
+  /// **'Relationships'**
+  String get ventor_reg_interest_relationships;
+
+  /// No description provided for @ventor_reg_interest_marriage.
+  ///
+  /// In en, this message translates to:
+  /// **'Marriage'**
+  String get ventor_reg_interest_marriage;
+
+  /// No description provided for @ventor_reg_interest_parenting.
+  ///
+  /// In en, this message translates to:
+  /// **'Parenting'**
+  String get ventor_reg_interest_parenting;
+
+  /// No description provided for @ventor_reg_interest_career_work.
+  ///
+  /// In en, this message translates to:
+  /// **'Career & Work'**
+  String get ventor_reg_interest_career_work;
+
+  /// No description provided for @ventor_reg_interest_stress_anxiety.
+  ///
+  /// In en, this message translates to:
+  /// **'Stress & Anxiety'**
+  String get ventor_reg_interest_stress_anxiety;
+
+  /// No description provided for @ventor_reg_interest_loneliness.
+  ///
+  /// In en, this message translates to:
+  /// **'Loneliness'**
+  String get ventor_reg_interest_loneliness;
+
+  /// No description provided for @ventor_reg_interest_student_life.
+  ///
+  /// In en, this message translates to:
+  /// **'Student Life'**
+  String get ventor_reg_interest_student_life;
+
+  /// No description provided for @ventor_reg_interest_financial_stress.
+  ///
+  /// In en, this message translates to:
+  /// **'Financial Stress'**
+  String get ventor_reg_interest_financial_stress;
+
+  /// No description provided for @ventor_reg_interest_health_wellness.
+  ///
+  /// In en, this message translates to:
+  /// **'Health & Wellness'**
+  String get ventor_reg_interest_health_wellness;
+
+  /// No description provided for @ventor_reg_interest_other.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get ventor_reg_interest_other;
+
+  /// No description provided for @ventor_reg_interest_other_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Please specify'**
+  String get ventor_reg_interest_other_hint;
+
+  /// No description provided for @ventor_reg_finish.
+  ///
+  /// In en, this message translates to:
+  /// **'Go to Dashboard'**
+  String get ventor_reg_finish;
 
   /// No description provided for @home_tab_dashboard.
   ///

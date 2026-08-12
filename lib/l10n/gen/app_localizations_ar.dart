@@ -4058,11 +4058,90 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
   String get ventor_reg_nickname_required => 'يرجى إدخال اسم مستعار';
 
   @override
+  String get ventor_reg_suggestions_label => 'جرّب أحد هذه الأسماء';
+
+  @override
+  String get ventor_reg_suggestion_1 => 'QuietSoul';
+
+  @override
+  String get ventor_reg_suggestion_2 => 'SoftRain';
+
+  @override
+  String get ventor_reg_suggestion_3 => 'NightOwl';
+
+  @override
+  String get ventor_reg_suggestion_4 => 'CalmWave';
+
+  @override
+  String get ventor_reg_suggestion_5 => 'GentleSky';
+
+  @override
+  String get ventor_reg_gender_label => 'الجنس';
+
+  @override
+  String get ventor_reg_gender_male => 'ذكر';
+
+  @override
+  String get ventor_reg_gender_female => 'أنثى';
+
+  @override
+  String get ventor_reg_gender_prefer_not => 'أفضل عدم الإفصاح';
+
+  @override
+  String get ventor_reg_gender_required => 'يرجى اختيار خيار الجنس';
+
+  @override
   String get ventor_reg_avatar_label => 'أضف صورة رمزية للملف (اختياري)';
+
+  @override
+  String get ventor_reg_avatar_gallery => 'المعرض';
 
   @override
   String get ventor_reg_change_anytime =>
       'يمكنك تغييره في أي وقت من إعدادات ملفك';
+
+  @override
+  String get ventor_reg_interests_title => 'عن ماذا تريد أن تتحدث؟';
+
+  @override
+  String get ventor_reg_interests_subtitle =>
+      'اختر موضوعًا واحدًا أو أكثر. هذا يساعدنا في ربطك بالمستمعين المناسبين.';
+
+  @override
+  String get ventor_reg_interest_relationships => 'العلاقات';
+
+  @override
+  String get ventor_reg_interest_marriage => 'الزواج';
+
+  @override
+  String get ventor_reg_interest_parenting => 'الأبوة والأمومة';
+
+  @override
+  String get ventor_reg_interest_career_work => 'المهنة والعمل';
+
+  @override
+  String get ventor_reg_interest_stress_anxiety => 'التوتر والقلق';
+
+  @override
+  String get ventor_reg_interest_loneliness => 'الوحدة';
+
+  @override
+  String get ventor_reg_interest_student_life => 'حياة الطالب';
+
+  @override
+  String get ventor_reg_interest_financial_stress => 'الضغط المالي';
+
+  @override
+  String get ventor_reg_interest_health_wellness => 'الصحة والعافية';
+
+  @override
+  String get ventor_reg_interest_other => 'أخرى';
+
+  @override
+  String get ventor_reg_interest_other_hint => 'يرجى التوضيح';
+
+  @override
+  String get ventor_reg_finish => 'الذهاب إلى لوحة التحكم';
 
   @override
   String get home_tab_dashboard => 'لوحة التحكم';
