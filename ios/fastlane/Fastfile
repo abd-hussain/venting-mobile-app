@@ -20,7 +20,8 @@ platform :ios do
         scheme: ENV["IOS_SCHEME"] || "prod",
         bundle_id: ENV["BUNDLE_ID"] || "com.vent.ventingMobileApp",
         entrypoint: ENV["ENTRYPOINT"] || "lib/main_prod.dart",
-        dart_define_file: ENV["DART_DEFINE_FILE"] || ".env/config.prod.json"
+        dart_define_file: ENV["DART_DEFINE_FILE"] || ".env/config.prod.json",
+        release_config: "Release-prod"
       }
     when "dev"
       {
@@ -28,11 +29,16 @@ platform :ios do
         scheme: ENV["IOS_SCHEME"] || "dev",
         bundle_id: ENV["BUNDLE_ID"] || "com.vent.ventingMobileApp.dev",
         entrypoint: ENV["ENTRYPOINT"] || "lib/main_dev.dart",
-        dart_define_file: ENV["DART_DEFINE_FILE"] || ".env/config.dev.json"
+        dart_define_file: ENV["DART_DEFINE_FILE"] || ".env/config.dev.json",
+        release_config: "Release-dev"
       }
     else
       UI.user_error!("Unsupported FLAVOR=#{flavor}. Use prod or dev.")
     end
+  end
+
+  def match_profile_name(bundle_id)
+    "match AppStore #{bundle_id}"
   end
 
   desc "Set Info.plist Version and Build Number from pubspec via flutter_version"
@@ -42,8 +48,9 @@ platform :ios do
     increment_build_number(build_number: version['version_code'])
   end
 
-  # Shared xcargs to force correct signing in CI (no provisioning specifier here!)
-  def signing_xcargs
+  # Manual signing for archive. Profile name comes from Match (not a fixed Xcode setting).
+  def signing_xcargs(bundle_id)
+    profile = match_profile_name(bundle_id)
     %Q[
       -allowProvisioningUpdates
       CODE_SIGN_STYLE=Manual
@@ -51,6 +58,7 @@ platform :ios do
       CODE_SIGN_IDENTITY="Apple Distribution"
       CODE_SIGNING_ALLOWED=YES
       CODE_SIGNING_REQUIRED=YES
+      PROVISIONING_PROFILE_SPECIFIER="#{profile}"
     ].gsub(/\s+/, ' ').strip
   end
 
@@ -71,7 +79,6 @@ platform :ios do
 
   def match_appstore!(bundle_id)
     # CI auth: workflow configures git url.insteadOf (HTTPS user:token).
-    # Do not rely on Match's http.extraheader clone flag — it can fail on runners.
     match(
       type: "appstore",
       readonly: is_ci,
@@ -80,12 +87,29 @@ platform :ios do
     )
   end
 
+  # Xcode project defaults to Automatic signing — force Match profile onto Runner.
+  def apply_match_signing!(cfg)
+    profile = match_profile_name(cfg[:bundle_id])
+    update_code_signing_settings(
+      use_automatic_signing: false,
+      path: "Runner.xcodeproj",
+      team_id: TEAM_ID,
+      targets: ["Runner"],
+      code_sign_identity: "Apple Distribution",
+      bundle_identifier: cfg[:bundle_id],
+      profile_name: profile,
+      build_configurations: [cfg[:release_config]]
+    )
+  end
+
   def build_signed_ipa!(cfg)
     ENV["FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT"] = "120"
     ENV["FASTLANE_XCODEBUILD_SETTINGS_RETRIES"] = "6"
 
     bundle_id = cfg[:bundle_id]
+    profile = match_profile_name(bundle_id)
     UI.message("🍎 Building flavor=#{cfg[:flavor]} scheme=#{cfg[:scheme]} bundle=#{bundle_id}")
+    UI.message("🔐 Using profile=#{profile}")
 
     build_app(
       workspace: "Runner.xcworkspace",
@@ -94,10 +118,10 @@ platform :ios do
       archive_path: "../build/ios/Runner.xcarchive",
       output_directory: "../build/ios/Runner",
       export_method: "app-store",
-      xcargs: signing_xcargs,
+      xcargs: signing_xcargs(bundle_id),
       export_options: {
         provisioningProfiles: {
-          bundle_id => "match AppStore #{bundle_id}"
+          bundle_id => profile
         }
       }
     )
@@ -111,6 +135,7 @@ platform :ios do
     prepare_flutter_flavor_config(cfg)
     cocoapods(clean_install: is_ci)
     match_appstore!(cfg[:bundle_id])
+    apply_match_signing!(cfg)
     build_signed_ipa!(cfg)
 
     upload_to_testflight(
@@ -129,6 +154,7 @@ platform :ios do
     prepare_flutter_flavor_config(cfg)
     cocoapods(clean_install: is_ci)
     match_appstore!(cfg[:bundle_id])
+    apply_match_signing!(cfg)
     build_signed_ipa!(cfg)
 
     UI.success("✅ iOS archive built successfully at ../build/ios/Runner/Runner.ipa (#{cfg[:flavor]})")
