@@ -48,17 +48,13 @@ platform :ios do
     increment_build_number(build_number: version['version_code'])
   end
 
-  # Manual signing for archive. Profile name comes from Match (not a fixed Xcode setting).
-  def signing_xcargs(bundle_id)
-    profile = match_profile_name(bundle_id)
+  # Global xcargs apply to ALL targets (including Pods). Never set
+  # PROVISIONING_PROFILE_SPECIFIER / CODE_SIGNING_ALLOWED here — Pods reject profiles.
+  # Runner signing is applied via update_code_signing_settings only.
+  def signing_xcargs
     %Q[
       -allowProvisioningUpdates
-      CODE_SIGN_STYLE=Manual
       DEVELOPMENT_TEAM=#{TEAM_ID}
-      CODE_SIGN_IDENTITY="Apple Distribution"
-      CODE_SIGNING_ALLOWED=YES
-      CODE_SIGNING_REQUIRED=YES
-      PROVISIONING_PROFILE_SPECIFIER="#{profile}"
     ].gsub(/\s+/, ' ').strip
   end
 
@@ -118,7 +114,7 @@ platform :ios do
       archive_path: "../build/ios/Runner.xcarchive",
       output_directory: "../build/ios/Runner",
       export_method: "app-store",
-      xcargs: signing_xcargs(bundle_id),
+      xcargs: signing_xcargs,
       export_options: {
         provisioningProfiles: {
           bundle_id => profile
