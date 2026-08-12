@@ -73,27 +73,19 @@ class WelcomeScreen extends StatelessWidget {
                     ),
                   ),
                   _WelcomePrimaryButton(
-                    label: l10n.welcome_need_someone_to_talk_to,
+                    label: l10n.welcome_i_am_ventor,
                     onPressed: () {
-                      context.push(AppRoutes.ventorOnboarding);
+                      context.push(AppRoutes.autVentorRegister);
                     },
                   ),
                   const SizedBox(height: 12),
                   _WelcomeSecondaryButton(
-                    label: l10n.welcome_want_to_be_listener,
+                    label: l10n.welcome_i_am_listener,
                     onPressed: () {
-                      context.push(AppRoutes.listenerOnboarding);
+                      context.push(AppRoutes.authListenerRegister);
                     },
                   ),
-                  const SizedBox(height: 20),
-                  _SignInPrompt(
-                    prompt: l10n.welcome_already_have_account,
-                    action: l10n.welcome_sign_in,
-                    onSignIn: () {
-                      context.push(AppRoutes.authUserUnknown);
-                    },
-                  ),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: 24),
                 ],
               ),
             ),
@@ -205,47 +197,6 @@ class _WelcomeSecondaryButton extends StatelessWidget {
         ),
         child: Text(label),
       ),
-    );
-  }
-}
-
-class _SignInPrompt extends StatelessWidget {
-  const _SignInPrompt({
-    required this.prompt,
-    required this.action,
-    required this.onSignIn,
-  });
-
-  final String prompt;
-  final String action;
-  final VoidCallback onSignIn;
-
-  @override
-  Widget build(BuildContext context) {
-    return Wrap(
-      alignment: WrapAlignment.center,
-      crossAxisAlignment: WrapCrossAlignment.center,
-      children: [
-        Text(
-          '$prompt ',
-          style: GoogleFonts.inter(
-            color: Colors.white.withValues(alpha: 0.78),
-            fontSize: 14,
-            fontWeight: FontWeight.w400,
-          ),
-        ),
-        GestureDetector(
-          onTap: onSignIn,
-          child: Text(
-            action,
-            style: GoogleFonts.inter(
-              color: Colors.white,
-              fontSize: 14,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-        ),
-      ],
     );
   }
 }

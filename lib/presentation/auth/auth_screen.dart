@@ -7,22 +7,18 @@ import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dar
 import 'package:venting_mobile_app/shared_widgets/app_language_selector.dart';
 import 'package:venting_mobile_app/utils/router_config.dart';
 
-enum AuthType { login, register }
-
-enum AuthUserType { ventor, lissener, unknown }
+enum AuthUserType { ventor, lissener }
 
 class AuthRouteArgs {
-  const AuthRouteArgs({required this.userType, required this.authType});
+  const AuthRouteArgs({required this.userType});
 
   final AuthUserType userType;
-  final AuthType authType;
 }
 
-/// Auth method picker for login or register.
+/// Auth method picker for ventor or listener (sign-in or create account).
 class AuthScreen extends StatelessWidget {
   final AuthUserType userType;
-  final AuthType authType;
-  const AuthScreen({super.key, required this.userType, required this.authType});
+  const AuthScreen({super.key, required this.userType});
 
   static const _overlayStyle = SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
@@ -36,28 +32,15 @@ class AuthScreen extends StatelessWidget {
   static const _bodyColor = Color(0xFF6B6280);
   static const _border = Color(0xFFE4DCEF);
 
-  bool get _isLogin => authType == AuthType.login;
-
   ({String title, String subtitle}) _copy(VentingMobLocalizations l10n) {
-    if (_isLogin || userType == AuthUserType.unknown) {
-      return (
-        title: l10n.sign_in_welcome_back,
-        subtitle: l10n.sign_in_subtitle,
-      );
-    }
-
     return switch (userType) {
       AuthUserType.ventor => (
-        title: l10n.auth_register_ventor_title,
-        subtitle: l10n.auth_register_ventor_subtitle,
+        title: l10n.auth_ventor_title,
+        subtitle: l10n.auth_ventor_subtitle,
       ),
       AuthUserType.lissener => (
-        title: l10n.auth_register_listener_title,
-        subtitle: l10n.auth_register_listener_subtitle,
-      ),
-      AuthUserType.unknown => (
-        title: l10n.sign_in_welcome_back,
-        subtitle: l10n.sign_in_subtitle,
+        title: l10n.auth_listener_title,
+        subtitle: l10n.auth_listener_subtitle,
       ),
     };
   }
@@ -66,15 +49,6 @@ class AuthScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = VentingMobLocalizations.of(context);
     final copy = _copy(l10n);
-    final appleLabel = _isLogin
-        ? l10n.sign_in_continue_with_apple
-        : l10n.sign_up_continue_with_apple;
-    final googleLabel = _isLogin
-        ? l10n.sign_in_continue_with_google
-        : l10n.sign_up_continue_with_google;
-    final emailLabel = _isLogin
-        ? l10n.sign_in_continue_with_email
-        : l10n.sign_up_continue_with_email;
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: _overlayStyle,
@@ -128,7 +102,7 @@ class AuthScreen extends StatelessWidget {
                   foregroundColor: Colors.white,
                   borderColor: Colors.black,
                   icon: Icons.apple,
-                  label: appleLabel,
+                  label: l10n.auth_continue_with_apple,
                   onPressed: () {
                     // TODO: Apple Sign-In / Sign-Up
                   },
@@ -139,7 +113,7 @@ class AuthScreen extends StatelessWidget {
                   foregroundColor: _titleColor,
                   borderColor: _border,
                   iconWidget: const _GoogleMark(),
-                  label: googleLabel,
+                  label: l10n.auth_continue_with_google,
                   onPressed: () {
                     // TODO: Google Sign-In / Sign-Up
                   },
@@ -150,14 +124,11 @@ class AuthScreen extends StatelessWidget {
                   foregroundColor: SplashColors.purpleMid,
                   borderColor: SplashColors.purpleMid.withValues(alpha: 0.55),
                   icon: Icons.mail_outline_rounded,
-                  label: emailLabel,
+                  label: l10n.auth_continue_with_email,
                   onPressed: () {
                     context.push(
                       AppRoutes.emailRegistration,
-                      extra: AuthRouteArgs(
-                        userType: userType,
-                        authType: authType,
-                      ),
+                      extra: AuthRouteArgs(userType: userType),
                     );
                   },
                 ),

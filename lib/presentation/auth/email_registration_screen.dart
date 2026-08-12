@@ -11,16 +11,11 @@ import 'package:venting_mobile_app/presentation/ventor_registration/ventor_regis
 import 'package:venting_mobile_app/shared_widgets/app_language_selector.dart';
 import 'package:venting_mobile_app/utils/router_config.dart';
 
-/// Email auth form for sign-in or registration (ventor / listener).
+/// Email auth form for ventor / listener (sign-in or create account).
 class EmailRegistrationScreen extends StatefulWidget {
-  const EmailRegistrationScreen({
-    super.key,
-    required this.userType,
-    required this.authType,
-  });
+  const EmailRegistrationScreen({super.key, required this.userType});
 
   final AuthUserType userType;
-  final AuthType authType;
 
   @override
   State<EmailRegistrationScreen> createState() =>
@@ -40,6 +35,10 @@ class _EmailRegistrationScreenState extends State<EmailRegistrationScreen> {
   static const _bodyColor = Color(0xFF6B6280);
   static const _success = Color(0xFF22C55E);
 
+  /// Temporary mock emails that skip password complexity and go to home.
+  static const _mockVentorEmail = 'v@v.com';
+  static const _mockListenerEmail = 'l@l.com';
+
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _emailFocus = FocusNode();
@@ -47,20 +46,19 @@ class _EmailRegistrationScreenState extends State<EmailRegistrationScreen> {
 
   bool _obscurePassword = true;
   bool _submitted = false;
-
-  bool get _isLogin =>
-      widget.authType == AuthType.login ||
-      widget.userType == AuthUserType.unknown;
+  bool _emailEditingComplete = false;
 
   @override
   void initState() {
     super.initState();
     _emailController.addListener(_onChanged);
     _passwordController.addListener(_onChanged);
+    _emailFocus.addListener(_onEmailFocusChanged);
   }
 
   @override
   void dispose() {
+    _emailFocus.removeListener(_onEmailFocusChanged);
     _emailController.dispose();
     _passwordController.dispose();
     _emailFocus.dispose();
@@ -70,12 +68,38 @@ class _EmailRegistrationScreenState extends State<EmailRegistrationScreen> {
 
   void _onChanged() => setState(() {});
 
+  void _onEmailFocusChanged() {
+    if (_emailFocus.hasFocus) {
+      // Hide rules again while the user is editing the email.
+      if (_emailEditingComplete) {
+        setState(() => _emailEditingComplete = false);
+      }
+      return;
+    }
+    _markEmailEditingComplete();
+  }
+
+  void _markEmailEditingComplete() {
+    if (_emailEditingComplete) return;
+    setState(() => _emailEditingComplete = true);
+  }
+
+  String get _normalizedEmail => _emailController.text.trim().toLowerCase();
+
+  bool get _isMockEmail =>
+      _normalizedEmail == _mockVentorEmail ||
+      _normalizedEmail == _mockListenerEmail;
+
+  /// Hidden until email field is finished; never shown for mock emails.
+  bool get _showPasswordComplexity =>
+      _emailEditingComplete && _normalizedEmail.isNotEmpty && !_isMockEmail;
+
   bool get _hasMinLength => _passwordController.text.length >= 8;
   bool get _hasUppercase => RegExp('[A-Z]').hasMatch(_passwordController.text);
   bool get _hasNumber => RegExp('[0-9]').hasMatch(_passwordController.text);
 
   bool get _isPasswordValid {
-    if (_isLogin) {
+    if (!_showPasswordComplexity) {
       return _passwordController.text.isNotEmpty;
     }
     return _hasMinLength && _hasUppercase && _hasNumber;
@@ -91,19 +115,9 @@ class _EmailRegistrationScreenState extends State<EmailRegistrationScreen> {
   ({String title, String subtitle, String passwordHint, String button}) _copy(
     VentingMobLocalizations l10n,
   ) {
-    if (_isLogin) {
-      return (
-        title: l10n.email_sign_in_title,
-        subtitle: l10n.email_sign_in_subtitle,
-        passwordHint: l10n.email_sign_in_password_hint,
-        button: l10n.email_sign_in_button,
-      );
-    }
-
     final subtitle = switch (widget.userType) {
       AuthUserType.ventor => l10n.email_registration_ventor_subtitle,
       AuthUserType.lissener => l10n.email_registration_listener_subtitle,
-      AuthUserType.unknown => l10n.email_registration_subtitle,
     };
 
     return (
@@ -118,44 +132,31 @@ class _EmailRegistrationScreenState extends State<EmailRegistrationScreen> {
     setState(() => _submitted = true);
     if (!_canSubmit) return;
 
-    if (widget.authType == AuthType.register) {
-      if (widget.userType == AuthUserType.lissener) {
-        context.push(
-          AppRoutes.listenerRegistration,
-          extra: ListenerRegistrationArgs(email: _emailController.text.trim()),
-        );
-        return;
-      }
-      if (widget.userType == AuthUserType.ventor) {
-        context.push(
-          AppRoutes.ventorRegistration,
-          extra: VentorRegistrationArgs(email: _emailController.text.trim()),
-        );
-        return;
-      }
+    // TODO(temp-mock): remove when real email/password auth API exists.
+    final mockRole = switch (_normalizedEmail) {
+      _mockVentorEmail => AuthUserType.ventor,
+      _mockListenerEmail => AuthUserType.lissener,
+      _ => null,
+    };
+    if (mockRole != null) {
+      context.go(AppRoutes.tabHome, extra: HomeScreenArgs(userType: mockRole));
+      return;
     }
 
-    if (_isLogin) {
-      // TODO(temp-mock): remove when real email/password sign-in API exists.
-      // Temporary role shortcuts for local testing:
-      //   v@v.com → ventor home
-      //   l@l.com → listener home
-      final email = _emailController.text.trim().toLowerCase();
-      final mockRole = switch (email) {
-        'v@v.com' => AuthUserType.ventor,
-        'l@l.com' => AuthUserType.lissener,
-        _ => null,
-      };
-      if (mockRole != null) {
-        context.go(
-          AppRoutes.tabHome,
-          extra: HomeScreenArgs(userType: mockRole),
-        );
-        return;
-      }
+    if (widget.userType == AuthUserType.lissener) {
+      context.push(
+        AppRoutes.listenerRegistration,
+        extra: ListenerRegistrationArgs(email: _emailController.text.trim()),
+      );
+      return;
     }
 
-    // TODO: call sign-in or register API based on authType / userType
+    context.push(
+      AppRoutes.ventorRegistration,
+      extra: VentorRegistrationArgs(email: _emailController.text.trim()),
+    );
+
+    // TODO: call sign-in or register API based on userType
   }
 
   @override
@@ -225,7 +226,10 @@ class _EmailRegistrationScreenState extends State<EmailRegistrationScreen> {
                         hint: l10n.email_registration_email_hint,
                         keyboardType: TextInputType.emailAddress,
                         textInputAction: TextInputAction.next,
-                        onSubmitted: (_) => _passwordFocus.requestFocus(),
+                        onSubmitted: (_) {
+                          _markEmailEditingComplete();
+                          _passwordFocus.requestFocus();
+                        },
                         errorText: showEmailError
                             ? l10n.email_registration_invalid_email
                             : null,
@@ -257,7 +261,7 @@ class _EmailRegistrationScreenState extends State<EmailRegistrationScreen> {
                           ),
                         ),
                       ),
-                      if (!_isLogin) ...[
+                      if (_showPasswordComplexity) ...[
                         const SizedBox(height: 16),
                         Text(
                           l10n.email_registration_password_must_contain,

@@ -5795,29 +5795,17 @@ abstract class VentingMobLocalizations {
   /// **'A safe space to be lighter'**
   String get welcome_tagline;
 
-  /// No description provided for @welcome_need_someone_to_talk_to.
+  /// No description provided for @welcome_i_am_ventor.
   ///
   /// In en, this message translates to:
-  /// **'I need someone to talk to'**
-  String get welcome_need_someone_to_talk_to;
+  /// **'I am a Ventor'**
+  String get welcome_i_am_ventor;
 
-  /// No description provided for @welcome_want_to_be_listener.
+  /// No description provided for @welcome_i_am_listener.
   ///
   /// In en, this message translates to:
-  /// **'I want to be a listener'**
-  String get welcome_want_to_be_listener;
-
-  /// No description provided for @welcome_already_have_account.
-  ///
-  /// In en, this message translates to:
-  /// **'Already have an account?'**
-  String get welcome_already_have_account;
-
-  /// No description provided for @welcome_sign_in.
-  ///
-  /// In en, this message translates to:
-  /// **'Sign in'**
-  String get welcome_sign_in;
+  /// **'I am a Listener'**
+  String get welcome_i_am_listener;
 
   /// No description provided for @onboarding_skip.
   ///
@@ -6011,29 +5999,47 @@ abstract class VentingMobLocalizations {
   /// **'Create an account to begin your journey.'**
   String get sign_up_create_account_subtitle;
 
-  /// No description provided for @auth_register_ventor_title.
+  /// No description provided for @auth_ventor_title.
   ///
   /// In en, this message translates to:
-  /// **'Let\'s Get Started'**
-  String get auth_register_ventor_title;
+  /// **'Welcome, Ventor'**
+  String get auth_ventor_title;
 
-  /// No description provided for @auth_register_ventor_subtitle.
+  /// No description provided for @auth_ventor_subtitle.
   ///
   /// In en, this message translates to:
-  /// **'Create an account to start talking and feel heard.'**
-  String get auth_register_ventor_subtitle;
+  /// **'Sign in or create an account to talk and feel heard.'**
+  String get auth_ventor_subtitle;
 
-  /// No description provided for @auth_register_listener_title.
+  /// No description provided for @auth_listener_title.
   ///
   /// In en, this message translates to:
-  /// **'Let\'s Get Started'**
-  String get auth_register_listener_title;
+  /// **'Welcome, Listener'**
+  String get auth_listener_title;
 
-  /// No description provided for @auth_register_listener_subtitle.
+  /// No description provided for @auth_listener_subtitle.
   ///
   /// In en, this message translates to:
-  /// **'Create an account to start listening and supporting others.'**
-  String get auth_register_listener_subtitle;
+  /// **'Sign in or create an account to listen and support others.'**
+  String get auth_listener_subtitle;
+
+  /// No description provided for @auth_continue_with_apple.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue with Apple'**
+  String get auth_continue_with_apple;
+
+  /// No description provided for @auth_continue_with_google.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue with Google'**
+  String get auth_continue_with_google;
+
+  /// No description provided for @auth_continue_with_email.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue with Email'**
+  String get auth_continue_with_email;
 
   /// No description provided for @sign_in_welcome_back.
   ///
@@ -6110,19 +6116,19 @@ abstract class VentingMobLocalizations {
   /// No description provided for @email_registration_subtitle.
   ///
   /// In en, this message translates to:
-  /// **'Please enter your details to create your account.'**
+  /// **'Enter your email and password to continue.'**
   String get email_registration_subtitle;
 
   /// No description provided for @email_registration_ventor_subtitle.
   ///
   /// In en, this message translates to:
-  /// **'Enter your details to create your ventor account.'**
+  /// **'Sign in or create your Ventor account with email.'**
   String get email_registration_ventor_subtitle;
 
   /// No description provided for @email_registration_listener_subtitle.
   ///
   /// In en, this message translates to:
-  /// **'Enter your details to create your listener account.'**
+  /// **'Sign in or create your Listener account with email.'**
   String get email_registration_listener_subtitle;
 
   /// No description provided for @email_sign_in_title.
@@ -6158,7 +6164,7 @@ abstract class VentingMobLocalizations {
   /// No description provided for @email_registration_password_hint.
   ///
   /// In en, this message translates to:
-  /// **'Create a password'**
+  /// **'Enter your password'**
   String get email_registration_password_hint;
 
   /// No description provided for @email_sign_in_password_hint.
@@ -6194,7 +6200,7 @@ abstract class VentingMobLocalizations {
   /// No description provided for @email_registration_create_account.
   ///
   /// In en, this message translates to:
-  /// **'Create Account'**
+  /// **'Continue'**
   String get email_registration_create_account;
 
   /// No description provided for @email_sign_in_button.

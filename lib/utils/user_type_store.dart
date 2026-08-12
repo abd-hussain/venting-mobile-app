@@ -13,21 +13,16 @@ abstract final class UserTypeStore {
     final value = switch (userType) {
       AuthUserType.ventor => _ventor,
       AuthUserType.lissener => _listener,
-      AuthUserType.unknown => '',
     };
-    if (value.isEmpty) {
-      await preferences.remove(SavedConstants.userType);
-      return;
-    }
     await preferences.setValue(SavedConstants.userType, value);
   }
 
-  static AuthUserType read(VentingPreferences preferences) {
+  static AuthUserType? read(VentingPreferences preferences) {
     final raw = preferences.getValue<String>(SavedConstants.userType, '');
     return switch (raw) {
       _ventor => AuthUserType.ventor,
       _listener => AuthUserType.lissener,
-      _ => AuthUserType.unknown,
+      _ => null,
     };
   }
 }

@@ -2,13 +2,14 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:go_router/go_router.dart';
 import 'package:preferences/preferences.dart';
 import 'package:venting_mobile_app/di/di_container.dart';
 import 'package:venting_mobile_app/presentation/auth/auth_screen.dart';
 import 'package:venting_mobile_app/presentation/home/listener/listener_home_shell.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/ventor_home_shell.dart';
 import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dart';
+import 'package:venting_mobile_app/utils/router_config.dart';
 import 'package:venting_mobile_app/utils/user_type_store.dart';
 
 class HomeScreenArgs {
@@ -40,13 +41,13 @@ class _HomeScreenState extends State<HomeScreen> {
     systemNavigationBarIconBrightness: Brightness.light,
   );
 
-  late final AuthUserType _userType;
+  AuthUserType? _userType;
 
   @override
   void initState() {
     super.initState();
     final fromArgs = widget.userType;
-    if (fromArgs != null && fromArgs != AuthUserType.unknown) {
+    if (fromArgs != null) {
       _userType = fromArgs;
       unawaited(
         UserTypeStore.save(diContainer<VentingPreferences>(), fromArgs),
@@ -54,38 +55,31 @@ class _HomeScreenState extends State<HomeScreen> {
     } else {
       _userType = UserTypeStore.read(diContainer<VentingPreferences>());
     }
+
+    if (_userType == null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted) return;
+        context.go(AppRoutes.welcome);
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    final userType = _userType;
+    if (userType == null) {
+      return const Scaffold(
+        backgroundColor: SplashColors.backgroundTop,
+        body: SizedBox.shrink(),
+      );
+    }
+
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: _overlayStyle,
-      child: switch (_userType) {
+      child: switch (userType) {
         AuthUserType.lissener => const ListenerHomeShell(),
         AuthUserType.ventor => const VentorHomeShell(),
-        AuthUserType.unknown => const _UnknownRoleHome(),
       },
-    );
-  }
-}
-
-class _UnknownRoleHome extends StatelessWidget {
-  const _UnknownRoleHome();
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: SplashColors.backgroundTop,
-      body: Center(
-        child: Text(
-          'Home',
-          style: GoogleFonts.inter(
-            color: Colors.white,
-            fontSize: 20,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-      ),
     );
   }
 }

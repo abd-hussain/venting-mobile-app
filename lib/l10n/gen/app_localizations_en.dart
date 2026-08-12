@@ -3240,16 +3240,10 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
   String get welcome_tagline => 'A safe space to be lighter';
 
   @override
-  String get welcome_need_someone_to_talk_to => 'I need someone to talk to';
+  String get welcome_i_am_ventor => 'I am a Ventor';
 
   @override
-  String get welcome_want_to_be_listener => 'I want to be a listener';
-
-  @override
-  String get welcome_already_have_account => 'Already have an account?';
-
-  @override
-  String get welcome_sign_in => 'Sign in';
+  String get welcome_i_am_listener => 'I am a Listener';
 
   @override
   String get onboarding_skip => 'Skip';
@@ -3362,18 +3356,27 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
       'Create an account to begin your journey.';
 
   @override
-  String get auth_register_ventor_title => 'Let\'s Get Started';
+  String get auth_ventor_title => 'Welcome, Ventor';
 
   @override
-  String get auth_register_ventor_subtitle =>
-      'Create an account to start talking and feel heard.';
+  String get auth_ventor_subtitle =>
+      'Sign in or create an account to talk and feel heard.';
 
   @override
-  String get auth_register_listener_title => 'Let\'s Get Started';
+  String get auth_listener_title => 'Welcome, Listener';
 
   @override
-  String get auth_register_listener_subtitle =>
-      'Create an account to start listening and supporting others.';
+  String get auth_listener_subtitle =>
+      'Sign in or create an account to listen and support others.';
+
+  @override
+  String get auth_continue_with_apple => 'Continue with Apple';
+
+  @override
+  String get auth_continue_with_google => 'Continue with Google';
+
+  @override
+  String get auth_continue_with_email => 'Continue with Email';
 
   @override
   String get sign_in_welcome_back => 'Welcome Back';
@@ -3413,15 +3416,15 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
 
   @override
   String get email_registration_subtitle =>
-      'Please enter your details to create your account.';
+      'Enter your email and password to continue.';
 
   @override
   String get email_registration_ventor_subtitle =>
-      'Enter your details to create your ventor account.';
+      'Sign in or create your Ventor account with email.';
 
   @override
   String get email_registration_listener_subtitle =>
-      'Enter your details to create your listener account.';
+      'Sign in or create your Listener account with email.';
 
   @override
   String get email_sign_in_title => 'Sign in with Email';
@@ -3440,7 +3443,7 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
   String get email_registration_password_label => 'Password';
 
   @override
-  String get email_registration_password_hint => 'Create a password';
+  String get email_registration_password_hint => 'Enter your password';
 
   @override
   String get email_sign_in_password_hint => 'Enter your password';
@@ -3459,7 +3462,7 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
   String get email_registration_rule_number => 'One number';
 
   @override
-  String get email_registration_create_account => 'Create Account';
+  String get email_registration_create_account => 'Continue';
 
   @override
   String get email_sign_in_button => 'Sign In';

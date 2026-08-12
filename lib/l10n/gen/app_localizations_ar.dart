@@ -3225,16 +3225,10 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
   String get welcome_tagline => 'مساحة آمنة لتشعر بخفة أكثر';
 
   @override
-  String get welcome_need_someone_to_talk_to => 'أحتاج شخصًا للتحدث معه';
+  String get welcome_i_am_ventor => 'أنا فينتور';
 
   @override
-  String get welcome_want_to_be_listener => 'أريد أن أكون مستمعًا';
-
-  @override
-  String get welcome_already_have_account => 'هل لديك حساب بالفعل؟';
-
-  @override
-  String get welcome_sign_in => 'تسجيل الدخول';
+  String get welcome_i_am_listener => 'أنا مستمع';
 
   @override
   String get onboarding_skip => 'تخطي';
@@ -3346,18 +3340,27 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
   String get sign_up_create_account_subtitle => 'أنشئ حسابًا لتبدأ رحلتك.';
 
   @override
-  String get auth_register_ventor_title => 'لنبدأ';
+  String get auth_ventor_title => 'مرحبًا، فينتور';
 
   @override
-  String get auth_register_ventor_subtitle =>
-      'أنشئ حسابًا لتبدأ بالتحدث وتشعر بأنك مسموع.';
+  String get auth_ventor_subtitle =>
+      'سجّل الدخول أو أنشئ حسابًا للتحدث والشعور بأنك مسموع.';
 
   @override
-  String get auth_register_listener_title => 'لنبدأ';
+  String get auth_listener_title => 'مرحبًا، مستمع';
 
   @override
-  String get auth_register_listener_subtitle =>
-      'أنشئ حسابًا لتبدأ بالاستماع ودعم الآخرين.';
+  String get auth_listener_subtitle =>
+      'سجّل الدخول أو أنشئ حسابًا للاستماع ودعم الآخرين.';
+
+  @override
+  String get auth_continue_with_apple => 'المتابعة مع Apple';
+
+  @override
+  String get auth_continue_with_google => 'المتابعة مع Google';
+
+  @override
+  String get auth_continue_with_email => 'المتابعة بالبريد الإلكتروني';
 
   @override
   String get sign_in_welcome_back => 'مرحبًا بعودتك';
@@ -3396,15 +3399,16 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
   String get email_registration_title => 'المتابعة بالبريد الإلكتروني';
 
   @override
-  String get email_registration_subtitle => 'يرجى إدخال بياناتك لإنشاء حسابك.';
+  String get email_registration_subtitle =>
+      'أدخل بريدك الإلكتروني وكلمة المرور للمتابعة.';
 
   @override
   String get email_registration_ventor_subtitle =>
-      'أدخل بياناتك لإنشاء حسابك كمتحدث.';
+      'سجّل الدخول أو أنشئ حساب فينتور بالبريد الإلكتروني.';
 
   @override
   String get email_registration_listener_subtitle =>
-      'أدخل بياناتك لإنشاء حسابك كمستمع.';
+      'سجّل الدخول أو أنشئ حساب مستمع بالبريد الإلكتروني.';
 
   @override
   String get email_sign_in_title => 'تسجيل الدخول بالبريد الإلكتروني';
@@ -3423,7 +3427,7 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
   String get email_registration_password_label => 'كلمة المرور';
 
   @override
-  String get email_registration_password_hint => 'أنشئ كلمة مرور';
+  String get email_registration_password_hint => 'أدخل كلمة المرور';
 
   @override
   String get email_sign_in_password_hint => 'أدخل كلمة المرور';
@@ -3442,7 +3446,7 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
   String get email_registration_rule_number => 'رقم واحد';
 
   @override
-  String get email_registration_create_account => 'إنشاء حساب';
+  String get email_registration_create_account => 'متابعة';
 
   @override
   String get email_sign_in_button => 'تسجيل الدخول';
