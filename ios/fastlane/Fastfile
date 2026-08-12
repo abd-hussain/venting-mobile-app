@@ -74,7 +74,9 @@ platform :ios do
       type: "appstore",
       readonly: is_ci,
       app_identifier: [bundle_id],
-      team_id: TEAM_ID
+      team_id: TEAM_ID,
+      clone_branch_directly: true,
+      git_basic_authorization: ENV["MATCH_GIT_BASIC_AUTHORIZATION"]
     )
   end
 

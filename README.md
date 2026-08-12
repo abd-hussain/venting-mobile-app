@@ -385,11 +385,17 @@ Example JSON shape:
 
 Paste into the `APPSTORE_CONNECT` repository secret. CI writes it to `ios/app_store_connect.json` (gitignored).
 
-Encode Match git auth:
+Encode Match git auth (`GIT_BASIC_AUTHORIZATION`):
 
 ```bash
-echo -n "github-username:ghp_yourPersonalAccessToken" | base64 | pbcopy
+# Classic PAT with `repo` scope (or fine-grained: Contents Read on Venting-Certificates)
+# IMPORTANT: use echo -n (no trailing newline) — a newline breaks Match clone auth.
+echo -n "abd-hussain:ghp_YOUR_PAT" | base64 | pbcopy
+# or:
+# echo -n "x-access-token:ghp_YOUR_PAT" | base64 | pbcopy
 ```
+
+Paste into the `GIT_BASIC_AUTHORIZATION` repository secret. CI maps it to `MATCH_GIT_BASIC_AUTHORIZATION`.
 
 ### Match certificates repo
 

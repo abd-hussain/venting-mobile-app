@@ -378,18 +378,51 @@ jobs:
             -scheme "$IOS_SCHEME" \
             -destination 'generic/platform=iOS'
 
+      - name: 🔐 Verify Match git auth (Venting-Certificates)
+        env:
+          MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.GIT_BASIC_AUTHORIZATION }}
+        run: |
+          set -euo pipefail
+          if [ -z "${MATCH_GIT_BASIC_AUTHORIZATION:-}" ]; then
+            echo "❌ Missing secret GIT_BASIC_AUTHORIZATION"
+            echo "   Create it as: echo -n 'abd-hussain:ghp_xxx' | base64 | pbcopy"
+            echo "   PAT needs read access to abd-hussain/Venting-Certificates"
+            exit 1
+          fi
+          # GitHub secrets often get a trailing newline — strip it
+          AUTH="$(printf '%s' "$MATCH_GIT_BASIC_AUTHORIZATION" | tr -d '\n\r')"
+          DECODED="$(printf '%s' "$AUTH" | base64 --decode 2>/dev/null || true)"
+          if [[ "$DECODED" != *:* ]]; then
+            echo "❌ GIT_BASIC_AUTHORIZATION does not decode to 'username:token'"
+            echo "   Use: echo -n 'abd-hussain:ghp_YOUR_PAT' | base64 | pbcopy"
+            echo "   (must use echo -n so there is no trailing newline)"
+            exit 1
+          fi
+          echo "✅ Secret shape looks like username:token"
+          echo "🔍 Testing read access to Venting-Certificates..."
+          if ! git -c "http.extraheader=Authorization: Basic ${AUTH}" \
+            ls-remote "https://github.com/abd-hussain/Venting-Certificates.git" HEAD >/dev/null; then
+            echo "❌ Cannot read Venting-Certificates with GIT_BASIC_AUTHORIZATION"
+            echo "   Check: PAT still valid, has 'repo' (classic) or Contents:Read on that private repo,"
+            echo "   and username matches the account that owns the token."
+            exit 1
+          fi
+          echo "✅ Match certificates repo is reachable"
+          echo "MATCH_GIT_BASIC_AUTHORIZATION=$AUTH" >> "$GITHUB_ENV"
+
       - name: 🛠️ Build and Deploy to TestFlight
         id: build-ios
         env:
           MATCH_PASSWORD: ${{ secrets.IOS_MATCH_PASSWORD }}
-          MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.GIT_BASIC_AUTHORIZATION }}
           FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT: "120"
           FASTLANE_XCODEBUILD_SETTINGS_RETRIES: "6"
         run: |
-          if [ -z "$MATCH_PASSWORD" ] || [ -z "$MATCH_GIT_BASIC_AUTHORIZATION" ]; then
-            echo "❌ Missing Match secrets. Set IOS_MATCH_PASSWORD and GIT_BASIC_AUTHORIZATION."
-            echo "   MATCH_PASSWORD ← IOS_MATCH_PASSWORD"
-            echo "   MATCH_GIT_BASIC_AUTHORIZATION ← GIT_BASIC_AUTHORIZATION"
+          if [ -z "${MATCH_PASSWORD:-}" ]; then
+            echo "❌ Missing secret IOS_MATCH_PASSWORD (Match encryption passphrase)."
+            exit 1
+          fi
+          if [ -z "${MATCH_GIT_BASIC_AUTHORIZATION:-}" ]; then
+            echo "❌ Missing Match git auth. Set GIT_BASIC_AUTHORIZATION."
             exit 1
           fi
           make deploy-ios
