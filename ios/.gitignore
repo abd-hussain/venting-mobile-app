@@ -38,3 +38,7 @@ app_store_connect.json
 fastlane/app_store_connect.json
 fastlane/report.xml
 fastlane/README.md
+
+# Bundler (CI uses vendor/bundle via setup-ruby; keep local installs out of git)
+.bundle/
+vendor/bundle/
