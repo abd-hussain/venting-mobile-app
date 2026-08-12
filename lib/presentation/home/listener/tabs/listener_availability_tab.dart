@@ -48,7 +48,7 @@ class _ListenerAvailabilityTabState extends State<ListenerAvailabilityTab> {
 
   List<DaySchedule> _buildMockDays() {
     return [
-      DaySchedule(
+      const DaySchedule(
         label: 'Mon',
         slots: const [
           TimeSlot(
@@ -61,7 +61,7 @@ class _ListenerAvailabilityTabState extends State<ListenerAvailabilityTab> {
           ),
         ],
       ),
-      DaySchedule(
+      const DaySchedule(
         label: 'Tue',
         slots: const [
           TimeSlot(
@@ -74,7 +74,7 @@ class _ListenerAvailabilityTabState extends State<ListenerAvailabilityTab> {
           ),
         ],
       ),
-      DaySchedule(
+      const DaySchedule(
         label: 'Wed',
         slots: const [
           TimeSlot(
@@ -87,7 +87,7 @@ class _ListenerAvailabilityTabState extends State<ListenerAvailabilityTab> {
           ),
         ],
       ),
-      DaySchedule(
+      const DaySchedule(
         label: 'Thu',
         slots: const [
           TimeSlot(
@@ -100,7 +100,7 @@ class _ListenerAvailabilityTabState extends State<ListenerAvailabilityTab> {
           ),
         ],
       ),
-      DaySchedule(
+      const DaySchedule(
         label: 'Fri',
         slots: const [
           TimeSlot(
@@ -113,7 +113,7 @@ class _ListenerAvailabilityTabState extends State<ListenerAvailabilityTab> {
           ),
         ],
       ),
-      DaySchedule(
+      const DaySchedule(
         label: 'Sat',
         slots: const [
           TimeSlot(
@@ -160,7 +160,7 @@ class _ListenerAvailabilityTabState extends State<ListenerAvailabilityTab> {
       title: l10n.listener_avail_session_length,
       options: _sessionLengthOptions,
       selected: _sessionLength,
-      labelOf: (minutes) => l10n.listener_avail_min_value(minutes),
+      labelOf: l10n.listener_avail_min_value,
     );
     if (!mounted || selected == null) return;
     // TODO: Persist session length via API.
@@ -174,7 +174,7 @@ class _ListenerAvailabilityTabState extends State<ListenerAvailabilityTab> {
       title: l10n.listener_avail_break_between,
       options: _breakLengthOptions,
       selected: _breakLength,
-      labelOf: (minutes) => l10n.listener_avail_min_value(minutes),
+      labelOf: l10n.listener_avail_min_value,
     );
     if (!mounted || selected == null) return;
     // TODO: Persist break length via API.

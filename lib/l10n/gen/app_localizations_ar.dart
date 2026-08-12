@@ -5312,4 +5312,165 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
   @override
   String get listener_call_report_success =>
       'تم إرسال البلاغ. سيقوم فريقنا بمراجعته قريباً.';
+
+  @override
+  String listener_dashboard_greeting_morning(String name) {
+    return 'صباح الخير، $name 👋';
+  }
+
+  @override
+  String listener_dashboard_greeting_afternoon(String name) {
+    return 'طاب يومك، $name 👋';
+  }
+
+  @override
+  String listener_dashboard_greeting_evening(String name) {
+    return 'مساء الخير، $name 👋';
+  }
+
+  @override
+  String get listener_dashboard_subtitle => 'أنت تحدث فرقاً حقيقياً.';
+
+  @override
+  String get listener_dashboard_impact_title => 'أثر اليوم';
+
+  @override
+  String get listener_dashboard_period_today => 'اليوم';
+
+  @override
+  String get listener_dashboard_period_week => 'هذا الأسبوع';
+
+  @override
+  String get listener_dashboard_period_month => 'هذا الشهر';
+
+  @override
+  String get listener_dashboard_sessions => 'جلسات';
+
+  @override
+  String get listener_dashboard_hours => 'ساعات';
+
+  @override
+  String get listener_dashboard_people_helped => 'أشخاص ساعدتهم';
+
+  @override
+  String get listener_dashboard_currently => 'أنت حالياً';
+
+  @override
+  String get listener_dashboard_available => 'متاح';
+
+  @override
+  String get listener_dashboard_offline => 'غير متصل';
+
+  @override
+  String get listener_dashboard_accepting => 'تقبل جلسات جديدة';
+
+  @override
+  String get listener_dashboard_paused => 'لا تقبل جلسات جديدة';
+
+  @override
+  String get listener_dashboard_go_offline => 'تحويل إلى غير متصل';
+
+  @override
+  String get listener_dashboard_go_online => 'تحويل إلى متصل';
+
+  @override
+  String get listener_dashboard_upcoming_title => 'الجلسة القادمة';
+
+  @override
+  String listener_dashboard_at_time(String time) {
+    return 'في $time';
+  }
+
+  @override
+  String listener_dashboard_session_minutes(int minutes) {
+    return 'جلسة $minutes دقيقة';
+  }
+
+  @override
+  String get listener_dashboard_waiting => 'في انتظارك.';
+
+  @override
+  String get listener_dashboard_view => 'عرض';
+
+  @override
+  String get listener_dashboard_reminder_title => 'تذكير يومي';
+
+  @override
+  String get listener_dashboard_reminder_message =>
+      'حضورك قد يكون السبب الذي يجعل أحدهم يشعر بتحسن اليوم.';
+
+  @override
+  String get listener_dashboard_setup_title => 'أكمل إعداد حسابك';
+
+  @override
+  String get listener_dashboard_setup_subtitle =>
+      'أنهِ الخطوات المتبقية قبل بدء استقبال الجلسات.';
+
+  @override
+  String get listener_dashboard_setup_identity => 'التحقق من الهوية';
+
+  @override
+  String get listener_dashboard_setup_profile => 'معلومات الملف الشخصي';
+
+  @override
+  String get listener_dashboard_setup_availability => 'التوفر';
+
+  @override
+  String get listener_dashboard_setup_training => 'التدريب';
+
+  @override
+  String get listener_dashboard_setup_tutorial => 'دليل الجلسة الأولى';
+
+  @override
+  String get listener_dashboard_setup_done => 'مكتمل';
+
+  @override
+  String get listener_dashboard_setup_in_progress => 'قيد التقدم';
+
+  @override
+  String get listener_dashboard_setup_locked => 'مقفل';
+
+  @override
+  String get listener_dashboard_setup_continue => 'متابعة الإعداد';
+
+  @override
+  String get listener_dashboard_setup_coming_soon =>
+      'التدريب والدروس قادمة قريباً.';
+
+  @override
+  String get listener_dashboard_profile_approved_title =>
+      'تمت الموافقة على الملف';
+
+  @override
+  String get listener_dashboard_profile_approved_message =>
+      'قبل استقبال الجلسات، أكمل رحلة الإعداد والدروس.';
+
+  @override
+  String get listener_dashboard_locked_accept_title => 'قبول الجلسات';
+
+  @override
+  String get listener_dashboard_locked_accept_subtitle =>
+      'يُفتح بعد إكمال الخطوات المطلوبة.';
+
+  @override
+  String get listener_dashboard_locked_earnings_title => 'الأرباح (هذا الشهر)';
+
+  @override
+  String get listener_dashboard_locked_earnings_subtitle =>
+      'أكمل الدروس لعرض أرباحك.';
+
+  @override
+  String get listener_dashboard_locked_earnings_footnote =>
+      'أكمل الدروس لعرض أرباحك.';
+
+  @override
+  String get listener_dashboard_no_requests =>
+      'لا توجد طلبات قادمة بعد. ستظهر الطلبات هنا عند بدء العمل.';
+
+  @override
+  String get listener_dashboard_helpful_tip_title => 'نصيحة مفيدة';
+
+  @override
+  String get listener_dashboard_helpful_tip_message =>
+      'أكمل الدروس لبناء الثقة والحصول على المزيد من طلبات الجلسات.';
 }

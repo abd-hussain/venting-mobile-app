@@ -114,7 +114,7 @@ class ListenerSessionPenaltyNote extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(
+          const Icon(
             Icons.info_outline_rounded,
             size: 18,
             color: ListenerProfileTheme.gold,
@@ -556,7 +556,7 @@ class ListenerSessionCard extends StatelessWidget {
             const SizedBox(height: 10),
             Row(
               children: [
-                Icon(
+                const Icon(
                   Icons.warning_amber_rounded,
                   size: 14,
                   color: ListenerProfileTheme.gold,

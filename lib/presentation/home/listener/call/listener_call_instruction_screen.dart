@@ -318,7 +318,7 @@ class _VentorHeader extends StatelessWidget {
               const SizedBox(height: 4),
               Row(
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.star_rounded,
                     size: 16,
                     color: ListenerProfileTheme.gold,
@@ -428,7 +428,7 @@ class _PermissionTile extends StatelessWidget {
             ),
           ),
           if (granted)
-            Icon(
+            const Icon(
               Icons.check_circle_rounded,
               color: ListenerProfileTheme.success,
               size: 20,

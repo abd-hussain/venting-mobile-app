@@ -89,7 +89,7 @@ class _ListenerSessionsTabState extends State<ListenerSessionsTab> {
         isWaiting: true,
         canJoinNow: true,
         isVideoCall: true,
-        ventorRating: 4.9,
+        ventorRating: 4.2,
       ),
       ListenerSessionItem(
         id: 'u1',

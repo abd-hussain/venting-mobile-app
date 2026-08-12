@@ -20,16 +20,22 @@ import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dar
 import 'package:venting_mobile_app/utils/router_config.dart';
 
 class ListenerRegistrationArgs {
-  const ListenerRegistrationArgs({required this.email});
+  const ListenerRegistrationArgs({required this.email, this.initialStep});
 
   final String email;
+  final ListenerRegistrationStep? initialStep;
 }
 
 /// Multi-step listener registration flow (9 steps).
 class ListenerRegistrationScreen extends StatefulWidget {
-  const ListenerRegistrationScreen({super.key, required this.email});
+  const ListenerRegistrationScreen({
+    super.key,
+    required this.email,
+    this.initialStep,
+  });
 
   final String email;
+  final ListenerRegistrationStep? initialStep;
 
   @override
   State<ListenerRegistrationScreen> createState() =>
@@ -48,6 +54,14 @@ class _ListenerRegistrationScreenState
 
   ListenerRegistrationStep _step = ListenerRegistrationStep.createAccount;
   bool _showUnderReview = false;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.initialStep != null) {
+      _step = widget.initialStep!;
+    }
+  }
 
   void _goTo(ListenerRegistrationStep step) {
     setState(() => _step = step);

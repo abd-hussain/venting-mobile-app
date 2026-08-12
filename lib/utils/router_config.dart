@@ -126,7 +126,10 @@ class VentingRouterConfig {
               ? extra
               : const ListenerRegistrationArgs(email: '');
 
-          return ListenerRegistrationScreen(email: args.email);
+          return ListenerRegistrationScreen(
+            email: args.email,
+            initialStep: args.initialStep,
+          );
         },
       ),
       GoRoute(

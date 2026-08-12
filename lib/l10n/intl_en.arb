@@ -3730,5 +3730,119 @@
   "listener_call_report_cancel": "Cancel",
   "@listener_call_report_cancel": {},
   "listener_call_report_success": "Report submitted. Our team will review it shortly.",
-  "@listener_call_report_success": {}
+  "@listener_call_report_success": {},
+  "listener_dashboard_greeting_morning": "Good morning, {name} 👋",
+  "@listener_dashboard_greeting_morning": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+  "listener_dashboard_greeting_afternoon": "Good afternoon, {name} 👋",
+  "@listener_dashboard_greeting_afternoon": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+  "listener_dashboard_greeting_evening": "Good evening, {name} 👋",
+  "@listener_dashboard_greeting_evening": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+  "listener_dashboard_subtitle": "You're making a real difference.",
+  "@listener_dashboard_subtitle": {},
+  "listener_dashboard_impact_title": "Today's Impact",
+  "@listener_dashboard_impact_title": {},
+  "listener_dashboard_period_today": "Today",
+  "@listener_dashboard_period_today": {},
+  "listener_dashboard_period_week": "This week",
+  "@listener_dashboard_period_week": {},
+  "listener_dashboard_period_month": "This month",
+  "@listener_dashboard_period_month": {},
+  "listener_dashboard_sessions": "Sessions",
+  "@listener_dashboard_sessions": {},
+  "listener_dashboard_hours": "Hours",
+  "@listener_dashboard_hours": {},
+  "listener_dashboard_people_helped": "People helped",
+  "@listener_dashboard_people_helped": {},
+  "listener_dashboard_currently": "You're Currently",
+  "@listener_dashboard_currently": {},
+  "listener_dashboard_available": "Available",
+  "@listener_dashboard_available": {},
+  "listener_dashboard_offline": "Offline",
+  "@listener_dashboard_offline": {},
+  "listener_dashboard_accepting": "Accepting new sessions",
+  "@listener_dashboard_accepting": {},
+  "listener_dashboard_paused": "Not accepting new sessions",
+  "@listener_dashboard_paused": {},
+  "listener_dashboard_go_offline": "Go Offline",
+  "@listener_dashboard_go_offline": {},
+  "listener_dashboard_go_online": "Go Online",
+  "@listener_dashboard_go_online": {},
+  "listener_dashboard_upcoming_title": "Upcoming Session",
+  "@listener_dashboard_upcoming_title": {},
+  "listener_dashboard_at_time": "At {time}",
+  "@listener_dashboard_at_time": {
+    "placeholders": {
+      "time": { "type": "String" }
+    }
+  },
+  "listener_dashboard_session_minutes": "{minutes} min session",
+  "@listener_dashboard_session_minutes": {
+    "placeholders": {
+      "minutes": { "type": "int" }
+    }
+  },
+  "listener_dashboard_waiting": "They're waiting for you.",
+  "@listener_dashboard_waiting": {},
+  "listener_dashboard_view": "View",
+  "@listener_dashboard_view": {},
+  "listener_dashboard_reminder_title": "Daily Reminder",
+  "@listener_dashboard_reminder_title": {},
+  "listener_dashboard_reminder_message": "Your presence can be the reason someone feels better today.",
+  "@listener_dashboard_reminder_message": {},
+  "listener_dashboard_setup_title": "Complete your setup",
+  "@listener_dashboard_setup_title": {},
+  "listener_dashboard_setup_subtitle": "Finish the remaining steps before going live.",
+  "@listener_dashboard_setup_subtitle": {},
+  "listener_dashboard_setup_identity": "Identity Verified",
+  "@listener_dashboard_setup_identity": {},
+  "listener_dashboard_setup_profile": "Profile Info",
+  "@listener_dashboard_setup_profile": {},
+  "listener_dashboard_setup_availability": "Availability",
+  "@listener_dashboard_setup_availability": {},
+  "listener_dashboard_setup_training": "Training",
+  "@listener_dashboard_setup_training": {},
+  "listener_dashboard_setup_tutorial": "First Session Tutorial",
+  "@listener_dashboard_setup_tutorial": {},
+  "listener_dashboard_setup_done": "Done",
+  "@listener_dashboard_setup_done": {},
+  "listener_dashboard_setup_in_progress": "In Progress",
+  "@listener_dashboard_setup_in_progress": {},
+  "listener_dashboard_setup_locked": "Locked",
+  "@listener_dashboard_setup_locked": {},
+  "listener_dashboard_setup_continue": "Continue Setup",
+  "@listener_dashboard_setup_continue": {},
+  "listener_dashboard_setup_coming_soon": "Training and tutorials are coming soon.",
+  "@listener_dashboard_setup_coming_soon": {},
+  "listener_dashboard_profile_approved_title": "Profile approved",
+  "@listener_dashboard_profile_approved_title": {},
+  "listener_dashboard_profile_approved_message": "Before taking sessions, complete the onboarding journey and tutorials.",
+  "@listener_dashboard_profile_approved_message": {},
+  "listener_dashboard_locked_accept_title": "Accept Sessions",
+  "@listener_dashboard_locked_accept_title": {},
+  "listener_dashboard_locked_accept_subtitle": "Unlock after completing required steps.",
+  "@listener_dashboard_locked_accept_subtitle": {},
+  "listener_dashboard_locked_earnings_title": "Earnings (This Month)",
+  "@listener_dashboard_locked_earnings_title": {},
+  "listener_dashboard_locked_earnings_subtitle": "Complete tutorials to see your earnings.",
+  "@listener_dashboard_locked_earnings_subtitle": {},
+  "listener_dashboard_locked_earnings_footnote": "Complete tutorials to see your earnings.",
+  "@listener_dashboard_locked_earnings_footnote": {},
+  "listener_dashboard_no_requests": "No upcoming requests yet. Requests will appear here once you go live.",
+  "@listener_dashboard_no_requests": {},
+  "listener_dashboard_helpful_tip_title": "Helpful Tip",
+  "@listener_dashboard_helpful_tip_title": {},
+  "listener_dashboard_helpful_tip_message": "Complete your tutorials to build trust and get more session requests.",
+  "@listener_dashboard_helpful_tip_message": {}
 }

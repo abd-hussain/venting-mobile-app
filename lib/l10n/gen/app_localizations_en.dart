@@ -5344,4 +5344,165 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
   @override
   String get listener_call_report_success =>
       'Report submitted. Our team will review it shortly.';
+
+  @override
+  String listener_dashboard_greeting_morning(String name) {
+    return 'Good morning, $name 👋';
+  }
+
+  @override
+  String listener_dashboard_greeting_afternoon(String name) {
+    return 'Good afternoon, $name 👋';
+  }
+
+  @override
+  String listener_dashboard_greeting_evening(String name) {
+    return 'Good evening, $name 👋';
+  }
+
+  @override
+  String get listener_dashboard_subtitle => 'You\'re making a real difference.';
+
+  @override
+  String get listener_dashboard_impact_title => 'Today\'s Impact';
+
+  @override
+  String get listener_dashboard_period_today => 'Today';
+
+  @override
+  String get listener_dashboard_period_week => 'This week';
+
+  @override
+  String get listener_dashboard_period_month => 'This month';
+
+  @override
+  String get listener_dashboard_sessions => 'Sessions';
+
+  @override
+  String get listener_dashboard_hours => 'Hours';
+
+  @override
+  String get listener_dashboard_people_helped => 'People helped';
+
+  @override
+  String get listener_dashboard_currently => 'You\'re Currently';
+
+  @override
+  String get listener_dashboard_available => 'Available';
+
+  @override
+  String get listener_dashboard_offline => 'Offline';
+
+  @override
+  String get listener_dashboard_accepting => 'Accepting new sessions';
+
+  @override
+  String get listener_dashboard_paused => 'Not accepting new sessions';
+
+  @override
+  String get listener_dashboard_go_offline => 'Go Offline';
+
+  @override
+  String get listener_dashboard_go_online => 'Go Online';
+
+  @override
+  String get listener_dashboard_upcoming_title => 'Upcoming Session';
+
+  @override
+  String listener_dashboard_at_time(String time) {
+    return 'At $time';
+  }
+
+  @override
+  String listener_dashboard_session_minutes(int minutes) {
+    return '$minutes min session';
+  }
+
+  @override
+  String get listener_dashboard_waiting => 'They\'re waiting for you.';
+
+  @override
+  String get listener_dashboard_view => 'View';
+
+  @override
+  String get listener_dashboard_reminder_title => 'Daily Reminder';
+
+  @override
+  String get listener_dashboard_reminder_message =>
+      'Your presence can be the reason someone feels better today.';
+
+  @override
+  String get listener_dashboard_setup_title => 'Complete your setup';
+
+  @override
+  String get listener_dashboard_setup_subtitle =>
+      'Finish the remaining steps before going live.';
+
+  @override
+  String get listener_dashboard_setup_identity => 'Identity Verified';
+
+  @override
+  String get listener_dashboard_setup_profile => 'Profile Info';
+
+  @override
+  String get listener_dashboard_setup_availability => 'Availability';
+
+  @override
+  String get listener_dashboard_setup_training => 'Training';
+
+  @override
+  String get listener_dashboard_setup_tutorial => 'First Session Tutorial';
+
+  @override
+  String get listener_dashboard_setup_done => 'Done';
+
+  @override
+  String get listener_dashboard_setup_in_progress => 'In Progress';
+
+  @override
+  String get listener_dashboard_setup_locked => 'Locked';
+
+  @override
+  String get listener_dashboard_setup_continue => 'Continue Setup';
+
+  @override
+  String get listener_dashboard_setup_coming_soon =>
+      'Training and tutorials are coming soon.';
+
+  @override
+  String get listener_dashboard_profile_approved_title => 'Profile approved';
+
+  @override
+  String get listener_dashboard_profile_approved_message =>
+      'Before taking sessions, complete the onboarding journey and tutorials.';
+
+  @override
+  String get listener_dashboard_locked_accept_title => 'Accept Sessions';
+
+  @override
+  String get listener_dashboard_locked_accept_subtitle =>
+      'Unlock after completing required steps.';
+
+  @override
+  String get listener_dashboard_locked_earnings_title =>
+      'Earnings (This Month)';
+
+  @override
+  String get listener_dashboard_locked_earnings_subtitle =>
+      'Complete tutorials to see your earnings.';
+
+  @override
+  String get listener_dashboard_locked_earnings_footnote =>
+      'Complete tutorials to see your earnings.';
+
+  @override
+  String get listener_dashboard_no_requests =>
+      'No upcoming requests yet. Requests will appear here once you go live.';
+
+  @override
+  String get listener_dashboard_helpful_tip_title => 'Helpful Tip';
+
+  @override
+  String get listener_dashboard_helpful_tip_message =>
+      'Complete your tutorials to build trust and get more session requests.';
 }

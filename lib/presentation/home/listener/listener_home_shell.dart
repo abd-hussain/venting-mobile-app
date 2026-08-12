@@ -18,14 +18,19 @@ class ListenerHomeShell extends StatefulWidget {
 
 class _ListenerHomeShellState extends State<ListenerHomeShell> {
   int _index = 0;
+  late final List<Widget> _tabs;
 
-  static const _tabs = <Widget>[
-    ListenerDashboardTab(),
-    ListenerSessionsTab(),
-    ListenerAvailabilityTab(),
-    ListenerEarningsTab(),
-    ListenerProfileTab(),
-  ];
+  @override
+  void initState() {
+    super.initState();
+    _tabs = [
+      ListenerDashboardTab(onOpenSessions: () => setState(() => _index = 1)),
+      const ListenerSessionsTab(),
+      const ListenerAvailabilityTab(),
+      const ListenerEarningsTab(),
+      const ListenerProfileTab(),
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {

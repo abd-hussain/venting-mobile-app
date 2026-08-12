@@ -9604,6 +9604,288 @@ abstract class VentingMobLocalizations {
   /// In en, this message translates to:
   /// **'Report submitted. Our team will review it shortly.'**
   String get listener_call_report_success;
+
+  /// No description provided for @listener_dashboard_greeting_morning.
+  ///
+  /// In en, this message translates to:
+  /// **'Good morning, {name} 👋'**
+  String listener_dashboard_greeting_morning(String name);
+
+  /// No description provided for @listener_dashboard_greeting_afternoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Good afternoon, {name} 👋'**
+  String listener_dashboard_greeting_afternoon(String name);
+
+  /// No description provided for @listener_dashboard_greeting_evening.
+  ///
+  /// In en, this message translates to:
+  /// **'Good evening, {name} 👋'**
+  String listener_dashboard_greeting_evening(String name);
+
+  /// No description provided for @listener_dashboard_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'re making a real difference.'**
+  String get listener_dashboard_subtitle;
+
+  /// No description provided for @listener_dashboard_impact_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Today\'s Impact'**
+  String get listener_dashboard_impact_title;
+
+  /// No description provided for @listener_dashboard_period_today.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get listener_dashboard_period_today;
+
+  /// No description provided for @listener_dashboard_period_week.
+  ///
+  /// In en, this message translates to:
+  /// **'This week'**
+  String get listener_dashboard_period_week;
+
+  /// No description provided for @listener_dashboard_period_month.
+  ///
+  /// In en, this message translates to:
+  /// **'This month'**
+  String get listener_dashboard_period_month;
+
+  /// No description provided for @listener_dashboard_sessions.
+  ///
+  /// In en, this message translates to:
+  /// **'Sessions'**
+  String get listener_dashboard_sessions;
+
+  /// No description provided for @listener_dashboard_hours.
+  ///
+  /// In en, this message translates to:
+  /// **'Hours'**
+  String get listener_dashboard_hours;
+
+  /// No description provided for @listener_dashboard_people_helped.
+  ///
+  /// In en, this message translates to:
+  /// **'People helped'**
+  String get listener_dashboard_people_helped;
+
+  /// No description provided for @listener_dashboard_currently.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'re Currently'**
+  String get listener_dashboard_currently;
+
+  /// No description provided for @listener_dashboard_available.
+  ///
+  /// In en, this message translates to:
+  /// **'Available'**
+  String get listener_dashboard_available;
+
+  /// No description provided for @listener_dashboard_offline.
+  ///
+  /// In en, this message translates to:
+  /// **'Offline'**
+  String get listener_dashboard_offline;
+
+  /// No description provided for @listener_dashboard_accepting.
+  ///
+  /// In en, this message translates to:
+  /// **'Accepting new sessions'**
+  String get listener_dashboard_accepting;
+
+  /// No description provided for @listener_dashboard_paused.
+  ///
+  /// In en, this message translates to:
+  /// **'Not accepting new sessions'**
+  String get listener_dashboard_paused;
+
+  /// No description provided for @listener_dashboard_go_offline.
+  ///
+  /// In en, this message translates to:
+  /// **'Go Offline'**
+  String get listener_dashboard_go_offline;
+
+  /// No description provided for @listener_dashboard_go_online.
+  ///
+  /// In en, this message translates to:
+  /// **'Go Online'**
+  String get listener_dashboard_go_online;
+
+  /// No description provided for @listener_dashboard_upcoming_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Upcoming Session'**
+  String get listener_dashboard_upcoming_title;
+
+  /// No description provided for @listener_dashboard_at_time.
+  ///
+  /// In en, this message translates to:
+  /// **'At {time}'**
+  String listener_dashboard_at_time(String time);
+
+  /// No description provided for @listener_dashboard_session_minutes.
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes} min session'**
+  String listener_dashboard_session_minutes(int minutes);
+
+  /// No description provided for @listener_dashboard_waiting.
+  ///
+  /// In en, this message translates to:
+  /// **'They\'re waiting for you.'**
+  String get listener_dashboard_waiting;
+
+  /// No description provided for @listener_dashboard_view.
+  ///
+  /// In en, this message translates to:
+  /// **'View'**
+  String get listener_dashboard_view;
+
+  /// No description provided for @listener_dashboard_reminder_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily Reminder'**
+  String get listener_dashboard_reminder_title;
+
+  /// No description provided for @listener_dashboard_reminder_message.
+  ///
+  /// In en, this message translates to:
+  /// **'Your presence can be the reason someone feels better today.'**
+  String get listener_dashboard_reminder_message;
+
+  /// No description provided for @listener_dashboard_setup_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete your setup'**
+  String get listener_dashboard_setup_title;
+
+  /// No description provided for @listener_dashboard_setup_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish the remaining steps before going live.'**
+  String get listener_dashboard_setup_subtitle;
+
+  /// No description provided for @listener_dashboard_setup_identity.
+  ///
+  /// In en, this message translates to:
+  /// **'Identity Verified'**
+  String get listener_dashboard_setup_identity;
+
+  /// No description provided for @listener_dashboard_setup_profile.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile Info'**
+  String get listener_dashboard_setup_profile;
+
+  /// No description provided for @listener_dashboard_setup_availability.
+  ///
+  /// In en, this message translates to:
+  /// **'Availability'**
+  String get listener_dashboard_setup_availability;
+
+  /// No description provided for @listener_dashboard_setup_training.
+  ///
+  /// In en, this message translates to:
+  /// **'Training'**
+  String get listener_dashboard_setup_training;
+
+  /// No description provided for @listener_dashboard_setup_tutorial.
+  ///
+  /// In en, this message translates to:
+  /// **'First Session Tutorial'**
+  String get listener_dashboard_setup_tutorial;
+
+  /// No description provided for @listener_dashboard_setup_done.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get listener_dashboard_setup_done;
+
+  /// No description provided for @listener_dashboard_setup_in_progress.
+  ///
+  /// In en, this message translates to:
+  /// **'In Progress'**
+  String get listener_dashboard_setup_in_progress;
+
+  /// No description provided for @listener_dashboard_setup_locked.
+  ///
+  /// In en, this message translates to:
+  /// **'Locked'**
+  String get listener_dashboard_setup_locked;
+
+  /// No description provided for @listener_dashboard_setup_continue.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue Setup'**
+  String get listener_dashboard_setup_continue;
+
+  /// No description provided for @listener_dashboard_setup_coming_soon.
+  ///
+  /// In en, this message translates to:
+  /// **'Training and tutorials are coming soon.'**
+  String get listener_dashboard_setup_coming_soon;
+
+  /// No description provided for @listener_dashboard_profile_approved_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile approved'**
+  String get listener_dashboard_profile_approved_title;
+
+  /// No description provided for @listener_dashboard_profile_approved_message.
+  ///
+  /// In en, this message translates to:
+  /// **'Before taking sessions, complete the onboarding journey and tutorials.'**
+  String get listener_dashboard_profile_approved_message;
+
+  /// No description provided for @listener_dashboard_locked_accept_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Accept Sessions'**
+  String get listener_dashboard_locked_accept_title;
+
+  /// No description provided for @listener_dashboard_locked_accept_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock after completing required steps.'**
+  String get listener_dashboard_locked_accept_subtitle;
+
+  /// No description provided for @listener_dashboard_locked_earnings_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Earnings (This Month)'**
+  String get listener_dashboard_locked_earnings_title;
+
+  /// No description provided for @listener_dashboard_locked_earnings_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete tutorials to see your earnings.'**
+  String get listener_dashboard_locked_earnings_subtitle;
+
+  /// No description provided for @listener_dashboard_locked_earnings_footnote.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete tutorials to see your earnings.'**
+  String get listener_dashboard_locked_earnings_footnote;
+
+  /// No description provided for @listener_dashboard_no_requests.
+  ///
+  /// In en, this message translates to:
+  /// **'No upcoming requests yet. Requests will appear here once you go live.'**
+  String get listener_dashboard_no_requests;
+
+  /// No description provided for @listener_dashboard_helpful_tip_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Helpful Tip'**
+  String get listener_dashboard_helpful_tip_title;
+
+  /// No description provided for @listener_dashboard_helpful_tip_message.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete your tutorials to build trust and get more session requests.'**
+  String get listener_dashboard_helpful_tip_message;
 }
 
 class _VentingMobLocalizationsDelegate

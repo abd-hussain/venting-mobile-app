@@ -142,7 +142,7 @@ class _ListenerCallScreenState extends State<ListenerCallScreen>
               const SizedBox(height: 12),
               TextButton.icon(
                 onPressed: _onReportSession,
-                icon: Icon(
+                icon: const Icon(
                   Icons.flag_outlined,
                   size: 16,
                   color: ListenerProfileTheme.muted,
@@ -212,7 +212,7 @@ class _CallHeader extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.star_rounded,
                       size: 14,
                       color: ListenerProfileTheme.gold,

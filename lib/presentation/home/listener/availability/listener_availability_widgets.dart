@@ -166,7 +166,7 @@ class _DayRow extends StatelessWidget {
                             .toList(),
                       ),
               ),
-              Icon(
+              const Icon(
                 Icons.chevron_right_rounded,
                 color: ListenerProfileTheme.muted,
                 size: 20,
@@ -218,7 +218,10 @@ class SessionSettingsCard extends StatelessWidget {
             return Column(
               children: [
                 if (i > 0)
-                  Divider(color: ListenerProfileTheme.cardBorder, height: 1),
+                  const Divider(
+                    color: ListenerProfileTheme.cardBorder,
+                    height: 1,
+                  ),
                 _SessionSettingRow(item: items[i]),
               ],
             );
@@ -272,7 +275,7 @@ class _SessionSettingRow extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 4),
-            Icon(
+            const Icon(
               Icons.chevron_right_rounded,
               color: ListenerProfileTheme.muted,
               size: 20,
@@ -339,7 +342,7 @@ class InstantCallToggleCard extends StatelessWidget {
           Switch(
             value: value,
             onChanged: onChanged,
-            activeColor: const Color(0xFF22C55E),
+            activeThumbColor: const Color(0xFF22C55E),
           ),
         ],
       ),

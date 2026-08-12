@@ -3730,5 +3730,119 @@
   "listener_call_report_cancel": "إلغاء",
   "@listener_call_report_cancel": {},
   "listener_call_report_success": "تم إرسال البلاغ. سيقوم فريقنا بمراجعته قريباً.",
-  "@listener_call_report_success": {}
+  "@listener_call_report_success": {},
+  "listener_dashboard_greeting_morning": "صباح الخير، {name} 👋",
+  "@listener_dashboard_greeting_morning": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+  "listener_dashboard_greeting_afternoon": "طاب يومك، {name} 👋",
+  "@listener_dashboard_greeting_afternoon": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+  "listener_dashboard_greeting_evening": "مساء الخير، {name} 👋",
+  "@listener_dashboard_greeting_evening": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+  "listener_dashboard_subtitle": "أنت تحدث فرقاً حقيقياً.",
+  "@listener_dashboard_subtitle": {},
+  "listener_dashboard_impact_title": "أثر اليوم",
+  "@listener_dashboard_impact_title": {},
+  "listener_dashboard_period_today": "اليوم",
+  "@listener_dashboard_period_today": {},
+  "listener_dashboard_period_week": "هذا الأسبوع",
+  "@listener_dashboard_period_week": {},
+  "listener_dashboard_period_month": "هذا الشهر",
+  "@listener_dashboard_period_month": {},
+  "listener_dashboard_sessions": "جلسات",
+  "@listener_dashboard_sessions": {},
+  "listener_dashboard_hours": "ساعات",
+  "@listener_dashboard_hours": {},
+  "listener_dashboard_people_helped": "أشخاص ساعدتهم",
+  "@listener_dashboard_people_helped": {},
+  "listener_dashboard_currently": "أنت حالياً",
+  "@listener_dashboard_currently": {},
+  "listener_dashboard_available": "متاح",
+  "@listener_dashboard_available": {},
+  "listener_dashboard_offline": "غير متصل",
+  "@listener_dashboard_offline": {},
+  "listener_dashboard_accepting": "تقبل جلسات جديدة",
+  "@listener_dashboard_accepting": {},
+  "listener_dashboard_paused": "لا تقبل جلسات جديدة",
+  "@listener_dashboard_paused": {},
+  "listener_dashboard_go_offline": "تحويل إلى غير متصل",
+  "@listener_dashboard_go_offline": {},
+  "listener_dashboard_go_online": "تحويل إلى متصل",
+  "@listener_dashboard_go_online": {},
+  "listener_dashboard_upcoming_title": "الجلسة القادمة",
+  "@listener_dashboard_upcoming_title": {},
+  "listener_dashboard_at_time": "في {time}",
+  "@listener_dashboard_at_time": {
+    "placeholders": {
+      "time": { "type": "String" }
+    }
+  },
+  "listener_dashboard_session_minutes": "جلسة {minutes} دقيقة",
+  "@listener_dashboard_session_minutes": {
+    "placeholders": {
+      "minutes": { "type": "int" }
+    }
+  },
+  "listener_dashboard_waiting": "في انتظارك.",
+  "@listener_dashboard_waiting": {},
+  "listener_dashboard_view": "عرض",
+  "@listener_dashboard_view": {},
+  "listener_dashboard_reminder_title": "تذكير يومي",
+  "@listener_dashboard_reminder_title": {},
+  "listener_dashboard_reminder_message": "حضورك قد يكون السبب الذي يجعل أحدهم يشعر بتحسن اليوم.",
+  "@listener_dashboard_reminder_message": {},
+  "listener_dashboard_setup_title": "أكمل إعداد حسابك",
+  "@listener_dashboard_setup_title": {},
+  "listener_dashboard_setup_subtitle": "أنهِ الخطوات المتبقية قبل بدء استقبال الجلسات.",
+  "@listener_dashboard_setup_subtitle": {},
+  "listener_dashboard_setup_identity": "التحقق من الهوية",
+  "@listener_dashboard_setup_identity": {},
+  "listener_dashboard_setup_profile": "معلومات الملف الشخصي",
+  "@listener_dashboard_setup_profile": {},
+  "listener_dashboard_setup_availability": "التوفر",
+  "@listener_dashboard_setup_availability": {},
+  "listener_dashboard_setup_training": "التدريب",
+  "@listener_dashboard_setup_training": {},
+  "listener_dashboard_setup_tutorial": "دليل الجلسة الأولى",
+  "@listener_dashboard_setup_tutorial": {},
+  "listener_dashboard_setup_done": "مكتمل",
+  "@listener_dashboard_setup_done": {},
+  "listener_dashboard_setup_in_progress": "قيد التقدم",
+  "@listener_dashboard_setup_in_progress": {},
+  "listener_dashboard_setup_locked": "مقفل",
+  "@listener_dashboard_setup_locked": {},
+  "listener_dashboard_setup_continue": "متابعة الإعداد",
+  "@listener_dashboard_setup_continue": {},
+  "listener_dashboard_setup_coming_soon": "التدريب والدروس قادمة قريباً.",
+  "@listener_dashboard_setup_coming_soon": {},
+  "listener_dashboard_profile_approved_title": "تمت الموافقة على الملف",
+  "@listener_dashboard_profile_approved_title": {},
+  "listener_dashboard_profile_approved_message": "قبل استقبال الجلسات، أكمل رحلة الإعداد والدروس.",
+  "@listener_dashboard_profile_approved_message": {},
+  "listener_dashboard_locked_accept_title": "قبول الجلسات",
+  "@listener_dashboard_locked_accept_title": {},
+  "listener_dashboard_locked_accept_subtitle": "يُفتح بعد إكمال الخطوات المطلوبة.",
+  "@listener_dashboard_locked_accept_subtitle": {},
+  "listener_dashboard_locked_earnings_title": "الأرباح (هذا الشهر)",
+  "@listener_dashboard_locked_earnings_title": {},
+  "listener_dashboard_locked_earnings_subtitle": "أكمل الدروس لعرض أرباحك.",
+  "@listener_dashboard_locked_earnings_subtitle": {},
+  "listener_dashboard_locked_earnings_footnote": "أكمل الدروس لعرض أرباحك.",
+  "@listener_dashboard_locked_earnings_footnote": {},
+  "listener_dashboard_no_requests": "لا توجد طلبات قادمة بعد. ستظهر الطلبات هنا عند بدء العمل.",
+  "@listener_dashboard_no_requests": {},
+  "listener_dashboard_helpful_tip_title": "نصيحة مفيدة",
+  "@listener_dashboard_helpful_tip_title": {},
+  "listener_dashboard_helpful_tip_message": "أكمل الدروس لبناء الثقة والحصول على المزيد من طلبات الجلسات.",
+  "@listener_dashboard_helpful_tip_message": {}
 }
