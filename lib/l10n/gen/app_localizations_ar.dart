@@ -5473,4 +5473,29 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
   @override
   String get listener_dashboard_helpful_tip_message =>
       'أكمل الدروس لبناء الثقة والحصول على المزيد من طلبات الجلسات.';
+
+  @override
+  String get listener_dashboard_notifications_empty =>
+      'لا توجد إشعارات جديدة. ستظهر الإشعارات هنا.';
+
+  @override
+  String get listener_dashboard_notifications_just_now => 'الآن';
+
+  @override
+  String listener_dashboard_notifications_minutes_ago(int count) {
+    return 'منذ $count د';
+  }
+
+  @override
+  String listener_dashboard_notifications_hours_ago(int count) {
+    return 'منذ $count س';
+  }
+
+  @override
+  String listener_dashboard_notifications_days_ago(int count) {
+    return 'منذ $count ي';
+  }
+
+  @override
+  String get listener_dashboard_notifications_delete => 'حذف';
 }

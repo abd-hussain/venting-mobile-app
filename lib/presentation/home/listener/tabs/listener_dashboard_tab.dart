@@ -5,6 +5,7 @@ import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
 import 'package:venting_mobile_app/presentation/home/listener/dashboard/listener_dashboard_setup.dart';
 import 'package:venting_mobile_app/presentation/home/listener/dashboard/listener_dashboard_setup_widgets.dart';
 import 'package:venting_mobile_app/presentation/home/listener/dashboard/listener_dashboard_widgets.dart';
+import 'package:venting_mobile_app/presentation/home/listener/dashboard/listener_notifications_screen.dart';
 import 'package:venting_mobile_app/presentation/listener_registration/listener_registration_screen.dart';
 import 'package:venting_mobile_app/presentation/listener_registration/listener_registration_step.dart';
 import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dart';
@@ -180,7 +181,7 @@ class _ListenerDashboardTabState extends State<ListenerDashboardTab> {
   }
 
   void _onNotifications() {
-    // TODO: Open listener notifications screen.
+    openListenerNotificationsScreen(context: context);
   }
 
   List<Widget> _buildSetupDashboard(VentingMobLocalizations l10n) {

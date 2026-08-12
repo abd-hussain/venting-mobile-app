@@ -5505,4 +5505,29 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
   @override
   String get listener_dashboard_helpful_tip_message =>
       'Complete your tutorials to build trust and get more session requests.';
+
+  @override
+  String get listener_dashboard_notifications_empty =>
+      'You\'re all caught up. New notifications will appear here.';
+
+  @override
+  String get listener_dashboard_notifications_just_now => 'Just now';
+
+  @override
+  String listener_dashboard_notifications_minutes_ago(int count) {
+    return '${count}m ago';
+  }
+
+  @override
+  String listener_dashboard_notifications_hours_ago(int count) {
+    return '${count}h ago';
+  }
+
+  @override
+  String listener_dashboard_notifications_days_ago(int count) {
+    return '${count}d ago';
+  }
+
+  @override
+  String get listener_dashboard_notifications_delete => 'Delete';
 }

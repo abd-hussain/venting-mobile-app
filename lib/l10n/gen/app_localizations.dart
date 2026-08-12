@@ -9886,6 +9886,42 @@ abstract class VentingMobLocalizations {
   /// In en, this message translates to:
   /// **'Complete your tutorials to build trust and get more session requests.'**
   String get listener_dashboard_helpful_tip_message;
+
+  /// No description provided for @listener_dashboard_notifications_empty.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'re all caught up. New notifications will appear here.'**
+  String get listener_dashboard_notifications_empty;
+
+  /// No description provided for @listener_dashboard_notifications_just_now.
+  ///
+  /// In en, this message translates to:
+  /// **'Just now'**
+  String get listener_dashboard_notifications_just_now;
+
+  /// No description provided for @listener_dashboard_notifications_minutes_ago.
+  ///
+  /// In en, this message translates to:
+  /// **'{count}m ago'**
+  String listener_dashboard_notifications_minutes_ago(int count);
+
+  /// No description provided for @listener_dashboard_notifications_hours_ago.
+  ///
+  /// In en, this message translates to:
+  /// **'{count}h ago'**
+  String listener_dashboard_notifications_hours_ago(int count);
+
+  /// No description provided for @listener_dashboard_notifications_days_ago.
+  ///
+  /// In en, this message translates to:
+  /// **'{count}d ago'**
+  String listener_dashboard_notifications_days_ago(int count);
+
+  /// No description provided for @listener_dashboard_notifications_delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get listener_dashboard_notifications_delete;
 }
 
 class _VentingMobLocalizationsDelegate
