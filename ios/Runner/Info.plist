@@ -28,7 +28,7 @@
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>This app requires location access for compliance and security verification purposes.</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>This app requires microphone access for audio recording during verification processes.</string>
+	<string>Microphone access is needed to record your voice introduction and for voice calls.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>This app requires access to the photo library to upload profile pictures and documents for verification purposes.</string>
 	<key>CFBundleDisplayName</key>

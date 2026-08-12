@@ -179,20 +179,30 @@ class _ListenerRegistrationStep7VoiceIntroState
   Future<bool> _ensureMicPermission() async {
     final l10n = VentingMobLocalizations.of(context);
 
-    var status = await Permission.microphone.status;
-    if (status.isGranted) return true;
-
-    if (status.isPermanentlyDenied) {
-      _showMessage(l10n.listener_reg_voice_mic_permission_settings);
-      await openAppSettings();
-      return false;
+    // Prefer the recorder's native permission flow (shows the iOS system
+    // dialog when status is undetermined). permission_handler alone can
+    // mis-report permanentlyDenied if its iOS macros are missing.
+    try {
+      final granted = await _recorder.hasPermission();
+      if (granted) return true;
+    } catch (error) {
+      debugPrint('Voice intro hasPermission error: $error');
     }
 
-    status = await Permission.microphone.request();
-    if (status.isGranted) return true;
+    var status = await Permission.microphone.status;
+    if (status.isGranted || status.isLimited) return true;
+
+    // Request only when iOS/Android can still show the system prompt.
+    if (status.isDenied) {
+      status = await Permission.microphone.request();
+      if (status.isGranted || status.isLimited) return true;
+    }
+
+    if (!mounted) return false;
 
     if (status.isPermanentlyDenied) {
       _showMessage(l10n.listener_reg_voice_mic_permission_settings);
+      // Mic appears in Settings only after the system prompt was shown once.
       await openAppSettings();
       return false;
     }

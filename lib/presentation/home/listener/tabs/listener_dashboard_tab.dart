@@ -6,6 +6,7 @@ import 'package:venting_mobile_app/presentation/home/listener/dashboard/listener
 import 'package:venting_mobile_app/presentation/home/listener/dashboard/listener_dashboard_setup_widgets.dart';
 import 'package:venting_mobile_app/presentation/home/listener/dashboard/listener_dashboard_widgets.dart';
 import 'package:venting_mobile_app/presentation/home/listener/dashboard/listener_notifications_screen.dart';
+import 'package:venting_mobile_app/presentation/home/listener/dashboard/listener_training_bottom_sheet.dart';
 import 'package:venting_mobile_app/presentation/listener_registration/listener_registration_screen.dart';
 import 'package:venting_mobile_app/presentation/listener_registration/listener_registration_step.dart';
 import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dart';
@@ -33,8 +34,8 @@ class _ListenerDashboardTabState extends State<ListenerDashboardTab> {
   static const _listenerName = 'Lina';
 
   // TODO: Load setup progress from listener onboarding API.
-  final ListenerDashboardSetupProgress _setupProgress =
-      ListenerDashboardSetupProgress.mockIncomplete;
+  ListenerDashboardSetupProgress _setupProgress =
+      ListenerDashboardSetupProgress.mockAwaitingTraining;
 
   ListenerDashboardPeriod _period = ListenerDashboardPeriod.today;
   bool _isOnline = true;
@@ -97,13 +98,13 @@ class _ListenerDashboardTabState extends State<ListenerDashboardTab> {
     };
   }
 
-  void _onContinueSetup() {
+  Future<void> _onContinueSetup() async {
     final next = _setupProgress.firstIncompleteStep;
     if (next == null) return;
 
     final registrationStep = _registrationStepFor(next);
     if (registrationStep != null) {
-      context.push(
+      await context.push(
         AppRoutes.listenerRegistration,
         extra: ListenerRegistrationArgs(
           email: '',
@@ -113,7 +114,35 @@ class _ListenerDashboardTabState extends State<ListenerDashboardTab> {
       return;
     }
 
-    // TODO: Navigate to listener training / first session tutorial flow.
+    if (next == ListenerDashboardSetupStepId.training) {
+      final completed = await openListenerTrainingBottomSheet(context: context);
+      if (!mounted || completed != true) return;
+
+      setState(() {
+        _setupProgress = ListenerDashboardSetupProgress(
+          profileApproved: _setupProgress.profileApproved,
+          steps: [
+            for (final step in _setupProgress.steps)
+              if (step.id == ListenerDashboardSetupStepId.training)
+                const ListenerDashboardSetupStep(
+                  id: ListenerDashboardSetupStepId.training,
+                  status: ListenerDashboardSetupStepStatus.done,
+                )
+              else if (step.id ==
+                  ListenerDashboardSetupStepId.firstSessionTutorial)
+                const ListenerDashboardSetupStep(
+                  id: ListenerDashboardSetupStepId.firstSessionTutorial,
+                  status: ListenerDashboardSetupStepStatus.inProgress,
+                )
+              else
+                step,
+          ],
+        );
+      });
+      return;
+    }
+
+    // TODO: Navigate to first session tutorial flow.
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(

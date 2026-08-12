@@ -4,7 +4,9 @@ void main() {
   runApp(const MyApp());
 }
 
-//TODO: Build Pipline for this project Dev + Prod (iOS)
+//TODO: feature for ventor to change the voice sound
+//TODO: feature for ventor to give some tops for the listener
+
 //TODO: Add Firebase / FCM
 
 class MyApp extends StatelessWidget {

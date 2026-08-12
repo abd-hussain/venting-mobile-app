@@ -3596,6 +3596,9 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
   String get listener_reg_boundary_other => 'أخرى';
 
   @override
+  String get listener_reg_boundary_other_hint => 'يرجى التوضيح';
+
+  @override
   String get listener_reg_step_about_you => 'عنك';
 
   @override
@@ -3688,6 +3691,9 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
 
   @override
   String get listener_reg_area_other => 'أخرى';
+
+  @override
+  String get listener_reg_area_other_hint => 'يرجى التوضيح';
 
   @override
   String get listener_reg_step_voice_intro => 'مقدمة صوتية';
@@ -3823,6 +3829,10 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
 
   @override
   String get listener_reg_avail_day_sun => 'ح';
+
+  @override
+  String get listener_reg_avail_manage_later_note =>
+      'يمكنك إدارة أوقات توفّرك بطريقة أفضل وبمزيد من التفاصيل من داخل التطبيق بعد إنهاء التسجيل.';
 
   @override
   String get listener_reg_step_experience => 'تجربة الحياة';
@@ -5440,6 +5450,44 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
   @override
   String get listener_dashboard_setup_coming_soon =>
       'التدريب والدروس قادمة قريباً.';
+
+  @override
+  String get listener_training_title => 'تدريب الاستماع الفعّال';
+
+  @override
+  String get listener_training_subtitle =>
+      'أكمل جميع الوحدات لتصبح مستمعًا موثوقًا.';
+
+  @override
+  String get listener_training_continue_learning => 'متابعة التعلّم';
+
+  @override
+  String get listener_training_finish => 'إنهاء التدريب';
+
+  @override
+  String get listener_training_status_completed => 'مكتمل';
+
+  @override
+  String get listener_training_status_in_progress => 'قيد التقدم';
+
+  @override
+  String get listener_training_status_not_started => 'لم يبدأ';
+
+  @override
+  String get listener_training_module_art_of_listening => 'فن الاستماع';
+
+  @override
+  String get listener_training_module_empathy => 'التعاطف والفهم';
+
+  @override
+  String get listener_training_module_boundaries => 'الحدود والأخلاقيات';
+
+  @override
+  String get listener_training_module_difficult_situations =>
+      'التعامل مع المواقف الصعبة';
+
+  @override
+  String get listener_training_module_crisis_awareness => 'الوعي بالأزمات';
 
   @override
   String get listener_dashboard_profile_approved_title =>

@@ -35,15 +35,41 @@ class _ListenerRegistrationStep5ComfortAreasState
   static const _rowSelected = Color(0xFF2A1F3D);
   static const _muted = Color(0xFF9B93AB);
   static const _checkboxBorder = Color(0xFF4A425C);
+  static const _fieldFill = Color(0xFF14101C);
+  static const _otherId = 'other';
 
   final Set<String> _selectedIds = {};
+  final _otherController = TextEditingController();
 
-  bool get _canContinue => _selectedIds.isNotEmpty;
+  bool get _isOtherSelected => _selectedIds.contains(_otherId);
+
+  bool get _canContinue {
+    if (_selectedIds.isEmpty) return false;
+    if (_isOtherSelected && _otherController.text.trim().isEmpty) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _otherController.addListener(() => setState(() {}));
+  }
+
+  @override
+  void dispose() {
+    _otherController.dispose();
+    super.dispose();
+  }
 
   void _toggle(String id) {
     setState(() {
       if (_selectedIds.contains(id)) {
         _selectedIds.remove(id);
+        if (id == _otherId) {
+          _otherController.clear();
+        }
       } else {
         _selectedIds.add(id);
       }
@@ -101,7 +127,7 @@ class _ListenerRegistrationStep5ComfortAreasState
         icon: Icons.health_and_safety_outlined,
       ),
       _ComfortArea(
-        id: 'other',
+        id: _otherId,
         label: l10n.listener_reg_area_other,
         icon: Icons.add_circle_outline_rounded,
       ),
@@ -165,6 +191,49 @@ class _ListenerRegistrationStep5ComfortAreasState
                 },
               ),
             ),
+            if (_isOtherSelected)
+              Padding(
+                padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
+                child: TextField(
+                  controller: _otherController,
+                  autofocus: true,
+                  style: GoogleFonts.inter(
+                    color: Colors.white,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  cursorColor: SplashColors.purpleMid,
+                  textCapitalization: TextCapitalization.sentences,
+                  textInputAction: TextInputAction.done,
+                  decoration: InputDecoration(
+                    hintText: l10n.listener_reg_area_other_hint,
+                    hintStyle: GoogleFonts.inter(
+                      color: _muted,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w400,
+                    ),
+                    filled: true,
+                    fillColor: _fieldFill,
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 14,
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(14),
+                      borderSide: BorderSide(
+                        color: SplashColors.purpleMid.withValues(alpha: 0.35),
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(14),
+                      borderSide: const BorderSide(
+                        color: SplashColors.purpleMid,
+                        width: 1.4,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
               child: SizedBox(

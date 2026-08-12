@@ -3613,6 +3613,9 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
   String get listener_reg_boundary_other => 'Other';
 
   @override
+  String get listener_reg_boundary_other_hint => 'Please specify';
+
+  @override
   String get listener_reg_step_about_you => 'About You';
 
   @override
@@ -3705,6 +3708,9 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
 
   @override
   String get listener_reg_area_other => 'Other';
+
+  @override
+  String get listener_reg_area_other_hint => 'Please specify';
 
   @override
   String get listener_reg_step_voice_intro => 'Voice Introduction';
@@ -3840,6 +3846,10 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
 
   @override
   String get listener_reg_avail_day_sun => 'S';
+
+  @override
+  String get listener_reg_avail_manage_later_note =>
+      'You can manage your availability in more detail from inside the app after you finish registration.';
 
   @override
   String get listener_reg_step_experience => 'Life Experience';
@@ -5471,6 +5481,45 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
   @override
   String get listener_dashboard_setup_coming_soon =>
       'Training and tutorials are coming soon.';
+
+  @override
+  String get listener_training_title => 'Active Listening Training';
+
+  @override
+  String get listener_training_subtitle =>
+      'Complete all modules to become a trusted listener.';
+
+  @override
+  String get listener_training_continue_learning => 'Continue Learning';
+
+  @override
+  String get listener_training_finish => 'Finish Training';
+
+  @override
+  String get listener_training_status_completed => 'Completed';
+
+  @override
+  String get listener_training_status_in_progress => 'In progress';
+
+  @override
+  String get listener_training_status_not_started => 'Not started';
+
+  @override
+  String get listener_training_module_art_of_listening =>
+      'The Art of Listening';
+
+  @override
+  String get listener_training_module_empathy => 'Empathy & Understanding';
+
+  @override
+  String get listener_training_module_boundaries => 'Boundaries & Ethics';
+
+  @override
+  String get listener_training_module_difficult_situations =>
+      'Handling Difficult Situations';
+
+  @override
+  String get listener_training_module_crisis_awareness => 'Crisis Awareness';
 
   @override
   String get listener_dashboard_profile_approved_title => 'Profile approved';

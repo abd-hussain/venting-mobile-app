@@ -226,17 +226,22 @@ class _EditVoiceIntroBottomSheetState extends State<EditVoiceIntroBottomSheet>
   Future<bool> _ensureMicPermission() async {
     final l10n = VentingMobLocalizations.of(context);
 
-    var status = await Permission.microphone.status;
-    if (status.isGranted) return true;
-
-    if (status.isPermanentlyDenied) {
-      _showMessage(l10n.listener_reg_voice_mic_permission_settings);
-      await openAppSettings();
-      return false;
+    try {
+      final granted = await _recorder.hasPermission();
+      if (granted) return true;
+    } catch (error) {
+      debugPrint('Profile voice hasPermission error: $error');
     }
 
-    status = await Permission.microphone.request();
-    if (status.isGranted) return true;
+    var status = await Permission.microphone.status;
+    if (status.isGranted || status.isLimited) return true;
+
+    if (status.isDenied) {
+      status = await Permission.microphone.request();
+      if (status.isGranted || status.isLimited) return true;
+    }
+
+    if (!mounted) return false;
 
     if (status.isPermanentlyDenied) {
       _showMessage(l10n.listener_reg_voice_mic_permission_settings);

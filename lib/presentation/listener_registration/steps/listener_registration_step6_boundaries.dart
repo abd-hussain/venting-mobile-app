@@ -36,13 +36,40 @@ class _ListenerRegistrationStep6BoundariesState
   static const _muted = Color(0xFF9B93AB);
   static const _checkboxBorder = Color(0xFF4A425C);
   static const _iconBg = Color(0xFF4A2A2A);
+  static const _fieldFill = Color(0xFF14101C);
+  static const _otherId = 'other';
 
   final Set<String> _selectedIds = {};
+  final _otherController = TextEditingController();
+
+  bool get _isOtherSelected => _selectedIds.contains(_otherId);
+
+  bool get _canContinue {
+    if (_isOtherSelected && _otherController.text.trim().isEmpty) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _otherController.addListener(() => setState(() {}));
+  }
+
+  @override
+  void dispose() {
+    _otherController.dispose();
+    super.dispose();
+  }
 
   void _toggle(String id) {
     setState(() {
       if (_selectedIds.contains(id)) {
         _selectedIds.remove(id);
+        if (id == _otherId) {
+          _otherController.clear();
+        }
       } else {
         _selectedIds.add(id);
       }
@@ -90,7 +117,7 @@ class _ListenerRegistrationStep6BoundariesState
         icon: Icons.gavel_outlined,
       ),
       _BoundaryTopic(
-        id: 'other',
+        id: _otherId,
         label: l10n.listener_reg_boundary_other,
         icon: Icons.more_horiz_rounded,
       ),
@@ -155,15 +182,62 @@ class _ListenerRegistrationStep6BoundariesState
                 },
               ),
             ),
+            if (_isOtherSelected)
+              Padding(
+                padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
+                child: TextField(
+                  controller: _otherController,
+                  autofocus: true,
+                  style: GoogleFonts.inter(
+                    color: Colors.white,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  cursorColor: SplashColors.purpleMid,
+                  textCapitalization: TextCapitalization.sentences,
+                  textInputAction: TextInputAction.done,
+                  decoration: InputDecoration(
+                    hintText: l10n.listener_reg_boundary_other_hint,
+                    hintStyle: GoogleFonts.inter(
+                      color: _muted,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w400,
+                    ),
+                    filled: true,
+                    fillColor: _fieldFill,
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 14,
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(14),
+                      borderSide: BorderSide(
+                        color: SplashColors.purpleMid.withValues(alpha: 0.35),
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(14),
+                      borderSide: const BorderSide(
+                        color: SplashColors.purpleMid,
+                        width: 1.4,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
               child: SizedBox(
                 height: 54,
                 child: FilledButton(
-                  onPressed: widget.onContinue,
+                  onPressed: _canContinue ? widget.onContinue : null,
                   style: FilledButton.styleFrom(
                     backgroundColor: SplashColors.purpleMid,
+                    disabledBackgroundColor: SplashColors.purpleMid.withValues(
+                      alpha: 0.35,
+                    ),
                     foregroundColor: Colors.white,
+                    disabledForegroundColor: Colors.white,
                     elevation: 0,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),

@@ -6473,6 +6473,12 @@ abstract class VentingMobLocalizations {
   /// **'Other'**
   String get listener_reg_boundary_other;
 
+  /// No description provided for @listener_reg_boundary_other_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Please specify'**
+  String get listener_reg_boundary_other_hint;
+
   /// No description provided for @listener_reg_step_about_you.
   ///
   /// In en, this message translates to:
@@ -6652,6 +6658,12 @@ abstract class VentingMobLocalizations {
   /// In en, this message translates to:
   /// **'Other'**
   String get listener_reg_area_other;
+
+  /// No description provided for @listener_reg_area_other_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Please specify'**
+  String get listener_reg_area_other_hint;
 
   /// No description provided for @listener_reg_step_voice_intro.
   ///
@@ -6898,6 +6910,12 @@ abstract class VentingMobLocalizations {
   /// In en, this message translates to:
   /// **'S'**
   String get listener_reg_avail_day_sun;
+
+  /// No description provided for @listener_reg_avail_manage_later_note.
+  ///
+  /// In en, this message translates to:
+  /// **'You can manage your availability in more detail from inside the app after you finish registration.'**
+  String get listener_reg_avail_manage_later_note;
 
   /// No description provided for @listener_reg_step_experience.
   ///
@@ -9832,6 +9850,78 @@ abstract class VentingMobLocalizations {
   /// In en, this message translates to:
   /// **'Training and tutorials are coming soon.'**
   String get listener_dashboard_setup_coming_soon;
+
+  /// No description provided for @listener_training_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Active Listening Training'**
+  String get listener_training_title;
+
+  /// No description provided for @listener_training_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete all modules to become a trusted listener.'**
+  String get listener_training_subtitle;
+
+  /// No description provided for @listener_training_continue_learning.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue Learning'**
+  String get listener_training_continue_learning;
+
+  /// No description provided for @listener_training_finish.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish Training'**
+  String get listener_training_finish;
+
+  /// No description provided for @listener_training_status_completed.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get listener_training_status_completed;
+
+  /// No description provided for @listener_training_status_in_progress.
+  ///
+  /// In en, this message translates to:
+  /// **'In progress'**
+  String get listener_training_status_in_progress;
+
+  /// No description provided for @listener_training_status_not_started.
+  ///
+  /// In en, this message translates to:
+  /// **'Not started'**
+  String get listener_training_status_not_started;
+
+  /// No description provided for @listener_training_module_art_of_listening.
+  ///
+  /// In en, this message translates to:
+  /// **'The Art of Listening'**
+  String get listener_training_module_art_of_listening;
+
+  /// No description provided for @listener_training_module_empathy.
+  ///
+  /// In en, this message translates to:
+  /// **'Empathy & Understanding'**
+  String get listener_training_module_empathy;
+
+  /// No description provided for @listener_training_module_boundaries.
+  ///
+  /// In en, this message translates to:
+  /// **'Boundaries & Ethics'**
+  String get listener_training_module_boundaries;
+
+  /// No description provided for @listener_training_module_difficult_situations.
+  ///
+  /// In en, this message translates to:
+  /// **'Handling Difficult Situations'**
+  String get listener_training_module_difficult_situations;
+
+  /// No description provided for @listener_training_module_crisis_awareness.
+  ///
+  /// In en, this message translates to:
+  /// **'Crisis Awareness'**
+  String get listener_training_module_crisis_awareness;
 
   /// No description provided for @listener_dashboard_profile_approved_title.
   ///

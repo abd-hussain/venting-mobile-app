@@ -50,6 +50,33 @@ class ListenerDashboardSetupProgress {
   }
 
   // TODO: Load from listener onboarding / setup API.
+  /// Registration finished — remaining work is training (+ locked tutorial).
+  static const mockAwaitingTraining = ListenerDashboardSetupProgress(
+    profileApproved: true,
+    steps: [
+      ListenerDashboardSetupStep(
+        id: ListenerDashboardSetupStepId.identityVerified,
+        status: ListenerDashboardSetupStepStatus.done,
+      ),
+      ListenerDashboardSetupStep(
+        id: ListenerDashboardSetupStepId.profileInfo,
+        status: ListenerDashboardSetupStepStatus.done,
+      ),
+      ListenerDashboardSetupStep(
+        id: ListenerDashboardSetupStepId.availability,
+        status: ListenerDashboardSetupStepStatus.done,
+      ),
+      ListenerDashboardSetupStep(
+        id: ListenerDashboardSetupStepId.training,
+        status: ListenerDashboardSetupStepStatus.inProgress,
+      ),
+      ListenerDashboardSetupStep(
+        id: ListenerDashboardSetupStepId.firstSessionTutorial,
+        status: ListenerDashboardSetupStepStatus.locked,
+      ),
+    ],
+  );
+
   static const mockIncomplete = ListenerDashboardSetupProgress(
     profileApproved: true,
     steps: [
@@ -67,7 +94,7 @@ class ListenerDashboardSetupProgress {
       ),
       ListenerDashboardSetupStep(
         id: ListenerDashboardSetupStepId.training,
-        status: ListenerDashboardSetupStepStatus.inProgress,
+        status: ListenerDashboardSetupStepStatus.locked,
       ),
       ListenerDashboardSetupStep(
         id: ListenerDashboardSetupStepId.firstSessionTutorial,

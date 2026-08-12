@@ -535,6 +535,49 @@ class _ListenerRegistrationStep8AvailabilityState
                               ],
                             ],
                           ),
+                          const SizedBox(height: 16),
+                          Container(
+                            width: double.infinity,
+                            padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
+                            decoration: BoxDecoration(
+                              color: SplashColors.purpleMid.withValues(
+                                alpha: 0.12,
+                              ),
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(
+                                color: SplashColors.purpleMid.withValues(
+                                  alpha: 0.28,
+                                ),
+                              ),
+                            ),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Padding(
+                                  padding: EdgeInsets.only(top: 1),
+                                  child: Icon(
+                                    Icons.info_outline_rounded,
+                                    size: 18,
+                                    color: SplashColors.purpleMid,
+                                  ),
+                                ),
+                                const SizedBox(width: 10),
+                                Expanded(
+                                  child: Text(
+                                    l10n.listener_reg_avail_manage_later_note,
+                                    style: GoogleFonts.inter(
+                                      color: Colors.white.withValues(
+                                        alpha: 0.78,
+                                      ),
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w400,
+                                      height: 1.4,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         ],
                       ),
                     ),

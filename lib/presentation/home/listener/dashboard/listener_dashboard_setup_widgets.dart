@@ -45,6 +45,14 @@ class ListenerDashboardSetupSection extends StatelessWidget {
     };
   }
 
+  String get _continueLabel {
+    final next = progress.firstIncompleteStep;
+    if (next == ListenerDashboardSetupStepId.training) {
+      return l10n.listener_training_continue_learning;
+    }
+    return l10n.listener_dashboard_setup_continue;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -115,7 +123,7 @@ class ListenerDashboardSetupSection extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  l10n.listener_dashboard_setup_continue,
+                  _continueLabel,
                   style: GoogleFonts.inter(
                     fontSize: 15,
                     fontWeight: FontWeight.w700,
