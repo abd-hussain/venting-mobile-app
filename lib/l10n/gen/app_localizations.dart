@@ -9172,6 +9172,438 @@ abstract class VentingMobLocalizations {
   /// In en, this message translates to:
   /// **'Remove'**
   String get listener_avail_remove_slot;
+
+  /// No description provided for @listener_sessions_filter_upcoming.
+  ///
+  /// In en, this message translates to:
+  /// **'Upcoming ({count})'**
+  String listener_sessions_filter_upcoming(int count);
+
+  /// No description provided for @listener_sessions_filter_missed.
+  ///
+  /// In en, this message translates to:
+  /// **'Missed ({count})'**
+  String listener_sessions_filter_missed(int count);
+
+  /// No description provided for @listener_sessions_filter_history.
+  ///
+  /// In en, this message translates to:
+  /// **'History'**
+  String get listener_sessions_filter_history;
+
+  /// No description provided for @listener_sessions_upcoming_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Upcoming Sessions'**
+  String get listener_sessions_upcoming_title;
+
+  /// No description provided for @listener_sessions_active_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Active Sessions'**
+  String get listener_sessions_active_title;
+
+  /// No description provided for @listener_sessions_history_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Past Sessions'**
+  String get listener_sessions_history_title;
+
+  /// No description provided for @listener_sessions_requests_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Session Requests'**
+  String get listener_sessions_requests_title;
+
+  /// No description provided for @listener_sessions_new_request.
+  ///
+  /// In en, this message translates to:
+  /// **'New request'**
+  String get listener_sessions_new_request;
+
+  /// No description provided for @listener_sessions_decline.
+  ///
+  /// In en, this message translates to:
+  /// **'Decline'**
+  String get listener_sessions_decline;
+
+  /// No description provided for @listener_sessions_accept.
+  ///
+  /// In en, this message translates to:
+  /// **'Accept'**
+  String get listener_sessions_accept;
+
+  /// No description provided for @listener_sessions_waiting.
+  ///
+  /// In en, this message translates to:
+  /// **'They\'re waiting for you'**
+  String get listener_sessions_waiting;
+
+  /// No description provided for @listener_sessions_join_now.
+  ///
+  /// In en, this message translates to:
+  /// **'Join call now'**
+  String get listener_sessions_join_now;
+
+  /// No description provided for @listener_sessions_today.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get listener_sessions_today;
+
+  /// No description provided for @listener_sessions_tomorrow.
+  ///
+  /// In en, this message translates to:
+  /// **'Tomorrow'**
+  String get listener_sessions_tomorrow;
+
+  /// No description provided for @listener_sessions_minutes_ago.
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes}m ago'**
+  String listener_sessions_minutes_ago(int minutes);
+
+  /// No description provided for @listener_sessions_hours_ago.
+  ///
+  /// In en, this message translates to:
+  /// **'{hours}h ago'**
+  String listener_sessions_hours_ago(int hours);
+
+  /// No description provided for @listener_sessions_days_ago.
+  ///
+  /// In en, this message translates to:
+  /// **'{days}d ago'**
+  String listener_sessions_days_ago(int days);
+
+  /// No description provided for @listener_sessions_stats_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Request outcomes'**
+  String get listener_sessions_stats_title;
+
+  /// No description provided for @listener_sessions_accepted.
+  ///
+  /// In en, this message translates to:
+  /// **'Accepted'**
+  String get listener_sessions_accepted;
+
+  /// No description provided for @listener_sessions_declined.
+  ///
+  /// In en, this message translates to:
+  /// **'Declined'**
+  String get listener_sessions_declined;
+
+  /// No description provided for @listener_sessions_stats_missed.
+  ///
+  /// In en, this message translates to:
+  /// **'Missed to enter'**
+  String get listener_sessions_stats_missed;
+
+  /// No description provided for @listener_sessions_status_accepted.
+  ///
+  /// In en, this message translates to:
+  /// **'Session accepted'**
+  String get listener_sessions_status_accepted;
+
+  /// No description provided for @listener_sessions_status_declined.
+  ///
+  /// In en, this message translates to:
+  /// **'Request declined'**
+  String get listener_sessions_status_declined;
+
+  /// No description provided for @listener_sessions_status_completed.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get listener_sessions_status_completed;
+
+  /// No description provided for @listener_sessions_no_missed.
+  ///
+  /// In en, this message translates to:
+  /// **'No missed sessions.'**
+  String get listener_sessions_no_missed;
+
+  /// No description provided for @listener_sessions_no_history.
+  ///
+  /// In en, this message translates to:
+  /// **'No past sessions yet.'**
+  String get listener_sessions_no_history;
+
+  /// No description provided for @listener_sessions_chosen_you.
+  ///
+  /// In en, this message translates to:
+  /// **'Why they chose you'**
+  String get listener_sessions_chosen_you;
+
+  /// No description provided for @listener_sessions_penalty_note.
+  ///
+  /// In en, this message translates to:
+  /// **'For each session you miss without entering, 20% of the session cost will be deducted from your balance.'**
+  String get listener_sessions_penalty_note;
+
+  /// No description provided for @listener_sessions_missed_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Missed sessions'**
+  String get listener_sessions_missed_title;
+
+  /// No description provided for @listener_sessions_status_missed.
+  ///
+  /// In en, this message translates to:
+  /// **'Missed — not entered'**
+  String get listener_sessions_status_missed;
+
+  /// No description provided for @listener_sessions_penalty_deducted.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} deducted (20%)'**
+  String listener_sessions_penalty_deducted(String amount);
+
+  /// No description provided for @listener_call_instructions_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Before you join'**
+  String get listener_call_instructions_title;
+
+  /// No description provided for @listener_call_mode_video.
+  ///
+  /// In en, this message translates to:
+  /// **'This is a video call — the ventor chose camera on.'**
+  String get listener_call_mode_video;
+
+  /// No description provided for @listener_call_mode_audio.
+  ///
+  /// In en, this message translates to:
+  /// **'This is a voice-only call — the ventor chose audio.'**
+  String get listener_call_mode_audio;
+
+  /// No description provided for @listener_call_instructions_heading.
+  ///
+  /// In en, this message translates to:
+  /// **'Guidelines for this session'**
+  String get listener_call_instructions_heading;
+
+  /// No description provided for @listener_call_instruction_respect.
+  ///
+  /// In en, this message translates to:
+  /// **'Treat the ventor with respect and kindness. This is a safe space for them to share.'**
+  String get listener_call_instruction_respect;
+
+  /// No description provided for @listener_call_instruction_listen.
+  ///
+  /// In en, this message translates to:
+  /// **'Listen actively without interrupting. Let them lead the conversation.'**
+  String get listener_call_instruction_listen;
+
+  /// No description provided for @listener_call_instruction_safe.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep the conversation supportive. Do not give medical or legal advice.'**
+  String get listener_call_instruction_safe;
+
+  /// No description provided for @listener_call_instruction_time.
+  ///
+  /// In en, this message translates to:
+  /// **'Stay for the full {minutes}-minute session unless they end early.'**
+  String listener_call_instruction_time(int minutes);
+
+  /// No description provided for @listener_call_instruction_boundaries.
+  ///
+  /// In en, this message translates to:
+  /// **'Respect boundaries. If a topic feels outside your comfort zone, guide them gently.'**
+  String get listener_call_instruction_boundaries;
+
+  /// No description provided for @listener_call_permissions_heading.
+  ///
+  /// In en, this message translates to:
+  /// **'Allow camera & microphone'**
+  String get listener_call_permissions_heading;
+
+  /// No description provided for @listener_call_permissions_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'The ventor decides whether the call is audio or video. Please allow both so you are ready either way.'**
+  String get listener_call_permissions_subtitle;
+
+  /// No description provided for @listener_call_permission_mic.
+  ///
+  /// In en, this message translates to:
+  /// **'Microphone'**
+  String get listener_call_permission_mic;
+
+  /// No description provided for @listener_call_permission_camera.
+  ///
+  /// In en, this message translates to:
+  /// **'Camera'**
+  String get listener_call_permission_camera;
+
+  /// No description provided for @listener_call_permission_allow.
+  ///
+  /// In en, this message translates to:
+  /// **'Allow'**
+  String get listener_call_permission_allow;
+
+  /// No description provided for @listener_call_permission_granted.
+  ///
+  /// In en, this message translates to:
+  /// **'Allowed'**
+  String get listener_call_permission_granted;
+
+  /// No description provided for @listener_call_permission_settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Permission denied. Enable it in Settings to join the call.'**
+  String get listener_call_permission_settings;
+
+  /// No description provided for @listener_call_join_now.
+  ///
+  /// In en, this message translates to:
+  /// **'Join call'**
+  String get listener_call_join_now;
+
+  /// No description provided for @listener_call_end.
+  ///
+  /// In en, this message translates to:
+  /// **'End'**
+  String get listener_call_end;
+
+  /// No description provided for @listener_call_mute.
+  ///
+  /// In en, this message translates to:
+  /// **'Mute'**
+  String get listener_call_mute;
+
+  /// No description provided for @listener_call_speaker.
+  ///
+  /// In en, this message translates to:
+  /// **'Speaker'**
+  String get listener_call_speaker;
+
+  /// No description provided for @listener_call_flip.
+  ///
+  /// In en, this message translates to:
+  /// **'Flip'**
+  String get listener_call_flip;
+
+  /// No description provided for @listener_call_chat.
+  ///
+  /// In en, this message translates to:
+  /// **'Chat'**
+  String get listener_call_chat;
+
+  /// No description provided for @listener_call_rating_title.
+  ///
+  /// In en, this message translates to:
+  /// **'How was your conversation?'**
+  String get listener_call_rating_title;
+
+  /// No description provided for @listener_call_rating_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your feedback helps us improve'**
+  String get listener_call_rating_subtitle;
+
+  /// No description provided for @listener_call_rating_felt_heard.
+  ///
+  /// In en, this message translates to:
+  /// **'Did they feel heard?'**
+  String get listener_call_rating_felt_heard;
+
+  /// No description provided for @listener_call_rating_talk_again.
+  ///
+  /// In en, this message translates to:
+  /// **'Would you take another session with them?'**
+  String get listener_call_rating_talk_again;
+
+  /// No description provided for @listener_call_yes.
+  ///
+  /// In en, this message translates to:
+  /// **'Yes'**
+  String get listener_call_yes;
+
+  /// No description provided for @listener_call_no.
+  ///
+  /// In en, this message translates to:
+  /// **'No'**
+  String get listener_call_no;
+
+  /// No description provided for @listener_call_rating_submit.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit'**
+  String get listener_call_rating_submit;
+
+  /// No description provided for @listener_call_report_session.
+  ///
+  /// In en, this message translates to:
+  /// **'Report session'**
+  String get listener_call_report_session;
+
+  /// No description provided for @listener_call_report_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Report session'**
+  String get listener_call_report_title;
+
+  /// No description provided for @listener_call_report_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Tell us what happened. Our team will review your report.'**
+  String get listener_call_report_subtitle;
+
+  /// No description provided for @listener_call_report_reason_inappropriate.
+  ///
+  /// In en, this message translates to:
+  /// **'Inappropriate behavior'**
+  String get listener_call_report_reason_inappropriate;
+
+  /// No description provided for @listener_call_report_reason_harassment.
+  ///
+  /// In en, this message translates to:
+  /// **'Harassment or abuse'**
+  String get listener_call_report_reason_harassment;
+
+  /// No description provided for @listener_call_report_reason_hate_speech.
+  ///
+  /// In en, this message translates to:
+  /// **'Hate speech or discrimination'**
+  String get listener_call_report_reason_hate_speech;
+
+  /// No description provided for @listener_call_report_reason_safety.
+  ///
+  /// In en, this message translates to:
+  /// **'Safety concern'**
+  String get listener_call_report_reason_safety;
+
+  /// No description provided for @listener_call_report_reason_technical.
+  ///
+  /// In en, this message translates to:
+  /// **'Technical issue'**
+  String get listener_call_report_reason_technical;
+
+  /// No description provided for @listener_call_report_reason_other.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get listener_call_report_reason_other;
+
+  /// No description provided for @listener_call_report_submit.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit report'**
+  String get listener_call_report_submit;
+
+  /// No description provided for @listener_call_report_cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get listener_call_report_cancel;
+
+  /// No description provided for @listener_call_report_success.
+  ///
+  /// In en, this message translates to:
+  /// **'Report submitted. Our team will review it shortly.'**
+  String get listener_call_report_success;
 }
 
 class _VentingMobLocalizationsDelegate

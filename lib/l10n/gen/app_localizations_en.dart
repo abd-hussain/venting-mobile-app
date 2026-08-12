@@ -5099,4 +5099,249 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
 
   @override
   String get listener_avail_remove_slot => 'Remove';
+
+  @override
+  String listener_sessions_filter_upcoming(int count) {
+    return 'Upcoming ($count)';
+  }
+
+  @override
+  String listener_sessions_filter_missed(int count) {
+    return 'Missed ($count)';
+  }
+
+  @override
+  String get listener_sessions_filter_history => 'History';
+
+  @override
+  String get listener_sessions_upcoming_title => 'Upcoming Sessions';
+
+  @override
+  String get listener_sessions_active_title => 'Active Sessions';
+
+  @override
+  String get listener_sessions_history_title => 'Past Sessions';
+
+  @override
+  String get listener_sessions_requests_title => 'Session Requests';
+
+  @override
+  String get listener_sessions_new_request => 'New request';
+
+  @override
+  String get listener_sessions_decline => 'Decline';
+
+  @override
+  String get listener_sessions_accept => 'Accept';
+
+  @override
+  String get listener_sessions_waiting => 'They\'re waiting for you';
+
+  @override
+  String get listener_sessions_join_now => 'Join call now';
+
+  @override
+  String get listener_sessions_today => 'Today';
+
+  @override
+  String get listener_sessions_tomorrow => 'Tomorrow';
+
+  @override
+  String listener_sessions_minutes_ago(int minutes) {
+    return '${minutes}m ago';
+  }
+
+  @override
+  String listener_sessions_hours_ago(int hours) {
+    return '${hours}h ago';
+  }
+
+  @override
+  String listener_sessions_days_ago(int days) {
+    return '${days}d ago';
+  }
+
+  @override
+  String get listener_sessions_stats_title => 'Request outcomes';
+
+  @override
+  String get listener_sessions_accepted => 'Accepted';
+
+  @override
+  String get listener_sessions_declined => 'Declined';
+
+  @override
+  String get listener_sessions_stats_missed => 'Missed to enter';
+
+  @override
+  String get listener_sessions_status_accepted => 'Session accepted';
+
+  @override
+  String get listener_sessions_status_declined => 'Request declined';
+
+  @override
+  String get listener_sessions_status_completed => 'Completed';
+
+  @override
+  String get listener_sessions_no_missed => 'No missed sessions.';
+
+  @override
+  String get listener_sessions_no_history => 'No past sessions yet.';
+
+  @override
+  String get listener_sessions_chosen_you => 'Why they chose you';
+
+  @override
+  String get listener_sessions_penalty_note =>
+      'For each session you miss without entering, 20% of the session cost will be deducted from your balance.';
+
+  @override
+  String get listener_sessions_missed_title => 'Missed sessions';
+
+  @override
+  String get listener_sessions_status_missed => 'Missed — not entered';
+
+  @override
+  String listener_sessions_penalty_deducted(String amount) {
+    return '$amount deducted (20%)';
+  }
+
+  @override
+  String get listener_call_instructions_title => 'Before you join';
+
+  @override
+  String get listener_call_mode_video =>
+      'This is a video call — the ventor chose camera on.';
+
+  @override
+  String get listener_call_mode_audio =>
+      'This is a voice-only call — the ventor chose audio.';
+
+  @override
+  String get listener_call_instructions_heading =>
+      'Guidelines for this session';
+
+  @override
+  String get listener_call_instruction_respect =>
+      'Treat the ventor with respect and kindness. This is a safe space for them to share.';
+
+  @override
+  String get listener_call_instruction_listen =>
+      'Listen actively without interrupting. Let them lead the conversation.';
+
+  @override
+  String get listener_call_instruction_safe =>
+      'Keep the conversation supportive. Do not give medical or legal advice.';
+
+  @override
+  String listener_call_instruction_time(int minutes) {
+    return 'Stay for the full $minutes-minute session unless they end early.';
+  }
+
+  @override
+  String get listener_call_instruction_boundaries =>
+      'Respect boundaries. If a topic feels outside your comfort zone, guide them gently.';
+
+  @override
+  String get listener_call_permissions_heading => 'Allow camera & microphone';
+
+  @override
+  String get listener_call_permissions_subtitle =>
+      'The ventor decides whether the call is audio or video. Please allow both so you are ready either way.';
+
+  @override
+  String get listener_call_permission_mic => 'Microphone';
+
+  @override
+  String get listener_call_permission_camera => 'Camera';
+
+  @override
+  String get listener_call_permission_allow => 'Allow';
+
+  @override
+  String get listener_call_permission_granted => 'Allowed';
+
+  @override
+  String get listener_call_permission_settings =>
+      'Permission denied. Enable it in Settings to join the call.';
+
+  @override
+  String get listener_call_join_now => 'Join call';
+
+  @override
+  String get listener_call_end => 'End';
+
+  @override
+  String get listener_call_mute => 'Mute';
+
+  @override
+  String get listener_call_speaker => 'Speaker';
+
+  @override
+  String get listener_call_flip => 'Flip';
+
+  @override
+  String get listener_call_chat => 'Chat';
+
+  @override
+  String get listener_call_rating_title => 'How was your conversation?';
+
+  @override
+  String get listener_call_rating_subtitle => 'Your feedback helps us improve';
+
+  @override
+  String get listener_call_rating_felt_heard => 'Did they feel heard?';
+
+  @override
+  String get listener_call_rating_talk_again =>
+      'Would you take another session with them?';
+
+  @override
+  String get listener_call_yes => 'Yes';
+
+  @override
+  String get listener_call_no => 'No';
+
+  @override
+  String get listener_call_rating_submit => 'Submit';
+
+  @override
+  String get listener_call_report_session => 'Report session';
+
+  @override
+  String get listener_call_report_title => 'Report session';
+
+  @override
+  String get listener_call_report_subtitle =>
+      'Tell us what happened. Our team will review your report.';
+
+  @override
+  String get listener_call_report_reason_inappropriate =>
+      'Inappropriate behavior';
+
+  @override
+  String get listener_call_report_reason_harassment => 'Harassment or abuse';
+
+  @override
+  String get listener_call_report_reason_hate_speech =>
+      'Hate speech or discrimination';
+
+  @override
+  String get listener_call_report_reason_safety => 'Safety concern';
+
+  @override
+  String get listener_call_report_reason_technical => 'Technical issue';
+
+  @override
+  String get listener_call_report_reason_other => 'Other';
+
+  @override
+  String get listener_call_report_submit => 'Submit report';
+
+  @override
+  String get listener_call_report_cancel => 'Cancel';
+
+  @override
+  String get listener_call_report_success =>
+      'Report submitted. Our team will review it shortly.';
 }

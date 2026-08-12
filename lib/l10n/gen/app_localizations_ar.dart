@@ -5071,4 +5071,245 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
 
   @override
   String get listener_avail_remove_slot => 'إزالة';
+
+  @override
+  String listener_sessions_filter_upcoming(int count) {
+    return 'القادمة ($count)';
+  }
+
+  @override
+  String listener_sessions_filter_missed(int count) {
+    return 'الفائتة ($count)';
+  }
+
+  @override
+  String get listener_sessions_filter_history => 'السجل';
+
+  @override
+  String get listener_sessions_upcoming_title => 'الجلسات القادمة';
+
+  @override
+  String get listener_sessions_active_title => 'الجلسات النشطة';
+
+  @override
+  String get listener_sessions_history_title => 'الجلسات الماضية';
+
+  @override
+  String get listener_sessions_requests_title => 'طلبات الجلسات';
+
+  @override
+  String get listener_sessions_new_request => 'طلب جديد';
+
+  @override
+  String get listener_sessions_decline => 'رفض';
+
+  @override
+  String get listener_sessions_accept => 'قبول';
+
+  @override
+  String get listener_sessions_waiting => 'ينتظرونك';
+
+  @override
+  String get listener_sessions_join_now => 'انضم للمكالمة الآن';
+
+  @override
+  String get listener_sessions_today => 'اليوم';
+
+  @override
+  String get listener_sessions_tomorrow => 'غداً';
+
+  @override
+  String listener_sessions_minutes_ago(int minutes) {
+    return 'منذ $minutes د';
+  }
+
+  @override
+  String listener_sessions_hours_ago(int hours) {
+    return 'منذ $hours س';
+  }
+
+  @override
+  String listener_sessions_days_ago(int days) {
+    return 'منذ $days ي';
+  }
+
+  @override
+  String get listener_sessions_stats_title => 'نتائج الطلبات';
+
+  @override
+  String get listener_sessions_accepted => 'مقبولة';
+
+  @override
+  String get listener_sessions_declined => 'مرفوضة';
+
+  @override
+  String get listener_sessions_stats_missed => 'فائتة — لم يتم الدخول';
+
+  @override
+  String get listener_sessions_status_accepted => 'جلسة مقبولة';
+
+  @override
+  String get listener_sessions_status_declined => 'طلب مرفوض';
+
+  @override
+  String get listener_sessions_status_completed => 'مكتملة';
+
+  @override
+  String get listener_sessions_no_missed => 'لا توجد جلسات فائتة.';
+
+  @override
+  String get listener_sessions_no_history => 'لا توجد جلسات ماضية بعد.';
+
+  @override
+  String get listener_sessions_chosen_you => 'لماذا اختاروك';
+
+  @override
+  String get listener_sessions_penalty_note =>
+      'لكل جلسة لا تدخلها، سيتم خصم 20% من تكلفة الجلسة من رصيدك.';
+
+  @override
+  String get listener_sessions_missed_title => 'الجلسات الفائتة';
+
+  @override
+  String get listener_sessions_status_missed => 'فائتة — لم يتم الدخول';
+
+  @override
+  String listener_sessions_penalty_deducted(String amount) {
+    return 'تم خصم $amount (20%)';
+  }
+
+  @override
+  String get listener_call_instructions_title => 'قبل الانضمام';
+
+  @override
+  String get listener_call_mode_video =>
+      'مكالمة فيديو — اختار المرسل تشغيل الكاميرا.';
+
+  @override
+  String get listener_call_mode_audio =>
+      'مكالمة صوتية فقط — اختار المرسل الصوت.';
+
+  @override
+  String get listener_call_instructions_heading => 'إرشادات هذه الجلسة';
+
+  @override
+  String get listener_call_instruction_respect =>
+      'عامل المرسل باحترام ولطف. هذه مساحة آمنة لمشاركة مشاعره.';
+
+  @override
+  String get listener_call_instruction_listen =>
+      'استمع بفعالية دون مقاطعة. دعه يقود المحادثة.';
+
+  @override
+  String get listener_call_instruction_safe =>
+      'اجعل المحادثة داعمة. لا تقدم نصائح طبية أو قانونية.';
+
+  @override
+  String listener_call_instruction_time(int minutes) {
+    return 'ابقَ طوال الجلسة ($minutes دقيقة) ما لم ينهِها مبكراً.';
+  }
+
+  @override
+  String get listener_call_instruction_boundaries =>
+      'احترم الحدود. إذا شعرت أن الموضوع خارج نطاق راحتك، وجّهه بلطف.';
+
+  @override
+  String get listener_call_permissions_heading => 'اسمح بالكاميرا والميكروفون';
+
+  @override
+  String get listener_call_permissions_subtitle =>
+      'المرسل يحدد ما إذا كانت المكالمة صوتية أو مرئية. يرجى السماح بكليهما للاستعداد في أي حال.';
+
+  @override
+  String get listener_call_permission_mic => 'الميكروفون';
+
+  @override
+  String get listener_call_permission_camera => 'الكاميرا';
+
+  @override
+  String get listener_call_permission_allow => 'سماح';
+
+  @override
+  String get listener_call_permission_granted => 'مسموح';
+
+  @override
+  String get listener_call_permission_settings =>
+      'تم رفض الإذن. فعّله من الإعدادات للانضمام للمكالمة.';
+
+  @override
+  String get listener_call_join_now => 'انضم للمكالمة';
+
+  @override
+  String get listener_call_end => 'إنهاء';
+
+  @override
+  String get listener_call_mute => 'كتم';
+
+  @override
+  String get listener_call_speaker => 'مكبر الصوت';
+
+  @override
+  String get listener_call_flip => 'قلب';
+
+  @override
+  String get listener_call_chat => 'محادثة';
+
+  @override
+  String get listener_call_rating_title => 'كيف كانت محادثتك؟';
+
+  @override
+  String get listener_call_rating_subtitle => 'ملاحظاتك تساعدنا على التحسين';
+
+  @override
+  String get listener_call_rating_felt_heard => 'هل شعر أنه مسموع؟';
+
+  @override
+  String get listener_call_rating_talk_again => 'هل تقبل جلسة أخرى معه؟';
+
+  @override
+  String get listener_call_yes => 'نعم';
+
+  @override
+  String get listener_call_no => 'لا';
+
+  @override
+  String get listener_call_rating_submit => 'إرسال';
+
+  @override
+  String get listener_call_report_session => 'الإبلاغ عن الجلسة';
+
+  @override
+  String get listener_call_report_title => 'الإبلاغ عن الجلسة';
+
+  @override
+  String get listener_call_report_subtitle =>
+      'أخبرنا بما حدث. سيقوم فريقنا بمراجعة بلاغك.';
+
+  @override
+  String get listener_call_report_reason_inappropriate => 'سلوك غير لائق';
+
+  @override
+  String get listener_call_report_reason_harassment => 'تحرش أو إساءة';
+
+  @override
+  String get listener_call_report_reason_hate_speech => 'خطاب كراهية أو تمييز';
+
+  @override
+  String get listener_call_report_reason_safety => 'مخاوف تتعلق بالسلامة';
+
+  @override
+  String get listener_call_report_reason_technical => 'مشكلة تقنية';
+
+  @override
+  String get listener_call_report_reason_other => 'أخرى';
+
+  @override
+  String get listener_call_report_submit => 'إرسال البلاغ';
+
+  @override
+  String get listener_call_report_cancel => 'إلغاء';
+
+  @override
+  String get listener_call_report_success =>
+      'تم إرسال البلاغ. سيقوم فريقنا بمراجعته قريباً.';
 }
