@@ -341,7 +341,7 @@ Requires Flutter, Ruby/Bundler, signing files, and Play JSON already in place un
 
 ## iOS CI/CD (TestFlight)
 
-The `ios` job in `.github/workflows/deploy.yml` runs on `macos-15` for pushes to `main` and `dev` (same branch → flavor mapping as Android). It signs with Fastlane Match (App Store), builds the flavored IPA, and uploads to TestFlight via an App Store Connect API key (`make deploy-ios`).
+The `ios` job in `.github/workflows/deploy.yml` runs on `macos-26` (Xcode 26 / iOS 26 SDK — required by App Store Connect) for pushes to `main` and `dev` (same branch → flavor mapping as Android). It signs with Fastlane Match (App Store), builds the flavored IPA, and uploads to TestFlight via an App Store Connect API key (`make deploy-ios`).
 
 Build numbers use the shared date format `YYYYMMDDHHMM` from `scripts/update_build_date.sh` (same as Android).
 

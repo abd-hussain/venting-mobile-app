@@ -218,7 +218,7 @@ jobs:
           echo "Updated commit message: $COMMIT_MSG"
 
   ios:
-    runs-on: macos-15
+    runs-on: macos-26
 
     steps:
       - name: 📚 Git Checkout
@@ -270,35 +270,48 @@ jobs:
           echo "📱 Bundle: $BUNDLE_ID"
           echo "📐 Scheme: $IOS_SCHEME"
 
-      - name: 🔀 Select Xcode with iPhoneOS SDK
+      - name: 🔀 Select Xcode 26+ (iOS 26 SDK required by App Store Connect)
         shell: bash
         run: |
           set -euo pipefail
 
           choose_xcode() {
             for X in "$@"; do
+              [[ -d "$X" ]] || continue
               SDK="$X/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iphoneos.sdk"
               [[ -d "$SDK" ]] || continue
 
-              >&2 echo "Checking $X"
-              if /usr/libexec/PlistBuddy -c 'Print :DTPlatformVersion' "$SDK/SDKSettings.plist" 2>/dev/null | grep -q '^18'; then
+              VER="$(/usr/libexec/PlistBuddy -c 'Print :DTPlatformVersion' "$SDK/SDKSettings.plist" 2>/dev/null || true)"
+              >&2 echo "Checking $X (iPhoneOS SDK $VER)"
+              # Prefer iOS 26+ SDK (ASC rejects older SDKs for upload)
+              if [[ "$VER" == 26* ]] || [[ "$VER" == 27* ]]; then
                 echo "$X"; return 0
               fi
+            done
+            # Fallback: first installed candidate that has any iPhoneOS SDK
+            for X in "$@"; do
+              SDK="$X/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iphoneos.sdk"
+              [[ -d "$SDK" ]] || continue
               echo "$X"; return 0
             done
             return 1
           }
 
           PICK="$(choose_xcode \
-            /Applications/Xcode_16.4.app \
-            /Applications/Xcode_16.3.app \
-            /Applications/Xcode_16.2.app \
-            /Applications/Xcode_16.1.app \
-            /Applications/Xcode_16.app \
+            /Applications/Xcode_26.6.app \
+            /Applications/Xcode_26.5.app \
+            /Applications/Xcode_26.4.1.app \
+            /Applications/Xcode_26.4.app \
+            /Applications/Xcode_26.3.app \
+            /Applications/Xcode_26.2.app \
+            /Applications/Xcode_26.1.1.app \
+            /Applications/Xcode_26.0.1.app \
+            /Applications/Xcode_26.app \
             /Applications/Xcode.app)"
 
           if [[ -z "$PICK" ]]; then
-            echo "❌ No suitable Xcode 16.x with iPhoneOS SDK found" >&2
+            echo "❌ No suitable Xcode 26.x with iPhoneOS 26+ SDK found" >&2
+            ls /Applications/Xcode*.app 2>/dev/null || true
             exit 1
           fi
 
@@ -308,6 +321,15 @@ jobs:
           sudo xcodebuild -runFirstLaunch || true
           xcodebuild -version
           xcodebuild -showsdks || true
+          SDK_VER="$(xcodebuild -version -sdk iphoneos ProductVersion 2>/dev/null || true)"
+          echo "iPhoneOS SDK: $SDK_VER"
+          case "$SDK_VER" in
+            26*|27*) echo "✅ SDK meets App Store Connect requirement" ;;
+            *)
+              echo "❌ App Store Connect requires iOS 26+ SDK; got: $SDK_VER"
+              exit 1
+              ;;
+          esac
 
       - name: 🐦 Setup Flutter
         uses: subosito/flutter-action@v2
