@@ -1,0 +1,134 @@
+# Fastlane configuration for Venting iOS → TestFlight
+# Docs: https://docs.fastlane.tools
+#
+# Flavors (same as Android):
+#   prod → scheme prod, bundle com.vent.ventingMobileApp, main_prod.dart
+#   dev  → scheme dev,  bundle com.vent.ventingMobileApp.dev, main_dev.dart
+# Override via ENV: FLAVOR, ENTRYPOINT, DART_DEFINE_FILE, BUNDLE_ID, IOS_SCHEME
+
+default_platform(:ios)
+
+TEAM_ID = "DX9H87DTX5"
+
+platform :ios do
+  def flavor_config
+    flavor = (ENV["FLAVOR"] || "prod").downcase
+    case flavor
+    when "prod"
+      {
+        flavor: "prod",
+        scheme: ENV["IOS_SCHEME"] || "prod",
+        bundle_id: ENV["BUNDLE_ID"] || "com.vent.ventingMobileApp",
+        entrypoint: ENV["ENTRYPOINT"] || "lib/main_prod.dart",
+        dart_define_file: ENV["DART_DEFINE_FILE"] || ".env/config.prod.json"
+      }
+    when "dev"
+      {
+        flavor: "dev",
+        scheme: ENV["IOS_SCHEME"] || "dev",
+        bundle_id: ENV["BUNDLE_ID"] || "com.vent.ventingMobileApp.dev",
+        entrypoint: ENV["ENTRYPOINT"] || "lib/main_dev.dart",
+        dart_define_file: ENV["DART_DEFINE_FILE"] || ".env/config.dev.json"
+      }
+    else
+      UI.user_error!("Unsupported FLAVOR=#{flavor}. Use prod or dev.")
+    end
+  end
+
+  desc "Set Info.plist Version and Build Number from pubspec via flutter_version"
+  lane :set_full_version do
+    version = flutter_version() # from fastlane-plugin-flutter_version
+    increment_version_number(version_number: version['version_name'])
+    increment_build_number(build_number: version['version_code'])
+  end
+
+  # Shared xcargs to force correct signing in CI (no provisioning specifier here!)
+  def signing_xcargs
+    %Q[
+      -allowProvisioningUpdates
+      CODE_SIGN_STYLE=Manual
+      DEVELOPMENT_TEAM=#{TEAM_ID}
+      CODE_SIGN_IDENTITY="Apple Distribution"
+      CODE_SIGNING_ALLOWED=YES
+      CODE_SIGNING_REQUIRED=YES
+    ].gsub(/\s+/, ' ').strip
+  end
+
+  def prepare_flutter_flavor_config(cfg)
+    # Ensures Generated.xcconfig points at the flavor entrypoint + dart-defines before archive.
+    root = File.expand_path("../..", __dir__)
+    Dir.chdir(root) do
+      sh(
+        "flutter", "build", "ios",
+        "--config-only",
+        "--release",
+        "--flavor", cfg[:flavor],
+        "-t", cfg[:entrypoint],
+        "--dart-define-from-file=#{cfg[:dart_define_file]}"
+      )
+    end
+  end
+
+  def match_appstore!(bundle_id)
+    match(
+      type: "appstore",
+      readonly: is_ci,
+      app_identifier: [bundle_id],
+      team_id: TEAM_ID
+    )
+  end
+
+  def build_signed_ipa!(cfg)
+    ENV["FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT"] = "120"
+    ENV["FASTLANE_XCODEBUILD_SETTINGS_RETRIES"] = "6"
+
+    bundle_id = cfg[:bundle_id]
+    UI.message("🍎 Building flavor=#{cfg[:flavor]} scheme=#{cfg[:scheme]} bundle=#{bundle_id}")
+
+    build_app(
+      workspace: "Runner.xcworkspace",
+      scheme: cfg[:scheme],
+      destination: "generic/platform=iOS",
+      archive_path: "../build/ios/Runner.xcarchive",
+      output_directory: "../build/ios/Runner",
+      export_method: "app-store",
+      xcargs: signing_xcargs,
+      export_options: {
+        provisioningProfiles: {
+          bundle_id => "match AppStore #{bundle_id}"
+        }
+      }
+    )
+  end
+
+  desc "Build and upload a new beta to TestFlight (FLAVOR=prod|dev)"
+  lane :deploy do
+    cfg = flavor_config
+    set_full_version()
+    setup_ci if is_ci
+    prepare_flutter_flavor_config(cfg)
+    cocoapods(clean_install: is_ci)
+    match_appstore!(cfg[:bundle_id])
+    build_signed_ipa!(cfg)
+
+    upload_to_testflight(
+      api_key_path: File.expand_path("../app_store_connect.json", __dir__),
+      ipa: "../build/ios/Runner/Runner.ipa",
+      skip_waiting_for_build_processing: true,
+      app_identifier: cfg[:bundle_id]
+    )
+  end
+
+  desc "Build iOS archive only (no upload) — useful for debugging CI signing"
+  lane :build_archive do
+    cfg = flavor_config
+    set_full_version()
+    setup_ci if is_ci
+    prepare_flutter_flavor_config(cfg)
+    cocoapods(clean_install: is_ci)
+    match_appstore!(cfg[:bundle_id])
+    build_signed_ipa!(cfg)
+
+    UI.success("✅ iOS archive built successfully at ../build/ios/Runner/Runner.ipa (#{cfg[:flavor]})")
+  end
+end

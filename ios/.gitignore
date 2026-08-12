@@ -32,3 +32,9 @@ Runner/GeneratedPluginRegistrant.*
 !default.mode2v3
 !default.pbxuser
 !default.perspectivev3
+
+# App Store Connect API key (decoded in CI from APPSTORE_CONNECT secret)
+app_store_connect.json
+fastlane/app_store_connect.json
+fastlane/report.xml
+fastlane/README.md

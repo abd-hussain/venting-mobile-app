@@ -338,3 +338,104 @@ make deploy-android
 ```
 
 Requires Flutter, Ruby/Bundler, signing files, and Play JSON already in place under `android/`.
+
+## iOS CI/CD (TestFlight)
+
+The `ios` job in `.github/workflows/deploy.yml` runs on `macos-15` for pushes to `main` and `dev` (same branch → flavor mapping as Android). It signs with Fastlane Match (App Store), builds the flavored IPA, and uploads to TestFlight via an App Store Connect API key (`make deploy-ios`).
+
+Build numbers use the shared date format `YYYYMMDDHHMM` from `scripts/update_build_date.sh` (same as Android).
+
+| Branch | Flavor | Scheme | Entrypoint | Bundle ID |
+| --- | --- | --- | --- | --- |
+| `main` | `prod` | `prod` | `lib/main_prod.dart` | `com.vent.ventingMobileApp` |
+| `dev` | `dev` | `dev` | `lib/main_dev.dart` | `com.vent.ventingMobileApp.dev` |
+
+| Item | Value |
+| --- | --- |
+| Developer Team ID | `DX9H87DTX5` |
+| Match repo | `https://github.com/abd-hussain/Venting-Certificates` (private) |
+| Flutter | from `.fvmrc` (currently 3.41.7) |
+
+### Required GitHub secrets
+
+| Secret | Purpose |
+| --- | --- |
+| `APPSTORE_CONNECT` | Base64 of App Store Connect API key JSON |
+| `IOS_MATCH_PASSWORD` | Fastlane Match encryption password → runtime `MATCH_PASSWORD` |
+| `GIT_BASIC_AUTHORIZATION` | Base64 `username:token` for the private Match certificates git repo → runtime `MATCH_GIT_BASIC_AUTHORIZATION` |
+
+### Encode the ASC API key (macOS)
+
+```bash
+# App Store Connect → Users and Access → Integrations → Team Keys → download AuthKey_XXX.p8
+# Build the JSON Fastlane expects, then:
+base64 -i AuthKey_XXX.json | pbcopy
+```
+
+Example JSON shape:
+
+```json
+{
+  "key_id": "XXXXXXXXXX",
+  "issuer_id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+  "key": "-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----",
+  "in_house": false
+}
+```
+
+Paste into the `APPSTORE_CONNECT` repository secret. CI writes it to `ios/app_store_connect.json` (gitignored).
+
+Encode Match git auth:
+
+```bash
+echo -n "github-username:ghp_yourPersonalAccessToken" | base64 | pbcopy
+```
+
+### Match certificates repo
+
+1. Create a **private** GitHub repo `Venting-Certificates` (URL must match `ios/fastlane/Matchfile`).
+2. Bootstrap **once locally** (not in CI readonly mode) while logged into the Apple Developer account that owns team `DX9H87DTX5`:
+
+```bash
+cd ios
+bundle install
+# First run creates certs + App Store profiles for BOTH flavors:
+MATCH_PASSWORD='your-match-passphrase' bundle exec fastlane match appstore
+```
+
+3. Confirm the repo contains App Store profiles for both:
+   - `match AppStore com.vent.ventingMobileApp`
+   - `match AppStore com.vent.ventingMobileApp.dev`
+4. Ensure both bundle IDs exist as separate apps in App Store Connect (prod + `.dev`) if you upload both flavors to TestFlight.
+5. Set `IOS_MATCH_PASSWORD` and `GIT_BASIC_AUTHORIZATION` in GitHub Actions secrets.
+6. CI uses Match with `readonly: true` and never regenerates certs.
+
+### Manual iOS deploy
+
+```bash
+# Requires Match env + ios/app_store_connect.json present
+
+# Production (default) — same as push to main
+make deploy-ios
+
+# Dev flavor — same as push to dev
+FLAVOR=dev \
+ENTRYPOINT=lib/main_dev.dart \
+DART_DEFINE_FILE=.env/config.dev.json \
+BUNDLE_ID=com.vent.ventingMobileApp.dev \
+IOS_SCHEME=dev \
+make deploy-ios
+```
+
+Archive-only (no TestFlight upload):
+
+```bash
+cd ios && FLAVOR=prod bundle exec fastlane build_archive
+cd ios && FLAVOR=dev bundle exec fastlane build_archive
+```
+
+### Verify after a green CI run
+
+1. Open [App Store Connect](https://appstoreconnect.apple.com) → the matching Venting app (prod or `.dev`) → TestFlight.
+2. Confirm a new build with the date-based build number from the workflow log (`build_number` output).
+3. Processing may continue after CI finishes (`skip_waiting_for_build_processing: true`).
