@@ -70,13 +70,13 @@ platform :ios do
   end
 
   def match_appstore!(bundle_id)
+    # CI auth: workflow configures git url.insteadOf (HTTPS user:token).
+    # Do not rely on Match's http.extraheader clone flag — it can fail on runners.
     match(
       type: "appstore",
       readonly: is_ci,
       app_identifier: [bundle_id],
-      team_id: TEAM_ID,
-      clone_branch_directly: true,
-      git_basic_authorization: ENV["MATCH_GIT_BASIC_AUTHORIZATION"]
+      team_id: TEAM_ID
     )
   end
 
