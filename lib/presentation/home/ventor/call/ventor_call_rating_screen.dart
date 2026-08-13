@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/call/ventor_call_args.dart';
+import 'package:venting_mobile_app/presentation/home/ventor/call/ventor_call_report_bottom_sheet.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/profile/ventor_profile_theme.dart';
 import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dart';
 
@@ -28,6 +29,7 @@ class _VentorCallRatingScreenState extends State<VentorCallRatingScreen> {
   int? _selectedTip;
   final _reviewController = TextEditingController();
   var _submitting = false;
+  VentorCallReportResult? _reported;
 
   @override
   void dispose() {
@@ -37,17 +39,87 @@ class _VentorCallRatingScreenState extends State<VentorCallRatingScreen> {
 
   String _money(int amount) => '\$$amount';
 
+  Future<void> _onReportListener() async {
+    if (_submitting) return;
+    final result = await showVentorCallReportBottomSheet(
+      context: context,
+      listenerName: widget.args.listenerName,
+    );
+    if (!mounted || result == null) return;
+    setState(() => _reported = result);
+    await _showReportReceivedDialog();
+  }
+
+  Future<void> _showReportReceivedDialog() async {
+    final l10n = VentingMobLocalizations.of(context);
+    await showDialog<void>(
+      context: context,
+      builder: (ctx) {
+        return AlertDialog(
+          backgroundColor: VentorProfileTheme.cardFill,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+            side: const BorderSide(color: VentorProfileTheme.cardBorder),
+          ),
+          icon: const Icon(
+            Icons.verified_user_outlined,
+            color: SplashColors.purpleMid,
+            size: 36,
+          ),
+          title: Text(
+            l10n.ventor_call_report_received_title,
+            textAlign: TextAlign.center,
+            style: GoogleFonts.inter(
+              color: Colors.white,
+              fontWeight: FontWeight.w700,
+              fontSize: 18,
+            ),
+          ),
+          content: Text(
+            l10n.ventor_call_report_received_body,
+            textAlign: TextAlign.center,
+            style: GoogleFonts.inter(
+              color: VentorProfileTheme.muted,
+              fontSize: 14,
+              height: 1.45,
+            ),
+          ),
+          actionsAlignment: MainAxisAlignment.center,
+          actions: [
+            FilledButton(
+              onPressed: () => Navigator.of(ctx).pop(),
+              style: FilledButton.styleFrom(
+                backgroundColor: SplashColors.purpleMid,
+                foregroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+              child: Text(
+                l10n.ventor_call_report_received_ok,
+                style: GoogleFonts.inter(fontWeight: FontWeight.w700),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+    if (!mounted) return;
+    Navigator.of(context).pop(true);
+  }
+
   Future<void> _submit() async {
     if (_submitting) return;
     setState(() => _submitting = true);
 
-    // TODO: Submit rating + optional tip to API.
+    // TODO: Submit rating + optional tip (+ report if any) to API.
     await Future<void>.delayed(const Duration(milliseconds: 500));
     if (!mounted) return;
 
     final l10n = VentingMobLocalizations.of(context);
     final tip = _selectedTip;
-    ScaffoldMessenger.of(context).showSnackBar(
+    final messenger = ScaffoldMessenger.of(context);
+    messenger.showSnackBar(
       SnackBar(
         content: Text(
           tip == null
@@ -218,7 +290,34 @@ class _VentorCallRatingScreenState extends State<VentorCallRatingScreen> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(24, 8, 24, 20),
+                padding: const EdgeInsets.fromLTRB(24, 0, 24, 8),
+                child: TextButton.icon(
+                  onPressed: _submitting ? null : _onReportListener,
+                  icon: Icon(
+                    _reported == null
+                        ? Icons.flag_outlined
+                        : Icons.flag_rounded,
+                    size: 16,
+                    color: _reported == null
+                        ? VentorProfileTheme.muted
+                        : const Color(0xFFE57373),
+                  ),
+                  label: Text(
+                    _reported == null
+                        ? l10n.ventor_call_report_listener
+                        : l10n.ventor_call_report_submitted,
+                    style: GoogleFonts.inter(
+                      color: _reported == null
+                          ? VentorProfileTheme.muted
+                          : const Color(0xFFE57373),
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(24, 0, 24, 20),
                 child: SizedBox(
                   width: double.infinity,
                   height: 54,

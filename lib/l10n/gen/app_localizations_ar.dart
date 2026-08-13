@@ -6699,4 +6699,63 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
   String ventor_call_rating_thanks_with_tip(String amount) {
     return 'شكرًا! تم إرسال إكراميتك بقيمة $amount.';
   }
+
+  @override
+  String get ventor_call_report_listener => 'الإبلاغ عن المستمع';
+
+  @override
+  String get ventor_call_report_submitted => 'تم الإبلاغ عن المستمع';
+
+  @override
+  String get ventor_call_report_title => 'الإبلاغ عن المستمع';
+
+  @override
+  String ventor_call_report_subtitle(String name) {
+    return 'أخبرنا بما حدث مع $name. سيراجع فريقنا بلاغك.';
+  }
+
+  @override
+  String get ventor_call_report_reason_inappropriate => 'سلوك غير لائق';
+
+  @override
+  String get ventor_call_report_reason_harassment => 'تحرش أو إساءة';
+
+  @override
+  String get ventor_call_report_reason_hate_speech => 'خطاب كراهية أو تمييز';
+
+  @override
+  String get ventor_call_report_reason_safety => 'مخاوف تتعلق بالسلامة';
+
+  @override
+  String get ventor_call_report_reason_not_listening =>
+      'لم يكن مستمعًا أو داعمًا';
+
+  @override
+  String get ventor_call_report_reason_technical => 'مشكلة تقنية';
+
+  @override
+  String get ventor_call_report_reason_other => 'أخرى';
+
+  @override
+  String get ventor_call_report_other_hint => 'يرجى وصف ما حدث…';
+
+  @override
+  String get ventor_call_report_submit => 'إرسال البلاغ';
+
+  @override
+  String get ventor_call_report_cancel => 'إلغاء';
+
+  @override
+  String get ventor_call_report_success =>
+      'تم إرسال البلاغ. سيراجعه فريقنا قريبًا.';
+
+  @override
+  String get ventor_call_report_received_title => 'استلمنا بلاغك';
+
+  @override
+  String get ventor_call_report_received_body =>
+      'سنراجع بلاغك بعناية. وإن لزم الأمر، سنعيد لك المبلغ ونقدّم أي تعويض مناسب.';
+
+  @override
+  String get ventor_call_report_received_ok => 'حسنًا';
 }

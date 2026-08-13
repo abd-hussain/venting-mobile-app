@@ -12012,6 +12012,114 @@ abstract class VentingMobLocalizations {
   /// In en, this message translates to:
   /// **'Thanks! Your {amount} tip was sent.'**
   String ventor_call_rating_thanks_with_tip(String amount);
+
+  /// No description provided for @ventor_call_report_listener.
+  ///
+  /// In en, this message translates to:
+  /// **'Report listener'**
+  String get ventor_call_report_listener;
+
+  /// No description provided for @ventor_call_report_submitted.
+  ///
+  /// In en, this message translates to:
+  /// **'Listener reported'**
+  String get ventor_call_report_submitted;
+
+  /// No description provided for @ventor_call_report_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Report listener'**
+  String get ventor_call_report_title;
+
+  /// No description provided for @ventor_call_report_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Tell us what went wrong with {name}. Our team will review your report.'**
+  String ventor_call_report_subtitle(String name);
+
+  /// No description provided for @ventor_call_report_reason_inappropriate.
+  ///
+  /// In en, this message translates to:
+  /// **'Inappropriate behavior'**
+  String get ventor_call_report_reason_inappropriate;
+
+  /// No description provided for @ventor_call_report_reason_harassment.
+  ///
+  /// In en, this message translates to:
+  /// **'Harassment or abuse'**
+  String get ventor_call_report_reason_harassment;
+
+  /// No description provided for @ventor_call_report_reason_hate_speech.
+  ///
+  /// In en, this message translates to:
+  /// **'Hate speech or discrimination'**
+  String get ventor_call_report_reason_hate_speech;
+
+  /// No description provided for @ventor_call_report_reason_safety.
+  ///
+  /// In en, this message translates to:
+  /// **'Safety concern'**
+  String get ventor_call_report_reason_safety;
+
+  /// No description provided for @ventor_call_report_reason_not_listening.
+  ///
+  /// In en, this message translates to:
+  /// **'Wasn’t listening or supportive'**
+  String get ventor_call_report_reason_not_listening;
+
+  /// No description provided for @ventor_call_report_reason_technical.
+  ///
+  /// In en, this message translates to:
+  /// **'Technical issue'**
+  String get ventor_call_report_reason_technical;
+
+  /// No description provided for @ventor_call_report_reason_other.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get ventor_call_report_reason_other;
+
+  /// No description provided for @ventor_call_report_other_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Please describe what happened…'**
+  String get ventor_call_report_other_hint;
+
+  /// No description provided for @ventor_call_report_submit.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit report'**
+  String get ventor_call_report_submit;
+
+  /// No description provided for @ventor_call_report_cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get ventor_call_report_cancel;
+
+  /// No description provided for @ventor_call_report_success.
+  ///
+  /// In en, this message translates to:
+  /// **'Report submitted. Our team will review it shortly.'**
+  String get ventor_call_report_success;
+
+  /// No description provided for @ventor_call_report_received_title.
+  ///
+  /// In en, this message translates to:
+  /// **'We’ve received your report'**
+  String get ventor_call_report_received_title;
+
+  /// No description provided for @ventor_call_report_received_body.
+  ///
+  /// In en, this message translates to:
+  /// **'We’ll look carefully into your report. If needed, we’ll refund you and provide any appropriate compensation.'**
+  String get ventor_call_report_received_body;
+
+  /// No description provided for @ventor_call_report_received_ok.
+  ///
+  /// In en, this message translates to:
+  /// **'Got it'**
+  String get ventor_call_report_received_ok;
 }
 
 class _VentingMobLocalizationsDelegate

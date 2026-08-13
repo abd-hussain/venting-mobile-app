@@ -14,6 +14,7 @@ import 'package:venting_mobile_app/presentation/home/ventor/sessions/ventor_list
 import 'package:venting_mobile_app/presentation/home/ventor/sessions/ventor_sessions_filter_sheet.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/sessions/ventor_sessions_models.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/sessions/ventor_sessions_widgets.dart';
+import 'package:venting_mobile_app/presentation/home/ventor/ventor_home_shell.dart';
 import 'package:venting_mobile_app/presentation/listener_registration/widgets/phone_country_picker.dart';
 import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dart';
 
@@ -284,6 +285,7 @@ class _VentorSessionsTabState extends State<VentorSessionsTab> {
             item,
       ];
     });
+    VentorHomeShell.goToDashboard(context);
   }
 
   List<Widget> _findChildren(VentingMobLocalizations l10n) {

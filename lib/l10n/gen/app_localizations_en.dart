@@ -6745,4 +6745,65 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
   String ventor_call_rating_thanks_with_tip(String amount) {
     return 'Thanks! Your $amount tip was sent.';
   }
+
+  @override
+  String get ventor_call_report_listener => 'Report listener';
+
+  @override
+  String get ventor_call_report_submitted => 'Listener reported';
+
+  @override
+  String get ventor_call_report_title => 'Report listener';
+
+  @override
+  String ventor_call_report_subtitle(String name) {
+    return 'Tell us what went wrong with $name. Our team will review your report.';
+  }
+
+  @override
+  String get ventor_call_report_reason_inappropriate =>
+      'Inappropriate behavior';
+
+  @override
+  String get ventor_call_report_reason_harassment => 'Harassment or abuse';
+
+  @override
+  String get ventor_call_report_reason_hate_speech =>
+      'Hate speech or discrimination';
+
+  @override
+  String get ventor_call_report_reason_safety => 'Safety concern';
+
+  @override
+  String get ventor_call_report_reason_not_listening =>
+      'Wasn’t listening or supportive';
+
+  @override
+  String get ventor_call_report_reason_technical => 'Technical issue';
+
+  @override
+  String get ventor_call_report_reason_other => 'Other';
+
+  @override
+  String get ventor_call_report_other_hint => 'Please describe what happened…';
+
+  @override
+  String get ventor_call_report_submit => 'Submit report';
+
+  @override
+  String get ventor_call_report_cancel => 'Cancel';
+
+  @override
+  String get ventor_call_report_success =>
+      'Report submitted. Our team will review it shortly.';
+
+  @override
+  String get ventor_call_report_received_title => 'We’ve received your report';
+
+  @override
+  String get ventor_call_report_received_body =>
+      'We’ll look carefully into your report. If needed, we’ll refund you and provide any appropriate compensation.';
+
+  @override
+  String get ventor_call_report_received_ok => 'Got it';
 }

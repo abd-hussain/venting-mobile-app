@@ -11,12 +11,31 @@ import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dar
 class VentorHomeShell extends StatefulWidget {
   const VentorHomeShell({super.key});
 
+  static const dashboardTab = 0;
+  static const sessionsTab = 1;
+  static const rewardsTab = 2;
+  static const profileTab = 3;
+
+  /// Switch the bottom tab if a [VentorHomeShell] is an ancestor.
+  static void goToTab(BuildContext context, int index) {
+    context.findAncestorStateOfType<_VentorHomeShellState>()?.goToTab(index);
+  }
+
+  static void goToDashboard(BuildContext context) {
+    goToTab(context, dashboardTab);
+  }
+
   @override
   State<VentorHomeShell> createState() => _VentorHomeShellState();
 }
 
 class _VentorHomeShellState extends State<VentorHomeShell> {
   int _index = 0;
+
+  void goToTab(int index) {
+    if (index < 0 || index >= _tabs.length || index == _index) return;
+    setState(() => _index = index);
+  }
 
   static const _tabs = <Widget>[
     VentorDashboardTab(),

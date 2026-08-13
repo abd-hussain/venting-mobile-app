@@ -4779,5 +4779,45 @@
     "placeholders": {
       "amount": { "type": "String" }
     }
-  }
+  },
+  "ventor_call_report_listener": "Report listener",
+  "@ventor_call_report_listener": {},
+  "ventor_call_report_submitted": "Listener reported",
+  "@ventor_call_report_submitted": {},
+  "ventor_call_report_title": "Report listener",
+  "@ventor_call_report_title": {},
+  "ventor_call_report_subtitle": "Tell us what went wrong with {name}. Our team will review your report.",
+  "@ventor_call_report_subtitle": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+  "ventor_call_report_reason_inappropriate": "Inappropriate behavior",
+  "@ventor_call_report_reason_inappropriate": {},
+  "ventor_call_report_reason_harassment": "Harassment or abuse",
+  "@ventor_call_report_reason_harassment": {},
+  "ventor_call_report_reason_hate_speech": "Hate speech or discrimination",
+  "@ventor_call_report_reason_hate_speech": {},
+  "ventor_call_report_reason_safety": "Safety concern",
+  "@ventor_call_report_reason_safety": {},
+  "ventor_call_report_reason_not_listening": "Wasn’t listening or supportive",
+  "@ventor_call_report_reason_not_listening": {},
+  "ventor_call_report_reason_technical": "Technical issue",
+  "@ventor_call_report_reason_technical": {},
+  "ventor_call_report_reason_other": "Other",
+  "@ventor_call_report_reason_other": {},
+  "ventor_call_report_other_hint": "Please describe what happened…",
+  "@ventor_call_report_other_hint": {},
+  "ventor_call_report_submit": "Submit report",
+  "@ventor_call_report_submit": {},
+  "ventor_call_report_cancel": "Cancel",
+  "@ventor_call_report_cancel": {},
+  "ventor_call_report_success": "Report submitted. Our team will review it shortly.",
+  "@ventor_call_report_success": {},
+  "ventor_call_report_received_title": "We’ve received your report",
+  "@ventor_call_report_received_title": {},
+  "ventor_call_report_received_body": "We’ll look carefully into your report. If needed, we’ll refund you and provide any appropriate compensation.",
+  "@ventor_call_report_received_body": {},
+  "ventor_call_report_received_ok": "Got it",
+  "@ventor_call_report_received_ok": {}
 }
