@@ -5590,6 +5590,9 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
   String get listener_sessions_chosen_you => 'لماذا اختاروك';
 
   @override
+  String get listener_sessions_speech_language => 'لغة الجلسة';
+
+  @override
   String get listener_sessions_penalty_note =>
       'لكل جلسة لا تدخلها، سيتم خصم 20% من تكلفة الجلسة من رصيدك.';
 
@@ -6002,4 +6005,698 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
 
   @override
   String get listener_first_session_cta => 'حسناً — أنا مستعد';
+
+  @override
+  String get ventor_sessions_title => 'الجلسات';
+
+  @override
+  String get ventor_sessions_subtitle => 'اعثر على من يفهمك.';
+
+  @override
+  String get ventor_sessions_search_hint => 'ابحث عن مواضيع أو مستمعين...';
+
+  @override
+  String get ventor_sessions_topic_all => 'الكل';
+
+  @override
+  String get ventor_sessions_topic_anxiety => 'القلق';
+
+  @override
+  String get ventor_sessions_topic_sadness => 'الحزن';
+
+  @override
+  String get ventor_sessions_topic_relationships => 'العلاقات';
+
+  @override
+  String get ventor_sessions_topic_stress => 'التوتر';
+
+  @override
+  String get ventor_sessions_top_listeners => 'أفضل المستمعين لك';
+
+  @override
+  String get ventor_sessions_see_all => 'عرض الكل';
+
+  @override
+  String get ventor_sessions_empty =>
+      'لا يوجد مستمعون يطابقون بحثك أو عوامل التصفية. جرّب تعديلها.';
+
+  @override
+  String get ventor_sessions_experience_empty => 'لا توجد تجارب حياتية مدرجة';
+
+  @override
+  String ventor_sessions_reviews(int count) {
+    return '$count تقييمات';
+  }
+
+  @override
+  String ventor_sessions_sessions_count(String count) {
+    return '$count جلسات';
+  }
+
+  @override
+  String get ventor_sessions_surprise_title => 'غير متأكد من اختيارك؟';
+
+  @override
+  String get ventor_sessions_surprise_cta => 'فاجئني ✨';
+
+  @override
+  String get ventor_sessions_filters_title => 'عوامل التصفية';
+
+  @override
+  String get ventor_sessions_filters_reset => 'إعادة تعيين';
+
+  @override
+  String get ventor_sessions_filters_apply => 'تطبيق التصفية';
+
+  @override
+  String get ventor_sessions_filter_price => 'السعر لكل دقيقة';
+
+  @override
+  String ventor_sessions_filter_price_range(String min, String max) {
+    return '$min – $max';
+  }
+
+  @override
+  String get ventor_sessions_filter_language => 'اللغة';
+
+  @override
+  String get ventor_sessions_filter_gender => 'الجنس';
+
+  @override
+  String get ventor_sessions_gender_female => 'أنثى';
+
+  @override
+  String get ventor_sessions_gender_male => 'ذكر';
+
+  @override
+  String get ventor_sessions_gender_prefer_not => 'أفضل عدم الإفصاح';
+
+  @override
+  String get ventor_sessions_filter_rating => 'الحد الأدنى للتقييم';
+
+  @override
+  String get ventor_sessions_filter_rating_any => 'أي تقييم';
+
+  @override
+  String ventor_sessions_filter_rating_min(String rating) {
+    return '$rating+';
+  }
+
+  @override
+  String get ventor_sessions_filter_favorites => 'المفضلة';
+
+  @override
+  String get ventor_sessions_filter_favorites_any => 'الكل';
+
+  @override
+  String get ventor_sessions_filter_favorites_only => 'المفضلة فقط';
+
+  @override
+  String get ventor_sessions_filter_favorites_not => 'غير المفضلة';
+
+  @override
+  String get ventor_sessions_about_me => 'عني';
+
+  @override
+  String get ventor_sessions_help_with => 'يمكنني المساعدة في';
+
+  @override
+  String get ventor_sessions_languages => 'اللغات';
+
+  @override
+  String get ventor_sessions_listen_voice => 'استمع إلى صوتي';
+
+  @override
+  String get ventor_sessions_reviews_title => 'التقييمات';
+
+  @override
+  String ventor_sessions_rate_per_min(String rate) {
+    return '$rate / دقيقة';
+  }
+
+  @override
+  String get ventor_sessions_choose_duration => 'اختر المدة';
+
+  @override
+  String ventor_sessions_duration_minutes(int minutes) {
+    return '$minutes دقيقة';
+  }
+
+  @override
+  String get ventor_sessions_duration_popular => 'الأكثر شيوعاً';
+
+  @override
+  String get ventor_sessions_continue_payment => 'المتابعة إلى الدفع';
+
+  @override
+  String get ventor_sessions_before_title => 'قبل الاتصال';
+
+  @override
+  String get ventor_sessions_before_heading => 'أمور بسيطة قبل البدء';
+
+  @override
+  String get ventor_sessions_before_body =>
+      'سيتم توصيلك قريباً. خذ نفساً عميقاً، وتذكّر أن هذه مساحة آمنة لمشاركة ما تحتاجه.';
+
+  @override
+  String get ventor_sessions_before_bullet_connect =>
+      'عادةً يستغرق الاتصال أقل من دقيقة.';
+
+  @override
+  String get ventor_sessions_before_bullet_leave =>
+      'يمكنك مغادرة الجلسة في أي وقت.';
+
+  @override
+  String get ventor_sessions_before_bullet_respect =>
+      'كن محترماً — التحرش ينهي الجلسة.';
+
+  @override
+  String get ventor_sessions_start_session => 'بدء الجلسة';
+
+  @override
+  String ventor_sessions_start_mock(String name, int minutes) {
+    return 'بدء جلسة لمدة $minutes دقيقة مع $name (تجريبي).';
+  }
+
+  @override
+  String get ventor_sessions_details_title => 'التفاصيل';
+
+  @override
+  String get ventor_sessions_gender_label => 'الجنس';
+
+  @override
+  String get ventor_sessions_country_label => 'الدولة';
+
+  @override
+  String get ventor_sessions_city_label => 'المدينة';
+
+  @override
+  String get ventor_sessions_life_experience_title => 'التجارب الحياتية';
+
+  @override
+  String get ventor_sessions_boundaries_title => 'الحدود';
+
+  @override
+  String get ventor_sessions_boundaries_subtitle =>
+      'مواضيع يفضّل هذا المستمع عدم مناقشتها.';
+
+  @override
+  String get ventor_sessions_boundaries_none => 'لا توجد حدود محددة.';
+
+  @override
+  String get ventor_sessions_availability_title => 'التوفر';
+
+  @override
+  String get ventor_sessions_availability_days => 'أيام التوفر';
+
+  @override
+  String get ventor_sessions_availability_hours => 'ساعات التوفر';
+
+  @override
+  String get ventor_sessions_availability_timezone => 'المنطقة الزمنية';
+
+  @override
+  String get ventor_sessions_availability_instant => 'المكالمات الفورية';
+
+  @override
+  String get ventor_sessions_availability_instant_yes =>
+      'يقبل المكالمات الفورية';
+
+  @override
+  String get ventor_sessions_availability_instant_no => 'جلسات مجدولة فقط';
+
+  @override
+  String get ventor_sessions_session_lengths => 'مدد الجلسات';
+
+  @override
+  String get ventor_sessions_day_mon => 'الاثنين';
+
+  @override
+  String get ventor_sessions_day_tue => 'الثلاثاء';
+
+  @override
+  String get ventor_sessions_day_wed => 'الأربعاء';
+
+  @override
+  String get ventor_sessions_day_thu => 'الخميس';
+
+  @override
+  String get ventor_sessions_day_fri => 'الجمعة';
+
+  @override
+  String get ventor_sessions_day_sat => 'السبت';
+
+  @override
+  String get ventor_sessions_day_sun => 'الأحد';
+
+  @override
+  String get ventor_sessions_continue => 'متابعة';
+
+  @override
+  String get ventor_sessions_choose_time_title => 'اختر وقت المكالمة';
+
+  @override
+  String ventor_sessions_choose_time_subtitle(String name, String duration) {
+    return 'اختر وقت الحديث مع $name لمدة $duration.';
+  }
+
+  @override
+  String ventor_sessions_choose_time_window(String hours, String timezone) {
+    return 'توفر المستمع: $hours ($timezone)';
+  }
+
+  @override
+  String get ventor_sessions_time_instant_title => 'مكالمة فورية';
+
+  @override
+  String get ventor_sessions_time_instant_subtitle => 'اتصل فور قبول المستمع.';
+
+  @override
+  String get ventor_sessions_time_nearest_title => 'أقرب وقت متاح';
+
+  @override
+  String ventor_sessions_time_nearest_subtitle(String slot) {
+    return 'المقترح: $slot';
+  }
+
+  @override
+  String get ventor_sessions_time_schedule_title => 'اختر من أوقات التوفر';
+
+  @override
+  String get ventor_sessions_time_schedule_subtitle =>
+      'اختر وقتاً ضمن ساعات هذا المستمع الأسبوعية.';
+
+  @override
+  String get ventor_sessions_time_no_slots =>
+      'لا توجد أوقات قادمة تطابق توفر هذا المستمع.';
+
+  @override
+  String get ventor_sessions_time_summary_instant => 'مكالمة فورية';
+
+  @override
+  String ventor_sessions_time_summary_nearest(String slot) {
+    return 'أقرب وقت · $slot';
+  }
+
+  @override
+  String ventor_sessions_time_summary_scheduled(String slot) {
+    return 'مجدول · $slot';
+  }
+
+  @override
+  String get ventor_sessions_confirm_booking => 'تأكيد الحجز';
+
+  @override
+  String get ventor_sessions_confirm_title => 'تأكيد الجلسة';
+
+  @override
+  String get ventor_sessions_confirm_heading => 'راجع جلستك';
+
+  @override
+  String get ventor_sessions_confirm_subtitle =>
+      'تحقق من التفاصيل، اختر صوت أو فيديو، ثم تابع إلى الدفع.';
+
+  @override
+  String get ventor_sessions_confirm_summary_title => 'اختياراتك';
+
+  @override
+  String get ventor_sessions_confirm_duration => 'المدة';
+
+  @override
+  String get ventor_sessions_confirm_time => 'وقت المكالمة';
+
+  @override
+  String get ventor_sessions_confirm_rate => 'السعر';
+
+  @override
+  String get ventor_sessions_confirm_total => 'الإجمالي';
+
+  @override
+  String get ventor_sessions_confirm_call_type => 'نوع المكالمة';
+
+  @override
+  String get ventor_sessions_call_voice => 'مكالمة صوتية';
+
+  @override
+  String get ventor_sessions_call_video => 'مكالمة فيديو';
+
+  @override
+  String get ventor_sessions_confirm_tips_title => 'نصائح قبل الاتصال';
+
+  @override
+  String get ventor_sessions_confirm_tip_quiet =>
+      'اختر مكاناً هادئاً لتتحدث بحرية.';
+
+  @override
+  String get ventor_sessions_confirm_tip_honest =>
+      'شارك ما تحتاجه — لا حاجة لتصفية مشاعرك.';
+
+  @override
+  String get ventor_sessions_confirm_tip_boundaries =>
+      'احترم حدود المستمع الظاهرة في ملفه.';
+
+  @override
+  String get ventor_sessions_confirm_tip_leave =>
+      'يمكنك مغادرة الجلسة في أي وقت إذا شعرت بعدم الراحة.';
+
+  @override
+  String get ventor_sessions_confirm_you_pay => 'المبلغ المستحق';
+
+  @override
+  String ventor_sessions_pay_now(String amount) {
+    return 'ادفع $amount';
+  }
+
+  @override
+  String ventor_sessions_pay_mock(
+    String name,
+    int minutes,
+    String mode,
+    String amount,
+  ) {
+    return 'تجربة دفع: $amount لجلسة $minutes دقيقة ($mode) مع $name.';
+  }
+
+  @override
+  String get ventor_sessions_permission_title => 'أذونات التطبيق';
+
+  @override
+  String get ventor_sessions_permission_note_voice =>
+      'سنطلب إذن الميكروفون الآن حتى تكون مستعداً بالكامل قبل الدفع وبدء المكالمة.';
+
+  @override
+  String get ventor_sessions_permission_note_video =>
+      'سنطلب إذن الميكروفون والكاميرا الآن حتى تكون مستعداً بالكامل قبل الدفع وبدء المكالمة.';
+
+  @override
+  String get ventor_sessions_permission_mic => 'الميكروفون';
+
+  @override
+  String get ventor_sessions_permission_camera => 'الكاميرا';
+
+  @override
+  String get ventor_sessions_permission_allow => 'السماح';
+
+  @override
+  String get ventor_sessions_permission_granted => 'مسموح';
+
+  @override
+  String get ventor_sessions_permission_settings =>
+      'تم رفض الإذن. فعّله من الإعدادات لتتمكن من الانضمام للمكالمة.';
+
+  @override
+  String get ventor_sessions_permission_required_hint =>
+      'اسمح بالأذونات المطلوبة للمتابعة إلى الدفع.';
+
+  @override
+  String get ventor_sessions_speech_language_title => 'لغة الحديث';
+
+  @override
+  String ventor_sessions_speech_language_subtitle(String name) {
+    return 'اختر اللغة التي ستتحدث بها حتى يكون $name مستعداً لهذه الجلسة.';
+  }
+
+  @override
+  String get ventor_sessions_speech_language_required =>
+      'اختر لغة الحديث للمتابعة.';
+
+  @override
+  String get ventor_sessions_confirm_session_price => 'سعر الجلسة';
+
+  @override
+  String get ventor_sessions_voice_change_title => 'إضافة اختيارية';
+
+  @override
+  String get ventor_sessions_voice_change_subtitle =>
+      'فعّل هذا الخيار إذا أردت تمويه صوتك أثناء المكالمة.';
+
+  @override
+  String get ventor_sessions_voice_change_option => 'تغيير صوتي في المكالمة';
+
+  @override
+  String ventor_sessions_voice_change_price(String amount) {
+    return '+$amount';
+  }
+
+  @override
+  String get ventor_sessions_voice_change_fee_label => 'تغيير الصوت';
+
+  @override
+  String get ventor_sessions_discount_title => 'الخصم والمكافآت';
+
+  @override
+  String get ventor_sessions_discount_subtitle =>
+      'طبّق رمزًا ترويجيًا أو استخدم خصمًا من مكافآتك.';
+
+  @override
+  String get ventor_sessions_promo_code_label => 'رمز ترويجي';
+
+  @override
+  String get ventor_sessions_promo_code_hint => 'أدخل الرمز';
+
+  @override
+  String get ventor_sessions_promo_apply => 'تطبيق';
+
+  @override
+  String get ventor_sessions_promo_empty => 'أدخل رمزًا ترويجيًا أولًا.';
+
+  @override
+  String get ventor_sessions_promo_invalid => 'هذا الرمز الترويجي غير صالح.';
+
+  @override
+  String ventor_sessions_promo_percent_label(int percent) {
+    return 'عرض · خصم $percent%';
+  }
+
+  @override
+  String ventor_sessions_promo_fixed_label(String amount) {
+    return 'عرض · خصم $amount';
+  }
+
+  @override
+  String get ventor_sessions_rewards_discount_label => 'مكافآتك';
+
+  @override
+  String get ventor_sessions_confirm_discount => 'الخصم';
+
+  @override
+  String ventor_sessions_discount_applied(String amount) {
+    return 'توفير $amount';
+  }
+
+  @override
+  String get ventor_sessions_discount_remove => 'إزالة';
+
+  @override
+  String get ventor_sessions_tab_find => 'ابحث';
+
+  @override
+  String get ventor_sessions_tab_booked => 'جلساتي';
+
+  @override
+  String get ventor_sessions_booked_subtitle => 'جلساتك المحجوزة والسابقة.';
+
+  @override
+  String get ventor_sessions_booked_empty => 'ليس لديك أي جلسات محجوزة بعد.';
+
+  @override
+  String get ventor_sessions_booked_empty_cta => 'ابحث عن مستمع';
+
+  @override
+  String get ventor_sessions_booked_status_upcoming => 'قادمة';
+
+  @override
+  String get ventor_sessions_booked_status_live => 'مباشرة';
+
+  @override
+  String get ventor_sessions_booked_status_completed => 'مكتملة';
+
+  @override
+  String get ventor_sessions_booked_status_cancelled => 'ملغاة';
+
+  @override
+  String get ventor_sessions_booked_instant_now => 'فورية · جارية الآن';
+
+  @override
+  String ventor_sessions_booked_speech_language(String language) {
+    return 'يتحدث بـ $language';
+  }
+
+  @override
+  String get ventor_sessions_booked_voice_change_on => 'تغيير الصوت مفعّل';
+
+  @override
+  String ventor_sessions_booked_paid(String amount) {
+    return 'مدفوع $amount';
+  }
+
+  @override
+  String get ventor_sessions_booked_join => 'انضم الآن';
+
+  @override
+  String get ventor_sessions_booked_details => 'التفاصيل';
+
+  @override
+  String get ventor_sessions_details_screen_title => 'تفاصيل الجلسة';
+
+  @override
+  String get ventor_sessions_details_heading => 'حجزك';
+
+  @override
+  String get ventor_sessions_details_subtitle =>
+      'راجع كل ما اخترته لهذه الجلسة.';
+
+  @override
+  String get ventor_sessions_voice_change_off => 'تغيير الصوت متوقف';
+
+  @override
+  String get ventor_sessions_cancel_cta => 'إلغاء الجلسة';
+
+  @override
+  String get ventor_sessions_cancel_title => 'إلغاء هذه الجلسة؟';
+
+  @override
+  String get ventor_sessions_cancel_body =>
+      'سنُرجع كامل مبلغ الجلسة إلى رصيد الفينتور حتى تتمكن من حجز جلسة أخرى في أي وقت.';
+
+  @override
+  String get ventor_sessions_cancel_refund_label => 'استرداد كامل للرصيد';
+
+  @override
+  String ventor_sessions_cancel_balance_note(String amount) {
+    return 'سيتم تخزين $amount في رصيد الفينتور.';
+  }
+
+  @override
+  String get ventor_sessions_cancel_keep => 'الإبقاء على الجلسة';
+
+  @override
+  String get ventor_sessions_cancel_confirm => 'إلغاء واسترداد';
+
+  @override
+  String ventor_sessions_cancel_success(String amount) {
+    return 'تم إلغاء الجلسة. أُرجع $amount إلى رصيدك — احجز جلسة أخرى متى شئت.';
+  }
+
+  @override
+  String get ventor_sessions_cancel_policy_title => 'سياسة الإلغاء';
+
+  @override
+  String ventor_sessions_cancel_policy_body(String amount) {
+    return 'إذا ألغيت، يُسترد المبلغ كاملاً ($amount) إلى رصيد الفينتور حتى تحجز جلسة أخرى.';
+  }
+
+  @override
+  String ventor_sessions_booked_was_paid(String amount) {
+    return 'كان $amount';
+  }
+
+  @override
+  String ventor_sessions_cancelled_refund_title(String amount) {
+    return 'استرداد كامل · $amount';
+  }
+
+  @override
+  String get ventor_sessions_cancelled_refund_subtitle =>
+      'أُرجع هذا المبلغ إلى رصيد الفينتور. احجز جلسة أخرى متى كنت مستعدًا.';
+
+  @override
+  String get ventor_sessions_cancelled_rebook => 'احجز مجددًا';
+
+  @override
+  String ventor_sessions_booked_tap_mock(String name) {
+    return 'فتح الجلسة مع $name (تجريبي).';
+  }
+
+  @override
+  String get ventor_call_tips_title => 'قبل الانضمام';
+
+  @override
+  String get ventor_call_permissions_heading => 'الأذونات';
+
+  @override
+  String get ventor_call_permissions_subtitle_voice =>
+      'اسمح بالميكروفون حتى تتمكن من التحدث في هذه الجلسة الصوتية.';
+
+  @override
+  String get ventor_call_permissions_subtitle_video =>
+      'اسمح بالميكروفون والكاميرا لهذه الجلسة المرئية.';
+
+  @override
+  String get ventor_call_permission_mic => 'الميكروفون';
+
+  @override
+  String get ventor_call_permission_camera => 'الكاميرا';
+
+  @override
+  String get ventor_call_permission_allow => 'السماح';
+
+  @override
+  String get ventor_call_permission_granted => 'تم السماح';
+
+  @override
+  String get ventor_call_permission_settings =>
+      'تم رفض الإذن. فعّله من الإعدادات للانضمام للمكالمة.';
+
+  @override
+  String get ventor_call_enter => 'ادخل المكالمة';
+
+  @override
+  String get ventor_call_end => 'إنهاء';
+
+  @override
+  String get ventor_call_mute => 'كتم';
+
+  @override
+  String get ventor_call_speaker => 'مكبر الصوت';
+
+  @override
+  String get ventor_call_flip => 'قلب';
+
+  @override
+  String get ventor_call_speaking => 'الجلسة جارية — تحدّث بحرية';
+
+  @override
+  String ventor_call_rating_title(String name) {
+    return 'كيف كانت جلستك مع $name؟';
+  }
+
+  @override
+  String get ventor_call_rating_subtitle =>
+      'تقييمك يساعد الفينتورين الآخرين على إيجاد مستمعين رائعين.';
+
+  @override
+  String ventor_call_rating_stars_hint(int count) {
+    return 'تقييم $count نجوم';
+  }
+
+  @override
+  String get ventor_call_rating_review_hint => 'ملاحظة اختيارية عن تجربتك…';
+
+  @override
+  String get ventor_call_tip_title => 'قدّم إكرامية شكرًا';
+
+  @override
+  String ventor_call_tip_subtitle(String name) {
+    return 'اختياري — أرسل إكرامية لـ $name تقديرًا لوجوده معك.';
+  }
+
+  @override
+  String get ventor_call_tip_none => 'بدون إكرامية';
+
+  @override
+  String get ventor_call_rating_submit => 'إرسال التقييم';
+
+  @override
+  String ventor_call_rating_submit_with_tip(String amount) {
+    return 'إرسال مع إكرامية $amount';
+  }
+
+  @override
+  String get ventor_call_rating_thanks => 'شكرًا لملاحظاتك!';
+
+  @override
+  String ventor_call_rating_thanks_with_tip(String amount) {
+    return 'شكرًا! تم إرسال إكراميتك بقيمة $amount.';
+  }
 }

@@ -3961,6 +3961,8 @@
   "@listener_sessions_no_history": {},
   "listener_sessions_chosen_you": "لماذا اختاروك",
   "@listener_sessions_chosen_you": {},
+  "listener_sessions_speech_language": "لغة الجلسة",
+  "@listener_sessions_speech_language": {},
   "listener_sessions_penalty_note": "لكل جلسة لا تدخلها، سيتم خصم 20% من تكلفة الجلسة من رصيدك.",
   "@listener_sessions_penalty_note": {},
   "listener_sessions_missed_title": "الجلسات الفائتة",
@@ -4244,5 +4246,538 @@
   "listener_first_session_bullet_available": "بعد هذه الجلسة التدريبية ستكون متاحاً بالكامل لأي مكالمة واردة.",
   "@listener_first_session_bullet_available": {},
   "listener_first_session_cta": "حسناً — أنا مستعد",
-  "@listener_first_session_cta": {}
+  "@listener_first_session_cta": {},
+  "ventor_sessions_title": "الجلسات",
+  "@ventor_sessions_title": {},
+  "ventor_sessions_subtitle": "اعثر على من يفهمك.",
+  "@ventor_sessions_subtitle": {},
+  "ventor_sessions_search_hint": "ابحث عن مواضيع أو مستمعين...",
+  "@ventor_sessions_search_hint": {},
+  "ventor_sessions_topic_all": "الكل",
+  "@ventor_sessions_topic_all": {},
+  "ventor_sessions_topic_anxiety": "القلق",
+  "@ventor_sessions_topic_anxiety": {},
+  "ventor_sessions_topic_sadness": "الحزن",
+  "@ventor_sessions_topic_sadness": {},
+  "ventor_sessions_topic_relationships": "العلاقات",
+  "@ventor_sessions_topic_relationships": {},
+  "ventor_sessions_topic_stress": "التوتر",
+  "@ventor_sessions_topic_stress": {},
+  "ventor_sessions_top_listeners": "أفضل المستمعين لك",
+  "@ventor_sessions_top_listeners": {},
+  "ventor_sessions_see_all": "عرض الكل",
+  "@ventor_sessions_see_all": {},
+  "ventor_sessions_empty": "لا يوجد مستمعون يطابقون بحثك أو عوامل التصفية. جرّب تعديلها.",
+  "@ventor_sessions_empty": {},
+  "ventor_sessions_experience_empty": "لا توجد تجارب حياتية مدرجة",
+  "@ventor_sessions_experience_empty": {},
+  "ventor_sessions_reviews": "{count} تقييمات",
+  "@ventor_sessions_reviews": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "ventor_sessions_sessions_count": "{count} جلسات",
+  "@ventor_sessions_sessions_count": {
+    "placeholders": {
+      "count": { "type": "String" }
+    }
+  },
+  "ventor_sessions_surprise_title": "غير متأكد من اختيارك؟",
+  "@ventor_sessions_surprise_title": {},
+  "ventor_sessions_surprise_cta": "فاجئني ✨",
+  "@ventor_sessions_surprise_cta": {},
+  "ventor_sessions_filters_title": "عوامل التصفية",
+  "@ventor_sessions_filters_title": {},
+  "ventor_sessions_filters_reset": "إعادة تعيين",
+  "@ventor_sessions_filters_reset": {},
+  "ventor_sessions_filters_apply": "تطبيق التصفية",
+  "@ventor_sessions_filters_apply": {},
+  "ventor_sessions_filter_price": "السعر لكل دقيقة",
+  "@ventor_sessions_filter_price": {},
+  "ventor_sessions_filter_price_range": "{min} – {max}",
+  "@ventor_sessions_filter_price_range": {
+    "placeholders": {
+      "min": { "type": "String" },
+      "max": { "type": "String" }
+    }
+  },
+  "ventor_sessions_filter_language": "اللغة",
+  "@ventor_sessions_filter_language": {},
+  "ventor_sessions_filter_gender": "الجنس",
+  "@ventor_sessions_filter_gender": {},
+  "ventor_sessions_gender_female": "أنثى",
+  "@ventor_sessions_gender_female": {},
+  "ventor_sessions_gender_male": "ذكر",
+  "@ventor_sessions_gender_male": {},
+  "ventor_sessions_gender_prefer_not": "أفضل عدم الإفصاح",
+  "@ventor_sessions_gender_prefer_not": {},
+  "ventor_sessions_filter_rating": "الحد الأدنى للتقييم",
+  "@ventor_sessions_filter_rating": {},
+  "ventor_sessions_filter_rating_any": "أي تقييم",
+  "@ventor_sessions_filter_rating_any": {},
+  "ventor_sessions_filter_rating_min": "{rating}+",
+  "@ventor_sessions_filter_rating_min": {
+    "placeholders": {
+      "rating": { "type": "String" }
+    }
+  },
+  "ventor_sessions_filter_favorites": "المفضلة",
+  "@ventor_sessions_filter_favorites": {},
+  "ventor_sessions_filter_favorites_any": "الكل",
+  "@ventor_sessions_filter_favorites_any": {},
+  "ventor_sessions_filter_favorites_only": "المفضلة فقط",
+  "@ventor_sessions_filter_favorites_only": {},
+  "ventor_sessions_filter_favorites_not": "غير المفضلة",
+  "@ventor_sessions_filter_favorites_not": {},
+  "ventor_sessions_about_me": "عني",
+  "@ventor_sessions_about_me": {},
+  "ventor_sessions_help_with": "يمكنني المساعدة في",
+  "@ventor_sessions_help_with": {},
+  "ventor_sessions_languages": "اللغات",
+  "@ventor_sessions_languages": {},
+  "ventor_sessions_listen_voice": "استمع إلى صوتي",
+  "@ventor_sessions_listen_voice": {},
+  "ventor_sessions_reviews_title": "التقييمات",
+  "@ventor_sessions_reviews_title": {},
+  "ventor_sessions_rate_per_min": "{rate} / دقيقة",
+  "@ventor_sessions_rate_per_min": {
+    "placeholders": {
+      "rate": { "type": "String" }
+    }
+  },
+  "ventor_sessions_choose_duration": "اختر المدة",
+  "@ventor_sessions_choose_duration": {},
+  "ventor_sessions_duration_minutes": "{minutes} دقيقة",
+  "@ventor_sessions_duration_minutes": {
+    "placeholders": {
+      "minutes": { "type": "int" }
+    }
+  },
+  "ventor_sessions_duration_popular": "الأكثر شيوعاً",
+  "@ventor_sessions_duration_popular": {},
+  "ventor_sessions_continue_payment": "المتابعة إلى الدفع",
+  "@ventor_sessions_continue_payment": {},
+  "ventor_sessions_before_title": "قبل الاتصال",
+  "@ventor_sessions_before_title": {},
+  "ventor_sessions_before_heading": "أمور بسيطة قبل البدء",
+  "@ventor_sessions_before_heading": {},
+  "ventor_sessions_before_body": "سيتم توصيلك قريباً. خذ نفساً عميقاً، وتذكّر أن هذه مساحة آمنة لمشاركة ما تحتاجه.",
+  "@ventor_sessions_before_body": {},
+  "ventor_sessions_before_bullet_connect": "عادةً يستغرق الاتصال أقل من دقيقة.",
+  "@ventor_sessions_before_bullet_connect": {},
+  "ventor_sessions_before_bullet_leave": "يمكنك مغادرة الجلسة في أي وقت.",
+  "@ventor_sessions_before_bullet_leave": {},
+  "ventor_sessions_before_bullet_respect": "كن محترماً — التحرش ينهي الجلسة.",
+  "@ventor_sessions_before_bullet_respect": {},
+  "ventor_sessions_start_session": "بدء الجلسة",
+  "@ventor_sessions_start_session": {},
+  "ventor_sessions_start_mock": "بدء جلسة لمدة {minutes} دقيقة مع {name} (تجريبي).",
+  "@ventor_sessions_start_mock": {
+    "placeholders": {
+      "name": { "type": "String" },
+      "minutes": { "type": "int" }
+    }
+  },
+  "ventor_sessions_details_title": "التفاصيل",
+  "@ventor_sessions_details_title": {},
+  "ventor_sessions_gender_label": "الجنس",
+  "@ventor_sessions_gender_label": {},
+  "ventor_sessions_country_label": "الدولة",
+  "@ventor_sessions_country_label": {},
+  "ventor_sessions_city_label": "المدينة",
+  "@ventor_sessions_city_label": {},
+  "ventor_sessions_life_experience_title": "التجارب الحياتية",
+  "@ventor_sessions_life_experience_title": {},
+  "ventor_sessions_boundaries_title": "الحدود",
+  "@ventor_sessions_boundaries_title": {},
+  "ventor_sessions_boundaries_subtitle": "مواضيع يفضّل هذا المستمع عدم مناقشتها.",
+  "@ventor_sessions_boundaries_subtitle": {},
+  "ventor_sessions_boundaries_none": "لا توجد حدود محددة.",
+  "@ventor_sessions_boundaries_none": {},
+  "ventor_sessions_availability_title": "التوفر",
+  "@ventor_sessions_availability_title": {},
+  "ventor_sessions_availability_days": "أيام التوفر",
+  "@ventor_sessions_availability_days": {},
+  "ventor_sessions_availability_hours": "ساعات التوفر",
+  "@ventor_sessions_availability_hours": {},
+  "ventor_sessions_availability_timezone": "المنطقة الزمنية",
+  "@ventor_sessions_availability_timezone": {},
+  "ventor_sessions_availability_instant": "المكالمات الفورية",
+  "@ventor_sessions_availability_instant": {},
+  "ventor_sessions_availability_instant_yes": "يقبل المكالمات الفورية",
+  "@ventor_sessions_availability_instant_yes": {},
+  "ventor_sessions_availability_instant_no": "جلسات مجدولة فقط",
+  "@ventor_sessions_availability_instant_no": {},
+  "ventor_sessions_session_lengths": "مدد الجلسات",
+  "@ventor_sessions_session_lengths": {},
+  "ventor_sessions_day_mon": "الاثنين",
+  "@ventor_sessions_day_mon": {},
+  "ventor_sessions_day_tue": "الثلاثاء",
+  "@ventor_sessions_day_tue": {},
+  "ventor_sessions_day_wed": "الأربعاء",
+  "@ventor_sessions_day_wed": {},
+  "ventor_sessions_day_thu": "الخميس",
+  "@ventor_sessions_day_thu": {},
+  "ventor_sessions_day_fri": "الجمعة",
+  "@ventor_sessions_day_fri": {},
+  "ventor_sessions_day_sat": "السبت",
+  "@ventor_sessions_day_sat": {},
+  "ventor_sessions_day_sun": "الأحد",
+  "@ventor_sessions_day_sun": {},
+  "ventor_sessions_continue": "متابعة",
+  "@ventor_sessions_continue": {},
+  "ventor_sessions_choose_time_title": "اختر وقت المكالمة",
+  "@ventor_sessions_choose_time_title": {},
+  "ventor_sessions_choose_time_subtitle": "اختر وقت الحديث مع {name} لمدة {duration}.",
+  "@ventor_sessions_choose_time_subtitle": {
+    "placeholders": {
+      "name": { "type": "String" },
+      "duration": { "type": "String" }
+    }
+  },
+  "ventor_sessions_choose_time_window": "توفر المستمع: {hours} ({timezone})",
+  "@ventor_sessions_choose_time_window": {
+    "placeholders": {
+      "hours": { "type": "String" },
+      "timezone": { "type": "String" }
+    }
+  },
+  "ventor_sessions_time_instant_title": "مكالمة فورية",
+  "@ventor_sessions_time_instant_title": {},
+  "ventor_sessions_time_instant_subtitle": "اتصل فور قبول المستمع.",
+  "@ventor_sessions_time_instant_subtitle": {},
+  "ventor_sessions_time_nearest_title": "أقرب وقت متاح",
+  "@ventor_sessions_time_nearest_title": {},
+  "ventor_sessions_time_nearest_subtitle": "المقترح: {slot}",
+  "@ventor_sessions_time_nearest_subtitle": {
+    "placeholders": {
+      "slot": { "type": "String" }
+    }
+  },
+  "ventor_sessions_time_schedule_title": "اختر من أوقات التوفر",
+  "@ventor_sessions_time_schedule_title": {},
+  "ventor_sessions_time_schedule_subtitle": "اختر وقتاً ضمن ساعات هذا المستمع الأسبوعية.",
+  "@ventor_sessions_time_schedule_subtitle": {},
+  "ventor_sessions_time_no_slots": "لا توجد أوقات قادمة تطابق توفر هذا المستمع.",
+  "@ventor_sessions_time_no_slots": {},
+  "ventor_sessions_time_summary_instant": "مكالمة فورية",
+  "@ventor_sessions_time_summary_instant": {},
+  "ventor_sessions_time_summary_nearest": "أقرب وقت · {slot}",
+  "@ventor_sessions_time_summary_nearest": {
+    "placeholders": {
+      "slot": { "type": "String" }
+    }
+  },
+  "ventor_sessions_time_summary_scheduled": "مجدول · {slot}",
+  "@ventor_sessions_time_summary_scheduled": {
+    "placeholders": {
+      "slot": { "type": "String" }
+    }
+  },
+  "ventor_sessions_confirm_booking": "تأكيد الحجز",
+  "@ventor_sessions_confirm_booking": {},
+  "ventor_sessions_confirm_title": "تأكيد الجلسة",
+  "@ventor_sessions_confirm_title": {},
+  "ventor_sessions_confirm_heading": "راجع جلستك",
+  "@ventor_sessions_confirm_heading": {},
+  "ventor_sessions_confirm_subtitle": "تحقق من التفاصيل، اختر صوت أو فيديو، ثم تابع إلى الدفع.",
+  "@ventor_sessions_confirm_subtitle": {},
+  "ventor_sessions_confirm_summary_title": "اختياراتك",
+  "@ventor_sessions_confirm_summary_title": {},
+  "ventor_sessions_confirm_duration": "المدة",
+  "@ventor_sessions_confirm_duration": {},
+  "ventor_sessions_confirm_time": "وقت المكالمة",
+  "@ventor_sessions_confirm_time": {},
+  "ventor_sessions_confirm_rate": "السعر",
+  "@ventor_sessions_confirm_rate": {},
+  "ventor_sessions_confirm_total": "الإجمالي",
+  "@ventor_sessions_confirm_total": {},
+  "ventor_sessions_confirm_call_type": "نوع المكالمة",
+  "@ventor_sessions_confirm_call_type": {},
+  "ventor_sessions_call_voice": "مكالمة صوتية",
+  "@ventor_sessions_call_voice": {},
+  "ventor_sessions_call_video": "مكالمة فيديو",
+  "@ventor_sessions_call_video": {},
+  "ventor_sessions_confirm_tips_title": "نصائح قبل الاتصال",
+  "@ventor_sessions_confirm_tips_title": {},
+  "ventor_sessions_confirm_tip_quiet": "اختر مكاناً هادئاً لتتحدث بحرية.",
+  "@ventor_sessions_confirm_tip_quiet": {},
+  "ventor_sessions_confirm_tip_honest": "شارك ما تحتاجه — لا حاجة لتصفية مشاعرك.",
+  "@ventor_sessions_confirm_tip_honest": {},
+  "ventor_sessions_confirm_tip_boundaries": "احترم حدود المستمع الظاهرة في ملفه.",
+  "@ventor_sessions_confirm_tip_boundaries": {},
+  "ventor_sessions_confirm_tip_leave": "يمكنك مغادرة الجلسة في أي وقت إذا شعرت بعدم الراحة.",
+  "@ventor_sessions_confirm_tip_leave": {},
+  "ventor_sessions_confirm_you_pay": "المبلغ المستحق",
+  "@ventor_sessions_confirm_you_pay": {},
+  "ventor_sessions_pay_now": "ادفع {amount}",
+  "@ventor_sessions_pay_now": {
+    "placeholders": {
+      "amount": { "type": "String" }
+    }
+  },
+  "ventor_sessions_pay_mock": "تجربة دفع: {amount} لجلسة {minutes} دقيقة ({mode}) مع {name}.",
+  "@ventor_sessions_pay_mock": {
+    "placeholders": {
+      "name": { "type": "String" },
+      "minutes": { "type": "int" },
+      "mode": { "type": "String" },
+      "amount": { "type": "String" }
+    }
+  },
+  "ventor_sessions_permission_title": "أذونات التطبيق",
+  "@ventor_sessions_permission_title": {},
+  "ventor_sessions_permission_note_voice": "سنطلب إذن الميكروفون الآن حتى تكون مستعداً بالكامل قبل الدفع وبدء المكالمة.",
+  "@ventor_sessions_permission_note_voice": {},
+  "ventor_sessions_permission_note_video": "سنطلب إذن الميكروفون والكاميرا الآن حتى تكون مستعداً بالكامل قبل الدفع وبدء المكالمة.",
+  "@ventor_sessions_permission_note_video": {},
+  "ventor_sessions_permission_mic": "الميكروفون",
+  "@ventor_sessions_permission_mic": {},
+  "ventor_sessions_permission_camera": "الكاميرا",
+  "@ventor_sessions_permission_camera": {},
+  "ventor_sessions_permission_allow": "السماح",
+  "@ventor_sessions_permission_allow": {},
+  "ventor_sessions_permission_granted": "مسموح",
+  "@ventor_sessions_permission_granted": {},
+  "ventor_sessions_permission_settings": "تم رفض الإذن. فعّله من الإعدادات لتتمكن من الانضمام للمكالمة.",
+  "@ventor_sessions_permission_settings": {},
+  "ventor_sessions_permission_required_hint": "اسمح بالأذونات المطلوبة للمتابعة إلى الدفع.",
+  "@ventor_sessions_permission_required_hint": {},
+  "ventor_sessions_speech_language_title": "لغة الحديث",
+  "@ventor_sessions_speech_language_title": {},
+  "ventor_sessions_speech_language_subtitle": "اختر اللغة التي ستتحدث بها حتى يكون {name} مستعداً لهذه الجلسة.",
+  "@ventor_sessions_speech_language_subtitle": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+  "ventor_sessions_speech_language_required": "اختر لغة الحديث للمتابعة.",
+  "@ventor_sessions_speech_language_required": {},
+  "ventor_sessions_confirm_session_price": "سعر الجلسة",
+  "@ventor_sessions_confirm_session_price": {},
+  "ventor_sessions_voice_change_title": "إضافة اختيارية",
+  "@ventor_sessions_voice_change_title": {},
+  "ventor_sessions_voice_change_subtitle": "فعّل هذا الخيار إذا أردت تمويه صوتك أثناء المكالمة.",
+  "@ventor_sessions_voice_change_subtitle": {},
+  "ventor_sessions_voice_change_option": "تغيير صوتي في المكالمة",
+  "@ventor_sessions_voice_change_option": {},
+  "ventor_sessions_voice_change_price": "+{amount}",
+  "@ventor_sessions_voice_change_price": {
+    "placeholders": {
+      "amount": { "type": "String" }
+    }
+  },
+  "ventor_sessions_voice_change_fee_label": "تغيير الصوت",
+  "@ventor_sessions_voice_change_fee_label": {},
+  "ventor_sessions_discount_title": "الخصم والمكافآت",
+  "@ventor_sessions_discount_title": {},
+  "ventor_sessions_discount_subtitle": "طبّق رمزًا ترويجيًا أو استخدم خصمًا من مكافآتك.",
+  "@ventor_sessions_discount_subtitle": {},
+  "ventor_sessions_promo_code_label": "رمز ترويجي",
+  "@ventor_sessions_promo_code_label": {},
+  "ventor_sessions_promo_code_hint": "أدخل الرمز",
+  "@ventor_sessions_promo_code_hint": {},
+  "ventor_sessions_promo_apply": "تطبيق",
+  "@ventor_sessions_promo_apply": {},
+  "ventor_sessions_promo_empty": "أدخل رمزًا ترويجيًا أولًا.",
+  "@ventor_sessions_promo_empty": {},
+  "ventor_sessions_promo_invalid": "هذا الرمز الترويجي غير صالح.",
+  "@ventor_sessions_promo_invalid": {},
+  "ventor_sessions_promo_percent_label": "عرض · خصم {percent}%",
+  "@ventor_sessions_promo_percent_label": {
+    "placeholders": {
+      "percent": { "type": "int" }
+    }
+  },
+  "ventor_sessions_promo_fixed_label": "عرض · خصم {amount}",
+  "@ventor_sessions_promo_fixed_label": {
+    "placeholders": {
+      "amount": { "type": "String" }
+    }
+  },
+  "ventor_sessions_rewards_discount_label": "مكافآتك",
+  "@ventor_sessions_rewards_discount_label": {},
+  "ventor_sessions_confirm_discount": "الخصم",
+  "@ventor_sessions_confirm_discount": {},
+  "ventor_sessions_discount_applied": "توفير {amount}",
+  "@ventor_sessions_discount_applied": {
+    "placeholders": {
+      "amount": { "type": "String" }
+    }
+  },
+  "ventor_sessions_discount_remove": "إزالة",
+  "@ventor_sessions_discount_remove": {},
+  "ventor_sessions_tab_find": "ابحث",
+  "@ventor_sessions_tab_find": {},
+  "ventor_sessions_tab_booked": "جلساتي",
+  "@ventor_sessions_tab_booked": {},
+  "ventor_sessions_booked_subtitle": "جلساتك المحجوزة والسابقة.",
+  "@ventor_sessions_booked_subtitle": {},
+  "ventor_sessions_booked_empty": "ليس لديك أي جلسات محجوزة بعد.",
+  "@ventor_sessions_booked_empty": {},
+  "ventor_sessions_booked_empty_cta": "ابحث عن مستمع",
+  "@ventor_sessions_booked_empty_cta": {},
+  "ventor_sessions_booked_status_upcoming": "قادمة",
+  "@ventor_sessions_booked_status_upcoming": {},
+  "ventor_sessions_booked_status_live": "مباشرة",
+  "@ventor_sessions_booked_status_live": {},
+  "ventor_sessions_booked_status_completed": "مكتملة",
+  "@ventor_sessions_booked_status_completed": {},
+  "ventor_sessions_booked_status_cancelled": "ملغاة",
+  "@ventor_sessions_booked_status_cancelled": {},
+  "ventor_sessions_booked_instant_now": "فورية · جارية الآن",
+  "@ventor_sessions_booked_instant_now": {},
+  "ventor_sessions_booked_speech_language": "يتحدث بـ {language}",
+  "@ventor_sessions_booked_speech_language": {
+    "placeholders": {
+      "language": { "type": "String" }
+    }
+  },
+  "ventor_sessions_booked_voice_change_on": "تغيير الصوت مفعّل",
+  "@ventor_sessions_booked_voice_change_on": {},
+  "ventor_sessions_booked_paid": "مدفوع {amount}",
+  "@ventor_sessions_booked_paid": {
+    "placeholders": {
+      "amount": { "type": "String" }
+    }
+  },
+  "ventor_sessions_booked_join": "انضم الآن",
+  "@ventor_sessions_booked_join": {},
+  "ventor_sessions_booked_details": "التفاصيل",
+  "@ventor_sessions_booked_details": {},
+  "ventor_sessions_details_screen_title": "تفاصيل الجلسة",
+  "@ventor_sessions_details_screen_title": {},
+  "ventor_sessions_details_heading": "حجزك",
+  "@ventor_sessions_details_heading": {},
+  "ventor_sessions_details_subtitle": "راجع كل ما اخترته لهذه الجلسة.",
+  "@ventor_sessions_details_subtitle": {},
+  "ventor_sessions_voice_change_off": "تغيير الصوت متوقف",
+  "@ventor_sessions_voice_change_off": {},
+  "ventor_sessions_cancel_cta": "إلغاء الجلسة",
+  "@ventor_sessions_cancel_cta": {},
+  "ventor_sessions_cancel_title": "إلغاء هذه الجلسة؟",
+  "@ventor_sessions_cancel_title": {},
+  "ventor_sessions_cancel_body": "سنُرجع كامل مبلغ الجلسة إلى رصيد الفينتور حتى تتمكن من حجز جلسة أخرى في أي وقت.",
+  "@ventor_sessions_cancel_body": {},
+  "ventor_sessions_cancel_refund_label": "استرداد كامل للرصيد",
+  "@ventor_sessions_cancel_refund_label": {},
+  "ventor_sessions_cancel_balance_note": "سيتم تخزين {amount} في رصيد الفينتور.",
+  "@ventor_sessions_cancel_balance_note": {
+    "placeholders": {
+      "amount": { "type": "String" }
+    }
+  },
+  "ventor_sessions_cancel_keep": "الإبقاء على الجلسة",
+  "@ventor_sessions_cancel_keep": {},
+  "ventor_sessions_cancel_confirm": "إلغاء واسترداد",
+  "@ventor_sessions_cancel_confirm": {},
+  "ventor_sessions_cancel_success": "تم إلغاء الجلسة. أُرجع {amount} إلى رصيدك — احجز جلسة أخرى متى شئت.",
+  "@ventor_sessions_cancel_success": {
+    "placeholders": {
+      "amount": { "type": "String" }
+    }
+  },
+  "ventor_sessions_cancel_policy_title": "سياسة الإلغاء",
+  "@ventor_sessions_cancel_policy_title": {},
+  "ventor_sessions_cancel_policy_body": "إذا ألغيت، يُسترد المبلغ كاملاً ({amount}) إلى رصيد الفينتور حتى تحجز جلسة أخرى.",
+  "@ventor_sessions_cancel_policy_body": {
+    "placeholders": {
+      "amount": { "type": "String" }
+    }
+  },
+  "ventor_sessions_booked_was_paid": "كان {amount}",
+  "@ventor_sessions_booked_was_paid": {
+    "placeholders": {
+      "amount": { "type": "String" }
+    }
+  },
+  "ventor_sessions_cancelled_refund_title": "استرداد كامل · {amount}",
+  "@ventor_sessions_cancelled_refund_title": {
+    "placeholders": {
+      "amount": { "type": "String" }
+    }
+  },
+  "ventor_sessions_cancelled_refund_subtitle": "أُرجع هذا المبلغ إلى رصيد الفينتور. احجز جلسة أخرى متى كنت مستعدًا.",
+  "@ventor_sessions_cancelled_refund_subtitle": {},
+  "ventor_sessions_cancelled_rebook": "احجز مجددًا",
+  "@ventor_sessions_cancelled_rebook": {},
+  "ventor_sessions_booked_tap_mock": "فتح الجلسة مع {name} (تجريبي).",
+  "@ventor_sessions_booked_tap_mock": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+  "ventor_call_tips_title": "قبل الانضمام",
+  "@ventor_call_tips_title": {},
+  "ventor_call_permissions_heading": "الأذونات",
+  "@ventor_call_permissions_heading": {},
+  "ventor_call_permissions_subtitle_voice": "اسمح بالميكروفون حتى تتمكن من التحدث في هذه الجلسة الصوتية.",
+  "@ventor_call_permissions_subtitle_voice": {},
+  "ventor_call_permissions_subtitle_video": "اسمح بالميكروفون والكاميرا لهذه الجلسة المرئية.",
+  "@ventor_call_permissions_subtitle_video": {},
+  "ventor_call_permission_mic": "الميكروفون",
+  "@ventor_call_permission_mic": {},
+  "ventor_call_permission_camera": "الكاميرا",
+  "@ventor_call_permission_camera": {},
+  "ventor_call_permission_allow": "السماح",
+  "@ventor_call_permission_allow": {},
+  "ventor_call_permission_granted": "تم السماح",
+  "@ventor_call_permission_granted": {},
+  "ventor_call_permission_settings": "تم رفض الإذن. فعّله من الإعدادات للانضمام للمكالمة.",
+  "@ventor_call_permission_settings": {},
+  "ventor_call_enter": "ادخل المكالمة",
+  "@ventor_call_enter": {},
+  "ventor_call_end": "إنهاء",
+  "@ventor_call_end": {},
+  "ventor_call_mute": "كتم",
+  "@ventor_call_mute": {},
+  "ventor_call_speaker": "مكبر الصوت",
+  "@ventor_call_speaker": {},
+  "ventor_call_flip": "قلب",
+  "@ventor_call_flip": {},
+  "ventor_call_speaking": "الجلسة جارية — تحدّث بحرية",
+  "@ventor_call_speaking": {},
+  "ventor_call_rating_title": "كيف كانت جلستك مع {name}؟",
+  "@ventor_call_rating_title": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+  "ventor_call_rating_subtitle": "تقييمك يساعد الفينتورين الآخرين على إيجاد مستمعين رائعين.",
+  "@ventor_call_rating_subtitle": {},
+  "ventor_call_rating_stars_hint": "تقييم {count} نجوم",
+  "@ventor_call_rating_stars_hint": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "ventor_call_rating_review_hint": "ملاحظة اختيارية عن تجربتك…",
+  "@ventor_call_rating_review_hint": {},
+  "ventor_call_tip_title": "قدّم إكرامية شكرًا",
+  "@ventor_call_tip_title": {},
+  "ventor_call_tip_subtitle": "اختياري — أرسل إكرامية لـ {name} تقديرًا لوجوده معك.",
+  "@ventor_call_tip_subtitle": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+  "ventor_call_tip_none": "بدون إكرامية",
+  "@ventor_call_tip_none": {},
+  "ventor_call_rating_submit": "إرسال التقييم",
+  "@ventor_call_rating_submit": {},
+  "ventor_call_rating_submit_with_tip": "إرسال مع إكرامية {amount}",
+  "@ventor_call_rating_submit_with_tip": {
+    "placeholders": {
+      "amount": { "type": "String" }
+    }
+  },
+  "ventor_call_rating_thanks": "شكرًا لملاحظاتك!",
+  "@ventor_call_rating_thanks": {},
+  "ventor_call_rating_thanks_with_tip": "شكرًا! تم إرسال إكراميتك بقيمة {amount}.",
+  "@ventor_call_rating_thanks_with_tip": {
+    "placeholders": {
+      "amount": { "type": "String" }
+    }
+  }
 }

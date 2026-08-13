@@ -3961,6 +3961,8 @@
   "@listener_sessions_no_history": {},
   "listener_sessions_chosen_you": "Why they chose you",
   "@listener_sessions_chosen_you": {},
+  "listener_sessions_speech_language": "Session language",
+  "@listener_sessions_speech_language": {},
   "listener_sessions_penalty_note": "For each session you miss without entering, 20% of the session cost will be deducted from your balance.",
   "@listener_sessions_penalty_note": {},
   "listener_sessions_missed_title": "Missed sessions",
@@ -4244,5 +4246,538 @@
   "listener_first_session_bullet_available": "After this tutorial session, you’ll be fully available for any incoming calls.",
   "@listener_first_session_bullet_available": {},
   "listener_first_session_cta": "Got it — I’m ready",
-  "@listener_first_session_cta": {}
+  "@listener_first_session_cta": {},
+  "ventor_sessions_title": "Sessions",
+  "@ventor_sessions_title": {},
+  "ventor_sessions_subtitle": "Find someone who gets you.",
+  "@ventor_sessions_subtitle": {},
+  "ventor_sessions_search_hint": "Search topics, listeners...",
+  "@ventor_sessions_search_hint": {},
+  "ventor_sessions_topic_all": "All",
+  "@ventor_sessions_topic_all": {},
+  "ventor_sessions_topic_anxiety": "Anxiety",
+  "@ventor_sessions_topic_anxiety": {},
+  "ventor_sessions_topic_sadness": "Sadness",
+  "@ventor_sessions_topic_sadness": {},
+  "ventor_sessions_topic_relationships": "Relationships",
+  "@ventor_sessions_topic_relationships": {},
+  "ventor_sessions_topic_stress": "Stress",
+  "@ventor_sessions_topic_stress": {},
+  "ventor_sessions_top_listeners": "Top listeners for you",
+  "@ventor_sessions_top_listeners": {},
+  "ventor_sessions_see_all": "See all",
+  "@ventor_sessions_see_all": {},
+  "ventor_sessions_empty": "No listeners match your search or filters. Try adjusting them.",
+  "@ventor_sessions_empty": {},
+  "ventor_sessions_experience_empty": "No life experiences listed",
+  "@ventor_sessions_experience_empty": {},
+  "ventor_sessions_reviews": "{count} reviews",
+  "@ventor_sessions_reviews": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "ventor_sessions_sessions_count": "{count} sessions",
+  "@ventor_sessions_sessions_count": {
+    "placeholders": {
+      "count": { "type": "String" }
+    }
+  },
+  "ventor_sessions_surprise_title": "Not sure who to pick?",
+  "@ventor_sessions_surprise_title": {},
+  "ventor_sessions_surprise_cta": "Surprise Me ✨",
+  "@ventor_sessions_surprise_cta": {},
+  "ventor_sessions_filters_title": "Filters",
+  "@ventor_sessions_filters_title": {},
+  "ventor_sessions_filters_reset": "Reset",
+  "@ventor_sessions_filters_reset": {},
+  "ventor_sessions_filters_apply": "Apply filters",
+  "@ventor_sessions_filters_apply": {},
+  "ventor_sessions_filter_price": "Price per minute",
+  "@ventor_sessions_filter_price": {},
+  "ventor_sessions_filter_price_range": "{min} – {max}",
+  "@ventor_sessions_filter_price_range": {
+    "placeholders": {
+      "min": { "type": "String" },
+      "max": { "type": "String" }
+    }
+  },
+  "ventor_sessions_filter_language": "Language",
+  "@ventor_sessions_filter_language": {},
+  "ventor_sessions_filter_gender": "Gender",
+  "@ventor_sessions_filter_gender": {},
+  "ventor_sessions_gender_female": "Female",
+  "@ventor_sessions_gender_female": {},
+  "ventor_sessions_gender_male": "Male",
+  "@ventor_sessions_gender_male": {},
+  "ventor_sessions_gender_prefer_not": "Prefer not to say",
+  "@ventor_sessions_gender_prefer_not": {},
+  "ventor_sessions_filter_rating": "Minimum rating",
+  "@ventor_sessions_filter_rating": {},
+  "ventor_sessions_filter_rating_any": "Any",
+  "@ventor_sessions_filter_rating_any": {},
+  "ventor_sessions_filter_rating_min": "{rating}+",
+  "@ventor_sessions_filter_rating_min": {
+    "placeholders": {
+      "rating": { "type": "String" }
+    }
+  },
+  "ventor_sessions_filter_favorites": "Favorites",
+  "@ventor_sessions_filter_favorites": {},
+  "ventor_sessions_filter_favorites_any": "All",
+  "@ventor_sessions_filter_favorites_any": {},
+  "ventor_sessions_filter_favorites_only": "Favorites only",
+  "@ventor_sessions_filter_favorites_only": {},
+  "ventor_sessions_filter_favorites_not": "Not favorites",
+  "@ventor_sessions_filter_favorites_not": {},
+  "ventor_sessions_about_me": "About me",
+  "@ventor_sessions_about_me": {},
+  "ventor_sessions_help_with": "I can help with",
+  "@ventor_sessions_help_with": {},
+  "ventor_sessions_languages": "Languages",
+  "@ventor_sessions_languages": {},
+  "ventor_sessions_listen_voice": "Listen to my voice",
+  "@ventor_sessions_listen_voice": {},
+  "ventor_sessions_reviews_title": "Reviews",
+  "@ventor_sessions_reviews_title": {},
+  "ventor_sessions_rate_per_min": "{rate} / min",
+  "@ventor_sessions_rate_per_min": {
+    "placeholders": {
+      "rate": { "type": "String" }
+    }
+  },
+  "ventor_sessions_choose_duration": "Choose duration",
+  "@ventor_sessions_choose_duration": {},
+  "ventor_sessions_duration_minutes": "{minutes} min",
+  "@ventor_sessions_duration_minutes": {
+    "placeholders": {
+      "minutes": { "type": "int" }
+    }
+  },
+  "ventor_sessions_duration_popular": "Most popular",
+  "@ventor_sessions_duration_popular": {},
+  "ventor_sessions_continue_payment": "Continue to payment",
+  "@ventor_sessions_continue_payment": {},
+  "ventor_sessions_before_title": "Before connecting",
+  "@ventor_sessions_before_title": {},
+  "ventor_sessions_before_heading": "A few things before you start",
+  "@ventor_sessions_before_heading": {},
+  "ventor_sessions_before_body": "You’ll be connected shortly. Take a breath, and remember this is a safe space to share what you need.",
+  "@ventor_sessions_before_body": {},
+  "ventor_sessions_before_bullet_connect": "Connection usually takes under a minute.",
+  "@ventor_sessions_before_bullet_connect": {},
+  "ventor_sessions_before_bullet_leave": "You can leave the session anytime.",
+  "@ventor_sessions_before_bullet_leave": {},
+  "ventor_sessions_before_bullet_respect": "Be respectful — harassment ends the session.",
+  "@ventor_sessions_before_bullet_respect": {},
+  "ventor_sessions_start_session": "Start session",
+  "@ventor_sessions_start_session": {},
+  "ventor_sessions_start_mock": "Starting {minutes}-min session with {name} (demo).",
+  "@ventor_sessions_start_mock": {
+    "placeholders": {
+      "name": { "type": "String" },
+      "minutes": { "type": "int" }
+    }
+  },
+  "ventor_sessions_details_title": "Details",
+  "@ventor_sessions_details_title": {},
+  "ventor_sessions_gender_label": "Gender",
+  "@ventor_sessions_gender_label": {},
+  "ventor_sessions_country_label": "Country",
+  "@ventor_sessions_country_label": {},
+  "ventor_sessions_city_label": "City",
+  "@ventor_sessions_city_label": {},
+  "ventor_sessions_life_experience_title": "Life experience",
+  "@ventor_sessions_life_experience_title": {},
+  "ventor_sessions_boundaries_title": "Boundaries",
+  "@ventor_sessions_boundaries_title": {},
+  "ventor_sessions_boundaries_subtitle": "Topics this listener prefers not to discuss.",
+  "@ventor_sessions_boundaries_subtitle": {},
+  "ventor_sessions_boundaries_none": "No specific boundaries listed.",
+  "@ventor_sessions_boundaries_none": {},
+  "ventor_sessions_availability_title": "Availability",
+  "@ventor_sessions_availability_title": {},
+  "ventor_sessions_availability_days": "Available days",
+  "@ventor_sessions_availability_days": {},
+  "ventor_sessions_availability_hours": "Available hours",
+  "@ventor_sessions_availability_hours": {},
+  "ventor_sessions_availability_timezone": "Time zone",
+  "@ventor_sessions_availability_timezone": {},
+  "ventor_sessions_availability_instant": "Instant calls",
+  "@ventor_sessions_availability_instant": {},
+  "ventor_sessions_availability_instant_yes": "Accepts instant calls",
+  "@ventor_sessions_availability_instant_yes": {},
+  "ventor_sessions_availability_instant_no": "Scheduled sessions only",
+  "@ventor_sessions_availability_instant_no": {},
+  "ventor_sessions_session_lengths": "Session lengths",
+  "@ventor_sessions_session_lengths": {},
+  "ventor_sessions_day_mon": "Monday",
+  "@ventor_sessions_day_mon": {},
+  "ventor_sessions_day_tue": "Tuesday",
+  "@ventor_sessions_day_tue": {},
+  "ventor_sessions_day_wed": "Wednesday",
+  "@ventor_sessions_day_wed": {},
+  "ventor_sessions_day_thu": "Thursday",
+  "@ventor_sessions_day_thu": {},
+  "ventor_sessions_day_fri": "Friday",
+  "@ventor_sessions_day_fri": {},
+  "ventor_sessions_day_sat": "Saturday",
+  "@ventor_sessions_day_sat": {},
+  "ventor_sessions_day_sun": "Sunday",
+  "@ventor_sessions_day_sun": {},
+  "ventor_sessions_continue": "Continue",
+  "@ventor_sessions_continue": {},
+  "ventor_sessions_choose_time_title": "Choose call time",
+  "@ventor_sessions_choose_time_title": {},
+  "ventor_sessions_choose_time_subtitle": "Pick when you’d like to talk with {name} for {duration}.",
+  "@ventor_sessions_choose_time_subtitle": {
+    "placeholders": {
+      "name": { "type": "String" },
+      "duration": { "type": "String" }
+    }
+  },
+  "ventor_sessions_choose_time_window": "Listener availability: {hours} ({timezone})",
+  "@ventor_sessions_choose_time_window": {
+    "placeholders": {
+      "hours": { "type": "String" },
+      "timezone": { "type": "String" }
+    }
+  },
+  "ventor_sessions_time_instant_title": "Instant call",
+  "@ventor_sessions_time_instant_title": {},
+  "ventor_sessions_time_instant_subtitle": "Connect as soon as the listener accepts.",
+  "@ventor_sessions_time_instant_subtitle": {},
+  "ventor_sessions_time_nearest_title": "Nearest available time",
+  "@ventor_sessions_time_nearest_title": {},
+  "ventor_sessions_time_nearest_subtitle": "Suggested: {slot}",
+  "@ventor_sessions_time_nearest_subtitle": {
+    "placeholders": {
+      "slot": { "type": "String" }
+    }
+  },
+  "ventor_sessions_time_schedule_title": "Choose from availability",
+  "@ventor_sessions_time_schedule_title": {},
+  "ventor_sessions_time_schedule_subtitle": "Pick a time within this listener’s weekly hours.",
+  "@ventor_sessions_time_schedule_subtitle": {},
+  "ventor_sessions_time_no_slots": "No upcoming slots match this listener’s availability.",
+  "@ventor_sessions_time_no_slots": {},
+  "ventor_sessions_time_summary_instant": "Instant call",
+  "@ventor_sessions_time_summary_instant": {},
+  "ventor_sessions_time_summary_nearest": "Nearest time · {slot}",
+  "@ventor_sessions_time_summary_nearest": {
+    "placeholders": {
+      "slot": { "type": "String" }
+    }
+  },
+  "ventor_sessions_time_summary_scheduled": "Scheduled · {slot}",
+  "@ventor_sessions_time_summary_scheduled": {
+    "placeholders": {
+      "slot": { "type": "String" }
+    }
+  },
+  "ventor_sessions_confirm_booking": "Confirm booking",
+  "@ventor_sessions_confirm_booking": {},
+  "ventor_sessions_confirm_title": "Confirm session",
+  "@ventor_sessions_confirm_title": {},
+  "ventor_sessions_confirm_heading": "Review your session",
+  "@ventor_sessions_confirm_heading": {},
+  "ventor_sessions_confirm_subtitle": "Check the details, choose voice or video, then continue to payment.",
+  "@ventor_sessions_confirm_subtitle": {},
+  "ventor_sessions_confirm_summary_title": "Your selections",
+  "@ventor_sessions_confirm_summary_title": {},
+  "ventor_sessions_confirm_duration": "Duration",
+  "@ventor_sessions_confirm_duration": {},
+  "ventor_sessions_confirm_time": "Call time",
+  "@ventor_sessions_confirm_time": {},
+  "ventor_sessions_confirm_rate": "Rate",
+  "@ventor_sessions_confirm_rate": {},
+  "ventor_sessions_confirm_total": "Total",
+  "@ventor_sessions_confirm_total": {},
+  "ventor_sessions_confirm_call_type": "Call type",
+  "@ventor_sessions_confirm_call_type": {},
+  "ventor_sessions_call_voice": "Voice call",
+  "@ventor_sessions_call_voice": {},
+  "ventor_sessions_call_video": "Video call",
+  "@ventor_sessions_call_video": {},
+  "ventor_sessions_confirm_tips_title": "Tips before you connect",
+  "@ventor_sessions_confirm_tips_title": {},
+  "ventor_sessions_confirm_tip_quiet": "Find a quiet place so you can speak freely.",
+  "@ventor_sessions_confirm_tip_quiet": {},
+  "ventor_sessions_confirm_tip_honest": "Share what you need — you don’t have to filter your feelings.",
+  "@ventor_sessions_confirm_tip_honest": {},
+  "ventor_sessions_confirm_tip_boundaries": "Respect the listener’s boundaries shown on their profile.",
+  "@ventor_sessions_confirm_tip_boundaries": {},
+  "ventor_sessions_confirm_tip_leave": "You can leave the session anytime if you feel uncomfortable.",
+  "@ventor_sessions_confirm_tip_leave": {},
+  "ventor_sessions_confirm_you_pay": "Amount to pay",
+  "@ventor_sessions_confirm_you_pay": {},
+  "ventor_sessions_pay_now": "Pay {amount}",
+  "@ventor_sessions_pay_now": {
+    "placeholders": {
+      "amount": { "type": "String" }
+    }
+  },
+  "ventor_sessions_pay_mock": "Payment demo: {amount} for {minutes}-min {mode} with {name}.",
+  "@ventor_sessions_pay_mock": {
+    "placeholders": {
+      "name": { "type": "String" },
+      "minutes": { "type": "int" },
+      "mode": { "type": "String" },
+      "amount": { "type": "String" }
+    }
+  },
+  "ventor_sessions_permission_title": "App permissions",
+  "@ventor_sessions_permission_title": {},
+  "ventor_sessions_permission_note_voice": "We’ll ask for microphone access now so you’re fully prepared before payment and the call starts.",
+  "@ventor_sessions_permission_note_voice": {},
+  "ventor_sessions_permission_note_video": "We’ll ask for microphone and camera access now so you’re fully prepared before payment and the call starts.",
+  "@ventor_sessions_permission_note_video": {},
+  "ventor_sessions_permission_mic": "Microphone",
+  "@ventor_sessions_permission_mic": {},
+  "ventor_sessions_permission_camera": "Camera",
+  "@ventor_sessions_permission_camera": {},
+  "ventor_sessions_permission_allow": "Allow",
+  "@ventor_sessions_permission_allow": {},
+  "ventor_sessions_permission_granted": "Allowed",
+  "@ventor_sessions_permission_granted": {},
+  "ventor_sessions_permission_settings": "Permission denied. Enable it in Settings so you can join the call.",
+  "@ventor_sessions_permission_settings": {},
+  "ventor_sessions_permission_required_hint": "Allow the required permissions to continue to payment.",
+  "@ventor_sessions_permission_required_hint": {},
+  "ventor_sessions_speech_language_title": "Speech language",
+  "@ventor_sessions_speech_language_title": {},
+  "ventor_sessions_speech_language_subtitle": "Choose the language you’ll speak so {name} is ready for this session.",
+  "@ventor_sessions_speech_language_subtitle": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+  "ventor_sessions_speech_language_required": "Select a speech language to continue.",
+  "@ventor_sessions_speech_language_required": {},
+  "ventor_sessions_confirm_session_price": "Session price",
+  "@ventor_sessions_confirm_session_price": {},
+  "ventor_sessions_voice_change_title": "Optional add-on",
+  "@ventor_sessions_voice_change_title": {},
+  "ventor_sessions_voice_change_subtitle": "Turn this on if you want your voice disguised during the call.",
+  "@ventor_sessions_voice_change_subtitle": {},
+  "ventor_sessions_voice_change_option": "Change my voice in the call",
+  "@ventor_sessions_voice_change_option": {},
+  "ventor_sessions_voice_change_price": "+{amount}",
+  "@ventor_sessions_voice_change_price": {
+    "placeholders": {
+      "amount": { "type": "String" }
+    }
+  },
+  "ventor_sessions_voice_change_fee_label": "Voice change",
+  "@ventor_sessions_voice_change_fee_label": {},
+  "ventor_sessions_discount_title": "Promo & rewards",
+  "@ventor_sessions_discount_title": {},
+  "ventor_sessions_discount_subtitle": "Apply a promo code or use a discount from your rewards.",
+  "@ventor_sessions_discount_subtitle": {},
+  "ventor_sessions_promo_code_label": "Promo code",
+  "@ventor_sessions_promo_code_label": {},
+  "ventor_sessions_promo_code_hint": "Enter code",
+  "@ventor_sessions_promo_code_hint": {},
+  "ventor_sessions_promo_apply": "Apply",
+  "@ventor_sessions_promo_apply": {},
+  "ventor_sessions_promo_empty": "Enter a promo code first.",
+  "@ventor_sessions_promo_empty": {},
+  "ventor_sessions_promo_invalid": "That promo code isn’t valid.",
+  "@ventor_sessions_promo_invalid": {},
+  "ventor_sessions_promo_percent_label": "Promo · {percent}% off",
+  "@ventor_sessions_promo_percent_label": {
+    "placeholders": {
+      "percent": { "type": "int" }
+    }
+  },
+  "ventor_sessions_promo_fixed_label": "Promo · {amount} off",
+  "@ventor_sessions_promo_fixed_label": {
+    "placeholders": {
+      "amount": { "type": "String" }
+    }
+  },
+  "ventor_sessions_rewards_discount_label": "Your rewards",
+  "@ventor_sessions_rewards_discount_label": {},
+  "ventor_sessions_confirm_discount": "Discount",
+  "@ventor_sessions_confirm_discount": {},
+  "ventor_sessions_discount_applied": "Saving {amount}",
+  "@ventor_sessions_discount_applied": {
+    "placeholders": {
+      "amount": { "type": "String" }
+    }
+  },
+  "ventor_sessions_discount_remove": "Remove",
+  "@ventor_sessions_discount_remove": {},
+  "ventor_sessions_tab_find": "Find",
+  "@ventor_sessions_tab_find": {},
+  "ventor_sessions_tab_booked": "My sessions",
+  "@ventor_sessions_tab_booked": {},
+  "ventor_sessions_booked_subtitle": "Your booked and past sessions.",
+  "@ventor_sessions_booked_subtitle": {},
+  "ventor_sessions_booked_empty": "You don’t have any booked sessions yet.",
+  "@ventor_sessions_booked_empty": {},
+  "ventor_sessions_booked_empty_cta": "Find a listener",
+  "@ventor_sessions_booked_empty_cta": {},
+  "ventor_sessions_booked_status_upcoming": "Upcoming",
+  "@ventor_sessions_booked_status_upcoming": {},
+  "ventor_sessions_booked_status_live": "Live",
+  "@ventor_sessions_booked_status_live": {},
+  "ventor_sessions_booked_status_completed": "Completed",
+  "@ventor_sessions_booked_status_completed": {},
+  "ventor_sessions_booked_status_cancelled": "Cancelled",
+  "@ventor_sessions_booked_status_cancelled": {},
+  "ventor_sessions_booked_instant_now": "Instant · happening now",
+  "@ventor_sessions_booked_instant_now": {},
+  "ventor_sessions_booked_speech_language": "Speaking {language}",
+  "@ventor_sessions_booked_speech_language": {
+    "placeholders": {
+      "language": { "type": "String" }
+    }
+  },
+  "ventor_sessions_booked_voice_change_on": "Voice change on",
+  "@ventor_sessions_booked_voice_change_on": {},
+  "ventor_sessions_booked_paid": "Paid {amount}",
+  "@ventor_sessions_booked_paid": {
+    "placeholders": {
+      "amount": { "type": "String" }
+    }
+  },
+  "ventor_sessions_booked_join": "Join now",
+  "@ventor_sessions_booked_join": {},
+  "ventor_sessions_booked_details": "Details",
+  "@ventor_sessions_booked_details": {},
+  "ventor_sessions_details_screen_title": "Session details",
+  "@ventor_sessions_details_screen_title": {},
+  "ventor_sessions_details_heading": "Your booking",
+  "@ventor_sessions_details_heading": {},
+  "ventor_sessions_details_subtitle": "Review everything you selected for this session.",
+  "@ventor_sessions_details_subtitle": {},
+  "ventor_sessions_voice_change_off": "Voice change off",
+  "@ventor_sessions_voice_change_off": {},
+  "ventor_sessions_cancel_cta": "Cancel session",
+  "@ventor_sessions_cancel_cta": {},
+  "ventor_sessions_cancel_title": "Cancel this session?",
+  "@ventor_sessions_cancel_title": {},
+  "ventor_sessions_cancel_body": "We’ll refund the full session amount to your ventor balance so you can book another session anytime.",
+  "@ventor_sessions_cancel_body": {},
+  "ventor_sessions_cancel_refund_label": "Full refund to balance",
+  "@ventor_sessions_cancel_refund_label": {},
+  "ventor_sessions_cancel_balance_note": "{amount} will be stored in your ventor balance.",
+  "@ventor_sessions_cancel_balance_note": {
+    "placeholders": {
+      "amount": { "type": "String" }
+    }
+  },
+  "ventor_sessions_cancel_keep": "Keep session",
+  "@ventor_sessions_cancel_keep": {},
+  "ventor_sessions_cancel_confirm": "Cancel & refund",
+  "@ventor_sessions_cancel_confirm": {},
+  "ventor_sessions_cancel_success": "Session cancelled. {amount} was refunded to your balance — book another session whenever you’re ready.",
+  "@ventor_sessions_cancel_success": {
+    "placeholders": {
+      "amount": { "type": "String" }
+    }
+  },
+  "ventor_sessions_cancel_policy_title": "Cancellation policy",
+  "@ventor_sessions_cancel_policy_title": {},
+  "ventor_sessions_cancel_policy_body": "If you cancel, the full amount ({amount}) is refunded to your ventor balance so you can book another session.",
+  "@ventor_sessions_cancel_policy_body": {
+    "placeholders": {
+      "amount": { "type": "String" }
+    }
+  },
+  "ventor_sessions_booked_was_paid": "Was {amount}",
+  "@ventor_sessions_booked_was_paid": {
+    "placeholders": {
+      "amount": { "type": "String" }
+    }
+  },
+  "ventor_sessions_cancelled_refund_title": "Full refund · {amount}",
+  "@ventor_sessions_cancelled_refund_title": {
+    "placeholders": {
+      "amount": { "type": "String" }
+    }
+  },
+  "ventor_sessions_cancelled_refund_subtitle": "This amount was returned to your ventor balance. Book another session whenever you’re ready.",
+  "@ventor_sessions_cancelled_refund_subtitle": {},
+  "ventor_sessions_cancelled_rebook": "Book again",
+  "@ventor_sessions_cancelled_rebook": {},
+  "ventor_sessions_booked_tap_mock": "Opening session with {name} (demo).",
+  "@ventor_sessions_booked_tap_mock": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+  "ventor_call_tips_title": "Before you join",
+  "@ventor_call_tips_title": {},
+  "ventor_call_permissions_heading": "Permissions",
+  "@ventor_call_permissions_heading": {},
+  "ventor_call_permissions_subtitle_voice": "Allow your microphone so you can speak in this voice session.",
+  "@ventor_call_permissions_subtitle_voice": {},
+  "ventor_call_permissions_subtitle_video": "Allow microphone and camera for this video session.",
+  "@ventor_call_permissions_subtitle_video": {},
+  "ventor_call_permission_mic": "Microphone",
+  "@ventor_call_permission_mic": {},
+  "ventor_call_permission_camera": "Camera",
+  "@ventor_call_permission_camera": {},
+  "ventor_call_permission_allow": "Allow",
+  "@ventor_call_permission_allow": {},
+  "ventor_call_permission_granted": "Allowed",
+  "@ventor_call_permission_granted": {},
+  "ventor_call_permission_settings": "Permission denied. Enable it in Settings to join the call.",
+  "@ventor_call_permission_settings": {},
+  "ventor_call_enter": "Enter call",
+  "@ventor_call_enter": {},
+  "ventor_call_end": "End",
+  "@ventor_call_end": {},
+  "ventor_call_mute": "Mute",
+  "@ventor_call_mute": {},
+  "ventor_call_speaker": "Speaker",
+  "@ventor_call_speaker": {},
+  "ventor_call_flip": "Flip",
+  "@ventor_call_flip": {},
+  "ventor_call_speaking": "Session in progress — speak freely",
+  "@ventor_call_speaking": {},
+  "ventor_call_rating_title": "How was your session with {name}?",
+  "@ventor_call_rating_title": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+  "ventor_call_rating_subtitle": "Your rating helps other ventors find great listeners.",
+  "@ventor_call_rating_subtitle": {},
+  "ventor_call_rating_stars_hint": "{count}-star rating",
+  "@ventor_call_rating_stars_hint": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "ventor_call_rating_review_hint": "Optional note about your experience…",
+  "@ventor_call_rating_review_hint": {},
+  "ventor_call_tip_title": "Say thanks with a tip",
+  "@ventor_call_tip_title": {},
+  "ventor_call_tip_subtitle": "Optional — send {name} a tip for being there for you.",
+  "@ventor_call_tip_subtitle": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+  "ventor_call_tip_none": "No tip",
+  "@ventor_call_tip_none": {},
+  "ventor_call_rating_submit": "Submit rating",
+  "@ventor_call_rating_submit": {},
+  "ventor_call_rating_submit_with_tip": "Submit & tip {amount}",
+  "@ventor_call_rating_submit_with_tip": {
+    "placeholders": {
+      "amount": { "type": "String" }
+    }
+  },
+  "ventor_call_rating_thanks": "Thanks for your feedback!",
+  "@ventor_call_rating_thanks": {},
+  "ventor_call_rating_thanks_with_tip": "Thanks! Your {amount} tip was sent.",
+  "@ventor_call_rating_thanks_with_tip": {
+    "placeholders": {
+      "amount": { "type": "String" }
+    }
+  }
 }

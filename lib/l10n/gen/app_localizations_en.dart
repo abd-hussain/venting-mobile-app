@@ -5620,6 +5620,9 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
   String get listener_sessions_chosen_you => 'Why they chose you';
 
   @override
+  String get listener_sessions_speech_language => 'Session language';
+
+  @override
   String get listener_sessions_penalty_note =>
       'For each session you miss without entering, 20% of the session cost will be deducted from your balance.';
 
@@ -6041,4 +6044,705 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
 
   @override
   String get listener_first_session_cta => 'Got it — I’m ready';
+
+  @override
+  String get ventor_sessions_title => 'Sessions';
+
+  @override
+  String get ventor_sessions_subtitle => 'Find someone who gets you.';
+
+  @override
+  String get ventor_sessions_search_hint => 'Search topics, listeners...';
+
+  @override
+  String get ventor_sessions_topic_all => 'All';
+
+  @override
+  String get ventor_sessions_topic_anxiety => 'Anxiety';
+
+  @override
+  String get ventor_sessions_topic_sadness => 'Sadness';
+
+  @override
+  String get ventor_sessions_topic_relationships => 'Relationships';
+
+  @override
+  String get ventor_sessions_topic_stress => 'Stress';
+
+  @override
+  String get ventor_sessions_top_listeners => 'Top listeners for you';
+
+  @override
+  String get ventor_sessions_see_all => 'See all';
+
+  @override
+  String get ventor_sessions_empty =>
+      'No listeners match your search or filters. Try adjusting them.';
+
+  @override
+  String get ventor_sessions_experience_empty => 'No life experiences listed';
+
+  @override
+  String ventor_sessions_reviews(int count) {
+    return '$count reviews';
+  }
+
+  @override
+  String ventor_sessions_sessions_count(String count) {
+    return '$count sessions';
+  }
+
+  @override
+  String get ventor_sessions_surprise_title => 'Not sure who to pick?';
+
+  @override
+  String get ventor_sessions_surprise_cta => 'Surprise Me ✨';
+
+  @override
+  String get ventor_sessions_filters_title => 'Filters';
+
+  @override
+  String get ventor_sessions_filters_reset => 'Reset';
+
+  @override
+  String get ventor_sessions_filters_apply => 'Apply filters';
+
+  @override
+  String get ventor_sessions_filter_price => 'Price per minute';
+
+  @override
+  String ventor_sessions_filter_price_range(String min, String max) {
+    return '$min – $max';
+  }
+
+  @override
+  String get ventor_sessions_filter_language => 'Language';
+
+  @override
+  String get ventor_sessions_filter_gender => 'Gender';
+
+  @override
+  String get ventor_sessions_gender_female => 'Female';
+
+  @override
+  String get ventor_sessions_gender_male => 'Male';
+
+  @override
+  String get ventor_sessions_gender_prefer_not => 'Prefer not to say';
+
+  @override
+  String get ventor_sessions_filter_rating => 'Minimum rating';
+
+  @override
+  String get ventor_sessions_filter_rating_any => 'Any';
+
+  @override
+  String ventor_sessions_filter_rating_min(String rating) {
+    return '$rating+';
+  }
+
+  @override
+  String get ventor_sessions_filter_favorites => 'Favorites';
+
+  @override
+  String get ventor_sessions_filter_favorites_any => 'All';
+
+  @override
+  String get ventor_sessions_filter_favorites_only => 'Favorites only';
+
+  @override
+  String get ventor_sessions_filter_favorites_not => 'Not favorites';
+
+  @override
+  String get ventor_sessions_about_me => 'About me';
+
+  @override
+  String get ventor_sessions_help_with => 'I can help with';
+
+  @override
+  String get ventor_sessions_languages => 'Languages';
+
+  @override
+  String get ventor_sessions_listen_voice => 'Listen to my voice';
+
+  @override
+  String get ventor_sessions_reviews_title => 'Reviews';
+
+  @override
+  String ventor_sessions_rate_per_min(String rate) {
+    return '$rate / min';
+  }
+
+  @override
+  String get ventor_sessions_choose_duration => 'Choose duration';
+
+  @override
+  String ventor_sessions_duration_minutes(int minutes) {
+    return '$minutes min';
+  }
+
+  @override
+  String get ventor_sessions_duration_popular => 'Most popular';
+
+  @override
+  String get ventor_sessions_continue_payment => 'Continue to payment';
+
+  @override
+  String get ventor_sessions_before_title => 'Before connecting';
+
+  @override
+  String get ventor_sessions_before_heading => 'A few things before you start';
+
+  @override
+  String get ventor_sessions_before_body =>
+      'You’ll be connected shortly. Take a breath, and remember this is a safe space to share what you need.';
+
+  @override
+  String get ventor_sessions_before_bullet_connect =>
+      'Connection usually takes under a minute.';
+
+  @override
+  String get ventor_sessions_before_bullet_leave =>
+      'You can leave the session anytime.';
+
+  @override
+  String get ventor_sessions_before_bullet_respect =>
+      'Be respectful — harassment ends the session.';
+
+  @override
+  String get ventor_sessions_start_session => 'Start session';
+
+  @override
+  String ventor_sessions_start_mock(String name, int minutes) {
+    return 'Starting $minutes-min session with $name (demo).';
+  }
+
+  @override
+  String get ventor_sessions_details_title => 'Details';
+
+  @override
+  String get ventor_sessions_gender_label => 'Gender';
+
+  @override
+  String get ventor_sessions_country_label => 'Country';
+
+  @override
+  String get ventor_sessions_city_label => 'City';
+
+  @override
+  String get ventor_sessions_life_experience_title => 'Life experience';
+
+  @override
+  String get ventor_sessions_boundaries_title => 'Boundaries';
+
+  @override
+  String get ventor_sessions_boundaries_subtitle =>
+      'Topics this listener prefers not to discuss.';
+
+  @override
+  String get ventor_sessions_boundaries_none =>
+      'No specific boundaries listed.';
+
+  @override
+  String get ventor_sessions_availability_title => 'Availability';
+
+  @override
+  String get ventor_sessions_availability_days => 'Available days';
+
+  @override
+  String get ventor_sessions_availability_hours => 'Available hours';
+
+  @override
+  String get ventor_sessions_availability_timezone => 'Time zone';
+
+  @override
+  String get ventor_sessions_availability_instant => 'Instant calls';
+
+  @override
+  String get ventor_sessions_availability_instant_yes =>
+      'Accepts instant calls';
+
+  @override
+  String get ventor_sessions_availability_instant_no =>
+      'Scheduled sessions only';
+
+  @override
+  String get ventor_sessions_session_lengths => 'Session lengths';
+
+  @override
+  String get ventor_sessions_day_mon => 'Monday';
+
+  @override
+  String get ventor_sessions_day_tue => 'Tuesday';
+
+  @override
+  String get ventor_sessions_day_wed => 'Wednesday';
+
+  @override
+  String get ventor_sessions_day_thu => 'Thursday';
+
+  @override
+  String get ventor_sessions_day_fri => 'Friday';
+
+  @override
+  String get ventor_sessions_day_sat => 'Saturday';
+
+  @override
+  String get ventor_sessions_day_sun => 'Sunday';
+
+  @override
+  String get ventor_sessions_continue => 'Continue';
+
+  @override
+  String get ventor_sessions_choose_time_title => 'Choose call time';
+
+  @override
+  String ventor_sessions_choose_time_subtitle(String name, String duration) {
+    return 'Pick when you’d like to talk with $name for $duration.';
+  }
+
+  @override
+  String ventor_sessions_choose_time_window(String hours, String timezone) {
+    return 'Listener availability: $hours ($timezone)';
+  }
+
+  @override
+  String get ventor_sessions_time_instant_title => 'Instant call';
+
+  @override
+  String get ventor_sessions_time_instant_subtitle =>
+      'Connect as soon as the listener accepts.';
+
+  @override
+  String get ventor_sessions_time_nearest_title => 'Nearest available time';
+
+  @override
+  String ventor_sessions_time_nearest_subtitle(String slot) {
+    return 'Suggested: $slot';
+  }
+
+  @override
+  String get ventor_sessions_time_schedule_title => 'Choose from availability';
+
+  @override
+  String get ventor_sessions_time_schedule_subtitle =>
+      'Pick a time within this listener’s weekly hours.';
+
+  @override
+  String get ventor_sessions_time_no_slots =>
+      'No upcoming slots match this listener’s availability.';
+
+  @override
+  String get ventor_sessions_time_summary_instant => 'Instant call';
+
+  @override
+  String ventor_sessions_time_summary_nearest(String slot) {
+    return 'Nearest time · $slot';
+  }
+
+  @override
+  String ventor_sessions_time_summary_scheduled(String slot) {
+    return 'Scheduled · $slot';
+  }
+
+  @override
+  String get ventor_sessions_confirm_booking => 'Confirm booking';
+
+  @override
+  String get ventor_sessions_confirm_title => 'Confirm session';
+
+  @override
+  String get ventor_sessions_confirm_heading => 'Review your session';
+
+  @override
+  String get ventor_sessions_confirm_subtitle =>
+      'Check the details, choose voice or video, then continue to payment.';
+
+  @override
+  String get ventor_sessions_confirm_summary_title => 'Your selections';
+
+  @override
+  String get ventor_sessions_confirm_duration => 'Duration';
+
+  @override
+  String get ventor_sessions_confirm_time => 'Call time';
+
+  @override
+  String get ventor_sessions_confirm_rate => 'Rate';
+
+  @override
+  String get ventor_sessions_confirm_total => 'Total';
+
+  @override
+  String get ventor_sessions_confirm_call_type => 'Call type';
+
+  @override
+  String get ventor_sessions_call_voice => 'Voice call';
+
+  @override
+  String get ventor_sessions_call_video => 'Video call';
+
+  @override
+  String get ventor_sessions_confirm_tips_title => 'Tips before you connect';
+
+  @override
+  String get ventor_sessions_confirm_tip_quiet =>
+      'Find a quiet place so you can speak freely.';
+
+  @override
+  String get ventor_sessions_confirm_tip_honest =>
+      'Share what you need — you don’t have to filter your feelings.';
+
+  @override
+  String get ventor_sessions_confirm_tip_boundaries =>
+      'Respect the listener’s boundaries shown on their profile.';
+
+  @override
+  String get ventor_sessions_confirm_tip_leave =>
+      'You can leave the session anytime if you feel uncomfortable.';
+
+  @override
+  String get ventor_sessions_confirm_you_pay => 'Amount to pay';
+
+  @override
+  String ventor_sessions_pay_now(String amount) {
+    return 'Pay $amount';
+  }
+
+  @override
+  String ventor_sessions_pay_mock(
+    String name,
+    int minutes,
+    String mode,
+    String amount,
+  ) {
+    return 'Payment demo: $amount for $minutes-min $mode with $name.';
+  }
+
+  @override
+  String get ventor_sessions_permission_title => 'App permissions';
+
+  @override
+  String get ventor_sessions_permission_note_voice =>
+      'We’ll ask for microphone access now so you’re fully prepared before payment and the call starts.';
+
+  @override
+  String get ventor_sessions_permission_note_video =>
+      'We’ll ask for microphone and camera access now so you’re fully prepared before payment and the call starts.';
+
+  @override
+  String get ventor_sessions_permission_mic => 'Microphone';
+
+  @override
+  String get ventor_sessions_permission_camera => 'Camera';
+
+  @override
+  String get ventor_sessions_permission_allow => 'Allow';
+
+  @override
+  String get ventor_sessions_permission_granted => 'Allowed';
+
+  @override
+  String get ventor_sessions_permission_settings =>
+      'Permission denied. Enable it in Settings so you can join the call.';
+
+  @override
+  String get ventor_sessions_permission_required_hint =>
+      'Allow the required permissions to continue to payment.';
+
+  @override
+  String get ventor_sessions_speech_language_title => 'Speech language';
+
+  @override
+  String ventor_sessions_speech_language_subtitle(String name) {
+    return 'Choose the language you’ll speak so $name is ready for this session.';
+  }
+
+  @override
+  String get ventor_sessions_speech_language_required =>
+      'Select a speech language to continue.';
+
+  @override
+  String get ventor_sessions_confirm_session_price => 'Session price';
+
+  @override
+  String get ventor_sessions_voice_change_title => 'Optional add-on';
+
+  @override
+  String get ventor_sessions_voice_change_subtitle =>
+      'Turn this on if you want your voice disguised during the call.';
+
+  @override
+  String get ventor_sessions_voice_change_option =>
+      'Change my voice in the call';
+
+  @override
+  String ventor_sessions_voice_change_price(String amount) {
+    return '+$amount';
+  }
+
+  @override
+  String get ventor_sessions_voice_change_fee_label => 'Voice change';
+
+  @override
+  String get ventor_sessions_discount_title => 'Promo & rewards';
+
+  @override
+  String get ventor_sessions_discount_subtitle =>
+      'Apply a promo code or use a discount from your rewards.';
+
+  @override
+  String get ventor_sessions_promo_code_label => 'Promo code';
+
+  @override
+  String get ventor_sessions_promo_code_hint => 'Enter code';
+
+  @override
+  String get ventor_sessions_promo_apply => 'Apply';
+
+  @override
+  String get ventor_sessions_promo_empty => 'Enter a promo code first.';
+
+  @override
+  String get ventor_sessions_promo_invalid => 'That promo code isn’t valid.';
+
+  @override
+  String ventor_sessions_promo_percent_label(int percent) {
+    return 'Promo · $percent% off';
+  }
+
+  @override
+  String ventor_sessions_promo_fixed_label(String amount) {
+    return 'Promo · $amount off';
+  }
+
+  @override
+  String get ventor_sessions_rewards_discount_label => 'Your rewards';
+
+  @override
+  String get ventor_sessions_confirm_discount => 'Discount';
+
+  @override
+  String ventor_sessions_discount_applied(String amount) {
+    return 'Saving $amount';
+  }
+
+  @override
+  String get ventor_sessions_discount_remove => 'Remove';
+
+  @override
+  String get ventor_sessions_tab_find => 'Find';
+
+  @override
+  String get ventor_sessions_tab_booked => 'My sessions';
+
+  @override
+  String get ventor_sessions_booked_subtitle =>
+      'Your booked and past sessions.';
+
+  @override
+  String get ventor_sessions_booked_empty =>
+      'You don’t have any booked sessions yet.';
+
+  @override
+  String get ventor_sessions_booked_empty_cta => 'Find a listener';
+
+  @override
+  String get ventor_sessions_booked_status_upcoming => 'Upcoming';
+
+  @override
+  String get ventor_sessions_booked_status_live => 'Live';
+
+  @override
+  String get ventor_sessions_booked_status_completed => 'Completed';
+
+  @override
+  String get ventor_sessions_booked_status_cancelled => 'Cancelled';
+
+  @override
+  String get ventor_sessions_booked_instant_now => 'Instant · happening now';
+
+  @override
+  String ventor_sessions_booked_speech_language(String language) {
+    return 'Speaking $language';
+  }
+
+  @override
+  String get ventor_sessions_booked_voice_change_on => 'Voice change on';
+
+  @override
+  String ventor_sessions_booked_paid(String amount) {
+    return 'Paid $amount';
+  }
+
+  @override
+  String get ventor_sessions_booked_join => 'Join now';
+
+  @override
+  String get ventor_sessions_booked_details => 'Details';
+
+  @override
+  String get ventor_sessions_details_screen_title => 'Session details';
+
+  @override
+  String get ventor_sessions_details_heading => 'Your booking';
+
+  @override
+  String get ventor_sessions_details_subtitle =>
+      'Review everything you selected for this session.';
+
+  @override
+  String get ventor_sessions_voice_change_off => 'Voice change off';
+
+  @override
+  String get ventor_sessions_cancel_cta => 'Cancel session';
+
+  @override
+  String get ventor_sessions_cancel_title => 'Cancel this session?';
+
+  @override
+  String get ventor_sessions_cancel_body =>
+      'We’ll refund the full session amount to your ventor balance so you can book another session anytime.';
+
+  @override
+  String get ventor_sessions_cancel_refund_label => 'Full refund to balance';
+
+  @override
+  String ventor_sessions_cancel_balance_note(String amount) {
+    return '$amount will be stored in your ventor balance.';
+  }
+
+  @override
+  String get ventor_sessions_cancel_keep => 'Keep session';
+
+  @override
+  String get ventor_sessions_cancel_confirm => 'Cancel & refund';
+
+  @override
+  String ventor_sessions_cancel_success(String amount) {
+    return 'Session cancelled. $amount was refunded to your balance — book another session whenever you’re ready.';
+  }
+
+  @override
+  String get ventor_sessions_cancel_policy_title => 'Cancellation policy';
+
+  @override
+  String ventor_sessions_cancel_policy_body(String amount) {
+    return 'If you cancel, the full amount ($amount) is refunded to your ventor balance so you can book another session.';
+  }
+
+  @override
+  String ventor_sessions_booked_was_paid(String amount) {
+    return 'Was $amount';
+  }
+
+  @override
+  String ventor_sessions_cancelled_refund_title(String amount) {
+    return 'Full refund · $amount';
+  }
+
+  @override
+  String get ventor_sessions_cancelled_refund_subtitle =>
+      'This amount was returned to your ventor balance. Book another session whenever you’re ready.';
+
+  @override
+  String get ventor_sessions_cancelled_rebook => 'Book again';
+
+  @override
+  String ventor_sessions_booked_tap_mock(String name) {
+    return 'Opening session with $name (demo).';
+  }
+
+  @override
+  String get ventor_call_tips_title => 'Before you join';
+
+  @override
+  String get ventor_call_permissions_heading => 'Permissions';
+
+  @override
+  String get ventor_call_permissions_subtitle_voice =>
+      'Allow your microphone so you can speak in this voice session.';
+
+  @override
+  String get ventor_call_permissions_subtitle_video =>
+      'Allow microphone and camera for this video session.';
+
+  @override
+  String get ventor_call_permission_mic => 'Microphone';
+
+  @override
+  String get ventor_call_permission_camera => 'Camera';
+
+  @override
+  String get ventor_call_permission_allow => 'Allow';
+
+  @override
+  String get ventor_call_permission_granted => 'Allowed';
+
+  @override
+  String get ventor_call_permission_settings =>
+      'Permission denied. Enable it in Settings to join the call.';
+
+  @override
+  String get ventor_call_enter => 'Enter call';
+
+  @override
+  String get ventor_call_end => 'End';
+
+  @override
+  String get ventor_call_mute => 'Mute';
+
+  @override
+  String get ventor_call_speaker => 'Speaker';
+
+  @override
+  String get ventor_call_flip => 'Flip';
+
+  @override
+  String get ventor_call_speaking => 'Session in progress — speak freely';
+
+  @override
+  String ventor_call_rating_title(String name) {
+    return 'How was your session with $name?';
+  }
+
+  @override
+  String get ventor_call_rating_subtitle =>
+      'Your rating helps other ventors find great listeners.';
+
+  @override
+  String ventor_call_rating_stars_hint(int count) {
+    return '$count-star rating';
+  }
+
+  @override
+  String get ventor_call_rating_review_hint =>
+      'Optional note about your experience…';
+
+  @override
+  String get ventor_call_tip_title => 'Say thanks with a tip';
+
+  @override
+  String ventor_call_tip_subtitle(String name) {
+    return 'Optional — send $name a tip for being there for you.';
+  }
+
+  @override
+  String get ventor_call_tip_none => 'No tip';
+
+  @override
+  String get ventor_call_rating_submit => 'Submit rating';
+
+  @override
+  String ventor_call_rating_submit_with_tip(String amount) {
+    return 'Submit & tip $amount';
+  }
+
+  @override
+  String get ventor_call_rating_thanks => 'Thanks for your feedback!';
+
+  @override
+  String ventor_call_rating_thanks_with_tip(String amount) {
+    return 'Thanks! Your $amount tip was sent.';
+  }
 }

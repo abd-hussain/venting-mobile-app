@@ -61,7 +61,6 @@ class _ListenerSessionsTabState extends State<ListenerSessionsTab> {
     final dayAfter = today.add(const Duration(days: 2));
 
     return [
-      // Assigned instant examples — ready to join (voice + video).
       ListenerSessionItem(
         id: 'iv_voice',
         scheduledAt: now,
@@ -73,6 +72,7 @@ class _ListenerSessionsTabState extends State<ListenerSessionsTab> {
         chosenReason:
             'You accepted first on this instant voice call, so it was assigned to you.',
         tags: const ['Stress'],
+        speechLanguage: 'English',
         isWaiting: true,
         canJoinNow: true,
         isInstant: true,
@@ -88,6 +88,7 @@ class _ListenerSessionsTabState extends State<ListenerSessionsTab> {
         chosenReason:
             'You accepted first on this instant video call, so it was assigned to you.',
         tags: const ['Relationships'],
+        speechLanguage: 'Arabic',
         isWaiting: true,
         canJoinNow: true,
         isInstant: true,
@@ -103,6 +104,7 @@ class _ListenerSessionsTabState extends State<ListenerSessionsTab> {
         chosenReason:
             'You specialize in anxiety support and your evening slots match my schedule.',
         tags: const ['Anxiety', 'Overthinking'],
+        speechLanguage: 'English',
       ),
       ListenerSessionItem(
         id: 'u2',
@@ -115,6 +117,7 @@ class _ListenerSessionsTabState extends State<ListenerSessionsTab> {
         chosenReason:
             'Your profile mentions experience with loneliness and you speak Arabic.',
         tags: const ['Loneliness'],
+        speechLanguage: 'Arabic',
         isVideoCall: true,
       ),
       ListenerSessionItem(
@@ -128,6 +131,7 @@ class _ListenerSessionsTabState extends State<ListenerSessionsTab> {
         chosenReason:
             'Your comfort areas include family stress and your reviews mention patience.',
         tags: const ['Family', 'Stress'],
+        speechLanguage: 'English',
       ),
       ListenerSessionItem(
         id: 'u4',
@@ -140,6 +144,7 @@ class _ListenerSessionsTabState extends State<ListenerSessionsTab> {
         chosenReason:
             'You matched my overthinking topic and had an open afternoon slot.',
         tags: const ['Overthinking'],
+        speechLanguage: 'French',
         isVideoCall: true,
       ),
     ];
@@ -271,6 +276,7 @@ class _ListenerSessionsTabState extends State<ListenerSessionsTab> {
         durationMinutes: 30,
         tags: const ['Anxiety', 'Panic'],
         receivedAt: now.subtract(const Duration(seconds: 25)),
+        speechLanguage: 'English',
         isInstant: true,
       ),
       ListenerSessionRequest(
@@ -285,6 +291,7 @@ class _ListenerSessionsTabState extends State<ListenerSessionsTab> {
         durationMinutes: 30,
         tags: const ['Stress'],
         receivedAt: now.subtract(const Duration(minutes: 1)),
+        speechLanguage: 'Arabic',
         isInstant: true,
         isVideoCall: true,
       ),
@@ -300,6 +307,7 @@ class _ListenerSessionsTabState extends State<ListenerSessionsTab> {
         durationMinutes: 30,
         tags: const ['Anxiety', 'Panic'],
         receivedAt: now.subtract(const Duration(minutes: 5)),
+        speechLanguage: 'English',
       ),
       ListenerSessionRequest(
         id: 'r_video',
@@ -315,6 +323,7 @@ class _ListenerSessionsTabState extends State<ListenerSessionsTab> {
         durationMinutes: 60,
         tags: const ['Loneliness'],
         receivedAt: now.subtract(const Duration(hours: 1)),
+        speechLanguage: 'Arabic',
         isVideoCall: true,
       ),
     ];
@@ -442,6 +451,7 @@ class _ListenerSessionsTabState extends State<ListenerSessionsTab> {
       message: request.message,
       chosenReason: request.chosenReason,
       tags: request.tags,
+      speechLanguage: request.speechLanguage,
       isWaiting: request.isInstant,
       canJoinNow: request.isInstant,
       isInstant: request.isInstant,
@@ -535,6 +545,7 @@ class _ListenerSessionsTabState extends State<ListenerSessionsTab> {
     required DateTime scheduledAt,
     required int durationMinutes,
     required List<String> tags,
+    String? speechLanguage,
     bool isWaiting = false,
     bool canJoinNow = false,
     bool isInstant = false,
@@ -579,6 +590,10 @@ class _ListenerSessionsTabState extends State<ListenerSessionsTab> {
       historyOutcome: historyOutcome,
       statusLabel: statusLabel,
       penaltyLabel: penaltyLabel,
+      speechLanguageLabel: speechLanguage == null
+          ? null
+          : l10n.listener_sessions_speech_language,
+      speechLanguage: speechLanguage,
     );
   }
 
@@ -644,6 +659,8 @@ class _ListenerSessionsTabState extends State<ListenerSessionsTab> {
             : l10n.listener_sessions_scheduled_request,
         headerTrailing: _timeAgoLabel(context, request.receivedAt),
         isVideoCall: request.isVideoCall,
+        speechLanguageLabel: l10n.listener_sessions_speech_language,
+        speechLanguage: request.speechLanguage,
         declineLabel: l10n.listener_sessions_decline,
         acceptLabel: request.isInstant
             ? l10n.listener_sessions_accept_instant
@@ -693,6 +710,7 @@ class _ListenerSessionsTabState extends State<ListenerSessionsTab> {
                 scheduledAt: session.scheduledAt,
                 durationMinutes: session.durationMinutes,
                 tags: session.tags,
+                speechLanguage: session.speechLanguage,
                 isWaiting: session.isWaiting,
                 canJoinNow: session.canJoinNow,
                 isInstant: session.isInstant,
@@ -725,6 +743,7 @@ class _ListenerSessionsTabState extends State<ListenerSessionsTab> {
                     scheduledAt: session.scheduledAt,
                     durationMinutes: session.durationMinutes,
                     tags: session.tags,
+                    speechLanguage: session.speechLanguage,
                     isWaiting: session.isWaiting,
                     canJoinNow: session.canJoinNow,
                     isInstant: session.isInstant,

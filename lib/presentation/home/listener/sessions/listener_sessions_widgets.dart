@@ -17,6 +17,7 @@ class ListenerSessionItem {
     required this.chosenReason,
     required this.tags,
     this.ventorAvatarUrl,
+    this.speechLanguage,
     this.isWaiting = false,
     this.canJoinNow = false,
     this.isInstant = false,
@@ -36,6 +37,7 @@ class ListenerSessionItem {
   final String message;
   final String chosenReason;
   final List<String> tags;
+  final String? speechLanguage;
   final bool isWaiting;
   final bool canJoinNow;
   final bool isInstant;
@@ -59,6 +61,7 @@ class ListenerSessionRequest {
     required this.durationMinutes,
     required this.tags,
     required this.receivedAt,
+    required this.speechLanguage,
     this.ventorAvatarUrl,
     this.isInstant = false,
     this.isVideoCall = false,
@@ -74,6 +77,7 @@ class ListenerSessionRequest {
   final int durationMinutes;
   final List<String> tags;
   final DateTime receivedAt;
+  final String speechLanguage;
   final bool isInstant;
   final bool isVideoCall;
   final double ventorRating;
@@ -399,6 +403,8 @@ class ListenerSessionCard extends StatelessWidget {
     this.acceptLabel,
     this.onDecline,
     this.onAccept,
+    this.speechLanguageLabel,
+    this.speechLanguage,
   });
 
   final String ventorName;
@@ -426,6 +432,8 @@ class ListenerSessionCard extends StatelessWidget {
   final String? acceptLabel;
   final VoidCallback? onDecline;
   final VoidCallback? onAccept;
+  final String? speechLanguageLabel;
+  final String? speechLanguage;
 
   bool get _isRequest => onAccept != null && onDecline != null;
 
@@ -566,6 +574,53 @@ class ListenerSessionCard extends StatelessWidget {
               ),
             ],
           ),
+          if (speechLanguage != null && speechLanguageLabel != null) ...[
+            const SizedBox(height: 12),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+              decoration: BoxDecoration(
+                color: SplashColors.purpleMid.withValues(alpha: 0.12),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(
+                  color: SplashColors.purpleMid.withValues(alpha: 0.4),
+                ),
+              ),
+              child: Row(
+                children: [
+                  const Icon(
+                    Icons.translate_rounded,
+                    size: 18,
+                    color: SplashColors.purpleMid,
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          speechLanguageLabel!,
+                          style: GoogleFonts.inter(
+                            color: ListenerProfileTheme.muted,
+                            fontSize: 11,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        const SizedBox(height: 2),
+                        Text(
+                          speechLanguage!,
+                          style: GoogleFonts.inter(
+                            color: Colors.white,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
           const SizedBox(height: 12),
           Text(
             message,

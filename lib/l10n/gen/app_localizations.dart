@@ -10076,6 +10076,12 @@ abstract class VentingMobLocalizations {
   /// **'Why they chose you'**
   String get listener_sessions_chosen_you;
 
+  /// No description provided for @listener_sessions_speech_language.
+  ///
+  /// In en, this message translates to:
+  /// **'Session language'**
+  String get listener_sessions_speech_language;
+
   /// No description provided for @listener_sessions_penalty_note.
   ///
   /// In en, this message translates to:
@@ -10807,6 +10813,1205 @@ abstract class VentingMobLocalizations {
   /// In en, this message translates to:
   /// **'Got it — I’m ready'**
   String get listener_first_session_cta;
+
+  /// No description provided for @ventor_sessions_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Sessions'**
+  String get ventor_sessions_title;
+
+  /// No description provided for @ventor_sessions_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Find someone who gets you.'**
+  String get ventor_sessions_subtitle;
+
+  /// No description provided for @ventor_sessions_search_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search topics, listeners...'**
+  String get ventor_sessions_search_hint;
+
+  /// No description provided for @ventor_sessions_topic_all.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get ventor_sessions_topic_all;
+
+  /// No description provided for @ventor_sessions_topic_anxiety.
+  ///
+  /// In en, this message translates to:
+  /// **'Anxiety'**
+  String get ventor_sessions_topic_anxiety;
+
+  /// No description provided for @ventor_sessions_topic_sadness.
+  ///
+  /// In en, this message translates to:
+  /// **'Sadness'**
+  String get ventor_sessions_topic_sadness;
+
+  /// No description provided for @ventor_sessions_topic_relationships.
+  ///
+  /// In en, this message translates to:
+  /// **'Relationships'**
+  String get ventor_sessions_topic_relationships;
+
+  /// No description provided for @ventor_sessions_topic_stress.
+  ///
+  /// In en, this message translates to:
+  /// **'Stress'**
+  String get ventor_sessions_topic_stress;
+
+  /// No description provided for @ventor_sessions_top_listeners.
+  ///
+  /// In en, this message translates to:
+  /// **'Top listeners for you'**
+  String get ventor_sessions_top_listeners;
+
+  /// No description provided for @ventor_sessions_see_all.
+  ///
+  /// In en, this message translates to:
+  /// **'See all'**
+  String get ventor_sessions_see_all;
+
+  /// No description provided for @ventor_sessions_empty.
+  ///
+  /// In en, this message translates to:
+  /// **'No listeners match your search or filters. Try adjusting them.'**
+  String get ventor_sessions_empty;
+
+  /// No description provided for @ventor_sessions_experience_empty.
+  ///
+  /// In en, this message translates to:
+  /// **'No life experiences listed'**
+  String get ventor_sessions_experience_empty;
+
+  /// No description provided for @ventor_sessions_reviews.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} reviews'**
+  String ventor_sessions_reviews(int count);
+
+  /// No description provided for @ventor_sessions_sessions_count.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} sessions'**
+  String ventor_sessions_sessions_count(String count);
+
+  /// No description provided for @ventor_sessions_surprise_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Not sure who to pick?'**
+  String get ventor_sessions_surprise_title;
+
+  /// No description provided for @ventor_sessions_surprise_cta.
+  ///
+  /// In en, this message translates to:
+  /// **'Surprise Me ✨'**
+  String get ventor_sessions_surprise_cta;
+
+  /// No description provided for @ventor_sessions_filters_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Filters'**
+  String get ventor_sessions_filters_title;
+
+  /// No description provided for @ventor_sessions_filters_reset.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset'**
+  String get ventor_sessions_filters_reset;
+
+  /// No description provided for @ventor_sessions_filters_apply.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply filters'**
+  String get ventor_sessions_filters_apply;
+
+  /// No description provided for @ventor_sessions_filter_price.
+  ///
+  /// In en, this message translates to:
+  /// **'Price per minute'**
+  String get ventor_sessions_filter_price;
+
+  /// No description provided for @ventor_sessions_filter_price_range.
+  ///
+  /// In en, this message translates to:
+  /// **'{min} – {max}'**
+  String ventor_sessions_filter_price_range(String min, String max);
+
+  /// No description provided for @ventor_sessions_filter_language.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get ventor_sessions_filter_language;
+
+  /// No description provided for @ventor_sessions_filter_gender.
+  ///
+  /// In en, this message translates to:
+  /// **'Gender'**
+  String get ventor_sessions_filter_gender;
+
+  /// No description provided for @ventor_sessions_gender_female.
+  ///
+  /// In en, this message translates to:
+  /// **'Female'**
+  String get ventor_sessions_gender_female;
+
+  /// No description provided for @ventor_sessions_gender_male.
+  ///
+  /// In en, this message translates to:
+  /// **'Male'**
+  String get ventor_sessions_gender_male;
+
+  /// No description provided for @ventor_sessions_gender_prefer_not.
+  ///
+  /// In en, this message translates to:
+  /// **'Prefer not to say'**
+  String get ventor_sessions_gender_prefer_not;
+
+  /// No description provided for @ventor_sessions_filter_rating.
+  ///
+  /// In en, this message translates to:
+  /// **'Minimum rating'**
+  String get ventor_sessions_filter_rating;
+
+  /// No description provided for @ventor_sessions_filter_rating_any.
+  ///
+  /// In en, this message translates to:
+  /// **'Any'**
+  String get ventor_sessions_filter_rating_any;
+
+  /// No description provided for @ventor_sessions_filter_rating_min.
+  ///
+  /// In en, this message translates to:
+  /// **'{rating}+'**
+  String ventor_sessions_filter_rating_min(String rating);
+
+  /// No description provided for @ventor_sessions_filter_favorites.
+  ///
+  /// In en, this message translates to:
+  /// **'Favorites'**
+  String get ventor_sessions_filter_favorites;
+
+  /// No description provided for @ventor_sessions_filter_favorites_any.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get ventor_sessions_filter_favorites_any;
+
+  /// No description provided for @ventor_sessions_filter_favorites_only.
+  ///
+  /// In en, this message translates to:
+  /// **'Favorites only'**
+  String get ventor_sessions_filter_favorites_only;
+
+  /// No description provided for @ventor_sessions_filter_favorites_not.
+  ///
+  /// In en, this message translates to:
+  /// **'Not favorites'**
+  String get ventor_sessions_filter_favorites_not;
+
+  /// No description provided for @ventor_sessions_about_me.
+  ///
+  /// In en, this message translates to:
+  /// **'About me'**
+  String get ventor_sessions_about_me;
+
+  /// No description provided for @ventor_sessions_help_with.
+  ///
+  /// In en, this message translates to:
+  /// **'I can help with'**
+  String get ventor_sessions_help_with;
+
+  /// No description provided for @ventor_sessions_languages.
+  ///
+  /// In en, this message translates to:
+  /// **'Languages'**
+  String get ventor_sessions_languages;
+
+  /// No description provided for @ventor_sessions_listen_voice.
+  ///
+  /// In en, this message translates to:
+  /// **'Listen to my voice'**
+  String get ventor_sessions_listen_voice;
+
+  /// No description provided for @ventor_sessions_reviews_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Reviews'**
+  String get ventor_sessions_reviews_title;
+
+  /// No description provided for @ventor_sessions_rate_per_min.
+  ///
+  /// In en, this message translates to:
+  /// **'{rate} / min'**
+  String ventor_sessions_rate_per_min(String rate);
+
+  /// No description provided for @ventor_sessions_choose_duration.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose duration'**
+  String get ventor_sessions_choose_duration;
+
+  /// No description provided for @ventor_sessions_duration_minutes.
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes} min'**
+  String ventor_sessions_duration_minutes(int minutes);
+
+  /// No description provided for @ventor_sessions_duration_popular.
+  ///
+  /// In en, this message translates to:
+  /// **'Most popular'**
+  String get ventor_sessions_duration_popular;
+
+  /// No description provided for @ventor_sessions_continue_payment.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue to payment'**
+  String get ventor_sessions_continue_payment;
+
+  /// No description provided for @ventor_sessions_before_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Before connecting'**
+  String get ventor_sessions_before_title;
+
+  /// No description provided for @ventor_sessions_before_heading.
+  ///
+  /// In en, this message translates to:
+  /// **'A few things before you start'**
+  String get ventor_sessions_before_heading;
+
+  /// No description provided for @ventor_sessions_before_body.
+  ///
+  /// In en, this message translates to:
+  /// **'You’ll be connected shortly. Take a breath, and remember this is a safe space to share what you need.'**
+  String get ventor_sessions_before_body;
+
+  /// No description provided for @ventor_sessions_before_bullet_connect.
+  ///
+  /// In en, this message translates to:
+  /// **'Connection usually takes under a minute.'**
+  String get ventor_sessions_before_bullet_connect;
+
+  /// No description provided for @ventor_sessions_before_bullet_leave.
+  ///
+  /// In en, this message translates to:
+  /// **'You can leave the session anytime.'**
+  String get ventor_sessions_before_bullet_leave;
+
+  /// No description provided for @ventor_sessions_before_bullet_respect.
+  ///
+  /// In en, this message translates to:
+  /// **'Be respectful — harassment ends the session.'**
+  String get ventor_sessions_before_bullet_respect;
+
+  /// No description provided for @ventor_sessions_start_session.
+  ///
+  /// In en, this message translates to:
+  /// **'Start session'**
+  String get ventor_sessions_start_session;
+
+  /// No description provided for @ventor_sessions_start_mock.
+  ///
+  /// In en, this message translates to:
+  /// **'Starting {minutes}-min session with {name} (demo).'**
+  String ventor_sessions_start_mock(String name, int minutes);
+
+  /// No description provided for @ventor_sessions_details_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Details'**
+  String get ventor_sessions_details_title;
+
+  /// No description provided for @ventor_sessions_gender_label.
+  ///
+  /// In en, this message translates to:
+  /// **'Gender'**
+  String get ventor_sessions_gender_label;
+
+  /// No description provided for @ventor_sessions_country_label.
+  ///
+  /// In en, this message translates to:
+  /// **'Country'**
+  String get ventor_sessions_country_label;
+
+  /// No description provided for @ventor_sessions_city_label.
+  ///
+  /// In en, this message translates to:
+  /// **'City'**
+  String get ventor_sessions_city_label;
+
+  /// No description provided for @ventor_sessions_life_experience_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Life experience'**
+  String get ventor_sessions_life_experience_title;
+
+  /// No description provided for @ventor_sessions_boundaries_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Boundaries'**
+  String get ventor_sessions_boundaries_title;
+
+  /// No description provided for @ventor_sessions_boundaries_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Topics this listener prefers not to discuss.'**
+  String get ventor_sessions_boundaries_subtitle;
+
+  /// No description provided for @ventor_sessions_boundaries_none.
+  ///
+  /// In en, this message translates to:
+  /// **'No specific boundaries listed.'**
+  String get ventor_sessions_boundaries_none;
+
+  /// No description provided for @ventor_sessions_availability_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Availability'**
+  String get ventor_sessions_availability_title;
+
+  /// No description provided for @ventor_sessions_availability_days.
+  ///
+  /// In en, this message translates to:
+  /// **'Available days'**
+  String get ventor_sessions_availability_days;
+
+  /// No description provided for @ventor_sessions_availability_hours.
+  ///
+  /// In en, this message translates to:
+  /// **'Available hours'**
+  String get ventor_sessions_availability_hours;
+
+  /// No description provided for @ventor_sessions_availability_timezone.
+  ///
+  /// In en, this message translates to:
+  /// **'Time zone'**
+  String get ventor_sessions_availability_timezone;
+
+  /// No description provided for @ventor_sessions_availability_instant.
+  ///
+  /// In en, this message translates to:
+  /// **'Instant calls'**
+  String get ventor_sessions_availability_instant;
+
+  /// No description provided for @ventor_sessions_availability_instant_yes.
+  ///
+  /// In en, this message translates to:
+  /// **'Accepts instant calls'**
+  String get ventor_sessions_availability_instant_yes;
+
+  /// No description provided for @ventor_sessions_availability_instant_no.
+  ///
+  /// In en, this message translates to:
+  /// **'Scheduled sessions only'**
+  String get ventor_sessions_availability_instant_no;
+
+  /// No description provided for @ventor_sessions_session_lengths.
+  ///
+  /// In en, this message translates to:
+  /// **'Session lengths'**
+  String get ventor_sessions_session_lengths;
+
+  /// No description provided for @ventor_sessions_day_mon.
+  ///
+  /// In en, this message translates to:
+  /// **'Monday'**
+  String get ventor_sessions_day_mon;
+
+  /// No description provided for @ventor_sessions_day_tue.
+  ///
+  /// In en, this message translates to:
+  /// **'Tuesday'**
+  String get ventor_sessions_day_tue;
+
+  /// No description provided for @ventor_sessions_day_wed.
+  ///
+  /// In en, this message translates to:
+  /// **'Wednesday'**
+  String get ventor_sessions_day_wed;
+
+  /// No description provided for @ventor_sessions_day_thu.
+  ///
+  /// In en, this message translates to:
+  /// **'Thursday'**
+  String get ventor_sessions_day_thu;
+
+  /// No description provided for @ventor_sessions_day_fri.
+  ///
+  /// In en, this message translates to:
+  /// **'Friday'**
+  String get ventor_sessions_day_fri;
+
+  /// No description provided for @ventor_sessions_day_sat.
+  ///
+  /// In en, this message translates to:
+  /// **'Saturday'**
+  String get ventor_sessions_day_sat;
+
+  /// No description provided for @ventor_sessions_day_sun.
+  ///
+  /// In en, this message translates to:
+  /// **'Sunday'**
+  String get ventor_sessions_day_sun;
+
+  /// No description provided for @ventor_sessions_continue.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get ventor_sessions_continue;
+
+  /// No description provided for @ventor_sessions_choose_time_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose call time'**
+  String get ventor_sessions_choose_time_title;
+
+  /// No description provided for @ventor_sessions_choose_time_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick when you’d like to talk with {name} for {duration}.'**
+  String ventor_sessions_choose_time_subtitle(String name, String duration);
+
+  /// No description provided for @ventor_sessions_choose_time_window.
+  ///
+  /// In en, this message translates to:
+  /// **'Listener availability: {hours} ({timezone})'**
+  String ventor_sessions_choose_time_window(String hours, String timezone);
+
+  /// No description provided for @ventor_sessions_time_instant_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Instant call'**
+  String get ventor_sessions_time_instant_title;
+
+  /// No description provided for @ventor_sessions_time_instant_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect as soon as the listener accepts.'**
+  String get ventor_sessions_time_instant_subtitle;
+
+  /// No description provided for @ventor_sessions_time_nearest_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Nearest available time'**
+  String get ventor_sessions_time_nearest_title;
+
+  /// No description provided for @ventor_sessions_time_nearest_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Suggested: {slot}'**
+  String ventor_sessions_time_nearest_subtitle(String slot);
+
+  /// No description provided for @ventor_sessions_time_schedule_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose from availability'**
+  String get ventor_sessions_time_schedule_title;
+
+  /// No description provided for @ventor_sessions_time_schedule_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick a time within this listener’s weekly hours.'**
+  String get ventor_sessions_time_schedule_subtitle;
+
+  /// No description provided for @ventor_sessions_time_no_slots.
+  ///
+  /// In en, this message translates to:
+  /// **'No upcoming slots match this listener’s availability.'**
+  String get ventor_sessions_time_no_slots;
+
+  /// No description provided for @ventor_sessions_time_summary_instant.
+  ///
+  /// In en, this message translates to:
+  /// **'Instant call'**
+  String get ventor_sessions_time_summary_instant;
+
+  /// No description provided for @ventor_sessions_time_summary_nearest.
+  ///
+  /// In en, this message translates to:
+  /// **'Nearest time · {slot}'**
+  String ventor_sessions_time_summary_nearest(String slot);
+
+  /// No description provided for @ventor_sessions_time_summary_scheduled.
+  ///
+  /// In en, this message translates to:
+  /// **'Scheduled · {slot}'**
+  String ventor_sessions_time_summary_scheduled(String slot);
+
+  /// No description provided for @ventor_sessions_confirm_booking.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm booking'**
+  String get ventor_sessions_confirm_booking;
+
+  /// No description provided for @ventor_sessions_confirm_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm session'**
+  String get ventor_sessions_confirm_title;
+
+  /// No description provided for @ventor_sessions_confirm_heading.
+  ///
+  /// In en, this message translates to:
+  /// **'Review your session'**
+  String get ventor_sessions_confirm_heading;
+
+  /// No description provided for @ventor_sessions_confirm_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Check the details, choose voice or video, then continue to payment.'**
+  String get ventor_sessions_confirm_subtitle;
+
+  /// No description provided for @ventor_sessions_confirm_summary_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Your selections'**
+  String get ventor_sessions_confirm_summary_title;
+
+  /// No description provided for @ventor_sessions_confirm_duration.
+  ///
+  /// In en, this message translates to:
+  /// **'Duration'**
+  String get ventor_sessions_confirm_duration;
+
+  /// No description provided for @ventor_sessions_confirm_time.
+  ///
+  /// In en, this message translates to:
+  /// **'Call time'**
+  String get ventor_sessions_confirm_time;
+
+  /// No description provided for @ventor_sessions_confirm_rate.
+  ///
+  /// In en, this message translates to:
+  /// **'Rate'**
+  String get ventor_sessions_confirm_rate;
+
+  /// No description provided for @ventor_sessions_confirm_total.
+  ///
+  /// In en, this message translates to:
+  /// **'Total'**
+  String get ventor_sessions_confirm_total;
+
+  /// No description provided for @ventor_sessions_confirm_call_type.
+  ///
+  /// In en, this message translates to:
+  /// **'Call type'**
+  String get ventor_sessions_confirm_call_type;
+
+  /// No description provided for @ventor_sessions_call_voice.
+  ///
+  /// In en, this message translates to:
+  /// **'Voice call'**
+  String get ventor_sessions_call_voice;
+
+  /// No description provided for @ventor_sessions_call_video.
+  ///
+  /// In en, this message translates to:
+  /// **'Video call'**
+  String get ventor_sessions_call_video;
+
+  /// No description provided for @ventor_sessions_confirm_tips_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Tips before you connect'**
+  String get ventor_sessions_confirm_tips_title;
+
+  /// No description provided for @ventor_sessions_confirm_tip_quiet.
+  ///
+  /// In en, this message translates to:
+  /// **'Find a quiet place so you can speak freely.'**
+  String get ventor_sessions_confirm_tip_quiet;
+
+  /// No description provided for @ventor_sessions_confirm_tip_honest.
+  ///
+  /// In en, this message translates to:
+  /// **'Share what you need — you don’t have to filter your feelings.'**
+  String get ventor_sessions_confirm_tip_honest;
+
+  /// No description provided for @ventor_sessions_confirm_tip_boundaries.
+  ///
+  /// In en, this message translates to:
+  /// **'Respect the listener’s boundaries shown on their profile.'**
+  String get ventor_sessions_confirm_tip_boundaries;
+
+  /// No description provided for @ventor_sessions_confirm_tip_leave.
+  ///
+  /// In en, this message translates to:
+  /// **'You can leave the session anytime if you feel uncomfortable.'**
+  String get ventor_sessions_confirm_tip_leave;
+
+  /// No description provided for @ventor_sessions_confirm_you_pay.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount to pay'**
+  String get ventor_sessions_confirm_you_pay;
+
+  /// No description provided for @ventor_sessions_pay_now.
+  ///
+  /// In en, this message translates to:
+  /// **'Pay {amount}'**
+  String ventor_sessions_pay_now(String amount);
+
+  /// No description provided for @ventor_sessions_pay_mock.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment demo: {amount} for {minutes}-min {mode} with {name}.'**
+  String ventor_sessions_pay_mock(
+    String name,
+    int minutes,
+    String mode,
+    String amount,
+  );
+
+  /// No description provided for @ventor_sessions_permission_title.
+  ///
+  /// In en, this message translates to:
+  /// **'App permissions'**
+  String get ventor_sessions_permission_title;
+
+  /// No description provided for @ventor_sessions_permission_note_voice.
+  ///
+  /// In en, this message translates to:
+  /// **'We’ll ask for microphone access now so you’re fully prepared before payment and the call starts.'**
+  String get ventor_sessions_permission_note_voice;
+
+  /// No description provided for @ventor_sessions_permission_note_video.
+  ///
+  /// In en, this message translates to:
+  /// **'We’ll ask for microphone and camera access now so you’re fully prepared before payment and the call starts.'**
+  String get ventor_sessions_permission_note_video;
+
+  /// No description provided for @ventor_sessions_permission_mic.
+  ///
+  /// In en, this message translates to:
+  /// **'Microphone'**
+  String get ventor_sessions_permission_mic;
+
+  /// No description provided for @ventor_sessions_permission_camera.
+  ///
+  /// In en, this message translates to:
+  /// **'Camera'**
+  String get ventor_sessions_permission_camera;
+
+  /// No description provided for @ventor_sessions_permission_allow.
+  ///
+  /// In en, this message translates to:
+  /// **'Allow'**
+  String get ventor_sessions_permission_allow;
+
+  /// No description provided for @ventor_sessions_permission_granted.
+  ///
+  /// In en, this message translates to:
+  /// **'Allowed'**
+  String get ventor_sessions_permission_granted;
+
+  /// No description provided for @ventor_sessions_permission_settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Permission denied. Enable it in Settings so you can join the call.'**
+  String get ventor_sessions_permission_settings;
+
+  /// No description provided for @ventor_sessions_permission_required_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Allow the required permissions to continue to payment.'**
+  String get ventor_sessions_permission_required_hint;
+
+  /// No description provided for @ventor_sessions_speech_language_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Speech language'**
+  String get ventor_sessions_speech_language_title;
+
+  /// No description provided for @ventor_sessions_speech_language_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the language you’ll speak so {name} is ready for this session.'**
+  String ventor_sessions_speech_language_subtitle(String name);
+
+  /// No description provided for @ventor_sessions_speech_language_required.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a speech language to continue.'**
+  String get ventor_sessions_speech_language_required;
+
+  /// No description provided for @ventor_sessions_confirm_session_price.
+  ///
+  /// In en, this message translates to:
+  /// **'Session price'**
+  String get ventor_sessions_confirm_session_price;
+
+  /// No description provided for @ventor_sessions_voice_change_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Optional add-on'**
+  String get ventor_sessions_voice_change_title;
+
+  /// No description provided for @ventor_sessions_voice_change_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn this on if you want your voice disguised during the call.'**
+  String get ventor_sessions_voice_change_subtitle;
+
+  /// No description provided for @ventor_sessions_voice_change_option.
+  ///
+  /// In en, this message translates to:
+  /// **'Change my voice in the call'**
+  String get ventor_sessions_voice_change_option;
+
+  /// No description provided for @ventor_sessions_voice_change_price.
+  ///
+  /// In en, this message translates to:
+  /// **'+{amount}'**
+  String ventor_sessions_voice_change_price(String amount);
+
+  /// No description provided for @ventor_sessions_voice_change_fee_label.
+  ///
+  /// In en, this message translates to:
+  /// **'Voice change'**
+  String get ventor_sessions_voice_change_fee_label;
+
+  /// No description provided for @ventor_sessions_discount_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Promo & rewards'**
+  String get ventor_sessions_discount_title;
+
+  /// No description provided for @ventor_sessions_discount_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply a promo code or use a discount from your rewards.'**
+  String get ventor_sessions_discount_subtitle;
+
+  /// No description provided for @ventor_sessions_promo_code_label.
+  ///
+  /// In en, this message translates to:
+  /// **'Promo code'**
+  String get ventor_sessions_promo_code_label;
+
+  /// No description provided for @ventor_sessions_promo_code_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter code'**
+  String get ventor_sessions_promo_code_hint;
+
+  /// No description provided for @ventor_sessions_promo_apply.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply'**
+  String get ventor_sessions_promo_apply;
+
+  /// No description provided for @ventor_sessions_promo_empty.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a promo code first.'**
+  String get ventor_sessions_promo_empty;
+
+  /// No description provided for @ventor_sessions_promo_invalid.
+  ///
+  /// In en, this message translates to:
+  /// **'That promo code isn’t valid.'**
+  String get ventor_sessions_promo_invalid;
+
+  /// No description provided for @ventor_sessions_promo_percent_label.
+  ///
+  /// In en, this message translates to:
+  /// **'Promo · {percent}% off'**
+  String ventor_sessions_promo_percent_label(int percent);
+
+  /// No description provided for @ventor_sessions_promo_fixed_label.
+  ///
+  /// In en, this message translates to:
+  /// **'Promo · {amount} off'**
+  String ventor_sessions_promo_fixed_label(String amount);
+
+  /// No description provided for @ventor_sessions_rewards_discount_label.
+  ///
+  /// In en, this message translates to:
+  /// **'Your rewards'**
+  String get ventor_sessions_rewards_discount_label;
+
+  /// No description provided for @ventor_sessions_confirm_discount.
+  ///
+  /// In en, this message translates to:
+  /// **'Discount'**
+  String get ventor_sessions_confirm_discount;
+
+  /// No description provided for @ventor_sessions_discount_applied.
+  ///
+  /// In en, this message translates to:
+  /// **'Saving {amount}'**
+  String ventor_sessions_discount_applied(String amount);
+
+  /// No description provided for @ventor_sessions_discount_remove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get ventor_sessions_discount_remove;
+
+  /// No description provided for @ventor_sessions_tab_find.
+  ///
+  /// In en, this message translates to:
+  /// **'Find'**
+  String get ventor_sessions_tab_find;
+
+  /// No description provided for @ventor_sessions_tab_booked.
+  ///
+  /// In en, this message translates to:
+  /// **'My sessions'**
+  String get ventor_sessions_tab_booked;
+
+  /// No description provided for @ventor_sessions_booked_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your booked and past sessions.'**
+  String get ventor_sessions_booked_subtitle;
+
+  /// No description provided for @ventor_sessions_booked_empty.
+  ///
+  /// In en, this message translates to:
+  /// **'You don’t have any booked sessions yet.'**
+  String get ventor_sessions_booked_empty;
+
+  /// No description provided for @ventor_sessions_booked_empty_cta.
+  ///
+  /// In en, this message translates to:
+  /// **'Find a listener'**
+  String get ventor_sessions_booked_empty_cta;
+
+  /// No description provided for @ventor_sessions_booked_status_upcoming.
+  ///
+  /// In en, this message translates to:
+  /// **'Upcoming'**
+  String get ventor_sessions_booked_status_upcoming;
+
+  /// No description provided for @ventor_sessions_booked_status_live.
+  ///
+  /// In en, this message translates to:
+  /// **'Live'**
+  String get ventor_sessions_booked_status_live;
+
+  /// No description provided for @ventor_sessions_booked_status_completed.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get ventor_sessions_booked_status_completed;
+
+  /// No description provided for @ventor_sessions_booked_status_cancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get ventor_sessions_booked_status_cancelled;
+
+  /// No description provided for @ventor_sessions_booked_instant_now.
+  ///
+  /// In en, this message translates to:
+  /// **'Instant · happening now'**
+  String get ventor_sessions_booked_instant_now;
+
+  /// No description provided for @ventor_sessions_booked_speech_language.
+  ///
+  /// In en, this message translates to:
+  /// **'Speaking {language}'**
+  String ventor_sessions_booked_speech_language(String language);
+
+  /// No description provided for @ventor_sessions_booked_voice_change_on.
+  ///
+  /// In en, this message translates to:
+  /// **'Voice change on'**
+  String get ventor_sessions_booked_voice_change_on;
+
+  /// No description provided for @ventor_sessions_booked_paid.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid {amount}'**
+  String ventor_sessions_booked_paid(String amount);
+
+  /// No description provided for @ventor_sessions_booked_join.
+  ///
+  /// In en, this message translates to:
+  /// **'Join now'**
+  String get ventor_sessions_booked_join;
+
+  /// No description provided for @ventor_sessions_booked_details.
+  ///
+  /// In en, this message translates to:
+  /// **'Details'**
+  String get ventor_sessions_booked_details;
+
+  /// No description provided for @ventor_sessions_details_screen_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Session details'**
+  String get ventor_sessions_details_screen_title;
+
+  /// No description provided for @ventor_sessions_details_heading.
+  ///
+  /// In en, this message translates to:
+  /// **'Your booking'**
+  String get ventor_sessions_details_heading;
+
+  /// No description provided for @ventor_sessions_details_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Review everything you selected for this session.'**
+  String get ventor_sessions_details_subtitle;
+
+  /// No description provided for @ventor_sessions_voice_change_off.
+  ///
+  /// In en, this message translates to:
+  /// **'Voice change off'**
+  String get ventor_sessions_voice_change_off;
+
+  /// No description provided for @ventor_sessions_cancel_cta.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel session'**
+  String get ventor_sessions_cancel_cta;
+
+  /// No description provided for @ventor_sessions_cancel_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel this session?'**
+  String get ventor_sessions_cancel_title;
+
+  /// No description provided for @ventor_sessions_cancel_body.
+  ///
+  /// In en, this message translates to:
+  /// **'We’ll refund the full session amount to your ventor balance so you can book another session anytime.'**
+  String get ventor_sessions_cancel_body;
+
+  /// No description provided for @ventor_sessions_cancel_refund_label.
+  ///
+  /// In en, this message translates to:
+  /// **'Full refund to balance'**
+  String get ventor_sessions_cancel_refund_label;
+
+  /// No description provided for @ventor_sessions_cancel_balance_note.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} will be stored in your ventor balance.'**
+  String ventor_sessions_cancel_balance_note(String amount);
+
+  /// No description provided for @ventor_sessions_cancel_keep.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep session'**
+  String get ventor_sessions_cancel_keep;
+
+  /// No description provided for @ventor_sessions_cancel_confirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel & refund'**
+  String get ventor_sessions_cancel_confirm;
+
+  /// No description provided for @ventor_sessions_cancel_success.
+  ///
+  /// In en, this message translates to:
+  /// **'Session cancelled. {amount} was refunded to your balance — book another session whenever you’re ready.'**
+  String ventor_sessions_cancel_success(String amount);
+
+  /// No description provided for @ventor_sessions_cancel_policy_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancellation policy'**
+  String get ventor_sessions_cancel_policy_title;
+
+  /// No description provided for @ventor_sessions_cancel_policy_body.
+  ///
+  /// In en, this message translates to:
+  /// **'If you cancel, the full amount ({amount}) is refunded to your ventor balance so you can book another session.'**
+  String ventor_sessions_cancel_policy_body(String amount);
+
+  /// No description provided for @ventor_sessions_booked_was_paid.
+  ///
+  /// In en, this message translates to:
+  /// **'Was {amount}'**
+  String ventor_sessions_booked_was_paid(String amount);
+
+  /// No description provided for @ventor_sessions_cancelled_refund_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Full refund · {amount}'**
+  String ventor_sessions_cancelled_refund_title(String amount);
+
+  /// No description provided for @ventor_sessions_cancelled_refund_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'This amount was returned to your ventor balance. Book another session whenever you’re ready.'**
+  String get ventor_sessions_cancelled_refund_subtitle;
+
+  /// No description provided for @ventor_sessions_cancelled_rebook.
+  ///
+  /// In en, this message translates to:
+  /// **'Book again'**
+  String get ventor_sessions_cancelled_rebook;
+
+  /// No description provided for @ventor_sessions_booked_tap_mock.
+  ///
+  /// In en, this message translates to:
+  /// **'Opening session with {name} (demo).'**
+  String ventor_sessions_booked_tap_mock(String name);
+
+  /// No description provided for @ventor_call_tips_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Before you join'**
+  String get ventor_call_tips_title;
+
+  /// No description provided for @ventor_call_permissions_heading.
+  ///
+  /// In en, this message translates to:
+  /// **'Permissions'**
+  String get ventor_call_permissions_heading;
+
+  /// No description provided for @ventor_call_permissions_subtitle_voice.
+  ///
+  /// In en, this message translates to:
+  /// **'Allow your microphone so you can speak in this voice session.'**
+  String get ventor_call_permissions_subtitle_voice;
+
+  /// No description provided for @ventor_call_permissions_subtitle_video.
+  ///
+  /// In en, this message translates to:
+  /// **'Allow microphone and camera for this video session.'**
+  String get ventor_call_permissions_subtitle_video;
+
+  /// No description provided for @ventor_call_permission_mic.
+  ///
+  /// In en, this message translates to:
+  /// **'Microphone'**
+  String get ventor_call_permission_mic;
+
+  /// No description provided for @ventor_call_permission_camera.
+  ///
+  /// In en, this message translates to:
+  /// **'Camera'**
+  String get ventor_call_permission_camera;
+
+  /// No description provided for @ventor_call_permission_allow.
+  ///
+  /// In en, this message translates to:
+  /// **'Allow'**
+  String get ventor_call_permission_allow;
+
+  /// No description provided for @ventor_call_permission_granted.
+  ///
+  /// In en, this message translates to:
+  /// **'Allowed'**
+  String get ventor_call_permission_granted;
+
+  /// No description provided for @ventor_call_permission_settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Permission denied. Enable it in Settings to join the call.'**
+  String get ventor_call_permission_settings;
+
+  /// No description provided for @ventor_call_enter.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter call'**
+  String get ventor_call_enter;
+
+  /// No description provided for @ventor_call_end.
+  ///
+  /// In en, this message translates to:
+  /// **'End'**
+  String get ventor_call_end;
+
+  /// No description provided for @ventor_call_mute.
+  ///
+  /// In en, this message translates to:
+  /// **'Mute'**
+  String get ventor_call_mute;
+
+  /// No description provided for @ventor_call_speaker.
+  ///
+  /// In en, this message translates to:
+  /// **'Speaker'**
+  String get ventor_call_speaker;
+
+  /// No description provided for @ventor_call_flip.
+  ///
+  /// In en, this message translates to:
+  /// **'Flip'**
+  String get ventor_call_flip;
+
+  /// No description provided for @ventor_call_speaking.
+  ///
+  /// In en, this message translates to:
+  /// **'Session in progress — speak freely'**
+  String get ventor_call_speaking;
+
+  /// No description provided for @ventor_call_rating_title.
+  ///
+  /// In en, this message translates to:
+  /// **'How was your session with {name}?'**
+  String ventor_call_rating_title(String name);
+
+  /// No description provided for @ventor_call_rating_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your rating helps other ventors find great listeners.'**
+  String get ventor_call_rating_subtitle;
+
+  /// No description provided for @ventor_call_rating_stars_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'{count}-star rating'**
+  String ventor_call_rating_stars_hint(int count);
+
+  /// No description provided for @ventor_call_rating_review_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Optional note about your experience…'**
+  String get ventor_call_rating_review_hint;
+
+  /// No description provided for @ventor_call_tip_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Say thanks with a tip'**
+  String get ventor_call_tip_title;
+
+  /// No description provided for @ventor_call_tip_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Optional — send {name} a tip for being there for you.'**
+  String ventor_call_tip_subtitle(String name);
+
+  /// No description provided for @ventor_call_tip_none.
+  ///
+  /// In en, this message translates to:
+  /// **'No tip'**
+  String get ventor_call_tip_none;
+
+  /// No description provided for @ventor_call_rating_submit.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit rating'**
+  String get ventor_call_rating_submit;
+
+  /// No description provided for @ventor_call_rating_submit_with_tip.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit & tip {amount}'**
+  String ventor_call_rating_submit_with_tip(String amount);
+
+  /// No description provided for @ventor_call_rating_thanks.
+  ///
+  /// In en, this message translates to:
+  /// **'Thanks for your feedback!'**
+  String get ventor_call_rating_thanks;
+
+  /// No description provided for @ventor_call_rating_thanks_with_tip.
+  ///
+  /// In en, this message translates to:
+  /// **'Thanks! Your {amount} tip was sent.'**
+  String ventor_call_rating_thanks_with_tip(String amount);
 }
 
 class _VentingMobLocalizationsDelegate
