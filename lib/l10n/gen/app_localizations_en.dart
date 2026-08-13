@@ -6806,4 +6806,212 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
 
   @override
   String get ventor_call_report_received_ok => 'Got it';
+
+  @override
+  String get ventor_home_greeting_morning => 'Good morning';
+
+  @override
+  String get ventor_home_greeting_afternoon => 'Good afternoon';
+
+  @override
+  String get ventor_home_greeting_evening => 'Good evening';
+
+  @override
+  String get ventor_home_safe_place => 'You\'re in a safe place.';
+
+  @override
+  String get ventor_home_mood_prompt => 'How are you feeling today?';
+
+  @override
+  String get ventor_home_mood_great => 'Great';
+
+  @override
+  String get ventor_home_mood_okay => 'Okay';
+
+  @override
+  String get ventor_home_mood_anxious => 'Anxious';
+
+  @override
+  String get ventor_home_mood_sad => 'Sad';
+
+  @override
+  String get ventor_home_mood_angry => 'Angry';
+
+  @override
+  String ventor_home_mood_write_title(String mood) {
+    return 'Feeling $mood';
+  }
+
+  @override
+  String get ventor_home_mood_write_subtitle =>
+      'Write a little about your emotions. Checking in daily builds your streak.';
+
+  @override
+  String get ventor_home_mood_write_hint => 'What\'s on your mind right now…';
+
+  @override
+  String get ventor_home_mood_submit => 'Save check-in';
+
+  @override
+  String get ventor_home_mood_saved =>
+      'Check-in saved. Keep going for your 7-day streak!';
+
+  @override
+  String get ventor_home_mood_already_done =>
+      'You already checked in today. Come back tomorrow!';
+
+  @override
+  String ventor_home_mood_streak_complete(int percent) {
+    return '7-day streak complete! Claim your $percent% session discount.';
+  }
+
+  @override
+  String get ventor_home_reco_default =>
+      'You might benefit from talking to listeners who are patient and great at listening.';
+
+  @override
+  String get ventor_home_reco_great =>
+      'Beautiful energy today. A supportive listener can help you celebrate what\'s going well.';
+
+  @override
+  String get ventor_home_reco_okay =>
+      'A calm chat can help you unpack the day and feel a little lighter.';
+
+  @override
+  String get ventor_home_reco_anxious =>
+      'You might benefit from talking to listeners who are patient and great at listening.';
+
+  @override
+  String get ventor_home_reco_sad =>
+      'Gentle, compassionate listeners can sit with you when things feel heavy.';
+
+  @override
+  String get ventor_home_reco_angry =>
+      'A grounded listener can help you release tension without judgment.';
+
+  @override
+  String get ventor_home_find_listener => 'Find a Listener ›';
+
+  @override
+  String ventor_home_streak_title(int count) {
+    return '🔥 $count day streak';
+  }
+
+  @override
+  String get ventor_home_streak_subtitle => 'Keep going, you\'re doing great!';
+
+  @override
+  String get ventor_home_streak_claim => 'Claim';
+
+  @override
+  String get ventor_home_streak_claimed_badge => 'Claimed';
+
+  @override
+  String ventor_home_streak_claimed(int percent) {
+    return 'Nice! You unlocked a $percent% session discount in Rewards.';
+  }
+
+  @override
+  String get ventor_home_day_mon => 'M';
+
+  @override
+  String get ventor_home_day_tue => 'T';
+
+  @override
+  String get ventor_home_day_wed => 'W';
+
+  @override
+  String get ventor_home_day_thu => 'T';
+
+  @override
+  String get ventor_home_day_fri => 'F';
+
+  @override
+  String get ventor_home_day_sat => 'S';
+
+  @override
+  String get ventor_home_day_sun => 'S';
+
+  @override
+  String get ventor_home_instant_section_title => 'Book an instant call';
+
+  @override
+  String get ventor_home_instant_section_subtitle =>
+      'We’ll match you with the best available listener right now.';
+
+  @override
+  String get ventor_home_instant_title => 'Instant match';
+
+  @override
+  String get ventor_home_instant_subtitle =>
+      'Let the system find a great listener for you.';
+
+  @override
+  String get ventor_home_instant_matching => 'Finding your best listener…';
+
+  @override
+  String get ventor_home_instant_cta => 'Book now';
+
+  @override
+  String get ventor_home_instant_none =>
+      'No listeners are available for an instant call right now. Try again shortly.';
+
+  @override
+  String get ventor_home_upcoming_title => 'Upcoming session';
+
+  @override
+  String get ventor_home_upcoming_live_now => 'Live now';
+
+  @override
+  String get ventor_home_quick_title => 'Quick ways to vent';
+
+  @override
+  String get ventor_home_quick_talk => 'Talk Now';
+
+  @override
+  String get ventor_home_quick_talk_sub => 'Instant call';
+
+  @override
+  String get ventor_home_quick_chat => 'Text Chat';
+
+  @override
+  String get ventor_home_quick_chat_sub => 'Type it out';
+
+  @override
+  String get ventor_home_quick_write => 'Write';
+
+  @override
+  String get ventor_home_quick_write_sub => 'Journal it';
+
+  @override
+  String get ventor_home_recent_title => 'Continue where you left off';
+
+  @override
+  String get ventor_home_see_all => 'See all';
+
+  @override
+  String ventor_home_recent_with(String name) {
+    return 'You & $name';
+  }
+
+  @override
+  String get ventor_home_yesterday => 'Yesterday';
+
+  @override
+  String ventor_home_recent_meta(String when, int minutes) {
+    return '$when · $minutes min';
+  }
+
+  @override
+  String get ventor_home_motivation =>
+      'Small steps every day lead to big changes.';
+
+  @override
+  String get ventor_home_notifications_soon => 'Notifications coming soon.';
+
+  @override
+  String get ventor_home_feature_soon_chat => 'Text chat is coming soon.';
+
+  @override
+  String get ventor_home_feature_soon_journal => 'Journaling is coming soon.';
 }

@@ -6758,4 +6758,211 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
 
   @override
   String get ventor_call_report_received_ok => 'حسنًا';
+
+  @override
+  String get ventor_home_greeting_morning => 'صباح الخير';
+
+  @override
+  String get ventor_home_greeting_afternoon => 'مساء الخير';
+
+  @override
+  String get ventor_home_greeting_evening => 'مساء الخير';
+
+  @override
+  String get ventor_home_safe_place => 'أنت في مكان آمن.';
+
+  @override
+  String get ventor_home_mood_prompt => 'كيف تشعر اليوم؟';
+
+  @override
+  String get ventor_home_mood_great => 'رائع';
+
+  @override
+  String get ventor_home_mood_okay => 'بخير';
+
+  @override
+  String get ventor_home_mood_anxious => 'قلق';
+
+  @override
+  String get ventor_home_mood_sad => 'حزين';
+
+  @override
+  String get ventor_home_mood_angry => 'غاضب';
+
+  @override
+  String ventor_home_mood_write_title(String mood) {
+    return 'تشعر بـ $mood';
+  }
+
+  @override
+  String get ventor_home_mood_write_subtitle =>
+      'اكتب قليلًا عن مشاعرك. التسجيل اليومي يبني سلسلتك.';
+
+  @override
+  String get ventor_home_mood_write_hint => 'ماذا يدور في ذهنك الآن…';
+
+  @override
+  String get ventor_home_mood_submit => 'حفظ التسجيل';
+
+  @override
+  String get ventor_home_mood_saved =>
+      'تم حفظ التسجيل. واصل لسلسلة الـ 7 أيام!';
+
+  @override
+  String get ventor_home_mood_already_done =>
+      'لقد سجّلت مشاعرك اليوم. عد غدًا!';
+
+  @override
+  String ventor_home_mood_streak_complete(int percent) {
+    return 'اكتملت سلسلة 7 أيام! استلم خصم $percent% على الجلسات.';
+  }
+
+  @override
+  String get ventor_home_reco_default =>
+      'قد تستفيد من التحدث مع مستمعين صبورين ويجيدون الإنصات.';
+
+  @override
+  String get ventor_home_reco_great =>
+      'طاقة جميلة اليوم. مستمع داعم يمكنه مشاركة فرحتك بما يسير جيدًا.';
+
+  @override
+  String get ventor_home_reco_okay =>
+      'محادثة هادئة قد تساعدك على تفريغ يومك والشعور براحة أكبر.';
+
+  @override
+  String get ventor_home_reco_anxious =>
+      'قد تستفيد من التحدث مع مستمعين صبورين ويجيدون الإنصات.';
+
+  @override
+  String get ventor_home_reco_sad =>
+      'مستمعون لطيفون ورحيمون يمكنهم الجلوس معك عندما يكون الأمر ثقيلًا.';
+
+  @override
+  String get ventor_home_reco_angry =>
+      'مستمع متزن يمكنه مساعدتك على تفريغ التوتر دون أحكام.';
+
+  @override
+  String get ventor_home_find_listener => 'ابحث عن مستمع ›';
+
+  @override
+  String ventor_home_streak_title(int count) {
+    return '🔥 سلسلة $count أيام';
+  }
+
+  @override
+  String get ventor_home_streak_subtitle => 'واصل، أنت تقوم بعمل رائع!';
+
+  @override
+  String get ventor_home_streak_claim => 'استلم';
+
+  @override
+  String get ventor_home_streak_claimed_badge => 'تم الاستلام';
+
+  @override
+  String ventor_home_streak_claimed(int percent) {
+    return 'رائع! فتحت خصم $percent% على الجلسات في المكافآت.';
+  }
+
+  @override
+  String get ventor_home_day_mon => 'ن';
+
+  @override
+  String get ventor_home_day_tue => 'ث';
+
+  @override
+  String get ventor_home_day_wed => 'ر';
+
+  @override
+  String get ventor_home_day_thu => 'خ';
+
+  @override
+  String get ventor_home_day_fri => 'ج';
+
+  @override
+  String get ventor_home_day_sat => 'س';
+
+  @override
+  String get ventor_home_day_sun => 'ح';
+
+  @override
+  String get ventor_home_instant_section_title => 'احجز مكالمة فورية';
+
+  @override
+  String get ventor_home_instant_section_subtitle =>
+      'سنطابقك مع أفضل مستمع متاح الآن.';
+
+  @override
+  String get ventor_home_instant_title => 'مطابقة فورية';
+
+  @override
+  String get ventor_home_instant_subtitle =>
+      'دع النظام يجد لك مستمعًا مناسبًا.';
+
+  @override
+  String get ventor_home_instant_matching => 'جارٍ إيجاد أفضل مستمع لك…';
+
+  @override
+  String get ventor_home_instant_cta => 'احجز الآن';
+
+  @override
+  String get ventor_home_instant_none =>
+      'لا يوجد مستمعون متاحون لمكالمة فورية الآن. حاول مجددًا بعد قليل.';
+
+  @override
+  String get ventor_home_upcoming_title => 'الجلسة القادمة';
+
+  @override
+  String get ventor_home_upcoming_live_now => 'مباشرة الآن';
+
+  @override
+  String get ventor_home_quick_title => 'طرق سريعة للتنفيس';
+
+  @override
+  String get ventor_home_quick_talk => 'تحدث الآن';
+
+  @override
+  String get ventor_home_quick_talk_sub => 'مكالمة فورية';
+
+  @override
+  String get ventor_home_quick_chat => 'محادثة نصية';
+
+  @override
+  String get ventor_home_quick_chat_sub => 'اكتب ما تشعر';
+
+  @override
+  String get ventor_home_quick_write => 'اكتب';
+
+  @override
+  String get ventor_home_quick_write_sub => 'يومياتك';
+
+  @override
+  String get ventor_home_recent_title => 'أكمل من حيث توقفت';
+
+  @override
+  String get ventor_home_see_all => 'عرض الكل';
+
+  @override
+  String ventor_home_recent_with(String name) {
+    return 'أنت و$name';
+  }
+
+  @override
+  String get ventor_home_yesterday => 'أمس';
+
+  @override
+  String ventor_home_recent_meta(String when, int minutes) {
+    return '$when · $minutes د';
+  }
+
+  @override
+  String get ventor_home_motivation => 'خطوات صغيرة كل يوم تصنع تغييرات كبيرة.';
+
+  @override
+  String get ventor_home_notifications_soon => 'الإشعارات قادمة قريبًا.';
+
+  @override
+  String get ventor_home_feature_soon_chat => 'المحادثة النصية قادمة قريبًا.';
+
+  @override
+  String get ventor_home_feature_soon_journal => 'اليوميات قادمة قريبًا.';
 }

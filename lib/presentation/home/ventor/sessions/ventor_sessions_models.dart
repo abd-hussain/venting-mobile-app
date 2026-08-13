@@ -625,6 +625,45 @@ abstract final class VentorSessionsCatalog {
     return null;
   }
 
+  /// Best available listener for an instant match (online + accepts instant).
+  static VentorFindListener? bestInstantListener() {
+    final pool = mockListeners
+        .where((l) => l.isOnline && l.availability.acceptInstantCall)
+        .toList();
+    if (pool.isEmpty) return null;
+
+    pool.sort((a, b) {
+      final byRating = b.rating.compareTo(a.rating);
+      if (byRating != 0) return byRating;
+      return b.sessionCount.compareTo(a.sessionCount);
+    });
+    return pool.first;
+  }
+
+  /// Nearest actionable session: live first, else soonest upcoming.
+  static VentorBookedSession? nearestUpcomingSession({DateTime? now}) {
+    final base = now ?? DateTime.now();
+    final candidates = mockBookedSessions(now: base).where((s) {
+      return s.status == VentorBookedSessionStatus.live ||
+          s.status == VentorBookedSessionStatus.upcoming;
+    }).toList();
+    if (candidates.isEmpty) return null;
+
+    candidates.sort((a, b) {
+      int rank(VentorBookedSessionStatus status) => switch (status) {
+        VentorBookedSessionStatus.live => 0,
+        VentorBookedSessionStatus.upcoming => 1,
+        _ => 2,
+      };
+      final byStatus = rank(a.status).compareTo(rank(b.status));
+      if (byStatus != 0) return byStatus;
+      final aTime = a.scheduledAt ?? base;
+      final bTime = b.scheduledAt ?? base;
+      return aTime.compareTo(bTime);
+    });
+    return candidates.first;
+  }
+
   // TODO: Replace with booked sessions API.
   static List<VentorBookedSession> mockBookedSessions({DateTime? now}) {
     final base = now ?? DateTime.now();

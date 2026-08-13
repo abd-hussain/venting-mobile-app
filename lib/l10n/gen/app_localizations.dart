@@ -12120,6 +12120,372 @@ abstract class VentingMobLocalizations {
   /// In en, this message translates to:
   /// **'Got it'**
   String get ventor_call_report_received_ok;
+
+  /// No description provided for @ventor_home_greeting_morning.
+  ///
+  /// In en, this message translates to:
+  /// **'Good morning'**
+  String get ventor_home_greeting_morning;
+
+  /// No description provided for @ventor_home_greeting_afternoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Good afternoon'**
+  String get ventor_home_greeting_afternoon;
+
+  /// No description provided for @ventor_home_greeting_evening.
+  ///
+  /// In en, this message translates to:
+  /// **'Good evening'**
+  String get ventor_home_greeting_evening;
+
+  /// No description provided for @ventor_home_safe_place.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'re in a safe place.'**
+  String get ventor_home_safe_place;
+
+  /// No description provided for @ventor_home_mood_prompt.
+  ///
+  /// In en, this message translates to:
+  /// **'How are you feeling today?'**
+  String get ventor_home_mood_prompt;
+
+  /// No description provided for @ventor_home_mood_great.
+  ///
+  /// In en, this message translates to:
+  /// **'Great'**
+  String get ventor_home_mood_great;
+
+  /// No description provided for @ventor_home_mood_okay.
+  ///
+  /// In en, this message translates to:
+  /// **'Okay'**
+  String get ventor_home_mood_okay;
+
+  /// No description provided for @ventor_home_mood_anxious.
+  ///
+  /// In en, this message translates to:
+  /// **'Anxious'**
+  String get ventor_home_mood_anxious;
+
+  /// No description provided for @ventor_home_mood_sad.
+  ///
+  /// In en, this message translates to:
+  /// **'Sad'**
+  String get ventor_home_mood_sad;
+
+  /// No description provided for @ventor_home_mood_angry.
+  ///
+  /// In en, this message translates to:
+  /// **'Angry'**
+  String get ventor_home_mood_angry;
+
+  /// No description provided for @ventor_home_mood_write_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Feeling {mood}'**
+  String ventor_home_mood_write_title(String mood);
+
+  /// No description provided for @ventor_home_mood_write_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Write a little about your emotions. Checking in daily builds your streak.'**
+  String get ventor_home_mood_write_subtitle;
+
+  /// No description provided for @ventor_home_mood_write_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'What\'s on your mind right now…'**
+  String get ventor_home_mood_write_hint;
+
+  /// No description provided for @ventor_home_mood_submit.
+  ///
+  /// In en, this message translates to:
+  /// **'Save check-in'**
+  String get ventor_home_mood_submit;
+
+  /// No description provided for @ventor_home_mood_saved.
+  ///
+  /// In en, this message translates to:
+  /// **'Check-in saved. Keep going for your 7-day streak!'**
+  String get ventor_home_mood_saved;
+
+  /// No description provided for @ventor_home_mood_already_done.
+  ///
+  /// In en, this message translates to:
+  /// **'You already checked in today. Come back tomorrow!'**
+  String get ventor_home_mood_already_done;
+
+  /// No description provided for @ventor_home_mood_streak_complete.
+  ///
+  /// In en, this message translates to:
+  /// **'7-day streak complete! Claim your {percent}% session discount.'**
+  String ventor_home_mood_streak_complete(int percent);
+
+  /// No description provided for @ventor_home_reco_default.
+  ///
+  /// In en, this message translates to:
+  /// **'You might benefit from talking to listeners who are patient and great at listening.'**
+  String get ventor_home_reco_default;
+
+  /// No description provided for @ventor_home_reco_great.
+  ///
+  /// In en, this message translates to:
+  /// **'Beautiful energy today. A supportive listener can help you celebrate what\'s going well.'**
+  String get ventor_home_reco_great;
+
+  /// No description provided for @ventor_home_reco_okay.
+  ///
+  /// In en, this message translates to:
+  /// **'A calm chat can help you unpack the day and feel a little lighter.'**
+  String get ventor_home_reco_okay;
+
+  /// No description provided for @ventor_home_reco_anxious.
+  ///
+  /// In en, this message translates to:
+  /// **'You might benefit from talking to listeners who are patient and great at listening.'**
+  String get ventor_home_reco_anxious;
+
+  /// No description provided for @ventor_home_reco_sad.
+  ///
+  /// In en, this message translates to:
+  /// **'Gentle, compassionate listeners can sit with you when things feel heavy.'**
+  String get ventor_home_reco_sad;
+
+  /// No description provided for @ventor_home_reco_angry.
+  ///
+  /// In en, this message translates to:
+  /// **'A grounded listener can help you release tension without judgment.'**
+  String get ventor_home_reco_angry;
+
+  /// No description provided for @ventor_home_find_listener.
+  ///
+  /// In en, this message translates to:
+  /// **'Find a Listener ›'**
+  String get ventor_home_find_listener;
+
+  /// No description provided for @ventor_home_streak_title.
+  ///
+  /// In en, this message translates to:
+  /// **'🔥 {count} day streak'**
+  String ventor_home_streak_title(int count);
+
+  /// No description provided for @ventor_home_streak_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep going, you\'re doing great!'**
+  String get ventor_home_streak_subtitle;
+
+  /// No description provided for @ventor_home_streak_claim.
+  ///
+  /// In en, this message translates to:
+  /// **'Claim'**
+  String get ventor_home_streak_claim;
+
+  /// No description provided for @ventor_home_streak_claimed_badge.
+  ///
+  /// In en, this message translates to:
+  /// **'Claimed'**
+  String get ventor_home_streak_claimed_badge;
+
+  /// No description provided for @ventor_home_streak_claimed.
+  ///
+  /// In en, this message translates to:
+  /// **'Nice! You unlocked a {percent}% session discount in Rewards.'**
+  String ventor_home_streak_claimed(int percent);
+
+  /// No description provided for @ventor_home_day_mon.
+  ///
+  /// In en, this message translates to:
+  /// **'M'**
+  String get ventor_home_day_mon;
+
+  /// No description provided for @ventor_home_day_tue.
+  ///
+  /// In en, this message translates to:
+  /// **'T'**
+  String get ventor_home_day_tue;
+
+  /// No description provided for @ventor_home_day_wed.
+  ///
+  /// In en, this message translates to:
+  /// **'W'**
+  String get ventor_home_day_wed;
+
+  /// No description provided for @ventor_home_day_thu.
+  ///
+  /// In en, this message translates to:
+  /// **'T'**
+  String get ventor_home_day_thu;
+
+  /// No description provided for @ventor_home_day_fri.
+  ///
+  /// In en, this message translates to:
+  /// **'F'**
+  String get ventor_home_day_fri;
+
+  /// No description provided for @ventor_home_day_sat.
+  ///
+  /// In en, this message translates to:
+  /// **'S'**
+  String get ventor_home_day_sat;
+
+  /// No description provided for @ventor_home_day_sun.
+  ///
+  /// In en, this message translates to:
+  /// **'S'**
+  String get ventor_home_day_sun;
+
+  /// No description provided for @ventor_home_instant_section_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Book an instant call'**
+  String get ventor_home_instant_section_title;
+
+  /// No description provided for @ventor_home_instant_section_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'We’ll match you with the best available listener right now.'**
+  String get ventor_home_instant_section_subtitle;
+
+  /// No description provided for @ventor_home_instant_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Instant match'**
+  String get ventor_home_instant_title;
+
+  /// No description provided for @ventor_home_instant_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Let the system find a great listener for you.'**
+  String get ventor_home_instant_subtitle;
+
+  /// No description provided for @ventor_home_instant_matching.
+  ///
+  /// In en, this message translates to:
+  /// **'Finding your best listener…'**
+  String get ventor_home_instant_matching;
+
+  /// No description provided for @ventor_home_instant_cta.
+  ///
+  /// In en, this message translates to:
+  /// **'Book now'**
+  String get ventor_home_instant_cta;
+
+  /// No description provided for @ventor_home_instant_none.
+  ///
+  /// In en, this message translates to:
+  /// **'No listeners are available for an instant call right now. Try again shortly.'**
+  String get ventor_home_instant_none;
+
+  /// No description provided for @ventor_home_upcoming_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Upcoming session'**
+  String get ventor_home_upcoming_title;
+
+  /// No description provided for @ventor_home_upcoming_live_now.
+  ///
+  /// In en, this message translates to:
+  /// **'Live now'**
+  String get ventor_home_upcoming_live_now;
+
+  /// No description provided for @ventor_home_quick_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Quick ways to vent'**
+  String get ventor_home_quick_title;
+
+  /// No description provided for @ventor_home_quick_talk.
+  ///
+  /// In en, this message translates to:
+  /// **'Talk Now'**
+  String get ventor_home_quick_talk;
+
+  /// No description provided for @ventor_home_quick_talk_sub.
+  ///
+  /// In en, this message translates to:
+  /// **'Instant call'**
+  String get ventor_home_quick_talk_sub;
+
+  /// No description provided for @ventor_home_quick_chat.
+  ///
+  /// In en, this message translates to:
+  /// **'Text Chat'**
+  String get ventor_home_quick_chat;
+
+  /// No description provided for @ventor_home_quick_chat_sub.
+  ///
+  /// In en, this message translates to:
+  /// **'Type it out'**
+  String get ventor_home_quick_chat_sub;
+
+  /// No description provided for @ventor_home_quick_write.
+  ///
+  /// In en, this message translates to:
+  /// **'Write'**
+  String get ventor_home_quick_write;
+
+  /// No description provided for @ventor_home_quick_write_sub.
+  ///
+  /// In en, this message translates to:
+  /// **'Journal it'**
+  String get ventor_home_quick_write_sub;
+
+  /// No description provided for @ventor_home_recent_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue where you left off'**
+  String get ventor_home_recent_title;
+
+  /// No description provided for @ventor_home_see_all.
+  ///
+  /// In en, this message translates to:
+  /// **'See all'**
+  String get ventor_home_see_all;
+
+  /// No description provided for @ventor_home_recent_with.
+  ///
+  /// In en, this message translates to:
+  /// **'You & {name}'**
+  String ventor_home_recent_with(String name);
+
+  /// No description provided for @ventor_home_yesterday.
+  ///
+  /// In en, this message translates to:
+  /// **'Yesterday'**
+  String get ventor_home_yesterday;
+
+  /// No description provided for @ventor_home_recent_meta.
+  ///
+  /// In en, this message translates to:
+  /// **'{when} · {minutes} min'**
+  String ventor_home_recent_meta(String when, int minutes);
+
+  /// No description provided for @ventor_home_motivation.
+  ///
+  /// In en, this message translates to:
+  /// **'Small steps every day lead to big changes.'**
+  String get ventor_home_motivation;
+
+  /// No description provided for @ventor_home_notifications_soon.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications coming soon.'**
+  String get ventor_home_notifications_soon;
+
+  /// No description provided for @ventor_home_feature_soon_chat.
+  ///
+  /// In en, this message translates to:
+  /// **'Text chat is coming soon.'**
+  String get ventor_home_feature_soon_chat;
+
+  /// No description provided for @ventor_home_feature_soon_journal.
+  ///
+  /// In en, this message translates to:
+  /// **'Journaling is coming soon.'**
+  String get ventor_home_feature_soon_journal;
 }
 
 class _VentingMobLocalizationsDelegate
