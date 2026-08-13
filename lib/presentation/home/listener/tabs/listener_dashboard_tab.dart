@@ -5,6 +5,7 @@ import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
 import 'package:venting_mobile_app/presentation/home/listener/dashboard/listener_dashboard_setup.dart';
 import 'package:venting_mobile_app/presentation/home/listener/dashboard/listener_dashboard_setup_widgets.dart';
 import 'package:venting_mobile_app/presentation/home/listener/dashboard/listener_dashboard_widgets.dart';
+import 'package:venting_mobile_app/presentation/home/listener/dashboard/listener_first_session_tutorial_bottom_sheet.dart';
 import 'package:venting_mobile_app/presentation/home/listener/dashboard/listener_notifications_screen.dart';
 import 'package:venting_mobile_app/presentation/home/listener/dashboard/listener_training_bottom_sheet.dart';
 import 'package:venting_mobile_app/presentation/listener_registration/listener_registration_screen.dart';
@@ -142,16 +143,31 @@ class _ListenerDashboardTabState extends State<ListenerDashboardTab> {
       return;
     }
 
-    // TODO: Navigate to first session tutorial flow.
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          VentingMobLocalizations.of(
-            context,
-          ).listener_dashboard_setup_coming_soon,
-        ),
-      ),
-    );
+    if (next == ListenerDashboardSetupStepId.firstSessionTutorial) {
+      final acknowledged = await openListenerFirstSessionTutorialBottomSheet(
+        context: context,
+      );
+      if (!mounted || acknowledged != true) return;
+
+      // TODO: Mark first-session tutorial as acknowledged via onboarding API.
+      // The live 30-min tutorial call will be assigned separately.
+      setState(() {
+        _setupProgress = ListenerDashboardSetupProgress(
+          profileApproved: _setupProgress.profileApproved,
+          steps: [
+            for (final step in _setupProgress.steps)
+              if (step.id == ListenerDashboardSetupStepId.firstSessionTutorial)
+                const ListenerDashboardSetupStep(
+                  id: ListenerDashboardSetupStepId.firstSessionTutorial,
+                  status: ListenerDashboardSetupStepStatus.done,
+                )
+              else
+                step,
+          ],
+        );
+      });
+      return;
+    }
   }
 
   Future<void> _pickPeriod() async {

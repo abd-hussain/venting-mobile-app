@@ -4197,7 +4197,7 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
   }
 
   @override
-  String get listener_earnings_rate => 'الأجر / 30 د';
+  String get listener_earnings_rate => 'الأجر بالساعة';
 
   @override
   String get listener_earnings_overview => 'نظرة عامة على الأرباح';
@@ -4213,6 +4213,50 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
 
   @override
   String get listener_earnings_default => 'افتراضي';
+
+  @override
+  String get listener_earnings_tiers_title => 'مستويات الأجر بالساعة';
+
+  @override
+  String get listener_earnings_tiers_subtitle =>
+      'أجرك بالساعة يعتمد على عدد الجلسات المكتملة ومتوسط تقييمك. يجب استيفاء الشرطين معاً لفتح المستوى.';
+
+  @override
+  String listener_earnings_tiers_stats(int sessions, String rating) {
+    return 'إحصاءاتك: $sessions جلسة · تقييم $rating';
+  }
+
+  @override
+  String get listener_earnings_your_tier => 'مستواك الحالي';
+
+  @override
+  String listener_earnings_tier_requirement(int sessions, String rating) {
+    return '$sessions+ جلسة · تقييم $rating+';
+  }
+
+  @override
+  String get listener_earnings_tier_requirement_starter =>
+      'متاح لجميع المستمعين';
+
+  @override
+  String listener_earnings_hourly_value(String amount) {
+    return '$amount/ساعة';
+  }
+
+  @override
+  String get listener_earnings_tier_starter => 'مبتدئ';
+
+  @override
+  String get listener_earnings_tier_rising => 'صاعد';
+
+  @override
+  String get listener_earnings_tier_trusted => 'موثوق';
+
+  @override
+  String get listener_earnings_tier_expert => 'خبير';
+
+  @override
+  String get listener_earnings_tier_elite => 'نخبة';
 
   @override
   String get listener_home_profile_placeholder =>
@@ -5191,7 +5235,47 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
   String get listener_sessions_requests_title => 'طلبات الجلسات';
 
   @override
+  String get listener_sessions_instant_section_title => 'المكالمات الفورية';
+
+  @override
+  String get listener_sessions_scheduled_section_title => 'الجلسات المجدولة';
+
+  @override
+  String get listener_sessions_instant_note =>
+      'المكالمات الفورية تُشعر المستمعين المتاحين في الوقت نفسه. أول مستمع يقبل يُعيَّن له المكالمة — ويفقد الباقون الطلب.';
+
+  @override
+  String get listener_sessions_no_instant => 'لا توجد مكالمات فورية حالياً.';
+
+  @override
+  String get listener_sessions_no_scheduled => 'لا توجد جلسات مجدولة بعد.';
+
+  @override
   String get listener_sessions_new_request => 'طلب جديد';
+
+  @override
+  String get listener_sessions_instant_incoming => 'مكالمة فورية واردة';
+
+  @override
+  String get listener_sessions_instant_badge => 'فورية';
+
+  @override
+  String get listener_sessions_scheduled_badge => 'مجدولة';
+
+  @override
+  String get listener_sessions_voice_call => 'مكالمة صوتية';
+
+  @override
+  String get listener_sessions_video_call => 'مكالمة فيديو';
+
+  @override
+  String get listener_sessions_scheduled_request => 'طلب مجدول جديد';
+
+  @override
+  String get listener_sessions_assigned_voice => 'مُعيَّنة — مكالمة صوتية';
+
+  @override
+  String get listener_sessions_assigned_video => 'مُعيَّنة — مكالمة فيديو';
 
   @override
   String get listener_sessions_decline => 'رفض';
@@ -5200,10 +5284,20 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
   String get listener_sessions_accept => 'قبول';
 
   @override
+  String get listener_sessions_accept_instant => 'قبول المكالمة';
+
+  @override
+  String get listener_sessions_assigned_snackbar =>
+      'تم تعيين المكالمة لك — انضم عندما تكون جاهزاً.';
+
+  @override
   String get listener_sessions_waiting => 'ينتظرونك';
 
   @override
   String get listener_sessions_join_now => 'انضم للمكالمة الآن';
+
+  @override
+  String get listener_sessions_now => 'الآن';
 
   @override
   String get listener_sessions_today => 'اليوم';
@@ -5535,13 +5629,16 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
 
   @override
   String get listener_training_subtitle =>
-      'أكمل جميع الوحدات لتصبح مستمعًا موثوقًا.';
+      'افتح فيديو أو رابط كل وحدة لإكمالها. أنهِ جميع الوحدات لاجتياز التدريب.';
 
   @override
   String get listener_training_continue_learning => 'متابعة التعلّم';
 
   @override
   String get listener_training_finish => 'إنهاء التدريب';
+
+  @override
+  String get listener_training_finish_locked => 'أكمل جميع الوحدات للإنهاء';
 
   @override
   String get listener_training_status_completed => 'مكتمل';
@@ -5551,6 +5648,18 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
 
   @override
   String get listener_training_status_not_started => 'لم يبدأ';
+
+  @override
+  String get listener_training_status_tap_to_open => 'اضغط لفتح الدرس';
+
+  @override
+  String get listener_training_status_locked => 'مقفل';
+
+  @override
+  String get listener_training_locked_hint => 'أكمل الوحدة السابقة أولاً.';
+
+  @override
+  String get listener_training_open_failed => 'تعذّر فتح رابط التدريب.';
 
   @override
   String get listener_training_module_art_of_listening => 'فن الاستماع';
@@ -5629,4 +5738,29 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
 
   @override
   String get listener_dashboard_notifications_delete => 'حذف';
+
+  @override
+  String get listener_first_session_continue => 'افتح الخطوة الأخيرة';
+
+  @override
+  String get listener_first_session_title => 'تهانينا — أنت على وشك الانتهاء!';
+
+  @override
+  String get listener_first_session_body =>
+      'تبقى خطوة أخيرة. سنرسل لك قريباً مكالمة جلسة لمدة 30 دقيقة — ستكون هذه أول جلسة تدريبية. نتطلع لرؤيتك هناك.';
+
+  @override
+  String get listener_first_session_bullet_call =>
+      'توقّع مكالمة تدريبية مدتها 30 دقيقة قريباً. انضم عند وصولها لنمرّ معاً على أول جلسة مباشرة.';
+
+  @override
+  String get listener_first_session_bullet_guidelines =>
+      'لا تنسَ الإرشادات من تدريب الاستماع الفعّال — احتفظ بها في بالك أثناء هذه المكالمة.';
+
+  @override
+  String get listener_first_session_bullet_available =>
+      'بعد هذه الجلسة التدريبية ستكون متاحاً بالكامل لأي مكالمة واردة.';
+
+  @override
+  String get listener_first_session_cta => 'حسناً — أنا مستعد';
 }

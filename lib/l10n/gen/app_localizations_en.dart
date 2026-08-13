@@ -4218,7 +4218,7 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
   }
 
   @override
-  String get listener_earnings_rate => 'Rate / 30 min';
+  String get listener_earnings_rate => 'Hourly rate';
 
   @override
   String get listener_earnings_overview => 'Earnings Overview';
@@ -4234,6 +4234,50 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
 
   @override
   String get listener_earnings_default => 'Default';
+
+  @override
+  String get listener_earnings_tiers_title => 'Hourly rate tiers';
+
+  @override
+  String get listener_earnings_tiers_subtitle =>
+      'Your hourly rate is based on completed sessions and your average rating. Meet both requirements to unlock a tier.';
+
+  @override
+  String listener_earnings_tiers_stats(int sessions, String rating) {
+    return 'Your stats: $sessions sessions · $rating rating';
+  }
+
+  @override
+  String get listener_earnings_your_tier => 'Your current tier';
+
+  @override
+  String listener_earnings_tier_requirement(int sessions, String rating) {
+    return '$sessions+ sessions · $rating+ rating';
+  }
+
+  @override
+  String get listener_earnings_tier_requirement_starter =>
+      'Open to all listeners';
+
+  @override
+  String listener_earnings_hourly_value(String amount) {
+    return '$amount/hr';
+  }
+
+  @override
+  String get listener_earnings_tier_starter => 'Starter';
+
+  @override
+  String get listener_earnings_tier_rising => 'Rising';
+
+  @override
+  String get listener_earnings_tier_trusted => 'Trusted';
+
+  @override
+  String get listener_earnings_tier_expert => 'Expert';
+
+  @override
+  String get listener_earnings_tier_elite => 'Elite';
 
   @override
   String get listener_home_profile_placeholder =>
@@ -5218,7 +5262,47 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
   String get listener_sessions_requests_title => 'Session Requests';
 
   @override
+  String get listener_sessions_instant_section_title => 'Instant Calls';
+
+  @override
+  String get listener_sessions_scheduled_section_title => 'Scheduled Sessions';
+
+  @override
+  String get listener_sessions_instant_note =>
+      'Instant calls notify available listeners at the same time. The first listener who accepts is assigned the call — others lose the request.';
+
+  @override
+  String get listener_sessions_no_instant => 'No instant calls right now.';
+
+  @override
+  String get listener_sessions_no_scheduled => 'No scheduled sessions yet.';
+
+  @override
   String get listener_sessions_new_request => 'New request';
+
+  @override
+  String get listener_sessions_instant_incoming => 'Incoming instant call';
+
+  @override
+  String get listener_sessions_instant_badge => 'Instant';
+
+  @override
+  String get listener_sessions_scheduled_badge => 'Scheduled';
+
+  @override
+  String get listener_sessions_voice_call => 'Voice call';
+
+  @override
+  String get listener_sessions_video_call => 'Video call';
+
+  @override
+  String get listener_sessions_scheduled_request => 'New scheduled request';
+
+  @override
+  String get listener_sessions_assigned_voice => 'Assigned — voice call';
+
+  @override
+  String get listener_sessions_assigned_video => 'Assigned — video call';
 
   @override
   String get listener_sessions_decline => 'Decline';
@@ -5227,10 +5311,20 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
   String get listener_sessions_accept => 'Accept';
 
   @override
+  String get listener_sessions_accept_instant => 'Accept call';
+
+  @override
+  String get listener_sessions_assigned_snackbar =>
+      'Call assigned to you — join when ready.';
+
+  @override
   String get listener_sessions_waiting => 'They\'re waiting for you';
 
   @override
   String get listener_sessions_join_now => 'Join call now';
+
+  @override
+  String get listener_sessions_now => 'Now';
 
   @override
   String get listener_sessions_today => 'Today';
@@ -5566,13 +5660,17 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
 
   @override
   String get listener_training_subtitle =>
-      'Complete all modules to become a trusted listener.';
+      'Open each module’s tutorial video or link to complete it. Finish all modules to pass training.';
 
   @override
   String get listener_training_continue_learning => 'Continue Learning';
 
   @override
   String get listener_training_finish => 'Finish Training';
+
+  @override
+  String get listener_training_finish_locked =>
+      'Complete all modules to finish';
 
   @override
   String get listener_training_status_completed => 'Completed';
@@ -5582,6 +5680,20 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
 
   @override
   String get listener_training_status_not_started => 'Not started';
+
+  @override
+  String get listener_training_status_tap_to_open => 'Tap to open tutorial';
+
+  @override
+  String get listener_training_status_locked => 'Locked';
+
+  @override
+  String get listener_training_locked_hint =>
+      'Complete the previous module first.';
+
+  @override
+  String get listener_training_open_failed =>
+      'Could not open the training link.';
 
   @override
   String get listener_training_module_art_of_listening =>
@@ -5661,4 +5773,30 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
 
   @override
   String get listener_dashboard_notifications_delete => 'Delete';
+
+  @override
+  String get listener_first_session_continue => 'Open last step';
+
+  @override
+  String get listener_first_session_title =>
+      'Congratulations — you’re almost there!';
+
+  @override
+  String get listener_first_session_body =>
+      'One last step remains. We’ll send you a 30-minute session call very soon — this will be your first session tutorial. We can’t wait to see you there.';
+
+  @override
+  String get listener_first_session_bullet_call =>
+      'Expect a 30-minute tutorial call soon. Join when it arrives so we can walk through your first live session together.';
+
+  @override
+  String get listener_first_session_bullet_guidelines =>
+      'Don’t forget the guidelines from your Active Listening Training — keep them in mind during this call.';
+
+  @override
+  String get listener_first_session_bullet_available =>
+      'After this tutorial session, you’ll be fully available for any incoming calls.';
+
+  @override
+  String get listener_first_session_cta => 'Got it — I’m ready';
 }

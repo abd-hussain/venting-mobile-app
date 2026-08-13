@@ -573,3 +573,204 @@ class ListenerPayoutMethodsCard extends StatelessWidget {
     );
   }
 }
+
+class ListenerHourlyRateTierRowData {
+  const ListenerHourlyRateTierRowData({
+    required this.name,
+    required this.requirementLabel,
+    required this.hourlyRateLabel,
+    required this.isCurrent,
+  });
+
+  final String name;
+  final String requirementLabel;
+  final String hourlyRateLabel;
+  final bool isCurrent;
+}
+
+class ListenerHourlyRateTiersCard extends StatelessWidget {
+  const ListenerHourlyRateTiersCard({
+    super.key,
+    required this.title,
+    required this.subtitle,
+    required this.statsLabel,
+    required this.yourTierLabel,
+    required this.tiers,
+  });
+
+  final String title;
+  final String subtitle;
+  final String statsLabel;
+  final String yourTierLabel;
+  final List<ListenerHourlyRateTierRowData> tiers;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.fromLTRB(16, 16, 16, 12),
+      decoration: BoxDecoration(
+        color: ListenerProfileTheme.cardFill,
+        borderRadius: BorderRadius.circular(18),
+        border: Border.all(color: ListenerProfileTheme.cardBorder),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(
+            title,
+            style: GoogleFonts.inter(
+              color: Colors.white,
+              fontSize: 16,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          const SizedBox(height: 6),
+          Text(
+            subtitle,
+            style: GoogleFonts.inter(
+              color: ListenerProfileTheme.muted,
+              fontSize: 13,
+              height: 1.4,
+            ),
+          ),
+          const SizedBox(height: 12),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+            decoration: BoxDecoration(
+              color: SplashColors.purpleMid.withValues(alpha: 0.12),
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(
+                color: SplashColors.purpleMid.withValues(alpha: 0.35),
+              ),
+            ),
+            child: Text(
+              statsLabel,
+              style: GoogleFonts.inter(
+                color: Colors.white.withValues(alpha: 0.92),
+                fontSize: 13,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+          const SizedBox(height: 14),
+          for (var i = 0; i < tiers.length; i++) ...[
+            if (i > 0) const SizedBox(height: 8),
+            _TierRow(tier: tiers[i], yourTierLabel: yourTierLabel),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+class _TierRow extends StatelessWidget {
+  const _TierRow({required this.tier, required this.yourTierLabel});
+
+  final ListenerHourlyRateTierRowData tier;
+  final String yourTierLabel;
+
+  @override
+  Widget build(BuildContext context) {
+    final borderColor = tier.isCurrent
+        ? SplashColors.purpleMid.withValues(alpha: 0.65)
+        : ListenerProfileTheme.cardBorder;
+    final fillColor = tier.isCurrent
+        ? SplashColors.purpleMid.withValues(alpha: 0.14)
+        : Colors.white.withValues(alpha: 0.03);
+
+    return Container(
+      padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
+      decoration: BoxDecoration(
+        color: fillColor,
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: borderColor),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: 36,
+            height: 36,
+            decoration: BoxDecoration(
+              color: tier.isCurrent
+                  ? SplashColors.purpleMid.withValues(alpha: 0.28)
+                  : Colors.white.withValues(alpha: 0.06),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Icon(
+              Icons.workspace_premium_rounded,
+              size: 20,
+              color: tier.isCurrent
+                  ? ListenerProfileTheme.gold
+                  : ListenerProfileTheme.muted,
+            ),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        tier.name,
+                        style: GoogleFonts.inter(
+                          color: Colors.white,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ),
+                    Text(
+                      tier.hourlyRateLabel,
+                      style: GoogleFonts.inter(
+                        color: tier.isCurrent
+                            ? ListenerProfileTheme.gold
+                            : Colors.white,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  tier.requirementLabel,
+                  style: GoogleFonts.inter(
+                    color: ListenerProfileTheme.muted,
+                    fontSize: 12,
+                    height: 1.35,
+                  ),
+                ),
+                if (tier.isCurrent) ...[
+                  const SizedBox(height: 8),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 3,
+                    ),
+                    decoration: BoxDecoration(
+                      color: ListenerProfileTheme.success.withValues(
+                        alpha: 0.16,
+                      ),
+                      borderRadius: BorderRadius.circular(999),
+                    ),
+                    child: Text(
+                      yourTierLabel,
+                      style: GoogleFonts.inter(
+                        color: ListenerProfileTheme.success,
+                        fontSize: 11,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                ],
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

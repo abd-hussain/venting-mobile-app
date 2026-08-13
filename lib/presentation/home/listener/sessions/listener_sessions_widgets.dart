@@ -19,6 +19,7 @@ class ListenerSessionItem {
     this.ventorAvatarUrl,
     this.isWaiting = false,
     this.canJoinNow = false,
+    this.isInstant = false,
     this.isVideoCall = false,
     this.ventorRating = 4.9,
     this.statusLabel,
@@ -37,6 +38,7 @@ class ListenerSessionItem {
   final List<String> tags;
   final bool isWaiting;
   final bool canJoinNow;
+  final bool isInstant;
   final bool isVideoCall;
   final double ventorRating;
   final String? statusLabel;
@@ -58,6 +60,9 @@ class ListenerSessionRequest {
     required this.tags,
     required this.receivedAt,
     this.ventorAvatarUrl,
+    this.isInstant = false,
+    this.isVideoCall = false,
+    this.ventorRating = 4.9,
   });
 
   final String id;
@@ -69,6 +74,9 @@ class ListenerSessionRequest {
   final int durationMinutes;
   final List<String> tags;
   final DateTime receivedAt;
+  final bool isInstant;
+  final bool isVideoCall;
+  final double ventorRating;
 }
 
 class ListenerSessionStats {
@@ -376,9 +384,11 @@ class ListenerSessionCard extends StatelessWidget {
     this.ventorAvatarUrl,
     this.headerLabel,
     this.headerTrailing,
+    this.badgeLabel,
     this.waitingLabel,
     this.isWaiting = false,
     this.canJoinNow = false,
+    this.isVideoCall = false,
     this.statusLabel,
     this.penaltyLabel,
     this.isMissed = false,
@@ -401,9 +411,11 @@ class ListenerSessionCard extends StatelessWidget {
   final List<String> tags;
   final String? headerLabel;
   final String? headerTrailing;
+  final String? badgeLabel;
   final String? waitingLabel;
   final bool isWaiting;
   final bool canJoinNow;
+  final bool isVideoCall;
   final String? statusLabel;
   final String? penaltyLabel;
   final bool isMissed;
@@ -461,14 +473,51 @@ class ListenerSessionCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          if (_isRequest && headerLabel != null)
+          if (headerLabel != null || badgeLabel != null)
             Padding(
               padding: const EdgeInsets.only(bottom: 12),
               child: Row(
                 children: [
+                  if (badgeLabel != null) ...[
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 4,
+                      ),
+                      decoration: BoxDecoration(
+                        color: SplashColors.purpleMid.withValues(alpha: 0.2),
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(
+                          color: SplashColors.purpleMid.withValues(alpha: 0.55),
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            isVideoCall
+                                ? Icons.videocam_rounded
+                                : Icons.phone_in_talk_rounded,
+                            size: 13,
+                            color: SplashColors.purpleMid,
+                          ),
+                          const SizedBox(width: 4),
+                          Text(
+                            badgeLabel!,
+                            style: GoogleFonts.inter(
+                              color: SplashColors.purpleMid,
+                              fontSize: 11,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                  ],
                   Expanded(
                     child: Text(
-                      headerLabel!,
+                      headerLabel ?? '',
                       style: GoogleFonts.inter(
                         color: Colors.white,
                         fontSize: 13,
@@ -615,7 +664,10 @@ class ListenerSessionCard extends StatelessWidget {
                 ),
                 padding: const EdgeInsets.symmetric(vertical: 12),
               ),
-              icon: const Icon(Icons.videocam_rounded, size: 18),
+              icon: Icon(
+                isVideoCall ? Icons.videocam_rounded : Icons.call_rounded,
+                size: 18,
+              ),
               label: Text(
                 joinNowLabel!,
                 style: GoogleFonts.inter(fontWeight: FontWeight.w700),

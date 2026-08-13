@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
 import 'package:venting_mobile_app/presentation/home/listener/dashboard/listener_training_curriculum.dart';
 import 'package:venting_mobile_app/presentation/home/listener/profile/listener_profile_theme.dart';
@@ -31,6 +32,7 @@ class _ListenerTrainingBottomSheetState
 
   late List<ListenerTrainingModule> _modules;
   var _initialized = false;
+  var _opening = false;
 
   @override
   void didChangeDependencies() {
@@ -60,44 +62,69 @@ class _ListenerTrainingBottomSheetState
       ListenerTrainingModuleStatus.completed =>
         l10n.listener_training_status_completed,
       ListenerTrainingModuleStatus.inProgress =>
-        l10n.listener_training_status_in_progress,
+        l10n.listener_training_status_tap_to_open,
       ListenerTrainingModuleStatus.notStarted =>
-        l10n.listener_training_status_not_started,
+        l10n.listener_training_status_locked,
     };
   }
 
-  void _continueLearning() {
-    if (_allCompleted) {
-      Navigator.of(context).pop(true);
+  Future<void> _openModule(int index) async {
+    if (_opening) return;
+
+    final module = _modules[index];
+    final l10n = VentingMobLocalizations.of(context);
+
+    if (module.status == ListenerTrainingModuleStatus.notStarted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(l10n.listener_training_locked_hint)),
+      );
       return;
     }
 
-    setState(() {
-      final currentIndex = _modules.indexWhere(
-        (module) => module.status == ListenerTrainingModuleStatus.inProgress,
+    final uri = Uri.tryParse(module.contentUrl);
+    if (uri == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(l10n.listener_training_open_failed)),
       );
+      return;
+    }
 
-      if (currentIndex >= 0) {
-        _modules[currentIndex] = _modules[currentIndex].copyWith(
-          status: ListenerTrainingModuleStatus.completed,
+    _opening = true;
+    try {
+      final opened = await launchUrl(uri, mode: LaunchMode.externalApplication);
+      if (!opened) {
+        if (!mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(l10n.listener_training_open_failed)),
         );
-        if (currentIndex + 1 < _modules.length) {
-          _modules[currentIndex + 1] = _modules[currentIndex + 1].copyWith(
-            status: ListenerTrainingModuleStatus.inProgress,
-          );
-        }
         return;
       }
 
-      final nextLocked = _modules.indexWhere(
-        (module) => module.status == ListenerTrainingModuleStatus.notStarted,
-      );
-      if (nextLocked >= 0) {
-        _modules[nextLocked] = _modules[nextLocked].copyWith(
-          status: ListenerTrainingModuleStatus.inProgress,
-        );
-      }
-    });
+      if (!mounted) return;
+      // Opening the tutorial marks the module done and unlocks the next one.
+      // TODO: Persist module completion via training progress API.
+      setState(() {
+        if (module.status != ListenerTrainingModuleStatus.completed) {
+          _modules[index] = module.copyWith(
+            status: ListenerTrainingModuleStatus.completed,
+          );
+          if (index + 1 < _modules.length &&
+              _modules[index + 1].status ==
+                  ListenerTrainingModuleStatus.notStarted) {
+            _modules[index + 1] = _modules[index + 1].copyWith(
+              status: ListenerTrainingModuleStatus.inProgress,
+            );
+          }
+        }
+      });
+    } finally {
+      _opening = false;
+    }
+  }
+
+  void _finishTraining() {
+    if (!_allCompleted) return;
+    Navigator.of(context).pop(true);
   }
 
   @override
@@ -193,6 +220,7 @@ class _ListenerTrainingBottomSheetState
                       statusLabel: _statusLabel(l10n, _modules[i].status),
                       rowFill: _rowFill,
                       lockedIconBg: _lockedIconBg,
+                      onTap: () => _openModule(i),
                     ),
                     if (i != _modules.length - 1) const SizedBox(height: 10),
                   ],
@@ -200,10 +228,15 @@ class _ListenerTrainingBottomSheetState
                   SizedBox(
                     height: 54,
                     child: FilledButton(
-                      onPressed: _continueLearning,
+                      onPressed: _allCompleted ? _finishTraining : null,
                       style: FilledButton.styleFrom(
                         backgroundColor: SplashColors.purpleMid,
+                        disabledBackgroundColor: SplashColors.purpleMid
+                            .withValues(alpha: 0.35),
                         foregroundColor: Colors.white,
+                        disabledForegroundColor: Colors.white.withValues(
+                          alpha: 0.7,
+                        ),
                         elevation: 0,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(16),
@@ -216,7 +249,7 @@ class _ListenerTrainingBottomSheetState
                       child: Text(
                         _allCompleted
                             ? l10n.listener_training_finish
-                            : l10n.listener_training_continue_learning,
+                            : l10n.listener_training_finish_locked,
                       ),
                     ),
                   ),
@@ -238,6 +271,7 @@ class _TrainingModuleRow extends StatelessWidget {
     required this.statusLabel,
     required this.rowFill,
     required this.lockedIconBg,
+    required this.onTap,
   });
 
   final int index;
@@ -246,51 +280,67 @@ class _TrainingModuleRow extends StatelessWidget {
   final String statusLabel;
   final Color rowFill;
   final Color lockedIconBg;
+  final VoidCallback onTap;
+
+  bool get _isLocked => status == ListenerTrainingModuleStatus.notStarted;
 
   @override
   Widget build(BuildContext context) {
     final statusColor = switch (status) {
       ListenerTrainingModuleStatus.completed => ListenerProfileTheme.success,
-      ListenerTrainingModuleStatus.inProgress => ListenerProfileTheme.muted,
+      ListenerTrainingModuleStatus.inProgress => SplashColors.purpleMid,
       ListenerTrainingModuleStatus.notStarted => ListenerProfileTheme.muted,
     };
 
-    return Container(
-      padding: const EdgeInsets.fromLTRB(14, 12, 12, 12),
-      decoration: BoxDecoration(
-        color: rowFill,
+    return Material(
+      color: rowFill,
+      borderRadius: BorderRadius.circular(16),
+      child: InkWell(
+        onTap: onTap,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.white.withValues(alpha: 0.04)),
-      ),
-      child: Row(
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  '$index. $title',
-                  style: GoogleFonts.inter(
-                    color: Colors.white,
-                    fontSize: 15,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  statusLabel,
-                  style: GoogleFonts.inter(
-                    color: statusColor,
-                    fontSize: 13,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ],
+        child: Container(
+          padding: const EdgeInsets.fromLTRB(14, 12, 12, 12),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(
+              color: status == ListenerTrainingModuleStatus.inProgress
+                  ? SplashColors.purpleMid.withValues(alpha: 0.45)
+                  : Colors.white.withValues(alpha: 0.04),
             ),
           ),
-          const SizedBox(width: 10),
-          _ModuleStatusIcon(status: status, lockedIconBg: lockedIconBg),
-        ],
+          child: Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '$index. $title',
+                      style: GoogleFonts.inter(
+                        color: Colors.white.withValues(
+                          alpha: _isLocked ? 0.65 : 1,
+                        ),
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      statusLabel,
+                      style: GoogleFonts.inter(
+                        color: statusColor,
+                        fontSize: 13,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(width: 10),
+              _ModuleStatusIcon(status: status, lockedIconBg: lockedIconBg),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -322,9 +372,9 @@ class _ModuleStatusIcon extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
         ),
         child: const Icon(
-          Icons.stacked_bar_chart_rounded,
+          Icons.play_arrow_rounded,
           color: Colors.white,
-          size: 22,
+          size: 26,
         ),
       ),
       ListenerTrainingModuleStatus.notStarted => Container(

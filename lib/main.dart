@@ -6,6 +6,8 @@ void main() {
 
 //TODO: feature for ventor to change the voice sound
 //TODO: feature for ventor to give some tops for the listener
+//TODO: we need another state for the listener to show his state as in call now
+//TODO: verify payrolls for the listener can happen here in bank account or we need to find defrent way
 
 //TODO: Add Firebase / FCM
 

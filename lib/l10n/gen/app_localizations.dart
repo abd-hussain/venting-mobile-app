@@ -7592,7 +7592,7 @@ abstract class VentingMobLocalizations {
   /// No description provided for @listener_earnings_rate.
   ///
   /// In en, this message translates to:
-  /// **'Rate / 30 min'**
+  /// **'Hourly rate'**
   String get listener_earnings_rate;
 
   /// No description provided for @listener_earnings_overview.
@@ -7624,6 +7624,78 @@ abstract class VentingMobLocalizations {
   /// In en, this message translates to:
   /// **'Default'**
   String get listener_earnings_default;
+
+  /// No description provided for @listener_earnings_tiers_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Hourly rate tiers'**
+  String get listener_earnings_tiers_title;
+
+  /// No description provided for @listener_earnings_tiers_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your hourly rate is based on completed sessions and your average rating. Meet both requirements to unlock a tier.'**
+  String get listener_earnings_tiers_subtitle;
+
+  /// No description provided for @listener_earnings_tiers_stats.
+  ///
+  /// In en, this message translates to:
+  /// **'Your stats: {sessions} sessions · {rating} rating'**
+  String listener_earnings_tiers_stats(int sessions, String rating);
+
+  /// No description provided for @listener_earnings_your_tier.
+  ///
+  /// In en, this message translates to:
+  /// **'Your current tier'**
+  String get listener_earnings_your_tier;
+
+  /// No description provided for @listener_earnings_tier_requirement.
+  ///
+  /// In en, this message translates to:
+  /// **'{sessions}+ sessions · {rating}+ rating'**
+  String listener_earnings_tier_requirement(int sessions, String rating);
+
+  /// No description provided for @listener_earnings_tier_requirement_starter.
+  ///
+  /// In en, this message translates to:
+  /// **'Open to all listeners'**
+  String get listener_earnings_tier_requirement_starter;
+
+  /// No description provided for @listener_earnings_hourly_value.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount}/hr'**
+  String listener_earnings_hourly_value(String amount);
+
+  /// No description provided for @listener_earnings_tier_starter.
+  ///
+  /// In en, this message translates to:
+  /// **'Starter'**
+  String get listener_earnings_tier_starter;
+
+  /// No description provided for @listener_earnings_tier_rising.
+  ///
+  /// In en, this message translates to:
+  /// **'Rising'**
+  String get listener_earnings_tier_rising;
+
+  /// No description provided for @listener_earnings_tier_trusted.
+  ///
+  /// In en, this message translates to:
+  /// **'Trusted'**
+  String get listener_earnings_tier_trusted;
+
+  /// No description provided for @listener_earnings_tier_expert.
+  ///
+  /// In en, this message translates to:
+  /// **'Expert'**
+  String get listener_earnings_tier_expert;
+
+  /// No description provided for @listener_earnings_tier_elite.
+  ///
+  /// In en, this message translates to:
+  /// **'Elite'**
+  String get listener_earnings_tier_elite;
 
   /// No description provided for @listener_home_profile_placeholder.
   ///
@@ -9395,11 +9467,89 @@ abstract class VentingMobLocalizations {
   /// **'Session Requests'**
   String get listener_sessions_requests_title;
 
+  /// No description provided for @listener_sessions_instant_section_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Instant Calls'**
+  String get listener_sessions_instant_section_title;
+
+  /// No description provided for @listener_sessions_scheduled_section_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Scheduled Sessions'**
+  String get listener_sessions_scheduled_section_title;
+
+  /// No description provided for @listener_sessions_instant_note.
+  ///
+  /// In en, this message translates to:
+  /// **'Instant calls notify available listeners at the same time. The first listener who accepts is assigned the call — others lose the request.'**
+  String get listener_sessions_instant_note;
+
+  /// No description provided for @listener_sessions_no_instant.
+  ///
+  /// In en, this message translates to:
+  /// **'No instant calls right now.'**
+  String get listener_sessions_no_instant;
+
+  /// No description provided for @listener_sessions_no_scheduled.
+  ///
+  /// In en, this message translates to:
+  /// **'No scheduled sessions yet.'**
+  String get listener_sessions_no_scheduled;
+
   /// No description provided for @listener_sessions_new_request.
   ///
   /// In en, this message translates to:
   /// **'New request'**
   String get listener_sessions_new_request;
+
+  /// No description provided for @listener_sessions_instant_incoming.
+  ///
+  /// In en, this message translates to:
+  /// **'Incoming instant call'**
+  String get listener_sessions_instant_incoming;
+
+  /// No description provided for @listener_sessions_instant_badge.
+  ///
+  /// In en, this message translates to:
+  /// **'Instant'**
+  String get listener_sessions_instant_badge;
+
+  /// No description provided for @listener_sessions_scheduled_badge.
+  ///
+  /// In en, this message translates to:
+  /// **'Scheduled'**
+  String get listener_sessions_scheduled_badge;
+
+  /// No description provided for @listener_sessions_voice_call.
+  ///
+  /// In en, this message translates to:
+  /// **'Voice call'**
+  String get listener_sessions_voice_call;
+
+  /// No description provided for @listener_sessions_video_call.
+  ///
+  /// In en, this message translates to:
+  /// **'Video call'**
+  String get listener_sessions_video_call;
+
+  /// No description provided for @listener_sessions_scheduled_request.
+  ///
+  /// In en, this message translates to:
+  /// **'New scheduled request'**
+  String get listener_sessions_scheduled_request;
+
+  /// No description provided for @listener_sessions_assigned_voice.
+  ///
+  /// In en, this message translates to:
+  /// **'Assigned — voice call'**
+  String get listener_sessions_assigned_voice;
+
+  /// No description provided for @listener_sessions_assigned_video.
+  ///
+  /// In en, this message translates to:
+  /// **'Assigned — video call'**
+  String get listener_sessions_assigned_video;
 
   /// No description provided for @listener_sessions_decline.
   ///
@@ -9413,6 +9563,18 @@ abstract class VentingMobLocalizations {
   /// **'Accept'**
   String get listener_sessions_accept;
 
+  /// No description provided for @listener_sessions_accept_instant.
+  ///
+  /// In en, this message translates to:
+  /// **'Accept call'**
+  String get listener_sessions_accept_instant;
+
+  /// No description provided for @listener_sessions_assigned_snackbar.
+  ///
+  /// In en, this message translates to:
+  /// **'Call assigned to you — join when ready.'**
+  String get listener_sessions_assigned_snackbar;
+
   /// No description provided for @listener_sessions_waiting.
   ///
   /// In en, this message translates to:
@@ -9424,6 +9586,12 @@ abstract class VentingMobLocalizations {
   /// In en, this message translates to:
   /// **'Join call now'**
   String get listener_sessions_join_now;
+
+  /// No description provided for @listener_sessions_now.
+  ///
+  /// In en, this message translates to:
+  /// **'Now'**
+  String get listener_sessions_now;
 
   /// No description provided for @listener_sessions_today.
   ///
@@ -10016,7 +10184,7 @@ abstract class VentingMobLocalizations {
   /// No description provided for @listener_training_subtitle.
   ///
   /// In en, this message translates to:
-  /// **'Complete all modules to become a trusted listener.'**
+  /// **'Open each module’s tutorial video or link to complete it. Finish all modules to pass training.'**
   String get listener_training_subtitle;
 
   /// No description provided for @listener_training_continue_learning.
@@ -10030,6 +10198,12 @@ abstract class VentingMobLocalizations {
   /// In en, this message translates to:
   /// **'Finish Training'**
   String get listener_training_finish;
+
+  /// No description provided for @listener_training_finish_locked.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete all modules to finish'**
+  String get listener_training_finish_locked;
 
   /// No description provided for @listener_training_status_completed.
   ///
@@ -10048,6 +10222,30 @@ abstract class VentingMobLocalizations {
   /// In en, this message translates to:
   /// **'Not started'**
   String get listener_training_status_not_started;
+
+  /// No description provided for @listener_training_status_tap_to_open.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to open tutorial'**
+  String get listener_training_status_tap_to_open;
+
+  /// No description provided for @listener_training_status_locked.
+  ///
+  /// In en, this message translates to:
+  /// **'Locked'**
+  String get listener_training_status_locked;
+
+  /// No description provided for @listener_training_locked_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete the previous module first.'**
+  String get listener_training_locked_hint;
+
+  /// No description provided for @listener_training_open_failed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not open the training link.'**
+  String get listener_training_open_failed;
 
   /// No description provided for @listener_training_module_art_of_listening.
   ///
@@ -10174,6 +10372,48 @@ abstract class VentingMobLocalizations {
   /// In en, this message translates to:
   /// **'Delete'**
   String get listener_dashboard_notifications_delete;
+
+  /// No description provided for @listener_first_session_continue.
+  ///
+  /// In en, this message translates to:
+  /// **'Open last step'**
+  String get listener_first_session_continue;
+
+  /// No description provided for @listener_first_session_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Congratulations — you’re almost there!'**
+  String get listener_first_session_title;
+
+  /// No description provided for @listener_first_session_body.
+  ///
+  /// In en, this message translates to:
+  /// **'One last step remains. We’ll send you a 30-minute session call very soon — this will be your first session tutorial. We can’t wait to see you there.'**
+  String get listener_first_session_body;
+
+  /// No description provided for @listener_first_session_bullet_call.
+  ///
+  /// In en, this message translates to:
+  /// **'Expect a 30-minute tutorial call soon. Join when it arrives so we can walk through your first live session together.'**
+  String get listener_first_session_bullet_call;
+
+  /// No description provided for @listener_first_session_bullet_guidelines.
+  ///
+  /// In en, this message translates to:
+  /// **'Don’t forget the guidelines from your Active Listening Training — keep them in mind during this call.'**
+  String get listener_first_session_bullet_guidelines;
+
+  /// No description provided for @listener_first_session_bullet_available.
+  ///
+  /// In en, this message translates to:
+  /// **'After this tutorial session, you’ll be fully available for any incoming calls.'**
+  String get listener_first_session_bullet_available;
+
+  /// No description provided for @listener_first_session_cta.
+  ///
+  /// In en, this message translates to:
+  /// **'Got it — I’m ready'**
+  String get listener_first_session_cta;
 }
 
 class _VentingMobLocalizationsDelegate

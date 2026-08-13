@@ -58,10 +58,12 @@ class _ListenerSessionsTabState extends State<ListenerSessionsTab> {
     final now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
     final tomorrow = today.add(const Duration(days: 1));
+    final dayAfter = today.add(const Duration(days: 2));
 
     return [
+      // Assigned instant examples — ready to join (voice + video).
       ListenerSessionItem(
-        id: 'u0',
+        id: 'iv_voice',
         scheduledAt: now,
         durationMinutes: 30,
         ventorName: 'Omar H.',
@@ -69,14 +71,14 @@ class _ListenerSessionsTabState extends State<ListenerSessionsTab> {
         message:
             'I need someone to listen right now — work stress is overwhelming.',
         chosenReason:
-            'You were available for instant sessions and matched my topic.',
+            'You accepted first on this instant voice call, so it was assigned to you.',
         tags: const ['Stress'],
         isWaiting: true,
         canJoinNow: true,
-        ventorRating: 4.7,
+        isInstant: true,
       ),
       ListenerSessionItem(
-        id: 'u0v',
+        id: 'iv_video',
         scheduledAt: now,
         durationMinutes: 30,
         ventorName: 'Maya R.',
@@ -84,12 +86,12 @@ class _ListenerSessionsTabState extends State<ListenerSessionsTab> {
         message:
             'I prefer video so we can talk face to face about what I am going through.',
         chosenReason:
-            'You matched my comfort areas and were available for an instant video session.',
+            'You accepted first on this instant video call, so it was assigned to you.',
         tags: const ['Relationships'],
         isWaiting: true,
         canJoinNow: true,
+        isInstant: true,
         isVideoCall: true,
-        ventorRating: 4.2,
       ),
       ListenerSessionItem(
         id: 'u1',
@@ -108,10 +110,37 @@ class _ListenerSessionsTabState extends State<ListenerSessionsTab> {
         durationMinutes: 30,
         ventorName: 'Sara K.',
         ventorAvatarUrl: 'https://i.pravatar.cc/120?u=ventor-sara',
-        message: 'I have been feeling lonely and need someone to talk to.',
+        message:
+            'I booked a video session — I want to talk face to face about feeling lonely.',
         chosenReason:
             'Your profile mentions experience with loneliness and you speak Arabic.',
         tags: const ['Loneliness'],
+        isVideoCall: true,
+      ),
+      ListenerSessionItem(
+        id: 'u3',
+        scheduledAt: tomorrow.add(const Duration(hours: 21)),
+        durationMinutes: 60,
+        ventorName: 'Rami N.',
+        ventorAvatarUrl: 'https://i.pravatar.cc/120?u=ventor-rami',
+        message:
+            'Family expectations are weighing on me and I need a calm space to unpack it.',
+        chosenReason:
+            'Your comfort areas include family stress and your reviews mention patience.',
+        tags: const ['Family', 'Stress'],
+      ),
+      ListenerSessionItem(
+        id: 'u4',
+        scheduledAt: dayAfter.add(const Duration(hours: 17, minutes: 15)),
+        durationMinutes: 30,
+        ventorName: 'Dina F.',
+        ventorAvatarUrl: 'https://i.pravatar.cc/120?u=ventor-dina',
+        message:
+            'I keep replaying conversations and want a scheduled video check-in.',
+        chosenReason:
+            'You matched my overthinking topic and had an open afternoon slot.',
+        tags: const ['Overthinking'],
+        isVideoCall: true,
       ),
     ];
   }
@@ -153,6 +182,30 @@ class _ListenerSessionsTabState extends State<ListenerSessionsTab> {
         tags: const ['Stress', 'Family'],
         historyOutcome: ListenerSessionHistoryOutcome.declined,
       ),
+      ListenerSessionItem(
+        id: 'h4',
+        scheduledAt: now.subtract(const Duration(days: 6, hours: 1)),
+        durationMinutes: 30,
+        ventorName: 'Tariq E.',
+        ventorAvatarUrl: 'https://i.pravatar.cc/120?u=ventor-tariq',
+        message: 'Needed an instant voice call after a rough day at work.',
+        chosenReason:
+            'You were online for instant calls and accepted first among matched listeners.',
+        tags: const ['Stress'],
+        historyOutcome: ListenerSessionHistoryOutcome.accepted,
+      ),
+      ListenerSessionItem(
+        id: 'h5',
+        scheduledAt: now.subtract(const Duration(days: 7, hours: 3)),
+        durationMinutes: 30,
+        ventorName: 'Salma Z.',
+        ventorAvatarUrl: 'https://i.pravatar.cc/120?u=ventor-salma',
+        message: 'Wanted video support while dealing with social anxiety.',
+        chosenReason:
+            'Another listener accepted this instant call before you responded.',
+        tags: const ['Anxiety'],
+        historyOutcome: ListenerSessionHistoryOutcome.declined,
+      ),
     ];
   }
 
@@ -185,6 +238,19 @@ class _ListenerSessionsTabState extends State<ListenerSessionsTab> {
         sessionCost: 36,
         isMissed: true,
       ),
+      ListenerSessionItem(
+        id: 'm3',
+        scheduledAt: now.subtract(const Duration(days: 8, hours: 2)),
+        durationMinutes: 30,
+        ventorName: 'Jad P.',
+        ventorAvatarUrl: 'https://i.pravatar.cc/120?u=ventor-jad',
+        message: 'Accepted an instant call but never joined the room.',
+        chosenReason:
+            'You accepted first on an instant request and were assigned the call.',
+        tags: const ['Loneliness'],
+        sessionCost: 18,
+        isMissed: true,
+      ),
     ];
   }
 
@@ -194,17 +260,62 @@ class _ListenerSessionsTabState extends State<ListenerSessionsTab> {
 
     return [
       ListenerSessionRequest(
-        id: 'r1',
-        ventorName: 'Maya R.',
-        ventorAvatarUrl: 'https://i.pravatar.cc/120?u=ventor-maya',
+        id: 'ri_voice',
+        ventorName: 'Lina W.',
+        ventorAvatarUrl: 'https://i.pravatar.cc/120?u=ventor-lina',
         message:
-            'Can you help me with panic attacks? They have been happening more often.',
+            'Panic is rising and I just need a calm voice for a few minutes.',
+        chosenReason:
+            'Instant voice call — first available listener who accepts gets assigned.',
+        scheduledAt: now,
+        durationMinutes: 30,
+        tags: const ['Anxiety', 'Panic'],
+        receivedAt: now.subtract(const Duration(seconds: 25)),
+        isInstant: true,
+      ),
+      ListenerSessionRequest(
+        id: 'ri_video',
+        ventorName: 'Karim V.',
+        ventorAvatarUrl: 'https://i.pravatar.cc/120?u=ventor-karim-v',
+        message:
+            'Can we do video? I feel more comfortable talking face to face right now.',
+        chosenReason:
+            'Instant video call — accept first to be assigned this session.',
+        scheduledAt: now,
+        durationMinutes: 30,
+        tags: const ['Stress'],
+        receivedAt: now.subtract(const Duration(minutes: 1)),
+        isInstant: true,
+        isVideoCall: true,
+      ),
+      ListenerSessionRequest(
+        id: 'r_voice',
+        ventorName: 'Farah Q.',
+        ventorAvatarUrl: 'https://i.pravatar.cc/120?u=ventor-farah',
+        message:
+            'Can you help me with panic attacks? Voice-only is fine for me.',
         chosenReason:
             'I saw you handle anxiety topics well and I need someone who understands panic.',
         scheduledAt: today.add(const Duration(hours: 20)),
         durationMinutes: 30,
         tags: const ['Anxiety', 'Panic'],
-        receivedAt: DateTime.now().subtract(const Duration(minutes: 5)),
+        receivedAt: now.subtract(const Duration(minutes: 5)),
+      ),
+      ListenerSessionRequest(
+        id: 'r_video',
+        ventorName: 'Hassan M.',
+        ventorAvatarUrl: 'https://i.pravatar.cc/120?u=ventor-hassan',
+        message:
+            'Would love a scheduled video session tomorrow evening about loneliness.',
+        chosenReason:
+            'Your reviews and Arabic support made you my first choice for this booking.',
+        scheduledAt: today
+            .add(const Duration(days: 1))
+            .add(const Duration(hours: 19)),
+        durationMinutes: 60,
+        tags: const ['Loneliness'],
+        receivedAt: now.subtract(const Duration(hours: 1)),
+        isVideoCall: true,
       ),
     ];
   }
@@ -247,13 +358,22 @@ class _ListenerSessionsTabState extends State<ListenerSessionsTab> {
     return '${months[date.month - 1]} ${date.day}';
   }
 
-  String _dateTimeLabel(BuildContext context, DateTime date) {
+  String _dateTimeLabel(
+    BuildContext context,
+    DateTime date, {
+    bool isInstant = false,
+  }) {
+    final l10n = VentingMobLocalizations.of(context);
+    if (isInstant) return '${l10n.listener_sessions_now} · ${_timeLabel(date)}';
     return '${_dateGroupLabel(context, date)} · ${_timeLabel(date)}';
   }
 
   String _timeAgoLabel(BuildContext context, DateTime date) {
     final l10n = VentingMobLocalizations.of(context);
     final diff = DateTime.now().difference(date);
+    if (diff.inMinutes < 1) {
+      return l10n.listener_sessions_minutes_ago(0);
+    }
     if (diff.inMinutes < 60) {
       return l10n.listener_sessions_minutes_ago(diff.inMinutes);
     }
@@ -303,15 +423,59 @@ class _ListenerSessionsTabState extends State<ListenerSessionsTab> {
   }
 
   Future<void> _onAcceptRequest(String id) async {
-    // TODO: Call accept session request API.
+    // TODO: Call accept session request API (instant: first accept wins).
+    ListenerSessionRequest? request;
+    for (final r in _requests) {
+      if (r.id == id) {
+        request = r;
+        break;
+      }
+    }
+    if (request == null) return;
+
+    final assigned = ListenerSessionItem(
+      id: 'assigned_${request.id}',
+      scheduledAt: request.isInstant ? DateTime.now() : request.scheduledAt,
+      durationMinutes: request.durationMinutes,
+      ventorName: request.ventorName,
+      ventorAvatarUrl: request.ventorAvatarUrl,
+      message: request.message,
+      chosenReason: request.chosenReason,
+      tags: request.tags,
+      isWaiting: request.isInstant,
+      canJoinNow: request.isInstant,
+      isInstant: request.isInstant,
+      isVideoCall: request.isVideoCall,
+      ventorRating: request.ventorRating,
+    );
+
     setState(() {
       _requests = _requests.where((r) => r.id != id).toList();
+      // Instant: first accept assigns the call; clear other competing
+      // instant requests in this mock to mirror exclusive assignment.
+      if (request!.isInstant) {
+        _requests = _requests.where((r) => !r.isInstant).toList();
+      }
+      _upcomingSessions = [assigned, ..._upcomingSessions];
       _stats = ListenerSessionStats(
         acceptedCount: _stats.acceptedCount + 1,
         declinedCount: _stats.declinedCount,
         missedCount: _stats.missedCount,
       );
     });
+
+    if (!mounted) return;
+    final l10n = VentingMobLocalizations.of(context);
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          request.isInstant
+              ? l10n.listener_sessions_assigned_snackbar
+              : l10n.listener_sessions_status_accepted,
+        ),
+        behavior: SnackBarBehavior.floating,
+      ),
+    );
   }
 
   Future<void> _onDeclineRequest(String id) async {
@@ -373,24 +537,42 @@ class _ListenerSessionsTabState extends State<ListenerSessionsTab> {
     required List<String> tags,
     bool isWaiting = false,
     bool canJoinNow = false,
+    bool isInstant = false,
+    bool isVideoCall = false,
     bool isMissed = false,
     ListenerSessionHistoryOutcome? historyOutcome,
     String? statusLabel,
     String? penaltyLabel,
     VoidCallback? onJoinNow,
   }) {
+    final callModeLabel = isVideoCall
+        ? l10n.listener_sessions_video_call
+        : l10n.listener_sessions_voice_call;
+    final String? headerLabel = canJoinNow
+        ? (isVideoCall
+              ? l10n.listener_sessions_assigned_video
+              : l10n.listener_sessions_assigned_voice)
+        : null;
+
     return ListenerSessionCard(
       ventorName: ventorName,
       ventorAvatarUrl: ventorAvatarUrl,
       message: message,
       chosenReasonLabel: l10n.listener_sessions_chosen_you,
       chosenReason: chosenReason,
-      dateTimeLabel: _dateTimeLabel(context, scheduledAt),
+      dateTimeLabel: _dateTimeLabel(
+        context,
+        scheduledAt,
+        isInstant: isInstant || canJoinNow,
+      ),
       durationLabel: l10n.listener_avail_min_value(durationMinutes),
       tags: tags,
+      badgeLabel: callModeLabel,
+      headerLabel: headerLabel,
       waitingLabel: l10n.listener_sessions_waiting,
       isWaiting: isWaiting,
       canJoinNow: canJoinNow,
+      isVideoCall: isVideoCall,
       joinNowLabel: canJoinNow ? l10n.listener_sessions_join_now : null,
       onJoinNow: onJoinNow,
       isMissed: isMissed,
@@ -420,65 +602,142 @@ class _ListenerSessionsTabState extends State<ListenerSessionsTab> {
     );
   }
 
+  Widget _emptySectionMessage(String message) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16, top: 4),
+      child: Text(
+        message,
+        style: GoogleFonts.inter(
+          color: ListenerProfileTheme.muted,
+          fontSize: 13,
+        ),
+      ),
+    );
+  }
+
+  Widget _requestCard(
+    VentingMobLocalizations l10n,
+    ListenerSessionRequest request,
+  ) {
+    final callModeLabel = request.isVideoCall
+        ? l10n.listener_sessions_video_call
+        : l10n.listener_sessions_voice_call;
+
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10),
+      child: ListenerSessionCard(
+        ventorName: request.ventorName,
+        ventorAvatarUrl: request.ventorAvatarUrl,
+        message: request.message,
+        chosenReasonLabel: l10n.listener_sessions_chosen_you,
+        chosenReason: request.chosenReason,
+        dateTimeLabel: _dateTimeLabel(
+          context,
+          request.scheduledAt,
+          isInstant: request.isInstant,
+        ),
+        durationLabel: l10n.listener_avail_min_value(request.durationMinutes),
+        tags: request.tags,
+        badgeLabel: callModeLabel,
+        headerLabel: request.isInstant
+            ? l10n.listener_sessions_instant_incoming
+            : l10n.listener_sessions_scheduled_request,
+        headerTrailing: _timeAgoLabel(context, request.receivedAt),
+        isVideoCall: request.isVideoCall,
+        declineLabel: l10n.listener_sessions_decline,
+        acceptLabel: request.isInstant
+            ? l10n.listener_sessions_accept_instant
+            : l10n.listener_sessions_accept,
+        onDecline: () => _onDeclineRequest(request.id),
+        onAccept: () => _onAcceptRequest(request.id),
+      ),
+    );
+  }
+
   Widget _buildUpcomingContent(VentingMobLocalizations l10n) {
-    final grouped = _groupByDate(context, _upcomingSessions);
+    final instantRequests = _requests.where((r) => r.isInstant).toList();
+    final scheduledRequests = _requests.where((r) => !r.isInstant).toList();
+    final instantSessions = _upcomingSessions
+        .where((s) => s.isInstant)
+        .toList();
+    final scheduledSessions = _upcomingSessions
+        .where((s) => !s.isInstant)
+        .toList();
+    final scheduledGrouped = _groupByDate(context, scheduledSessions);
+
+    final hasInstant = instantRequests.isNotEmpty || instantSessions.isNotEmpty;
+    final hasScheduled =
+        scheduledRequests.isNotEmpty || scheduledSessions.isNotEmpty;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        if (_requests.isNotEmpty) ...[
-          _sectionTitle(l10n.listener_sessions_requests_title),
-          ..._requests.map((request) {
+        _sectionTitle(l10n.listener_sessions_instant_section_title),
+        if (instantRequests.isNotEmpty)
+          ListenerSessionPenaltyNote(
+            message: l10n.listener_sessions_instant_note,
+          ),
+        if (!hasInstant)
+          _emptySectionMessage(l10n.listener_sessions_no_instant)
+        else ...[
+          ...instantRequests.map((request) => _requestCard(l10n, request)),
+          ...instantSessions.map((session) {
             return Padding(
               padding: const EdgeInsets.only(bottom: 10),
-              child: ListenerSessionCard(
-                ventorName: request.ventorName,
-                ventorAvatarUrl: request.ventorAvatarUrl,
-                message: request.message,
-                chosenReasonLabel: l10n.listener_sessions_chosen_you,
-                chosenReason: request.chosenReason,
-                dateTimeLabel: _dateTimeLabel(context, request.scheduledAt),
-                durationLabel: l10n.listener_avail_min_value(
-                  request.durationMinutes,
-                ),
-                tags: request.tags,
-                headerLabel: l10n.listener_sessions_new_request,
-                headerTrailing: _timeAgoLabel(context, request.receivedAt),
-                declineLabel: l10n.listener_sessions_decline,
-                acceptLabel: l10n.listener_sessions_accept,
-                onDecline: () => _onDeclineRequest(request.id),
-                onAccept: () => _onAcceptRequest(request.id),
+              child: _sessionCard(
+                l10n: l10n,
+                ventorName: session.ventorName,
+                ventorAvatarUrl: session.ventorAvatarUrl,
+                message: session.message,
+                chosenReason: session.chosenReason,
+                scheduledAt: session.scheduledAt,
+                durationMinutes: session.durationMinutes,
+                tags: session.tags,
+                isWaiting: session.isWaiting,
+                canJoinNow: session.canJoinNow,
+                isInstant: session.isInstant,
+                isVideoCall: session.isVideoCall,
+                onJoinNow: session.canJoinNow
+                    ? () => _onJoinSession(session.id)
+                    : null,
               ),
             );
           }),
-          const SizedBox(height: 8),
         ],
-        _sectionTitle(l10n.listener_sessions_upcoming_title),
-        ...grouped.entries.expand((entry) {
-          return [
-            _dateHeader(entry.key),
-            ...entry.value.map((session) {
-              return Padding(
-                padding: const EdgeInsets.only(bottom: 10),
-                child: _sessionCard(
-                  l10n: l10n,
-                  ventorName: session.ventorName,
-                  ventorAvatarUrl: session.ventorAvatarUrl,
-                  message: session.message,
-                  chosenReason: session.chosenReason,
-                  scheduledAt: session.scheduledAt,
-                  durationMinutes: session.durationMinutes,
-                  tags: session.tags,
-                  isWaiting: session.isWaiting,
-                  canJoinNow: session.canJoinNow,
-                  onJoinNow: session.canJoinNow
-                      ? () => _onJoinSession(session.id)
-                      : null,
-                ),
-              );
-            }),
-          ];
-        }),
+        const SizedBox(height: 8),
+        _sectionTitle(l10n.listener_sessions_scheduled_section_title),
+        if (!hasScheduled)
+          _emptySectionMessage(l10n.listener_sessions_no_scheduled)
+        else ...[
+          ...scheduledRequests.map((request) => _requestCard(l10n, request)),
+          ...scheduledGrouped.entries.expand((entry) {
+            return [
+              _dateHeader(entry.key),
+              ...entry.value.map((session) {
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 10),
+                  child: _sessionCard(
+                    l10n: l10n,
+                    ventorName: session.ventorName,
+                    ventorAvatarUrl: session.ventorAvatarUrl,
+                    message: session.message,
+                    chosenReason: session.chosenReason,
+                    scheduledAt: session.scheduledAt,
+                    durationMinutes: session.durationMinutes,
+                    tags: session.tags,
+                    isWaiting: session.isWaiting,
+                    canJoinNow: session.canJoinNow,
+                    isInstant: session.isInstant,
+                    isVideoCall: session.isVideoCall,
+                    onJoinNow: session.canJoinNow
+                        ? () => _onJoinSession(session.id)
+                        : null,
+                  ),
+                );
+              }),
+            ];
+          }),
+        ],
       ],
     );
   }

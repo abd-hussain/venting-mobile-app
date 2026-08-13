@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
+import 'package:venting_mobile_app/presentation/home/listener/earnings/listener_earnings_tiers.dart';
 import 'package:venting_mobile_app/presentation/home/listener/earnings/listener_earnings_widgets.dart';
 import 'package:venting_mobile_app/presentation/home/listener/profile/listener_profile_theme.dart';
 import 'package:venting_mobile_app/presentation/home/listener/profile/widgets/listener_payment_payouts_screen.dart';
-import 'package:venting_mobile_app/presentation/home/listener/profile/widgets/payout_history_bottom_sheet.dart';
 import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dart';
 
 class ListenerEarningsTab extends StatefulWidget {
@@ -29,7 +29,7 @@ class _ListenerEarningsTabState extends State<ListenerEarningsTab> {
   static const _trendPercent = 18;
   static const _sessions = 24;
   static const _hours = 18.5;
-  static const _ratePerSession = 18.50;
+  static const _rating = 4.6;
 
   // TODO: Load chart series from listener earnings API.
   static const _chartPoints = <ListenerEarningsChartPoint>[
@@ -39,44 +39,37 @@ class _ListenerEarningsTabState extends State<ListenerEarningsTab> {
     ListenerEarningsChartPoint(label: 'May 26', amount: 142),
   ];
 
-  // TODO: Load most recent payout from payout history API.
-  static final _recentPayout = ListenerPayoutHistoryItem(
-    id: '1',
-    amount: 210.40,
-    date: DateTime(2024, 5, 15),
-    status: ListenerPayoutStatus.completed,
-    methodLabel: 'PayPal',
-    reference: 'PO-10482',
-  );
-
   // TODO: Load default payout method from API.
   static const _payoutMethodTitle = 'PayPal';
   static const _payoutMethodSubtitle = 'lina.listener@gmail.com';
 
   String _money(double value) => '\$${value.toStringAsFixed(2)}';
 
-  String _dateLabel(DateTime date) {
-    const months = [
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'Jun',
-      'Jul',
-      'Aug',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec',
-    ];
-    return '${months[date.month - 1]} ${date.day}, ${date.year}';
+  String _ratingLabel(double rating) => rating.toStringAsFixed(1);
+
+  String _tierName(
+    VentingMobLocalizations l10n,
+    ListenerEarningsTierId id,
+  ) {
+    return switch (id) {
+      ListenerEarningsTierId.starter => l10n.listener_earnings_tier_starter,
+      ListenerEarningsTierId.rising => l10n.listener_earnings_tier_rising,
+      ListenerEarningsTierId.trusted => l10n.listener_earnings_tier_trusted,
+      ListenerEarningsTierId.expert => l10n.listener_earnings_tier_expert,
+      ListenerEarningsTierId.elite => l10n.listener_earnings_tier_elite,
+    };
   }
 
-  Future<void> _onRecentPayout() {
-    return showPayoutHistoryBottomSheet(
-      context: context,
-      items: [_recentPayout],
+  String _tierRequirement(
+    VentingMobLocalizations l10n,
+    ListenerEarningsTier tier,
+  ) {
+    if (tier.id == ListenerEarningsTierId.starter) {
+      return l10n.listener_earnings_tier_requirement_starter;
+    }
+    return l10n.listener_earnings_tier_requirement(
+      tier.minSessions,
+      _ratingLabel(tier.minRating),
     );
   }
 
@@ -87,6 +80,14 @@ class _ListenerEarningsTabState extends State<ListenerEarningsTab> {
   @override
   Widget build(BuildContext context) {
     final l10n = VentingMobLocalizations.of(context);
+    // TODO: Resolve tier from API-backed sessions + rating.
+    final currentTier = resolveListenerEarningsTier(
+      sessions: _sessions,
+      rating: _rating,
+    );
+    final hourlyRateLabel = l10n.listener_earnings_hourly_value(
+      _money(currentTier.hourlyRate),
+    );
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: _overlayStyle,
@@ -119,20 +120,33 @@ class _ListenerEarningsTabState extends State<ListenerEarningsTab> {
                   _hours.toStringAsFixed(1),
                 ),
                 rateLabel: l10n.listener_earnings_rate,
-                rateValue: _money(_ratePerSession),
+                rateValue: hourlyRateLabel,
+              ),
+              const SizedBox(height: 14),
+              ListenerHourlyRateTiersCard(
+                title: l10n.listener_earnings_tiers_title,
+                subtitle: l10n.listener_earnings_tiers_subtitle,
+                statsLabel: l10n.listener_earnings_tiers_stats(
+                  _sessions,
+                  _ratingLabel(_rating),
+                ),
+                yourTierLabel: l10n.listener_earnings_your_tier,
+                tiers: [
+                  for (final tier in listenerEarningsTiers)
+                    ListenerHourlyRateTierRowData(
+                      name: _tierName(l10n, tier.id),
+                      requirementLabel: _tierRequirement(l10n, tier),
+                      hourlyRateLabel: l10n.listener_earnings_hourly_value(
+                        _money(tier.hourlyRate),
+                      ),
+                      isCurrent: tier.id == currentTier.id,
+                    ),
+                ],
               ),
               const SizedBox(height: 14),
               ListenerEarningsOverviewCard(
                 title: l10n.listener_earnings_overview,
                 points: _chartPoints,
-              ),
-              const SizedBox(height: 14),
-              ListenerRecentPayoutCard(
-                title: l10n.listener_earnings_recent_payout,
-                dateLabel: _dateLabel(_recentPayout.date),
-                amountLabel: _money(_recentPayout.amount),
-                statusLabel: l10n.listener_earnings_status_paid,
-                onTap: _onRecentPayout,
               ),
               const SizedBox(height: 14),
               ListenerPayoutMethodsCard(

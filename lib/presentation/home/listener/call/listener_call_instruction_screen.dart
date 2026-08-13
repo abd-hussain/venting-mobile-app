@@ -123,7 +123,6 @@ class _ListenerCallInstructionScreenState
             _VentorHeader(
               name: args.ventorName,
               avatarUrl: args.ventorAvatarUrl,
-              rating: args.ventorRating,
               durationMinutes: args.durationMinutes,
               l10n: l10n,
             ),
@@ -266,14 +265,12 @@ class _VentorHeader extends StatelessWidget {
   const _VentorHeader({
     required this.name,
     required this.avatarUrl,
-    required this.rating,
     required this.durationMinutes,
     required this.l10n,
   });
 
   final String name;
   final String? avatarUrl;
-  final double rating;
   final int durationMinutes;
   final VentingMobLocalizations l10n;
 
@@ -316,31 +313,12 @@ class _VentorHeader extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 4),
-              Row(
-                children: [
-                  const Icon(
-                    Icons.star_rounded,
-                    size: 16,
-                    color: ListenerProfileTheme.gold,
-                  ),
-                  const SizedBox(width: 4),
-                  Text(
-                    rating.toStringAsFixed(1),
-                    style: GoogleFonts.inter(
-                      color: Colors.white,
-                      fontSize: 13,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Text(
-                    l10n.listener_avail_min_value(durationMinutes),
-                    style: GoogleFonts.inter(
-                      color: ListenerProfileTheme.muted,
-                      fontSize: 13,
-                    ),
-                  ),
-                ],
+              Text(
+                l10n.listener_avail_min_value(durationMinutes),
+                style: GoogleFonts.inter(
+                  color: ListenerProfileTheme.muted,
+                  fontSize: 13,
+                ),
               ),
             ],
           ),

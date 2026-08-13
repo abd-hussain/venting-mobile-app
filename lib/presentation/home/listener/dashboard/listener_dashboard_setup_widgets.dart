@@ -50,6 +50,9 @@ class ListenerDashboardSetupSection extends StatelessWidget {
     if (next == ListenerDashboardSetupStepId.training) {
       return l10n.listener_training_continue_learning;
     }
+    if (next == ListenerDashboardSetupStepId.firstSessionTutorial) {
+      return l10n.listener_first_session_continue;
+    }
     return l10n.listener_dashboard_setup_continue;
   }
 
