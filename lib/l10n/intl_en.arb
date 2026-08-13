@@ -3466,6 +3466,204 @@
   "@ventor_home_sessions_placeholder": {},
   "ventor_home_rewards_placeholder": "Rewards and achievements for ventors will appear here.",
   "@ventor_home_rewards_placeholder": {},
+  "ventor_rewards_title": "Rewards & Discounts",
+  "@ventor_rewards_title": {},
+  "ventor_rewards_subtitle": "Use your points to get amazing benefits.",
+  "@ventor_rewards_subtitle": {},
+  "ventor_rewards_pts": "{points} pts",
+  "@ventor_rewards_pts": {
+    "placeholders": {
+      "points": { "type": "String" }
+    }
+  },
+  "ventor_rewards_active_saving": "You’re saving {percent}% on your next session.",
+  "@ventor_rewards_active_saving": {
+    "placeholders": {
+      "percent": { "type": "int" }
+    }
+  },
+  "ventor_rewards_active_saving_tier": "You’re saving {percent}% with {audience} on your next session.",
+  "@ventor_rewards_active_saving_tier": {
+    "placeholders": {
+      "percent": { "type": "int" },
+      "audience": { "type": "String" }
+    }
+  },
+  "ventor_rewards_active_free_session": "Your next {minutes}-min session is free.",
+  "@ventor_rewards_active_free_session": {
+    "placeholders": {
+      "minutes": { "type": "int" }
+    }
+  },
+  "ventor_rewards_active_priority": "Priority match is on for your next session.",
+  "@ventor_rewards_active_priority": {},
+  "ventor_rewards_available": "Available Rewards",
+  "@ventor_rewards_available": {},
+  "ventor_rewards_tab_available": "Available",
+  "@ventor_rewards_tab_available": {},
+  "ventor_rewards_tab_history": "History",
+  "@ventor_rewards_tab_history": {},
+  "ventor_rewards_earn_more": "How to earn more points",
+  "@ventor_rewards_earn_more": {},
+  "ventor_rewards_trade_history": "Trade history",
+  "@ventor_rewards_trade_history": {},
+  "ventor_rewards_trade_empty": "No trades yet. Redeem an offer to see it here.",
+  "@ventor_rewards_trade_empty": {},
+  "ventor_rewards_trade_unknown": "Session discount",
+  "@ventor_rewards_trade_unknown": {},
+  "ventor_rewards_not_enough": "You need more points for this offer.",
+  "@ventor_rewards_not_enough": {},
+  "ventor_rewards_redeemed": "Reward applied to your next session.",
+  "@ventor_rewards_redeemed": {},
+  "ventor_rewards_already_active": "This reward is already active.",
+  "@ventor_rewards_already_active": {},
+  "ventor_rewards_welcome_used": "Your first-call 50% gift has already been used.",
+  "@ventor_rewards_welcome_used": {},
+  "ventor_rewards_first_call_gift": "After your first call you unlocked 50% off your next session.",
+  "@ventor_rewards_first_call_gift": {},
+  "ventor_rewards_welcome_title": "50% off your next session",
+  "@ventor_rewards_welcome_title": {},
+  "ventor_rewards_active": "Active",
+  "@ventor_rewards_active": {},
+  "ventor_rewards_used": "Used",
+  "@ventor_rewards_used": {},
+  "ventor_rewards_unlocked": "Unlocked",
+  "@ventor_rewards_unlocked": {},
+  "ventor_rewards_offer_percent": "{percent}% Off",
+  "@ventor_rewards_offer_percent": {
+    "placeholders": {
+      "percent": { "type": "int" }
+    }
+  },
+  "ventor_rewards_offer_free_minutes": "Free {minutes}-min Session",
+  "@ventor_rewards_offer_free_minutes": {
+    "placeholders": {
+      "minutes": { "type": "int" }
+    }
+  },
+  "ventor_rewards_offer_priority": "Priority Match",
+  "@ventor_rewards_offer_priority": {},
+  "ventor_rewards_offer_welcome_subtitle": "Gift after your first call",
+  "@ventor_rewards_offer_welcome_subtitle": {},
+  "ventor_rewards_audience_any": "Any session",
+  "@ventor_rewards_audience_any": {},
+  "ventor_rewards_audience_elite": "Elite listeners",
+  "@ventor_rewards_audience_elite": {},
+  "ventor_rewards_audience_trusted_up": "Trusted listeners & up",
+  "@ventor_rewards_audience_trusted_up": {},
+  "ventor_rewards_audience_starter_rising": "Starter & Rising listeners",
+  "@ventor_rewards_audience_starter_rising": {},
+  "ventor_rewards_audience_min_tier": "{tier} listeners & up",
+  "@ventor_rewards_audience_min_tier": {
+    "placeholders": {
+      "tier": { "type": "String" }
+    }
+  },
+  "ventor_rewards_earn_title": "How to earn points",
+  "@ventor_rewards_earn_title": {},
+  "ventor_rewards_earn_subtitle": "There are three ways to grow your balance and unlock session discounts.",
+  "@ventor_rewards_earn_subtitle": {},
+  "ventor_rewards_earn_sessions_title": "Have more sessions",
+  "@ventor_rewards_earn_sessions_title": {},
+  "ventor_rewards_earn_sessions_body": "Earn {points} points every time you complete a session.",
+  "@ventor_rewards_earn_sessions_body": {
+    "placeholders": {
+      "points": { "type": "int" }
+    }
+  },
+  "ventor_rewards_earn_invite_title": "Invite friends",
+  "@ventor_rewards_earn_invite_title": {},
+  "ventor_rewards_earn_invite_body": "Share your code. You get {registerPoints} points when they register, and you both get {firstCallPoints} points after their first call.",
+  "@ventor_rewards_earn_invite_body": {
+    "placeholders": {
+      "registerPoints": { "type": "int" },
+      "firstCallPoints": { "type": "int" }
+    }
+  },
+  "ventor_rewards_earn_booking_title": "Your friend books a call",
+  "@ventor_rewards_earn_booking_title": {},
+  "ventor_rewards_earn_booking_body": "Get {points} extra points when a friend you invited books a session.",
+  "@ventor_rewards_earn_booking_body": {
+    "placeholders": {
+      "points": { "type": "int" }
+    }
+  },
+  "ventor_rewards_earn_invite_cta": "Invite friends",
+  "@ventor_rewards_earn_invite_cta": {},
+  "ventor_invite_title": "Invite Friends. Earn More.",
+  "@ventor_invite_title": {},
+  "ventor_invite_subtitle": "Help others find support and get rewarded.",
+  "@ventor_invite_subtitle": {},
+  "ventor_invite_promo": "Give support. Get rewarded. Invite a friend — you get {registerPoints} points when they register, and you both get {firstCallPoints} points after their first call.",
+  "@ventor_invite_promo": {
+    "placeholders": {
+      "registerPoints": { "type": "int" },
+      "firstCallPoints": { "type": "int" }
+    }
+  },
+  "ventor_invite_your_code": "YOUR CODE",
+  "@ventor_invite_your_code": {},
+  "ventor_invite_copied": "Invite code copied",
+  "@ventor_invite_copied": {},
+  "ventor_invite_link_copied": "Invite link copied",
+  "@ventor_invite_link_copied": {},
+  "ventor_invite_share_title": "Share your invite link",
+  "@ventor_invite_share_title": {},
+  "ventor_invite_share_failed": "Could not open the share app.",
+  "@ventor_invite_share_failed": {},
+  "ventor_invite_instagram_hint": "Link copied — paste it in Instagram.",
+  "@ventor_invite_instagram_hint": {},
+  "ventor_invite_history_cta": "See Invite History",
+  "@ventor_invite_history_cta": {},
+  "ventor_invite_how_title": "How it works",
+  "@ventor_invite_how_title": {},
+  "ventor_invite_how_1": "Share your unique code or link.",
+  "@ventor_invite_how_1": {},
+  "ventor_invite_how_2": "Your friend registers in the app — you get {points} points.",
+  "@ventor_invite_how_2": {
+    "placeholders": {
+      "points": { "type": "int" }
+    }
+  },
+  "ventor_invite_how_3": "When your friend has their first call, you both get {points} points.",
+  "@ventor_invite_how_3": {
+    "placeholders": {
+      "points": { "type": "int" }
+    }
+  },
+  "ventor_invite_summary_title": "Your Invites",
+  "@ventor_invite_summary_title": {},
+  "ventor_invite_total": "Total invited: {count} friends",
+  "@ventor_invite_total": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "ventor_invite_points_earned": "Points earned: {points} pts",
+  "@ventor_invite_points_earned": {
+    "placeholders": {
+      "points": { "type": "String" }
+    }
+  },
+  "ventor_invite_share_message": "Join me on Venting. Use my code {code} to get started: {link}",
+  "@ventor_invite_share_message": {
+    "placeholders": {
+      "code": { "type": "String" },
+      "link": { "type": "String" }
+    }
+  },
+  "ventor_invite_history_title": "Invite History",
+  "@ventor_invite_history_title": {},
+  "ventor_invite_history_empty": "No invites yet. Share your code to get started.",
+  "@ventor_invite_history_empty": {},
+  "ventor_invite_status_pending": "Pending",
+  "@ventor_invite_status_pending": {},
+  "ventor_invite_status_joined": "Registered",
+  "@ventor_invite_status_joined": {},
+  "ventor_invite_status_first_session": "First call done",
+  "@ventor_invite_status_first_session": {},
+  "ventor_invite_status_booked": "Booked a call",
+  "@ventor_invite_status_booked": {},
   "ventor_home_profile_placeholder": "Your ventor profile and settings will appear here.",
   "@ventor_home_profile_placeholder": {},
   "ventor_profile_anonymous": "Anonymous",

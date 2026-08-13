@@ -8915,6 +8915,399 @@ abstract class VentingMobLocalizations {
   /// **'Rewards and achievements for ventors will appear here.'**
   String get ventor_home_rewards_placeholder;
 
+  /// No description provided for @ventor_rewards_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Rewards & Discounts'**
+  String get ventor_rewards_title;
+
+  /// No description provided for @ventor_rewards_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Use your points to get amazing benefits.'**
+  String get ventor_rewards_subtitle;
+
+  /// No description provided for @ventor_rewards_pts.
+  ///
+  /// In en, this message translates to:
+  /// **'{points} pts'**
+  String ventor_rewards_pts(String points);
+
+  /// No description provided for @ventor_rewards_active_saving.
+  ///
+  /// In en, this message translates to:
+  /// **'You’re saving {percent}% on your next session.'**
+  String ventor_rewards_active_saving(int percent);
+
+  /// No description provided for @ventor_rewards_active_saving_tier.
+  ///
+  /// In en, this message translates to:
+  /// **'You’re saving {percent}% with {audience} on your next session.'**
+  String ventor_rewards_active_saving_tier(int percent, String audience);
+
+  /// No description provided for @ventor_rewards_active_free_session.
+  ///
+  /// In en, this message translates to:
+  /// **'Your next {minutes}-min session is free.'**
+  String ventor_rewards_active_free_session(int minutes);
+
+  /// No description provided for @ventor_rewards_active_priority.
+  ///
+  /// In en, this message translates to:
+  /// **'Priority match is on for your next session.'**
+  String get ventor_rewards_active_priority;
+
+  /// No description provided for @ventor_rewards_available.
+  ///
+  /// In en, this message translates to:
+  /// **'Available Rewards'**
+  String get ventor_rewards_available;
+
+  /// No description provided for @ventor_rewards_tab_available.
+  ///
+  /// In en, this message translates to:
+  /// **'Available'**
+  String get ventor_rewards_tab_available;
+
+  /// No description provided for @ventor_rewards_tab_history.
+  ///
+  /// In en, this message translates to:
+  /// **'History'**
+  String get ventor_rewards_tab_history;
+
+  /// No description provided for @ventor_rewards_earn_more.
+  ///
+  /// In en, this message translates to:
+  /// **'How to earn more points'**
+  String get ventor_rewards_earn_more;
+
+  /// No description provided for @ventor_rewards_trade_history.
+  ///
+  /// In en, this message translates to:
+  /// **'Trade history'**
+  String get ventor_rewards_trade_history;
+
+  /// No description provided for @ventor_rewards_trade_empty.
+  ///
+  /// In en, this message translates to:
+  /// **'No trades yet. Redeem an offer to see it here.'**
+  String get ventor_rewards_trade_empty;
+
+  /// No description provided for @ventor_rewards_trade_unknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Session discount'**
+  String get ventor_rewards_trade_unknown;
+
+  /// No description provided for @ventor_rewards_not_enough.
+  ///
+  /// In en, this message translates to:
+  /// **'You need more points for this offer.'**
+  String get ventor_rewards_not_enough;
+
+  /// No description provided for @ventor_rewards_redeemed.
+  ///
+  /// In en, this message translates to:
+  /// **'Reward applied to your next session.'**
+  String get ventor_rewards_redeemed;
+
+  /// No description provided for @ventor_rewards_already_active.
+  ///
+  /// In en, this message translates to:
+  /// **'This reward is already active.'**
+  String get ventor_rewards_already_active;
+
+  /// No description provided for @ventor_rewards_welcome_used.
+  ///
+  /// In en, this message translates to:
+  /// **'Your first-call 50% gift has already been used.'**
+  String get ventor_rewards_welcome_used;
+
+  /// No description provided for @ventor_rewards_first_call_gift.
+  ///
+  /// In en, this message translates to:
+  /// **'After your first call you unlocked 50% off your next session.'**
+  String get ventor_rewards_first_call_gift;
+
+  /// No description provided for @ventor_rewards_welcome_title.
+  ///
+  /// In en, this message translates to:
+  /// **'50% off your next session'**
+  String get ventor_rewards_welcome_title;
+
+  /// No description provided for @ventor_rewards_active.
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get ventor_rewards_active;
+
+  /// No description provided for @ventor_rewards_used.
+  ///
+  /// In en, this message translates to:
+  /// **'Used'**
+  String get ventor_rewards_used;
+
+  /// No description provided for @ventor_rewards_unlocked.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlocked'**
+  String get ventor_rewards_unlocked;
+
+  /// No description provided for @ventor_rewards_offer_percent.
+  ///
+  /// In en, this message translates to:
+  /// **'{percent}% Off'**
+  String ventor_rewards_offer_percent(int percent);
+
+  /// No description provided for @ventor_rewards_offer_free_minutes.
+  ///
+  /// In en, this message translates to:
+  /// **'Free {minutes}-min Session'**
+  String ventor_rewards_offer_free_minutes(int minutes);
+
+  /// No description provided for @ventor_rewards_offer_priority.
+  ///
+  /// In en, this message translates to:
+  /// **'Priority Match'**
+  String get ventor_rewards_offer_priority;
+
+  /// No description provided for @ventor_rewards_offer_welcome_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Gift after your first call'**
+  String get ventor_rewards_offer_welcome_subtitle;
+
+  /// No description provided for @ventor_rewards_audience_any.
+  ///
+  /// In en, this message translates to:
+  /// **'Any session'**
+  String get ventor_rewards_audience_any;
+
+  /// No description provided for @ventor_rewards_audience_elite.
+  ///
+  /// In en, this message translates to:
+  /// **'Elite listeners'**
+  String get ventor_rewards_audience_elite;
+
+  /// No description provided for @ventor_rewards_audience_trusted_up.
+  ///
+  /// In en, this message translates to:
+  /// **'Trusted listeners & up'**
+  String get ventor_rewards_audience_trusted_up;
+
+  /// No description provided for @ventor_rewards_audience_starter_rising.
+  ///
+  /// In en, this message translates to:
+  /// **'Starter & Rising listeners'**
+  String get ventor_rewards_audience_starter_rising;
+
+  /// No description provided for @ventor_rewards_audience_min_tier.
+  ///
+  /// In en, this message translates to:
+  /// **'{tier} listeners & up'**
+  String ventor_rewards_audience_min_tier(String tier);
+
+  /// No description provided for @ventor_rewards_earn_title.
+  ///
+  /// In en, this message translates to:
+  /// **'How to earn points'**
+  String get ventor_rewards_earn_title;
+
+  /// No description provided for @ventor_rewards_earn_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'There are three ways to grow your balance and unlock session discounts.'**
+  String get ventor_rewards_earn_subtitle;
+
+  /// No description provided for @ventor_rewards_earn_sessions_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Have more sessions'**
+  String get ventor_rewards_earn_sessions_title;
+
+  /// No description provided for @ventor_rewards_earn_sessions_body.
+  ///
+  /// In en, this message translates to:
+  /// **'Earn {points} points every time you complete a session.'**
+  String ventor_rewards_earn_sessions_body(int points);
+
+  /// No description provided for @ventor_rewards_earn_invite_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Invite friends'**
+  String get ventor_rewards_earn_invite_title;
+
+  /// No description provided for @ventor_rewards_earn_invite_body.
+  ///
+  /// In en, this message translates to:
+  /// **'Share your code. You get {registerPoints} points when they register, and you both get {firstCallPoints} points after their first call.'**
+  String ventor_rewards_earn_invite_body(
+    int registerPoints,
+    int firstCallPoints,
+  );
+
+  /// No description provided for @ventor_rewards_earn_booking_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Your friend books a call'**
+  String get ventor_rewards_earn_booking_title;
+
+  /// No description provided for @ventor_rewards_earn_booking_body.
+  ///
+  /// In en, this message translates to:
+  /// **'Get {points} extra points when a friend you invited books a session.'**
+  String ventor_rewards_earn_booking_body(int points);
+
+  /// No description provided for @ventor_rewards_earn_invite_cta.
+  ///
+  /// In en, this message translates to:
+  /// **'Invite friends'**
+  String get ventor_rewards_earn_invite_cta;
+
+  /// No description provided for @ventor_invite_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Invite Friends. Earn More.'**
+  String get ventor_invite_title;
+
+  /// No description provided for @ventor_invite_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Help others find support and get rewarded.'**
+  String get ventor_invite_subtitle;
+
+  /// No description provided for @ventor_invite_promo.
+  ///
+  /// In en, this message translates to:
+  /// **'Give support. Get rewarded. Invite a friend — you get {registerPoints} points when they register, and you both get {firstCallPoints} points after their first call.'**
+  String ventor_invite_promo(int registerPoints, int firstCallPoints);
+
+  /// No description provided for @ventor_invite_your_code.
+  ///
+  /// In en, this message translates to:
+  /// **'YOUR CODE'**
+  String get ventor_invite_your_code;
+
+  /// No description provided for @ventor_invite_copied.
+  ///
+  /// In en, this message translates to:
+  /// **'Invite code copied'**
+  String get ventor_invite_copied;
+
+  /// No description provided for @ventor_invite_link_copied.
+  ///
+  /// In en, this message translates to:
+  /// **'Invite link copied'**
+  String get ventor_invite_link_copied;
+
+  /// No description provided for @ventor_invite_share_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Share your invite link'**
+  String get ventor_invite_share_title;
+
+  /// No description provided for @ventor_invite_share_failed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not open the share app.'**
+  String get ventor_invite_share_failed;
+
+  /// No description provided for @ventor_invite_instagram_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Link copied — paste it in Instagram.'**
+  String get ventor_invite_instagram_hint;
+
+  /// No description provided for @ventor_invite_history_cta.
+  ///
+  /// In en, this message translates to:
+  /// **'See Invite History'**
+  String get ventor_invite_history_cta;
+
+  /// No description provided for @ventor_invite_how_title.
+  ///
+  /// In en, this message translates to:
+  /// **'How it works'**
+  String get ventor_invite_how_title;
+
+  /// No description provided for @ventor_invite_how_1.
+  ///
+  /// In en, this message translates to:
+  /// **'Share your unique code or link.'**
+  String get ventor_invite_how_1;
+
+  /// No description provided for @ventor_invite_how_2.
+  ///
+  /// In en, this message translates to:
+  /// **'Your friend registers in the app — you get {points} points.'**
+  String ventor_invite_how_2(int points);
+
+  /// No description provided for @ventor_invite_how_3.
+  ///
+  /// In en, this message translates to:
+  /// **'When your friend has their first call, you both get {points} points.'**
+  String ventor_invite_how_3(int points);
+
+  /// No description provided for @ventor_invite_summary_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Invites'**
+  String get ventor_invite_summary_title;
+
+  /// No description provided for @ventor_invite_total.
+  ///
+  /// In en, this message translates to:
+  /// **'Total invited: {count} friends'**
+  String ventor_invite_total(int count);
+
+  /// No description provided for @ventor_invite_points_earned.
+  ///
+  /// In en, this message translates to:
+  /// **'Points earned: {points} pts'**
+  String ventor_invite_points_earned(String points);
+
+  /// No description provided for @ventor_invite_share_message.
+  ///
+  /// In en, this message translates to:
+  /// **'Join me on Venting. Use my code {code} to get started: {link}'**
+  String ventor_invite_share_message(String code, String link);
+
+  /// No description provided for @ventor_invite_history_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Invite History'**
+  String get ventor_invite_history_title;
+
+  /// No description provided for @ventor_invite_history_empty.
+  ///
+  /// In en, this message translates to:
+  /// **'No invites yet. Share your code to get started.'**
+  String get ventor_invite_history_empty;
+
+  /// No description provided for @ventor_invite_status_pending.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending'**
+  String get ventor_invite_status_pending;
+
+  /// No description provided for @ventor_invite_status_joined.
+  ///
+  /// In en, this message translates to:
+  /// **'Registered'**
+  String get ventor_invite_status_joined;
+
+  /// No description provided for @ventor_invite_status_first_session.
+  ///
+  /// In en, this message translates to:
+  /// **'First call done'**
+  String get ventor_invite_status_first_session;
+
+  /// No description provided for @ventor_invite_status_booked.
+  ///
+  /// In en, this message translates to:
+  /// **'Booked a call'**
+  String get ventor_invite_status_booked;
+
   /// No description provided for @ventor_home_profile_placeholder.
   ///
   /// In en, this message translates to:

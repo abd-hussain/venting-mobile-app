@@ -4966,6 +4966,248 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
       'Rewards and achievements for ventors will appear here.';
 
   @override
+  String get ventor_rewards_title => 'Rewards & Discounts';
+
+  @override
+  String get ventor_rewards_subtitle =>
+      'Use your points to get amazing benefits.';
+
+  @override
+  String ventor_rewards_pts(String points) {
+    return '$points pts';
+  }
+
+  @override
+  String ventor_rewards_active_saving(int percent) {
+    return 'You’re saving $percent% on your next session.';
+  }
+
+  @override
+  String ventor_rewards_active_saving_tier(int percent, String audience) {
+    return 'You’re saving $percent% with $audience on your next session.';
+  }
+
+  @override
+  String ventor_rewards_active_free_session(int minutes) {
+    return 'Your next $minutes-min session is free.';
+  }
+
+  @override
+  String get ventor_rewards_active_priority =>
+      'Priority match is on for your next session.';
+
+  @override
+  String get ventor_rewards_available => 'Available Rewards';
+
+  @override
+  String get ventor_rewards_tab_available => 'Available';
+
+  @override
+  String get ventor_rewards_tab_history => 'History';
+
+  @override
+  String get ventor_rewards_earn_more => 'How to earn more points';
+
+  @override
+  String get ventor_rewards_trade_history => 'Trade history';
+
+  @override
+  String get ventor_rewards_trade_empty =>
+      'No trades yet. Redeem an offer to see it here.';
+
+  @override
+  String get ventor_rewards_trade_unknown => 'Session discount';
+
+  @override
+  String get ventor_rewards_not_enough =>
+      'You need more points for this offer.';
+
+  @override
+  String get ventor_rewards_redeemed => 'Reward applied to your next session.';
+
+  @override
+  String get ventor_rewards_already_active => 'This reward is already active.';
+
+  @override
+  String get ventor_rewards_welcome_used =>
+      'Your first-call 50% gift has already been used.';
+
+  @override
+  String get ventor_rewards_first_call_gift =>
+      'After your first call you unlocked 50% off your next session.';
+
+  @override
+  String get ventor_rewards_welcome_title => '50% off your next session';
+
+  @override
+  String get ventor_rewards_active => 'Active';
+
+  @override
+  String get ventor_rewards_used => 'Used';
+
+  @override
+  String get ventor_rewards_unlocked => 'Unlocked';
+
+  @override
+  String ventor_rewards_offer_percent(int percent) {
+    return '$percent% Off';
+  }
+
+  @override
+  String ventor_rewards_offer_free_minutes(int minutes) {
+    return 'Free $minutes-min Session';
+  }
+
+  @override
+  String get ventor_rewards_offer_priority => 'Priority Match';
+
+  @override
+  String get ventor_rewards_offer_welcome_subtitle =>
+      'Gift after your first call';
+
+  @override
+  String get ventor_rewards_audience_any => 'Any session';
+
+  @override
+  String get ventor_rewards_audience_elite => 'Elite listeners';
+
+  @override
+  String get ventor_rewards_audience_trusted_up => 'Trusted listeners & up';
+
+  @override
+  String get ventor_rewards_audience_starter_rising =>
+      'Starter & Rising listeners';
+
+  @override
+  String ventor_rewards_audience_min_tier(String tier) {
+    return '$tier listeners & up';
+  }
+
+  @override
+  String get ventor_rewards_earn_title => 'How to earn points';
+
+  @override
+  String get ventor_rewards_earn_subtitle =>
+      'There are three ways to grow your balance and unlock session discounts.';
+
+  @override
+  String get ventor_rewards_earn_sessions_title => 'Have more sessions';
+
+  @override
+  String ventor_rewards_earn_sessions_body(int points) {
+    return 'Earn $points points every time you complete a session.';
+  }
+
+  @override
+  String get ventor_rewards_earn_invite_title => 'Invite friends';
+
+  @override
+  String ventor_rewards_earn_invite_body(
+    int registerPoints,
+    int firstCallPoints,
+  ) {
+    return 'Share your code. You get $registerPoints points when they register, and you both get $firstCallPoints points after their first call.';
+  }
+
+  @override
+  String get ventor_rewards_earn_booking_title => 'Your friend books a call';
+
+  @override
+  String ventor_rewards_earn_booking_body(int points) {
+    return 'Get $points extra points when a friend you invited books a session.';
+  }
+
+  @override
+  String get ventor_rewards_earn_invite_cta => 'Invite friends';
+
+  @override
+  String get ventor_invite_title => 'Invite Friends. Earn More.';
+
+  @override
+  String get ventor_invite_subtitle =>
+      'Help others find support and get rewarded.';
+
+  @override
+  String ventor_invite_promo(int registerPoints, int firstCallPoints) {
+    return 'Give support. Get rewarded. Invite a friend — you get $registerPoints points when they register, and you both get $firstCallPoints points after their first call.';
+  }
+
+  @override
+  String get ventor_invite_your_code => 'YOUR CODE';
+
+  @override
+  String get ventor_invite_copied => 'Invite code copied';
+
+  @override
+  String get ventor_invite_link_copied => 'Invite link copied';
+
+  @override
+  String get ventor_invite_share_title => 'Share your invite link';
+
+  @override
+  String get ventor_invite_share_failed => 'Could not open the share app.';
+
+  @override
+  String get ventor_invite_instagram_hint =>
+      'Link copied — paste it in Instagram.';
+
+  @override
+  String get ventor_invite_history_cta => 'See Invite History';
+
+  @override
+  String get ventor_invite_how_title => 'How it works';
+
+  @override
+  String get ventor_invite_how_1 => 'Share your unique code or link.';
+
+  @override
+  String ventor_invite_how_2(int points) {
+    return 'Your friend registers in the app — you get $points points.';
+  }
+
+  @override
+  String ventor_invite_how_3(int points) {
+    return 'When your friend has their first call, you both get $points points.';
+  }
+
+  @override
+  String get ventor_invite_summary_title => 'Your Invites';
+
+  @override
+  String ventor_invite_total(int count) {
+    return 'Total invited: $count friends';
+  }
+
+  @override
+  String ventor_invite_points_earned(String points) {
+    return 'Points earned: $points pts';
+  }
+
+  @override
+  String ventor_invite_share_message(String code, String link) {
+    return 'Join me on Venting. Use my code $code to get started: $link';
+  }
+
+  @override
+  String get ventor_invite_history_title => 'Invite History';
+
+  @override
+  String get ventor_invite_history_empty =>
+      'No invites yet. Share your code to get started.';
+
+  @override
+  String get ventor_invite_status_pending => 'Pending';
+
+  @override
+  String get ventor_invite_status_joined => 'Registered';
+
+  @override
+  String get ventor_invite_status_first_session => 'First call done';
+
+  @override
+  String get ventor_invite_status_booked => 'Booked a call';
+
+  @override
   String get ventor_home_profile_placeholder =>
       'Your ventor profile and settings will appear here.';
 

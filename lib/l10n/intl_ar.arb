@@ -3466,6 +3466,204 @@
   "@ventor_home_sessions_placeholder": {},
   "ventor_home_rewards_placeholder": "ستظهر مكافآت وإنجازات المتحدث هنا.",
   "@ventor_home_rewards_placeholder": {},
+  "ventor_rewards_title": "المكافآت والخصومات",
+  "@ventor_rewards_title": {},
+  "ventor_rewards_subtitle": "استخدم نقاطك للحصول على مزايا رائعة.",
+  "@ventor_rewards_subtitle": {},
+  "ventor_rewards_pts": "{points} نقطة",
+  "@ventor_rewards_pts": {
+    "placeholders": {
+      "points": { "type": "String" }
+    }
+  },
+  "ventor_rewards_active_saving": "أنت توفّر {percent}% على جلستك القادمة.",
+  "@ventor_rewards_active_saving": {
+    "placeholders": {
+      "percent": { "type": "int" }
+    }
+  },
+  "ventor_rewards_active_saving_tier": "أنت توفّر {percent}% مع {audience} على جلستك القادمة.",
+  "@ventor_rewards_active_saving_tier": {
+    "placeholders": {
+      "percent": { "type": "int" },
+      "audience": { "type": "String" }
+    }
+  },
+  "ventor_rewards_active_free_session": "جلستك القادمة لمدة {minutes} دقيقة مجانية.",
+  "@ventor_rewards_active_free_session": {
+    "placeholders": {
+      "minutes": { "type": "int" }
+    }
+  },
+  "ventor_rewards_active_priority": "المطابقة ذات الأولوية مفعّلة لجلستك القادمة.",
+  "@ventor_rewards_active_priority": {},
+  "ventor_rewards_available": "المكافآت المتاحة",
+  "@ventor_rewards_available": {},
+  "ventor_rewards_tab_available": "المتاحة",
+  "@ventor_rewards_tab_available": {},
+  "ventor_rewards_tab_history": "السجل",
+  "@ventor_rewards_tab_history": {},
+  "ventor_rewards_earn_more": "كيف تكسب المزيد من النقاط",
+  "@ventor_rewards_earn_more": {},
+  "ventor_rewards_trade_history": "سجل التبديل",
+  "@ventor_rewards_trade_history": {},
+  "ventor_rewards_trade_empty": "لا توجد عمليات تبديل بعد. استبدل عرضاً ليظهر هنا.",
+  "@ventor_rewards_trade_empty": {},
+  "ventor_rewards_trade_unknown": "خصم جلسة",
+  "@ventor_rewards_trade_unknown": {},
+  "ventor_rewards_not_enough": "تحتاج إلى المزيد من النقاط لهذا العرض.",
+  "@ventor_rewards_not_enough": {},
+  "ventor_rewards_redeemed": "تم تطبيق المكافأة على جلستك القادمة.",
+  "@ventor_rewards_redeemed": {},
+  "ventor_rewards_already_active": "هذه المكافأة مفعّلة حالياً.",
+  "@ventor_rewards_already_active": {},
+  "ventor_rewards_welcome_used": "هدية الـ 50% بعد أول مكالمة تم استخدامها مسبقاً.",
+  "@ventor_rewards_welcome_used": {},
+  "ventor_rewards_first_call_gift": "بعد أول مكالمة حصلت على خصم 50% على جلستك التالية.",
+  "@ventor_rewards_first_call_gift": {},
+  "ventor_rewards_welcome_title": "خصم 50% على جلستك القادمة",
+  "@ventor_rewards_welcome_title": {},
+  "ventor_rewards_active": "مفعّل",
+  "@ventor_rewards_active": {},
+  "ventor_rewards_used": "مستخدم",
+  "@ventor_rewards_used": {},
+  "ventor_rewards_unlocked": "مفتوح",
+  "@ventor_rewards_unlocked": {},
+  "ventor_rewards_offer_percent": "خصم {percent}%",
+  "@ventor_rewards_offer_percent": {
+    "placeholders": {
+      "percent": { "type": "int" }
+    }
+  },
+  "ventor_rewards_offer_free_minutes": "جلسة مجانية {minutes} دقيقة",
+  "@ventor_rewards_offer_free_minutes": {
+    "placeholders": {
+      "minutes": { "type": "int" }
+    }
+  },
+  "ventor_rewards_offer_priority": "مطابقة ذات أولوية",
+  "@ventor_rewards_offer_priority": {},
+  "ventor_rewards_offer_welcome_subtitle": "هدية بعد أول مكالمة",
+  "@ventor_rewards_offer_welcome_subtitle": {},
+  "ventor_rewards_audience_any": "أي جلسة",
+  "@ventor_rewards_audience_any": {},
+  "ventor_rewards_audience_elite": "مستمعو النخبة",
+  "@ventor_rewards_audience_elite": {},
+  "ventor_rewards_audience_trusted_up": "المستمعون الموثوقون فأعلى",
+  "@ventor_rewards_audience_trusted_up": {},
+  "ventor_rewards_audience_starter_rising": "مستمعو المبتدئ والصاعد",
+  "@ventor_rewards_audience_starter_rising": {},
+  "ventor_rewards_audience_min_tier": "مستمعو {tier} فأعلى",
+  "@ventor_rewards_audience_min_tier": {
+    "placeholders": {
+      "tier": { "type": "String" }
+    }
+  },
+  "ventor_rewards_earn_title": "كيف تكسب النقاط",
+  "@ventor_rewards_earn_title": {},
+  "ventor_rewards_earn_subtitle": "هناك ثلاث طرق لزيادة رصيدك وفتح خصومات الجلسات.",
+  "@ventor_rewards_earn_subtitle": {},
+  "ventor_rewards_earn_sessions_title": "أكمل المزيد من الجلسات",
+  "@ventor_rewards_earn_sessions_title": {},
+  "ventor_rewards_earn_sessions_body": "اكسب {points} نقطة في كل مرة تُكمل فيها جلسة.",
+  "@ventor_rewards_earn_sessions_body": {
+    "placeholders": {
+      "points": { "type": "int" }
+    }
+  },
+  "ventor_rewards_earn_invite_title": "ادعُ أصدقاءك",
+  "@ventor_rewards_earn_invite_title": {},
+  "ventor_rewards_earn_invite_body": "شارك رمزك. تحصل على {registerPoints} نقطة عندما يسجّل صديقك، وتحصلان معاً على {firstCallPoints} نقطة بعد أول مكالمة له.",
+  "@ventor_rewards_earn_invite_body": {
+    "placeholders": {
+      "registerPoints": { "type": "int" },
+      "firstCallPoints": { "type": "int" }
+    }
+  },
+  "ventor_rewards_earn_booking_title": "صديقك يحجز مكالمة",
+  "@ventor_rewards_earn_booking_title": {},
+  "ventor_rewards_earn_booking_body": "احصل على {points} نقطة إضافية عندما يحجز صديق دعوته جلسة.",
+  "@ventor_rewards_earn_booking_body": {
+    "placeholders": {
+      "points": { "type": "int" }
+    }
+  },
+  "ventor_rewards_earn_invite_cta": "ادعُ أصدقاءك",
+  "@ventor_rewards_earn_invite_cta": {},
+  "ventor_invite_title": "ادعُ أصدقاءك. اربح المزيد.",
+  "@ventor_invite_title": {},
+  "ventor_invite_subtitle": "ساعد الآخرين في إيجاد الدعم واحصل على المكافأة.",
+  "@ventor_invite_subtitle": {},
+  "ventor_invite_promo": "قدّم الدعم. واحصل على المكافأة. ادعُ صديقاً — تحصل على {registerPoints} نقطة عندما يسجّل، وتحصلان معاً على {firstCallPoints} نقطة بعد أول مكالمة له.",
+  "@ventor_invite_promo": {
+    "placeholders": {
+      "registerPoints": { "type": "int" },
+      "firstCallPoints": { "type": "int" }
+    }
+  },
+  "ventor_invite_your_code": "رمزك",
+  "@ventor_invite_your_code": {},
+  "ventor_invite_copied": "تم نسخ رمز الدعوة",
+  "@ventor_invite_copied": {},
+  "ventor_invite_link_copied": "تم نسخ رابط الدعوة",
+  "@ventor_invite_link_copied": {},
+  "ventor_invite_share_title": "شارك رابط دعوتك",
+  "@ventor_invite_share_title": {},
+  "ventor_invite_share_failed": "تعذّر فتح تطبيق المشاركة.",
+  "@ventor_invite_share_failed": {},
+  "ventor_invite_instagram_hint": "تم نسخ الرابط — الصقه في إنستغرام.",
+  "@ventor_invite_instagram_hint": {},
+  "ventor_invite_history_cta": "عرض سجل الدعوات",
+  "@ventor_invite_history_cta": {},
+  "ventor_invite_how_title": "كيف يعمل",
+  "@ventor_invite_how_title": {},
+  "ventor_invite_how_1": "شارك رمزك أو رابطك الخاص.",
+  "@ventor_invite_how_1": {},
+  "ventor_invite_how_2": "يسجّل صديقك في التطبيق — وتحصل على {points} نقطة.",
+  "@ventor_invite_how_2": {
+    "placeholders": {
+      "points": { "type": "int" }
+    }
+  },
+  "ventor_invite_how_3": "عندما يجري صديقك أول مكالمة، تحصلان معاً على {points} نقطة.",
+  "@ventor_invite_how_3": {
+    "placeholders": {
+      "points": { "type": "int" }
+    }
+  },
+  "ventor_invite_summary_title": "دعواتك",
+  "@ventor_invite_summary_title": {},
+  "ventor_invite_total": "إجمالي المدعوين: {count} أصدقاء",
+  "@ventor_invite_total": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "ventor_invite_points_earned": "النقاط المكتسبة: {points} نقطة",
+  "@ventor_invite_points_earned": {
+    "placeholders": {
+      "points": { "type": "String" }
+    }
+  },
+  "ventor_invite_share_message": "انضم إليّ على فنتينغ. استخدم رمزي {code} للبدء: {link}",
+  "@ventor_invite_share_message": {
+    "placeholders": {
+      "code": { "type": "String" },
+      "link": { "type": "String" }
+    }
+  },
+  "ventor_invite_history_title": "سجل الدعوات",
+  "@ventor_invite_history_title": {},
+  "ventor_invite_history_empty": "لا توجد دعوات بعد. شارك رمزك للبدء.",
+  "@ventor_invite_history_empty": {},
+  "ventor_invite_status_pending": "قيد الانتظار",
+  "@ventor_invite_status_pending": {},
+  "ventor_invite_status_joined": "سجّل",
+  "@ventor_invite_status_joined": {},
+  "ventor_invite_status_first_session": "أُجريت أول مكالمة",
+  "@ventor_invite_status_first_session": {},
+  "ventor_invite_status_booked": "حجز مكالمة",
+  "@ventor_invite_status_booked": {},
   "ventor_home_profile_placeholder": "سيظهر ملف المتحدث والإعدادات هنا.",
   "@ventor_home_profile_placeholder": {},
   "ventor_profile_anonymous": "مجهول",

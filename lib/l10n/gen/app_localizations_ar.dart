@@ -4940,6 +4940,245 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
       'ستظهر مكافآت وإنجازات المتحدث هنا.';
 
   @override
+  String get ventor_rewards_title => 'المكافآت والخصومات';
+
+  @override
+  String get ventor_rewards_subtitle => 'استخدم نقاطك للحصول على مزايا رائعة.';
+
+  @override
+  String ventor_rewards_pts(String points) {
+    return '$points نقطة';
+  }
+
+  @override
+  String ventor_rewards_active_saving(int percent) {
+    return 'أنت توفّر $percent% على جلستك القادمة.';
+  }
+
+  @override
+  String ventor_rewards_active_saving_tier(int percent, String audience) {
+    return 'أنت توفّر $percent% مع $audience على جلستك القادمة.';
+  }
+
+  @override
+  String ventor_rewards_active_free_session(int minutes) {
+    return 'جلستك القادمة لمدة $minutes دقيقة مجانية.';
+  }
+
+  @override
+  String get ventor_rewards_active_priority =>
+      'المطابقة ذات الأولوية مفعّلة لجلستك القادمة.';
+
+  @override
+  String get ventor_rewards_available => 'المكافآت المتاحة';
+
+  @override
+  String get ventor_rewards_tab_available => 'المتاحة';
+
+  @override
+  String get ventor_rewards_tab_history => 'السجل';
+
+  @override
+  String get ventor_rewards_earn_more => 'كيف تكسب المزيد من النقاط';
+
+  @override
+  String get ventor_rewards_trade_history => 'سجل التبديل';
+
+  @override
+  String get ventor_rewards_trade_empty =>
+      'لا توجد عمليات تبديل بعد. استبدل عرضاً ليظهر هنا.';
+
+  @override
+  String get ventor_rewards_trade_unknown => 'خصم جلسة';
+
+  @override
+  String get ventor_rewards_not_enough =>
+      'تحتاج إلى المزيد من النقاط لهذا العرض.';
+
+  @override
+  String get ventor_rewards_redeemed => 'تم تطبيق المكافأة على جلستك القادمة.';
+
+  @override
+  String get ventor_rewards_already_active => 'هذه المكافأة مفعّلة حالياً.';
+
+  @override
+  String get ventor_rewards_welcome_used =>
+      'هدية الـ 50% بعد أول مكالمة تم استخدامها مسبقاً.';
+
+  @override
+  String get ventor_rewards_first_call_gift =>
+      'بعد أول مكالمة حصلت على خصم 50% على جلستك التالية.';
+
+  @override
+  String get ventor_rewards_welcome_title => 'خصم 50% على جلستك القادمة';
+
+  @override
+  String get ventor_rewards_active => 'مفعّل';
+
+  @override
+  String get ventor_rewards_used => 'مستخدم';
+
+  @override
+  String get ventor_rewards_unlocked => 'مفتوح';
+
+  @override
+  String ventor_rewards_offer_percent(int percent) {
+    return 'خصم $percent%';
+  }
+
+  @override
+  String ventor_rewards_offer_free_minutes(int minutes) {
+    return 'جلسة مجانية $minutes دقيقة';
+  }
+
+  @override
+  String get ventor_rewards_offer_priority => 'مطابقة ذات أولوية';
+
+  @override
+  String get ventor_rewards_offer_welcome_subtitle => 'هدية بعد أول مكالمة';
+
+  @override
+  String get ventor_rewards_audience_any => 'أي جلسة';
+
+  @override
+  String get ventor_rewards_audience_elite => 'مستمعو النخبة';
+
+  @override
+  String get ventor_rewards_audience_trusted_up => 'المستمعون الموثوقون فأعلى';
+
+  @override
+  String get ventor_rewards_audience_starter_rising => 'مستمعو المبتدئ والصاعد';
+
+  @override
+  String ventor_rewards_audience_min_tier(String tier) {
+    return 'مستمعو $tier فأعلى';
+  }
+
+  @override
+  String get ventor_rewards_earn_title => 'كيف تكسب النقاط';
+
+  @override
+  String get ventor_rewards_earn_subtitle =>
+      'هناك ثلاث طرق لزيادة رصيدك وفتح خصومات الجلسات.';
+
+  @override
+  String get ventor_rewards_earn_sessions_title => 'أكمل المزيد من الجلسات';
+
+  @override
+  String ventor_rewards_earn_sessions_body(int points) {
+    return 'اكسب $points نقطة في كل مرة تُكمل فيها جلسة.';
+  }
+
+  @override
+  String get ventor_rewards_earn_invite_title => 'ادعُ أصدقاءك';
+
+  @override
+  String ventor_rewards_earn_invite_body(
+    int registerPoints,
+    int firstCallPoints,
+  ) {
+    return 'شارك رمزك. تحصل على $registerPoints نقطة عندما يسجّل صديقك، وتحصلان معاً على $firstCallPoints نقطة بعد أول مكالمة له.';
+  }
+
+  @override
+  String get ventor_rewards_earn_booking_title => 'صديقك يحجز مكالمة';
+
+  @override
+  String ventor_rewards_earn_booking_body(int points) {
+    return 'احصل على $points نقطة إضافية عندما يحجز صديق دعوته جلسة.';
+  }
+
+  @override
+  String get ventor_rewards_earn_invite_cta => 'ادعُ أصدقاءك';
+
+  @override
+  String get ventor_invite_title => 'ادعُ أصدقاءك. اربح المزيد.';
+
+  @override
+  String get ventor_invite_subtitle =>
+      'ساعد الآخرين في إيجاد الدعم واحصل على المكافأة.';
+
+  @override
+  String ventor_invite_promo(int registerPoints, int firstCallPoints) {
+    return 'قدّم الدعم. واحصل على المكافأة. ادعُ صديقاً — تحصل على $registerPoints نقطة عندما يسجّل، وتحصلان معاً على $firstCallPoints نقطة بعد أول مكالمة له.';
+  }
+
+  @override
+  String get ventor_invite_your_code => 'رمزك';
+
+  @override
+  String get ventor_invite_copied => 'تم نسخ رمز الدعوة';
+
+  @override
+  String get ventor_invite_link_copied => 'تم نسخ رابط الدعوة';
+
+  @override
+  String get ventor_invite_share_title => 'شارك رابط دعوتك';
+
+  @override
+  String get ventor_invite_share_failed => 'تعذّر فتح تطبيق المشاركة.';
+
+  @override
+  String get ventor_invite_instagram_hint =>
+      'تم نسخ الرابط — الصقه في إنستغرام.';
+
+  @override
+  String get ventor_invite_history_cta => 'عرض سجل الدعوات';
+
+  @override
+  String get ventor_invite_how_title => 'كيف يعمل';
+
+  @override
+  String get ventor_invite_how_1 => 'شارك رمزك أو رابطك الخاص.';
+
+  @override
+  String ventor_invite_how_2(int points) {
+    return 'يسجّل صديقك في التطبيق — وتحصل على $points نقطة.';
+  }
+
+  @override
+  String ventor_invite_how_3(int points) {
+    return 'عندما يجري صديقك أول مكالمة، تحصلان معاً على $points نقطة.';
+  }
+
+  @override
+  String get ventor_invite_summary_title => 'دعواتك';
+
+  @override
+  String ventor_invite_total(int count) {
+    return 'إجمالي المدعوين: $count أصدقاء';
+  }
+
+  @override
+  String ventor_invite_points_earned(String points) {
+    return 'النقاط المكتسبة: $points نقطة';
+  }
+
+  @override
+  String ventor_invite_share_message(String code, String link) {
+    return 'انضم إليّ على فنتينغ. استخدم رمزي $code للبدء: $link';
+  }
+
+  @override
+  String get ventor_invite_history_title => 'سجل الدعوات';
+
+  @override
+  String get ventor_invite_history_empty =>
+      'لا توجد دعوات بعد. شارك رمزك للبدء.';
+
+  @override
+  String get ventor_invite_status_pending => 'قيد الانتظار';
+
+  @override
+  String get ventor_invite_status_joined => 'سجّل';
+
+  @override
+  String get ventor_invite_status_first_session => 'أُجريت أول مكالمة';
+
+  @override
+  String get ventor_invite_status_booked => 'حجز مكالمة';
+
+  @override
   String get ventor_home_profile_placeholder =>
       'سيظهر ملف المتحدث والإعدادات هنا.';
 
