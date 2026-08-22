@@ -5059,7 +5059,7 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
 
   @override
   String get ventor_rewards_earn_subtitle =>
-      'هناك ثلاث طرق لزيادة رصيدك وفتح خصومات الجلسات.';
+      'أربع طرق لزيادة رصيدك وفتح خصومات الجلسات.';
 
   @override
   String get ventor_rewards_earn_sessions_title => 'أكمل المزيد من الجلسات';
@@ -5089,7 +5089,59 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
   }
 
   @override
+  String get ventor_rewards_earn_buy_title => 'شراء النقاط';
+
+  @override
+  String get ventor_rewards_earn_buy_body =>
+      'اشترِ حزم نقاط في أي وقت واستبدلها في المكافآت بجلسات مجانية أو خصومات.';
+
+  @override
   String get ventor_rewards_earn_invite_cta => 'ادعُ أصدقاءك';
+
+  @override
+  String get ventor_points_buy_title => 'شراء النقاط';
+
+  @override
+  String get ventor_points_buy_subtitle =>
+      'عبّئ رصيدك واستبدل النقاط في المكافآت للحصول على دقائق مجانية أو خصومات على الجلسات.';
+
+  @override
+  String get ventor_points_buy_cta => 'شراء النقاط';
+
+  @override
+  String get ventor_points_buy_example =>
+      'استبدل النقاط في المكافآت بجلسات مجانية (٣٠ أو ٤٥ أو ٦٠ دقيقة) أو بخصومات نسبية — التكلفة حسب العرض.';
+
+  @override
+  String ventor_points_package_price(String price) {
+    return '\$$price';
+  }
+
+  @override
+  String ventor_points_package_bonus(int percent) {
+    return 'مكافأة +$percent%';
+  }
+
+  @override
+  String ventor_points_purchase_success(String points) {
+    return 'تمت إضافة $points نقطة إلى رصيدك.';
+  }
+
+  @override
+  String get ventor_points_purchase_redeem_cta => 'استبدال';
+
+  @override
+  String get ventor_points_home_title => 'النقاط والمكافآت';
+
+  @override
+  String get ventor_points_home_body =>
+      'اشترِ نقاطاً واستبدلها في المكافآت بجلسات مجانية (٣٠ أو ٤٥ أو ٦٠ دقيقة) أو بخصومات على الجلسات.';
+
+  @override
+  String get ventor_points_home_buy_cta => 'شراء النقاط';
+
+  @override
+  String get ventor_points_home_redeem_cta => 'استبدال';
 
   @override
   String get ventor_invite_title => 'ادعُ أصدقاءك. اربح المزيد.';

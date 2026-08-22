@@ -5088,7 +5088,7 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
 
   @override
   String get ventor_rewards_earn_subtitle =>
-      'There are three ways to grow your balance and unlock session discounts.';
+      'Four ways to grow your balance and unlock session discounts.';
 
   @override
   String get ventor_rewards_earn_sessions_title => 'Have more sessions';
@@ -5118,7 +5118,59 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
   }
 
   @override
+  String get ventor_rewards_earn_buy_title => 'Buy points';
+
+  @override
+  String get ventor_rewards_earn_buy_body =>
+      'Purchase point packs anytime and redeem them in Rewards for free sessions or discounts.';
+
+  @override
   String get ventor_rewards_earn_invite_cta => 'Invite friends';
+
+  @override
+  String get ventor_points_buy_title => 'Buy points';
+
+  @override
+  String get ventor_points_buy_subtitle =>
+      'Top up your balance and redeem points in Rewards for free minutes or session discounts.';
+
+  @override
+  String get ventor_points_buy_cta => 'Buy points';
+
+  @override
+  String get ventor_points_buy_example =>
+      'Redeem points in Rewards for free sessions (30, 45, or 60 min) or percentage discounts — costs depend on the offer.';
+
+  @override
+  String ventor_points_package_price(String price) {
+    return '\$$price';
+  }
+
+  @override
+  String ventor_points_package_bonus(int percent) {
+    return '+$percent% bonus';
+  }
+
+  @override
+  String ventor_points_purchase_success(String points) {
+    return '$points points added to your balance.';
+  }
+
+  @override
+  String get ventor_points_purchase_redeem_cta => 'Redeem';
+
+  @override
+  String get ventor_points_home_title => 'Points & rewards';
+
+  @override
+  String get ventor_points_home_body =>
+      'Buy points and redeem them in Rewards for free sessions (30, 45, or 60 min) or session discounts.';
+
+  @override
+  String get ventor_points_home_buy_cta => 'Buy points';
+
+  @override
+  String get ventor_points_home_redeem_cta => 'Redeem';
 
   @override
   String get ventor_invite_title => 'Invite Friends. Earn More.';

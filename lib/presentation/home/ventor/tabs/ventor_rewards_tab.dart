@@ -3,13 +3,17 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/profile/ventor_profile_theme.dart';
+import 'package:venting_mobile_app/presentation/home/ventor/rewards/ventor_buy_points_bottom_sheet.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/rewards/ventor_earn_points_bottom_sheet.dart';
+import 'package:venting_mobile_app/presentation/home/ventor/rewards/ventor_points_scope.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/rewards/ventor_rewards_models.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/rewards/ventor_rewards_widgets.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/rewards/ventor_trade_history_screen.dart';
 import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dart';
 
 enum _RewardsSection { available, history }
+
+//TODO: the offer here should be studies will , this is wrong
 
 class VentorRewardsTab extends StatefulWidget {
   const VentorRewardsTab({super.key});
@@ -27,8 +31,7 @@ class _VentorRewardsTabState extends State<VentorRewardsTab> {
     systemNavigationBarIconBrightness: Brightness.light,
   );
 
-  // TODO: Load points, redeemed offers, and first-session gift from rewards API.
-  var _points = VentorRewardsCatalog.mockPoints;
+  // TODO: Load redeemed offers and first-session gift from rewards API (#63).
   var _activeOfferId = VentorRewardsCatalog.mockActiveOfferId;
   var _welcomeGiftUsed = true;
   var _section = _RewardsSection.available;
@@ -98,16 +101,17 @@ class _VentorRewardsTabState extends State<VentorRewardsTab> {
       return;
     }
 
-    if (_points < offer.pointsCost) {
+    final scope = VentorPointsScope.of(context);
+    if (scope.points < offer.pointsCost) {
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(SnackBar(content: Text(l10n.ventor_rewards_not_enough)));
       return;
     }
 
-    // TODO: Redeem offer via rewards API.
+    // TODO: Redeem offer via rewards API (#64).
+    if (!scope.spendPoints(offer.pointsCost)) return;
     setState(() {
-      _points -= offer.pointsCost;
       _activeOfferId = offer.id;
       _recordTrade(offer);
     });
@@ -122,7 +126,14 @@ class _VentorRewardsTabState extends State<VentorRewardsTab> {
         .where((offer) => !offer.isWelcomeGift)
         .toList();
 
+    final points = VentorPointsScope.of(context).points;
+
     return [
+      VentorEarnMorePointsButton(
+        label: l10n.ventor_points_buy_cta,
+        onTap: () => showVentorBuyPointsBottomSheet(context: context),
+      ),
+      const SizedBox(height: 10),
       VentorEarnMorePointsButton(
         label: l10n.ventor_rewards_earn_more,
         onTap: () => showVentorEarnPointsBottomSheet(context: context),
@@ -166,7 +177,7 @@ class _VentorRewardsTabState extends State<VentorRewardsTab> {
           costLabel: _costLabel(l10n, catalogOffers[i]),
           icon: ventorRewardIcon(catalogOffers[i]),
           isActive: catalogOffers[i].id == _activeOfferId,
-          canAfford: _points >= catalogOffers[i].pointsCost,
+          canAfford: points >= catalogOffers[i].pointsCost,
           isUsedGift: false,
           onTap: () => _onOfferTap(catalogOffers[i]),
         ),
@@ -202,6 +213,7 @@ class _VentorRewardsTabState extends State<VentorRewardsTab> {
   @override
   Widget build(BuildContext context) {
     final l10n = VentingMobLocalizations.of(context);
+    final points = VentorPointsScope.of(context).points;
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: _overlayStyle,
@@ -218,7 +230,7 @@ class _VentorRewardsTabState extends State<VentorRewardsTab> {
                 title: l10n.ventor_rewards_title,
                 subtitle: l10n.ventor_rewards_subtitle,
                 pointsLabel: l10n.ventor_rewards_pts(
-                  formatVentorPoints(_points),
+                  formatVentorPoints(points),
                 ),
               ),
               const SizedBox(height: 16),

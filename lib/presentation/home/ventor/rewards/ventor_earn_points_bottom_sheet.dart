@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/profile/ventor_profile_theme.dart';
+import 'package:venting_mobile_app/presentation/home/ventor/rewards/ventor_buy_points_bottom_sheet.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/rewards/ventor_invite_friends_screen.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/rewards/ventor_rewards_models.dart';
 import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dart';
@@ -11,12 +12,14 @@ Future<void> showVentorEarnPointsBottomSheet({required BuildContext context}) {
     context: context,
     isScrollControlled: true,
     backgroundColor: Colors.transparent,
-    builder: (context) => const _VentorEarnPointsBottomSheet(),
+    builder: (_) => _VentorEarnPointsBottomSheet(hostContext: context),
   );
 }
 
 class _VentorEarnPointsBottomSheet extends StatelessWidget {
-  const _VentorEarnPointsBottomSheet();
+  const _VentorEarnPointsBottomSheet({required this.hostContext});
+
+  final BuildContext hostContext;
 
   static const _sheetFill = Color(0xFF1C1826);
 
@@ -94,27 +97,70 @@ class _VentorEarnPointsBottomSheet extends StatelessWidget {
               ),
               icon: Icons.group_add_rounded,
             ),
+            const SizedBox(height: 10),
+            _EarnWayRow(
+              number: '4',
+              title: l10n.ventor_rewards_earn_buy_title,
+              body: l10n.ventor_rewards_earn_buy_body,
+              icon: Icons.monetization_on_rounded,
+              onTap: () {
+                Navigator.of(context).pop();
+                showVentorBuyPointsBottomSheet(context: hostContext);
+              },
+            ),
             const SizedBox(height: 18),
-            SizedBox(
-              height: 52,
-              child: FilledButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  openVentorInviteFriendsScreen(context: context);
-                },
-                style: FilledButton.styleFrom(
-                  backgroundColor: SplashColors.purpleMid,
-                  foregroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(14),
-                  ),
-                  textStyle: GoogleFonts.inter(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w700,
+            Row(
+              children: [
+                Expanded(
+                  child: SizedBox(
+                    height: 52,
+                    child: OutlinedButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                        showVentorBuyPointsBottomSheet(context: hostContext);
+                      },
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: Colors.white,
+                        side: BorderSide(
+                          color: Colors.white.withValues(alpha: 0.18),
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(14),
+                        ),
+                        textStyle: GoogleFonts.inter(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      child: Text(l10n.ventor_points_buy_cta),
+                    ),
                   ),
                 ),
-                child: Text(l10n.ventor_rewards_earn_invite_cta),
-              ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: SizedBox(
+                    height: 52,
+                    child: FilledButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                        openVentorInviteFriendsScreen(context: hostContext);
+                      },
+                      style: FilledButton.styleFrom(
+                        backgroundColor: SplashColors.purpleMid,
+                        foregroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(14),
+                        ),
+                        textStyle: GoogleFonts.inter(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      child: Text(l10n.ventor_rewards_earn_invite_cta),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ],
         ),
@@ -129,16 +175,18 @@ class _EarnWayRow extends StatelessWidget {
     required this.title,
     required this.body,
     required this.icon,
+    this.onTap,
   });
 
   final String number;
   final String title;
   final String body;
   final IconData icon;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    final content = Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: const Color(0xFF15101F),
@@ -199,6 +247,16 @@ class _EarnWayRow extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+
+    if (onTap == null) return content;
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(14),
+        child: content,
       ),
     );
   }

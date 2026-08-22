@@ -6,6 +6,7 @@ import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/call/ventor_call_args.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/call/ventor_call_flow.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/home/ventor_home_models.dart';
+import 'package:venting_mobile_app/presentation/home/ventor/home/ventor_points_home_card.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/home/ventor_mood_checkin_sheet.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/profile/ventor_profile_theme.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/sessions/ventor_before_connecting_screen.dart';
@@ -278,6 +279,7 @@ class _VentorDashboardTabState extends State<VentorDashboardTab> {
         child: ListView(
           padding: const EdgeInsets.fromLTRB(16, 12, 16, 28),
           children: [
+            // Dashboard sections are ordered by user priority (highest first).
             _HomeHeader(
               greeting: '${_greeting(l10n)}, $name 👋',
               subtitle: l10n.ventor_home_safe_place,
@@ -285,52 +287,9 @@ class _VentorDashboardTabState extends State<VentorDashboardTab> {
                   _todoFeature(l10n.ventor_home_notifications_soon),
             ),
             const SizedBox(height: 22),
-            Text(
-              l10n.ventor_home_mood_prompt,
-              style: GoogleFonts.inter(
-                color: Colors.white,
-                fontSize: 16,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-            const SizedBox(height: 14),
-            _MoodRow(
-              selected: _todayMood,
-              onTap: _onMoodTap,
-              labelFor: (kind) => _moodLabel(l10n, kind),
-            ),
-            if (_checkedInToday && _todayNote != null) ...[
-              const SizedBox(height: 12),
-              _TodayNoteCard(note: _todayNote!),
-            ],
-            const SizedBox(height: 18),
-            _RecommendationCard(
-              message: _recommendation(l10n, _todayMood),
-              cta: l10n.ventor_home_find_listener,
-              onTap: _goSessions,
-            ),
-            const SizedBox(height: 14),
-            _StreakCard(
-              title: l10n.ventor_home_streak_title(_streakCount),
-              subtitle: l10n.ventor_home_streak_subtitle,
-              checked: _streakChecked,
-              dayLabels: [
-                l10n.ventor_home_day_mon,
-                l10n.ventor_home_day_tue,
-                l10n.ventor_home_day_wed,
-                l10n.ventor_home_day_thu,
-                l10n.ventor_home_day_fri,
-                l10n.ventor_home_day_sat,
-                l10n.ventor_home_day_sun,
-              ],
-              claimLabel: _streakClaimed
-                  ? l10n.ventor_home_streak_claimed_badge
-                  : l10n.ventor_home_streak_claim,
-              canClaim: _canClaim,
-              onClaim: _onClaimStreak,
-            ),
+
+            // P1 — Time-sensitive: join live or review upcoming booking.
             if (_nearestUpcoming != null) ...[
-              const SizedBox(height: 22),
               Row(
                 children: [
                   Expanded(
@@ -391,8 +350,10 @@ class _VentorDashboardTabState extends State<VentorDashboardTab> {
                     : l10n.ventor_sessions_booked_details,
                 onAction: () => _onUpcomingTap(_nearestUpcoming!),
               ),
+              const SizedBox(height: 22),
             ],
-            const SizedBox(height: 22),
+
+            // P2 — Primary action: connect with a listener now.
             Text(
               l10n.ventor_home_instant_section_title,
               style: GoogleFonts.inter(
@@ -420,6 +381,63 @@ class _VentorDashboardTabState extends State<VentorDashboardTab> {
               onTap: _bookInstantCall,
             ),
             const SizedBox(height: 22),
+
+            // P3 — Daily mood check-in.
+            Text(
+              l10n.ventor_home_mood_prompt,
+              style: GoogleFonts.inter(
+                color: Colors.white,
+                fontSize: 16,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+            const SizedBox(height: 14),
+            _MoodRow(
+              selected: _todayMood,
+              onTap: _onMoodTap,
+              labelFor: (kind) => _moodLabel(l10n, kind),
+            ),
+            if (_checkedInToday && _todayNote != null) ...[
+              const SizedBox(height: 12),
+              _TodayNoteCard(note: _todayNote!),
+            ],
+            const SizedBox(height: 14),
+
+            // P4 — 7-day mood streak (progress from daily check-ins above).
+            _StreakCard(
+              title: l10n.ventor_home_streak_title(_streakCount),
+              subtitle: l10n.ventor_home_streak_subtitle,
+              checked: _streakChecked,
+              dayLabels: [
+                l10n.ventor_home_day_mon,
+                l10n.ventor_home_day_tue,
+                l10n.ventor_home_day_wed,
+                l10n.ventor_home_day_thu,
+                l10n.ventor_home_day_fri,
+                l10n.ventor_home_day_sat,
+                l10n.ventor_home_day_sun,
+              ],
+              claimLabel: _streakClaimed
+                  ? l10n.ventor_home_streak_claimed_badge
+                  : l10n.ventor_home_streak_claim,
+              canClaim: _canClaim,
+              onClaim: _onClaimStreak,
+            ),
+            const SizedBox(height: 18),
+
+            // P5 — Mood-based listener recommendation.
+            _RecommendationCard(
+              message: _recommendation(l10n, _todayMood),
+              cta: l10n.ventor_home_find_listener,
+              onTap: _goSessions,
+            ),
+            const SizedBox(height: 14),
+
+            // P6 — Points balance and purchase/redemption entry.
+            const VentorPointsHomeCard(),
+            const SizedBox(height: 22),
+
+            // P7 — Session history preview.
             Row(
               children: [
                 Expanded(
@@ -465,6 +483,8 @@ class _VentorDashboardTabState extends State<VentorDashboardTab> {
               const SizedBox(height: 10),
             ],
             const SizedBox(height: 8),
+
+            // P8 — Inspirational footer.
             _MotivationCard(quote: l10n.ventor_home_motivation),
           ],
         ),

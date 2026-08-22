@@ -3561,7 +3561,7 @@
   },
   "ventor_rewards_earn_title": "How to earn points",
   "@ventor_rewards_earn_title": {},
-  "ventor_rewards_earn_subtitle": "There are three ways to grow your balance and unlock session discounts.",
+  "ventor_rewards_earn_subtitle": "Four ways to grow your balance and unlock session discounts.",
   "@ventor_rewards_earn_subtitle": {},
   "ventor_rewards_earn_sessions_title": "Have more sessions",
   "@ventor_rewards_earn_sessions_title": {},
@@ -3588,8 +3588,48 @@
       "points": { "type": "int" }
     }
   },
+  "ventor_rewards_earn_buy_title": "Buy points",
+  "@ventor_rewards_earn_buy_title": {},
+  "ventor_rewards_earn_buy_body": "Purchase point packs anytime and redeem them in Rewards for free sessions or discounts.",
+  "@ventor_rewards_earn_buy_body": {},
   "ventor_rewards_earn_invite_cta": "Invite friends",
   "@ventor_rewards_earn_invite_cta": {},
+  "ventor_points_buy_title": "Buy points",
+  "@ventor_points_buy_title": {},
+  "ventor_points_buy_subtitle": "Top up your balance and redeem points in Rewards for free minutes or session discounts.",
+  "@ventor_points_buy_subtitle": {},
+  "ventor_points_buy_cta": "Buy points",
+  "@ventor_points_buy_cta": {},
+  "ventor_points_buy_example": "Redeem points in Rewards for free sessions (30, 45, or 60 min) or percentage discounts — costs depend on the offer.",
+  "@ventor_points_buy_example": {},
+  "ventor_points_package_price": "${price}",
+  "@ventor_points_package_price": {
+    "placeholders": {
+      "price": { "type": "String" }
+    }
+  },
+  "ventor_points_package_bonus": "+{percent}% bonus",
+  "@ventor_points_package_bonus": {
+    "placeholders": {
+      "percent": { "type": "int" }
+    }
+  },
+  "ventor_points_purchase_success": "{points} points added to your balance.",
+  "@ventor_points_purchase_success": {
+    "placeholders": {
+      "points": { "type": "String" }
+    }
+  },
+  "ventor_points_purchase_redeem_cta": "Redeem",
+  "@ventor_points_purchase_redeem_cta": {},
+  "ventor_points_home_title": "Points & rewards",
+  "@ventor_points_home_title": {},
+  "ventor_points_home_body": "Buy points and redeem them in Rewards for free sessions (30, 45, or 60 min) or session discounts.",
+  "@ventor_points_home_body": {},
+  "ventor_points_home_buy_cta": "Buy points",
+  "@ventor_points_home_buy_cta": {},
+  "ventor_points_home_redeem_cta": "Redeem",
+  "@ventor_points_home_redeem_cta": {},
   "ventor_invite_title": "Invite Friends. Earn More.",
   "@ventor_invite_title": {},
   "ventor_invite_subtitle": "Help others find support and get rewarded.",

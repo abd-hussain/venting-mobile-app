@@ -48,6 +48,20 @@ class VentorInviteHistoryItem {
   final int pointsEarned;
 }
 
+class VentorPointPackage {
+  const VentorPointPackage({
+    required this.id,
+    required this.points,
+    required this.priceUsd,
+    this.bonusPercent,
+  });
+
+  final String id;
+  final int points;
+  final double priceUsd;
+  final int? bonusPercent;
+}
+
 class VentorRewardTrade {
   const VentorRewardTrade({
     required this.id,
@@ -73,6 +87,27 @@ abstract final class VentorRewardsCatalog {
 
   static const mockPoints = 1250;
   static const mockCompletedSessions = 12;
+
+  /// Free-session offers (any listener). Longer sessions cost more points.
+  static const free30MinOfferPointsCost = 2500;
+  static const free45MinOfferPointsCost = 3500;
+  static const free60MinOfferPointsCost = 4500;
+
+  static const pointPackages = <VentorPointPackage>[
+    VentorPointPackage(id: 'pkg_500', points: 500, priceUsd: 4.99),
+    VentorPointPackage(
+      id: 'pkg_1200',
+      points: 1200,
+      priceUsd: 9.99,
+      bonusPercent: 20,
+    ),
+    VentorPointPackage(
+      id: 'pkg_2800',
+      points: 2800,
+      priceUsd: 19.99,
+      bonusPercent: 40,
+    ),
+  ];
   static const mockInviteCode = 'VENT1234';
   static const mockInviteLink = 'https://venting.app/invite/VENT1234';
   static const mockActiveOfferId = 'off_20_any';
@@ -98,6 +133,27 @@ abstract final class VentorRewardsCatalog {
       kind: VentorRewardOfferKind.percentOff,
       pointsCost: 1000,
       percentOff: 20,
+      audience: VentorRewardAudience(),
+    ),
+    VentorRewardOffer(
+      id: 'free_30_any',
+      kind: VentorRewardOfferKind.freeMinutes,
+      pointsCost: free30MinOfferPointsCost,
+      freeMinutes: 30,
+      audience: VentorRewardAudience(),
+    ),
+    VentorRewardOffer(
+      id: 'free_45_any',
+      kind: VentorRewardOfferKind.freeMinutes,
+      pointsCost: free45MinOfferPointsCost,
+      freeMinutes: 45,
+      audience: VentorRewardAudience(),
+    ),
+    VentorRewardOffer(
+      id: 'free_60_any',
+      kind: VentorRewardOfferKind.freeMinutes,
+      pointsCost: free60MinOfferPointsCost,
+      freeMinutes: 60,
       audience: VentorRewardAudience(),
     ),
     VentorRewardOffer(
@@ -192,6 +248,13 @@ abstract final class VentorRewardsCatalog {
   static VentorRewardOffer? offerById(String id) {
     for (final offer in offers) {
       if (offer.id == id) return offer;
+    }
+    return null;
+  }
+
+  static VentorPointPackage? packageById(String id) {
+    for (final package in pointPackages) {
+      if (package.id == id) return package;
     }
     return null;
   }

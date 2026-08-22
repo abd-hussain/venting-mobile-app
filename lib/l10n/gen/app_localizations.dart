@@ -9116,7 +9116,7 @@ abstract class VentingMobLocalizations {
   /// No description provided for @ventor_rewards_earn_subtitle.
   ///
   /// In en, this message translates to:
-  /// **'There are three ways to grow your balance and unlock session discounts.'**
+  /// **'Four ways to grow your balance and unlock session discounts.'**
   String get ventor_rewards_earn_subtitle;
 
   /// No description provided for @ventor_rewards_earn_sessions_title.
@@ -9158,11 +9158,95 @@ abstract class VentingMobLocalizations {
   /// **'Get {points} extra points when a friend you invited books a session.'**
   String ventor_rewards_earn_booking_body(int points);
 
+  /// No description provided for @ventor_rewards_earn_buy_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Buy points'**
+  String get ventor_rewards_earn_buy_title;
+
+  /// No description provided for @ventor_rewards_earn_buy_body.
+  ///
+  /// In en, this message translates to:
+  /// **'Purchase point packs anytime and redeem them in Rewards for free sessions or discounts.'**
+  String get ventor_rewards_earn_buy_body;
+
   /// No description provided for @ventor_rewards_earn_invite_cta.
   ///
   /// In en, this message translates to:
   /// **'Invite friends'**
   String get ventor_rewards_earn_invite_cta;
+
+  /// No description provided for @ventor_points_buy_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Buy points'**
+  String get ventor_points_buy_title;
+
+  /// No description provided for @ventor_points_buy_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Top up your balance and redeem points in Rewards for free minutes or session discounts.'**
+  String get ventor_points_buy_subtitle;
+
+  /// No description provided for @ventor_points_buy_cta.
+  ///
+  /// In en, this message translates to:
+  /// **'Buy points'**
+  String get ventor_points_buy_cta;
+
+  /// No description provided for @ventor_points_buy_example.
+  ///
+  /// In en, this message translates to:
+  /// **'Redeem points in Rewards for free sessions (30, 45, or 60 min) or percentage discounts — costs depend on the offer.'**
+  String get ventor_points_buy_example;
+
+  /// No description provided for @ventor_points_package_price.
+  ///
+  /// In en, this message translates to:
+  /// **'\${price}'**
+  String ventor_points_package_price(String price);
+
+  /// No description provided for @ventor_points_package_bonus.
+  ///
+  /// In en, this message translates to:
+  /// **'+{percent}% bonus'**
+  String ventor_points_package_bonus(int percent);
+
+  /// No description provided for @ventor_points_purchase_success.
+  ///
+  /// In en, this message translates to:
+  /// **'{points} points added to your balance.'**
+  String ventor_points_purchase_success(String points);
+
+  /// No description provided for @ventor_points_purchase_redeem_cta.
+  ///
+  /// In en, this message translates to:
+  /// **'Redeem'**
+  String get ventor_points_purchase_redeem_cta;
+
+  /// No description provided for @ventor_points_home_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Points & rewards'**
+  String get ventor_points_home_title;
+
+  /// No description provided for @ventor_points_home_body.
+  ///
+  /// In en, this message translates to:
+  /// **'Buy points and redeem them in Rewards for free sessions (30, 45, or 60 min) or session discounts.'**
+  String get ventor_points_home_body;
+
+  /// No description provided for @ventor_points_home_buy_cta.
+  ///
+  /// In en, this message translates to:
+  /// **'Buy points'**
+  String get ventor_points_home_buy_cta;
+
+  /// No description provided for @ventor_points_home_redeem_cta.
+  ///
+  /// In en, this message translates to:
+  /// **'Redeem'**
+  String get ventor_points_home_redeem_cta;
 
   /// No description provided for @ventor_invite_title.
   ///
