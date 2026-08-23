@@ -1,0 +1,65 @@
+---
+description: Follow Zalleon architecture — repository → usecase → bloc for all API/feature work
+alwaysApply: true
+---
+
+# Venting Architecture (mirror Zalleon)
+
+Reference project: `/Users/abdulrahman/development/projects/Zalleon`
+
+Always match Zalleon’s layering, naming, and dependency flow. Do **not** call APIs from UI, BLoCs, or widgets directly.
+
+## Required flow for every API / business action
+
+```
+API DTO (domain/data/api)
+  → Repository (domain/repository)
+    → Usecase (domain/usecase)
+      → Bloc (presentation/.../bloc)
+        → Screen / widgets
+```
+
+| Layer | Path | Responsibility |
+|-------|------|----------------|
+| DTO / models | `lib/domain/data/api/` | freezed + json_serializable response/request models |
+| App models | `lib/domain/data/app/` | Domain models not tied to one API shape |
+| Exceptions | `lib/domain/data/exceptions/` | e.g. `MainAPIException` |
+| Repository | `lib/domain/repository/api/` (or `app/`) | Extends `BaseRepository`; talks to `api_client`; returns `TaskEither` |
+| Usecase | `lib/domain/usecase/` | One class per use case; depends on repository; returns `TaskEither` |
+| Bloc | `lib/presentation/<feature>/bloc/` | Calls usecases only; freezed events/states |
+| DI | `lib/di/venting_module_extensions/` | Register repo → usecase → bloc |
+
+## Rules
+
+1. **Never** put HTTP/`apiClient` calls in a Bloc, screen, or widget.
+2. **Never** skip the usecase (Bloc must not depend on Repository directly).
+3. One repository method / class per API concern; one usecase class per business action.
+4. Prefer `fpdart` `TaskEither` in repository and usecase; map failures to `MainAPIException`.
+5. Register new repos in `venting_module_repositories.dart`, usecases in the usecases module, blocs in `venting_module_blocs.dart`.
+6. Feature UI lives under `lib/presentation/<feature>/` with colocated `bloc/` and `widgets/`.
+7. When unsure, copy the nearest equivalent pattern from Zalleon (`LoginRepository` → `LoginUsecase` → feature Bloc).
+
+## Example (Zalleon-style)
+
+```dart
+// repository
+class LoginRepository extends BaseRepository {
+  TaskEither<Exception, LoginResponseModel> call({...}) => executeRequest(...);
+}
+
+// usecase
+class LoginUsecase {
+  final LoginRepository loginRepository;
+  TaskEither<Exception, LoginResponseModel> call({...}) =>
+      loginRepository.call(...);
+}
+
+// bloc — injects LoginUsecase only, not the repository
+```
+
+## Forbidden
+
+- Calling Dio/`ApiClient` from presentation
+- Fat repositories with unrelated endpoints dumped together without clear grouping
+- Business logic only in the Bloc with no usecase
+- Inventing a different folder layout than Zalleon for the same concern
