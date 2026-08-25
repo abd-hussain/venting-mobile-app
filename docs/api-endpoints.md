@@ -20,7 +20,7 @@
 
 | Item | Value |
 |------|--------|
-| Base URL | `String.fromEnvironment('BASE_URL')` (replace legacy Zain hosts) |
+| Base URL | `String.fromEnvironment('BASE_URL')` |
 | Content-Type | `application/json; charset=UTF-8` |
 | Auth header | `Authorization: Bearer {accessToken}` |
 | Common headers | `skel-platform`, `skel-os-version`, `skel-app-version`, `skel-installation-id`, `skel-network-type`, `skel-phone-version`, `accept-language` / `skel-accept-language`, `user-agent` |
@@ -63,7 +63,7 @@ List responses may include:
 
 | Domain | Count | Master list # |
 |--------|------:|---------------|
-| Auth & account | 7 | 1–7 |
+| Auth & account | 9 | 0–7, 1b |
 | Ventor profile / home / wellness | 14 | 8–21 |
 | Listener profile / onboarding / dashboard | 15 | 22–36 |
 | Listener availability | 3 | 37–39 |
@@ -74,11 +74,113 @@ List responses may include:
 | Notifications | 3 | 68–70 |
 | Training | 2 | 71–72 |
 | Promo | 1 | 73 |
-| **Total** | **73** | |
+| Catalog / categories | 1 | 74 |
+| **Total** | **76** | |
 
 ---
 
 ## 1. Auth & account
+
+### 0. `POST /v1/auth/check-email` *(proposed)*
+
+> **Status:** Proposed — not implemented on backend or mobile yet.  
+> **Purpose:** Email-first discovery — branch **Create account** vs **Sign in** before password submit. Does **not** authenticate.
+
+| | |
+|--|--|
+| **Auth** | Public |
+| **Screen** | Email auth step (after AuthScreen → “Continue with email”) |
+| **When** | User finishes entering a valid email (on blur / Continue), **before** password submit |
+| **Body** | `email` (string, required). Optional `role` (`ventor` \| `listener`) — role chosen on Welcome; used to detect mismatch when account exists |
+| **Response** | `{ exists, email, role?, registration_complete?, listener_profile_status? }` |
+
+**Request examples:**
+
+```json
+{ "email": "user@example.com" }
+```
+
+```json
+{ "email": "user@example.com", "role": "ventor" }
+```
+
+**Success — new email (register path):**
+
+```json
+{
+  "status": "success",
+  "data": {
+    "exists": false,
+    "email": "new@example.com",
+    "role": null,
+    "registration_complete": null,
+    "listener_profile_status": null
+  }
+}
+```
+
+**Success — existing listener, profile incomplete:**
+
+```json
+{
+  "status": "success",
+  "data": {
+    "exists": true,
+    "email": "l@example.com",
+    "role": "listener",
+    "registration_complete": false,
+    "listener_profile_status": "incomplete"
+  }
+}
+```
+
+**Response fields (`data`):**
+
+| Field | Type | When present | Meaning |
+|-------|------|--------------|---------|
+| `exists` | boolean | always | `false` = no account (or treated as unknown — see security) |
+| `email` | string | always | Normalized email echoed back |
+| `role` | `ventor` \| `listener` \| null | `exists == true` | Account role |
+| `registration_complete` | boolean \| null | `exists == true` | Same meaning as `#7` |
+| `listener_profile_status` | `incomplete` \| `under_review` \| `approved` \| `rejected` \| null | `exists == true` and `role == listener` | Same enum as `#7` |
+
+**Mobile branching:**
+
+| `exists` | Action | Next API |
+|----------|--------|----------|
+| `false` | Show **Create account** UI (password rules) | `#1 register` with Welcome `role` |
+| `true` | Show **Sign in** UI | `#2 login` with account `role` |
+| `true` + Welcome `role` ≠ account `role` | Block; explain role mismatch | — |
+| After `#1` or `#2` success | Route user | `#7 GET /v1/auth/me` (source of truth) |
+
+**Errors (standard envelope):**
+
+| HTTP | `type` | `code` | When |
+|------|--------|--------|------|
+| 400 | `validation` | 110 | Missing / invalid email |
+| 400 | `validation` | 111 | Invalid `role` |
+| 409 | `auth` | 112 | Email exists but `role` in body ≠ account role |
+| 403 | `auth` | 113 | Account deleted / disabled / banned |
+| 429 | `rate_limit` | 429 | Too many checks (IP / installation id) |
+
+**Security (required):**
+
+- Rate limit (e.g. 10–20/min per IP and per `skel-installation-id`)
+- Normalize email: trim + lowercase server-side
+- No password, tokens, `id`, display name, or avatar in response
+- Soft-deleted accounts: treat as `exists: false` **or** 403 — pick one and document
+- Pure read; no session created
+
+**Out of scope:** login/register replacement, OTP, password validation. Social auth is a separate endpoint — see [`social-auth-backend-requirements.md`](./social-auth-backend-requirements.md).
+
+**Acceptance criteria:**
+
+- [ ] Public `POST /v1/auth/check-email` with `{ email, role? }`
+- [ ] Standard `{ status, data }` success envelope
+- [ ] Mobile can branch register vs login without calling `#1`/`#2` until password submit
+- [ ] After auth, `#7` remains routing authority
+
+---
 
 ### 1. `POST /v1/auth/register`
 
@@ -101,6 +203,54 @@ Password rules (UI): min 8, 1 uppercase, 1 number.
 | **Screen** | Email registration (sign-in path) |
 | **Body** | `email`, `password`, `role` (`ventor` \| `listener`) |
 | **Response** | `access_token`, `refresh_token`, `user` `{ id, email, role, registration_complete }` |
+
+---
+
+### 1b. `POST /v1/auth/social` *(proposed)*
+
+> **Status:** Proposed — not implemented on backend or mobile yet.  
+> **Full spec:** [`social-auth-backend-requirements.md`](./social-auth-backend-requirements.md)
+
+| | |
+|--|--|
+| **Auth** | Public |
+| **Screen** | AuthScreen → “Continue with Google” / “Continue with Apple” |
+| **When** | After native Google/Apple Sign-In; mobile may call `#0 check-email` first when email is available |
+| **Body** | `provider` (`google` \| `apple`), `id_token` (string), `role` (`ventor` \| `listener`), optional `nonce` (Apple), optional `full_name` |
+| **Response** | Same session envelope as `#1` / `#2`: `access_token`, `refresh_token`, `user` `{ id, email, role, is_new, registration_complete }` |
+
+**Request example:**
+
+```json
+{
+  "provider": "google",
+  "id_token": "eyJhbGciOiJSUzI1NiIs...",
+  "role": "ventor"
+}
+```
+
+**Success example:**
+
+```json
+{
+  "status": "success",
+  "data": {
+    "access_token": "...",
+    "refresh_token": "...",
+    "user": {
+      "id": "uuid",
+      "email": "user@example.com",
+      "role": "ventor",
+      "is_new": true,
+      "registration_complete": false
+    }
+  }
+}
+```
+
+**Errors (see full doc for codes 120–127):** invalid token, role mismatch (409), account disabled (403), rate limit (429).
+
+**After success:** mobile calls `#7 GET /v1/auth/me` for routing (same as email auth).
 
 ---
 
@@ -888,6 +1038,224 @@ Demo codes in UI today: `SAVE10`, `VENT5`, `WELCOME15` (replace with real catalo
 
 ---
 
+## 12. Catalog / categories *(proposed)*
+
+> Shared lookup lists for registration and filters. Seeded in DB (`comfort_areas`, `languages`, …).  
+> Mobile **must not** hardcode category labels long-term — fetch from here.
+
+### 74. `GET /v1/catalog/categories` *(proposed)*
+
+> **Status:** Proposed — replace the hardcoded list in `VentorRegistrationInterestsStep`.  
+> **Purpose:** Return active interest / comfort categories for ventor (and optionally listener) registration.  
+> **DB source:** `comfort_areas` (ids also used as `interest_ids` on `#8 POST /v1/ventors/register`).
+
+| | |
+|--|--|
+| **Auth** | Public (Bearer accepted if present). Catalog is not secret. |
+| **Screen** | Ventor registration → interests step (`VentorRegistrationInterestsStep`) |
+| **When** | When interests step opens (and on pull-to-retry / error retry) |
+| **Query** | See below |
+| **Response** | `{ items: Category[] }` |
+
+#### Query parameters
+
+| Param | Type | Required | Default | Notes |
+|-------|------|----------|---------|-------|
+| `audience` | `ventor` \| `listener` \| `all` | no | `all` | Filter by who may select the category. Ventor interests step sends `audience=ventor`. |
+| `locale` | `en` \| `ar` | no | from `Accept-Language` / `skel-accept-language` | Optional hint; response still includes **both** `name_en` and `name_ar` so the client can switch language without re-fetch. |
+
+#### `Category` object
+
+| Field | Type | Required | Notes |
+|-------|------|----------|-------|
+| `id` | string | yes | Stable slug PK — same value sent later in `#8` `interest_ids` |
+| `name_en` | string | yes | English label |
+| `name_ar` | string | yes | Arabic label |
+| `icon_key` | string | yes | Machine key for UI icon (see seed table). **Not** a URL. |
+| `sort_order` | number | yes | Ascending; lower first |
+| `allows_custom_text` | boolean | yes | `true` → show free-text field (e.g. `other`) |
+| `topic_group` | string \| null | no | Optional grouping for admin / filters |
+
+#### Success example
+
+```http
+GET /v1/catalog/categories?audience=ventor
+Accept-Language: en
+```
+
+```json
+{
+  "status": "success",
+  "data": {
+    "items": [
+      {
+        "id": "relationships",
+        "name_en": "Relationships",
+        "name_ar": "العلاقات",
+        "icon_key": "favorite",
+        "sort_order": 10,
+        "allows_custom_text": false,
+        "topic_group": "relationships"
+      },
+      {
+        "id": "marriage",
+        "name_en": "Marriage",
+        "name_ar": "الزواج",
+        "icon_key": "favorite_border",
+        "sort_order": 20,
+        "allows_custom_text": false,
+        "topic_group": "relationships"
+      },
+      {
+        "id": "parenting",
+        "name_en": "Parenting",
+        "name_ar": "الأبوة والأمومة",
+        "icon_key": "family_restroom",
+        "sort_order": 30,
+        "allows_custom_text": false,
+        "topic_group": "family"
+      },
+      {
+        "id": "career_work",
+        "name_en": "Career & work",
+        "name_ar": "المهنة والعمل",
+        "icon_key": "work_outline",
+        "sort_order": 40,
+        "allows_custom_text": false,
+        "topic_group": "work"
+      },
+      {
+        "id": "stress_anxiety",
+        "name_en": "Stress & anxiety",
+        "name_ar": "التوتر والقلق",
+        "icon_key": "psychology_alt",
+        "sort_order": 50,
+        "allows_custom_text": false,
+        "topic_group": "mental"
+      },
+      {
+        "id": "loneliness",
+        "name_en": "Loneliness",
+        "name_ar": "الوحدة",
+        "icon_key": "person_outline",
+        "sort_order": 60,
+        "allows_custom_text": false,
+        "topic_group": "mental"
+      },
+      {
+        "id": "student_life",
+        "name_en": "Student life",
+        "name_ar": "حياة الطالب",
+        "icon_key": "school",
+        "sort_order": 70,
+        "allows_custom_text": false,
+        "topic_group": "life"
+      },
+      {
+        "id": "financial_stress",
+        "name_en": "Financial stress",
+        "name_ar": "الضغط المالي",
+        "icon_key": "attach_money",
+        "sort_order": 80,
+        "allows_custom_text": false,
+        "topic_group": "money"
+      },
+      {
+        "id": "health_wellness",
+        "name_en": "Health & wellness",
+        "name_ar": "الصحة والعافية",
+        "icon_key": "health_and_safety",
+        "sort_order": 90,
+        "allows_custom_text": false,
+        "topic_group": "health"
+      },
+      {
+        "id": "other",
+        "name_en": "Other",
+        "name_ar": "أخرى",
+        "icon_key": "add_circle_outline",
+        "sort_order": 1000,
+        "allows_custom_text": true,
+        "topic_group": null
+      }
+    ]
+  }
+}
+```
+
+#### Seed / `icon_key` contract (mobile mapping)
+
+| `id` | `icon_key` | Flutter `Icons.*` (approx) |
+|------|------------|----------------------------|
+| `relationships` | `favorite` | `Icons.favorite_rounded` |
+| `marriage` | `favorite_border` | `Icons.favorite_border_rounded` |
+| `parenting` | `family_restroom` | `Icons.family_restroom_rounded` |
+| `career_work` | `work_outline` | `Icons.work_outline_rounded` |
+| `stress_anxiety` | `psychology_alt` | `Icons.psychology_alt_outlined` |
+| `loneliness` | `person_outline` | `Icons.person_outline_rounded` |
+| `student_life` | `school` | `Icons.school_outlined` |
+| `financial_stress` | `attach_money` | `Icons.attach_money_rounded` |
+| `health_wellness` | `health_and_safety` | `Icons.health_and_safety_outlined` |
+| `other` | `add_circle_outline` | `Icons.add_circle_outline_rounded` |
+
+Unknown `icon_key` → mobile falls back to `Icons.category_outlined`.
+
+#### Mobile usage
+
+1. Open Ventor registration interests step.
+2. `GET /v1/catalog/categories?audience=ventor`.
+3. Render `items` sorted by `sort_order`.
+4. Localized label: `locale == ar ? name_ar : name_en`.
+5. If item has `allows_custom_text == true` and is selected → show free-text field; require non-empty trim before Finish.
+6. On Finish → collect selected `id`s (+ optional custom text for `other`) → send as `interest_ids` (and optional `other_text`) on `#8 POST /v1/ventors/register`.
+
+#### Errors
+
+| HTTP | type | code | When |
+|------|------|------|------|
+| 400 | validation | 740 | Invalid `audience` |
+| 500 | server | 500 | Unexpected failure |
+| 503 | server | 503 | Catalog unavailable |
+
+Empty active catalog → still `200` with `"items": []` (mobile shows empty + retry). Do **not** 404.
+
+#### Rules
+
+- Only return rows with `is_active = true`.
+- IDs are immutable once shipped — changing an `id` breaks existing `ventor_interests` / `interest_ids`.
+- Add/remove/reorder categories via admin CMS later (`/v1/admin/catalog/…`); this public GET is read-only.
+- Cache-friendly: `Cache-Control: public, max-age=300` recommended (optional).
+
+#### Acceptance criteria
+
+- [ ] `GET /v1/catalog/categories?audience=ventor` returns the seed set above (or equivalent active rows)
+- [ ] Standard `{ status, data: { items } }` envelope
+- [ ] Both `name_en` and `name_ar` present
+- [ ] `other` has `allows_custom_text: true`
+- [ ] Inactive rows omitted
+- [ ] Same `id` values accepted by `#8` `interest_ids`
+
+#### Link to register
+
+| Step | API |
+|------|-----|
+| Load chips | `#74 GET /v1/catalog/categories?audience=ventor` |
+| Submit profile + interests | `#8 POST /v1/ventors/register` with `interest_ids: ["relationships", "career_work", …]` |
+
+Optional body extension on `#8` when `other` selected:
+
+```json
+{
+  "nickname": "QuietFox",
+  "gender": "prefer_not_to_say",
+  "avatar_preset_index": 2,
+  "interest_ids": ["stress_anxiety", "other"],
+  "other_interest_text": "Grief after moving cities"
+}
+```
+
+---
+
 ## Efficiency guidelines (for implementers)
 
 1. **Prefer aggregates** — `#11` ventor home and `#30` listener dashboard load one screen in one round-trip.
@@ -915,7 +1283,7 @@ Demo codes in UI today: `SAVE10`, `VENT5`, `WELCOME15` (replace with real catalo
 
 | Category | Count |
 |----------|------:|
-| Auth & account | 7 |
+| Auth & account | 8 |
 | Ventor profile / home / wellness | 14 |
 | Listener profile / onboarding / dashboard | 15 |
 | Listener availability | 3 |
@@ -926,14 +1294,17 @@ Demo codes in UI today: `SAVE10`, `VENT5`, `WELCOME15` (replace with real catalo
 | Notifications | 3 |
 | Training | 2 |
 | Promo | 1 |
-| **Total unique API endpoints** | **73** |
+| Catalog / categories | 1 |
+| **Total unique API endpoints** | **76** |
 
 ### Master checklist (method + path)
 
 | # | Method | Path |
 |---|--------|------|
+| 0 | POST | `/v1/auth/check-email` *(proposed)* |
 | 1 | POST | `/v1/auth/register` |
 | 2 | POST | `/v1/auth/login` |
+| 1b | POST | `/v1/auth/social` *(proposed)* |
 | 3 | POST | `/v1/auth/refresh` |
 | 4 | POST | `/v1/auth/logout` |
 | 5 | DELETE | `/v1/auth/account` |
@@ -1005,6 +1376,7 @@ Demo codes in UI today: `SAVE10`, `VENT5`, `WELCOME15` (replace with real catalo
 | 71 | GET | `/v1/listeners/me/training` |
 | 72 | POST | `/v1/listeners/me/training/{moduleId}/complete` |
 | 73 | POST | `/v1/promo/validate` |
+| 74 | GET | `/v1/catalog/categories` *(proposed)* |
 
 ---
 

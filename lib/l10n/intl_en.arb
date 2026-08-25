@@ -1,1663 +1,36 @@
 {
   "@@locale": "en",
   "@@last_modified": "2026-05-17T00:00:00+03:00",
-  "app_currency": "IQD",
-  "@app_currency": {},
-  "common_yes": "Yes",
-  "@common_yes": {},
-  "common_submit": "Submit",
-  "@common_submit": {},
-  "common_alert": "Alert",
-  "@common_alert": {},
-  "common_copied": "Copied!",
-  "@common_copied": {},
-  "common_skip": "Skip",
-  "@common_skip": {},
   "common_cancel": "Cancel",
   "@common_cancel": {},
-  "common_clear": "Clear",
-  "@common_clear": {},
-  "common_retry": "Retry",
-  "@common_retry": {},
-  "common_ok": "OK",
-  "@common_ok": {},
-  "common_okay": "Okay",
-  "@common_okay": {},
-  "common_next": "Next",
-  "@common_next": {},
-  "common_back": "Back",
-  "@common_back": {},
-  "common_pay": "Pay",
-  "@common_pay": {},
-  "common_confirm": "Confirm",
-  "@common_confirm": {},
-  "common_done": "Done",
-  "@common_done": {},
   "common_save": "Save",
-  "@common_delete": {},
-  "common_delete": "Delete",
   "@common_save": {},
-  "common_maybe_later": "Maybe Later",
-  "@common_maybe_later": {},
-  "common_noDataFound": "No data found",
-  "@common_noDataFound": {},
-  "common_generalErrorMsg": "An error occurred",
-  "@common_generalErrorMsg": {},
   "common_connectionLost": "No Internet Connection",
   "@common_connectionLost": {},
   "common_connectionLostMessage": "Looks like you're offline. Please check your connection and try again.",
   "@common_connectionLostMessage": {},
-  "common_rechargeRequired": "Recharge Required",
-  "@common_rechargeRequired": {},
-  "common_lowBalanceMessage": "You have Low Balance for this service, please recharge and try again",
-  "@common_lowBalanceMessage": {},
-  "splash_welcome_to": "Welcome to",
-  "@splash_welcome_to": {},
-  "splash_zain_iraq": "Zain Iraq",
-  "@splash_zain_iraq": {},
-  "auth_enter_mobile_number_getVerificationCode": "Get Verification Code",
-  "@auth_enter_mobile_number_getVerificationCode": {},
-  "auth_enter_mobile_number_phoneNumber": "Phone Number",
-  "@auth_enter_mobile_number_phoneNumber": {},
-  "auth_enter_mobile_number_mobileNumberLength": "Mobile Number Length is less than expectations",
-  "@auth_enter_mobile_number_mobileNumberLength": {},
-  "auth_enter_mobile_number_mobileNumberNotUsed": "Please Enter Valid Number",
-  "@auth_enter_mobile_number_mobileNumberNotUsed": {},
-  "auth_enter_mobile_number_mobileNumberNotZain": "Mobile number is not a Zain number",
-  "@auth_enter_mobile_number_mobileNumberNotZain": {},
-  "auth_enter_mobile_number_pleaseEnterYourZainPhoneNumberToContinue": "Enter your Zain number to continue",
-  "@auth_enter_mobile_number_pleaseEnterYourZainPhoneNumberToContinue": {},
-  "auth_enter_mobile_number_alreadyRegistered": "This phone number already has an account on the app",
-  "@auth_enter_mobile_number_alreadyRegistered": {},
-  "auth_enter_mobile_number_loginButton": "Login",
-  "@auth_enter_mobile_number_loginButton": {},
-  "auth_enter_mobile_number_forgotPasswordButton": "Forgot Password",
-  "@auth_enter_mobile_number_forgotPasswordButton": {},
-  "auth_enter_mobile_number_or": "or",
-  "@auth_enter_mobile_number_or": {},
-  "auth_enter_mobile_number_simBlocked": "This service is not available for your line",
-  "@auth_enter_mobile_number_simBlocked": {},
-  "auth_enter_mobile_number_simBlockedIneligible": "The service will be available soon for your line",
-  "@auth_enter_mobile_number_simBlockedIneligible": {},
-  "auth_enter_mobile_number_simBlockedDisconnected": "Your SIM is in a recycled, blocked, or barred state. Please call support for more information.",
-  "@auth_enter_mobile_number_simBlockedDisconnected": {},
-  "auth_enter_mobile_number_simBlockedActivate": "To activate, please make sure your SIM is inside your device and call using the button below.",
-  "@auth_enter_mobile_number_simBlockedActivate": {},
-  "auth_enter_mobile_number_simBlockedCritical": "Please visit a Zain service center to get a new SIM",
-  "@auth_enter_mobile_number_simBlockedCritical": {},
-  "auth_enter_mobile_number_mobileNumberRequired": "Please enter your mobile number",
-  "@auth_enter_mobile_number_mobileNumberRequired": {},
-  "auth_enter_mobile_number_enterPhoneNumberHint": "Enter phone number",
-  "@auth_enter_mobile_number_enterPhoneNumberHint": {},
-  "auth_enter_mobile_number_otpRequestFailureTitle": "OTP Error",
-  "@auth_enter_mobile_number_otpRequestFailureTitle": {},
-  "auth_enter_mobile_number_otpRequestFailureResend": "Resend",
-  "@auth_enter_mobile_number_otpRequestFailureResend": {},
-  "auth_otp_authentication_enterOTP_lead": "A one time passcode has been sent to ",
-  "@auth_otp_authentication_enterOTP_lead": {},
-  "auth_otp_authentication_enterOTP_tail": ". \nThe code will be valid for ",
-  "@auth_otp_authentication_enterOTP_tail": {},
-  "auth_otp_authentication_enterOTP_validityDuration": "180 seconds",
-  "@auth_otp_authentication_enterOTP_validityDuration": {},
-  "auth_otp_authentication_enterOTP_tailSuffix": ".",
-  "@auth_otp_authentication_enterOTP_tailSuffix": {},
-  "auth_otp_authentication_didntReceiveCode": "Didn't receive code?",
-  "@auth_otp_authentication_didntReceiveCode": {},
-  "auth_otp_authentication_resendCode": "Resend code",
-  "@auth_otp_authentication_resendCode": {},
-  "auth_otp_authentication_resendCodeIn": "Resend code in",
-  "@auth_otp_authentication_resendCodeIn": {},
-  "auth_otp_authentication_triesLeft": "Attempts Remaining",
-  "@auth_otp_authentication_triesLeft": {},
-  "auth_otp_authentication_otpverificationtext": "OTP Verification",
-  "@auth_otp_authentication_otpverificationtext": {},
-  "auth_otp_authentication_title": "OTP Authentication",
-  "@auth_otp_authentication_title": {},
-  "auth_otp_authentication_verifyWithOtp": "Verify with One-Time Password",
-  "@auth_otp_authentication_verifyWithOtp": {},
-  "auth_otp_authentication_blockTitle": "You have exceeded the limit",
-  "@auth_otp_authentication_blockTitle": {},
-  "auth_otp_authentication_blockDescription": "For your security access is paused due to multiple incorrect attempts",
-  "@auth_otp_authentication_blockDescription": {},
-  "auth_otp_authentication_blockTimeRemaining": "Time Remaining",
-  "@auth_otp_authentication_blockTimeRemaining": {},
-  "auth_otp_authentication_blockTryAgainIn": "Please try again in {time}",
-  "@auth_otp_authentication_blockTryAgainIn": {
-    "placeholders": {
-      "time": {
-        "type": "String",
-        "example": "14:32"
-      }
-    }
-  },
-  "auth_biometric_activation_enableFaceId": "Enable Face ID",
-  "@auth_biometric_activation_enableFaceId": {},
-  "auth_biometric_activation_enableTouchId": "Enable Touch ID",
-  "@auth_biometric_activation_enableTouchId": {},
-  "auth_biometric_activation_enablePinCode": "Enable Pin Code",
-  "@auth_biometric_activation_enablePinCode": {},
-  "auth_biometric_activation_faceId_message": "Make logging in effortless with Face ID",
-  "@auth_biometric_activation_faceId_message": {},
-  "auth_biometric_activation_touchId_message": "Make logging in effortless with Touch ID",
-  "@auth_biometric_activation_touchId_message": {},
-  "auth_biometric_activation_pincode_message": "Make logging in effortless with Pin Code",
-  "@auth_biometric_activation_pincode_message": {},
-  "auth_biometric_activation_successRegistrationFaceId": "Face ID Enabled and PIN Created Successfully!",
-  "@auth_biometric_activation_successRegistrationFaceId": {},
-  "auth_biometric_activation_successRegistrationMessageFaceId": "You can now sign in instantly using Face ID.",
-  "@auth_biometric_activation_successRegistrationMessageFaceId": {},
-  "auth_biometric_activation_successRegistrationTocuhId": "Touch ID Enabled and PIN Created Successfully!",
-  "@auth_biometric_activation_successRegistrationTocuhId": {},
-  "auth_biometric_activation_successRegistrationMessageTocuhId": "You can now sign in instantly using Touch ID.",
-  "@auth_biometric_activation_successRegistrationMessageTocuhId": {},
-  "auth_biometric_activation_successRegistrationPinId": "PIN Created Successfully!",
-  "@auth_biometric_activation_successRegistrationPinId": {},
-  "auth_biometric_activation_successRegistrationMessagePinId": "You can now sign in instantly using Pin Code.",
-  "@auth_biometric_activation_successRegistrationMessagePinId": {},
-  "auth_biometric_activation_addLater": "Add Later",
-  "@auth_biometric_activation_addLater": {},
-  "auth_enable_quick_login_title": "You're one tap away 🔓",
-  "@auth_enable_quick_login_title": {},
-  "auth_enable_quick_login_subtitle": "Enable biometric login for instant, secure access — no typing needed.",
-  "@auth_enable_quick_login_subtitle": {},
-  "auth_enable_quick_login_proceed_biometric": "Enable biometric login",
-  "@auth_enable_quick_login_proceed_biometric": {},
-  "auth_set_password_title": "Set password",
-  "@auth_set_password_title": {},
-  "auth_set_password_description": "Set a secure password for your account.",
-  "@auth_set_password_description": {},
-  "auth_set_password_continue": "Continue",
-  "@auth_set_password_continue": {},
-  "auth_set_password_must_contain": "Must contain at least;",
-  "@auth_set_password_must_contain": {},
-  "auth_setup_pin_code_setAppCode": "Set your app security code",
-  "@auth_setup_pin_code_setAppCode": {},
-  "auth_setup_pin_code_setAppCodeDesc": "For your security, please create a 6-digit app code to use when Face ID is unavailable.",
-  "@auth_setup_pin_code_setAppCodeDesc": {},
-  "auth_setup_pin_code_confirmAppCode": "Confirm your app code",
-  "@auth_setup_pin_code_confirmAppCode": {},
-  "auth_setup_pin_code_confirmAppCodeDesc": "For verification, please re-enter your 6-digit app code. This confirms your code for use when Face ID is unavailable",
-  "@auth_setup_pin_code_confirmAppCodeDesc": {},
-  "auth_setup_pin_code_createPinBtn": "Create  Pin",
-  "@auth_setup_pin_code_createPinBtn": {},
-  "auth_setup_pin_code_createCodeBtn": "Create code",
-  "@auth_setup_pin_code_createCodeBtn": {},
-  "auth_setup_pin_code_confirmPinErrorMessage": "The codes do not match. Please try again",
-  "@auth_setup_pin_code_confirmPinErrorMessage": {},
-  "auth_setup_pin_code_continueButton": "Continue",
-  "@auth_setup_pin_code_continueButton": {},
-  "auth_captcha_title": "Verify you're human",
-  "@auth_captcha_title": {},
-  "auth_captcha_subtitle": "Enter the text shown below",
-  "@auth_captcha_subtitle": {},
-  "auth_captcha_inputLabel": "Characters",
-  "@auth_captcha_inputLabel": {},
-  "auth_captcha_inputHint": "Enter text here",
-  "@auth_captcha_inputHint": {},
-  "auth_captcha_refreshSemantics": "Show a new code",
-  "@auth_captcha_refreshSemantics": {},
-  "auth_captcha_error": "That doesn't match. Try again.",
-  "@auth_captcha_error": {},
-  "auth_captcha_success": "Verified",
-  "@auth_captcha_success": {},
-  "auth_captcha_verifyButton": "Verify",
-  "@auth_captcha_verifyButton": {},
-  "auth_enter_full_name_enterYourName": "Enter your name",
-  "@auth_enter_full_name_enterYourName": {},
-  "auth_enter_full_name_fullNameHint": "eg. John Doe",
-  "@auth_enter_full_name_fullNameHint": {},
-  "auth_returning_user_welcomeBack": "Welcome Back",
-  "@auth_returning_user_welcomeBack": {},
-  "auth_returning_user_chooseLoginMethod": "Choose your preferred login method",
-  "@auth_returning_user_chooseLoginMethod": {},
-  "auth_returning_user_mobileNumberLabel": "Mobile Number:",
-  "@auth_returning_user_mobileNumberLabel": {},
-  "auth_returning_user_loginWithOTP": "Login with OTP",
-  "@auth_returning_user_loginWithOTP": {},
-  "auth_returning_user_switch_to_otp_title": "Switch to OTP Login",
-  "@auth_returning_user_switch_to_otp_title": {},
-  "auth_returning_user_switch_to_otp_message": "By continuing, your password will be removed. You will use OTP for future logins.",
-  "@auth_returning_user_switch_to_otp_message": {},
-  "auth_returning_user_loginWithPassword": "Login with Password",
-  "@auth_returning_user_loginWithPassword": {},
-  "auth_session_expired_title": "Session expired",
-  "@auth_session_expired_title": {},
-  "auth_session_expired_message": "Your session has expired. Please sign in again to continue using the app with {phoneNumber}.",
-  "@auth_session_expired_message": {
-    "placeholders": {
-      "phoneNumber": {
-        "type": "String"
-      }
-    }
-  },
-  "auth_login_with_password_title": "Enter password",
-  "@auth_login_with_password_title": {},
-  "auth_login_with_password_description": "Please enter your password for",
-  "@auth_login_with_password_description": {},
-  "auth_returning_user_loginWithAnotherNumber": "Need to login with another number?",
-  "@auth_returning_user_loginWithAnotherNumber": {},
-  "auth_returning_user_loginWithAnotherAccount": "Login with a different account",
-  "@auth_returning_user_loginWithAnotherAccount": {},
-  "auth_returning_user_faceIDLogin": "Face ID Login",
-  "@auth_returning_user_faceIDLogin": {},
-  "auth_returning_user_touchIDLogin": "Touch ID Login",
-  "@auth_returning_user_touchIDLogin": {},
-  "auth_returning_user_orWord": "OR",
-  "@auth_returning_user_orWord": {},
-  "auth_returning_user_confirm_logout_switch_title": "Logout to Switch",
-  "@auth_returning_user_confirm_logout_switch_title": {},
-  "auth_returning_user_confirm_logout_switch_description": "You'll be logged out from your current account before signing in with another.",
-  "@auth_returning_user_confirm_logout_switch_description": {},
-  "auth_returning_user_confirm_logout_switch_confirm_button_title": "Logout",
-  "@auth_returning_user_confirm_logout_switch_confirm_button_title": {},
-  "auth_returning_user_confirm_logout_switch_cancel_button_title": "Cancel",
-  "@auth_returning_user_confirm_logout_switch_cancel_button_title": {},
-  "home_tab_home_tab": "Home",
-  "@home_tab_home_tab": {},
-  "home_tab_welcoming_message_morning": "Good Morning",
-  "@home_tab_welcoming_message_morning": {},
-  "home_tab_welcoming_message_afternoon": "Good Afternoon",
-  "@home_tab_welcoming_message_afternoon": {},
-  "home_tab_welcoming_message_evening": "Good Evening",
-  "@home_tab_welcoming_message_evening": {},
-  "home_tab_prepaid_validityTill": "Validity till",
-  "@home_tab_prepaid_validityTill": {},
-  "home_tab_prepaid_myresources": "My Resources",
-  "@home_tab_prepaid_myresources": {},
-  "home_tab_prepaid_gold": "Gold",
-  "@home_tab_prepaid_gold": {},
-  "home_tab_prepaid_mamnoon": "Mamnoon",
-  "@home_tab_prepaid_mamnoon": {},
-  "home_tab_postpaid_totalBill": "Total Bill",
-  "@home_tab_postpaid_totalBill": {},
-  "home_tab_postpaid_paybill": "Pay Bill",
-  "@home_tab_postpaid_paybill": {},
-  "home_tab_postpaid_unbilledAmount": "Unbilled Amount",
-  "@home_tab_postpaid_unbilledAmount": {},
-  "home_tab_postpaid_pastDue": "Past Due",
-  "@home_tab_postpaid_pastDue": {},
-  "home_tab_postpaid_advancePayment": "Advance Payment",
-  "@home_tab_postpaid_advancePayment": {},
-  "home_sim_restricted_banner_title": "Your SIM has a restriction",
-  "@home_sim_restricted_banner_title": {},
-  "home_sim_restricted_banner_subtitle": "Please contact support for assistance.",
-  "@home_sim_restricted_banner_subtitle": {},
-  "sim_support_warn_recharge_title": "Recharge your line",
-  "@sim_support_warn_recharge_title": {},
-  "sim_support_warn_recharge_subtitle": "Your line needs a top-up. Recharge to restore full service and app features.",
-  "@sim_support_warn_recharge_subtitle": {},
-  "sim_support_dunning_title": "Payment or recharge needed",
-  "@sim_support_dunning_title": {},
-  "sim_support_dunning_subtitle": "There is an outstanding bill or balance issue. Pay or recharge to unlock all services.",
-  "@sim_support_dunning_subtitle": {},
-  "sim_support_postpaid_title": "Postpaid line restricted",
-  "@sim_support_postpaid_title": {},
-  "sim_support_postpaid_subtitle": "Your postpaid account needs attention. Contact customer support for help.",
-  "@sim_support_postpaid_subtitle": {},
-  "sim_support_prepaid_ineligible_title": "Service not available for this line",
-  "@sim_support_prepaid_ineligible_title": {},
-  "sim_support_prepaid_ineligible_subtitle": "This offer or service is not available on your prepaid line. Please contact support.",
-  "@sim_support_prepaid_ineligible_subtitle": {},
-  "sim_support_prepaid_line_issue_title": "Prepaid line issue",
-  "@sim_support_prepaid_line_issue_title": {},
-  "sim_support_prepaid_line_issue_subtitle": "Your prepaid line is suspended or blocked. Contact support to resolve it.",
-  "@sim_support_prepaid_line_issue_subtitle": {},
-  "sim_support_activate_title": "Activate your SIM",
-  "@sim_support_activate_title": {},
-  "sim_support_activate_subtitle": "Insert your Zain SIM in this device, then dial *100# to activate.",
-  "@sim_support_activate_subtitle": {},
-  "auth_enter_mobile_number_dial_activate_sim": "Dial *100#",
-  "@auth_enter_mobile_number_dial_activate_sim": {},
-  "home_tab_loyalty_welcome_to_the_zain_loyalty_program": "Welcome to Zain Loyalty Program",
-  "@home_tab_loyalty_welcome_to_the_zain_loyalty_program": {},
-  "loyalty_tutorial_discover_mamnoon": "Discover \"Mamnoon\" program !",
-  "@loyalty_tutorial_discover_mamnoon": {},
-  "loyalty_tutorial_watch_video_description": "Watch the video to learn how to earn points and redeem them for rewards and gifts",
-  "@loyalty_tutorial_watch_video_description": {},
-  "home_tab_loyalty_free_gift": "Scratch Card Reward",
-  "@home_tab_loyalty_free_gift": {},
-  "home_tab_loyalty_gift_text": "Scratch the card below to reveal your gift",
-  "@home_tab_loyalty_gift_text": {},
-  "home_tab_loyalty_congratulations": "Congratulations",
-  "@home_tab_loyalty_congratulations": {},
-  "home_tab_loyalty_already_clamed_git_title": "You have already got your daily gift",
-  "@home_tab_loyalty_already_clamed_git_title": {},
-  "home_tab_loyalty_already_clamed_git_desc": "You have already claimed your reward.. come back later as we gift every 24 hours!",
-  "@home_tab_loyalty_already_clamed_git_desc": {},
-  "home_tab_loyalty_you_got_100_mb_free": "You got 100MB Free!",
-  "@home_tab_loyalty_you_got_100_mb_free": {},
-  "home_tab_loyalty_next_gift_text": "Come back in 24 hours to claim your next free gift!",
-  "@home_tab_loyalty_next_gift_text": {},
-  "home_tab_loyalty_gift_disclaimer_text": "Use your finger to scratch the card completely.",
-  "@home_tab_loyalty_gift_disclaimer_text": {},
-  "loyalty_not_eligible_title": "Dear {name},",
-  "@loyalty_not_eligible_title": {
-    "placeholders": {
-      "name": {
-        "type": "String",
-        "example": "Tharwat"
-      }
-    }
-  },
-  "loyalty_not_eligible_subtitle": "",
-  "@loyalty_not_eligible_subtitle": {},
-  "loyalty_not_eligible_body_blacklisted": "For more information please contact call center.",
-  "@loyalty_not_eligible_body_blacklisted": {},
-  "home_tab_recent_activities_recentactivities": "Recent Activities",
-  "@home_tab_recent_activities_recentactivities": {},
-  "home_tab_recent_activities_recentlyused": "Recently Used",
-  "@home_tab_recent_activities_recentlyused": {},
-  "home_tab_banner_view_details": "Details",
-  "@home_tab_banner_view_details": {},
-  "home_tab_games_zain_games": "Zain Games",
-  "@home_tab_games_zain_games": {},
-  "home_tab_games_games_title": "Games",
-  "@home_tab_games_games_title": {},
-  "home_tab_games_play_and_win": "Play games everyday and win MBs",
-  "@home_tab_games_play_and_win": {},
-  "home_tab_new_releases": "New Releases",
-  "@home_tab_new_releases": {},
-  "home_tab_most_popular": "Most Popular Bundles",
-  "@home_tab_most_popular": {},
-  "home_tab_view_details": "View Details",
-  "@home_tab_view_details": {},
-  "home_tab_feature_card_kafoo_line": "Kafoo Line",
-  "@home_tab_feature_card_kafoo_line": {},
-  "home_tab_feature_zain_fi_title": "Zain-Fi Devices",
-  "@home_tab_feature_zain_fi_title": {},
-  "home_tab_feature_zain_fi_description": "Stay connected and experience|lightning-fast speeds on the go|with Zain-Fi devices.",
-  "@home_tab_feature_zain_fi_description": {},
-  "home_tab_feature_esim_title": "eSIM",
-  "@home_tab_feature_esim_title": {},
-  "home_tab_feature_esim_description": "Switching to an eSIM is quick and easy, and it's eco-friendly.",
-  "@home_tab_feature_esim_description": {},
-  "home_tab_bundle_fastest_45g_internet": "Fastest 4.5G+ Internet",
-  "@home_tab_bundle_fastest_45g_internet": {},
-  "home_tab_bundle_high_speed_data": "High Speed Data",
-  "@home_tab_bundle_high_speed_data": {},
-  "home_tab_bundle_new_release_1": "Latest Data Bundle",
-  "@home_tab_bundle_new_release_1": {},
-  "home_tab_bundle_new_release_2": "Premium Internet Pack",
-  "@home_tab_bundle_new_release_2": {},
-  "home_tab_fill_name_welcome_to_zain": "Welcome to Zain",
-  "@home_tab_fill_name_welcome_to_zain": {},
-  "home_tab_fill_name_what_should_we_call_you": "What should we call you?",
-  "@home_tab_fill_name_what_should_we_call_you": {},
-  "home_tab_fill_name_enter_your_name": "Enter Your Name",
-  "@home_tab_fill_name_enter_your_name": {},
-  "home_tab_fill_name_maybe_later": "Maybe Later",
-  "@home_tab_fill_name_maybe_later": {},
-  "user_resources_kafoo_credit": "Kafoo Credit",
-  "@user_resources_kafoo_credit": {},
-  "user_resources_free_credit": "Free Credit",
-  "@user_resources_free_credit": {},
-  "user_resources_calls": "Calls",
-  "@user_resources_calls": {},
-  "user_resources_data": "Data",
-  "@user_resources_data": {},
-  "user_resources_sms": "SMS",
-  "@user_resources_sms": {},
-  "user_resources_roaming": "Roaming",
-  "@user_resources_roaming": {},
-  "user_resources_international": "International",
-  "@user_resources_international": {},
-  "user_resources_unit_min": "Min",
-  "@user_resources_unit_min": {},
-  "user_resources_unit_sms": "SMS",
-  "@user_resources_unit_sms": {},
-  "user_resources_unlimited_internet": "∞ Unlimited Internet",
-  "@user_resources_unlimited_internet": {},
-  "user_resources_unit_gb_internet": "GB Internet",
-  "@user_resources_unit_gb_internet": {},
-  "user_resources_unit_mb_internet": "MB Internet",
-  "@user_resources_unit_mb_internet": {},
-  "user_resources_unit_gb": "GB",
-  "@user_resources_unit_gb": {},
-  "user_resources_unit_mb": "MB",
-  "@user_resources_unit_mb": {},
-  "user_resources_out_of": "out of",
-  "@user_resources_out_of": {},
-  "user_resources_days_remaining": "{days} Days Remaining",
-  "@user_resources_days_remaining": {
-    "placeholders": {
-      "days": {
-        "type": "int"
-      }
-    }
-  },
-  "resource_details": "Resource Details",
-  "@resource_details": {},
-  "resource_details_empty_category": "You are not subscribed to any offer",
-  "@resource_details_empty_category": {},
-  "offers_tab_offers_tab": "Offers",
-  "@offers_tab_offers_tab": {},
-  "offers_tab_offer_internet": "Internet",
-  "@offers_tab_offer_internet": {},
-  "offers_tab_offer_sms": "SMS",
-  "@offers_tab_offer_sms": {},
-  "offers_tab_offer_minutes": "Minutes",
-  "@offers_tab_offer_minutes": {},
-  "offers_tab_offer_free_credits": "Free Credits",
-  "@offers_tab_offer_free_credits": {},
-  "offers_tab_offer_free_socials": "Free Socials",
-  "@offers_tab_offer_free_socials": {},
-  "offers_tab_offer_details": "Details",
-  "@offers_tab_offer_details": {},
-  "offers_tab_offer_subscribe": "Subscribe",
-  "@offers_tab_offer_subscribe": {},
-  "offers_tab_offer_insufficient_error": "Insufficient balance. Recharge your account to subscribe to this offer.",
-  "@offers_tab_offer_insufficient_error": {},
-  "offers_tab_offer_call": "Call",
-  "@offers_tab_offer_call": {},
-  "offers_tab_offer_earn_mamnoon_points": "Mamnoon Points",
-  "@offers_tab_offer_earn_mamnoon_points": {},
-  "offers_tab_offer_bonus_credit": "Bonus Credit",
-  "@offers_tab_offer_bonus_credit": {},
-  "offers_tab_credit": "Credit",
-  "@offers_tab_credit": {},
-  "offers_tab_kaffoo_variant_standard": "Kafoo",
-  "@offers_tab_kaffoo_variant_standard": {},
-  "offers_tab_kaffoo_variant_two_plus_one": "Kafoo 2+1",
-  "@offers_tab_kaffoo_variant_two_plus_one": {},
-  "offers_tab_variant_bikaifi": "BIKAIFI",
-  "@offers_tab_variant_bikaifi": {},
-  "offers_tab_variant_super_card": "SUPER CARD",
-  "@offers_tab_variant_super_card": {},
-  "offers_tab_variant_unlimited": "Unlimited",
-  "@offers_tab_variant_unlimited": {},
-  "offers_tab_variant_free_social": "Free Social",
-  "@offers_tab_variant_free_social": {},
-  "kaffoo_free_social_customise_title": "Customise your Apps",
-  "@kaffoo_free_social_customise_title": {},
-  "kaffoo_free_social_customise_subtitle": "Replace any included app with another from the same category",
-  "@kaffoo_free_social_customise_subtitle": {},
-  "kaffoo_free_social_swap_confirm_title": "Swap. Personalize. Enjoy.",
-  "@kaffoo_free_social_swap_confirm_title": {},
-  "kaffoo_free_social_your_free_apps_title": "Your Free Apps",
-  "@kaffoo_free_social_your_free_apps_title": {},
-  "kaffoo_free_social_customise_button": "Customise",
-  "@kaffoo_free_social_customise_button": {},
-  "kaffoo_free_social_app_replacement_title": "App Replacement",
-  "@kaffoo_free_social_app_replacement_title": {},
-  "kaffoo_free_social_first_replacement_prefix": "1st Replacement is ",
-  "@kaffoo_free_social_first_replacement_prefix": {},
-  "kaffoo_free_social_replacement_free": "Free",
-  "@kaffoo_free_social_replacement_free": {},
-  "kaffoo_free_social_replacements_per_cycle": "Up to {maxCount} replacements per cycle",
-  "@kaffoo_free_social_replacements_per_cycle": {
-    "placeholders": {
-      "maxCount": {
-        "type": "int"
-      }
-    }
-  },
-  "kaffoo_free_social_replacement_changes_label": "Changes",
-  "@kaffoo_free_social_replacement_changes_label": {},
-  "kaffoo_free_social_replacement_no_changes": "No Changes",
-  "@kaffoo_free_social_replacement_no_changes": {},
-  "kaffoo_free_social_replacement_free_change": "Free Change",
-  "@kaffoo_free_social_replacement_free_change": {},
-  "kaffoo_free_social_replacement_pricing_note": "1 free, then {price} {currency} each",
-  "@kaffoo_free_social_replacement_pricing_note": {
-    "placeholders": {
-      "price": {
-        "type": "String"
-      },
-      "currency": {
-        "type": "String"
-      }
-    }
-  },
-  "kaffoo_free_social_replacement_limit_reached": "All {maxCount} replacements have been used. You have reached the limit.",
-  "@kaffoo_free_social_replacement_limit_reached": {
-    "placeholders": {
-      "maxCount": {
-        "type": "int"
-      }
-    }
-  },
-  "kaffoo_free_social_replacement_confirm_free_title": "Free App Change",
-  "@kaffoo_free_social_replacement_confirm_free_title": {},
-  "kaffoo_free_social_replacement_confirm_free_desc": "No FEE will be deducted from your balance if you continue.",
-  "@kaffoo_free_social_replacement_confirm_free_desc": {},
-  "kaffoo_free_social_replacement_confirm_paid_title": "Confirm App Changes",
-  "@kaffoo_free_social_replacement_confirm_paid_title": {},
-  "kaffoo_free_social_replacement_confirm_paid_desc": "{price} {currency} will be deducted from your balance if you continue.",
-  "@kaffoo_free_social_replacement_confirm_paid_desc": {
-    "placeholders": {
-      "price": {
-        "type": "String"
-      },
-      "currency": {
-        "type": "String"
-      }
-    }
-  },
-  "kaffoo_free_social_apps_new_tag": "NEW",
-  "@kaffoo_free_social_apps_new_tag": {},
-  "kaffoo_free_social_select_apps_title": "Select your Free Apps",
-  "@kaffoo_free_social_select_apps_title": {},
-  "kaffoo_free_social_select_apps_hint": "Choose 5 apps from the groups below",
-  "@kaffoo_free_social_select_apps_hint": {},
-  "kaffoo_free_social_light_apps_title": "Light Apps",
-  "@kaffoo_free_social_light_apps_title": {},
-  "kaffoo_free_social_heavy_apps_title": "Heavy Apps",
-  "@kaffoo_free_social_heavy_apps_title": {},
-  "kaffoo_free_social_choose_up_to": "(choose upto {count})",
-  "@kaffoo_free_social_choose_up_to": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "kaffoo_free_social_selected_label": "Selected",
-  "@kaffoo_free_social_selected_label": {},
-  "kaffoo_free_social_total_selected": "Selected",
-  "@kaffoo_free_social_total_selected": {},
-  "kaffoo_free_social_reset": "Reset",
-  "@kaffoo_free_social_reset": {},
-  "kaffoo_free_social_continue": "Continue",
-  "@kaffoo_free_social_continue": {},
-  "kaffoo_free_social_more": "More",
-  "@kaffoo_free_social_more": {},
-  "kaffoo_free_social_max_selection_reached": "You can only select up to {count} apps from this group. Deselect one to choose another.",
-  "@kaffoo_free_social_max_selection_reached": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "kaffoo_free_social_review_selection_title": "Review Your Selection",
-  "@kaffoo_free_social_review_selection_title": {},
-  "kaffoo_free_social_review_selected_prefix": "You selected ",
-  "@kaffoo_free_social_review_selected_prefix": {},
-  "kaffoo_free_social_review_selected_suffix": " free apps",
-  "@kaffoo_free_social_review_selected_suffix": {},
-  "kaffoo_free_social_good_choice": "Good Choice",
-  "@kaffoo_free_social_good_choice": {},
-  "kaffoo_free_social_bundle_price_note": "This won't affect the price of your bundle.",
-  "@kaffoo_free_social_bundle_price_note": {},
-  "offers_tab_variant_tiktok": "TIKTOK",
-  "@offers_tab_variant_tiktok": {},
-  "offers_tab_select_package": "Select Package",
-  "@offers_tab_select_package": {},
-  "offers_tab_already_subscribed_warning": "You're already subscribed to this offer",
-  "@offers_tab_already_subscribed_warning": {},
-  "offers_tab_offer_minutes_with_family": "Minutes with Family",
-  "@offers_tab_offer_minutes_with_family": {},
-  "offers_tab_offer_free_sms": "Free SMS",
-  "@offers_tab_offer_free_sms": {},
-  "offers_tab_kaffoo_offer_free_sms": "Free SMS",
-  "@offers_tab_kaffoo_offer_free_sms": {},
-  "offers_tab_offer_3rd_month_free": "3rd Month Free",
-  "@offers_tab_offer_3rd_month_free": {},
-  "offers_tab_appExclusiveBadge": "App Exclusive",
-  "@offers_tab_appExclusiveBadge": {},
-  "offers_tab_hotOfferBadge": "Hot Offer",
-  "@offers_tab_hotOfferBadge": {},
-  "offers_tab_hot": "Hot",
-  "@offers_tab_hot": {},
-  "offers_tab_search": "Search",
-  "@offers_tab_search": {},
-  "account_tab_restricted": "Restricted",
-  "@account_tab_restricted": {},
-  "offers_tab_subscription_successful": "Subscription successful!",
-  "@offers_tab_subscription_successful": {},
-  "offers_tab_subscription_success_description": "Your selected bundle has been successfully activated. You can now enjoy your",
-  "@offers_tab_subscription_success_description": {},
-  "offers_tab_subscription_success_body": "Your selected bundle has been successfully activated.\nYou can now enjoy your benefits instantly",
-  "@offers_tab_subscription_success_body": {},
-  "offers_tab_subscription_activated_bundle": "Activated Bundle",
-  "@offers_tab_subscription_activated_bundle": {},
-  "offers_tab_subscription_balance_updated": "Thankyou ! your balance has been updated",
-  "@offers_tab_subscription_balance_updated": {},
-  "offers_tab_subscription_conflict_title": "Subscription Conflict Detected",
-  "@offers_tab_subscription_conflict_title": {},
-  "offers_tab_subscription_conflict_description": "You currently have an active subscription that conflicts with this offer. Only one bundle of this type can be active at a time.",
-  "@offers_tab_subscription_conflict_description": {},
-  "offers_tab_confirm_subscription": "Confirm Subscription",
-  "@offers_tab_confirm_subscription": {},
-  "offers_tab_confirm_subscription_details1": "You are about to subscribe to the selected bundle. Charges will apply as per your plan.",
-  "@offers_tab_confirm_subscription_details1": {},
-  "offers_tab_confirm_subscription_details2": "Would you like to continue?",
-  "@offers_tab_confirm_subscription_details2": {},
-  "offers_tab_confirm_subscription_yes_please": "yes, Please",
-  "@offers_tab_confirm_subscription_yes_please": {},
-  "offers_tab_confirm_subscription_no_cancel": "No Cancel",
-  "@offers_tab_confirm_subscription_no_cancel": {},
-  "offers_tab_confirm_subscription_button_confirm": "Confirm",
-  "@offers_tab_confirm_subscription_button_confirm": {},
-  "offers_tab_confirm_subscription_maybe_later": "Maybe Later",
-  "@offers_tab_confirm_subscription_maybe_later": {},
-  "offers_tab_restricted": "Restricted",
-  "@offers_tab_restricted": {},
-  "offers_tab_offer_subscribed_successfully": "Offer subscribed successfully",
-  "@offers_tab_offer_subscribed_successfully": {},
-  "offers_tab_error_subscribing_offer": "Error subscribing offer",
-  "@offers_tab_error_subscribing_offer": {},
-  "offers_tab_subscription_not_eligible_title": "Not Eligible",
-  "@offers_tab_subscription_not_eligible_title": {},
-  "offers_tab_subscription_not_eligible_description": "You are not eligible for this offer.",
-  "@offers_tab_subscription_not_eligible_description": {},
-  "offers_tab_subscription_unable_title": "Oops!",
-  "@offers_tab_subscription_unable_title": {},
-  "offers_tab_subscription_unable_description": "We were unable to process your subscription. Please try again later.",
-  "@offers_tab_subscription_unable_description": {},
-  "offers_tab_gift_sent_successfully": "Gift sent successfully",
-  "@offers_tab_gift_sent_successfully": {},
-  "offers_tab_error_sending_gift": "Error sending gift",
-  "@offers_tab_error_sending_gift": {},
-  "offers_tab_no_offers_found": "No offers found",
-  "@offers_tab_no_offers_found": {},
-  "offers_tab_confirm_gift": "Confirm Gift",
-  "@offers_tab_confirm_gift": {},
-  "offers_tab_you_are_about_to_gift": "You are about to gift",
-  "@offers_tab_you_are_about_to_gift": {},
-  "offers_tab_priced_at": "priced at",
-  "@offers_tab_priced_at": {},
-  "offers_tab_to_the_number": "to the number",
-  "@offers_tab_to_the_number": {},
-  "offers_tab_would_you_like_to_continue": "Would you like to continue ?",
-  "@offers_tab_would_you_like_to_continue": {},
-  "offers_tab_send_gift": "Send Gift",
-  "@offers_tab_send_gift": {},
-  "offers_tab_enter_gift_number_prompt": "Please enter the Zain number you want to send the gift to",
-  "@offers_tab_enter_gift_number_prompt": {},
-  "offers_tab_filter_offers": "Filter Offers",
-  "@offers_tab_filter_offers": {},
-  "offers_tab_offer_type": "Offer Type",
-  "@offers_tab_offer_type": {},
-  "offers_tab_offer_duration": "Offer Duration",
-  "@offers_tab_offer_duration": {},
-  "offers_tab_apply_filters": "Apply Filters",
-  "@offers_tab_apply_filters": {},
-  "offers_tab_clear_filters": "Reset",
-  "@offers_tab_clear_filters": {},
-  "offers_tab_sort_direction": "Sort Direction",
-  "@offers_tab_sort_direction": {},
-  "offers_tab_sort_by": "Sort By",
-  "@offers_tab_sort_by": {},
-  "offers_tab_sort_ascending": "Ascending",
-  "@offers_tab_sort_ascending": {},
-  "offers_tab_sort_descending": "Descending",
-  "@offers_tab_sort_descending": {},
-  "offers_tab_sort_by_price": "Price",
-  "@offers_tab_sort_by_price": {},
-  "offers_tab_sort_by_validity": "Validity",
-  "@offers_tab_sort_by_validity": {},
-  "offers_tab_sort_by_mbs": "MBs",
-  "@offers_tab_sort_by_mbs": {},
-  "offers_tab_sort_by_alphabetical": "Alphabetical",
-  "@offers_tab_sort_by_alphabetical": {},
-  "offers_tab_offer_roaming": "Roaming",
-  "@offers_tab_offer_roaming": {},
-  "offers_tab_roaming_search_hint": "Search for country",
-  "@offers_tab_roaming_search_hint": {},
-  "offers_tab_offer_roam_internet": "Roam Internet",
-  "@offers_tab_offer_roam_internet": {},
-  "offers_tab_offer_roam_mins": "Roam Mins",
-  "@offers_tab_offer_roam_mins": {},
-  "offers_tab_offer_roam_sms": "Roam SMS",
-  "@offers_tab_offer_roam_sms": {},
-  "offers_tab_offer_int_internet": "Int Internet",
-  "@offers_tab_offer_int_internet": {},
-  "offers_tab_offer_int_mins": "Int Mins",
-  "@offers_tab_offer_int_mins": {},
-  "offers_tab_offer_int_sms": "Int SMS",
-  "@offers_tab_offer_int_sms": {},
-  "offers_tab_filter_type_bundle_to_gift": "Bundle to gift",
-  "@offers_tab_filter_type_bundle_to_gift": {},
-  "offers_tab_filter_type_hot_bundle": "Hot Bundle",
-  "@offers_tab_filter_type_hot_bundle": {},
-  "offers_tab_filter_duration_daily": "Daily",
-  "@offers_tab_filter_duration_daily": {},
-  "offers_tab_filter_duration_2_days": "2 Days",
-  "@offers_tab_filter_duration_2_days": {},
-  "offers_tab_filter_duration_3_days": "3 Days",
-  "@offers_tab_filter_duration_3_days": {},
-  "offers_tab_filter_duration_weekly": "Weekly",
-  "@offers_tab_filter_duration_weekly": {},
-  "offers_tab_filter_duration_10_days": "10 Days",
-  "@offers_tab_filter_duration_10_days": {},
-  "offers_tab_filter_duration_14_days": "14 Days",
-  "@offers_tab_filter_duration_14_days": {},
-  "offers_tab_filter_duration_20_days": "20 Days",
-  "@offers_tab_filter_duration_20_days": {},
-  "offers_tab_filter_duration_monthly": "Monthly",
-  "@offers_tab_filter_duration_monthly": {},
-  "offers_tab_filter_duration_yearly": "Yearly",
-  "@offers_tab_filter_duration_yearly": {},
-  "offers_tab_validity_days_count": "{days} Days",
-  "@offers_tab_validity_days_count": {
-    "placeholders": {
-      "days": {
-        "type": "int"
-      }
-    }
-  },
-  "offers_tab_validity_weeks_count": "{weeks} Week",
-  "@offers_tab_validity_weeks_count": {
-    "placeholders": {
-      "weeks": {
-        "type": "int"
-      }
-    }
-  },
-  "offers_tab_gift_this_offer": "Gift this offer",
-  "@offers_tab_gift_this_offer": {},
-  "offers_tile_header_validity_prefix": "Validity: ",
-  "@offers_tile_header_validity_prefix": {},
-  "offers_tab_offer_validity": "Validity: {days} Days",
-  "@offers_tab_offer_validity": {
-    "placeholders": {
-      "days": {
-        "type": "int"
-      }
-    }
-  },
-  "offers_tab_view_details": "View Details",
-  "@offers_tab_view_details": {},
-  "offers_tab_offer_more_details": "More Details",
-  "@offers_tab_offer_more_details": {},
-  "account_tab_profile_tab": "Account",
-  "@account_tab_profile_tab": {},
-  "account_tab_settings": "Settings",
-  "@account_tab_settings": {},
-  "account_tab_settings_subtitle": "Manage your account",
-  "@account_tab_settings_subtitle": {},
-  "account_tab_sim_status": "Sim Status",
-  "@account_tab_sim_status": {},
-  "account_tab_active": "Active",
-  "@account_tab_active": {},
   "account_tab_change_password": "Change Password",
   "@account_tab_change_password": {},
-  "change_password_screen_title": "Change password",
-  "@change_password_screen_title": {},
-  "forgot_password_screen_title": "Forgot password",
-  "@forgot_password_screen_title": {},
-  "forgot_password_set_password": "SET PASSWORD",
-  "@forgot_password_set_password": {},
-  "change_password_password_hint": "Password",
-  "@change_password_password_hint": {},
-  "change_password_confirm_password_hint": "Confirm password",
-  "@change_password_confirm_password_hint": {},
-  "change_password_rules_title": "Your password should contain:",
-  "@change_password_rules_title": {},
-  "change_password_rule_min_length": "At least 8 characters",
-  "@change_password_rule_min_length": {},
-  "change_password_rule_number": "At least 1 number",
-  "@change_password_rule_number": {},
-  "change_password_rule_upper_lower": "At least one upper-case & lower-case letter",
-  "@change_password_rule_upper_lower": {},
-  "change_password_rule_matched": "Passwords are matched",
-  "@change_password_rule_matched": {},
-  "change_password_validate_with_otp": "VALIDATE WITH OTP",
-  "@change_password_validate_with_otp": {},
-  "change_password_success_title": "Password Changed",
-  "@change_password_success_title": {},
   "change_password_success_message": "You have successfully changed your password",
   "@change_password_success_message": {},
-  "forgot_password_success_title": "Password reset",
-  "@forgot_password_success_title": {},
-  "forgot_password_success_message": "You have successfully reset your password. You can sign in with your new password.",
-  "@forgot_password_success_message": {},
-  "account_tab_manage_payment_card": "Manage Payment Card",
-  "@account_tab_manage_payment_card": {},
-  "account_tab_manage_subsecription": "Manage Subscriptions",
-  "@account_tab_manage_subsecription": {},
-  "manage_subscription_active_subscription": "Active Subscriptions",
-  "@manage_subscription_active_subscription": {},
-  "manage_subscription_browse_more_offers": "Browse More Offers",
-  "@manage_subscription_browse_more_offers": {},
-  "manage_subscription_no_subscriptions": "You are not subscribed to any offer",
-  "@manage_subscription_no_subscriptions": {},
-  "manage_subscription_expiring_in": "Expiring in",
-  "@manage_subscription_expiring_in": {},
-  "manage_subscription_day": "Day",
-  "@manage_subscription_day": {},
-  "manage_subscription_days": "Days",
-  "@manage_subscription_days": {},
-  "manage_subscription_unsubscribe": "Unsubscribe",
-  "@manage_subscription_unsubscribe": {},
-  "manage_subscription_recharge": "Recharge",
-  "@manage_subscription_recharge": {},
-  "manage_subscription_resubscribe": "Resubscribe",
-  "@manage_subscription_resubscribe": {},
-  "manage_subscription_pending_recharge": "Pending recharge",
-  "@manage_subscription_pending_recharge": {},
-  "manage_subscription_renew_cancelled": "Renew Cancelled",
-  "@manage_subscription_renew_cancelled": {},
-  "manage_subscription_confirm_unsubscribe": "Confirm Unsubscription",
-  "@manage_subscription_confirm_unsubscribe": {},
-  "manage_subscription_confirm_unsubscribe_description": "Unsubscribing will stop this offer and all its benefits.",
-  "@manage_subscription_confirm_unsubscribe_description": {},
-  "manage_subscription_keep_offer": "Keep Offer",
-  "@manage_subscription_keep_offer": {},
-  "manage_subscription_unsubscribe_success": "You have successfully unsubscribed.",
-  "@manage_subscription_unsubscribe_success": {},
-  "manage_subscription_renews_on": "Renews on",
-  "@manage_subscription_renews_on": {},
-  "manage_subscription_expires_on": "Expires on",
-  "@manage_subscription_expires_on": {},
-  "manage_subscription_renew_with_balance": "Renew with balance",
-  "@manage_subscription_renew_with_balance": {},
-  "manage_subscription_renew_success": "Subscription renewed successfully.",
-  "@manage_subscription_renew_success": {},
-  "manage_subscription_confirm_renew_title": "Confirm renewal",
-  "@manage_subscription_confirm_renew_title": {},
-  "manage_subscription_confirm_renew_body": "Resubscribing will renew this offer and restore its benefits.",
-  "@manage_subscription_confirm_renew_body": {},
-  "manage_subscription_status_active": "Active",
-  "@manage_subscription_status_active": {},
-  "manage_subscription_view_details": "View details",
-  "@manage_subscription_view_details": {},
-  "manage_subscription_cannot_unsubscribe": "This subscription cannot be unsubscribed.",
-  "@manage_subscription_cannot_unsubscribe": {},
-  "account_tab_biometric_login": "Biometric Login",
-  "@account_tab_biometric_login": {},
-  "account_tab_biometric_enable_dialog_title": "Enable Biometric Login",
-  "@account_tab_biometric_enable_dialog_title": {},
-  "account_tab_biometric_enable_dialog_description": "You will need to enter your password and complete biometric authentication to enable biometric login.",
-  "@account_tab_biometric_enable_dialog_description": {},
-  "account_tab_biometric_disable_dialog_title": "Disable Biometric Login",
-  "@account_tab_biometric_disable_dialog_title": {},
-  "account_tab_biometric_disable_dialog_description": "Biometric login will be turned off. You can enable it again anytime from Settings.",
-  "@account_tab_biometric_disable_dialog_description": {},
-  "account_tab_biometric_enable_button": "Enable",
-  "@account_tab_biometric_enable_button": {},
-  "account_tab_biometric_disable_button": "Disable",
-  "@account_tab_biometric_disable_button": {},
-  "account_tab_biometric_confirm_password_title": "Confirm Password",
-  "@account_tab_biometric_confirm_password_title": {},
-  "account_tab_biometric_confirm_password_description": "Enter your current password to enable biometric login.",
-  "@account_tab_biometric_confirm_password_description": {},
-  "account_tab_biometric_password_required": "Please enter your password.",
-  "@account_tab_biometric_password_required": {},
-  "account_tab_biometric_wrong_password": "The password you entered is incorrect.",
-  "@account_tab_biometric_wrong_password": {},
   "account_tab_change_language": "Select Language",
   "@account_tab_change_language": {},
-  "account_tab_select_language": "Select language",
-  "@account_tab_select_language": {},
-  "account_tab_select_language_subtitle": "choose your preferred language to continue",
-  "@account_tab_select_language_subtitle": {},
-  "account_tab_delete_my_account": "Delete My Account",
-  "@account_tab_delete_my_account": {},
   "account_tab_delete_account": "Delete Account",
   "@account_tab_delete_account": {},
-  "account_tab_delete_your_account": "Delete Your Account",
-  "@account_tab_delete_your_account": {},
-  "account_tab_delete_account_description_paragraph1": "You are about to delete your account which will remove your data from the app and log you out. You will have to register again to access the app.",
-  "@account_tab_delete_account_description_paragraph1": {},
-  "account_tab_delete_account_description_paragraph2": "This does not affect your mobile line and benefits, so you will still have access to your subscriptions, allowances, and other Zain features.",
-  "@account_tab_delete_account_description_paragraph2": {},
-  "account_tab_confirm_delete_account_title": "Confirm Delete Account",
-  "@account_tab_confirm_delete_account_title": {},
-  "account_tab_confirm_delete_account_description": "Are you sure you want to delete your account?",
-  "@account_tab_confirm_delete_account_description": {},
-  "account_tab_delete_account_confirm_button_title": "Delete",
-  "@account_tab_delete_account_confirm_button_title": {},
-  "account_tab_delete_account_cancel_button_title": "Cancel",
-  "@account_tab_delete_account_cancel_button_title": {},
-  "account_tab_confirm_logout_title": "Confirm logout",
-  "@account_tab_confirm_logout_title": {},
-  "account_tab_confirm_logout_description": "Are you sure you want to log out?",
-  "@account_tab_confirm_logout_description": {},
-  "account_tab_confirm_logout_confirm_button_title": "Logout",
-  "@account_tab_confirm_logout_confirm_button_title": {},
-  "account_tab_confirm_logout_cancel_button_title": "Cancel",
-  "@account_tab_confirm_logout_cancel_button_title": {},
-  "main_container_exit_app_title": "Exit app",
-  "@main_container_exit_app_title": {},
-  "main_container_exit_app_description": "Are you sure you want to exit the app?",
-  "@main_container_exit_app_description": {},
-  "main_container_exit_app_confirm": "Exit",
-  "@main_container_exit_app_confirm": {},
-  "account_tab_support": "Support",
-  "@account_tab_support": {},
-  "account_tab_support_subtitle": "We're here to help",
-  "@account_tab_support_subtitle": {},
-  "account_tab_whatsapp_care": "WhatsApp Zain Care",
-  "@account_tab_whatsapp_care": {},
-  "account_tab_help_and_support": "Help & Support",
-  "@account_tab_help_and_support": {},
-  "help_and_support_tutorials": "Tutorials",
-  "@help_and_support_tutorials": {},
-  "help_and_support_tutorial_registration": "Registration",
-  "@help_and_support_tutorial_registration": {},
-  "help_and_support_tutorial_forget_password": "Forget Password",
-  "@help_and_support_tutorial_forget_password": {},
-  "help_and_support_tutorial_recharge_by_voucher": "Recharge by voucher",
-  "@help_and_support_tutorial_recharge_by_voucher": {},
-  "help_and_support_tutorial_recharge_by_credit_card": "Recharge by credit card",
-  "@help_and_support_tutorial_recharge_by_credit_card": {},
-  "help_and_support_tutorial_offers_subscription": "Offers Subscription",
-  "@help_and_support_tutorial_offers_subscription": {},
-  "help_and_support_support_live_chat": "Live Chat",
-  "@help_and_support_support_live_chat": {},
-  "help_and_support_support_live_chat_failed": "Failed to launch Live Chat. Please try again.",
-  "@help_and_support_support_live_chat_failed": {},
-  "help_and_support_support_ticket_management": "Ticket Management",
-  "@help_and_support_support_ticket_management": {},
-  "help_and_support_ticket_select_complaint_type": "Select complaint type",
-  "@help_and_support_ticket_select_complaint_type": {},
-  "help_and_support_ticket_sort_by_date": "Sort by Date",
-  "@help_and_support_ticket_sort_by_date": {},
-  "help_and_support_ticket_sort_by_latest": "Sort by Latest",
-  "@help_and_support_ticket_sort_by_latest": {},
-  "help_and_support_ticket_sort_by_oldest": "Sort by Oldest",
-  "@help_and_support_ticket_sort_by_oldest": {},
-  "account_tab_find_zain_near_me": "Find Zain Near Me",
-  "@account_tab_find_zain_near_me": {},
-  "account_tab_edit_profile": "Edit Profile",
-  "@account_tab_edit_profile": {},
-  "account_tab_enter_full_name_fullNameHint": "Enter your full name",
-  "@account_tab_enter_full_name_fullNameHint": {},
   "account_tab_logout": "Logout",
   "@account_tab_logout": {},
-  "account_tab_could_not_launch_whatsapp": "Could not launch WhatsApp",
-  "@account_tab_could_not_launch_whatsapp": {},
-  "menu_tab_menu": "Services",
-  "@menu_tab_menu": {},
-  "menu_tab_digital_services": "Digital Services",
-  "@menu_tab_digital_services": {},
-  "menu_tab_manage_data_usage": "Data Usage",
-  "@menu_tab_manage_data_usage": {},
-  "manage_data_usage_subtitle": "Set your internet usage from KAFOO credit",
-  "@manage_data_usage_subtitle": {},
-  "manage_data_usage_limit_description": "Select your limit that can be spent on internet when you have enough credit from KAFOO bundle",
-  "@manage_data_usage_limit_description": {},
-  "manage_data_usage_header_assigned_credit": "You assigned {amount} {currency} from your credit for internet usage!",
-  "@manage_data_usage_header_assigned_credit": {
-    "placeholders": {
-      "amount": {
-        "type": "String"
-      },
-      "currency": {
-        "type": "String"
-      }
-    }
-  },
-  "manage_data_usage_header_amount_reset": "This amount will reset with each successful bundle renewal",
-  "@manage_data_usage_header_amount_reset": {},
-  "manage_data_blocking_message": "You cannot perform the operation now, please try again after {date}",
-  "@manage_data_blocking_message": {
-    "placeholders": {
-      "date": {
-        "type": "String"
-      }
-    }
-  },
-  "menu_tab_manage_subscriptions": "Subscriptions",
-  "@menu_tab_manage_subscriptions": {},
-  "menu_tab_view_free_units": "View Free Units",
-  "@menu_tab_view_free_units": {},
-  "menu_tab_recharge": "Recharge",
-  "@menu_tab_recharge": {},
-  "menu_tab_give_feedback": "Give Feedback",
-  "@menu_tab_give_feedback": {},
-  "give_feedback_title": "We Value Your Feedback",
-  "@give_feedback_title": {},
-  "give_feedback_description": "Your comments help us enhance our services. Please rate your experience and share any issues or suggestions.",
-  "@give_feedback_description": {},
-  "give_feedback_hint": "Write your feedback here....",
-  "@give_feedback_hint": {},
-  "give_feedback_hint_negative": "Oh oh! Please help us to improve",
-  "@give_feedback_hint_negative": {},
-  "give_feedback_hint_positive": "So we are doing great?",
-  "@give_feedback_hint_positive": {},
-  "give_feedback_send_button": "Send Feedback",
-  "@give_feedback_send_button": {},
-  "give_feedback_success_message": "Thank you for your feedback!",
-  "@give_feedback_success_message": {},
-  "menu_tab_get_your_credit_info": "Credit Info",
-  "@menu_tab_get_your_credit_info": {},
-  "get_credit_info_no_activity_found": "No activity found",
-  "@get_credit_info_no_activity_found": {},
-  "get_credit_info_last_3_days": "(last 3 days)",
-  "@get_credit_info_last_3_days": {},
-  "get_credit_info_service_type": "Service Type",
-  "@get_credit_info_service_type": {},
-  "get_credit_info_time": "Time",
-  "@get_credit_info_time": {},
-  "get_credit_info_b_number": "B Number",
-  "@get_credit_info_b_number": {},
-  "get_credit_info_service_type_received_amount": "Received amount",
-  "@get_credit_info_service_type_received_amount": {},
-  "get_credit_info_service_type_transferred_amount": "Transferred amount",
-  "@get_credit_info_service_type_transferred_amount": {},
-  "get_credit_info_service_type_adjustment": "Adjustment",
-  "@get_credit_info_service_type_adjustment": {},
-  "get_credit_info_service_type_service_fee": "Service Fee",
-  "@get_credit_info_service_type_service_fee": {},
-  "get_credit_info_service_type_balance_recharge": "Balance Recharge",
-  "@get_credit_info_service_type_balance_recharge": {},
-  "get_credit_info_service_type_call": "Call",
-  "@get_credit_info_service_type_call": {},
-  "get_credit_info_service_type_video_call": "Video Call",
-  "@get_credit_info_service_type_video_call": {},
-  "get_credit_info_service_type_call_roaming": "Call Roaming",
-  "@get_credit_info_service_type_call_roaming": {},
-  "get_credit_info_service_type_sms_roaming": "SMS Roaming",
-  "@get_credit_info_service_type_sms_roaming": {},
-  "get_credit_info_service_type_sms": "SMS",
-  "@get_credit_info_service_type_sms": {},
-  "get_credit_info_service_type_mms": "MMS",
-  "@get_credit_info_service_type_mms": {},
-  "get_credit_info_service_type_data": "Data",
-  "@get_credit_info_service_type_data": {},
-  "get_credit_info_service_type_data_roaming": "Data Roaming",
-  "@get_credit_info_service_type_data_roaming": {},
-  "get_credit_info_service_type_bundle_fee": "Bundle Fee",
-  "@get_credit_info_service_type_bundle_fee": {},
-  "get_credit_info_service_type_installment": "Installment",
-  "@get_credit_info_service_type_installment": {},
-  "get_credit_info_service_type_unknown": "N/A",
-  "@get_credit_info_service_type_unknown": {},
-  "recharge_choose_recharge_method": "Choose Your Recharge Method",
-  "@recharge_choose_recharge_method": {},
-  "recharge_recharge_method_voucher_pin": "Voucher PIN",
-  "@recharge_recharge_method_voucher_pin": {},
-  "recharge_recharge_method_credit_debit": "Credit/Debit Card",
-  "@recharge_recharge_method_credit_debit": {},
-  "recharge_recharge_method_zain_cash": "Zain Cash",
-  "@recharge_recharge_method_zain_cash": {},
-  "recharge_voucher_pin_enter_or_scan_voucher": "Enter or Scan Voucher",
-  "@recharge_voucher_pin_enter_or_scan_voucher": {},
-  "recharge_voucher_pin_enter_the_16_digit_voucher_pin": "Enter the 16-digit voucher PIN",
-  "@recharge_voucher_pin_enter_the_16_digit_voucher_pin": {},
-  "recharge_voucher_pin_recharge": "Recharge",
-  "@recharge_voucher_pin_recharge": {},
-  "recharge_voucher_pin_please_enter_zain_number_you_want_to_recharge": "Please enter Zain number you want to recharge",
-  "@recharge_voucher_pin_please_enter_zain_number_you_want_to_recharge": {},
-  "recharge_voucher_pin_recharge_to_others": "Another Number",
-  "@recharge_voucher_pin_recharge_to_others": {},
-  "recharge_voucher_pin_recharge_failed": "Voucher Recharge Failed",
-  "@recharge_voucher_pin_recharge_failed": {},
-  "recharge_voucher_pin_recharge_failed_message": "Invalid code entered, please check and re-enter 16-digit voucher code",
-  "@recharge_voucher_pin_recharge_failed_message": {},
-  "recharge_voucher_pin_voucher_already_used_message": "This voucher has already been used.",
-  "@recharge_voucher_pin_voucher_already_used_message": {},
-  "recharge_voucher_pin_success_message": "You Have successfully recharge",
-  "@recharge_voucher_pin_success_message": {},
-  "recharge_success_via": "Via",
-  "@recharge_success_via": {},
-  "recharge_success_method_voucher": "Voucher",
-  "@recharge_success_method_voucher": {},
-  "recharge_success_via_credit_card_to": "Via Credit Card to",
-  "@recharge_success_via_credit_card_to": {},
-  "recharge_success_recharge_another_number": "Recharge another number",
-  "@recharge_success_recharge_another_number": {},
-  "common_back_to_home": "Back to home",
-  "@common_back_to_home": {},
-  "recharge_credit_debit_card_credit_debit_card": "Credit/Debit Card",
-  "@recharge_credit_debit_card_credit_debit_card": {},
-  "recharge_credit_debit_card_enter_the_amount_you_want_to_recharge": "Enter the amount you want to recharge",
-  "@recharge_credit_debit_card_enter_the_amount_you_want_to_recharge": {},
-  "recharge_credit_debit_card_enter_the_amount_you_want_to_pay": "Enter the amount you want to pay your bill with",
-  "@recharge_credit_debit_card_enter_the_amount_you_want_to_pay": {},
-  "recharge_credit_debit_card_select_amount": "Select Amount",
-  "@recharge_credit_debit_card_select_amount": {},
-  "recharge_credit_debit_card_select_amount_you_want_to_recharge": "Select the amount you want to recharge",
-  "@recharge_credit_debit_card_select_amount_you_want_to_recharge": {},
-  "recharge_credit_debit_card_payment_unsuccessful": "Payment Unsuccessful",
-  "@recharge_credit_debit_card_payment_unsuccessful": {},
-  "recharge_credit_debit_card_payment_unsuccessful_message": "Your credit card payment was not successful. Please ensure your card details are correct and try again.",
-  "@recharge_credit_debit_card_payment_unsuccessful_message": {},
-  "recharge_credit_debit_card_3ds_cancelled": "Payment authentication was cancelled.",
-  "@recharge_credit_debit_card_3ds_cancelled": {},
-  "recharge_credit_debit_card_3ds_webview_title": "Secure verification",
-  "@recharge_credit_debit_card_3ds_webview_title": {},
-  "recharge_credit_debit_card_payment_successful": "Payment successful",
-  "@recharge_credit_debit_card_payment_successful": {},
-  "recharge_credit_debit_card_payment_successful_message": "Your payment has been successfully processed",
-  "@recharge_credit_debit_card_payment_successful_message": {},
-  "recharge_credit_debit_card_additional_fees": "Additional fees might be applied by the bank or the credit card issuer",
-  "@recharge_credit_debit_card_additional_fees": {},
-  "recharge_credit_debit_card_your_card_number": "Your card number",
-  "@recharge_credit_debit_card_your_card_number": {},
-  "recharge_credit_debit_card_your_name_on_card": "Your name on the card",
-  "@recharge_credit_debit_card_your_name_on_card": {},
-  "recharge_credit_debit_card_powered_by": "Powered by",
-  "@recharge_credit_debit_card_powered_by": {},
-  "recharge_credit_debit_card_recharge_with_zain_cash": "Recharge with Zain Cash",
-  "@recharge_credit_debit_card_recharge_with_zain_cash": {},
-  "recharge_credit_debit_card_totalAmount": "Total Amount",
-  "@recharge_credit_debit_card_totalAmount": {},
-  "recharge_credit_debit_card_current_balance": "Current Balance",
-  "@recharge_credit_debit_card_current_balance": {},
-  "recharge_credit_debit_card_expiry_hint": "MM/YY",
-  "@recharge_credit_debit_card_expiry_hint": {},
-  "recharge_credit_debit_card_cvv_hint": "CVV",
-  "@recharge_credit_debit_card_cvv_hint": {},
-  "recharge_credit_debit_card_expiry_error_month": "Month must be between 01 and 12",
-  "@recharge_credit_debit_card_expiry_error_month": {},
-  "recharge_credit_debit_card_expiry_error_past": "Expiry date cannot be in the past",
-  "@recharge_credit_debit_card_expiry_error_past": {},
-  "recharge_credit_debit_card_expiry_error_future": "Expiry date cannot be more than {maxYears} years in the future",
-  "@recharge_credit_debit_card_expiry_error_future": {
-    "placeholders": {
-      "maxYears": {
-        "type": "int"
-      }
-    }
-  },
-  "recharge_zain_cash_pay_bill_with_zain_cash": "Pay Bill with Zain Cash",
-  "@recharge_zain_cash_pay_bill_with_zain_cash": {},
-  "recharge_zain_cash_webview_pay_with_zain_cash": "Pay with Zain Cash",
-  "@recharge_zain_cash_webview_pay_with_zain_cash": {},
-  "recharge_zain_cash_webview_error_loading": "Error loading Zain Cash",
-  "@recharge_zain_cash_webview_error_loading": {},
-  "recharge_zain_cash_enter_recharge_amount": "Please enter the recharge amount",
-  "@recharge_zain_cash_enter_recharge_amount": {},
-  "recharge_zain_cash_confirm_amount_title": "Confirm amount",
-  "@recharge_zain_cash_confirm_amount_title": {},
-  "recharge_zain_cash_confirm_amount_message": "You are about to pay {amount}. Do you want to continue?",
-  "@recharge_zain_cash_confirm_amount_message": {
-    "placeholders": {
-      "amount": {
-        "type": "String"
-      }
-    }
-  },
-  "recharge_transfer_credit_transferCredit": "Transfer Credit",
-  "@recharge_transfer_credit_transferCredit": {},
-  "recharge_transfer_credit_please_enter_zain_number_you_want_to_send_credit_to": "Please enter Zain number you want to transfer credit",
-  "@recharge_transfer_credit_please_enter_zain_number_you_want_to_send_credit_to": {},
-  "recharge_transfer_credit_please_enter_amount_of_money": "Please enter the amount of money you would like to send",
-  "@recharge_transfer_credit_please_enter_amount_of_money": {},
-  "recharge_transfer_credit_noContactsPermissionButton": "Activate from settings",
-  "@recharge_transfer_credit_noContactsPermissionButton": {},
-  "recharge_transfer_credit_no_permission_for_contact": "no permission to read your contacts list",
-  "@recharge_transfer_credit_no_permission_for_contact": {},
-  "recharge_transfer_credit_no_contacts_to_show": "no contacts to show",
-  "@recharge_transfer_credit_no_contacts_to_show": {},
-  "recharge_transfer_credit_select_contact": "Select Contact",
-  "@recharge_transfer_credit_select_contact": {},
-  "recharge_transfer_credit_transferAmount": "Transfer Amount",
-  "@recharge_transfer_credit_transferAmount": {},
-  "recharge_transfer_credit_confirmTransfer": "Confirm Transfer",
-  "@recharge_transfer_credit_confirmTransfer": {},
-  "recharge_transfer_credit_confirmTransferMessage": "Are you sure you want to transfer to {phoneNumber} a credit of {amount}",
-  "@recharge_transfer_credit_confirmTransferMessage": {
-    "placeholders": {
-      "phoneNumber": {
-        "type": "String"
-      },
-      "amount": {
-        "type": "String"
-      }
-    }
-  },
-  "recharge_transfer_credit_transfer": "Transfer",
-  "@recharge_transfer_credit_transfer": {},
-  "contact_list_no_contacts_to_show": "no contacts to show",
-  "@contact_list_no_contacts_to_show": {},
-  "contact_list_no_permission_for_contact": "no permission to read your contacts list",
-  "@contact_list_no_permission_for_contact": {},
-  "contact_list_no_permission_button": "Activate from settings",
-  "@contact_list_no_permission_button": {},
-  "recharge_transfer_credit_search": "Who are you looking for?",
-  "@recharge_transfer_credit_search": {},
-  "contact_list_select_contact": "Select Contact",
-  "@contact_list_select_contact": {},
-  "loyalty_dashboard_how_to_earn_points": "How to Earn Points",
-  "@loyalty_dashboard_how_to_earn_points": {},
-  "loyalty_dashboard_redeem_points": "Redeem Points",
-  "@loyalty_dashboard_redeem_points": {},
-  "loyalty_dashboard_hot_bundles": "Hot Bundles",
-  "@loyalty_dashboard_hot_bundles": {},
-  "loyalty_dashboard_points_history": "Point History",
-  "@loyalty_dashboard_points_history": {},
-  "loyalty_dashboard_help": "Help",
-  "@loyalty_dashboard_help": {},
-  "loyalty_dashboard_platinum": "Platinum",
-  "@loyalty_dashboard_platinum": {},
-  "loyalty_dashboard_silver": "Silver",
-  "@loyalty_dashboard_silver": {},
-  "loyalty_redeem_points_bundles": "Bundles",
-  "@loyalty_redeem_points_bundles": {},
-  "loyalty_redeem_points_credits": "Credits",
-  "@loyalty_redeem_points_credits": {},
-  "loyalty_redeem_points_stores": "Stores",
-  "@loyalty_redeem_points_stores": {},
-  "loyalty_redeem_points_stores_location_services_disabled_message": "Please enable location services to find nearby stores.",
-  "@loyalty_redeem_points_stores_location_services_disabled_message": {},
-  "loyalty_redeem_points_stores_permission_denied_message": "Please enable location permission to find nearby stores.",
-  "@loyalty_redeem_points_stores_permission_denied_message": {},
-  "loyalty_redeem_points_stores_permission_denied_forever_message": "Location permission is permanently denied. Please open app settings to enable it.",
-  "@loyalty_redeem_points_stores_permission_denied_forever_message": {},
-  "loyalty_redeem_points_stores_enable_location_services": "Enable Location Services",
-  "@loyalty_redeem_points_stores_enable_location_services": {},
-  "loyalty_redeem_points_stores_request_permission_again": "Request Permission Again",
-  "@loyalty_redeem_points_stores_request_permission_again": {},
-  "loyalty_redeem_points_stores_open_app_settings": "Open Settings",
-  "@loyalty_redeem_points_stores_open_app_settings": {},
-  "loyalty_redeem_points_points": "Points",
-  "@loyalty_redeem_points_points": {},
-  "loyalty_hot_bundles_loyalty_points_label": "Loyalty Points",
-  "@loyalty_hot_bundles_loyalty_points_label": {},
-  "loyalty_redeem_points_no_bundles_available": "No bundles available",
-  "@loyalty_redeem_points_no_bundles_available": {},
-  "loyalty_bundles_redeem_success_message": "Your bundle has been activated successfully.",
-  "@loyalty_bundles_redeem_success_message": {},
-  "loyalty_redeem_points_please_enter_amount_of_points_you_want_to_redeem_to_credit": "Please enter the amount of points you want to redeem to credit",
-  "@loyalty_redeem_points_please_enter_amount_of_points_you_want_to_redeem_to_credit": {},
-  "loyalty_redeem_points_redeem_mamnoon_points_to_credit_to_be_used_for_all_networks": "Redeem Mamnoon points to credit to be used for all networks",
-  "@loyalty_redeem_points_redeem_mamnoon_points_to_credit_to_be_used_for_all_networks": {},
-  "loyalty_extend_validity_select_length_of_extension": "Select extension period",
-  "@loyalty_extend_validity_select_length_of_extension": {},
-  "loyalty_extend_validity_select_extension_subtitle": "Choose how long you want to extend your line validity",
-  "@loyalty_extend_validity_select_extension_subtitle": {},
-  "loyalty_extend_validity_option_subtitle": "Extend validity for {duration}",
-  "@loyalty_extend_validity_option_subtitle": {
-    "placeholders": {
-      "duration": {
-        "type": "String"
-      }
-    }
-  },
-  "loyalty_extend_validity_service_active_info": "Service will be active for selected period",
-  "@loyalty_extend_validity_service_active_info": {},
-  "loyalty_extend_validity_extension_label": "Extension",
-  "@loyalty_extend_validity_extension_label": {},
-  "loyalty_extend_validity_total_price_label": "Total Price",
-  "@loyalty_extend_validity_total_price_label": {},
-  "loyalty_extend_validity_day": "Day",
-  "@loyalty_extend_validity_day": {},
-  "loyalty_extend_validity_days": "Days",
-  "@loyalty_extend_validity_days": {},
-  "loyalty_extend_validity_week": "Week",
-  "@loyalty_extend_validity_week": {},
-  "loyalty_extend_validity_weeks": "Weeks",
-  "@loyalty_extend_validity_weeks": {},
-  "loyalty_extend_validity_month": "Month",
-  "@loyalty_extend_validity_month": {},
-  "loyalty_extend_validity_months": "Months",
-  "@loyalty_extend_validity_months": {},
-  "loyalty_extend_validity_year": "Year",
-  "@loyalty_extend_validity_year": {},
-  "loyalty_extend_validity_extendValidity": "Extend Validity",
-  "@loyalty_extend_validity_extendValidity": {},
-  "loyalty_extend_validity_extendValidityAlertTitle": "Confirm Extension",
-  "@loyalty_extend_validity_extendValidityAlertTitle": {},
-  "loyalty_extend_validity_extendValidityAlertBody1": "Your credit validity will be extended for",
-  "@loyalty_extend_validity_extendValidityAlertBody1": {},
-  "loyalty_extend_validity_extendValidityAlertBody2": "with a fee of",
-  "@loyalty_extend_validity_extendValidityAlertBody2": {},
-  "loyalty_extend_validity_extension_successful": "Extension Successful",
-  "@loyalty_extend_validity_extension_successful": {},
-  "loyalty_extend_validity_success_message": "The validity has been successfully extended.",
-  "@loyalty_extend_validity_success_message": {},
-  "loyalty_extend_validity_noThanks": "No, Thanks",
-  "@loyalty_extend_validity_noThanks": {},
-  "digital_services_explore": "EXPLORE",
-  "@digital_services_explore": {},
-  "digital_services_all": "All",
-  "@digital_services_all": {},
-  "digital_services_games": "GAMES",
-  "@digital_services_games": {},
-  "digital_services_ehealth_insurance": "E-HEALTH & INSURANCE",
-  "@digital_services_ehealth_insurance": {},
-  "digital_services_elearning": "E-LEARNING",
-  "@digital_services_elearning": {},
-  "digital_services_entertainment": "Entertainment",
-  "@digital_services_entertainment": {},
-  "digital_services_zain_world_kids": "ZAIN WORLD KIDS",
-  "@digital_services_zain_world_kids": {},
-  "digital_services_esports_service": "ESPORTS SERVICE",
-  "@digital_services_esports_service": {},
-  "digital_services_appstore": "APP STORE",
-  "@digital_services_appstore": {},
-  "digital_services_voucher_and_estores": "VOUCHER & E-STORES",
-  "@digital_services_voucher_and_estores": {},
-  "digital_services_no_services_available": "No service available",
-  "@digital_services_no_services_available": {},
-  "digital_services_details": "Details",
-  "@digital_services_details": {},
-  "update_version_update_version_cancel": "Cancel",
-  "@update_version_update_version_cancel": {},
-  "update_version_update_required_skip": "Skip",
-  "@update_version_update_required_skip": {},
-  "update_version_update_version_update_badge": "NEW UPDATE",
-  "@update_version_update_version_update_badge": {},
-  "update_version_update_version_update_now": "Update the app now!",
-  "@update_version_update_version_update_now": {},
-  "update_version_update_required_now": "Update the app now!",
-  "@update_version_update_required_now": {},
-  "update_version_update_version_update_title": "Update Required",
-  "@update_version_update_version_update_title": {},
-  "update_version_update_required_title": "Update Required",
-  "@update_version_update_required_title": {},
-  "update_version_update_version_update_desc": "A new version of the app is available.\nGet the latest version to enjoy our newest services,\nenhanced features, and the best possible experience.",
-  "@update_version_update_version_update_desc": {},
-  "update_version_update_required_desc": "A new version of the app is available.\nGet the latest version to enjoy our newest services,\nenhanced features, and the best possible experience.",
-  "@update_version_update_required_desc": {},
-  "update_version_update_highlight_better_performance_title": "Better Performance",
-  "@update_version_update_highlight_better_performance_title": {},
-  "update_version_update_highlight_bug_fixes_title": "Bug Fixes",
-  "@update_version_update_highlight_bug_fixes_title": {},
-  "update_version_update_highlight_security_improvements_title": "Security Improvements",
-  "@update_version_update_highlight_security_improvements_title": {},
-  "edit_profile_screen_title": "Edit Profile",
-  "@edit_profile_screen_title": {},
-  "edit_profile_photo_sheet_title": "Edit Profile Photo",
-  "@edit_profile_photo_sheet_title": {},
-  "edit_profile_remove_current_photo": "Remove Current Photo",
-  "@edit_profile_remove_current_photo": {},
-  "edit_profile_select_new_photo": "Select New Photo",
-  "@edit_profile_select_new_photo": {},
-  "edit_profile_capture_new_photo": "Capture New Photo",
-  "@edit_profile_capture_new_photo": {},
-  "edit_profile_full_name": "Full Name",
-  "@edit_profile_full_name": {},
-  "edit_profile_save_changes": "Save Changes",
-  "@edit_profile_save_changes": {},
-  "edit_profile_confirm_changes_title": "Confirm Changes",
-  "@edit_profile_confirm_changes_title": {},
-  "edit_profile_confirm_changes_message": "Are you sure you want to save these changes?",
-  "@edit_profile_confirm_changes_message": {},
-  "edit_profile_yes_please": "Yes, Please",
-  "@edit_profile_yes_please": {},
-  "edit_profile_back": "Back",
-  "@edit_profile_back": {},
-  "edit_profile_remove_photo_title": "Remove Photo",
-  "@edit_profile_remove_photo_title": {},
-  "edit_profile_remove_photo_message": "Are you sure you want to remove Current Photo?",
-  "@edit_profile_remove_photo_message": {},
   "common_something_went_wrong": "Something went wrong",
   "@common_something_went_wrong": {},
   "common_something_went_wrong_message": "We didn't see that coming. Please try again in a moment.",
   "@common_something_went_wrong_message": {},
   "common_contact_support": "Contact Support",
   "@common_contact_support": {},
-  "zain_near_me_list_of_stores": "List of Store",
-  "@zain_near_me_list_of_stores": {},
-  "zain_near_me_map_view": "Map View",
-  "@zain_near_me_map_view": {},
-  "zain_near_me_no_stores_found": "No stores found",
-  "@zain_near_me_no_stores_found": {},
-  "zain_near_me_enable_location_message": "Please Enable Location Permission to use this feature",
-  "@zain_near_me_enable_location_message": {},
-  "zain_near_me_enable_location_button": "Enable Location Permission",
-  "@zain_near_me_enable_location_button": {},
-  "zain_near_me_request_permission_again": "Request Permission Again",
-  "@zain_near_me_request_permission_again": {},
-  "zain_near_me_open_settings": "Open Settings",
-  "@zain_near_me_open_settings": {},
-  "zain_near_me_map_view_coming_soon": "Map view coming soon",
-  "@zain_near_me_map_view_coming_soon": {},
-  "zain_near_me_permission_permanently_denied": "Location permission is permanently denied. Please open app settings to enable it.",
-  "@zain_near_me_permission_permanently_denied": {},
-  "zain_near_me_get_directions": "Get Directions",
-  "@zain_near_me_get_directions": {},
-  "zain_near_me_close": "Close",
-  "@zain_near_me_close": {},
-  "zain_near_me_store_location_not_available": "Store location not available",
-  "@zain_near_me_store_location_not_available": {},
-  "zain_near_me_distance_km_away": "{distance} km away",
-  "@zain_near_me_distance_km_away": {
-    "placeholders": {
-      "distance": {
-        "type": "String"
-      }
-    }
-  },
-  "zain_near_me_opening_hours_day": "Day",
-  "@zain_near_me_opening_hours_day": {},
-  "zain_near_me_opening_hours_work_hours": "Work hours",
-  "@zain_near_me_opening_hours_work_hours": {},
-  "zain_near_me_opening_hours_rest_hours": "Rest hours",
-  "@zain_near_me_opening_hours_rest_hours": {},
-  "zain_near_me_opening_hours_closed": "Closed",
-  "@zain_near_me_opening_hours_closed": {},
-  "zain_near_me_store_status_opens_closes": "Opens {startTime} • Closes {endTime}",
-  "@zain_near_me_store_status_opens_closes": {
-    "placeholders": {
-      "startTime": {
-        "type": "String"
-      },
-      "endTime": {
-        "type": "String"
-      }
-    }
-  },
-  "zain_near_me_store_status_closed": "Closed",
-  "@zain_near_me_store_status_closed": {},
-  "zain_near_me_day_sunday": "Sunday",
-  "@zain_near_me_day_sunday": {},
-  "zain_near_me_day_monday": "Monday",
-  "@zain_near_me_day_monday": {},
-  "zain_near_me_day_tuesday": "Tuesday",
-  "@zain_near_me_day_tuesday": {},
-  "zain_near_me_day_wednesday": "Wednesday",
-  "@zain_near_me_day_wednesday": {},
-  "zain_near_me_day_thursday": "Thursday",
-  "@zain_near_me_day_thursday": {},
-  "zain_near_me_day_friday": "Friday",
-  "@zain_near_me_day_friday": {},
-  "zain_near_me_day_saturday": "Saturday",
-  "@zain_near_me_day_saturday": {},
-  "zain_near_me_time_am": "AM",
-  "@zain_near_me_time_am": {},
-  "zain_near_me_time_pm": "PM",
-  "@zain_near_me_time_pm": {},
-  "kafoo_intro_slide1_title": "What's KAFOO?",
-  "@kafoo_intro_slide1_title": {},
-  "kafoo_intro_slide1_description": "Kafoo bundles portfolio gives you multiplied credit and unlimited flexibility to make calls and SMS across all local networks and use 4.5G+ Internet.",
-  "@kafoo_intro_slide1_description": {},
-  "kafoo_intro_slide2_title": "What's KAFOO Family?",
-  "@kafoo_intro_slide2_title": {},
-  "kafoo_intro_slide2_description": "With the all-new KAFOO Family Bundles, you can enjoy all the benefits of KAFOO and also share them with your family and friends.",
-  "@kafoo_intro_slide2_description": {},
-  "kafoo_intro_slide3_title": "Free Social Media with KAFOO!",
-  "@kafoo_intro_slide3_title": {},
-  "kafoo_intro_slide3_description": "Enjoy unlimited free social media with all your favorite apps. Avail 20% bonus credit when subscribing through the app on KAFOO 20, 25, and 30.",
-  "@kafoo_intro_slide3_description": {},
-  "kafoo_intro_explore_bundles": "Explore KAFOO Bundles!",
-  "@kafoo_intro_explore_bundles": {},
   "notifications_screen_title": "Notification",
   "@notifications_screen_title": {},
   "notifications_mark_all_as_read": "Mark All as Read",
   "@notifications_mark_all_as_read": {},
   "notifications_show_unread_only": "Show Unread Only",
   "@notifications_show_unread_only": {},
-  "notifications_error_fetching": "Error fetching notifications",
-  "@notifications_error_fetching": {},
-  "auth_native_biometric_title": "Enable Biometric Login",
-  "@auth_native_biometric_title": {},
-  "auth_native_biometric_subtitle": "You will be able to login more quickly",
-  "@auth_native_biometric_subtitle": {},
-  "auth_native_biometric_enable_button": "Enable Biometric",
-  "@auth_native_biometric_enable_button": {},
-  "auth_native_biometric_skip_button": "Skip",
-  "@auth_native_biometric_skip_button": {},
-  "loyalty_dashboard_mamnoon_rewards": "Mamnoon Rewards",
-  "@loyalty_dashboard_mamnoon_rewards": {},
-  "loyalty_dashboard_mamnoon_gifts_discounts": "Gifts and Discounts",
-  "@loyalty_dashboard_mamnoon_gifts_discount": {},
-  "loyalty_dashboard_mamnoon_redeem": "Redeem",
-  "@loyalty_dashboard_mamnoon_redeem": {},
-  "loyalty_dashboard_mamnoon_enter_points": "Enter Points",
-  "@loyalty_dashboard_mamnoon_enter_points": {},
-  "loyalty_dashboard_mamnoon_cancel": "Cancel",
-  "@loyalty_dashboard_mamnoon_cancel": {},
-  "loyalty_dashboard_mamnoon_please_confirm": "Please Confirm",
-  "@loyalty_dashboard_mamnoon_please_confirm": {},
-  "loyalty_dashboard_mamnoon_points_redeem_for_gifts": "{points} points will be Redeemed for this gift.",
-  "@loyalty_dashboard_mamnoon_points_redeem_for_gifts": {
-    "placeholders": {
-      "points": {
-        "type": "int"
-      }
-    }
-  },
-  "loyalty_dashboard_points_range_error": "Points should be between {minPoints} and {maxPoints}.",
-  "@loyalty_dashboard_points_range_error": {
-    "placeholders": {
-      "minPoints": {
-        "type": "int"
-      },
-      "maxPoints": {
-        "type": "int"
-      }
-    }
-  },
-  "loyalty_dashboard_redemption_history": "Rewards history",
-  "@loyalty_dashboard_redemption_history": {},
-  "loyalty_dashboard_no_redemption_history": "There is no redemption history",
-  "@loyalty_dashboard_no_redemption_history": {},
-  "loyalty_dashboard_you_currently_have": "You currently have:",
-  "@loyalty_dashboard_you_currently_have": {},
-  "loyalty_dashboard_total_spendable_points": "{totalSpendablePoints} Points",
-  "@loyalty_dashboard_total_spendable_points": {
-    "placeholders": {
-      "totalSpendablePoints": {
-        "type": "int"
-      }
-    }
-  },
-  "loyalty_dashboard_congratulations": "Congratulations!",
-  "@loyalty_dashboard_congratulations": {},
-  "loyalty_dashboard_points_redeemed_successfully": "Your points are successfully redeemed!",
-  "@loyalty_dashboard_points_redeemed_successfully": {},
-  "loyalty_dashboard_redemption_failed": "Redemption failed",
-  "@loyalty_dashboard_redemption_failed": {},
-  "loyalty_dashboard_see_details": "SEE DETAILS",
-  "@loyalty_dashboard_see_details": {},
-  "loyalty_statement_points_earned": "Points earned",
-  "@loyalty_statement_points_earned": {},
-  "loyalty_statement_points_redeemed": "Points redeemed",
-  "@loyalty_statement_points_redeemed": {},
-  "loyalty_statement_your_point_history": "Points history",
-  "@loyalty_statement_your_point_history": {},
-  "loyalty_statement_no_history_available": "No history available",
-  "@loyalty_statement_no_history_available": {},
-  "loyalty_statement_type": "Type",
-  "@loyalty_statement_type": {},
-  "loyalty_statement_partner": "Partner",
-  "@loyalty_statement_partner": {},
-  "loyalty_statement_mamnoon_points": "Mamnoon Points",
-  "@loyalty_statement_mamnoon_points": {},
-  "loyalty_statement_points_redemption": "Points Redemption",
-  "@loyalty_statement_points_redemption": {},
-  "loyalty_statement_close": "CLOSE",
-  "@loyalty_statement_close": {},
-  "loyalty_statement_redeem_again": "REDEEM AGAIN",
-  "@loyalty_statement_redeem_again": {},
-  "loyalty_dashboard_valid_until": "Valid until {validUntil}",
-  "@loyalty_dashboard_valid_until": {
-    "placeholders": {
-      "validUntil": {
-        "type": "String"
-      }
-    }
-  },
-  "loyalty_dashboard_faq": "FAQ",
-  "@loyalty_dashboard_faq": {},
-  "loyalty_help_no_faq_items_available": "No FAQ items available",
-  "@loyalty_help_no_faq_items_available": {},
-  "loyalty_help_and_faq": "Help & FAQ",
-  "@loyalty_help_and_faq": {},
-  "loyalty_help_contact_us": "Contact us",
-  "@loyalty_help_contact_us": {},
-  "loyalty_dashboard_zain_network": "Zain Network: {zainNetworkNumber}",
-  "@loyalty_dashboard_zain_network": {
-    "placeholders": {
-      "zainNetworkNumber": {
-        "type": "String"
-      }
-    }
-  },
-  "loyalty_dashboard_other_networks": "Other Networks: {otherNetworksNumber}",
-  "@loyalty_dashboard_other_networks": {
-    "placeholders": {
-      "otherNetworksNumber": {
-        "type": "String"
-      }
-    }
-  },
-  "loyalty_help_whatsapp_zain_care": "WhatsApp Zain Care",
-  "@loyalty_help_whatsapp_zain_care": {},
-  "loyalty_help_could_not_open_email_client": "Could not open email client",
-  "@loyalty_help_could_not_open_email_client": {},
-  "loyalty_dashboard_gifts_and_discounts": "Gifts and Discounts",
-  "@loyalty_dashboard_gifts_and_discounts": {},
-  "loyalty_store_details": "Store Details",
-  "@loyalty_store_details": {},
-  "loyalty_store_promo_code_copied": "Promo code copied!",
-  "@loyalty_store_promo_code_copied": {},
-  "loyalty_store_could_not_open_google_maps": "Could not open Google Maps",
-  "@loyalty_store_could_not_open_google_maps": {},
-  "loyalty_store_view_on_map": "VIEW ON MAP",
-  "@loyalty_store_view_on_map": {},
-  "loyalty_store_redeem_offer": "REDEEM",
-  "@loyalty_store_redeem_offer": {},
-  "loyalty_store_normal_redemption_visit_message": "To get this offer please visit {storeName}",
-  "@loyalty_store_normal_redemption_visit_message": {
-    "placeholders": {
-      "storeName": {
-        "type": "String"
-      }
-    }
-  },
-  "loyalty_store_report_merchant": "REPORT MERCHANT",
-  "@loyalty_store_report_merchant": {},
-  "loyalty_store_report_merchant_confirm": "Report merchant?",
-  "@loyalty_store_report_merchant_confirm": {},
-  "loyalty_store_report_merchant_guideline": "Please only report merchants who do not fulfill the offers listed on our app",
-  "@loyalty_store_report_merchant_guideline": {},
-  "loyalty_store_got_it": "GOT IT",
-  "@loyalty_store_got_it": {},
-  "loyalty_store_enter_valid_points": "Enter valid points",
-  "@loyalty_store_enter_valid_points": {},
-  "loyalty_store_minimum_points_required": "Minimum {minPoints} points required",
-  "@loyalty_store_minimum_points_required": {
-    "placeholders": {
-      "minPoints": {
-        "type": "String"
-      }
-    }
-  },
-  "loyalty_store_not_enough_points": "You don’t have enough points",
-  "@loyalty_store_not_enough_points": {},
-  "loyalty_store_maximum_allowed_points": "Maximum allowed is {maxPoints} points",
-  "@loyalty_store_maximum_allowed_points": {
-    "placeholders": {
-      "maxPoints": {
-        "type": "String"
-      }
-    }
-  },
-  "loyalty_store_earn_more_points_to_upgrade": "Earn more {points} points to upgrade to {nextTier}",
-  "@loyalty_store_earn_more_points_to_upgrade": {
-    "placeholders": {
-      "points": {
-        "type": "String"
-      },
-      "nextTier": {
-        "type": "String"
-      }
-    }
-  },
-  "loyalty_dashboard_mamnoon_earn_points_to_redeem": "Earn {missing_points} extra points to redeem this offer",
-  "@loyalty_dashboard_mamnoon_earn_points_to_redeem": {
-    "placeholders": {
-      "missing_points": {
-        "type": "int"
-      }
-    }
-  },
-  "start_date_end_date": "Start date - End date",
-  "@start_date_end_date": {},
-  "select_date": "Select Date",
-  "@select_date": {},
-  "clear_filter": "Clear Filter",
-  "@clear_filter": {},
-  "end_date": "End Date",
-  "@end_date": {},
   "mon": "Mon",
   "@mon": {},
   "tue": "Tue",
@@ -1672,315 +45,11 @@
   "@sat": {},
   "sun": "Sun",
   "@sun": {},
-  "loyalty_info_details_title": "Mamnoon Rewards Points",
-  "@loyalty_info_details_title": {},
-  "loyalty_how_to_earn_points": "How to Earn Points",
-  "@loyalty_how_to_earn_points": {},
-  "loyalty_expiring_on": "Expiring on",
-  "@loyalty_expiring_on": {},
-  "onboarding_welcome_to_zain": "Welcome to Zain",
-  "@onboarding_welcome_to_zain": {},
-  "onboarding_experience_best_services": "Fast, stable, and reliable coverage built for everyday communication, streaming, gaming, and work.",
-  "@onboarding_experience_best_services": {},
-  "onboarding_manage_your_account": "Manage Your Account",
-  "@onboarding_manage_your_account": {},
-  "onboarding_account_description": "Check your balance, recharge, and manage subscriptions easily",
-  "@onboarding_account_description": {},
-  "onboarding_explore_offers": "Explore Offers",
-  "@onboarding_explore_offers": {},
-  "onboarding_offers_description": "Discover amazing offers and bundles tailored for you",
-  "@onboarding_offers_description": {},
   "onboarding_get_started": "Get Started",
-  "error_could_not_open_link": "Could not open link",
-  "@error_could_not_open_link": {},
-  "digital_services_more_details": "More Details",
-  "@digital_services_more_details": {},
-  "common_see_more": "See More",
-  "@common_see_more": {},
-  "common_show_qr_code": "SHOW QR CODE",
-  "@common_show_qr_code": {},
-  "common_show_barcode": "SHOW BARCODE",
-  "@common_show_barcode": {},
-  "common_promo_code": "Promo Code",
-  "@common_promo_code": {},
-  "common_promo_code_copied": "Promo code copied!",
-  "@common_promo_code_copied": {},
-  "common_all": "All",
-  "@common_all": {},
-  "service_data": "Data",
-  "@service_data": {},
-  "service_minutes": "Minutes",
-  "@service_minutes": {},
-  "service_sms": "SMS",
-  "@service_sms": {},
-  "common_redeem_offer": "Redeem Offer",
-  "@common_redeem_offer": {},
-  "redeem_offer_confirmation_message": "points will be Redeemed for this gift",
-  "@redeem_offer_confirmation_message": {},
-  "redeem_offer_button": "REDEEM OFFER",
-  "@redeem_offer_button": {},
-  "common_congratulations": "Congratulations!",
-  "@common_congratulations": {},
-  "redeem_barcode_success_message": "Your barcode has been redeemed successfully",
-  "@redeem_barcode_success_message": {},
-  "common_close": "CLOSE",
-  "@common_close": {},
-  "barcode_error_unable_to_generate": "Unable to generate barcode",
-  "@barcode_error_unable_to_generate": {},
-  "redeem_offer_success_discount_received": "You have got the discount",
-  "@redeem_offer_success_discount_received": {},
-  "redeem_offer_show_to_merchant": "Show the dialog to the merchant {merchantName} to get:",
-  "@redeem_offer_show_to_merchant": {
-    "placeholders": {
-      "merchantName": {
-        "type": "String"
-      }
-    }
-  },
-  "qr_scan_get_discount": "Scan the QR code to get the discount",
-  "@qr_scan_get_discount": {},
-  "redeem_offer_copy_code": "Copy Code",
-  "@redeem_offer_copy_code": {},
-  "report_merchant_success_title": "Merchant reported",
-  "@report_merchant_success_title": {},
-  "report_merchant_success_message": "We will look into this and make sure it does not happen again",
-  "@report_merchant_success_message": {},
-  "redeem_offer_success_discount_text_1": "You've got the discount. Show the counter to the merchant",
-  "@redeem_offer_success_discount_text_1": {},
-  "common_unable_to_generate_barcode": "Unable to generate barcode",
-  "@common_unable_to_generate_barcode": {},
-  "redeem_offer_success_to_get": "to get:",
-  "@redeem_offer_success_to_get": {},
-  "common_code": "code:",
-  "@common_code": {},
-  "common_details": "Details",
-  "@common_details": {},
-  "common_redeem_on": "Redeem on",
-  "@common_redeem_on": {},
-  "common_choose_governorate": "Choose Governorate",
-  "@common_choose_governorate": {},
-  "common_select": "SELECT",
-  "@common_select": {},
-  "common_clear_filter": "CLEAR FILTER",
-  "@common_clear_filter": {},
-  "common_selected": "Selected",
-  "@common_selected": {},
-  "scan_card": "Scan Card",
-  "@scan_card": {},
-  "initializing_camera": "Initializing camera...",
-  "@initializing_camera": {},
-  "camera_no_available": "No cameras available",
-  "@camera_no_available": {},
-  "camera_permission_required": "Camera permission is required",
-  "@camera_permission_required": {},
-  "camera_permission_settings": "Camera permission is required. Please enable it in Settings.",
-  "@camera_permission_settings": {},
-  "camera_init_failed": "Failed to initialize camera",
-  "@camera_init_failed": {},
   "camera_init_failed_generic": "Failed to initialize camera",
   "@camera_init_failed_generic": {},
-  "position_card": "Position card within the frame",
-  "@position_card": {},
-  "card_not_detected": "Card Not Detected",
-  "@card_not_detected": {},
-  "card_not_detected_desc": "Could not detect a card number. Please try again.",
-  "@card_not_detected_desc": {},
   "try_again": "Try Again",
   "@try_again": {},
-  "error_processing_image": "Error processing image",
-  "@error_processing_image": {},
-  "open_settings": "Open Settings",
-  "@open_settings": {},
-  "use_scanned_code": "Use scanned code",
-  "@use_scanned_code": {},
-  "enter_manually": "Enter manually",
-  "@enter_manually": {},
-  "instruction_digits": "To start scanning, place the sixteen-digit number inside the yellow box.",
-  "@instruction_digits": {},
-  "instruction_qr": "To start scanning, place the QR code inside the yellow box.",
-  "@instruction_qr": {},
-  "scanner_mode_digits": "DIGITS",
-  "@scanner_mode_digits": {},
-  "scanner_mode_qr": "QR CODE",
-  "@scanner_mode_qr": {},
-  "voucher_pin_scanner": "Voucher Pin Scanner",
-  "@voucher_pin_scanner": {},
-  "zain_cash_recharge_failed": "Zain Cash Recharge Failed",
-  "@zain_cash_recharge_failed": {},
-  "transaction_failed": "Transaction failed",
-  "@transaction_failed": {},
-  "submit_new_ticket": "Submit New Ticket",
-  "@submit_new_ticket": {},
-  "submit_ticket_attachments": "Attachments",
-  "@submit_ticket_attachments": {},
-  "submit_ticket_upload_attachment": "Upload Attachment",
-  "@submit_ticket_upload_attachment": {},
-  "submit_ticket_upload_files_hint": "Upload up to {maxFiles} files (PDF, JPG, JPEG, PNG)",
-  "@submit_ticket_upload_files_hint": {
-    "placeholders": {
-      "maxFiles": {}
-    }
-  },
-  "submit_ticket_attachment_invalid_file_type": "File type not supported. Please upload PDF, JPG, JPEG, or PNG.",
-  "@submit_ticket_attachment_invalid_file_type": {},
-  "submit_ticket_attachment_duplicate_file": "This file has already been uploaded.",
-  "@submit_ticket_attachment_duplicate_file": {},
-  "submit_ticket_attachment_unreadable_file": "Unable to read file.",
-  "@submit_ticket_attachment_unreadable_file": {},
-  "submit_ticket_attachment_size_limit_exceeded": "Total attachment size must be less than {maxSizeMb} MB.",
-  "@submit_ticket_attachment_size_limit_exceeded": {
-    "placeholders": {
-      "maxSizeMb": {}
-    }
-  },
-  "submit_ticket_hint_upload_images": "Upload up to 3 images (optional)",
-  "@submit_ticket_hint_upload_images": {},
-  "submit_ticket_description": "Description",
-  "@submit_ticket_description": {},
-  "submit_ticket_describe_your_issue": "Describe your issue…",
-  "@submit_ticket_describe_your_issue": {},
-  "submit_ticket_complaint_type": "Complaint Type",
-  "@submit_ticket_complaint_type": {},
-  "submit_ticket_location": "Location",
-  "@submit_ticket_location": {},
-  "submit_ticket_governorate": "Governorate",
-  "@submit_ticket_governorate": {},
-  "submit_ticket_city": "City",
-  "@submit_ticket_city": {},
-  "submit_ticket_enter_your_answer": "Enter your answer",
-  "@submit_ticket_enter_your_answer": {},
-  "submit_ticket_date_future_error": "Date cannot be in the future",
-  "@submit_ticket_date_future_error": {},
-  "submit_ticket_time_future_error": "Invalid time",
-  "@submit_ticket_time_future_error": {},
-  "submit_ticket_additional_questions": "Additional Questions",
-  "@submit_ticket_additional_questions": {},
-  "submit_ticket_success_message": "Your ticket has been submitted successfully. We will get back to you soon.",
-  "@submit_ticket_success_message": {},
-  "submit_ticket_select_summary": "Select summary",
-  "@submit_ticket_select_summary": {},
-  "submit_ticket_select_option": "Select an option",
-  "@submit_ticket_select_option": {},
-  "submit_ticket_summary": "Summary",
-  "@submit_ticket_summary": {},
-  "submit_ticket_ticket_files_count": "Ticket #{ticketId} • {count, plural, one{# file} other{# files}}",
-  "@submit_ticket_ticket_files_count": {
-    "description": "Ticket id with file count",
-    "placeholders": {
-      "ticketId": {},
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "ticket_count_label": "{count, plural, one{# Ticket} other{# Tickets}}",
-  "@ticket_count_label": {
-    "description": "Shows number of tickets",
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "submit_ticket_attachment_count": "{count} Attachment(s)",
-  "@submit_ticket_attachment_count": {
-    "description": "Attachment count label",
-    "placeholders": {
-      "count": {}
-    }
-  },
-  "submit_ticket_no_attachments": "No attachments",
-  "@submit_ticket_no_attachments": {},
-  "submit_ticket_answers": "Answers",
-  "@submit_ticket_answers": {},
-  "submit_ticket_details": "Ticket Details",
-  "@submit_ticket_details": {},
-  "submit_ticket_no_tickets": "No tickets yet",
-  "@submit_ticket_no_tickets": {},
-  "submit_ticket_create_hint": "Submit a new ticket using the button below.",
-  "@submit_ticket_create_hint": {},
-  "submit_ticket_retry": "Retry",
-  "@submit_ticket_retry": {},
-  "submit_ticket_submit_ticket": "Submit Ticket",
-  "@submit_ticket_submit_ticket": {},
-  "submit_ticket_my_tickets": "My Tickets",
-  "@submit_ticket_my_tickets": {},
-  "submit_ticket_search": "Search tickets…",
-  "@submit_ticket_search": {},
-  "submit_ticket_summary_label": "Summary:",
-  "@submit_ticket_summary_label": {},
-  "submit_ticket_created": "Created:",
-  "@submit_ticket_created": {},
-  "submit_ticket_view_details": "View Details",
-  "@submit_ticket_view_details": {},
-  "submit_ticket_reopen": "Re-open Ticket",
-  "@submit_ticket_reopen": {},
-  "submit_ticket_reopen_instruction": "Select a reason and provide additional details.",
-  "@submit_ticket_reopen_instruction": {},
-  "submit_ticket_reopen_success": "Success opening ticket",
-  "@submit_ticket_reopen_success": {},
-  "submit_ticket_additional_details": "Additional details (optional)",
-  "@submit_ticket_additional_details": {},
-  "submit_ticket_no_matches": "No matches found",
-  "@submit_ticket_no_matches": {},
-  "submit_ticket_no_results_hint": "We couldn't find any tickets matching your search.",
-  "@submit_ticket_no_results_hint": {},
-  "submit_ticket_description_hint": "Describe your issue…",
-  "@submit_ticket_description_hint": {},
-  "submit_ticket_scan_card": "Scan Card",
-  "@submit_ticket_scan_card": {},
-  "submit_ticket_initializing_camera": "Initializing camera...",
-  "@submit_ticket_initializing_camera": {},
-  "submit_ticket_camera_no_available": "No cameras available",
-  "@submit_ticket_camera_no_available": {},
-  "submit_ticket_camera_permission_required": "Camera permission is required",
-  "@submit_ticket_camera_permission_required": {},
-  "submit_ticket_camera_permission_settings": "Camera permission is required. Please enable it in Settings.",
-  "@submit_ticket_camera_permission_settings": {},
-  "submit_ticket_camera_init_failed": "Failed to initialize camera",
-  "@submit_ticket_camera_init_failed": {},
-  "submit_ticket_camera_init_failed_generic": "Failed to initialize camera",
-  "@submit_ticket_camera_init_failed_generic": {},
-  "submit_ticket_position_card": "Position card within the frame",
-  "@submit_ticket_position_card": {},
-  "submit_ticket_card_not_detected": "Card Not Detected",
-  "@submit_ticket_card_not_detected": {},
-  "submit_ticket_card_not_detected_desc": "Could not detect a card number. Please try again.",
-  "@submit_ticket_card_not_detected_desc": {},
-  "submit_ticket_try_again": "Try Again",
-  "@submit_ticket_try_again": {},
-  "submit_ticket_error_processing_image": "Error processing image",
-  "@submit_ticket_error_processing_image": {},
-  "submit_ticket_open_settings": "Open Settings",
-  "@submit_ticket_open_settings": {},
-  "submit_ticket_use_scanned_code": "Use scanned code",
-  "@submit_ticket_use_scanned_code": {},
-  "submit_ticket_enter_manually": "Enter Manually",
-  "@submit_ticket_enter_manually": {},
-  "submit_ticket_voucher_pin_scanner": "Voucher Pin Scanner",
-  "@submit_ticket_voucher_pin_scanner": {},
-  "submit_ticket_submit_new_ticket": "Submit New Ticket",
-  "@submit_ticket_submit_new_ticket": {},
-  "submit_ticket_ticket_submitted": "Ticket Submitted!",
-  "@submit_ticket_ticket_submitted": {},
-  "submit_ticket_ticket_number": "Ticket #{ticketNumber}",
-  "@submit_ticket_ticket_number": {
-    "placeholders": {
-      "ticketNumber": {}
-    }
-  },
-  "submit_ticket_usim_required": "USIM Required",
-  "@submit_ticket_usim_required": {},
-  "submit_ticket_usim_required_desc": "You need USIM to create ticket in \"{summary}\".",
-  "@submit_ticket_usim_required_desc": {
-    "placeholders": {
-      "summary": {}
-    }
-  },
-  "common_item": "Item",
-  "@common_item": {},
-  "enter_card_number": "Enter card number",
-  "@enter_card_number": {},
   "@onboarding_get_started": {},
   "today": "Today",
   "@today": {},
@@ -1992,66 +61,10 @@
   "@older": {},
   "confirm_delete_title": "Delete notification?",
   "confirm_delete_description": "This action cannot be undone. The notification will be permanently removed.",
-  "time_just_now": "Just now",
-  "@time_just_now": {},
-  "time_minutes_ago": "{count} minute(s) ago",
-  "@time_minutes_ago": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "time_hours_ago": "{count} hour(s) ago",
-  "@time_hours_ago": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "time_days_ago": "{count} day(s) ago",
-  "@time_days_ago": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "time_weeks_ago": "{count} week(s) ago",
-  "@time_weeks_ago": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "time_months_ago": "{count} month(s) ago",
-  "@time_months_ago": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "time_years_ago": "{count} year(s) ago",
-  "@time_years_ago": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
   "notifications_no_unread": "No unread notifications",
   "@notifications_no_unread": {},
   "notifications_show_all": "Show all",
   "@notifications_show_all": {},
-  "general_error": "General error",
-  "@general_error": {},
-  "common_error": "Error",
-  "@common_error": {},
-  "authentication_failed": "Authentication failed. Please try again.",
-  "@authentication_failed": {},
   "failed_to_check_authentication_status": "Failed to check authentication status",
   "@failed_to_check_authentication_status": {},
   "common_page_not_found_title": "Page not found",
@@ -2060,212 +73,14 @@
   "@common_page_not_found_description": {},
   "common_go_home": "Go Home",
   "@common_go_home": {},
-  "loyalty_statement_date": "Date",
-  "@loyalty_statement_date": {},
-  "common_not_applicable": "N/A",
-  "@common_not_applicable": {},
-  "offers_tab_service_types_joiner": ", and ",
-  "@offers_tab_service_types_joiner": {},
   "common_no_internet_connection_short": "No internet connection",
   "@common_no_internet_connection_short": {},
-  "recharge_hyper_pay_no_bridge_response": "No response from payment service",
-  "@recharge_hyper_pay_no_bridge_response": {},
-  "recharge_hyper_pay_payment_failed": "Payment failed",
-  "@recharge_hyper_pay_payment_failed": {},
-  "recharge_hyper_pay_unknown_response_type": "Unknown payment response: {responseType}",
-  "@recharge_hyper_pay_unknown_response_type": {
-    "placeholders": {
-      "responseType": {
-        "type": "String"
-      }
-    }
-  },
-  "recharge_hyper_pay_platform_error": "Platform error",
-  "@recharge_hyper_pay_platform_error": {},
   "common_unknown_error": "Something went wrong. Please try again.",
   "@common_unknown_error": {},
-  "onboarding_stay_connected_across_iraq": "Stay Connected Across Iraq",
-  "@onboarding_stay_connected_across_iraq": {},
-  "onboarding_connectivity": "Connectivity",
-  "@onboarding_connectivity": {},
-  "onboarding_account_dashboard": "Account Dashboard",
-  "@onboarding_account_dashboard": {},
-  "onboarding_everything_in_one_place": "Everything in One Place",
-  "@onboarding_everything_in_one_place": {},
-  "onboarding_manage_services_description": "Manage balance, recharge, subscriptions, internet packages, and usage instantly.",
-  "@onboarding_manage_services_description": {},
-  "onboarding_loyalty_program": "Loyalty Program",
-  "@onboarding_loyalty_program": {},
-  "onboarding_rewards_more": "Rewards & More",
-  "@onboarding_rewards_more": {},
-  "onboarding_loyalty_description": "Unlock exclusive offers, collect rewards, discover entertainment, and enjoy personalized deals.",
-  "@onboarding_loyalty_description": {},
-  "onboarding_join_zain": "Join Zain",
-  "@onboarding_join_zain": {},
-  "onboarding_join_customers": "Join 20M+ Satisfied Customers",
-  "@onboarding_join_customers": {},
-  "onboarding_create_account_description": "Create your account in seconds and start managing your services instantly.",
-  "@onboarding_create_account_description": {},
-  "imtiyaz_merchant_details_confirm_redeption_popup_title": "Please Confirm",
-  "@imtiyaz_merchant_details_confirm_redeption_popup_title": {},
-  "zain_loyalty_promo_codes_redemption_popup_title": "Confirmation",
-  "@zain_loyalty_promo_codes_redemption_popup_title": {},
-  "redeem_offer_confirmation_no_points_message": "Are you sure you want to reveal the offer for {merchantName}?",
-  "@redeem_offer_confirmation_no_points_message": {
-    "placeholders": {
-      "merchantName": {
-        "type": "String"
-      }
-    }
-  },
-  "common_success": "Success",
-  "@common_success": {},
-  "ticket_location_picker_selectLocation": "Select location",
-  "@ticket_location_picker_selectLocation": {},
-  "ticket_location_picker_readingAddress": "Reading address…",
-  "@ticket_location_picker_readingAddress": {},
-  "ticket_location_picker_addressUnavailable": "Address unavailable for this point",
-  "@ticket_location_picker_addressUnavailable": {},
-  "submit_ticket_location_pick_prompt": "We need you to pick the issue location on the map.",
-  "@submit_ticket_location_pick_prompt": {},
-  "submit_ticket_tap_to_pick_on_map": "Tap to pick on map",
-  "@submit_ticket_tap_to_pick_on_map": {},
-  "bundle_sharing_view_users": "Manage lines",
-  "@bundle_sharing_view_users": {},
-  "bundle_sharing_offer_management": "Offer Management",
-  "@bundle_sharing_offer_management": {},
-  "bundle_sharing_add_user": "Add Member",
-  "@bundle_sharing_add_user": {},
-  "bundle_sharing_remaining_out_of_iqd": "Remaining out of {amount} IQD",
-  "@bundle_sharing_remaining_out_of_iqd": {
-    "placeholders": {
-      "amount": {
-        "type": "String",
-        "example": "50,000"
-      }
-    }
-  },
-  "bundle_sharing_remaining_users": "You can add a total of {count} members",
-  "@bundle_sharing_remaining_users": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "bundle_sharing_member_label": "Member {index}",
-  "@bundle_sharing_member_label": {
-    "placeholders": {
-      "index": {
-        "type": "int"
-      }
-    }
-  },
-  "bundle_sharing_valid_till": "Valid until {date}",
-  "@bundle_sharing_valid_till": {
-    "placeholders": {
-      "date": {
-        "type": "String",
-        "example": "31/12/2026"
-      }
-    }
-  },
-  "bundle_sharing_enter_number": "Enter Zain number",
-  "@bundle_sharing_enter_number": {},
-  "bundle_sharing_confirm": "Confirm",
-  "@bundle_sharing_confirm": {},
-  "bundle_sharing_confirm_add_and_assign": "Add {number} and assign them {amount}?",
-  "@bundle_sharing_confirm_add_and_assign": {
-    "placeholders": {
-      "number": {
-        "type": "String"
-      },
-      "amount": {
-        "type": "String"
-      }
-    }
-  },
-  "bundle_sharing_parent_member": "You can't add your own number",
-  "@bundle_sharing_parent_member": {},
-  "bundle_sharing_already_member": "This number is already a member",
-  "@bundle_sharing_already_member": {},
-  "bundle_sharing_user_not_on_kafoo": "User not on Kafoo",
-  "@bundle_sharing_user_not_on_kafoo": {},
-  "bundle_sharing_user_not_on_kafoo_message": "{number} is not a Kafoo member yet. Invite them to migrate.",
-  "@bundle_sharing_user_not_on_kafoo_message": {
-    "placeholders": {
-      "number": {
-        "type": "String"
-      }
-    }
-  },
-  "bundle_sharing_invite_to_kafoo": "Invite to Kafoo",
-  "@bundle_sharing_invite_to_kafoo": {},
-  "bundle_sharing_invite_success": "Invitation sent",
-  "@bundle_sharing_invite_success": {},
-  "bundle_sharing_invite_success_message": "We've invited {number}. You can add them once they migrate to Kafoo.",
-  "@bundle_sharing_invite_success_message": {
-    "placeholders": {
-      "number": {
-        "type": "String"
-      }
-    }
-  },
-  "bundle_sharing_ineligible_number_title": "Ineligible number",
-  "@bundle_sharing_ineligible_number_title": {},
-  "bundle_sharing_ineligible_number_message": "This number can't be added to your family bundle.",
-  "@bundle_sharing_ineligible_number_message": {},
-  "bundle_sharing_add_success": "{amount} shared with the member",
-  "@bundle_sharing_add_success": {
-    "placeholders": {
-      "amount": {
-        "type": "String"
-      }
-    }
-  },
-  "bundle_sharing_quota": "Sharing Credit",
-  "@bundle_sharing_quota": {},
-  "bundle_sharing_back": "Back",
-  "@bundle_sharing_back": {},
-  "bundle_sharing_confirm_remove_member": "Remove {number} from your family bundle?",
-  "@bundle_sharing_confirm_remove_member": {
-    "placeholders": {
-      "number": {
-        "type": "String"
-      }
-    }
-  },
-  "bundle_sharing_remove_success": "Member removed",
-  "@bundle_sharing_remove_success": {},
-  "bundle_sharing_change_quota": "Manage Sharing Quota",
-  "@bundle_sharing_change_quota": {},
-  "bundle_sharing_save_changes": "Save Changes",
-  "@bundle_sharing_save_changes": {},
-  "bundle_sharing_confirm_quota_changes_message": "Are you sure you want to add additional shared credit with {number} for {amount}?",
-  "@bundle_sharing_confirm_quota_changes_message": {
-    "placeholders": {
-      "number": {
-        "type": "String"
-      },
-      "amount": {
-        "type": "String"
-      }
-    }
-  },
-  "send_a_gift": "Send a Gift",
-  "@send_a_gift": {},
+  "common_retry": "Try again",
+  "@common_retry": {},
   "choose_preferred_language": "Choose your preferred language to continue",
   "@choose_preferred_language": {},
-  "language_save_changes": "Save Changes",
-  "@language_save_changes": {},
-  "bundle_validity_days": "{days, plural, =0 {0 Days} =1 {1 Day} other {{days} Days}}",
-  "@bundle_validity_days": {
-    "placeholders": {
-      "days": {
-        "type": "int"
-      }
-    }
-  },
   "welcome_tagline": "A safe space to be lighter",
   "@welcome_tagline": {},
   "welcome_i_am_ventor": "I am a Ventor",
@@ -2300,42 +115,6 @@
   "@onboarding_page5_description": {},
   "change_language": "Change Language",
   "@change_language": {},
-  "ventor_onboarding_page1_title": "A Safe Place to Be Heard",
-  "@ventor_onboarding_page1_title": {},
-  "ventor_onboarding_page1_description": "Sometimes all you need is someone who listens.",
-  "@ventor_onboarding_page1_description": {},
-  "ventor_onboarding_page2_title": "Express Yourself",
-  "@ventor_onboarding_page2_title": {},
-  "ventor_onboarding_page2_description": "Talk freely with verified listeners in a private and judgment-free environment.",
-  "@ventor_onboarding_page2_description": {},
-  "ventor_onboarding_page3_title": "Find the Right Listener",
-  "@ventor_onboarding_page3_title": {},
-  "ventor_onboarding_page3_description": "Choose a listener based on language, expertise, personality, reviews, and voice introduction.",
-  "@ventor_onboarding_page3_description": {},
-  "ventor_onboarding_page4_title": "Your Privacy Comes First",
-  "@ventor_onboarding_page4_title": {},
-  "ventor_onboarding_page4_description": "Stay anonymous. You decide what to share. Every conversation is private.",
-  "@ventor_onboarding_page4_description": {},
-  "listener_onboarding_page1_title": "Be the Listener Someone Needs",
-  "@listener_onboarding_page1_title": {},
-  "listener_onboarding_page1_description": "Your empathy can help someone feel lighter, heard, and less alone.",
-  "@listener_onboarding_page1_description": {},
-  "listener_onboarding_page2_title": "Listen with Compassion",
-  "@listener_onboarding_page2_title": {},
-  "listener_onboarding_page2_description": "Support people through tough moments in a private, judgment-free space.",
-  "@listener_onboarding_page2_description": {},
-  "listener_onboarding_page3_title": "Build Your Listener Profile",
-  "@listener_onboarding_page3_title": {},
-  "listener_onboarding_page3_description": "Share your languages, expertise, personality, and a voice introduction.",
-  "@listener_onboarding_page3_description": {},
-  "listener_onboarding_page4_title": "Support on Your Schedule",
-  "@listener_onboarding_page4_title": {},
-  "listener_onboarding_page4_description": "Choose when you're available and make a difference whenever it works for you.",
-  "@listener_onboarding_page4_description": {},
-  "sign_up_lets_get_started": "Let's Get Started",
-  "@sign_up_lets_get_started": {},
-  "sign_up_create_account_subtitle": "Create an account to begin your journey.",
-  "@sign_up_create_account_subtitle": {},
   "auth_ventor_title": "Welcome, Ventor",
   "@auth_ventor_title": {},
   "auth_ventor_subtitle": "Sign in or create an account to talk and feel heard.",
@@ -2350,40 +129,12 @@
   "@auth_continue_with_google": {},
   "auth_continue_with_email": "Continue with Email",
   "@auth_continue_with_email": {},
-  "sign_in_welcome_back": "Welcome Back",
-  "@sign_in_welcome_back": {},
-  "sign_in_subtitle": "Sign in to continue your journey.",
-  "@sign_in_subtitle": {},
-  "sign_in_dont_have_account": "Don't have an account?",
-  "@sign_in_dont_have_account": {},
-  "sign_in_sign_up": "Sign Up",
-  "@sign_in_sign_up": {},
-  "sign_up_continue_with_apple": "Continue with Apple",
-  "@sign_up_continue_with_apple": {},
-  "sign_up_continue_with_google": "Continue with Google",
-  "@sign_up_continue_with_google": {},
-  "sign_up_continue_with_email": "Continue with Email",
-  "@sign_up_continue_with_email": {},
-  "sign_in_continue_with_apple": "Sign in with Apple",
-  "@sign_in_continue_with_apple": {},
-  "sign_in_continue_with_google": "Sign in with Google",
-  "@sign_in_continue_with_google": {},
-  "sign_in_continue_with_email": "Sign in with Email",
-  "@sign_in_continue_with_email": {},
-  "sign_up_or": "or",
-  "@sign_up_or": {},
   "email_registration_title": "Continue with Email",
   "@email_registration_title": {},
-  "email_registration_subtitle": "Enter your email and password to continue.",
-  "@email_registration_subtitle": {},
   "email_registration_ventor_subtitle": "Sign in or create your Ventor account with email.",
   "@email_registration_ventor_subtitle": {},
   "email_registration_listener_subtitle": "Sign in or create your Listener account with email.",
   "@email_registration_listener_subtitle": {},
-  "email_sign_in_title": "Sign in with Email",
-  "@email_sign_in_title": {},
-  "email_sign_in_subtitle": "Enter your email and password to continue.",
-  "@email_sign_in_subtitle": {},
   "email_registration_email_label": "Email",
   "@email_registration_email_label": {},
   "email_registration_email_hint": "Enter your email",
@@ -2392,8 +143,6 @@
   "@email_registration_password_label": {},
   "email_registration_password_hint": "Enter your password",
   "@email_registration_password_hint": {},
-  "email_sign_in_password_hint": "Enter your password",
-  "@email_sign_in_password_hint": {},
   "email_registration_password_must_contain": "Password must contain:",
   "@email_registration_password_must_contain": {},
   "email_registration_rule_min_length": "At least 8 characters",
@@ -2404,26 +153,20 @@
   "@email_registration_rule_number": {},
   "email_registration_create_account": "Continue",
   "@email_registration_create_account": {},
-  "email_sign_in_button": "Sign In",
-  "@email_sign_in_button": {},
+  "email_registration_sign_in": "Sign in",
+  "@email_registration_sign_in": {},
   "email_registration_invalid_email": "Please enter a valid email address",
   "@email_registration_invalid_email": {},
-  "account_created_title": "Account Created!",
-  "@account_created_title": {},
-  "account_created_subtitle": "We've sent a verification link to your email address.",
-  "@account_created_subtitle": {},
-  "account_created_check_email": "Check Your Email",
-  "@account_created_check_email": {},
-  "account_created_resend_email": "Resend Email",
-  "@account_created_resend_email": {},
-  "account_created_resend_email_countdown": "Resend Email ({time})",
-  "@account_created_resend_email_countdown": {
+  "email_registration_role_mismatch": "This email belongs to a {role} account. Go back and choose the matching role, or use a different email.",
+  "@email_registration_role_mismatch": {
     "placeholders": {
-      "time": {
+      "role": {
         "type": "String"
       }
     }
   },
+  "email_registration_checking_email": "Checking email…",
+  "@email_registration_checking_email": {},
   "listener_reg_continue": "Continue",
   "@listener_reg_continue": {},
   "listener_reg_skip_for_now": "Skip for now",
@@ -2471,8 +214,6 @@
   "@listener_reg_select_country": {},
   "listener_reg_search_country": "Search by country or code",
   "@listener_reg_search_country": {},
-  "listener_reg_password": "Password",
-  "@listener_reg_password": {},
   "listener_reg_agree_prefix": "I agree to the ",
   "@listener_reg_agree_prefix": {},
   "listener_reg_terms": "Terms of Service",
@@ -2481,20 +222,6 @@
   "@listener_reg_agree_and": {},
   "listener_reg_privacy": "Privacy Policy",
   "@listener_reg_privacy": {},
-  "listener_reg_already_have": "Already have an account?",
-  "@listener_reg_already_have": {},
-  "listener_reg_sign_in": "Sign in",
-  "@listener_reg_sign_in": {},
-  "listener_reg_step_coming_soon": "This step is coming next. Continue to preview the flow.",
-  "@listener_reg_step_coming_soon": {},
-  "listener_reg_step_create_account": "Create Account",
-  "@listener_reg_step_create_account": {},
-  "listener_reg_step_verify_email": "Verify Email",
-  "@listener_reg_step_verify_email": {},
-  "listener_reg_step_profile_photo": "Profile Photo",
-  "@listener_reg_step_profile_photo": {},
-  "listener_reg_step_boundaries": "Things You Don't Want",
-  "@listener_reg_step_boundaries": {},
   "listener_reg_boundaries_title": "Set your boundaries",
   "@listener_reg_boundaries_title": {},
   "listener_reg_boundaries_subtitle": "Topics you don't want to discuss. We will respect your choice.",
@@ -2517,8 +244,6 @@
   "@listener_reg_boundary_other": {},
   "listener_reg_boundary_other_hint": "Please specify",
   "@listener_reg_boundary_other_hint": {},
-  "listener_reg_step_about_you": "About You",
-  "@listener_reg_step_about_you": {},
   "listener_reg_about_title": "Tell us about yourself",
   "@listener_reg_about_title": {},
   "listener_reg_about_subtitle": "This helps us match you with the right conversations.",
@@ -2533,20 +258,6 @@
   "@listener_reg_city": {},
   "listener_reg_enter_city": "Enter your city",
   "@listener_reg_enter_city": {},
-  "listener_reg_select_city": "Select city",
-  "@listener_reg_select_city": {},
-  "listener_reg_search_city": "Search or type a city",
-  "@listener_reg_search_city": {},
-  "listener_reg_type_city": "Type your city name above to continue.",
-  "@listener_reg_type_city": {},
-  "listener_reg_use_city": "Use \"{city}\"",
-  "@listener_reg_use_city": {
-    "placeholders": {
-      "city": {
-        "type": "String"
-      }
-    }
-  },
   "listener_reg_languages_you_speak": "Languages you speak",
   "@listener_reg_languages_you_speak": {},
   "listener_reg_select_languages": "Select languages",
@@ -2555,10 +266,6 @@
   "@listener_reg_search_language": {},
   "listener_reg_done": "Done",
   "@listener_reg_done": {},
-  "listener_reg_step_languages": "Languages",
-  "@listener_reg_step_languages": {},
-  "listener_reg_step_expertise": "Areas You're Comfortable With",
-  "@listener_reg_step_expertise": {},
   "listener_reg_areas_title": "What would you like to listen to?",
   "@listener_reg_areas_title": {},
   "listener_reg_areas_subtitle": "Choose the topics you feel comfortable supporting others with.",
@@ -2585,8 +292,6 @@
   "@listener_reg_area_other": {},
   "listener_reg_area_other_hint": "Please specify",
   "@listener_reg_area_other_hint": {},
-  "listener_reg_step_voice_intro": "Voice Introduction",
-  "@listener_reg_step_voice_intro": {},
   "listener_reg_voice_title": "Record a short introduction",
   "@listener_reg_voice_title": {},
   "listener_reg_voice_subtitle": "Introduce yourself so users can get to know you.",
@@ -2599,8 +304,6 @@
   "@listener_reg_voice_stop": {},
   "listener_reg_voice_play": "Play",
   "@listener_reg_voice_play": {},
-  "listener_reg_voice_tip": "Tip: Be natural, kind, and authentic.",
-  "@listener_reg_voice_tip": {},
   "listener_reg_voice_tips_title": "Recording Tips",
   "@listener_reg_voice_tips_title": {},
   "listener_reg_voice_tip_1": "Speak naturally.",
@@ -2731,10 +434,6 @@
   "@listener_reg_add": {},
   "listener_reg_cancel": "Cancel",
   "@listener_reg_cancel": {},
-  "listener_reg_step_guidelines": "Community Guidelines",
-  "@listener_reg_step_guidelines": {},
-  "listener_reg_step_identity": "Identity Verification",
-  "@listener_reg_step_identity": {},
   "listener_reg_identity_title": "Verify your identity",
   "@listener_reg_identity_title": {},
   "listener_reg_identity_subtitle": "This helps us keep our community safe and trusted.",
@@ -2747,16 +446,8 @@
   "@listener_reg_identity_selfie_title": {},
   "listener_reg_identity_selfie_subtitle": "Make sure your face is clearly visible",
   "@listener_reg_identity_selfie_subtitle": {},
-  "listener_reg_identity_liveness_title": "Liveness check",
-  "@listener_reg_identity_liveness_title": {},
-  "listener_reg_identity_liveness_subtitle": "We'll ask you to move your head slightly",
-  "@listener_reg_identity_liveness_subtitle": {},
-  "listener_reg_identity_start": "Start Verification",
-  "@listener_reg_identity_start": {},
   "listener_reg_identity_secure_note": "Your data is encrypted and secure",
   "@listener_reg_identity_secure_note": {},
-  "listener_reg_step_review_submit": "Review & Submit",
-  "@listener_reg_step_review_submit": {},
   "listener_profile_under_review_title": "Your profile is under review",
   "@listener_profile_under_review_title": {},
   "listener_profile_under_review_subtitle": "Our team is reviewing your information to ensure a safe and trusted community.",
@@ -2887,14 +578,6 @@
   "@home_tab_rewards": {},
   "home_tab_profile": "Profile",
   "@home_tab_profile": {},
-  "listener_home_dashboard_placeholder": "Your listener overview will appear here.",
-  "@listener_home_dashboard_placeholder": {},
-  "listener_home_sessions_placeholder": "Upcoming and past listening sessions will appear here.",
-  "@listener_home_sessions_placeholder": {},
-  "listener_home_availability_placeholder": "Manage when you are available to take calls.",
-  "@listener_home_availability_placeholder": {},
-  "listener_home_earnings_placeholder": "Track your listener earnings and payouts here.",
-  "@listener_home_earnings_placeholder": {},
   "listener_earnings_total": "Total Earnings",
   "@listener_earnings_total": {},
   "listener_earnings_trend_up": "+{percent}% from last month",
@@ -2921,10 +604,6 @@
   "@listener_earnings_rate": {},
   "listener_earnings_overview": "Earnings Overview",
   "@listener_earnings_overview": {},
-  "listener_earnings_recent_payout": "Recent Payout",
-  "@listener_earnings_recent_payout": {},
-  "listener_earnings_status_paid": "Paid",
-  "@listener_earnings_status_paid": {},
   "listener_earnings_payout_methods": "Payout Methods",
   "@listener_earnings_payout_methods": {},
   "listener_earnings_default": "Default",
@@ -2936,8 +615,12 @@
   "listener_earnings_tiers_stats": "Your stats: {sessions} sessions · {rating} rating",
   "@listener_earnings_tiers_stats": {
     "placeholders": {
-      "sessions": { "type": "int" },
-      "rating": { "type": "String" }
+      "sessions": {
+        "type": "int"
+      },
+      "rating": {
+        "type": "String"
+      }
     }
   },
   "listener_earnings_your_tier": "Your current tier",
@@ -2945,8 +628,12 @@
   "listener_earnings_tier_requirement": "{sessions}+ sessions · {rating}+ rating",
   "@listener_earnings_tier_requirement": {
     "placeholders": {
-      "sessions": { "type": "int" },
-      "rating": { "type": "String" }
+      "sessions": {
+        "type": "int"
+      },
+      "rating": {
+        "type": "String"
+      }
     }
   },
   "listener_earnings_tier_requirement_starter": "Open to all listeners",
@@ -2954,7 +641,9 @@
   "listener_earnings_hourly_value": "{amount}/hr",
   "@listener_earnings_hourly_value": {
     "placeholders": {
-      "amount": { "type": "String" }
+      "amount": {
+        "type": "String"
+      }
     }
   },
   "listener_earnings_tier_starter": "Starter",
@@ -2967,16 +656,12 @@
   "@listener_earnings_tier_expert": {},
   "listener_earnings_tier_elite": "Elite",
   "@listener_earnings_tier_elite": {},
-  "listener_home_profile_placeholder": "Your listener profile and settings will appear here.",
-  "@listener_home_profile_placeholder": {},
   "listener_profile_title": "My Profile",
   "@listener_profile_title": {},
   "listener_profile_email": "Email",
   "@listener_profile_email": {},
   "listener_profile_date_of_birth": "Date of birth",
   "@listener_profile_date_of_birth": {},
-  "listener_profile_view_profile": "View Profile",
-  "@listener_profile_view_profile": {},
   "listener_profile_active_now": "Active now",
   "@listener_profile_active_now": {},
   "listener_profile_reviews_count": "{count} reviews",
@@ -3018,8 +703,6 @@
   "@listener_profile_see_more": {},
   "listener_profile_see_less": "See less",
   "@listener_profile_see_less": {},
-  "listener_profile_good_at": "What I'm Good At",
-  "@listener_profile_good_at": {},
   "listener_profile_experiences": "Experiences",
   "@listener_profile_experiences": {},
   "listener_profile_edit_experiences_title": "Edit Experiences",
@@ -3044,8 +727,6 @@
   "@listener_profile_edit_boundaries_subtitle": {},
   "listener_profile_boundaries_empty": "No boundaries set yet. Tap Edit to choose topics you prefer to avoid.",
   "@listener_profile_boundaries_empty": {},
-  "listener_profile_add_more": "+ Add more",
-  "@listener_profile_add_more": {},
   "listener_profile_languages": "Languages",
   "@listener_profile_languages": {},
   "listener_profile_country": "Country",
@@ -3056,12 +737,6 @@
   "@listener_profile_edit_city_title": {},
   "listener_profile_edit_city_subtitle": "Update the city shown on your listener profile.",
   "@listener_profile_edit_city_subtitle": {},
-  "listener_profile_experience": "Experience",
-  "@listener_profile_experience": {},
-  "listener_profile_availability_label": "Availability",
-  "@listener_profile_availability_label": {},
-  "listener_profile_response_time": "Response Time",
-  "@listener_profile_response_time": {},
   "listener_profile_reviews": "Reviews",
   "@listener_profile_reviews": {},
   "listener_profile_view_all_reviews": "View all ({count})",
@@ -3123,20 +798,6 @@
       }
     }
   },
-  "listener_profile_next_availability": "Next Availability",
-  "@listener_profile_next_availability": {},
-  "listener_profile_available_now": "Available Now",
-  "@listener_profile_available_now": {},
-  "listener_profile_until_time": "Until {time}",
-  "@listener_profile_until_time": {
-    "placeholders": {
-      "time": {
-        "type": "String"
-      }
-    }
-  },
-  "listener_profile_tomorrow": "Tomorrow",
-  "@listener_profile_tomorrow": {},
   "listener_profile_account_settings": "Account & Settings",
   "@listener_profile_account_settings": {},
   "listener_profile_notification_preferences": "Notification Preferences",
@@ -3185,16 +846,10 @@
   "@listener_profile_settings_section_earnings": {},
   "listener_profile_settings_section_support": "Support",
   "@listener_profile_settings_section_support": {},
-  "listener_profile_settings_email": "Email Address",
-  "@listener_profile_settings_email": {},
   "listener_profile_settings_phone": "Phone Number",
   "@listener_profile_settings_phone": {},
-  "listener_profile_settings_two_factor": "Two-Factor Authentication",
-  "@listener_profile_settings_two_factor": {},
   "listener_profile_settings_payout_methods": "Payout Methods",
   "@listener_profile_settings_payout_methods": {},
-  "listener_profile_settings_feedback": "Give Us Feedback",
-  "@listener_profile_settings_feedback": {},
   "listener_profile_settings_about": "About Venting",
   "@listener_profile_settings_about": {},
   "listener_confirm_logout_title": "Log Out",
@@ -3258,10 +913,6 @@
   "@listener_whats_new_1_1_0_item_2": {},
   "listener_whats_new_1_1_0_item_3": "Stability and performance improvements.",
   "@listener_whats_new_1_1_0_item_3": {},
-  "listener_profile_settings_on": "On",
-  "@listener_profile_settings_on": {},
-  "listener_profile_settings_off": "Off",
-  "@listener_profile_settings_off": {},
   "listener_profile_settings_version": "Version {version}",
   "@listener_profile_settings_version": {
     "placeholders": {
@@ -3312,8 +963,6 @@
   "@listener_notif_session_reminder_10": {},
   "listener_notif_session_reminder_5": "Session reminder before 5 min",
   "@listener_notif_session_reminder_5": {},
-  "listener_notif_messages": "Messages",
-  "@listener_notif_messages": {},
   "listener_notif_reviews_feedback": "Reviews & feedback",
   "@listener_notif_reviews_feedback": {},
   "listener_notif_tips_earnings": "Tips & earnings",
@@ -3432,40 +1081,6 @@
   "@listener_profile_edit": {},
   "listener_profile_about_me_body": "I'm here to listen and support you in a safe, judgment-free space. I truly believe that sometimes all we need is someone who listens with an open heart.",
   "@listener_profile_about_me_body": {},
-  "listener_profile_experience_value": "{years}+ years",
-  "@listener_profile_experience_value": {
-    "placeholders": {
-      "years": {
-        "type": "int"
-      }
-    }
-  },
-  "listener_profile_usually_available": "Usually available",
-  "@listener_profile_usually_available": {},
-  "listener_profile_response_within": "Usually within {minutes} min",
-  "@listener_profile_response_within": {
-    "placeholders": {
-      "minutes": {
-        "type": "int"
-      }
-    }
-  },
-  "listener_profile_tag_stress_anxiety": "Stress & Anxiety",
-  "@listener_profile_tag_stress_anxiety": {},
-  "listener_profile_tag_relationships": "Relationships",
-  "@listener_profile_tag_relationships": {},
-  "listener_profile_tag_overthinking": "Overthinking",
-  "@listener_profile_tag_overthinking": {},
-  "listener_profile_tag_life_transitions": "Life Transitions",
-  "@listener_profile_tag_life_transitions": {},
-  "listener_profile_tag_parenting": "Parenting",
-  "@listener_profile_tag_parenting": {},
-  "ventor_home_dashboard_placeholder": "Find listeners and start a conversation from here.",
-  "@ventor_home_dashboard_placeholder": {},
-  "ventor_home_sessions_placeholder": "Your venting sessions and history will appear here.",
-  "@ventor_home_sessions_placeholder": {},
-  "ventor_home_rewards_placeholder": "Rewards and achievements for ventors will appear here.",
-  "@ventor_home_rewards_placeholder": {},
   "ventor_rewards_title": "Rewards & Discounts",
   "@ventor_rewards_title": {},
   "ventor_rewards_subtitle": "Use your points to get amazing benefits.",
@@ -3473,26 +1088,36 @@
   "ventor_rewards_pts": "{points} pts",
   "@ventor_rewards_pts": {
     "placeholders": {
-      "points": { "type": "String" }
+      "points": {
+        "type": "String"
+      }
     }
   },
   "ventor_rewards_active_saving": "You’re saving {percent}% on your next session.",
   "@ventor_rewards_active_saving": {
     "placeholders": {
-      "percent": { "type": "int" }
+      "percent": {
+        "type": "int"
+      }
     }
   },
   "ventor_rewards_active_saving_tier": "You’re saving {percent}% with {audience} on your next session.",
   "@ventor_rewards_active_saving_tier": {
     "placeholders": {
-      "percent": { "type": "int" },
-      "audience": { "type": "String" }
+      "percent": {
+        "type": "int"
+      },
+      "audience": {
+        "type": "String"
+      }
     }
   },
   "ventor_rewards_active_free_session": "Your next {minutes}-min session is free.",
   "@ventor_rewards_active_free_session": {
     "placeholders": {
-      "minutes": { "type": "int" }
+      "minutes": {
+        "type": "int"
+      }
     }
   },
   "ventor_rewards_active_priority": "Priority match is on for your next session.",
@@ -3532,13 +1157,17 @@
   "ventor_rewards_offer_percent": "{percent}% Off",
   "@ventor_rewards_offer_percent": {
     "placeholders": {
-      "percent": { "type": "int" }
+      "percent": {
+        "type": "int"
+      }
     }
   },
   "ventor_rewards_offer_free_minutes": "Free {minutes}-min Session",
   "@ventor_rewards_offer_free_minutes": {
     "placeholders": {
-      "minutes": { "type": "int" }
+      "minutes": {
+        "type": "int"
+      }
     }
   },
   "ventor_rewards_offer_priority": "Priority Match",
@@ -3556,7 +1185,9 @@
   "ventor_rewards_audience_min_tier": "{tier} listeners & up",
   "@ventor_rewards_audience_min_tier": {
     "placeholders": {
-      "tier": { "type": "String" }
+      "tier": {
+        "type": "String"
+      }
     }
   },
   "ventor_rewards_earn_title": "How to earn points",
@@ -3568,7 +1199,9 @@
   "ventor_rewards_earn_sessions_body": "Earn {points} points every time you complete a session.",
   "@ventor_rewards_earn_sessions_body": {
     "placeholders": {
-      "points": { "type": "int" }
+      "points": {
+        "type": "int"
+      }
     }
   },
   "ventor_rewards_earn_invite_title": "Invite friends",
@@ -3576,8 +1209,12 @@
   "ventor_rewards_earn_invite_body": "Share your code. You get {registerPoints} points when they register, and you both get {firstCallPoints} points after their first call.",
   "@ventor_rewards_earn_invite_body": {
     "placeholders": {
-      "registerPoints": { "type": "int" },
-      "firstCallPoints": { "type": "int" }
+      "registerPoints": {
+        "type": "int"
+      },
+      "firstCallPoints": {
+        "type": "int"
+      }
     }
   },
   "ventor_rewards_earn_booking_title": "Your friend books a call",
@@ -3585,7 +1222,9 @@
   "ventor_rewards_earn_booking_body": "Get {points} extra points when a friend you invited books a session.",
   "@ventor_rewards_earn_booking_body": {
     "placeholders": {
-      "points": { "type": "int" }
+      "points": {
+        "type": "int"
+      }
     }
   },
   "ventor_rewards_earn_buy_title": "Buy points",
@@ -3605,19 +1244,25 @@
   "ventor_points_package_price": "${price}",
   "@ventor_points_package_price": {
     "placeholders": {
-      "price": { "type": "String" }
+      "price": {
+        "type": "String"
+      }
     }
   },
   "ventor_points_package_bonus": "+{percent}% bonus",
   "@ventor_points_package_bonus": {
     "placeholders": {
-      "percent": { "type": "int" }
+      "percent": {
+        "type": "int"
+      }
     }
   },
   "ventor_points_purchase_success": "{points} points added to your balance.",
   "@ventor_points_purchase_success": {
     "placeholders": {
-      "points": { "type": "String" }
+      "points": {
+        "type": "String"
+      }
     }
   },
   "ventor_points_purchase_redeem_cta": "Redeem",
@@ -3637,8 +1282,12 @@
   "ventor_invite_promo": "Give support. Get rewarded. Invite a friend — you get {registerPoints} points when they register, and you both get {firstCallPoints} points after their first call.",
   "@ventor_invite_promo": {
     "placeholders": {
-      "registerPoints": { "type": "int" },
-      "firstCallPoints": { "type": "int" }
+      "registerPoints": {
+        "type": "int"
+      },
+      "firstCallPoints": {
+        "type": "int"
+      }
     }
   },
   "ventor_invite_your_code": "YOUR CODE",
@@ -3662,13 +1311,17 @@
   "ventor_invite_how_2": "Your friend registers in the app — you get {points} points.",
   "@ventor_invite_how_2": {
     "placeholders": {
-      "points": { "type": "int" }
+      "points": {
+        "type": "int"
+      }
     }
   },
   "ventor_invite_how_3": "When your friend has their first call, you both get {points} points.",
   "@ventor_invite_how_3": {
     "placeholders": {
-      "points": { "type": "int" }
+      "points": {
+        "type": "int"
+      }
     }
   },
   "ventor_invite_summary_title": "Your Invites",
@@ -3676,20 +1329,28 @@
   "ventor_invite_total": "Total invited: {count} friends",
   "@ventor_invite_total": {
     "placeholders": {
-      "count": { "type": "int" }
+      "count": {
+        "type": "int"
+      }
     }
   },
   "ventor_invite_points_earned": "Points earned: {points} pts",
   "@ventor_invite_points_earned": {
     "placeholders": {
-      "points": { "type": "String" }
+      "points": {
+        "type": "String"
+      }
     }
   },
   "ventor_invite_share_message": "Join me on Venting. Use my code {code} to get started: {link}",
   "@ventor_invite_share_message": {
     "placeholders": {
-      "code": { "type": "String" },
-      "link": { "type": "String" }
+      "code": {
+        "type": "String"
+      },
+      "link": {
+        "type": "String"
+      }
     }
   },
   "ventor_invite_history_title": "Invite History",
@@ -3704,14 +1365,10 @@
   "@ventor_invite_status_first_session": {},
   "ventor_invite_status_booked": "Booked a call",
   "@ventor_invite_status_booked": {},
-  "ventor_home_profile_placeholder": "Your ventor profile and settings will appear here.",
-  "@ventor_home_profile_placeholder": {},
   "ventor_profile_anonymous": "Anonymous",
   "@ventor_profile_anonymous": {},
   "ventor_profile_sessions": "Sessions",
   "@ventor_profile_sessions": {},
-  "ventor_profile_avg_rating": "Avg. Rating",
-  "@ventor_profile_avg_rating": {},
   "ventor_profile_day_streak": "Day Streak",
   "@ventor_profile_day_streak": {},
   "ventor_profile_mood_journey": "Mood Journey",
@@ -3775,16 +1432,6 @@
   "@ventor_profile_achievement_unlocked": {},
   "ventor_profile_achievement_locked": "Locked",
   "@ventor_profile_achievement_locked": {},
-  "ventor_profile_total_points": "{points} Total Points",
-  "@ventor_profile_total_points": {
-    "placeholders": {
-      "points": {
-        "type": "String"
-      }
-    }
-  },
-  "ventor_profile_view_rewards": "View Rewards",
-  "@ventor_profile_view_rewards": {},
   "ventor_profile_my_listeners": "My Listeners",
   "@ventor_profile_my_listeners": {},
   "ventor_profile_add_favorite": "Add Favorite",
@@ -3861,7 +1508,6 @@
   "@ventor_privacy_allow_discovery_sub": {},
   "ventor_privacy_save": "Save",
   "@ventor_privacy_save": {},
-
   "listener_avail_title": "Availability",
   "@listener_avail_title": {},
   "listener_avail_weekly_schedule": "Set Weekly Schedule",
@@ -3881,7 +1527,9 @@
   "listener_avail_min_value": "{minutes} min",
   "@listener_avail_min_value": {
     "placeholders": {
-      "minutes": { "type": "int" }
+      "minutes": {
+        "type": "int"
+      }
     }
   },
   "listener_avail_instant_calls": "Accept Instant Calls",
@@ -3894,29 +1542,26 @@
   "@listener_avail_add_slot": {},
   "listener_avail_remove_slot": "Remove",
   "@listener_avail_remove_slot": {},
-
   "listener_sessions_filter_upcoming": "Upcoming ({count})",
   "@listener_sessions_filter_upcoming": {
     "placeholders": {
-      "count": { "type": "int" }
+      "count": {
+        "type": "int"
+      }
     }
   },
   "listener_sessions_filter_missed": "Missed ({count})",
   "@listener_sessions_filter_missed": {
     "placeholders": {
-      "count": { "type": "int" }
+      "count": {
+        "type": "int"
+      }
     }
   },
   "listener_sessions_filter_history": "History",
   "@listener_sessions_filter_history": {},
-  "listener_sessions_upcoming_title": "Upcoming Sessions",
-  "@listener_sessions_upcoming_title": {},
-  "listener_sessions_active_title": "Active Sessions",
-  "@listener_sessions_active_title": {},
   "listener_sessions_history_title": "Past Sessions",
   "@listener_sessions_history_title": {},
-  "listener_sessions_requests_title": "Session Requests",
-  "@listener_sessions_requests_title": {},
   "listener_sessions_instant_section_title": "Instant Calls",
   "@listener_sessions_instant_section_title": {},
   "listener_sessions_scheduled_section_title": "Scheduled Sessions",
@@ -3927,14 +1572,8 @@
   "@listener_sessions_no_instant": {},
   "listener_sessions_no_scheduled": "No scheduled sessions yet.",
   "@listener_sessions_no_scheduled": {},
-  "listener_sessions_new_request": "New request",
-  "@listener_sessions_new_request": {},
   "listener_sessions_instant_incoming": "Incoming instant call",
   "@listener_sessions_instant_incoming": {},
-  "listener_sessions_instant_badge": "Instant",
-  "@listener_sessions_instant_badge": {},
-  "listener_sessions_scheduled_badge": "Scheduled",
-  "@listener_sessions_scheduled_badge": {},
   "listener_sessions_voice_call": "Voice call",
   "@listener_sessions_voice_call": {},
   "listener_sessions_video_call": "Video call",
@@ -3966,19 +1605,25 @@
   "listener_sessions_minutes_ago": "{minutes}m ago",
   "@listener_sessions_minutes_ago": {
     "placeholders": {
-      "minutes": { "type": "int" }
+      "minutes": {
+        "type": "int"
+      }
     }
   },
   "listener_sessions_hours_ago": "{hours}h ago",
   "@listener_sessions_hours_ago": {
     "placeholders": {
-      "hours": { "type": "int" }
+      "hours": {
+        "type": "int"
+      }
     }
   },
   "listener_sessions_days_ago": "{days}d ago",
   "@listener_sessions_days_ago": {
     "placeholders": {
-      "days": { "type": "int" }
+      "days": {
+        "type": "int"
+      }
     }
   },
   "listener_sessions_stats_title": "Request outcomes",
@@ -3993,8 +1638,6 @@
   "@listener_sessions_status_accepted": {},
   "listener_sessions_status_declined": "Request declined",
   "@listener_sessions_status_declined": {},
-  "listener_sessions_status_completed": "Completed",
-  "@listener_sessions_status_completed": {},
   "listener_sessions_no_missed": "No missed sessions.",
   "@listener_sessions_no_missed": {},
   "listener_sessions_no_history": "No past sessions yet.",
@@ -4005,14 +1648,14 @@
   "@listener_sessions_speech_language": {},
   "listener_sessions_penalty_note": "For each session you miss without entering, 20% of the session cost will be deducted from your balance.",
   "@listener_sessions_penalty_note": {},
-  "listener_sessions_missed_title": "Missed sessions",
-  "@listener_sessions_missed_title": {},
   "listener_sessions_status_missed": "Missed — not entered",
   "@listener_sessions_status_missed": {},
   "listener_sessions_penalty_deducted": "{amount} deducted (20%)",
   "@listener_sessions_penalty_deducted": {
     "placeholders": {
-      "amount": { "type": "String" }
+      "amount": {
+        "type": "String"
+      }
     }
   },
   "listener_call_instructions_title": "Before you join",
@@ -4032,7 +1675,9 @@
   "listener_call_instruction_time": "Stay for the full {minutes}-minute session unless they end early.",
   "@listener_call_instruction_time": {
     "placeholders": {
-      "minutes": { "type": "int" }
+      "minutes": {
+        "type": "int"
+      }
     }
   },
   "listener_call_instruction_boundaries": "Respect boundaries. If a topic feels outside your comfort zone, guide them gently.",
@@ -4061,8 +1706,6 @@
   "@listener_call_speaker": {},
   "listener_call_flip": "Flip",
   "@listener_call_flip": {},
-  "listener_call_chat": "Chat",
-  "@listener_call_chat": {},
   "listener_call_rating_title": "How was your conversation?",
   "@listener_call_rating_title": {},
   "listener_call_rating_subtitle": "Your feedback helps us improve",
@@ -4104,19 +1747,25 @@
   "listener_dashboard_greeting_morning": "Good morning, {name} 👋",
   "@listener_dashboard_greeting_morning": {
     "placeholders": {
-      "name": { "type": "String" }
+      "name": {
+        "type": "String"
+      }
     }
   },
   "listener_dashboard_greeting_afternoon": "Good afternoon, {name} 👋",
   "@listener_dashboard_greeting_afternoon": {
     "placeholders": {
-      "name": { "type": "String" }
+      "name": {
+        "type": "String"
+      }
     }
   },
   "listener_dashboard_greeting_evening": "Good evening, {name} 👋",
   "@listener_dashboard_greeting_evening": {
     "placeholders": {
-      "name": { "type": "String" }
+      "name": {
+        "type": "String"
+      }
     }
   },
   "listener_dashboard_subtitle": "You're making a real difference.",
@@ -4154,13 +1803,17 @@
   "listener_dashboard_at_time": "At {time}",
   "@listener_dashboard_at_time": {
     "placeholders": {
-      "time": { "type": "String" }
+      "time": {
+        "type": "String"
+      }
     }
   },
   "listener_dashboard_session_minutes": "{minutes} min session",
   "@listener_dashboard_session_minutes": {
     "placeholders": {
-      "minutes": { "type": "int" }
+      "minutes": {
+        "type": "int"
+      }
     }
   },
   "listener_dashboard_waiting": "They're waiting for you.",
@@ -4193,8 +1846,6 @@
   "@listener_dashboard_setup_locked": {},
   "listener_dashboard_setup_continue": "Continue Setup",
   "@listener_dashboard_setup_continue": {},
-  "listener_dashboard_setup_coming_soon": "Training and tutorials are coming soon.",
-  "@listener_dashboard_setup_coming_soon": {},
   "listener_training_title": "Active Listening Training",
   "@listener_training_title": {},
   "listener_training_subtitle": "Open each module’s tutorial video or link to complete it. Finish all modules to pass training.",
@@ -4207,10 +1858,6 @@
   "@listener_training_finish_locked": {},
   "listener_training_status_completed": "Completed",
   "@listener_training_status_completed": {},
-  "listener_training_status_in_progress": "In progress",
-  "@listener_training_status_in_progress": {},
-  "listener_training_status_not_started": "Not started",
-  "@listener_training_status_not_started": {},
   "listener_training_status_tap_to_open": "Tap to open tutorial",
   "@listener_training_status_tap_to_open": {},
   "listener_training_status_locked": "Locked",
@@ -4239,8 +1886,6 @@
   "@listener_dashboard_locked_accept_subtitle": {},
   "listener_dashboard_locked_earnings_title": "Earnings (This Month)",
   "@listener_dashboard_locked_earnings_title": {},
-  "listener_dashboard_locked_earnings_subtitle": "Complete tutorials to see your earnings.",
-  "@listener_dashboard_locked_earnings_subtitle": {},
   "listener_dashboard_locked_earnings_footnote": "Complete tutorials to see your earnings.",
   "@listener_dashboard_locked_earnings_footnote": {},
   "listener_dashboard_no_requests": "No upcoming requests yet. Requests will appear here once you go live.",
@@ -4256,19 +1901,25 @@
   "listener_dashboard_notifications_minutes_ago": "{count}m ago",
   "@listener_dashboard_notifications_minutes_ago": {
     "placeholders": {
-      "count": { "type": "int" }
+      "count": {
+        "type": "int"
+      }
     }
   },
   "listener_dashboard_notifications_hours_ago": "{count}h ago",
   "@listener_dashboard_notifications_hours_ago": {
     "placeholders": {
-      "count": { "type": "int" }
+      "count": {
+        "type": "int"
+      }
     }
   },
   "listener_dashboard_notifications_days_ago": "{count}d ago",
   "@listener_dashboard_notifications_days_ago": {
     "placeholders": {
-      "count": { "type": "int" }
+      "count": {
+        "type": "int"
+      }
     }
   },
   "listener_dashboard_notifications_delete": "Delete",
@@ -4305,8 +1956,6 @@
   "@ventor_sessions_topic_stress": {},
   "ventor_sessions_top_listeners": "Top listeners for you",
   "@ventor_sessions_top_listeners": {},
-  "ventor_sessions_see_all": "See all",
-  "@ventor_sessions_see_all": {},
   "ventor_sessions_empty": "No listeners match your search or filters. Try adjusting them.",
   "@ventor_sessions_empty": {},
   "ventor_sessions_experience_empty": "No life experiences listed",
@@ -4314,13 +1963,17 @@
   "ventor_sessions_reviews": "{count} reviews",
   "@ventor_sessions_reviews": {
     "placeholders": {
-      "count": { "type": "int" }
+      "count": {
+        "type": "int"
+      }
     }
   },
   "ventor_sessions_sessions_count": "{count} sessions",
   "@ventor_sessions_sessions_count": {
     "placeholders": {
-      "count": { "type": "String" }
+      "count": {
+        "type": "String"
+      }
     }
   },
   "ventor_sessions_surprise_title": "Not sure who to pick?",
@@ -4338,8 +1991,12 @@
   "ventor_sessions_filter_price_range": "{min} – {max}",
   "@ventor_sessions_filter_price_range": {
     "placeholders": {
-      "min": { "type": "String" },
-      "max": { "type": "String" }
+      "min": {
+        "type": "String"
+      },
+      "max": {
+        "type": "String"
+      }
     }
   },
   "ventor_sessions_filter_language": "Language",
@@ -4359,7 +2016,9 @@
   "ventor_sessions_filter_rating_min": "{rating}+",
   "@ventor_sessions_filter_rating_min": {
     "placeholders": {
-      "rating": { "type": "String" }
+      "rating": {
+        "type": "String"
+      }
     }
   },
   "ventor_sessions_filter_favorites": "Favorites",
@@ -4383,7 +2042,9 @@
   "ventor_sessions_rate_per_min": "{rate} / min",
   "@ventor_sessions_rate_per_min": {
     "placeholders": {
-      "rate": { "type": "String" }
+      "rate": {
+        "type": "String"
+      }
     }
   },
   "ventor_sessions_choose_duration": "Choose duration",
@@ -4391,34 +2052,13 @@
   "ventor_sessions_duration_minutes": "{minutes} min",
   "@ventor_sessions_duration_minutes": {
     "placeholders": {
-      "minutes": { "type": "int" }
+      "minutes": {
+        "type": "int"
+      }
     }
   },
   "ventor_sessions_duration_popular": "Most popular",
   "@ventor_sessions_duration_popular": {},
-  "ventor_sessions_continue_payment": "Continue to payment",
-  "@ventor_sessions_continue_payment": {},
-  "ventor_sessions_before_title": "Before connecting",
-  "@ventor_sessions_before_title": {},
-  "ventor_sessions_before_heading": "A few things before you start",
-  "@ventor_sessions_before_heading": {},
-  "ventor_sessions_before_body": "You’ll be connected shortly. Take a breath, and remember this is a safe space to share what you need.",
-  "@ventor_sessions_before_body": {},
-  "ventor_sessions_before_bullet_connect": "Connection usually takes under a minute.",
-  "@ventor_sessions_before_bullet_connect": {},
-  "ventor_sessions_before_bullet_leave": "You can leave the session anytime.",
-  "@ventor_sessions_before_bullet_leave": {},
-  "ventor_sessions_before_bullet_respect": "Be respectful — harassment ends the session.",
-  "@ventor_sessions_before_bullet_respect": {},
-  "ventor_sessions_start_session": "Start session",
-  "@ventor_sessions_start_session": {},
-  "ventor_sessions_start_mock": "Starting {minutes}-min session with {name} (demo).",
-  "@ventor_sessions_start_mock": {
-    "placeholders": {
-      "name": { "type": "String" },
-      "minutes": { "type": "int" }
-    }
-  },
   "ventor_sessions_details_title": "Details",
   "@ventor_sessions_details_title": {},
   "ventor_sessions_gender_label": "Gender",
@@ -4472,15 +2112,23 @@
   "ventor_sessions_choose_time_subtitle": "Pick when you’d like to talk with {name} for {duration}.",
   "@ventor_sessions_choose_time_subtitle": {
     "placeholders": {
-      "name": { "type": "String" },
-      "duration": { "type": "String" }
+      "name": {
+        "type": "String"
+      },
+      "duration": {
+        "type": "String"
+      }
     }
   },
   "ventor_sessions_choose_time_window": "Listener availability: {hours} ({timezone})",
   "@ventor_sessions_choose_time_window": {
     "placeholders": {
-      "hours": { "type": "String" },
-      "timezone": { "type": "String" }
+      "hours": {
+        "type": "String"
+      },
+      "timezone": {
+        "type": "String"
+      }
     }
   },
   "ventor_sessions_time_instant_title": "Instant call",
@@ -4492,7 +2140,9 @@
   "ventor_sessions_time_nearest_subtitle": "Suggested: {slot}",
   "@ventor_sessions_time_nearest_subtitle": {
     "placeholders": {
-      "slot": { "type": "String" }
+      "slot": {
+        "type": "String"
+      }
     }
   },
   "ventor_sessions_time_schedule_title": "Choose from availability",
@@ -4506,17 +2156,19 @@
   "ventor_sessions_time_summary_nearest": "Nearest time · {slot}",
   "@ventor_sessions_time_summary_nearest": {
     "placeholders": {
-      "slot": { "type": "String" }
+      "slot": {
+        "type": "String"
+      }
     }
   },
   "ventor_sessions_time_summary_scheduled": "Scheduled · {slot}",
   "@ventor_sessions_time_summary_scheduled": {
     "placeholders": {
-      "slot": { "type": "String" }
+      "slot": {
+        "type": "String"
+      }
     }
   },
-  "ventor_sessions_confirm_booking": "Confirm booking",
-  "@ventor_sessions_confirm_booking": {},
   "ventor_sessions_confirm_title": "Confirm session",
   "@ventor_sessions_confirm_title": {},
   "ventor_sessions_confirm_heading": "Review your session",
@@ -4554,16 +2206,26 @@
   "ventor_sessions_pay_now": "Pay {amount}",
   "@ventor_sessions_pay_now": {
     "placeholders": {
-      "amount": { "type": "String" }
+      "amount": {
+        "type": "String"
+      }
     }
   },
   "ventor_sessions_pay_mock": "Payment demo: {amount} for {minutes}-min {mode} with {name}.",
   "@ventor_sessions_pay_mock": {
     "placeholders": {
-      "name": { "type": "String" },
-      "minutes": { "type": "int" },
-      "mode": { "type": "String" },
-      "amount": { "type": "String" }
+      "name": {
+        "type": "String"
+      },
+      "minutes": {
+        "type": "int"
+      },
+      "mode": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
     }
   },
   "ventor_sessions_permission_title": "App permissions",
@@ -4589,7 +2251,9 @@
   "ventor_sessions_speech_language_subtitle": "Choose the language you’ll speak so {name} is ready for this session.",
   "@ventor_sessions_speech_language_subtitle": {
     "placeholders": {
-      "name": { "type": "String" }
+      "name": {
+        "type": "String"
+      }
     }
   },
   "ventor_sessions_speech_language_required": "Select a speech language to continue.",
@@ -4605,7 +2269,9 @@
   "ventor_sessions_voice_change_price": "+{amount}",
   "@ventor_sessions_voice_change_price": {
     "placeholders": {
-      "amount": { "type": "String" }
+      "amount": {
+        "type": "String"
+      }
     }
   },
   "ventor_sessions_voice_change_fee_label": "Voice change",
@@ -4627,13 +2293,17 @@
   "ventor_sessions_promo_percent_label": "Promo · {percent}% off",
   "@ventor_sessions_promo_percent_label": {
     "placeholders": {
-      "percent": { "type": "int" }
+      "percent": {
+        "type": "int"
+      }
     }
   },
   "ventor_sessions_promo_fixed_label": "Promo · {amount} off",
   "@ventor_sessions_promo_fixed_label": {
     "placeholders": {
-      "amount": { "type": "String" }
+      "amount": {
+        "type": "String"
+      }
     }
   },
   "ventor_sessions_rewards_discount_label": "Your rewards",
@@ -4643,7 +2313,9 @@
   "ventor_sessions_discount_applied": "Saving {amount}",
   "@ventor_sessions_discount_applied": {
     "placeholders": {
-      "amount": { "type": "String" }
+      "amount": {
+        "type": "String"
+      }
     }
   },
   "ventor_sessions_discount_remove": "Remove",
@@ -4671,7 +2343,9 @@
   "ventor_sessions_booked_speech_language": "Speaking {language}",
   "@ventor_sessions_booked_speech_language": {
     "placeholders": {
-      "language": { "type": "String" }
+      "language": {
+        "type": "String"
+      }
     }
   },
   "ventor_sessions_booked_voice_change_on": "Voice change on",
@@ -4679,7 +2353,9 @@
   "ventor_sessions_booked_paid": "Paid {amount}",
   "@ventor_sessions_booked_paid": {
     "placeholders": {
-      "amount": { "type": "String" }
+      "amount": {
+        "type": "String"
+      }
     }
   },
   "ventor_sessions_booked_join": "Join now",
@@ -4705,7 +2381,9 @@
   "ventor_sessions_cancel_balance_note": "{amount} will be stored in your ventor balance.",
   "@ventor_sessions_cancel_balance_note": {
     "placeholders": {
-      "amount": { "type": "String" }
+      "amount": {
+        "type": "String"
+      }
     }
   },
   "ventor_sessions_cancel_keep": "Keep session",
@@ -4715,7 +2393,9 @@
   "ventor_sessions_cancel_success": "Session cancelled. {amount} was refunded to your balance — book another session whenever you’re ready.",
   "@ventor_sessions_cancel_success": {
     "placeholders": {
-      "amount": { "type": "String" }
+      "amount": {
+        "type": "String"
+      }
     }
   },
   "ventor_sessions_cancel_policy_title": "Cancellation policy",
@@ -4723,19 +2403,25 @@
   "ventor_sessions_cancel_policy_body": "If you cancel, the full amount ({amount}) is refunded to your ventor balance so you can book another session.",
   "@ventor_sessions_cancel_policy_body": {
     "placeholders": {
-      "amount": { "type": "String" }
+      "amount": {
+        "type": "String"
+      }
     }
   },
   "ventor_sessions_booked_was_paid": "Was {amount}",
   "@ventor_sessions_booked_was_paid": {
     "placeholders": {
-      "amount": { "type": "String" }
+      "amount": {
+        "type": "String"
+      }
     }
   },
   "ventor_sessions_cancelled_refund_title": "Full refund · {amount}",
   "@ventor_sessions_cancelled_refund_title": {
     "placeholders": {
-      "amount": { "type": "String" }
+      "amount": {
+        "type": "String"
+      }
     }
   },
   "ventor_sessions_cancelled_refund_subtitle": "This amount was returned to your ventor balance. Book another session whenever you’re ready.",
@@ -4745,7 +2431,9 @@
   "ventor_sessions_booked_tap_mock": "Opening session with {name} (demo).",
   "@ventor_sessions_booked_tap_mock": {
     "placeholders": {
-      "name": { "type": "String" }
+      "name": {
+        "type": "String"
+      }
     }
   },
   "ventor_call_tips_title": "Before you join",
@@ -4781,7 +2469,9 @@
   "ventor_call_rating_title": "How was your session with {name}?",
   "@ventor_call_rating_title": {
     "placeholders": {
-      "name": { "type": "String" }
+      "name": {
+        "type": "String"
+      }
     }
   },
   "ventor_call_rating_subtitle": "Your rating helps other ventors find great listeners.",
@@ -4789,7 +2479,9 @@
   "ventor_call_rating_stars_hint": "{count}-star rating",
   "@ventor_call_rating_stars_hint": {
     "placeholders": {
-      "count": { "type": "int" }
+      "count": {
+        "type": "int"
+      }
     }
   },
   "ventor_call_rating_review_hint": "Optional note about your experience…",
@@ -4799,7 +2491,9 @@
   "ventor_call_tip_subtitle": "Optional — send {name} a tip for being there for you.",
   "@ventor_call_tip_subtitle": {
     "placeholders": {
-      "name": { "type": "String" }
+      "name": {
+        "type": "String"
+      }
     }
   },
   "ventor_call_tip_none": "No tip",
@@ -4809,7 +2503,9 @@
   "ventor_call_rating_submit_with_tip": "Submit & tip {amount}",
   "@ventor_call_rating_submit_with_tip": {
     "placeholders": {
-      "amount": { "type": "String" }
+      "amount": {
+        "type": "String"
+      }
     }
   },
   "ventor_call_rating_thanks": "Thanks for your feedback!",
@@ -4817,7 +2513,9 @@
   "ventor_call_rating_thanks_with_tip": "Thanks! Your {amount} tip was sent.",
   "@ventor_call_rating_thanks_with_tip": {
     "placeholders": {
-      "amount": { "type": "String" }
+      "amount": {
+        "type": "String"
+      }
     }
   },
   "ventor_call_report_listener": "Report listener",
@@ -4829,7 +2527,9 @@
   "ventor_call_report_subtitle": "Tell us what went wrong with {name}. Our team will review your report.",
   "@ventor_call_report_subtitle": {
     "placeholders": {
-      "name": { "type": "String" }
+      "name": {
+        "type": "String"
+      }
     }
   },
   "ventor_call_report_reason_inappropriate": "Inappropriate behavior",
@@ -4852,8 +2552,6 @@
   "@ventor_call_report_submit": {},
   "ventor_call_report_cancel": "Cancel",
   "@ventor_call_report_cancel": {},
-  "ventor_call_report_success": "Report submitted. Our team will review it shortly.",
-  "@ventor_call_report_success": {},
   "ventor_call_report_received_title": "We’ve received your report",
   "@ventor_call_report_received_title": {},
   "ventor_call_report_received_body": "We’ll look carefully into your report. If needed, we’ll refund you and provide any appropriate compensation.",
@@ -4883,7 +2581,9 @@
   "ventor_home_mood_write_title": "Feeling {mood}",
   "@ventor_home_mood_write_title": {
     "placeholders": {
-      "mood": { "type": "String" }
+      "mood": {
+        "type": "String"
+      }
     }
   },
   "ventor_home_mood_write_subtitle": "Write a little about your emotions. Checking in daily builds your streak.",
@@ -4899,7 +2599,9 @@
   "ventor_home_mood_streak_complete": "7-day streak complete! Claim your {percent}% session discount.",
   "@ventor_home_mood_streak_complete": {
     "placeholders": {
-      "percent": { "type": "int" }
+      "percent": {
+        "type": "int"
+      }
     }
   },
   "ventor_home_reco_default": "You might benefit from talking to listeners who are patient and great at listening.",
@@ -4919,7 +2621,9 @@
   "ventor_home_streak_title": "🔥 {count} day streak",
   "@ventor_home_streak_title": {
     "placeholders": {
-      "count": { "type": "int" }
+      "count": {
+        "type": "int"
+      }
     }
   },
   "ventor_home_streak_subtitle": "Keep going, you're doing great!",
@@ -4931,7 +2635,9 @@
   "ventor_home_streak_claimed": "Nice! You unlocked a {percent}% session discount in Rewards.",
   "@ventor_home_streak_claimed": {
     "placeholders": {
-      "percent": { "type": "int" }
+      "percent": {
+        "type": "int"
+      }
     }
   },
   "ventor_home_day_mon": "M",
@@ -4966,20 +2672,6 @@
   "@ventor_home_upcoming_title": {},
   "ventor_home_upcoming_live_now": "Live now",
   "@ventor_home_upcoming_live_now": {},
-  "ventor_home_quick_title": "Quick ways to vent",
-  "@ventor_home_quick_title": {},
-  "ventor_home_quick_talk": "Talk Now",
-  "@ventor_home_quick_talk": {},
-  "ventor_home_quick_talk_sub": "Instant call",
-  "@ventor_home_quick_talk_sub": {},
-  "ventor_home_quick_chat": "Text Chat",
-  "@ventor_home_quick_chat": {},
-  "ventor_home_quick_chat_sub": "Type it out",
-  "@ventor_home_quick_chat_sub": {},
-  "ventor_home_quick_write": "Write",
-  "@ventor_home_quick_write": {},
-  "ventor_home_quick_write_sub": "Journal it",
-  "@ventor_home_quick_write_sub": {},
   "ventor_home_recent_title": "Continue where you left off",
   "@ventor_home_recent_title": {},
   "ventor_home_see_all": "See all",
@@ -4987,7 +2679,9 @@
   "ventor_home_recent_with": "You & {name}",
   "@ventor_home_recent_with": {
     "placeholders": {
-      "name": { "type": "String" }
+      "name": {
+        "type": "String"
+      }
     }
   },
   "ventor_home_yesterday": "Yesterday",
@@ -4995,16 +2689,16 @@
   "ventor_home_recent_meta": "{when} · {minutes} min",
   "@ventor_home_recent_meta": {
     "placeholders": {
-      "when": { "type": "String" },
-      "minutes": { "type": "int" }
+      "when": {
+        "type": "String"
+      },
+      "minutes": {
+        "type": "int"
+      }
     }
   },
   "ventor_home_motivation": "Small steps every day lead to big changes.",
   "@ventor_home_motivation": {},
   "ventor_home_notifications_soon": "Notifications coming soon.",
-  "@ventor_home_notifications_soon": {},
-  "ventor_home_feature_soon_chat": "Text chat is coming soon.",
-  "@ventor_home_feature_soon_chat": {},
-  "ventor_home_feature_soon_journal": "Journaling is coming soon.",
-  "@ventor_home_feature_soon_journal": {}
+  "@ventor_home_notifications_soon": {}
 }

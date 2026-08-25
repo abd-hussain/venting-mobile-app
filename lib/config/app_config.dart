@@ -6,4 +6,13 @@ abstract interface class AppConfig {
   String get termsOfServiceUrl;
   String get privacyPolicyUrl;
   String get helpCenterBaseUrl;
+
+  /// Web OAuth client ID — preferred `aud` / serverClientId for ID tokens.
+  String get googleWebClientId;
+
+  /// iOS OAuth client ID for this flavor.
+  String get googleIosClientId;
+
+  /// Android OAuth client ID for this flavor (SHA-1 + package).
+  String get googleAndroidClientId;
 }

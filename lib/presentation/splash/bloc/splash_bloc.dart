@@ -4,7 +4,13 @@ import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:logger_manager/logger_manager.dart';
 import 'package:preferences/preferences.dart';
+import 'package:venting_mobile_app/domain/data/api/auth_me_response_model.dart';
+import 'package:venting_mobile_app/domain/data/exceptions/main_api_exception.dart';
+import 'package:venting_mobile_app/domain/usecase/auth_me_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/clear_auth_session_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/get_cached_auth_me_usecase.dart';
 import 'package:venting_mobile_app/l10n/venting_mob_localizations_holder.dart';
+import 'package:venting_mobile_app/presentation/auth/auth_screen.dart';
 
 part 'splash_bloc.freezed.dart';
 part 'splash_event.dart';
@@ -12,14 +18,20 @@ part 'splash_state.dart';
 
 class SplashBloc extends Bloc<SplashEvent, SplashState> {
   SplashBloc(
-    this.zainPreferences, {
+    this.ventingPreferences,
+    this._authMeUsecase,
+    this._getCachedAuthMeUsecase,
+    this._clearAuthSessionUsecase, {
     Duration minimumSplashDuration = const Duration(milliseconds: 4200),
   }) : _minimumSplashDuration = minimumSplashDuration,
        super(const SplashState()) {
     on<_CheckAuthenticationStatus>(_onCheckAuthenticationStatus);
   }
 
-  final VentingPreferences zainPreferences;
+  final VentingPreferences ventingPreferences;
+  final AuthMeUsecase _authMeUsecase;
+  final GetCachedAuthMeUsecase _getCachedAuthMeUsecase;
+  final ClearAuthSessionUsecase _clearAuthSessionUsecase;
   final Duration _minimumSplashDuration;
 
   FutureOr<void> _onCheckAuthenticationStatus(
@@ -28,8 +40,7 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
   ) async {
     final stopwatch = Stopwatch()..start();
     try {
-      // Check onboarding status first
-      final onboardingShown = zainPreferences.getValue(
+      final onboardingShown = ventingPreferences.getValue(
         SavedConstants.onboardingShown,
         false,
       );
@@ -40,40 +51,143 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
         return;
       }
 
-      final compleateRegistration = zainPreferences.getValue(
-        SavedConstants.compleateRegistration,
-        "false",
+      final accessToken = ventingPreferences.getValue(
+        SavedConstants.accessToken,
+        '',
       );
 
-      if (compleateRegistration == "false") {
+      _logTokenStatus(accessToken);
+
+      if (accessToken.isEmpty) {
         await _ensureMinimumSplashDuration(stopwatch);
         _emitNeedAuthenticate(emit);
         return;
       }
 
-      // Check if user exists in preferences
-      final alreadyUser = _getAlreadyUser(zainPreferences);
+      final result = await _authMeUsecase().run();
 
-      if (alreadyUser.isEmpty) {
-        await _ensureMinimumSplashDuration(stopwatch);
-        _emitNeedAuthenticate(emit);
-        return;
-      }
+      await result.match(
+        (error) async {
+          LoggerManagerBase.logErrorMessage(
+            error: error,
+            message: 'SplashBloc: /v1/auth/me failed',
+          );
 
-      // Check authentication status
-      final isAuthenticated = _isUserAuthenticated(zainPreferences);
+          final cached = _getCachedAuthMeUsecase();
+          if (cached != null) {
+            await _ensureMinimumSplashDuration(stopwatch);
+            _emitRouteForAuthMe(emit, cached, fromCache: true);
+            return;
+          }
 
-      if (isAuthenticated) {
-        await _ensureMinimumSplashDuration(stopwatch);
-        _emitAuthorizedForApp(emit);
-      } else {
-        await _ensureMinimumSplashDuration(stopwatch);
-        _emitNeedAuthenticate(emit);
-      }
+          if (_isAuthFailure(error)) {
+            await _clearAuthSessionUsecase();
+            await _ensureMinimumSplashDuration(stopwatch);
+            _emitNeedAuthenticate(emit);
+            return;
+          }
+
+          await _ensureMinimumSplashDuration(stopwatch);
+          _handleError(error, emit);
+        },
+        (response) async {
+          await _ensureMinimumSplashDuration(stopwatch);
+          _emitRouteForAuthMe(emit, response.data);
+        },
+      );
     } catch (e) {
       await _ensureMinimumSplashDuration(stopwatch);
       _handleError(e, emit);
     }
+  }
+
+  void _emitRouteForAuthMe(
+    Emitter<SplashState> emit,
+    AuthMeData authMe, {
+    bool fromCache = false,
+  }) {
+    if (fromCache) {
+      LoggerManagerBase.logInfo(
+        message: 'SplashBloc: routing from cached /v1/auth/me',
+      );
+    }
+
+    final userType = _mapRole(authMe.role);
+    emit(state.copyWith(userEmail: authMe.email));
+
+    if (!authMe.registration_complete) {
+      if (userType == AuthUserType.ventor) {
+        emit(
+          state.copyWith(
+            userEmail: authMe.email,
+            processState: const SplashProcessState.needVentorRegistration(),
+          ),
+        );
+        return;
+      }
+
+      emit(
+        state.copyWith(
+          userEmail: authMe.email,
+          processState: const SplashProcessState.needListenerRegistration(),
+        ),
+      );
+      return;
+    }
+
+    if (userType == AuthUserType.lissener) {
+      switch (authMe.listener_profile_status) {
+        case 'under_review':
+          emit(
+            state.copyWith(
+              userEmail: authMe.email,
+              processState:
+                  const SplashProcessState.listenerProfileUnderReview(),
+            ),
+          );
+          return;
+        case 'rejected':
+          emit(
+            state.copyWith(
+              userEmail: authMe.email,
+              processState: const SplashProcessState.listenerProfileRejected(),
+            ),
+          );
+          return;
+        case 'incomplete':
+        case null:
+          emit(
+            state.copyWith(
+              userEmail: authMe.email,
+              processState:
+                  const SplashProcessState.needListenerRegistration(),
+            ),
+          );
+          return;
+        case 'approved':
+        default:
+          break;
+      }
+    }
+
+    emit(
+      state.copyWith(
+        userEmail: authMe.email,
+        processState: SplashProcessState.autherizedForApp(userType: userType),
+      ),
+    );
+  }
+
+  AuthUserType _mapRole(String role) => switch (role) {
+    'listener' => AuthUserType.lissener,
+    _ => AuthUserType.ventor,
+  };
+
+  bool _isAuthFailure(Object error) {
+    if (error is MainAPIException) {
+      return error.type == 'auth' || error.code == 401;
+    }
+    return false;
   }
 
   Future<void> _ensureMinimumSplashDuration(Stopwatch stopwatch) async {
@@ -84,18 +198,6 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
     }
   }
 
-  String _getAlreadyUser(VentingPreferences preferences) {
-    return preferences.getValue(SavedConstants.alreadyUser, "");
-  }
-
-  bool _isUserAuthenticated(VentingPreferences preferences) {
-    final accessToken = preferences.getValue(SavedConstants.accessToken, "");
-
-    _logTokenStatus(accessToken);
-
-    return accessToken.isNotEmpty;
-  }
-
   void _logTokenStatus(String accessToken) {
     LoggerManagerBase.logInfo(
       message:
@@ -103,16 +205,9 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
     );
   }
 
-  void _emitAuthorizedForApp(Emitter<SplashState> emit) {
-    emit(
-      state.copyWith(processState: const SplashProcessState.autherizedForApp()),
-    );
-  }
-
   void _emitNeedAuthenticate(Emitter<SplashState> emit) {
     LoggerManagerBase.logInfo(
-      message:
-          'SplashBloc: User needs authentication - token empty/invalid or registration incomplete',
+      message: 'SplashBloc: no valid session - navigating to welcome',
     );
 
     emit(
@@ -129,7 +224,7 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
   void _handleError(Object error, Emitter<SplashState> emit) {
     LoggerManagerBase.logErrorMessage(
       error: error,
-      message: "Error checking authentication status",
+      message: 'Error checking authentication status',
     );
 
     emit(
@@ -146,7 +241,7 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
   void addError(Object error, [StackTrace? stackTrace]) {
     LoggerManagerBase.logErrorMessage(
       error: error,
-      message: "SplashBloc error",
+      message: 'SplashBloc error',
       stackTrace: stackTrace,
     );
     super.addError(error, stackTrace);

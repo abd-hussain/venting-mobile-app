@@ -1,3 +1,5 @@
 {
-    "BASE_URL": "https://venting-3a5ebaed4621.herokuapp.com/"
+    "BASE_URL": "https://venting-3a5ebaed4621.herokuapp.com/",
+    "GOOGLE_IOS_CLIENT_ID": "350575468077-cu7cveqh910k7qer48nr9fh0nfof4g8k.apps.googleusercontent.com",
+    "GOOGLE_ANDROID_CLIENT_ID": "350575468077-ck0e74km5fohglgag23qc51d1cafqct4.apps.googleusercontent.com"
 }

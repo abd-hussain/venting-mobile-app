@@ -23,7 +23,7 @@ void main() {
       path: 'https://api.test/users',
       method: 'POST',
       headers: {'Authorization': 'Bearer x', 'Cookie': 'sid=1'},
-      data: {'name': 'zain'},
+      data: {'name': 'venting'},
     );
     final response = Response(requestOptions: options, statusCode: 200);
 

@@ -8,4 +8,5 @@ class SavedConstants {
   static const String compleateRegistration = "compleateRegistration";
   static const String alreadyUser = "alreadyUser";
   static const String userType = "userType";
+  static const String cachedAuthMe = "cachedAuthMe";
 }

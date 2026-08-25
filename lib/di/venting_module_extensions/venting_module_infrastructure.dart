@@ -7,10 +7,11 @@ import 'package:network_logging/network_logging.dart';
 import 'package:preferences/preferences.dart';
 import 'package:venting_mobile_app/config/app_config.dart';
 import 'package:venting_mobile_app/di/venting_module.dart';
+import 'package:venting_mobile_app/utils/auth_refresh_interceptor.dart';
 import 'package:venting_mobile_app/utils/connectivity_interceptor.dart';
 import 'package:venting_mobile_app/utils/device_info_provider.dart';
 
-/// Infrastructure mixin for ZainModule
+/// Infrastructure mixin for VentingModule
 /// Handles setup of core infrastructure components like preferences, network, and API clients
 mixin VentingModuleInfrastructure on VentingModule {
   @lazySingleton
@@ -69,6 +70,7 @@ mixin VentingModuleInfrastructure on VentingModule {
   @lazySingleton
   ApiClientBase apiClient(DioBuilder diobuilder) {
     final dio = diobuilder.build();
+    dio.interceptors.add(AuthRefreshInterceptor(dio));
     return DioApiClient(dio);
   }
 
@@ -95,12 +97,13 @@ mixin VentingModuleInfrastructure on VentingModule {
     @Named('mobileBffDioBuilder') DioBuilder diobuilder,
   ) {
     final dio = diobuilder.build();
+    dio.interceptors.add(AuthRefreshInterceptor(dio));
     return DioApiClient(dio);
   }
 
   /// Registers initial setup components (preferences, global keys, VPN handler)
   Future<void> registerInitialSetup(GetIt getIt) async {
-    // Pre-resolve ZainPreferences since it's marked with @preResolve
+    // Pre-resolve VentingPreferences since it's marked with @preResolve
     final ventingPreferences = await sharedPreferences();
     getIt.registerSingleton<VentingPreferences>(ventingPreferences);
 

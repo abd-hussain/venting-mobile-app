@@ -71,7 +71,7 @@ class VentingNavigationObserver extends NavigatorObserver {
   }
 }
 
-/// Router configuration for the MyZain app
+/// Router configuration for the Venting app
 class VentingRouterConfig {
   static final router = GoRouter(
     navigatorKey: diContainer<GlobalKey<NavigatorState>>(),

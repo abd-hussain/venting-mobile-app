@@ -37,7 +37,7 @@ Future<void> runMainApp(GetIt getIt, AppConfig config) async {
   // SplashScreen applies immersive UI first; edge-to-edge is restored on splash dispose.
 
   //Mark: - Enable Device Preview From Here
-  //runApp(DevicePreview(builder: (context) => ZainApp(config: config)));
+  //runApp(DevicePreview(builder: (context) => VentingApp(config: config)));
   runApp(VentingApp(config: config));
 }
 

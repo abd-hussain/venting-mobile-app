@@ -1,11 +1,11 @@
-# Zain Lint
+# Venting Lint
 
-A package that provides lint rules and code style guidelines for MY_ZAIN_APP projects.
+A package that provides lint rules and code style guidelines for Venting_APP projects.
 
 ## Features
 
 - Comprehensive set of lint rules for Dart and Flutter
-- Custom lint rules specific to MY_ZAIN_APP projects
+- Custom lint rules specific to Venting_APP projects
 - Consistent code style across all projects
 - Documentation requirements
 - Error prevention rules
@@ -16,14 +16,14 @@ To use this package, add it as a dependency in your `pubspec.yaml`:
 
 ```yaml
 dev_dependencies:
-  zain_lint:
-    path: ../zain_lint
+  venting_lint:
+    path: ../venting_lint
 ```
 
 Then, include the analysis options in your `analysis_options.yaml`:
 
 ```yaml
-include: package:zain_lint/analysis_options.yaml
+include: package:venting_lint/analysis_options.yaml
 ```
 
 ## Lint Rules
@@ -86,7 +86,7 @@ In addition to standard lint rules, this package provides custom lint rules:
 If you need to disable specific rules for your project, you can override them in your project's `analysis_options.yaml`:
 
 ```yaml
-include: package:zain_lint/analysis_options.yaml
+include: package:venting_lint/analysis_options.yaml
 
 linter:
   rules:

@@ -122,8 +122,8 @@ class _VentorRegistrationScreenState extends State<VentorRegistrationScreen> {
     setState(() => _stepIndex = 1);
   }
 
-  void _onFinishInterests() {
-    // TODO: submit selected vent interests with profile data
+  void _onFinishInterests(VentorInterestsSelection selection) {
+    // TODO: submit profile + selection.interestIds (+ otherInterestText) via #8
     context.go(
       AppRoutes.tabHome,
       extra: const HomeScreenArgs(userType: AuthUserType.ventor),
@@ -135,7 +135,12 @@ class _VentorRegistrationScreenState extends State<VentorRegistrationScreen> {
       setState(() => _stepIndex = 0);
       return;
     }
-    context.pop();
+    if (context.canPop()) {
+      context.pop();
+    } else {
+      // Arrived via `go` after login/register — no stack to pop.
+      context.go(AppRoutes.welcome);
+    }
   }
 
   @override

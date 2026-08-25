@@ -20,4 +20,16 @@ class DevConfig implements AppConfig {
   // TODO: Replace with real listener help center URLs.
   @override
   String get helpCenterBaseUrl => 'https://dev.venting.app/help';
+
+  @override
+  String get googleWebClientId =>
+      const String.fromEnvironment('GOOGLE_WEB_CLIENT_ID');
+
+  @override
+  String get googleIosClientId =>
+      const String.fromEnvironment('GOOGLE_IOS_CLIENT_ID');
+
+  @override
+  String get googleAndroidClientId =>
+      const String.fromEnvironment('GOOGLE_ANDROID_CLIENT_ID');
 }

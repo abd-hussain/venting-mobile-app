@@ -9,6 +9,34 @@
 // ignore_for_file: type=lint
 // ignore_for_file: deprecated_member_use,directives_ordering,implicit_dynamic_list_literal,unnecessary_import
 
+class $AssetsGoogleFontsGen {
+  const $AssetsGoogleFontsGen();
+
+  /// File path: assets/google_fonts/GreatVibes-Regular.ttf
+  String get greatVibesRegular => 'assets/google_fonts/GreatVibes-Regular.ttf';
+
+  /// File path: assets/google_fonts/Inter-Bold.ttf
+  String get interBold => 'assets/google_fonts/Inter-Bold.ttf';
+
+  /// File path: assets/google_fonts/Inter-Medium.ttf
+  String get interMedium => 'assets/google_fonts/Inter-Medium.ttf';
+
+  /// File path: assets/google_fonts/Inter-Regular.ttf
+  String get interRegular => 'assets/google_fonts/Inter-Regular.ttf';
+
+  /// File path: assets/google_fonts/Inter-SemiBold.ttf
+  String get interSemiBold => 'assets/google_fonts/Inter-SemiBold.ttf';
+
+  /// List of all assets
+  List<String> get values => [
+    greatVibesRegular,
+    interBold,
+    interMedium,
+    interRegular,
+    interSemiBold,
+  ];
+}
+
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
@@ -25,5 +53,6 @@ class $AssetsImagesGen {
 class Assets {
   const Assets._();
 
+  static const $AssetsGoogleFontsGen googleFonts = $AssetsGoogleFontsGen();
   static const $AssetsImagesGen images = $AssetsImagesGen();
 }

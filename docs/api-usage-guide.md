@@ -1,6 +1,6 @@
 # Venting Mobile — API Usage Guide
 
-> **Companion to:** [`api-endpoints.md`](./api-endpoints.md)  
+> **Companion to:** [`api-endpoints.md`](./api-endpoints.md) · [`social-auth-backend-requirements.md`](./social-auth-backend-requirements.md)  
 > **Purpose:** Describe every REST API and **exactly where in the app** to call it.  
 > **Audience:** Mobile engineers wiring screens to the backend.
 
@@ -18,7 +18,11 @@ This guide is organized by **user journey and screen**, not by raw endpoint numb
 | Success | Prefer `{ status: "success", data: { … } }` |
 | Roles | Call **ventor** APIs only as a ventor; **listener** APIs only as a listener (except shared session join/end/report) |
 
-**When to call `#7 GET /v1/auth/me`:** Splash / app shell bootstrap — decide route (onboarding vs home) and role before showing tabs.
+**When to call `#0 POST /v1/auth/check-email` *(proposed)*:** Email auth step — after user enters email, before password. Branch Create account vs Sign in. Does not authenticate.
+
+**When to call `#7 GET /v1/auth/me`:** Splash / app shell bootstrap — decide route (onboarding vs home) and role before showing tabs. Also after `#1` / `#2` / `#1b` success.
+
+**When to call `#1b POST /v1/auth/social` *(proposed)*:** AuthScreen — after native Google/Apple Sign-In returns an ID token. Optionally after `#0 check-email` when email is available (role mismatch UX). Full backend spec: [`social-auth-backend-requirements.md`](./social-auth-backend-requirements.md).
 
 **When to call `#3 POST /v1/auth/refresh`:** Silently in the Dio interceptor when a Bearer call returns 401 and a refresh token exists — not from a visible screen.
 
@@ -30,13 +34,30 @@ Use these for **both** ventor and listener unless a screen is role-specific.
 
 | # | Endpoint | Where to use it | When to call |
 |---|----------|-----------------|--------------|
-| 1 | `POST /v1/auth/register` | Email registration (create account) | User submits email + password + role (`ventor` \| `listener`) |
-| 2 | `POST /v1/auth/login` | Email sign-in | User signs in with existing credentials |
+| 0 *(proposed)* | `POST /v1/auth/check-email` | Email auth step (after AuthScreen → email) | User finishes email; before password — branch register vs login |
+| 7 | `GET /v1/auth/me` | Splash · shell bootstrap | App launch / cold start / after `#1` or `#2` to route the user |
 | 3 | `POST /v1/auth/refresh` | Dio / auth interceptor (background) | Access token expired; rotate tokens |
+| 1 | `POST /v1/auth/register` | Email registration (create account) | Submit email + password + role when `#0` returns `exists: false` (or without `#0`) |
+| 2 | `POST /v1/auth/login` | Email sign-in | Submit credentials when `#0` returns `exists: true` |
+| 1b *(proposed)* | `POST /v1/auth/social` | AuthScreen (Google / Apple buttons) | After native sign-in; send `provider`, `id_token`, `role`; then `#7` for routing |
 | 4 | `POST /v1/auth/logout` | Ventor profile settings · Listener profile settings | User taps Log out; clear local tokens after success |
 | 5 | `DELETE /v1/auth/account` | Delete account confirm screen | User confirms permanent deletion |
 | 6 | `POST /v1/auth/change-password` | Listener change password screen | User submits current + new password |
-| 7 | `GET /v1/auth/me` | Splash · shell bootstrap | App launch / cold start / after login to route the user |
+
+**Routing hints from `#0` *(proposed)*:**
+
+- `exists == false` → Create account UI → `#1 register`
+- `exists == true` → Sign-in UI → `#2 login`
+- Welcome `role` ≠ account `role` → show mismatch error; do not register/login
+- `registration_complete` / `listener_profile_status` on `#0` are **hints only** — final routing uses `#7` after auth
+
+**Social auth flow (AuthScreen → `#1b`):**
+
+1. User taps Continue with Google or Apple on AuthScreen (ventor or listener path).
+2. Native SDK returns `id_token` (+ email on first Apple auth).
+3. If email is available → `#0 check-email` with `{ email, role }` — block on role mismatch.
+4. `#1b social` with `{ provider, id_token, role, nonce?, full_name? }`.
+5. Persist tokens → `#7 me` → same routing as email auth (ventor/listener registration, under_review, home).
 
 **Routing hints from `#7`:**
 
@@ -51,7 +72,14 @@ Use these for **both** ventor and listener unless a screen is role-specific.
 
 | # | Endpoint | Screen / place | When |
 |---|----------|----------------|------|
-| 8 | `POST /v1/ventors/register` | Ventor registration (nickname, gender, avatar, interests) | Final submit of ventor onboarding |
+| 74 *(proposed)* | `GET /v1/catalog/categories?audience=ventor` | Ventor registration → **interests step** | On step open — load category chips (id, localized name, icon_key). Do **not** hardcode the list. |
+| 8 | `POST /v1/ventors/register` | Ventor registration (nickname, gender, avatar, interests) | Final submit of ventor onboarding — body includes `interest_ids` from #74 |
+
+**Interests flow:**
+
+1. Step 2 opens → `#74` load categories.
+2. User selects one or more (`other` may require free text when `allows_custom_text`).
+3. Finish → `#8` with `interest_ids` (+ optional `other_interest_text`).
 
 ### B2. Ventor home & wellness
 
@@ -223,8 +251,9 @@ Module ids: `art_of_listening`, `empathy`, `boundaries`, `difficult_situations`,
 | Screen | APIs |
 |--------|------|
 | Splash / bootstrap | `#7` |
-| Register | `#1` then role register `#8` or `#22` |
-| Login | `#2` then `#7` |
+| Email auth — email step *(proposed)* | `#0` → branch UI |
+| Register | `#0` (optional) → `#1` → `#7` → role register `#8` or `#22` if incomplete |
+| Login | `#0` (optional) → `#2` → `#7` |
 | Token refresh | `#3` (interceptor) |
 | Logout | `#4` |
 | Delete account | `#5` |
@@ -257,6 +286,14 @@ Module ids: `art_of_listening`, `empathy`, `boundaries`, `difficult_situations`,
 ---
 
 ## Part E — Recommended call order (happy paths)
+
+### Email auth (with `#0` proposed)
+
+1. Welcome → pick role (`ventor` \| `listener`)
+2. AuthScreen → Continue with email
+3. `#0` check-email → branch UI (Create account vs Sign in)
+4. `#1` register **or** `#2` login (password submit)
+5. `#7` auth/me → route (home / role registration / listener status)
 
 ### Ventor: cold start → book → call → rate
 

@@ -16,7 +16,7 @@ void main() {
       osVersion: '14',
       appVersion: '1.0.0',
       installationId: 'install-1',
-      userAgent: 'ZainApp/1.0',
+      userAgent: 'VentingApp/1.0',
       networkType: 'wifi',
       phoneVersion: 'Pixel',
       getLanguageCode: () => 'en',
@@ -31,7 +31,7 @@ void main() {
     expect(options.headers['skel-platform'], 'android');
     expect(options.headers['skel-os-version'], '14');
     expect(options.headers['skel-fix-version'], '1.0.0');
-    expect(options.headers['user-agent'], 'ZainApp/1.0');
+    expect(options.headers['user-agent'], 'VentingApp/1.0');
     expect(options.headers['skel-accept-language'], 'en');
     expect(options.headers['accept-language'], 'en');
     expect(options.headers['content-type'], 'application/json; charset=UTF-8');
@@ -45,7 +45,7 @@ void main() {
       osVersion: '17',
       appVersion: '2.0.0',
       installationId: 'install-2',
-      userAgent: 'ZainApp/2.0',
+      userAgent: 'VentingApp/2.0',
       networkType: 'cellular',
       phoneVersion: 'iPhone',
       getLanguageCode: () => 'ckb',
@@ -85,7 +85,7 @@ void main() {
       osVersion: '14',
       appVersion: '1.0.0',
       installationId: 'install-1',
-      userAgent: 'ZainApp/1.0',
+      userAgent: 'VentingApp/1.0',
       networkType: 'wifi',
       phoneVersion: 'Pixel',
       getLanguageCode: () => '',

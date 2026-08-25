@@ -74,7 +74,12 @@ class _ListenerRegistrationScreenState
     }
     final previous = _step.previous;
     if (previous == null) {
-      context.pop();
+      if (context.canPop()) {
+        context.pop();
+      } else {
+        // Arrived via `go` after login/register — no stack to pop.
+        context.go(AppRoutes.welcome);
+      }
       return;
     }
     _goTo(previous);

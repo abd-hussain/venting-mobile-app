@@ -1,6 +1,18 @@
 import 'package:get_it/get_it.dart';
 import 'package:preferences/preferences.dart';
 import 'package:venting_mobile_app/di/venting_module.dart';
+import 'package:venting_mobile_app/domain/usecase/auth_check_email_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/auth_login_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/auth_me_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/auth_register_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/auth_social_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/clear_auth_session_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/get_cached_auth_me_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/sign_in_with_apple_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/sign_in_with_google_usecase.dart';
+import 'package:venting_mobile_app/presentation/auth/auth_screen.dart';
+import 'package:venting_mobile_app/presentation/auth/bloc/auth_bloc.dart';
+import 'package:venting_mobile_app/presentation/auth/bloc/email_registration_bloc.dart';
 import 'package:venting_mobile_app/presentation/splash/bloc/splash_bloc.dart';
 
 /// Blocs mixin for VentingModule
@@ -9,7 +21,33 @@ mixin VentingModuleBlocs on VentingModule {
   /// Registers all bloc dependencies
   void registerBlocs(GetIt getIt) {
     getIt.registerFactory<SplashBloc>(
-      () => SplashBloc(getIt<VentingPreferences>()),
+      () => SplashBloc(
+        getIt<VentingPreferences>(),
+        getIt<AuthMeUsecase>(),
+        getIt<GetCachedAuthMeUsecase>(),
+        getIt<ClearAuthSessionUsecase>(),
+      ),
+    );
+    getIt.registerFactoryParam<EmailRegistrationBloc, AuthUserType, void>(
+      (userType, _) => EmailRegistrationBloc(
+        getIt<AuthCheckEmailUsecase>(),
+        getIt<AuthRegisterUsecase>(),
+        getIt<AuthLoginUsecase>(),
+        getIt<AuthMeUsecase>(),
+        getIt<VentingPreferences>(),
+        userType: userType,
+      ),
+    );
+    getIt.registerFactoryParam<AuthBloc, AuthUserType, void>(
+      (userType, _) => AuthBloc(
+        getIt<SignInWithGoogleUsecase>(),
+        getIt<SignInWithAppleUsecase>(),
+        getIt<AuthCheckEmailUsecase>(),
+        getIt<AuthSocialUsecase>(),
+        getIt<AuthMeUsecase>(),
+        getIt<VentingPreferences>(),
+        userType: userType,
+      ),
     );
   }
 }

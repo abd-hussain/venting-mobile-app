@@ -1,21 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:venting_mobile_app/di/di_container.dart';
+import 'package:venting_mobile_app/domain/data/api/catalog_category_model.dart';
+import 'package:venting_mobile_app/domain/data/exceptions/main_api_exception.dart';
+import 'package:venting_mobile_app/domain/usecase/get_catalog_categories_usecase.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
 import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dart';
 
-class _VentorInterest {
-  const _VentorInterest({
-    required this.id,
-    required this.label,
-    required this.icon,
+/// Result of the interests step — passed to parent for `#8 ventors/register`.
+class VentorInterestsSelection {
+  const VentorInterestsSelection({
+    required this.interestIds,
+    this.otherInterestText,
   });
 
-  final String id;
-  final String label;
-  final IconData icon;
+  final List<String> interestIds;
+  final String? otherInterestText;
 }
 
 /// Ventor registration step 2 — topics they want to vent about.
+///
+/// Categories come from `#74 GET /v1/catalog/categories?audience=ventor`.
 class VentorRegistrationInterestsStep extends StatefulWidget {
   const VentorRegistrationInterestsStep({
     super.key,
@@ -24,7 +29,7 @@ class VentorRegistrationInterestsStep extends StatefulWidget {
   });
 
   final VoidCallback onBack;
-  final VoidCallback onFinish;
+  final ValueChanged<VentorInterestsSelection> onFinish;
 
   @override
   State<VentorRegistrationInterestsStep> createState() =>
@@ -38,16 +43,30 @@ class _VentorRegistrationInterestsStepState
   static const _muted = Color(0xFF9B93AB);
   static const _checkboxBorder = Color(0xFF4A425C);
   static const _fieldFill = Color(0xFF14101C);
-  static const _otherId = 'other';
 
   final Set<String> _selectedIds = {};
   final _otherController = TextEditingController();
 
-  bool get _isOtherSelected => _selectedIds.contains(_otherId);
+  bool _isLoading = true;
+  String? _errorMessage;
+  List<CatalogCategoryModel> _categories = const [];
+
+  CatalogCategoryModel? get _customTextCategory {
+    for (final category in _categories) {
+      if (category.allows_custom_text && _selectedIds.contains(category.id)) {
+        return category;
+      }
+    }
+    return null;
+  }
 
   bool get _canContinue {
+    if (_isLoading || _errorMessage != null || _categories.isEmpty) {
+      return false;
+    }
     if (_selectedIds.isEmpty) return false;
-    if (_isOtherSelected && _otherController.text.trim().isEmpty) {
+    final custom = _customTextCategory;
+    if (custom != null && _otherController.text.trim().isEmpty) {
       return false;
     }
     return true;
@@ -57,6 +76,7 @@ class _VentorRegistrationInterestsStepState
   void initState() {
     super.initState();
     _otherController.addListener(() => setState(() {}));
+    WidgetsBinding.instance.addPostFrameCallback((_) => _loadCategories());
   }
 
   @override
@@ -65,11 +85,79 @@ class _VentorRegistrationInterestsStepState
     super.dispose();
   }
 
+  Future<void> _loadCategories() async {
+    setState(() {
+      _isLoading = true;
+      _errorMessage = null;
+    });
+
+    final result = await diContainer<GetCatalogCategoriesUsecase>()().run();
+
+    if (!mounted) return;
+
+    result.match(
+      (error) {
+        setState(() {
+          _isLoading = false;
+          _errorMessage = _mapError(error);
+          _categories = const [];
+        });
+      },
+      (response) {
+        final items = [...response.data.items]
+          ..sort((a, b) => a.sort_order.compareTo(b.sort_order));
+        setState(() {
+          _isLoading = false;
+          _errorMessage = null;
+          _categories = items;
+          _selectedIds.removeWhere(
+            (id) => items.every((item) => item.id != id),
+          );
+        });
+      },
+    );
+  }
+
+  String _mapError(Object error) {
+    if (error is MainAPIException) {
+      final localized = error.getLocalizedMessage();
+      if (localized.isNotEmpty) return localized;
+      if (error.message.isNotEmpty) return error.message;
+    }
+    return VentingMobLocalizations.of(context).common_unknown_error;
+  }
+
+  String _labelFor(CatalogCategoryModel category, Locale locale) {
+    if (locale.languageCode.toLowerCase().startsWith('ar')) {
+      return category.name_ar;
+    }
+    return category.name_en;
+  }
+
+  IconData _iconFor(String iconKey) {
+    return switch (iconKey) {
+      'favorite' => Icons.favorite_rounded,
+      'favorite_border' => Icons.favorite_border_rounded,
+      'family_restroom' => Icons.family_restroom_rounded,
+      'work_outline' => Icons.work_outline_rounded,
+      'psychology_alt' => Icons.psychology_alt_outlined,
+      'person_outline' => Icons.person_outline_rounded,
+      'school' => Icons.school_outlined,
+      'attach_money' => Icons.attach_money_rounded,
+      'health_and_safety' => Icons.health_and_safety_outlined,
+      'add_circle_outline' => Icons.add_circle_outline_rounded,
+      _ => Icons.category_outlined,
+    };
+  }
+
   void _toggle(String id) {
     setState(() {
       if (_selectedIds.contains(id)) {
         _selectedIds.remove(id);
-        if (id == _otherId) {
+        final wasCustom = _categories.any(
+          (c) => c.id == id && c.allows_custom_text,
+        );
+        if (wasCustom) {
           _otherController.clear();
         }
       } else {
@@ -78,62 +166,22 @@ class _VentorRegistrationInterestsStepState
     });
   }
 
+  void _onFinish() {
+    if (!_canContinue) return;
+    final custom = _customTextCategory;
+    widget.onFinish(
+      VentorInterestsSelection(
+        interestIds: _selectedIds.toList(growable: false),
+        otherInterestText: custom == null ? null : _otherController.text.trim(),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = VentingMobLocalizations.of(context);
-
-    final interests = [
-      _VentorInterest(
-        id: 'relationships',
-        label: l10n.ventor_reg_interest_relationships,
-        icon: Icons.favorite_rounded,
-      ),
-      _VentorInterest(
-        id: 'marriage',
-        label: l10n.ventor_reg_interest_marriage,
-        icon: Icons.favorite_border_rounded,
-      ),
-      _VentorInterest(
-        id: 'parenting',
-        label: l10n.ventor_reg_interest_parenting,
-        icon: Icons.family_restroom_rounded,
-      ),
-      _VentorInterest(
-        id: 'career_work',
-        label: l10n.ventor_reg_interest_career_work,
-        icon: Icons.work_outline_rounded,
-      ),
-      _VentorInterest(
-        id: 'stress_anxiety',
-        label: l10n.ventor_reg_interest_stress_anxiety,
-        icon: Icons.psychology_alt_outlined,
-      ),
-      _VentorInterest(
-        id: 'loneliness',
-        label: l10n.ventor_reg_interest_loneliness,
-        icon: Icons.person_outline_rounded,
-      ),
-      _VentorInterest(
-        id: 'student_life',
-        label: l10n.ventor_reg_interest_student_life,
-        icon: Icons.school_outlined,
-      ),
-      _VentorInterest(
-        id: 'financial_stress',
-        label: l10n.ventor_reg_interest_financial_stress,
-        icon: Icons.attach_money_rounded,
-      ),
-      _VentorInterest(
-        id: 'health_wellness',
-        label: l10n.ventor_reg_interest_health_wellness,
-        icon: Icons.health_and_safety_outlined,
-      ),
-      _VentorInterest(
-        id: _otherId,
-        label: l10n.ventor_reg_interest_other,
-        icon: Icons.add_circle_outline_rounded,
-      ),
-    ];
+    final locale = Localizations.localeOf(context);
+    final customCategory = _customTextCategory;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -188,27 +236,8 @@ class _VentorRegistrationInterestsStepState
                       ],
                     ),
                   ),
-                  Expanded(
-                    child: ListView.separated(
-                      padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
-                      itemCount: interests.length,
-                      separatorBuilder: (_, _) => const SizedBox(height: 6),
-                      itemBuilder: (context, index) {
-                        final interest = interests[index];
-                        final selected = _selectedIds.contains(interest.id);
-                        return _InterestRow(
-                          label: interest.label,
-                          icon: interest.icon,
-                          selected: selected,
-                          selectedFill: _rowSelected,
-                          muted: _muted,
-                          checkboxBorder: _checkboxBorder,
-                          onTap: () => _toggle(interest.id),
-                        );
-                      },
-                    ),
-                  ),
-                  if (_isOtherSelected)
+                  Expanded(child: _buildBody(l10n, locale)),
+                  if (customCategory != null)
                     Padding(
                       padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
                       child: TextField(
@@ -258,7 +287,7 @@ class _VentorRegistrationInterestsStepState
                     child: SizedBox(
                       height: 54,
                       child: FilledButton(
-                        onPressed: _canContinue ? widget.onFinish : null,
+                        onPressed: _canContinue ? _onFinish : null,
                         style: FilledButton.styleFrom(
                           backgroundColor: SplashColors.purpleMid,
                           disabledBackgroundColor: SplashColors.purpleMid
@@ -284,6 +313,78 @@ class _VentorRegistrationInterestsStepState
           ),
         ),
       ],
+    );
+  }
+
+  Widget _buildBody(VentingMobLocalizations l10n, Locale locale) {
+    if (_isLoading) {
+      return const Center(
+        child: CircularProgressIndicator(
+          strokeWidth: 2.4,
+          color: SplashColors.purpleMid,
+        ),
+      );
+    }
+
+    if (_errorMessage != null) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              _errorMessage!,
+              textAlign: TextAlign.center,
+              style: GoogleFonts.inter(
+                color: const Color(0xFFF87171),
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+                height: 1.4,
+              ),
+            ),
+            const SizedBox(height: 16),
+            TextButton(
+              onPressed: _loadCategories,
+              child: Text(
+                l10n.common_retry,
+                style: GoogleFonts.inter(
+                  color: SplashColors.purpleMid,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
+    if (_categories.isEmpty) {
+      return Center(
+        child: Text(
+          l10n.common_unknown_error,
+          textAlign: TextAlign.center,
+          style: GoogleFonts.inter(color: _muted, fontSize: 14),
+        ),
+      );
+    }
+
+    return ListView.separated(
+      padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
+      itemCount: _categories.length,
+      separatorBuilder: (_, _) => const SizedBox(height: 6),
+      itemBuilder: (context, index) {
+        final category = _categories[index];
+        final selected = _selectedIds.contains(category.id);
+        return _InterestRow(
+          label: _labelFor(category, locale),
+          icon: _iconFor(category.icon_key),
+          selected: selected,
+          selectedFill: _rowSelected,
+          muted: _muted,
+          checkboxBorder: _checkboxBorder,
+          onTap: () => _toggle(category.id),
+        );
+      },
     );
   }
 }

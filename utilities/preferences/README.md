@@ -1,3 +1,3 @@
 # Preferences
 
-Local storage for Zain app
+Local storage for Venting app
