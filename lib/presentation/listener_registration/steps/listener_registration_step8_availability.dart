@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:timezone/data/latest.dart' as tzdata;
 import 'package:timezone/timezone.dart' as tz;
+import 'package:venting_mobile_app/domain/data/app/listener_registration_draft.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
-import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dart';
 
 class _TimeZoneOption {
   const _TimeZoneOption({required this.id, required this.label});
@@ -24,9 +24,21 @@ class ListenerRegistrationStep8Availability extends StatefulWidget {
   const ListenerRegistrationStep8Availability({
     super.key,
     required this.onContinue,
+    this.initialTimeZoneId,
+    this.initialSelectedDays = const ['mon', 'tue', 'wed', 'thu', 'fri'],
+    this.initialFromHour = '09:00 AM',
+    this.initialToHour = '11:00 PM',
+    this.initialAcceptInstantCall = true,
+    this.initialSessionMinutes = const [30, 60],
   });
 
-  final VoidCallback onContinue;
+  final ValueChanged<ListenerRegistrationStep8Data> onContinue;
+  final String? initialTimeZoneId;
+  final List<String> initialSelectedDays;
+  final String initialFromHour;
+  final String initialToHour;
+  final bool initialAcceptInstantCall;
+  final List<int> initialSessionMinutes;
 
   @override
   State<ListenerRegistrationStep8Availability> createState() =>
@@ -35,9 +47,11 @@ class ListenerRegistrationStep8Availability extends StatefulWidget {
 
 class _ListenerRegistrationStep8AvailabilityState
     extends State<ListenerRegistrationStep8Availability> {
-  static const _cardFill = Color(0xFF1C1826);
-  static const _fieldFill = Color(0xFF15101F);
+  static const _accent = Color(0xFF8A3CFE);
+  static const _fieldFill = Color(0xFF1C1826);
+  static const _chipFill = Color(0xFF1C1826);
   static const _muted = Color(0xFF9B93AB);
+  static const _sectionLabel = Color(0xFFB7AEC9);
 
   static List<_TimeZoneOption>? _cachedTimeZones;
 
@@ -228,22 +242,35 @@ class _ListenerRegistrationStep8AvailabilityState
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
                           ),
-                          cursorColor: SplashColors.purpleMid,
+                          cursorColor: _accent,
                           decoration: InputDecoration(
                             hintText: searchHint,
                             hintStyle: GoogleFonts.inter(
                               color: _muted,
                               fontSize: 14,
                             ),
-                            prefixIcon: const Icon(
+                            prefixIcon: Icon(
                               Icons.search_rounded,
-                              color: Color(0xFF9B93AB),
+                              color: _muted.withValues(alpha: 0.9),
                             ),
                             filled: true,
                             fillColor: _fieldFill,
                             contentPadding: const EdgeInsets.symmetric(
                               horizontal: 14,
                               vertical: 12,
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(14),
+                              borderSide: BorderSide(
+                                color: _accent.withValues(alpha: 0.55),
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(14),
+                              borderSide: const BorderSide(
+                                color: _accent,
+                                width: 1.4,
+                              ),
                             ),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(14),
@@ -274,7 +301,7 @@ class _ListenerRegistrationStep8AvailabilityState
                             trailing: selected
                                 ? const Icon(
                                     Icons.check_rounded,
-                                    color: SplashColors.purpleMid,
+                                    color: _accent,
                                   )
                                 : null,
                             onTap: () => Navigator.of(context).pop(option),
@@ -296,7 +323,30 @@ class _ListenerRegistrationStep8AvailabilityState
   void initState() {
     super.initState();
     _timeZones = _loadAllTimeZones();
-    _timeZoneId = _defaultTimeZoneId(_timeZones);
+    _timeZoneId = widget.initialTimeZoneId ?? _defaultTimeZoneId(_timeZones);
+    _selectedDays
+      ..clear()
+      ..addAll(widget.initialSelectedDays);
+    _fromHour = widget.initialFromHour;
+    _toHour = widget.initialToHour;
+    _acceptInstantCall = widget.initialAcceptInstantCall;
+    _sessionMinutes
+      ..clear()
+      ..addAll(widget.initialSessionMinutes);
+  }
+
+  void _submit() {
+    if (!_canContinue) return;
+    widget.onContinue(
+      ListenerRegistrationStep8Data(
+        timeZoneId: _timeZoneId,
+        availabilityDays: _selectedDays.toList(growable: false),
+        availabilityFrom: _fromHour,
+        availabilityTo: _toHour,
+        acceptInstantCalls: _acceptInstantCall,
+        sessionMinutes: _sessionMinutes.toList(growable: false),
+      ),
+    );
   }
 
   @override
@@ -317,298 +367,230 @@ class _ListenerRegistrationStep8AvailabilityState
     ];
 
     return Padding(
-      padding: const EdgeInsets.fromLTRB(24, 8, 24, 24),
+      padding: const EdgeInsets.fromLTRB(24, 8, 24, 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Row(
-            children: [
-              Container(
-                width: 36,
-                height: 36,
-                alignment: Alignment.center,
-                decoration: const BoxDecoration(
-                  color: SplashColors.purpleMid,
-                  shape: BoxShape.circle,
-                ),
-                child: Text(
-                  '8',
-                  style: GoogleFonts.inter(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Text(
-                  l10n.listener_reg_step_availability,
-                  style: GoogleFonts.inter(
-                    color: Colors.white,
-                    fontSize: 20,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ),
-            ],
+          Text(
+            l10n.listener_reg_avail_title,
+            style: GoogleFonts.inter(
+              color: Colors.white,
+              fontSize: 28,
+              fontWeight: FontWeight.w700,
+              height: 1.2,
+            ),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 10),
+          Text(
+            l10n.listener_reg_avail_subtitle,
+            style: GoogleFonts.inter(
+              color: _muted,
+              fontSize: 15,
+              fontWeight: FontWeight.w400,
+              height: 1.45,
+            ),
+          ),
+          const SizedBox(height: 24),
           Expanded(
-            child: Container(
-              decoration: BoxDecoration(
-                color: _cardFill,
-                borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: Colors.white.withValues(alpha: 0.06)),
-              ),
+            child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Expanded(
-                    child: SingleChildScrollView(
-                      padding: const EdgeInsets.fromLTRB(20, 20, 20, 12),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          Text(
-                            l10n.listener_reg_avail_title,
-                            style: GoogleFonts.inter(
-                              color: Colors.white,
-                              fontSize: 22,
-                              fontWeight: FontWeight.w700,
-                              height: 1.25,
-                            ),
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            l10n.listener_reg_avail_subtitle,
-                            style: GoogleFonts.inter(
-                              color: Colors.white.withValues(alpha: 0.65),
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              height: 1.4,
-                            ),
-                          ),
-                          const SizedBox(height: 22),
-                          _FieldLabel(l10n.listener_reg_avail_timezone),
-                          const SizedBox(height: 8),
-                          _DropdownField(
-                            value: timeZoneLabel,
-                            fill: _fieldFill,
-                            muted: _muted,
-                            onTap: _pickTimeZone,
-                          ),
-                          const SizedBox(height: 18),
-                          _FieldLabel(l10n.listener_reg_avail_weekly),
-                          const SizedBox(height: 10),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              for (final day in days)
-                                _DayChip(
-                                  label: day.label,
-                                  selected: _selectedDays.contains(day.id),
-                                  onTap: () {
-                                    setState(() {
-                                      if (_selectedDays.contains(day.id)) {
-                                        _selectedDays.remove(day.id);
-                                      } else {
-                                        _selectedDays.add(day.id);
-                                      }
-                                    });
-                                  },
-                                ),
-                            ],
-                          ),
-                          const SizedBox(height: 18),
-                          _FieldLabel(l10n.listener_reg_avail_hours),
-                          const SizedBox(height: 8),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: _DropdownField(
-                                  value: _fromHour,
-                                  fill: _fieldFill,
-                                  muted: _muted,
-                                  onTap: () => _pickHour(isFrom: true),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 10,
-                                ),
-                                child: Text(
-                                  l10n.listener_reg_avail_to,
-                                  style: GoogleFonts.inter(
-                                    color: _muted,
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                child: _DropdownField(
-                                  value: _toHour,
-                                  fill: _fieldFill,
-                                  muted: _muted,
-                                  onTap: () => _pickHour(isFrom: false),
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 18),
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 14,
-                              vertical: 12,
-                            ),
-                            decoration: BoxDecoration(
-                              color: _fieldFill,
-                              borderRadius: BorderRadius.circular(14),
-                            ),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        l10n.listener_reg_avail_instant_call,
-                                        style: GoogleFonts.inter(
-                                          color: Colors.white,
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-                                      const SizedBox(height: 4),
-                                      Text(
-                                        l10n.listener_reg_avail_instant_call_hint,
-                                        style: GoogleFonts.inter(
-                                          color: _muted,
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w400,
-                                          height: 1.35,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                const SizedBox(width: 10),
-                                Switch.adaptive(
-                                  value: _acceptInstantCall,
-                                  activeThumbColor: Colors.white,
-                                  activeTrackColor: SplashColors.purpleMid,
-                                  inactiveThumbColor: Colors.white70,
-                                  inactiveTrackColor: const Color(0xFF3A3348),
-                                  onChanged: (value) {
-                                    setState(() => _acceptInstantCall = value);
-                                  },
-                                ),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(height: 18),
-                          _FieldLabel(l10n.listener_reg_avail_session_length),
-                          const SizedBox(height: 10),
-                          Row(
-                            children: [
-                              for (final minutes in [30, 60]) ...[
-                                Expanded(
-                                  child: _SessionLengthChip(
-                                    label: l10n.listener_reg_avail_session_min(
-                                      minutes,
-                                    ),
-                                    selected: _sessionMinutes.contains(minutes),
-                                    onTap: () {
-                                      setState(() {
-                                        if (_sessionMinutes.contains(minutes)) {
-                                          _sessionMinutes.remove(minutes);
-                                        } else {
-                                          _sessionMinutes.add(minutes);
-                                        }
-                                      });
-                                    },
-                                  ),
-                                ),
-                                if (minutes != 60) const SizedBox(width: 8),
-                              ],
-                            ],
-                          ),
-                          const SizedBox(height: 16),
-                          Container(
-                            width: double.infinity,
-                            padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
-                            decoration: BoxDecoration(
-                              color: SplashColors.purpleMid.withValues(
-                                alpha: 0.12,
-                              ),
-                              borderRadius: BorderRadius.circular(12),
-                              border: Border.all(
-                                color: SplashColors.purpleMid.withValues(
-                                  alpha: 0.28,
-                                ),
-                              ),
-                            ),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Padding(
-                                  padding: EdgeInsets.only(top: 1),
-                                  child: Icon(
-                                    Icons.info_outline_rounded,
-                                    size: 18,
-                                    color: SplashColors.purpleMid,
-                                  ),
-                                ),
-                                const SizedBox(width: 10),
-                                Expanded(
-                                  child: Text(
-                                    l10n.listener_reg_avail_manage_later_note,
-                                    style: GoogleFonts.inter(
-                                      color: Colors.white.withValues(
-                                        alpha: 0.78,
-                                      ),
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.w400,
-                                      height: 1.4,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                  _FieldLabel(l10n.listener_reg_avail_timezone),
+                  const SizedBox(height: 10),
+                  _DropdownField(value: timeZoneLabel, onTap: _pickTimeZone),
+                  const SizedBox(height: 20),
+                  _FieldLabel(l10n.listener_reg_avail_weekly),
+                  const SizedBox(height: 12),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      for (final day in days)
+                        _DayChip(
+                          label: day.label,
+                          selected: _selectedDays.contains(day.id),
+                          onTap: () {
+                            setState(() {
+                              if (_selectedDays.contains(day.id)) {
+                                _selectedDays.remove(day.id);
+                              } else {
+                                _selectedDays.add(day.id);
+                              }
+                            });
+                          },
+                        ),
+                    ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
-                    child: SizedBox(
-                      height: 54,
-                      child: FilledButton(
-                        onPressed: _canContinue ? widget.onContinue : null,
-                        style: FilledButton.styleFrom(
-                          backgroundColor: SplashColors.purpleMid,
-                          disabledBackgroundColor: SplashColors.purpleMid
-                              .withValues(alpha: 0.35),
-                          foregroundColor: Colors.white,
-                          disabledForegroundColor: Colors.white,
-                          elevation: 0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                          textStyle: GoogleFonts.inter(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w700,
+                  const SizedBox(height: 20),
+                  _FieldLabel(l10n.listener_reg_avail_hours),
+                  const SizedBox(height: 10),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: _DropdownField(
+                          value: _fromHour,
+                          onTap: () => _pickHour(isFrom: true),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: Text(
+                          l10n.listener_reg_avail_to,
+                          style: GoogleFonts.inter(
+                            color: _muted,
+                            fontSize: 13,
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
-                        child: Text(l10n.listener_reg_continue),
                       ),
+                      Expanded(
+                        child: _DropdownField(
+                          value: _toHour,
+                          onTap: () => _pickHour(isFrom: false),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 14,
+                      vertical: 12,
+                    ),
+                    decoration: BoxDecoration(
+                      color: _fieldFill,
+                      borderRadius: BorderRadius.circular(14),
+                      border: Border.all(
+                        color: _accent.withValues(alpha: 0.35),
+                      ),
+                    ),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                l10n.listener_reg_avail_instant_call,
+                                style: GoogleFonts.inter(
+                                  color: Colors.white,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              const SizedBox(height: 4),
+                              Text(
+                                l10n.listener_reg_avail_instant_call_hint,
+                                style: GoogleFonts.inter(
+                                  color: _muted,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w400,
+                                  height: 1.35,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        Switch.adaptive(
+                          value: _acceptInstantCall,
+                          activeThumbColor: Colors.white,
+                          activeTrackColor: _accent,
+                          inactiveThumbColor: Colors.white70,
+                          inactiveTrackColor: const Color(0xFF3A2F52),
+                          onChanged: (value) {
+                            setState(() => _acceptInstantCall = value);
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  _FieldLabel(l10n.listener_reg_avail_session_length),
+                  const SizedBox(height: 12),
+                  Row(
+                    children: [
+                      for (final minutes in [30, 60]) ...[
+                        Expanded(
+                          child: _SessionLengthChip(
+                            label: l10n.listener_reg_avail_session_min(minutes),
+                            selected: _sessionMinutes.contains(minutes),
+                            onTap: () {
+                              setState(() {
+                                if (_sessionMinutes.contains(minutes)) {
+                                  _sessionMinutes.remove(minutes);
+                                } else {
+                                  _sessionMinutes.add(minutes);
+                                }
+                              });
+                            },
+                          ),
+                        ),
+                        if (minutes != 60) const SizedBox(width: 10),
+                      ],
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.fromLTRB(14, 14, 14, 14),
+                    decoration: BoxDecoration(
+                      color: _accent.withValues(alpha: 0.1),
+                      borderRadius: BorderRadius.circular(14),
+                      border: Border.all(
+                        color: _accent.withValues(alpha: 0.28),
+                      ),
+                    ),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(top: 1),
+                          child: Icon(
+                            Icons.info_outline_rounded,
+                            size: 18,
+                            color: _accent.withValues(alpha: 0.9),
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: Text(
+                            l10n.listener_reg_avail_manage_later_note,
+                            style: GoogleFonts.inter(
+                              color: _muted,
+                              fontSize: 13,
+                              fontWeight: FontWeight.w400,
+                              height: 1.45,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
               ),
+            ),
+          ),
+          const SizedBox(height: 12),
+          SizedBox(
+            height: 56,
+            child: FilledButton(
+              onPressed: _canContinue ? _submit : null,
+              style: FilledButton.styleFrom(
+                backgroundColor: _accent,
+                disabledBackgroundColor: _accent.withValues(alpha: 0.42),
+                foregroundColor: Colors.white,
+                disabledForegroundColor: Colors.white,
+                elevation: 0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(999),
+                ),
+                textStyle: GoogleFonts.inter(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              child: Text(l10n.listener_reg_continue),
             ),
           ),
         ],
@@ -627,37 +609,38 @@ class _FieldLabel extends StatelessWidget {
     return Text(
       text,
       style: GoogleFonts.inter(
-        color: const Color(0xFF9B93AB),
-        fontSize: 13,
-        fontWeight: FontWeight.w500,
+        color: _ListenerRegistrationStep8AvailabilityState._sectionLabel,
+        fontSize: 14,
+        fontWeight: FontWeight.w600,
       ),
     );
   }
 }
 
 class _DropdownField extends StatelessWidget {
-  const _DropdownField({
-    required this.value,
-    required this.fill,
-    required this.muted,
-    required this.onTap,
-  });
+  const _DropdownField({required this.value, required this.onTap});
 
   final String value;
-  final Color fill;
-  final Color muted;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: fill,
+      color: _ListenerRegistrationStep8AvailabilityState._fieldFill,
       borderRadius: BorderRadius.circular(14),
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(14),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(14),
+            border: Border.all(
+              color: _ListenerRegistrationStep8AvailabilityState._accent
+                  .withValues(alpha: 0.55),
+              width: 1.2,
+            ),
+          ),
           child: Row(
             children: [
               Expanded(
@@ -667,12 +650,16 @@ class _DropdownField extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: GoogleFonts.inter(
                     color: Colors.white,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
               ),
-              Icon(Icons.keyboard_arrow_down_rounded, color: muted, size: 22),
+              const Icon(
+                Icons.keyboard_arrow_down_rounded,
+                color: _ListenerRegistrationStep8AvailabilityState._accent,
+                size: 22,
+              ),
             ],
           ),
         ),
@@ -695,14 +682,23 @@ class _DayChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: selected ? SplashColors.purpleMid : const Color(0xFF2A2436),
+      color: _ListenerRegistrationStep8AvailabilityState._chipFill,
       shape: const CircleBorder(),
       child: InkWell(
         customBorder: const CircleBorder(),
         onTap: onTap,
-        child: SizedBox(
+        child: Container(
           width: 38,
           height: 38,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            border: Border.all(
+              color: selected
+                  ? _ListenerRegistrationStep8AvailabilityState._accent
+                  : Colors.white.withValues(alpha: 0.08),
+              width: selected ? 1.5 : 1,
+            ),
+          ),
           child: Center(
             child: Text(
               label,
@@ -733,31 +729,29 @@ class _SessionLengthChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: selected
-          ? SplashColors.purpleMid.withValues(alpha: 0.16)
-          : const Color(0xFF15101F),
-      borderRadius: BorderRadius.circular(12),
+      color: _ListenerRegistrationStep8AvailabilityState._chipFill,
+      borderRadius: BorderRadius.circular(22),
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(22),
         child: Container(
           height: 44,
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(22),
             border: Border.all(
               color: selected
-                  ? SplashColors.purpleMid
+                  ? _ListenerRegistrationStep8AvailabilityState._accent
                   : Colors.white.withValues(alpha: 0.08),
-              width: selected ? 1.4 : 1,
+              width: selected ? 1.5 : 1,
             ),
           ),
           child: Text(
             label,
             style: GoogleFonts.inter(
               color: Colors.white,
-              fontSize: 13,
-              fontWeight: FontWeight.w600,
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
             ),
           ),
         ),

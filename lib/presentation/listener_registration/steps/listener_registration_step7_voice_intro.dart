@@ -6,20 +6,24 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:record/record.dart';
+import 'package:venting_mobile_app/domain/data/app/listener_registration_draft.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
-import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dart';
+import 'package:venting_mobile_app/utils/registration_media_storage.dart';
 
 /// Step 7 — Record a short voice introduction (max 60s).
 class ListenerRegistrationStep7VoiceIntro extends StatefulWidget {
   const ListenerRegistrationStep7VoiceIntro({
     super.key,
     required this.onContinue,
+    this.initialRecordingPath,
+    this.initialRecordedSeconds = 0,
   });
 
-  final VoidCallback onContinue;
+  final ValueChanged<ListenerRegistrationStep7Data> onContinue;
+  final String? initialRecordingPath;
+  final int initialRecordedSeconds;
 
   @override
   State<ListenerRegistrationStep7VoiceIntro> createState() =>
@@ -29,8 +33,9 @@ class ListenerRegistrationStep7VoiceIntro extends StatefulWidget {
 class _ListenerRegistrationStep7VoiceIntroState
     extends State<ListenerRegistrationStep7VoiceIntro>
     with SingleTickerProviderStateMixin {
-  static const _cardFill = Color(0xFF1C1826);
+  static const _accent = Color(0xFF8A3CFE);
   static const _muted = Color(0xFF9B93AB);
+  static const _tipsCardFill = Color(0xFF1C1826);
   static const _maxSeconds = 60;
 
   final _recorder = AudioRecorder();
@@ -63,6 +68,11 @@ class _ListenerRegistrationStep7VoiceIntroState
   @override
   void initState() {
     super.initState();
+    _recordingPath = widget.initialRecordingPath;
+    _recordedSeconds = widget.initialRecordedSeconds;
+    if (_recordingPath != null) {
+      _seconds = _recordedSeconds;
+    }
     _pulseController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 1400),
@@ -104,14 +114,13 @@ class _ListenerRegistrationStep7VoiceIntroState
   }
 
   Future<String> _recordingPathFor(AudioEncoder encoder) async {
-    final dir = await getTemporaryDirectory();
     final ext = switch (encoder) {
-      AudioEncoder.wav => 'wav',
-      AudioEncoder.amrNb || AudioEncoder.amrWb => 'amr',
-      AudioEncoder.opus => 'ogg',
-      _ => 'm4a',
+      AudioEncoder.wav => '.wav',
+      AudioEncoder.amrNb || AudioEncoder.amrWb => '.amr',
+      AudioEncoder.opus => '.ogg',
+      _ => '.m4a',
     };
-    return '${dir.path}/listener_voice_intro_${DateTime.now().millisecondsSinceEpoch}.$ext';
+    return RegistrationMediaStorage.newVoiceIntroPath(extension: ext);
   }
 
   Future<void> _deleteRecordingFile(String? path) async {
@@ -386,190 +395,194 @@ class _ListenerRegistrationStep7VoiceIntroState
     }
   }
 
+  void _submit() {
+    if (!_canContinue) return;
+    widget.onContinue(
+      ListenerRegistrationStep7Data(
+        voiceIntroPath: _recordingPath!,
+        voiceIntroSeconds: _recordedSeconds,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = VentingMobLocalizations.of(context);
     final displaySeconds = _isRecording ? _seconds : _recordedSeconds;
 
     return Padding(
-      padding: const EdgeInsets.fromLTRB(24, 8, 24, 24),
-      child: Container(
-        decoration: BoxDecoration(
-          color: _cardFill,
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: Colors.white.withValues(alpha: 0.06)),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(20, 20, 20, 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(
-                l10n.listener_reg_voice_title,
-                style: GoogleFonts.inter(
-                  color: Colors.white,
-                  fontSize: 22,
-                  fontWeight: FontWeight.w700,
-                  height: 1.25,
-                ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                l10n.listener_reg_voice_subtitle,
-                style: GoogleFonts.inter(
-                  color: Colors.white.withValues(alpha: 0.65),
-                  fontSize: 14,
-                  fontWeight: FontWeight.w400,
-                  height: 1.4,
-                ),
-              ),
-              const SizedBox(height: 12),
-              _VoiceVisualizer(
-                pulse: _pulseController,
-                amplitude: _amplitude,
-                isRecording: _isRecording,
-              ),
-              const SizedBox(height: 12),
-              Text(
-                '${_format(displaySeconds)} / ${_format(_maxSeconds)}',
-                textAlign: TextAlign.center,
-                style: GoogleFonts.inter(
-                  color: Colors.white,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                  letterSpacing: 0.5,
-                ),
-              ),
-              const SizedBox(height: 4),
-              Text(
-                l10n.listener_reg_voice_speak_hint,
-                textAlign: TextAlign.center,
-                style: GoogleFonts.inter(
-                  color: _muted,
-                  fontSize: 13,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-              const SizedBox(height: 14),
-              Expanded(
-                child: SingleChildScrollView(
-                  child: _RecordingTips(
-                    title: l10n.listener_reg_voice_tips_title,
-                    tips: [
-                      l10n.listener_reg_voice_tip_1,
-                      l10n.listener_reg_voice_tip_2,
-                      l10n.listener_reg_voice_tip_3,
-                      l10n.listener_reg_voice_tip_4,
-                      l10n.listener_reg_voice_tip_5,
-                      l10n.listener_reg_voice_tip_6,
-                    ].where((tip) => tip.trim().isNotEmpty).toList(),
-                    exampleTitle: l10n.listener_reg_voice_example_title,
-                    exampleBody: l10n.listener_reg_voice_example_body,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 12),
-              SizedBox(
-                height: 54,
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: FilledButton.icon(
-                        onPressed: _toggleRecord,
-                        icon: Icon(
-                          _isRecording
-                              ? Icons.stop_rounded
-                              : Icons.mic_none_rounded,
-                          size: 22,
-                        ),
-                        label: Text(
-                          _isRecording
-                              ? l10n.listener_reg_voice_stop
-                              : l10n.listener_reg_voice_record,
-                        ),
-                        style: FilledButton.styleFrom(
-                          backgroundColor: SplashColors.purpleMid,
-                          foregroundColor: Colors.white,
-                          elevation: 0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                          textStyle: GoogleFonts.inter(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: OutlinedButton.icon(
-                        onPressed: _recordingPath == null || _isRecording
-                            ? null
-                            : _togglePlay,
-                        icon: Icon(
-                          _isPlaying
-                              ? Icons.stop_rounded
-                              : Icons.play_arrow_rounded,
-                          size: 22,
-                        ),
-                        label: Text(
-                          _isPlaying
-                              ? l10n.listener_reg_voice_stop
-                              : l10n.listener_reg_voice_play,
-                        ),
-                        style: OutlinedButton.styleFrom(
-                          foregroundColor: Colors.white,
-                          disabledForegroundColor: Colors.white.withValues(
-                            alpha: 0.35,
-                          ),
-                          side: BorderSide(
-                            color: Colors.white.withValues(
-                              alpha: _recordingPath == null || _isRecording
-                                  ? 0.12
-                                  : 0.22,
-                            ),
-                          ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                          textStyle: GoogleFonts.inter(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 10),
-              SizedBox(
-                height: 54,
-                child: FilledButton(
-                  onPressed: _canContinue ? widget.onContinue : null,
-                  style: FilledButton.styleFrom(
-                    backgroundColor: SplashColors.purpleMid,
-                    disabledBackgroundColor: SplashColors.purpleMid.withValues(
-                      alpha: 0.35,
-                    ),
-                    foregroundColor: Colors.white,
-                    disabledForegroundColor: Colors.white,
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    textStyle: GoogleFonts.inter(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  child: Text(l10n.listener_reg_continue),
-                ),
-              ),
-            ],
+      padding: const EdgeInsets.fromLTRB(24, 8, 24, 20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(
+            l10n.listener_reg_voice_title,
+            style: GoogleFonts.inter(
+              color: Colors.white,
+              fontSize: 28,
+              fontWeight: FontWeight.w700,
+              height: 1.2,
+            ),
           ),
-        ),
+          const SizedBox(height: 10),
+          Text(
+            l10n.listener_reg_voice_subtitle,
+            style: GoogleFonts.inter(
+              color: _muted,
+              fontSize: 15,
+              fontWeight: FontWeight.w400,
+              height: 1.45,
+            ),
+          ),
+          const SizedBox(height: 20),
+          Center(
+            child: _VoiceVisualizer(
+              pulse: _pulseController,
+              amplitude: _amplitude,
+              isRecording: _isRecording,
+            ),
+          ),
+          const SizedBox(height: 16),
+          Text(
+            '${_format(displaySeconds)}/${_format(_maxSeconds)}',
+            textAlign: TextAlign.center,
+            style: GoogleFonts.inter(
+              color: Colors.white,
+              fontSize: 20,
+              fontWeight: FontWeight.w700,
+              letterSpacing: 0.5,
+            ),
+          ),
+          const SizedBox(height: 6),
+          Text(
+            l10n.listener_reg_voice_speak_hint,
+            textAlign: TextAlign.center,
+            style: GoogleFonts.inter(
+              color: _muted,
+              fontSize: 13,
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+          const SizedBox(height: 16),
+          Expanded(
+            child: SingleChildScrollView(
+              child: _RecordingTips(
+                title: l10n.listener_reg_voice_tips_title,
+                tips: [
+                  l10n.listener_reg_voice_tip_1,
+                  l10n.listener_reg_voice_tip_2,
+                  l10n.listener_reg_voice_tip_3,
+                  l10n.listener_reg_voice_tip_4,
+                  l10n.listener_reg_voice_tip_5,
+                  l10n.listener_reg_voice_tip_6,
+                ].where((tip) => tip.trim().isNotEmpty).toList(),
+                exampleTitle: l10n.listener_reg_voice_example_title,
+                exampleBody: l10n.listener_reg_voice_example_body,
+              ),
+            ),
+          ),
+          const SizedBox(height: 12),
+          SizedBox(
+            height: 52,
+            child: Row(
+              children: [
+                Expanded(
+                  child: FilledButton.icon(
+                    onPressed: _isBusy ? null : _toggleRecord,
+                    icon: Icon(
+                      _isRecording
+                          ? Icons.stop_rounded
+                          : Icons.mic_none_rounded,
+                      size: 20,
+                    ),
+                    label: Text(
+                      _isRecording
+                          ? l10n.listener_reg_voice_stop
+                          : l10n.listener_reg_voice_record,
+                    ),
+                    style: FilledButton.styleFrom(
+                      backgroundColor: _accent,
+                      disabledBackgroundColor: _accent.withValues(alpha: 0.42),
+                      foregroundColor: Colors.white,
+                      disabledForegroundColor: Colors.white,
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(999),
+                      ),
+                      textStyle: GoogleFonts.inter(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: OutlinedButton.icon(
+                    onPressed: _recordingPath == null || _isRecording || _isBusy
+                        ? null
+                        : _togglePlay,
+                    icon: Icon(
+                      _isPlaying
+                          ? Icons.stop_rounded
+                          : Icons.play_arrow_rounded,
+                      size: 20,
+                    ),
+                    label: Text(
+                      _isPlaying
+                          ? l10n.listener_reg_voice_stop
+                          : l10n.listener_reg_voice_play,
+                    ),
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: Colors.white,
+                      disabledForegroundColor: Colors.white.withValues(
+                        alpha: 0.35,
+                      ),
+                      backgroundColor: const Color(0xFF14101C),
+                      side: BorderSide(
+                        color: _accent.withValues(
+                          alpha:
+                              _recordingPath == null || _isRecording || _isBusy
+                              ? 0.2
+                              : 0.55,
+                        ),
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(999),
+                      ),
+                      textStyle: GoogleFonts.inter(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 12),
+          SizedBox(
+            height: 56,
+            child: FilledButton(
+              onPressed: _canContinue ? _submit : null,
+              style: FilledButton.styleFrom(
+                backgroundColor: _accent,
+                disabledBackgroundColor: _accent.withValues(alpha: 0.42),
+                foregroundColor: Colors.white,
+                disabledForegroundColor: Colors.white,
+                elevation: 0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(999),
+                ),
+                textStyle: GoogleFonts.inter(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              child: Text(l10n.listener_reg_continue),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -592,36 +605,28 @@ class _RecordingTips extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.fromLTRB(14, 14, 14, 12),
+      padding: const EdgeInsets.fromLTRB(16, 16, 16, 14),
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.04),
-        borderRadius: BorderRadius.circular(14),
+        color: _ListenerRegistrationStep7VoiceIntroState._tipsCardFill,
+        borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: SplashColors.purpleMid.withValues(alpha: 0.25),
+          color: _ListenerRegistrationStep7VoiceIntroState._accent.withValues(
+            alpha: 0.22,
+          ),
         ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              const Icon(
-                Icons.lightbulb_outline_rounded,
-                size: 18,
-                color: SplashColors.purpleMid,
-              ),
-              const SizedBox(width: 8),
-              Text(
-                title,
-                style: GoogleFonts.inter(
-                  color: SplashColors.purpleMid,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-            ],
+          Text(
+            title,
+            style: GoogleFonts.inter(
+              color: _ListenerRegistrationStep7VoiceIntroState._accent,
+              fontSize: 15,
+              fontWeight: FontWeight.w700,
+            ),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 12),
           for (final tip in tips) ...[
             Padding(
               padding: const EdgeInsets.only(bottom: 8),
@@ -634,7 +639,7 @@ class _RecordingTips extends StatelessWidget {
                       width: 5,
                       height: 5,
                       decoration: const BoxDecoration(
-                        color: SplashColors.purpleMid,
+                        color: _ListenerRegistrationStep7VoiceIntroState._muted,
                         shape: BoxShape.circle,
                       ),
                     ),
@@ -644,10 +649,10 @@ class _RecordingTips extends StatelessWidget {
                     child: Text(
                       tip,
                       style: GoogleFonts.inter(
-                        color: Colors.white.withValues(alpha: 0.78),
+                        color: _ListenerRegistrationStep7VoiceIntroState._muted,
                         fontSize: 13,
                         fontWeight: FontWeight.w400,
-                        height: 1.4,
+                        height: 1.45,
                       ),
                     ),
                   ),
@@ -659,7 +664,7 @@ class _RecordingTips extends StatelessWidget {
           Text(
             exampleTitle,
             style: GoogleFonts.inter(
-              color: SplashColors.purpleMid,
+              color: _ListenerRegistrationStep7VoiceIntroState._accent,
               fontSize: 13,
               fontWeight: FontWeight.w700,
               height: 1.35,
@@ -670,14 +675,14 @@ class _RecordingTips extends StatelessWidget {
             width: double.infinity,
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: Colors.black.withValues(alpha: 0.22),
+              color: const Color(0xFF14101C),
               borderRadius: BorderRadius.circular(12),
               border: Border.all(color: Colors.white.withValues(alpha: 0.06)),
             ),
             child: Text(
               exampleBody,
               style: GoogleFonts.inter(
-                color: Colors.white.withValues(alpha: 0.82),
+                color: _ListenerRegistrationStep7VoiceIntroState._muted,
                 fontSize: 13,
                 fontWeight: FontWeight.w400,
                 height: 1.5,
@@ -697,6 +702,9 @@ class _VoiceVisualizer extends StatelessWidget {
     required this.isRecording,
   });
 
+  static const _accent = Color(0xFF8A3CFE);
+  static const _micFill = Color(0xFF1C1826);
+
   final Animation<double> pulse;
   final double amplitude;
   final bool isRecording;
@@ -710,55 +718,44 @@ class _VoiceVisualizer extends StatelessWidget {
         final ampBoost = isRecording ? (0.15 + amplitude * 0.35) : 0.0;
 
         return SizedBox(
-          width: 180,
-          height: 180,
+          width: 100,
+          height: 100,
           child: Stack(
             alignment: Alignment.center,
             children: [
               for (var i = 3; i >= 1; i--)
                 Container(
-                  width: (90.0 + i * 28) * (pulseValue + ampBoost * 0.4),
-                  height: (90.0 + i * 28) * (pulseValue + ampBoost * 0.4),
+                  width: (50.0 + i * 16) * (pulseValue + ampBoost * 0.4),
+                  height: (50.0 + i * 16) * (pulseValue + ampBoost * 0.4),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     border: Border.all(
-                      color: SplashColors.purpleMid.withValues(
-                        alpha: 0.08 + (i * 0.05),
-                      ),
-                      width: 1.2,
+                      color: _accent.withValues(alpha: 0.1 + (i * 0.06)),
                     ),
                   ),
                 ),
               CustomPaint(
-                size: const Size(140, 48),
+                size: const Size(78, 28),
                 painter: _WaveformPainter(
                   amplitude: isRecording ? math.max(0.2, amplitude) : 0.22,
-                  color: SplashColors.purpleMid.withValues(
-                    alpha: isRecording ? 0.55 : 0.28,
-                  ),
+                  color: _accent.withValues(alpha: isRecording ? 0.65 : 0.32),
                 ),
               ),
               Container(
-                width: 72,
-                height: 72,
+                width: 40,
+                height: 40,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: const Color(0xFF241833),
-                  border: Border.all(
-                    color: SplashColors.purpleMid.withValues(alpha: 0.35),
-                  ),
+                  color: _micFill,
+                  border: Border.all(color: _accent.withValues(alpha: 0.45)),
                   boxShadow: [
                     BoxShadow(
-                      color: SplashColors.purpleGlow.withValues(alpha: 0.25),
-                      blurRadius: 18,
+                      color: _accent.withValues(alpha: 0.28),
+                      blurRadius: 10,
                     ),
                   ],
                 ),
-                child: const Icon(
-                  Icons.mic_rounded,
-                  size: 34,
-                  color: SplashColors.purpleMid,
-                ),
+                child: const Icon(Icons.mic_rounded, size: 20, color: _accent),
               ),
             ],
           ),

@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:venting_mobile_app/di/di_container.dart';
@@ -6,6 +5,7 @@ import 'package:venting_mobile_app/domain/data/api/catalog_category_model.dart';
 import 'package:venting_mobile_app/domain/data/exceptions/main_api_exception.dart';
 import 'package:venting_mobile_app/domain/usecase/get_catalog_categories_usecase.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
+import 'package:venting_mobile_app/presentation/catalog/widgets/catalog_category_widgets.dart';
 
 /// Result of the interests step — passed to parent for `#8 ventors/register`.
 class VentorInterestsSelection {
@@ -20,18 +20,18 @@ class VentorInterestsSelection {
 
 /// Ventor registration step 2 — topics they want to vent about.
 ///
-/// Categories come from `#74 GET /v1/catalog/categories?audience=ventor`.
+/// Categories come from `#74 GET /v1/catalog/categories`.
 class VentorRegistrationInterestsStep extends StatefulWidget {
   const VentorRegistrationInterestsStep({
     super.key,
     required this.onBack,
-    required this.onFinish,
-    this.isSubmitting = false,
+    required this.onContinue,
+    this.initialSelection,
   });
 
   final VoidCallback onBack;
-  final ValueChanged<VentorInterestsSelection> onFinish;
-  final bool isSubmitting;
+  final ValueChanged<VentorInterestsSelection> onContinue;
+  final VentorInterestsSelection? initialSelection;
 
   @override
   State<VentorRegistrationInterestsStep> createState() =>
@@ -41,13 +41,11 @@ class VentorRegistrationInterestsStep extends StatefulWidget {
 class _VentorRegistrationInterestsStepState
     extends State<VentorRegistrationInterestsStep> {
   static const _rowFill = Color(0xFF1C1826);
-  static const _iconFill = Color(0xFF2A2140);
   static const _muted = Color(0xFF9B93AB);
   static const _accent = Color(0xFF8A3CFE);
   static const _progressTrack = Color(0xFF3A2F52);
-  static const _checkboxBorder = Color(0xFF6B5F82);
   static const _fieldFill = Color(0xFF14101C);
-  static const _totalSteps = 3;
+  static const _totalSteps = 4;
   static const _currentStep = 3;
 
   final Set<String> _selectedIds = {};
@@ -81,6 +79,14 @@ class _VentorRegistrationInterestsStepState
   @override
   void initState() {
     super.initState();
+    final initial = widget.initialSelection;
+    if (initial != null) {
+      _selectedIds.addAll(initial.interestIds);
+      if (initial.otherInterestText != null &&
+          initial.otherInterestText!.isNotEmpty) {
+        _otherController.text = initial.otherInterestText!;
+      }
+    }
     _otherController.addListener(() => setState(() {}));
     WidgetsBinding.instance.addPostFrameCallback((_) => _loadCategories());
   }
@@ -130,14 +136,7 @@ class _VentorRegistrationInterestsStepState
       if (localized.isNotEmpty) return localized;
       if (error.message.isNotEmpty) return error.message;
     }
-    return VentingMobLocalizations.of(context).common_unknown_error;
-  }
-
-  String _labelFor(CatalogCategoryModel category, Locale locale) {
-    if (locale.languageCode.toLowerCase().startsWith('ar')) {
-      return category.name_ar;
-    }
-    return category.name_en;
+    return VentingMobLocalizations.of(context).catalog_categories_load_error;
   }
 
   void _toggle(String id) {
@@ -156,10 +155,10 @@ class _VentorRegistrationInterestsStepState
     });
   }
 
-  void _onFinish() {
-    if (!_canContinue || widget.isSubmitting) return;
+  void _onContinue() {
+    if (!_canContinue) return;
     final custom = _customTextCategory;
-    widget.onFinish(
+    widget.onContinue(
       VentorInterestsSelection(
         interestIds: _selectedIds.toList(growable: false),
         otherInterestText: custom == null ? null : _otherController.text.trim(),
@@ -185,7 +184,7 @@ class _VentorRegistrationInterestsStepState
                 shape: const CircleBorder(),
                 child: InkWell(
                   customBorder: const CircleBorder(),
-                  onTap: widget.isSubmitting ? null : widget.onBack,
+                  onTap: widget.onBack,
                   child: Container(
                     width: 42,
                     height: 42,
@@ -313,9 +312,7 @@ class _VentorRegistrationInterestsStepState
                 child: SizedBox(
                   height: 56,
                   child: FilledButton(
-                    onPressed: (_canContinue && !widget.isSubmitting)
-                        ? _onFinish
-                        : null,
+                    onPressed: _canContinue ? _onContinue : null,
                     style: FilledButton.styleFrom(
                       backgroundColor: _accent,
                       disabledBackgroundColor: _accent.withValues(alpha: 0.42),
@@ -330,16 +327,7 @@ class _VentorRegistrationInterestsStepState
                         fontWeight: FontWeight.w700,
                       ),
                     ),
-                    child: widget.isSubmitting
-                        ? const SizedBox(
-                            width: 22,
-                            height: 22,
-                            child: CircularProgressIndicator(
-                              strokeWidth: 2.2,
-                              color: Colors.white,
-                            ),
-                          )
-                        : Text(l10n.ventor_reg_finish),
+                    child: Text(l10n.listener_reg_continue),
                   ),
                 ),
               ),
@@ -366,9 +354,7 @@ class _VentorRegistrationInterestsStepState
 
   Widget _buildBody(VentingMobLocalizations l10n, Locale locale) {
     if (_isLoading) {
-      return const Center(
-        child: CircularProgressIndicator(strokeWidth: 2.4, color: _accent),
-      );
+      return const SingleChildScrollView(child: CatalogCategoriesShimmer());
     }
 
     if (_errorMessage != null) {
@@ -406,7 +392,7 @@ class _VentorRegistrationInterestsStepState
     if (_categories.isEmpty) {
       return Center(
         child: Text(
-          l10n.common_unknown_error,
+          l10n.catalog_categories_load_error,
           textAlign: TextAlign.center,
           style: GoogleFonts.inter(color: _muted, fontSize: 14),
         ),
@@ -420,150 +406,14 @@ class _VentorRegistrationInterestsStepState
       itemBuilder: (context, index) {
         final category = _categories[index];
         final selected = _selectedIds.contains(category.id);
-        return _InterestRow(
-          label: _labelFor(category, locale),
+        return CatalogCategoryRow(
+          label: catalogCategoryLabel(category, locale),
           iconUrl: category.icon_url,
           iconEmoji: category.icon_emoji,
           selected: selected,
           onTap: () => _toggle(category.id),
         );
       },
-    );
-  }
-}
-
-class _InterestRow extends StatelessWidget {
-  const _InterestRow({
-    required this.label,
-    required this.iconUrl,
-    required this.iconEmoji,
-    required this.selected,
-    required this.onTap,
-  });
-
-  final String label;
-  final String iconUrl;
-  final String iconEmoji;
-  final bool selected;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: _VentorRegistrationInterestsStepState._rowFill,
-      borderRadius: BorderRadius.circular(16),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(16),
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16),
-            border: Border.all(
-              color: selected
-                  ? _VentorRegistrationInterestsStepState._accent.withValues(
-                      alpha: 0.55,
-                    )
-                  : Colors.white.withValues(alpha: 0.06),
-            ),
-          ),
-          child: Row(
-            children: [
-              _InterestIcon(url: iconUrl, emoji: iconEmoji, selected: selected),
-              const SizedBox(width: 14),
-              Expanded(
-                child: Text(
-                  label,
-                  style: GoogleFonts.inter(
-                    color: selected
-                        ? Colors.white
-                        : _VentorRegistrationInterestsStepState._muted,
-                    fontSize: 15,
-                    fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
-                  ),
-                ),
-              ),
-              AnimatedContainer(
-                duration: const Duration(milliseconds: 160),
-                width: 22,
-                height: 22,
-                decoration: BoxDecoration(
-                  color: Colors.transparent,
-                  borderRadius: BorderRadius.circular(5),
-                  border: Border.all(
-                    color: selected
-                        ? _VentorRegistrationInterestsStepState._accent
-                        : _VentorRegistrationInterestsStepState._checkboxBorder,
-                    width: 1.5,
-                  ),
-                ),
-                child: selected
-                    ? const Icon(
-                        Icons.check_rounded,
-                        size: 14,
-                        color: _VentorRegistrationInterestsStepState._accent,
-                      )
-                    : null,
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _InterestIcon extends StatelessWidget {
-  const _InterestIcon({
-    required this.url,
-    required this.emoji,
-    required this.selected,
-  });
-
-  final String url;
-  final String emoji;
-  final bool selected;
-
-  @override
-  Widget build(BuildContext context) {
-    final trimmedUrl = url.trim();
-    final trimmedEmoji = emoji.trim();
-    final hasUrl = trimmedUrl.isNotEmpty;
-
-    return Container(
-      width: 40,
-      height: 40,
-      decoration: BoxDecoration(
-        color: _VentorRegistrationInterestsStepState._iconFill,
-        borderRadius: BorderRadius.circular(12),
-      ),
-      clipBehavior: Clip.antiAlias,
-      alignment: Alignment.center,
-      child: hasUrl
-          ? CachedNetworkImage(
-              imageUrl: trimmedUrl,
-              fit: BoxFit.cover,
-              width: 40,
-              height: 40,
-              placeholder: (_, _) =>
-                  _emojiOrFallback(trimmedEmoji, selected: selected),
-              errorWidget: (_, _, _) =>
-                  _emojiOrFallback(trimmedEmoji, selected: selected),
-            )
-          : _emojiOrFallback(trimmedEmoji, selected: selected),
-    );
-  }
-
-  static Widget _emojiOrFallback(String emoji, {required bool selected}) {
-    if (emoji.isNotEmpty) {
-      return Text(emoji, style: const TextStyle(fontSize: 20));
-    }
-    return Icon(
-      Icons.category_outlined,
-      size: 22,
-      color: selected
-          ? _VentorRegistrationInterestsStepState._accent
-          : _VentorRegistrationInterestsStepState._muted,
     );
   }
 }

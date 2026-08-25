@@ -431,8 +431,8 @@ Password rules (UI): min 8, 1 uppercase, 1 number.
 | | |
 |--|--|
 | **Auth** | Bearer (user already authenticated via `#1` / `#1b` / `#2`; `registration_complete` still `false`) |
-| **Screen** | Ventor registration — **final step** (after profile → languages → interests) |
-| **When** | User taps Finish / “Go to Dashboard” on the interests step |
+| **Screen** | Ventor registration — **final step** (after profile → languages → interests → **notifications**) |
+| **When** | User taps **Enable Notifications** on the notifications step (submits `#8` immediately after) |
 | **Content-Type** | `application/json` **or** `multipart/form-data` (required when uploading `avatar` file) |
 | **Response** | Ventor profile object (same shape as #9), wrapped in `{ status, data }` |
 
@@ -447,6 +447,8 @@ Password rules (UI): min 8, 1 uppercase, 1 number.
 | `other_interest_text` | string | conditional | **Required** when `interest_ids` contains a category with `allows_custom_text: true` (typically `other`). Trimmed free text; omit or `null` otherwise. Stored on `ventor_interests.custom_text`. |
 | `avatar_preset_index` | number | no* | 0-based preset index when user picks a built-in avatar |
 | `avatar` | file | no* | Multipart image file when user picks from gallery |
+| `notifications_enabled` | boolean | yes | Whether the user granted push permission on the final notifications step |
+| `fcm_token` | string \| null | no | Firebase device token — **`null` or omitted** when permission denied or token unavailable. Never required for registration to succeed. |
 
 \* Provide **either** `avatar` **or** `avatar_preset_index`, or neither (backend may assign a default). Do not send both.
 
@@ -480,6 +482,8 @@ Form fields (repeat `language_ids` / `interest_ids` once per value):
 | `language_ids` | `en` (repeat for each) |
 | `interest_ids` | `relationships` (repeat for each) |
 | `other_interest_text` | *(omit unless Other selected)* |
+| `notifications_enabled` | `true` or `false` |
+| `fcm_token` | *(omit when null / permission denied)* |
 | `avatar` | image file |
 
 #### Rules
@@ -652,27 +656,62 @@ Form fields (repeat `language_ids` / `interest_ids` once per value):
 | Field | From step | Type |
 |-------|-----------|------|
 | `full_name`, `phone`, `phone_country`, `avatar`, `agreed_to_terms` | 1 | string / file / bool |
-| `identity_document` (front/back), `selfie` | 2 | multipart |
+| `document_front`, `selfie` | 2 | multipart (`document_back` optional if UI captures one ID image) |
 | `date_of_birth`, `country_iso`, `city`, `language_ids` | 3 | date / string / string[] |
-| `life_experience_ids`, `custom_experiences?` | 4 | string[] |
-| `comfort_area_ids` | 5 | string[] |
-| `boundary_ids` | 6 | string[] |
-| `voice_intro` | 7 | audio multipart |
-| `availability` (see #37 shape), `accept_instant_calls`, `session_minutes` | 8 | object |
-| `notifications_enabled` | 9 | bool |
+| `life_experience_ids`, `custom_experiences?` | 4 | string[] (includes client-local relationship/family slugs + catalog ids) |
+| `comfort_area_ids`, `custom_comfort_area_text?` | 5 | string[] / string |
+| `boundary_ids`, `custom_boundary_text?` | 6 | string[] / string |
+| `voice_intro`, `voice_intro_seconds?` | 7 | audio multipart / int |
+| `availability` (JSON — `#37` days/slots shape), `accept_instant_calls`, `session_minutes` | 8 | object / bool / **int** (preferred session length in minutes; if UI allows 30+60, send shortest selected, e.g. `30`) |
+| `notifications_enabled`, `fcm_token?` | 9 | bool / string \| null — **`fcm_token` omitted or `null` when permission denied**; registration must still succeed |
+
+#### Multipart encoding (`#22`)
+
+When using `multipart/form-data` (required for file uploads), **array and object fields must be JSON-encoded strings** — do **not** repeat the same field name per item (Heroku returns `422` for repeated `language_ids`).
+
+| Field | Multipart value example |
+|-------|-------------------------|
+| `language_ids` | `["en","ar"]` |
+| `life_experience_ids` | `["single","parent","stress_anxiety"]` |
+| `custom_experiences` | `["Career change"]` |
+| `comfort_area_ids` | `["relationships","other"]` |
+| `boundary_ids` | `["suicide_self_harm"]` |
+| `session_minutes` | `30` (integer string, not JSON array) |
+| `availability` | `{"time_zone_id":"America/Chicago","days":[...]}` |
+
+Scalars (`agreed_to_terms`, `accept_instant_calls`, `notifications_enabled`) are sent as `"true"` / `"false"` strings. `fcm_token` is omitted when null.
 
 **Efficiency note:** Prefer one submit at end (`POST`) + optional `PATCH /v1/listeners/me/registration/{step}` for resume. If you split by step, keep the same field names.
+
+**Identity documents:** Include front/back + selfie on **this** `#22` call for first-time registration. Do **not** also call `#23` during initial onboarding.
 
 ---
 
 ### 23. `POST /v1/listeners/me/identity-verification`
 
+> **Purpose:** Resubmit KYC / identity documents **after an admin rejects** the listener’s previous verification.  
+> **Not for first-time registration** — first upload is part of `#22 POST /v1/listeners/register`.
+
 | | |
 |--|--|
-| **Auth** | Bearer |
-| **Screen** | Registration step 2 / re-verify |
+| **Auth** | Bearer (listener) |
+| **When** | Listener `profile_status` (or identity verification status) is **`rejected`** and the user taps resubmit / re-verify |
+| **Screen** | KYC rejected / resubmit identity screen (not the initial registration step 2 submit) |
 | **Body** | multipart: `document_front`, `document_back?`, `selfie` |
-| **Response** | `{ status: "pending" \| "approved" \| "rejected" }` |
+| **Response** | `{ status: "pending" }` — returns to admin review queue |
+
+#### Rules
+
+- Call **only** when prior KYC was **rejected by admin** (or an explicit re-verify flow after rejection).
+- Do **not** call during first registration — identity files belong on `#22`.
+- On success: set verification status back to **pending** / `under_review`; clear or archive the rejected attempt as needed.
+- Listener does **not** redo full `#22` registration for a KYC-only rejection.
+
+#### Acceptance
+
+- [ ] Rejected listeners can resubmit docs without re-entering profile / experiences / voice / availability
+- [ ] First-time onboarding never requires `#23`
+- [ ] Successful resubmit puts the case back in the admin review queue
 
 ---
 
@@ -1230,29 +1269,32 @@ Demo codes in UI today: `SAVE10`, `VENT5`, `WELCOME15` (replace with real catalo
 > Mobile and other clients must call the focused endpoints only:
 > - `#74` `GET /v1/catalog/categories`
 > - `#75` `GET /v1/catalog/languages`
-> (Listener registration may later add focused endpoints for life experiences / boundaries — never the mega dump.)
+> - `#76` `GET /v1/catalog/life-experiences`
+> - `#77` `GET /v1/catalog/boundaries`
+> (Never use the mega dump.)
 
 ### 74. `GET /v1/catalog/categories` *(proposed)*
 
-> **Status:** Proposed — ventor registration interests from portal-managed `comfort_areas`.  
-> **Purpose:** Return active interest / comfort categories for ventor (and optionally listener) registration.  
-> **DB source:** `comfort_areas` (ids also used as `interest_ids` on `#8 POST /v1/ventors/register`).  
+> **Status:** Proposed — ventor & listener registration topic picker from portal-managed `comfort_areas`.  
+> **Purpose:** Return active interest / comfort categories for **both** ventor interests and listener comfort areas.  
+> **DB source:** `comfort_areas` (ids used as `interest_ids` on `#8 POST /v1/ventors/register` and `comfort_area_ids` on `#22 POST /v1/listeners/register`).  
 > **Icons:** `icon_emoji` (like language `flag_emoji`) plus optional `icon_url` (CDN). Mobile does **not** map Material `icon_key`s.
 
 | | |
 |--|--|
 | **Auth** | Public (Bearer accepted if present). Catalog is not secret. |
-| **Screen** | Ventor registration → interests step (`VentorRegistrationInterestsStep`) |
-| **When** | When interests step opens (and on pull-to-retry / error retry) |
-| **Query** | See below |
+| **Screen** | Ventor registration → interests step; Listener registration → comfort areas step (step 5) |
+| **When** | When step opens (and on error retry) |
+| **Query** | Optional `locale` only — see below |
 | **Response** | `{ items: Category[] }` |
 
 #### Query parameters
 
 | Param | Type | Required | Default | Notes |
 |-------|------|----------|---------|-------|
-| `audience` | `ventor` \| `listener` \| `all` | no | `all` | Filter by who may select the category. Ventor interests step sends `audience=ventor`. |
 | `locale` | `en` \| `ar` | no | from `Accept-Language` / `skel-accept-language` | Optional hint; response still includes **both** `name_en` and `name_ar` so the client can switch language without re-fetch. |
+
+> **Mobile does not send `audience`.** Ventor and listener registration show the **same** active category list from this endpoint.
 
 #### `Category` object
 
@@ -1270,7 +1312,7 @@ Demo codes in UI today: `SAVE10`, `VENT5`, `WELCOME15` (replace with real catalo
 #### Success example
 
 ```http
-GET /v1/catalog/categories?audience=ventor
+GET /v1/catalog/categories
 Accept-Language: en
 ```
 
@@ -1403,19 +1445,19 @@ Mobile must **not** hardcode category labels or icons. Prefer `icon_url` when se
 
 #### Mobile usage
 
-1. Open Ventor registration interests step.
-2. `GET /v1/catalog/categories?audience=ventor`.
-3. Render `items` sorted by `sort_order`.
-4. Localized label: `locale == ar ? name_ar : name_en`.
-5. Leading icon: `icon_url` (network image) if non-empty, else `icon_emoji` (same pattern as language `flag_url` / `flag_emoji`).
-6. If item has `allows_custom_text == true` and is selected → show free-text field; require non-empty trim before Finish.
-7. On Finish → collect selected `id`s (+ optional custom text for `other`) → send as `interest_ids` (and optional `other_interest_text`) on `#8 POST /v1/ventors/register`.
+1. Open ventor interests step **or** listener comfort-areas step.
+2. `GET /v1/catalog/categories` (no query params required).
+3. Show shimmer list rows until response arrives.
+4. Render `items` sorted by `sort_order`.
+5. Localized label: `locale == ar ? name_ar : name_en`.
+6. Leading icon: `icon_url` (network image) if non-empty, else `icon_emoji` (same pattern as language `flag_url` / `flag_emoji`).
+7. If item has `allows_custom_text == true` and is selected → show free-text field; require non-empty trim before Continue/Finish.
+8. Ventor Finish → `#8` with `interest_ids` (+ optional `other_interest_text`). Listener Continue → include selected ids in `#22` `comfort_area_ids`.
 
 #### Errors
 
 | HTTP | type | code | When |
 |------|------|------|------|
-| 400 | validation | 740 | Invalid `audience` |
 | 500 | server | 500 | Unexpected failure |
 | 503 | server | 503 | Catalog unavailable |
 
@@ -1431,7 +1473,7 @@ Empty active catalog → still `200` with `"items": []` (mobile shows empty + re
 
 #### Acceptance criteria
 
-- [ ] `GET /v1/catalog/categories?audience=ventor` returns active rows with `icon_emoji`
+- [ ] `GET /v1/catalog/categories` returns active rows with `icon_emoji`
 - [ ] Standard `{ status, data: { items } }` envelope
 - [ ] Both `name_en` and `name_ar` present
 - [ ] `other` has `allows_custom_text: true`
@@ -1442,8 +1484,9 @@ Empty active catalog → still `200` with `"items": []` (mobile shows empty + re
 
 | Step | API |
 |------|-----|
-| Load chips | `#74 GET /v1/catalog/categories?audience=ventor` |
+| Load list | `#74 GET /v1/catalog/categories` |
 | Submit profile + interests | `#8 POST /v1/ventors/register` with `interest_ids: ["relationships", "career_work", …]` |
+| Submit listener registration | `#22 POST /v1/listeners/register` with `comfort_area_ids: ["stress_anxiety", …]` |
 
 Optional body extension on `#8` when `other` selected:
 
@@ -1581,6 +1624,264 @@ Empty → `200` + `items: []`.
 
 ---
 
+### 76. `GET /v1/catalog/life-experiences` *(proposed)*
+
+> **Status:** Proposed — listener registration life-experience chips.  
+> **Purpose:** Return active life-experience tags from `life_experiences`.  
+> **DB source:** `life_experiences` (`id`, `name_en`, `name_ar`, `sort_order`, `is_active`).  
+> **Managed by:** Admin portal catalogs → Life experiences (`A51`).
+
+| | |
+|--|--|
+| **Auth** | Public (Bearer accepted if present) |
+| **Screen** | Listener registration → **Share your life experiences** (step 4) |
+| **When** | Step open / retry after error |
+| **Query** | `locale` optional (`en` \| `ar`) — hint only; response always includes both names |
+| **Response** | `{ items: LifeExperience[] }` |
+
+#### `LifeExperience` object
+
+| Field | Type | Required | Notes |
+|-------|------|----------|-------|
+| `id` | string | yes | Stable slug PK — sent later in `#22` `life_experience_ids` |
+| `name_en` | string | yes | English label |
+| `name_ar` | string | yes | Arabic label |
+| `sort_order` | number | yes | Ascending |
+
+#### Success example
+
+```json
+{
+  "status": "success",
+  "data": {
+    "items": [
+      {
+        "id": "career_change",
+        "name_en": "Career Change",
+        "name_ar": "تغيير المسار المهني",
+        "sort_order": 10
+      },
+      {
+        "id": "job_loss",
+        "name_en": "Jobless",
+        "name_ar": "بلا عمل",
+        "sort_order": 20
+      },
+      {
+        "id": "grief_loss",
+        "name_en": "Grief/Loss",
+        "name_ar": "الفقدان / الحزن",
+        "sort_order": 30
+      },
+      {
+        "id": "anxiety_stress",
+        "name_en": "Anxiety/Stress",
+        "name_ar": "القلق / التوتر",
+        "sort_order": 40
+      },
+      {
+        "id": "financial_stress",
+        "name_en": "Financial Stress",
+        "name_ar": "ضغط مالي",
+        "sort_order": 50
+      },
+      {
+        "id": "life_stages",
+        "name_en": "Life Stages",
+        "name_ar": "مراحل الحياة",
+        "sort_order": 60
+      },
+      {
+        "id": "health_challenge",
+        "name_en": "Health Challenge",
+        "name_ar": "تحدٍ صحي",
+        "sort_order": 70
+      }
+    ]
+  }
+}
+```
+
+#### Mobile usage
+
+1. Open listener registration step 4.
+2. `GET /v1/catalog/life-experiences`.
+3. Show shimmer chips until response arrives.
+4. Render `items` sorted by `sort_order`; label = `ar ? name_ar : name_en`.
+5. Multi-select + optional custom free-text experiences (client-side) → `#22` `life_experience_ids` / `custom_experiences`.
+
+#### Errors
+
+| HTTP | type | code | When |
+|------|------|------|------|
+| 500 / 503 | server | … | Failure |
+
+Empty → `200` + `items: []`. Do **not** 404.
+
+#### Rules
+
+- Only `is_active = true` rows.
+- IDs immutable once shipped (breaks `listener_life_experiences`).
+- Relationship status / family role remain **client-local** enums — not this catalog.
+- `Cache-Control: public, max-age=300` recommended.
+
+#### Acceptance
+
+- [ ] Public `GET /v1/catalog/life-experiences` returns active rows only
+- [ ] Standard `{ status, data: { items } }` envelope
+- [ ] Both `name_en` and `name_ar` + `sort_order`
+- [ ] Same `id`s accepted by `#22` `life_experience_ids`
+
+---
+
+### 77. `GET /v1/catalog/boundaries` *(proposed)*
+
+> **Status:** Proposed — listener registration boundary picker.  
+> **Purpose:** Return active boundary tags from `boundaries`.  
+> **DB source:** `boundaries` (`id`, `name_en`, `name_ar`, `icon_emoji`, optional `icon_url`, `sort_order`, `is_active`).  
+> **Managed by:** Admin portal catalogs → Boundaries (`A52`).
+
+| | |
+|--|--|
+| **Auth** | Public (Bearer accepted if present) |
+| **Screen** | Listener registration → **Select your Boundaries** (step 6) |
+| **When** | Step open / retry after error |
+| **Query** | Optional `locale` (`en` \| `ar`) — hint only; response includes both names |
+| **Response** | `{ items: Boundary[] }` — see legacy note below |
+
+> **Legacy shape (current Heroku):** `{ status, data: Boundary[] }` (array directly under `data`). Mobile accepts **both** `{ data: { items } }` and `{ data: [...] }`. New backends should use the standard `{ data: { items } }` envelope.
+
+#### `Boundary` object
+
+| Field | Type | Required | Notes |
+|-------|------|----------|-------|
+| `id` | string | yes | Stable slug PK — sent later in `#22` `boundary_ids` |
+| `name_en` | string | yes | English label |
+| `name_ar` | string | yes | Arabic label |
+| `icon_emoji` | string | yes | Unicode emoji for the leading icon (e.g. `🛡️`) — same pattern as `#74` categories |
+| `icon_url` | string \| null | no | Optional CDN image URL; mobile **prefers `icon_url` when non-empty**, else shows `icon_emoji`. Legacy field name `image_url` is accepted. |
+| `sort_order` | number | yes | Ascending |
+| `allows_custom_text` | boolean | no | default `false` — `true` for optional “Other” row with free text |
+
+#### Success example
+
+```http
+GET /v1/catalog/boundaries
+Accept-Language: en
+```
+
+```json
+{
+  "status": "success",
+  "data": {
+    "items": [
+      {
+        "id": "suicide_self_harm",
+        "name_en": "Suicide / Self-harm",
+        "name_ar": "الانتحار / إيذاء النفس",
+        "icon_emoji": "🛡️",
+        "icon_url": null,
+        "sort_order": 10,
+        "allows_custom_text": false
+      },
+      {
+        "id": "domestic_violence",
+        "name_en": "Domestic violence",
+        "name_ar": "العنف الأسري",
+        "icon_emoji": "🏠",
+        "icon_url": null,
+        "sort_order": 20,
+        "allows_custom_text": false
+      },
+      {
+        "id": "sexual_topics",
+        "name_en": "Sexual topics",
+        "name_ar": "مواضيع جنسية",
+        "icon_emoji": "👁️",
+        "icon_url": null,
+        "sort_order": 30,
+        "allows_custom_text": false
+      },
+      {
+        "id": "addiction",
+        "name_en": "Addiction",
+        "name_ar": "الإدمان",
+        "icon_emoji": "💊",
+        "icon_url": null,
+        "sort_order": 40,
+        "allows_custom_text": false
+      },
+      {
+        "id": "politics",
+        "name_en": "Politics",
+        "name_ar": "السياسة",
+        "icon_emoji": "🏛️",
+        "icon_url": null,
+        "sort_order": 50,
+        "allows_custom_text": false
+      },
+      {
+        "id": "religion",
+        "name_en": "Religion",
+        "name_ar": "الدين",
+        "icon_emoji": "📖",
+        "icon_url": null,
+        "sort_order": 60,
+        "allows_custom_text": false
+      },
+      {
+        "id": "illegal_activities",
+        "name_en": "Illegal activities",
+        "name_ar": "أنشطة غير قانونية",
+        "icon_emoji": "🚫",
+        "icon_url": null,
+        "sort_order": 70,
+        "allows_custom_text": false
+      }
+    ]
+  }
+}
+```
+
+#### Seed notes
+
+| `id` | `icon_emoji` |
+|------|--------------|
+| `suicide_self_harm` | 🛡️ |
+| `domestic_violence` | 🏠 |
+| `sexual_topics` | 👁️ |
+| `addiction` | 💊 |
+| `politics` | 🏛️ |
+| `religion` | 📖 |
+| `illegal_activities` | 🚫 |
+
+Mobile must **not** hardcode boundary labels or icons. Prefer `icon_url` when set; otherwise show `icon_emoji`.
+
+#### Mobile usage
+
+1. Open listener registration step 6.
+2. `GET /v1/catalog/boundaries`.
+3. Show shimmer list rows until response arrives.
+4. Render `items` sorted by `sort_order`; label = `ar ? name_ar : name_en`.
+5. Multi-select optional (0+ boundaries) → `#22` `boundary_ids`.
+6. If `allows_custom_text` item selected → require non-empty custom text before Continue.
+
+#### Errors
+
+| HTTP | type | code | When |
+|------|------|------|------|
+| 500 / 503 | server | … | Failure |
+
+Empty → `200` + `items: []`. Do **not** 404.
+
+#### Acceptance
+
+- [ ] Public `GET /v1/catalog/boundaries` returns active rows only
+- [ ] Standard `{ status, data: { items } }` envelope (or legacy array under `data` during migration)
+- [ ] Both `name_en` and `name_ar` + non-empty `icon_emoji` per row
+- [ ] Same `id`s accepted by `#22` `boundary_ids`
+
+---
 
 ## Efficiency guidelines (for implementers)
 
@@ -1639,8 +1940,8 @@ Password reset pages are opened from the **email link** (browser / OS), not from
 | Notifications | 3 |
 | Training | 2 |
 | Promo | 1 |
-| Catalog / categories | 2 |
-| **Total unique API endpoints** | **79** |
+| Catalog / categories | 4 |
+| **Total unique API endpoints** | **81** |
 
 ### Master checklist (method + path)
 
@@ -1725,6 +2026,8 @@ Password reset pages are opened from the **email link** (browser / OS), not from
 | 73 | POST | `/v1/promo/validate` |
 | 74 | GET | `/v1/catalog/categories` *(proposed)* |
 | 75 | GET | `/v1/catalog/languages` *(proposed)* |
+| 76 | GET | `/v1/catalog/life-experiences` *(proposed)* |
+| 77 | GET | `/v1/catalog/boundaries` *(proposed)* |
 
 ---
 

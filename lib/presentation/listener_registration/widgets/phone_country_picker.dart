@@ -52,6 +52,7 @@ String countryDialCode(IsoCode isoCode) =>
 Future<IsoCode?> showPhoneCountryPicker({
   required BuildContext context,
   required IsoCode selected,
+  bool showDialCode = true,
 }) {
   return showModalBottomSheet<IsoCode>(
     context: context,
@@ -60,14 +61,21 @@ Future<IsoCode?> showPhoneCountryPicker({
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
     ),
-    builder: (context) => _PhoneCountryPickerSheet(selected: selected),
+    builder: (context) => _PhoneCountryPickerSheet(
+      selected: selected,
+      showDialCode: showDialCode,
+    ),
   );
 }
 
 class _PhoneCountryPickerSheet extends StatefulWidget {
-  const _PhoneCountryPickerSheet({required this.selected});
+  const _PhoneCountryPickerSheet({
+    required this.selected,
+    required this.showDialCode,
+  });
 
   final IsoCode selected;
+  final bool showDialCode;
 
   @override
   State<_PhoneCountryPickerSheet> createState() =>
@@ -113,15 +121,15 @@ class _PhoneCountryPickerSheetState extends State<_PhoneCountryPickerSheet> {
     final query = _searchController.text.trim().toLowerCase();
     if (query.isEmpty) return _allCountries;
     return _allCountries.where((iso) {
-      final dial = countryDialCode(iso);
       final name = countryDisplayName(
         iso,
         languageCode: _languageCode,
       ).toLowerCase();
-      return name.contains(query) ||
-          iso.name.toLowerCase().contains(query) ||
-          dial.contains(query) ||
-          '+$dial'.contains(query);
+      final matchesName =
+          name.contains(query) || iso.name.toLowerCase().contains(query);
+      if (!widget.showDialCode) return matchesName;
+      final dial = countryDialCode(iso);
+      return matchesName || dial.contains(query) || '+$dial'.contains(query);
     }).toList();
   }
 
@@ -187,7 +195,6 @@ class _PhoneCountryPickerSheetState extends State<_PhoneCountryPickerSheet> {
                   itemCount: countries.length,
                   itemBuilder: (context, index) {
                     final iso = countries[index];
-                    final dial = countryDialCode(iso);
                     final selected = iso == widget.selected;
                     final name = countryDisplayName(
                       iso,
@@ -210,14 +217,23 @@ class _PhoneCountryPickerSheetState extends State<_PhoneCountryPickerSheet> {
                               : FontWeight.w500,
                         ),
                       ),
-                      trailing: Text(
-                        '+$dial',
-                        style: GoogleFonts.inter(
-                          color: selected ? SplashColors.purpleMid : _muted,
-                          fontSize: 15,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
+                      trailing: widget.showDialCode
+                          ? Text(
+                              '+${countryDialCode(iso)}',
+                              style: GoogleFonts.inter(
+                                color: selected
+                                    ? SplashColors.purpleMid
+                                    : _muted,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            )
+                          : (selected
+                                ? const Icon(
+                                    Icons.check_rounded,
+                                    color: SplashColors.purpleMid,
+                                  )
+                                : null),
                       selected: selected,
                       selectedTileColor: SplashColors.purpleMid.withValues(
                         alpha: 0.12,

@@ -1,28 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:venting_mobile_app/di/di_container.dart';
+import 'package:venting_mobile_app/domain/data/api/catalog_boundary_model.dart';
+import 'package:venting_mobile_app/domain/data/app/listener_registration_draft.dart';
+import 'package:venting_mobile_app/domain/data/exceptions/main_api_exception.dart';
+import 'package:venting_mobile_app/domain/usecase/get_catalog_boundaries_usecase.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
-import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dart';
+import 'package:venting_mobile_app/presentation/catalog/widgets/catalog_category_widgets.dart';
 
-class _BoundaryTopic {
-  const _BoundaryTopic({
-    required this.id,
-    required this.label,
-    required this.icon,
-  });
-
-  final String id;
-  final String label;
-  final IconData icon;
+String _boundaryLabel(CatalogBoundaryModel boundary, Locale locale) {
+  if (locale.languageCode.toLowerCase().startsWith('ar')) {
+    return boundary.name_ar;
+  }
+  return boundary.name_en;
 }
 
 /// Step 6 — Topics the listener does not want to discuss.
+///
+/// Boundaries come from `#77 GET /v1/catalog/boundaries`.
 class ListenerRegistrationStep6Boundaries extends StatefulWidget {
   const ListenerRegistrationStep6Boundaries({
     super.key,
     required this.onContinue,
+    this.initialSelectedIds = const [],
+    this.initialOtherText,
   });
 
-  final VoidCallback onContinue;
+  final ValueChanged<ListenerRegistrationStep6Data> onContinue;
+  final List<String> initialSelectedIds;
+  final String? initialOtherText;
 
   @override
   State<ListenerRegistrationStep6Boundaries> createState() =>
@@ -31,21 +37,28 @@ class ListenerRegistrationStep6Boundaries extends StatefulWidget {
 
 class _ListenerRegistrationStep6BoundariesState
     extends State<ListenerRegistrationStep6Boundaries> {
-  static const _cardFill = Color(0xFF1C1826);
-  static const _rowSelected = Color(0xFF2A1F3D);
-  static const _muted = Color(0xFF9B93AB);
-  static const _checkboxBorder = Color(0xFF4A425C);
-  static const _iconBg = Color(0xFF4A2A2A);
   static const _fieldFill = Color(0xFF14101C);
-  static const _otherId = 'other';
 
   final Set<String> _selectedIds = {};
   final _otherController = TextEditingController();
 
-  bool get _isOtherSelected => _selectedIds.contains(_otherId);
+  bool _isLoading = true;
+  String? _errorMessage;
+  List<CatalogBoundaryModel> _boundaries = const [];
+
+  CatalogBoundaryModel? get _customTextBoundary {
+    for (final boundary in _boundaries) {
+      if (boundary.allows_custom_text && _selectedIds.contains(boundary.id)) {
+        return boundary;
+      }
+    }
+    return null;
+  }
 
   bool get _canContinue {
-    if (_isOtherSelected && _otherController.text.trim().isEmpty) {
+    if (_isLoading) return false;
+    final custom = _customTextBoundary;
+    if (custom != null && _otherController.text.trim().isEmpty) {
       return false;
     }
     return true;
@@ -54,7 +67,13 @@ class _ListenerRegistrationStep6BoundariesState
   @override
   void initState() {
     super.initState();
+    _selectedIds.addAll(widget.initialSelectedIds);
+    if (widget.initialOtherText != null &&
+        widget.initialOtherText!.isNotEmpty) {
+      _otherController.text = widget.initialOtherText!;
+    }
     _otherController.addListener(() => setState(() {}));
+    WidgetsBinding.instance.addPostFrameCallback((_) => _loadBoundaries());
   }
 
   @override
@@ -63,11 +82,60 @@ class _ListenerRegistrationStep6BoundariesState
     super.dispose();
   }
 
+  Future<void> _loadBoundaries() async {
+    setState(() {
+      _isLoading = true;
+      _errorMessage = null;
+    });
+
+    final result = await diContainer<GetCatalogBoundariesUsecase>()().run();
+
+    if (!mounted) return;
+
+    result.match(
+      (error) {
+        setState(() {
+          _isLoading = false;
+          _errorMessage = _mapError(error);
+          _boundaries = const [];
+        });
+      },
+      (response) {
+        final items = [...response.data.items]
+          ..sort((a, b) {
+            final order = a.sort_order.compareTo(b.sort_order);
+            if (order != 0) return order;
+            return a.name_en.compareTo(b.name_en);
+          });
+        setState(() {
+          _isLoading = false;
+          _errorMessage = null;
+          _boundaries = items;
+          _selectedIds.removeWhere(
+            (id) => items.every((item) => item.id != id),
+          );
+        });
+      },
+    );
+  }
+
+  String _mapError(Object error) {
+    if (error is MainAPIException) {
+      final localized = error.getLocalizedMessage();
+      if (localized.isNotEmpty) return localized;
+      if (error.message.isNotEmpty) return error.message;
+    }
+    return VentingMobLocalizations.of(context).catalog_boundaries_load_error;
+  }
+
   void _toggle(String id) {
     setState(() {
       if (_selectedIds.contains(id)) {
         _selectedIds.remove(id);
-        if (id == _otherId) {
+        final wasCustom = _boundaries.any(
+          (b) => b.id == id && b.allows_custom_text,
+        );
+        if (wasCustom) {
           _otherController.clear();
         }
       } else {
@@ -76,265 +144,186 @@ class _ListenerRegistrationStep6BoundariesState
     });
   }
 
-  @override
-  Widget build(BuildContext context) {
-    final l10n = VentingMobLocalizations.of(context);
-
-    final topics = [
-      _BoundaryTopic(
-        id: 'suicide_self_harm',
-        label: l10n.listener_reg_boundary_suicide,
-        icon: Icons.heart_broken_outlined,
-      ),
-      _BoundaryTopic(
-        id: 'domestic_violence',
-        label: l10n.listener_reg_boundary_domestic_violence,
-        icon: Icons.home_outlined,
-      ),
-      _BoundaryTopic(
-        id: 'sexual_topics',
-        label: l10n.listener_reg_boundary_sexual,
-        icon: Icons.block_flipped,
-      ),
-      _BoundaryTopic(
-        id: 'addiction',
-        label: l10n.listener_reg_boundary_addiction,
-        icon: Icons.medication_outlined,
-      ),
-      _BoundaryTopic(
-        id: 'politics',
-        label: l10n.listener_reg_boundary_politics,
-        icon: Icons.account_balance_outlined,
-      ),
-      _BoundaryTopic(
-        id: 'religion',
-        label: l10n.listener_reg_boundary_religion,
-        icon: Icons.mosque_outlined,
-      ),
-      _BoundaryTopic(
-        id: 'illegal_activities',
-        label: l10n.listener_reg_boundary_illegal,
-        icon: Icons.gavel_outlined,
-      ),
-      _BoundaryTopic(
-        id: _otherId,
-        label: l10n.listener_reg_boundary_other,
-        icon: Icons.more_horiz_rounded,
-      ),
-    ];
-
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(24, 8, 24, 24),
-      child: Container(
-        decoration: BoxDecoration(
-          color: _cardFill,
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: Colors.white.withValues(alpha: 0.06)),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20, 20, 20, 8),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    l10n.listener_reg_boundaries_title,
-                    style: GoogleFonts.inter(
-                      color: Colors.white,
-                      fontSize: 22,
-                      fontWeight: FontWeight.w700,
-                      height: 1.25,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    l10n.listener_reg_boundaries_subtitle,
-                    style: GoogleFonts.inter(
-                      color: Colors.white.withValues(alpha: 0.65),
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                      height: 1.4,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Expanded(
-              child: ListView.separated(
-                padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
-                itemCount: topics.length,
-                separatorBuilder: (_, _) => const SizedBox(height: 6),
-                itemBuilder: (context, index) {
-                  final topic = topics[index];
-                  final selected = _selectedIds.contains(topic.id);
-                  return _BoundaryRow(
-                    label: topic.label,
-                    icon: topic.icon,
-                    selected: selected,
-                    selectedFill: _rowSelected,
-                    muted: _muted,
-                    checkboxBorder: _checkboxBorder,
-                    iconBg: _iconBg,
-                    onTap: () => _toggle(topic.id),
-                  );
-                },
-              ),
-            ),
-            if (_isOtherSelected)
-              Padding(
-                padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
-                child: TextField(
-                  controller: _otherController,
-                  autofocus: true,
-                  style: GoogleFonts.inter(
-                    color: Colors.white,
-                    fontSize: 15,
-                    fontWeight: FontWeight.w500,
-                  ),
-                  cursorColor: SplashColors.purpleMid,
-                  textCapitalization: TextCapitalization.sentences,
-                  textInputAction: TextInputAction.done,
-                  decoration: InputDecoration(
-                    hintText: l10n.listener_reg_boundary_other_hint,
-                    hintStyle: GoogleFonts.inter(
-                      color: _muted,
-                      fontSize: 15,
-                      fontWeight: FontWeight.w400,
-                    ),
-                    filled: true,
-                    fillColor: _fieldFill,
-                    contentPadding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 14,
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(14),
-                      borderSide: BorderSide(
-                        color: SplashColors.purpleMid.withValues(alpha: 0.35),
-                      ),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(14),
-                      borderSide: const BorderSide(
-                        color: SplashColors.purpleMid,
-                        width: 1.4,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
-              child: SizedBox(
-                height: 54,
-                child: FilledButton(
-                  onPressed: _canContinue ? widget.onContinue : null,
-                  style: FilledButton.styleFrom(
-                    backgroundColor: SplashColors.purpleMid,
-                    disabledBackgroundColor: SplashColors.purpleMid.withValues(
-                      alpha: 0.35,
-                    ),
-                    foregroundColor: Colors.white,
-                    disabledForegroundColor: Colors.white,
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    textStyle: GoogleFonts.inter(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  child: Text(l10n.listener_reg_continue),
-                ),
-              ),
-            ),
-          ],
-        ),
+  void _submit() {
+    if (!_canContinue) return;
+    final other = _otherController.text.trim();
+    widget.onContinue(
+      ListenerRegistrationStep6Data(
+        boundaryIds: _selectedIds.toList(growable: false),
+        boundaryOtherText: other.isEmpty ? null : other,
       ),
     );
   }
-}
-
-class _BoundaryRow extends StatelessWidget {
-  const _BoundaryRow({
-    required this.label,
-    required this.icon,
-    required this.selected,
-    required this.selectedFill,
-    required this.muted,
-    required this.checkboxBorder,
-    required this.iconBg,
-    required this.onTap,
-  });
-
-  final String label;
-  final IconData icon;
-  final bool selected;
-  final Color selectedFill;
-  final Color muted;
-  final Color checkboxBorder;
-  final Color iconBg;
-  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: selected ? selectedFill : Colors.transparent,
-      borderRadius: BorderRadius.circular(14),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(14),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-          child: Row(
-            children: [
-              Container(
-                width: 40,
-                height: 40,
-                decoration: BoxDecoration(
-                  color: iconBg,
-                  borderRadius: BorderRadius.circular(12),
+    final l10n = VentingMobLocalizations.of(context);
+    final locale = Localizations.localeOf(context);
+    final customBoundary = _customTextBoundary;
+
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(24, 8, 24, 20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(
+            l10n.listener_reg_boundaries_title,
+            style: GoogleFonts.inter(
+              color: Colors.white,
+              fontSize: 28,
+              fontWeight: FontWeight.w700,
+              height: 1.2,
+            ),
+          ),
+          const SizedBox(height: 10),
+          Text(
+            l10n.listener_reg_boundaries_subtitle,
+            style: GoogleFonts.inter(
+              color: CatalogCategoryTheme.muted,
+              fontSize: 15,
+              fontWeight: FontWeight.w400,
+              height: 1.45,
+            ),
+          ),
+          const SizedBox(height: 24),
+          Expanded(child: _buildBody(l10n, locale)),
+          if (customBoundary != null)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8),
+              child: TextField(
+                controller: _otherController,
+                autofocus: true,
+                style: GoogleFonts.inter(
+                  color: Colors.white,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w500,
                 ),
-                child: Icon(icon, size: 22, color: const Color(0xFFE8B4B4)),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Text(
-                  label,
-                  style: GoogleFonts.inter(
-                    color: Colors.white,
+                cursorColor: CatalogCategoryTheme.accent,
+                textCapitalization: TextCapitalization.sentences,
+                textInputAction: TextInputAction.done,
+                decoration: InputDecoration(
+                  hintText: l10n.listener_reg_boundary_other_hint,
+                  hintStyle: GoogleFonts.inter(
+                    color: CatalogCategoryTheme.muted,
                     fontSize: 15,
-                    fontWeight: selected ? FontWeight.w600 : FontWeight.w500,
+                    fontWeight: FontWeight.w400,
+                  ),
+                  filled: true,
+                  fillColor: _fieldFill,
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 14,
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(14),
+                    borderSide: BorderSide(
+                      color: CatalogCategoryTheme.accent.withValues(
+                        alpha: 0.55,
+                      ),
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(14),
+                    borderSide: const BorderSide(
+                      color: CatalogCategoryTheme.accent,
+                      width: 1.4,
+                    ),
                   ),
                 ),
               ),
-              AnimatedContainer(
-                duration: const Duration(milliseconds: 160),
-                width: 24,
-                height: 24,
-                decoration: BoxDecoration(
-                  color: selected ? SplashColors.purpleMid : Colors.transparent,
-                  borderRadius: BorderRadius.circular(6),
-                  border: Border.all(
-                    color: selected ? SplashColors.purpleMid : checkboxBorder,
-                    width: 1.6,
-                  ),
+            ),
+          SizedBox(
+            height: 56,
+            child: FilledButton(
+              onPressed: _canContinue ? _submit : null,
+              style: FilledButton.styleFrom(
+                backgroundColor: CatalogCategoryTheme.accent,
+                disabledBackgroundColor: CatalogCategoryTheme.accent.withValues(
+                  alpha: 0.42,
                 ),
-                child: selected
-                    ? const Icon(
-                        Icons.check_rounded,
-                        size: 16,
-                        color: Colors.white,
-                      )
-                    : null,
+                foregroundColor: Colors.white,
+                disabledForegroundColor: Colors.white,
+                elevation: 0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(999),
+                ),
+                textStyle: GoogleFonts.inter(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                ),
               ),
-            ],
+              child: Text(l10n.listener_reg_continue),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildBody(VentingMobLocalizations l10n, Locale locale) {
+    if (_isLoading) {
+      return const SingleChildScrollView(
+        child: CatalogCategoriesShimmer(padding: EdgeInsets.zero),
+      );
+    }
+
+    if (_errorMessage != null) {
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            _errorMessage!,
+            textAlign: TextAlign.center,
+            style: GoogleFonts.inter(
+              color: CatalogCategoryTheme.muted,
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+              height: 1.4,
+            ),
+          ),
+          const SizedBox(height: 16),
+          TextButton(
+            onPressed: _loadBoundaries,
+            child: Text(
+              l10n.common_retry,
+              style: GoogleFonts.inter(
+                color: CatalogCategoryTheme.accent,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+        ],
+      );
+    }
+
+    if (_boundaries.isEmpty) {
+      return Center(
+        child: Text(
+          l10n.catalog_boundaries_load_error,
+          textAlign: TextAlign.center,
+          style: GoogleFonts.inter(
+            color: CatalogCategoryTheme.muted,
+            fontSize: 14,
           ),
         ),
-      ),
+      );
+    }
+
+    return ListView.separated(
+      padding: EdgeInsets.zero,
+      itemCount: _boundaries.length,
+      separatorBuilder: (_, _) => const SizedBox(height: 10),
+      itemBuilder: (context, index) {
+        final boundary = _boundaries[index];
+        final selected = _selectedIds.contains(boundary.id);
+        return CatalogCategoryRow(
+          label: _boundaryLabel(boundary, locale),
+          iconUrl: boundary.icon_url,
+          iconEmoji: boundary.icon_emoji,
+          selected: selected,
+          onTap: () => _toggle(boundary.id),
+        );
+      },
     );
   }
 }

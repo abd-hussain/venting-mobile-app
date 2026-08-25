@@ -13,8 +13,11 @@ import 'package:venting_mobile_app/domain/repository/api/auth/auth_me_repository
 import 'package:venting_mobile_app/domain/repository/api/auth/auth_refresh_token_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/auth/auth_register_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/auth/auth_social_repository.dart';
+import 'package:venting_mobile_app/domain/repository/api/catalog/catalog_boundaries_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/catalog/catalog_categories_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/catalog/catalog_languages_repository.dart';
+import 'package:venting_mobile_app/domain/repository/api/catalog/catalog_life_experiences_repository.dart';
+import 'package:venting_mobile_app/domain/repository/api/listener/listener_register_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/ventor/ventor_register_repository.dart';
 import 'package:venting_mobile_app/domain/repository/app/auth_me_cache_repository.dart';
 import 'package:venting_mobile_app/domain/repository/app/social_sign_in_repository.dart';
@@ -71,6 +74,18 @@ mixin VentingModuleRepositories on VentingModule {
     ApiClientBase apiClient,
   ) => CatalogLanguagesRepository(apiClient);
 
+  CatalogLifeExperiencesRepository catalogLifeExperiencesRepository(
+    ApiClientBase apiClient,
+  ) => CatalogLifeExperiencesRepository(apiClient);
+
+  CatalogBoundariesRepository catalogBoundariesRepository(
+    ApiClientBase apiClient,
+  ) => CatalogBoundariesRepository(apiClient);
+
+  ListenerRegisterRepository listenerRegisterRepository(
+    ApiClientBase apiClient,
+  ) => ListenerRegisterRepository(apiClient);
+
   VentorRegisterRepository ventorRegisterRepository(ApiClientBase apiClient) =>
       VentorRegisterRepository(apiClient);
 
@@ -117,6 +132,15 @@ mixin VentingModuleRepositories on VentingModule {
     );
     getIt.registerFactory<CatalogLanguagesRepository>(
       () => catalogLanguagesRepository(getIt<ApiClientBase>()),
+    );
+    getIt.registerFactory<CatalogLifeExperiencesRepository>(
+      () => catalogLifeExperiencesRepository(getIt<ApiClientBase>()),
+    );
+    getIt.registerFactory<CatalogBoundariesRepository>(
+      () => catalogBoundariesRepository(getIt<ApiClientBase>()),
+    );
+    getIt.registerFactory<ListenerRegisterRepository>(
+      () => listenerRegisterRepository(getIt<ApiClientBase>()),
     );
     getIt.registerFactory<VentorRegisterRepository>(
       () => ventorRegisterRepository(getIt<ApiClientBase>()),

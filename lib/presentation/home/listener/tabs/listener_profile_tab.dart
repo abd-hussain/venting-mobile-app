@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:phone_numbers_parser/phone_numbers_parser.dart';
+import 'package:venting_mobile_app/domain/data/api/catalog_language_model.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
 import 'package:venting_mobile_app/presentation/home/listener/profile/listener_profile_theme.dart';
 import 'package:venting_mobile_app/presentation/home/listener/profile/widgets/edit_about_me_bottom_sheet.dart';
@@ -18,7 +19,6 @@ import 'package:venting_mobile_app/presentation/home/listener/profile/widgets/li
 import 'package:venting_mobile_app/presentation/home/listener/profile/widgets/listener_profile_settings_screen.dart';
 import 'package:venting_mobile_app/presentation/home/listener/profile/widgets/listener_profile_widgets.dart';
 import 'package:venting_mobile_app/presentation/listener_registration/widgets/country_display_names.dart';
-import 'package:venting_mobile_app/presentation/listener_registration/widgets/language_options.dart';
 import 'package:venting_mobile_app/presentation/listener_registration/widgets/phone_country_picker.dart';
 import 'package:venting_mobile_app/presentation/listener_registration/widgets/spoken_languages_picker.dart';
 import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dart';
@@ -101,7 +101,7 @@ class _ListenerProfileTabState extends State<ListenerProfileTab> {
   // TODO: Load location / languages from listener profile API / repository.
   IsoCode _country = IsoCode.JO;
   var _city = 'Amman';
-  Set<String> _languageIds = {'en', 'ar'};
+  List<CatalogLanguageModel> _selectedLanguages = const [];
 
   var _aboutExpanded = false;
   var _isPlayingVoice = false;
@@ -264,12 +264,12 @@ class _ListenerProfileTabState extends State<ListenerProfileTab> {
   Future<void> _onEditLanguages() async {
     final selected = await showSpokenLanguagesPicker(
       context: context,
-      selectedIds: _languageIds,
+      selectedIds: _selectedLanguages.map((e) => e.id).toSet(),
     );
     if (!mounted || selected == null) return;
     if (selected.isEmpty) return;
     // TODO: Persist languages via listener profile API / repository.
-    setState(() => _languageIds = {...selected});
+    setState(() => _selectedLanguages = selected);
   }
 
   Future<void> _onViewAllReviews() {
@@ -298,14 +298,11 @@ class _ListenerProfileTabState extends State<ListenerProfileTab> {
   }
 
   String _languagesLabel(BuildContext context) {
+    if (_selectedLanguages.isEmpty) return '—';
     final languageCode = Localizations.localeOf(context).languageCode;
-    final labels = _languageIds
-        .map(spokenLanguageById)
-        .whereType<SpokenLanguage>()
-        .map((lang) => lang.label(languageCode))
-        .toList();
-    if (labels.isEmpty) return '—';
-    return labels.join(', ');
+    return _selectedLanguages
+        .map((lang) => catalogLanguageLabel(lang, languageCode))
+        .join(', ');
   }
 
   @override

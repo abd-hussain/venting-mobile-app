@@ -1,17 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shimmer_manager/shimmer_manager.dart';
+import 'package:venting_mobile_app/di/di_container.dart';
+import 'package:venting_mobile_app/domain/data/api/catalog_life_experience_model.dart';
+import 'package:venting_mobile_app/domain/data/app/listener_registration_draft.dart';
+import 'package:venting_mobile_app/domain/data/exceptions/main_api_exception.dart';
+import 'package:venting_mobile_app/domain/usecase/get_catalog_life_experiences_usecase.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
-import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dart';
 
 /// Step 4 — Life Experience (relationship, family, experiences).
+///
+/// Life experience chips come from `#76 GET /v1/catalog/life-experiences`.
 class ListenerRegistrationStep4LifeExperience extends StatefulWidget {
   const ListenerRegistrationStep4LifeExperience({
     super.key,
     required this.onContinue,
+    this.initialRelationshipId,
+    this.initialFamilyIds = const [],
+    this.initialExperienceIds = const [],
+    this.initialCustomExperiences = const [],
   });
 
-  final VoidCallback onContinue;
+  final ValueChanged<ListenerRegistrationStep4Data> onContinue;
+  final String? initialRelationshipId;
+  final List<String> initialFamilyIds;
+  final List<String> initialExperienceIds;
+  final List<String> initialCustomExperiences;
 
   @override
   State<ListenerRegistrationStep4LifeExperience> createState() =>
@@ -21,17 +36,91 @@ class ListenerRegistrationStep4LifeExperience extends StatefulWidget {
 class _ListenerRegistrationStep4LifeExperienceState
     extends State<ListenerRegistrationStep4LifeExperience> {
   static const _customMaxLength = 40;
+  static const _chipFill = Color(0xFF1C1826);
+  static const _muted = Color(0xFF9B93AB);
+  static const _accent = Color(0xFF8A3CFE);
+  static const _sectionLabel = Color(0xFFB7AEC9);
 
   String? _relationshipId;
   final Set<String> _familyIds = {};
   final Set<String> _experienceIds = {};
   final List<String> _customExperiences = [];
 
+  bool _isLoadingExperiences = true;
+  String? _experiencesError;
+  List<CatalogLifeExperienceModel> _experiences = const [];
+
   bool get _canContinue =>
       _relationshipId != null ||
       _familyIds.isNotEmpty ||
       _experienceIds.isNotEmpty ||
       _customExperiences.isNotEmpty;
+
+  @override
+  void initState() {
+    super.initState();
+    _relationshipId = widget.initialRelationshipId;
+    _familyIds
+      ..clear()
+      ..addAll(widget.initialFamilyIds);
+    _experienceIds
+      ..clear()
+      ..addAll(widget.initialExperienceIds);
+    _customExperiences
+      ..clear()
+      ..addAll(widget.initialCustomExperiences);
+    WidgetsBinding.instance.addPostFrameCallback((_) => _loadExperiences());
+  }
+
+  Future<void> _loadExperiences() async {
+    setState(() {
+      _isLoadingExperiences = true;
+      _experiencesError = null;
+    });
+
+    final result = await diContainer<GetCatalogLifeExperiencesUsecase>()()
+        .run();
+
+    if (!mounted) return;
+
+    result.match(
+      (error) {
+        setState(() {
+          _isLoadingExperiences = false;
+          _experiencesError = _mapError(error);
+          _experiences = const [];
+        });
+      },
+      (response) {
+        final items = [...response.data.items]
+          ..sort((a, b) => a.sort_order.compareTo(b.sort_order));
+        setState(() {
+          _isLoadingExperiences = false;
+          _experiencesError = null;
+          _experiences = items;
+          _experienceIds.removeWhere(
+            (id) => items.every((item) => item.id != id),
+          );
+        });
+      },
+    );
+  }
+
+  String _mapError(Object error) {
+    if (error is MainAPIException) {
+      final localized = error.getLocalizedMessage();
+      if (localized.isNotEmpty) return localized;
+      if (error.message.isNotEmpty) return error.message;
+    }
+    return VentingMobLocalizations.of(context).listener_reg_exp_load_error;
+  }
+
+  String _labelFor(CatalogLifeExperienceModel item, Locale locale) {
+    if (locale.languageCode.toLowerCase().startsWith('ar')) {
+      return item.name_ar;
+    }
+    return item.name_en;
+  }
 
   void _selectRelationship(String id) {
     setState(() {
@@ -63,6 +152,18 @@ class _ListenerRegistrationStep4LifeExperienceState
     setState(() => _customExperiences.remove(value));
   }
 
+  void _submit() {
+    if (!_canContinue) return;
+    widget.onContinue(
+      ListenerRegistrationStep4Data(
+        relationshipId: _relationshipId,
+        familyIds: _familyIds.toList(growable: false),
+        experienceIds: _experienceIds.toList(growable: false),
+        customExperiences: List<String>.from(_customExperiences),
+      ),
+    );
+  }
+
   Future<void> _addCustomExperience() async {
     final result = await showDialog<String>(
       context: context,
@@ -81,6 +182,7 @@ class _ListenerRegistrationStep4LifeExperienceState
   @override
   Widget build(BuildContext context) {
     final l10n = VentingMobLocalizations.of(context);
+    final locale = Localizations.localeOf(context);
 
     final relationships = [
       (id: 'single', label: l10n.listener_reg_exp_single),
@@ -96,26 +198,8 @@ class _ListenerRegistrationStep4LifeExperienceState
       (id: 'caregiver', label: l10n.listener_reg_exp_caregiver),
     ];
 
-    final experiences = [
-      (id: 'career_change', label: l10n.listener_reg_exp_career_change),
-      (id: 'job_loss', label: l10n.listener_reg_exp_job_loss),
-      (id: 'startup_founder', label: l10n.listener_reg_exp_startup_founder),
-      (
-        id: 'financial_struggle',
-        label: l10n.listener_reg_exp_financial_struggle,
-      ),
-      (id: 'life_stages', label: l10n.listener_reg_exp_life_stages),
-      (id: 'grief_loss', label: l10n.listener_reg_exp_grief_loss),
-      (id: 'anxiety_stress', label: l10n.listener_reg_exp_anxiety_stress),
-      (id: 'health_challenge', label: l10n.listener_reg_exp_health_challenge),
-      (
-        id: 'addiction_recovery',
-        label: l10n.listener_reg_exp_addiction_recovery,
-      ),
-    ];
-
     return Padding(
-      padding: const EdgeInsets.fromLTRB(24, 8, 24, 24),
+      padding: const EdgeInsets.fromLTRB(24, 8, 24, 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -172,45 +256,53 @@ class _ListenerRegistrationStep4LifeExperienceState
                   const SizedBox(height: 24),
                   _SectionTitle(l10n.listener_reg_exp_section_experiences),
                   const SizedBox(height: 12),
-                  _ChipWrap(
-                    children: [
-                      for (final item in experiences)
-                        _SelectableChip(
-                          label: item.label,
-                          selected: _experienceIds.contains(item.id),
-                          onTap: () => _toggleExperience(item.id),
+                  if (_isLoadingExperiences)
+                    const _ExperiencesShimmer()
+                  else if (_experiencesError != null)
+                    _ExperiencesError(
+                      message: _experiencesError!,
+                      onRetry: _loadExperiences,
+                    )
+                  else
+                    _ChipWrap(
+                      children: [
+                        for (final item in _experiences)
+                          _SelectableChip(
+                            label: _labelFor(item, locale),
+                            selected: _experienceIds.contains(item.id),
+                            onTap: () => _toggleExperience(item.id),
+                          ),
+                        for (final custom in _customExperiences)
+                          _SelectableChip(
+                            label: custom,
+                            selected: true,
+                            onTap: () => _removeCustom(custom),
+                            showClose: true,
+                          ),
+                        _AddMoreChip(
+                          label: l10n.listener_reg_exp_add_more,
+                          onTap: _addCustomExperience,
                         ),
-                      for (final custom in _customExperiences)
-                        _SelectableChip(
-                          label: custom,
-                          selected: true,
-                          onTap: () => _removeCustom(custom),
-                          showClose: true,
-                        ),
-                      _AddMoreChip(
-                        label: l10n.listener_reg_exp_add_more,
-                        onTap: _addCustomExperience,
-                      ),
-                    ],
-                  ),
+                      ],
+                    ),
                 ],
               ),
             ),
           ),
           SizedBox(
-            height: 54,
+            height: 56,
             child: FilledButton(
-              onPressed: _canContinue ? widget.onContinue : null,
+              onPressed: _canContinue ? _submit : null,
               style: FilledButton.styleFrom(
-                backgroundColor: SplashColors.purpleMid,
-                disabledBackgroundColor: SplashColors.purpleMid.withValues(
-                  alpha: 0.35,
-                ),
+                backgroundColor: _canContinue
+                    ? _accent
+                    : _accent.withValues(alpha: 0.42),
+                disabledBackgroundColor: _accent.withValues(alpha: 0.42),
                 foregroundColor: Colors.white,
                 disabledForegroundColor: Colors.white,
                 elevation: 0,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(999),
                 ),
                 textStyle: GoogleFonts.inter(
                   fontSize: 16,
@@ -236,10 +328,80 @@ class _SectionTitle extends StatelessWidget {
     return Text(
       text,
       style: GoogleFonts.inter(
-        color: Colors.white,
-        fontSize: 16,
-        fontWeight: FontWeight.w700,
+        color: _ListenerRegistrationStep4LifeExperienceState._sectionLabel,
+        fontSize: 14,
+        fontWeight: FontWeight.w600,
       ),
+    );
+  }
+}
+
+class _ExperiencesShimmer extends StatelessWidget {
+  const _ExperiencesShimmer();
+
+  static const _widths = <double>[112, 88, 104, 128, 118, 72, 96, 120];
+
+  @override
+  Widget build(BuildContext context) {
+    return Shimmer.fromColors(
+      baseColor: const Color(0xFF2A2140),
+      highlightColor: const Color(0xFF3A2F52),
+      child: Wrap(
+        spacing: 10,
+        runSpacing: 10,
+        children: [
+          for (final width in _widths)
+            Container(
+              width: width,
+              height: 40,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(22),
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ExperiencesError extends StatelessWidget {
+  const _ExperiencesError({required this.message, required this.onRetry});
+
+  final String message;
+  final VoidCallback onRetry;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = VentingMobLocalizations.of(context);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          message,
+          style: GoogleFonts.inter(
+            color: _ListenerRegistrationStep4LifeExperienceState._muted,
+            fontSize: 14,
+            height: 1.4,
+          ),
+        ),
+        const SizedBox(height: 10),
+        TextButton(
+          onPressed: onRetry,
+          style: TextButton.styleFrom(
+            foregroundColor:
+                _ListenerRegistrationStep4LifeExperienceState._accent,
+            padding: EdgeInsets.zero,
+            minimumSize: Size.zero,
+            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          ),
+          child: Text(
+            l10n.common_retry,
+            style: GoogleFonts.inter(fontWeight: FontWeight.w700),
+          ),
+        ),
+      ],
     );
   }
 }
@@ -254,9 +416,6 @@ class _AddExperienceDialog extends StatefulWidget {
 }
 
 class _AddExperienceDialogState extends State<_AddExperienceDialog> {
-  static const _chipFill = Color(0xFF1C1826);
-  static const _muted = Color(0xFF9B93AB);
-
   late final TextEditingController _controller;
 
   @override
@@ -298,14 +457,20 @@ class _AddExperienceDialogState extends State<_AddExperienceDialog> {
         maxLength: widget.maxLength,
         inputFormatters: [LengthLimitingTextInputFormatter(widget.maxLength)],
         style: GoogleFonts.inter(color: Colors.white, fontSize: 15),
-        cursorColor: SplashColors.purpleMid,
+        cursorColor: _ListenerRegistrationStep4LifeExperienceState._accent,
         textCapitalization: TextCapitalization.sentences,
         decoration: InputDecoration(
           hintText: l10n.listener_reg_add_experience_hint,
-          hintStyle: GoogleFonts.inter(color: _muted, fontSize: 14),
+          hintStyle: GoogleFonts.inter(
+            color: _ListenerRegistrationStep4LifeExperienceState._muted,
+            fontSize: 14,
+          ),
           filled: true,
-          fillColor: _chipFill,
-          counterStyle: GoogleFonts.inter(color: _muted, fontSize: 11),
+          fillColor: _ListenerRegistrationStep4LifeExperienceState._chipFill,
+          counterStyle: GoogleFonts.inter(
+            color: _ListenerRegistrationStep4LifeExperienceState._muted,
+            fontSize: 11,
+          ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
             borderSide: BorderSide.none,
@@ -318,7 +483,9 @@ class _AddExperienceDialogState extends State<_AddExperienceDialog> {
           onPressed: () => Navigator.of(context).pop(),
           child: Text(
             l10n.listener_reg_cancel,
-            style: GoogleFonts.inter(color: _muted),
+            style: GoogleFonts.inter(
+              color: _ListenerRegistrationStep4LifeExperienceState._muted,
+            ),
           ),
         ),
         TextButton(
@@ -326,7 +493,7 @@ class _AddExperienceDialogState extends State<_AddExperienceDialog> {
           child: Text(
             l10n.listener_reg_add,
             style: GoogleFonts.inter(
-              color: SplashColors.purpleMid,
+              color: _ListenerRegistrationStep4LifeExperienceState._accent,
               fontWeight: FontWeight.w700,
             ),
           ),
@@ -362,8 +529,12 @@ class _SelectableChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final borderColor = selected
+        ? _ListenerRegistrationStep4LifeExperienceState._accent
+        : Colors.white.withValues(alpha: 0.08);
+
     return Material(
-      color: selected ? SplashColors.purpleMid : const Color(0xFF1C1826),
+      color: _ListenerRegistrationStep4LifeExperienceState._chipFill,
       borderRadius: BorderRadius.circular(22),
       child: InkWell(
         onTap: onTap,
@@ -377,11 +548,7 @@ class _SelectableChip extends StatelessWidget {
           ),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(22),
-            border: Border.all(
-              color: selected
-                  ? SplashColors.purpleMid
-                  : Colors.white.withValues(alpha: 0.08),
-            ),
+            border: Border.all(color: borderColor, width: selected ? 1.5 : 1),
           ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
@@ -415,7 +582,7 @@ class _AddMoreChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: const Color(0xFF1C1826),
+      color: _ListenerRegistrationStep4LifeExperienceState._chipFill,
       borderRadius: BorderRadius.circular(22),
       child: InkWell(
         onTap: onTap,
@@ -425,7 +592,8 @@ class _AddMoreChip extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(22),
             border: Border.all(
-              color: SplashColors.purpleMid.withValues(alpha: 0.55),
+              color: _ListenerRegistrationStep4LifeExperienceState._accent
+                  .withValues(alpha: 0.55),
             ),
           ),
           child: Row(
@@ -434,13 +602,13 @@ class _AddMoreChip extends StatelessWidget {
               const Icon(
                 Icons.add_rounded,
                 size: 18,
-                color: SplashColors.purpleMid,
+                color: _ListenerRegistrationStep4LifeExperienceState._accent,
               ),
               const SizedBox(width: 4),
               Text(
                 label,
                 style: GoogleFonts.inter(
-                  color: SplashColors.purpleMid,
+                  color: _ListenerRegistrationStep4LifeExperienceState._accent,
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
                 ),

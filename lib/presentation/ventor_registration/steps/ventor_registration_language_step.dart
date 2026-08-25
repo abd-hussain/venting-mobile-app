@@ -42,7 +42,7 @@ class _VentorRegistrationLanguageStepState
   static const _progressTrack = Color(0xFF3A2F52);
   static const _checkboxBorder = Color(0xFF6B5F82);
   static const _searchFill = Color(0xFF14101C);
-  static const _totalSteps = 3;
+  static const _totalSteps = 4;
   static const _currentStep = 2;
 
   final _searchController = TextEditingController();

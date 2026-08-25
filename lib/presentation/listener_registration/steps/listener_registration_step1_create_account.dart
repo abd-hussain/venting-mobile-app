@@ -6,10 +6,11 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:phone_numbers_parser/phone_numbers_parser.dart';
+import 'package:venting_mobile_app/domain/data/app/listener_registration_draft.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
 import 'package:venting_mobile_app/presentation/listener_registration/widgets/phone_country_picker.dart';
-import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dart';
 import 'package:venting_mobile_app/utils/legal_document_opener.dart';
+import 'package:venting_mobile_app/utils/registration_media_storage.dart';
 import 'package:venting_mobile_app/utils/static_web_content.dart';
 
 /// Step 1 — Create Account (profile photo, full name, locked email, phone).
@@ -18,10 +19,20 @@ class ListenerRegistrationStep1CreateAccount extends StatefulWidget {
     super.key,
     required this.email,
     required this.onContinue,
+    this.initialProfilePhotoPath,
+    this.initialFullName = '',
+    this.initialPhoneNational = '',
+    this.initialPhoneCountry,
+    this.initialAgreedToTerms = false,
   });
 
   final String email;
-  final VoidCallback onContinue;
+  final ValueChanged<ListenerRegistrationStep1Data> onContinue;
+  final String? initialProfilePhotoPath;
+  final String initialFullName;
+  final String initialPhoneNational;
+  final IsoCode? initialPhoneCountry;
+  final bool initialAgreedToTerms;
 
   @override
   State<ListenerRegistrationStep1CreateAccount> createState() =>
@@ -30,11 +41,10 @@ class ListenerRegistrationStep1CreateAccount extends StatefulWidget {
 
 class _ListenerRegistrationStep1CreateAccountState
     extends State<ListenerRegistrationStep1CreateAccount> {
-  static const _fieldFill = Color(0xFF1A1428);
-  static const _fieldBorder = Color(0xFF2A2238);
   static const _muted = Color(0xFF9B93AB);
-  static const _label = Color(0xFFC8C0D8);
-  static const _disabledFill = Color(0xFF14101C);
+  static const _label = Color(0xFF9B93AB);
+  static const _accent = Color(0xFF8A3CFE);
+  static const _success = Color(0xFF22C55E);
 
   final _picker = ImagePicker();
   final _nameController = TextEditingController();
@@ -56,6 +66,17 @@ class _ListenerRegistrationStep1CreateAccountState
   void initState() {
     super.initState();
     _emailController.text = widget.email;
+    _profilePhotoPath = widget.initialProfilePhotoPath;
+    if (widget.initialFullName.isNotEmpty) {
+      _nameController.text = widget.initialFullName;
+    }
+    if (widget.initialPhoneNational.isNotEmpty) {
+      _phoneController.text = widget.initialPhoneNational;
+    }
+    if (widget.initialPhoneCountry != null) {
+      _country = widget.initialPhoneCountry!;
+    }
+    _agreedToTerms = widget.initialAgreedToTerms;
     for (final c in [_nameController, _phoneController]) {
       c.addListener(_onChanged);
     }
@@ -71,6 +92,8 @@ class _ListenerRegistrationStep1CreateAccountState
     for (final f in [_nameFocus, _phoneFocus]) {
       f.dispose();
     }
+    _termsRecognizer.dispose();
+    _privacyRecognizer.dispose();
     super.dispose();
   }
 
@@ -134,7 +157,12 @@ class _ListenerRegistrationStep1CreateAccountState
         imageQuality: 85,
       );
       if (!mounted || file == null) return;
-      setState(() => _profilePhotoPath = file.path);
+      final persisted = await RegistrationMediaStorage.persistImage(
+        file.path,
+        prefix: 'avatar',
+      );
+      if (!mounted) return;
+      setState(() => _profilePhotoPath = persisted);
     } catch (_) {
       if (!mounted) return;
       final l10n = VentingMobLocalizations.of(context);
@@ -167,7 +195,15 @@ class _ListenerRegistrationStep1CreateAccountState
   void _submit() {
     setState(() => _submitted = true);
     if (!_canContinue) return;
-    widget.onContinue();
+    widget.onContinue(
+      ListenerRegistrationStep1Data(
+        profilePhotoPath: _profilePhotoPath!,
+        fullName: _nameController.text.trim(),
+        phoneNational: _nationalNumber,
+        phoneCountryIso: _country.name,
+        agreedToTerms: _agreedToTerms,
+      ),
+    );
   }
 
   @override
@@ -176,12 +212,14 @@ class _ListenerRegistrationStep1CreateAccountState
     final dialCode = countryDialCode(_country);
     final showPhoneError = _submitted && !_isPhoneValid;
     final showPhotoError = _submitted && _profilePhotoPath == null;
+    final showNameError = _submitted && _nameController.text.trim().isEmpty;
+    final emailVerified = widget.email.trim().isNotEmpty;
 
     return Column(
       children: [
         Expanded(
           child: SingleChildScrollView(
-            padding: const EdgeInsets.fromLTRB(24, 4, 24, 24),
+            padding: const EdgeInsets.fromLTRB(24, 12, 24, 16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -196,16 +234,16 @@ class _ListenerRegistrationStep1CreateAccountState
                             l10n.listener_reg_step1_title,
                             style: GoogleFonts.inter(
                               color: Colors.white,
-                              fontSize: 28,
+                              fontSize: 30,
                               fontWeight: FontWeight.w700,
-                              height: 1.2,
+                              height: 1.15,
                             ),
                           ),
                           const SizedBox(height: 10),
                           Text(
                             l10n.listener_reg_step1_subtitle,
                             style: GoogleFonts.inter(
-                              color: Colors.white.withValues(alpha: 0.7),
+                              color: _muted,
                               fontSize: 14,
                               fontWeight: FontWeight.w400,
                               height: 1.45,
@@ -219,8 +257,6 @@ class _ListenerRegistrationStep1CreateAccountState
                       imagePath: _profilePhotoPath,
                       isLoading: _pickingPhoto,
                       hasError: showPhotoError,
-                      addLabel: l10n.listener_reg_add_profile_photo,
-                      changeLabel: l10n.listener_reg_change_profile_photo,
                       onTap: _pickProfilePhoto,
                     ),
                   ],
@@ -240,38 +276,41 @@ class _ListenerRegistrationStep1CreateAccountState
                   ),
                 ],
                 const SizedBox(height: 28),
-                _DarkField(
+                _LabeledField(
+                  label: l10n.listener_reg_full_name,
                   controller: _nameController,
                   focusNode: _nameFocus,
-                  icon: Icons.person_outline_rounded,
-                  hint: l10n.listener_reg_full_name,
+                  hint: l10n.listener_reg_full_name_hint,
                   textInputAction: TextInputAction.next,
                   onSubmitted: (_) => _phoneFocus.requestFocus(),
                   inputFormatters: [LengthLimitingTextInputFormatter(50)],
                   maxLength: 50,
-                  fill: _fieldFill,
-                  border: _fieldBorder,
-                  muted: _muted,
+                  hasError: showNameError,
                 ),
-                const SizedBox(height: 14),
-                _DarkField(
+                const SizedBox(height: 16),
+                _LabeledField(
+                  label: l10n.listener_reg_email,
                   controller: _emailController,
                   focusNode: FocusNode(canRequestFocus: false),
-                  icon: Icons.mail_outline_rounded,
-                  hint: l10n.listener_reg_email,
+                  hint: l10n.listener_reg_email_hint,
                   keyboardType: TextInputType.emailAddress,
                   enabled: false,
-                  fill: _disabledFill,
-                  border: _fieldBorder,
-                  muted: _muted,
+                  forceAccentBorder: emailVerified,
+                  trailing: emailVerified
+                      ? const Icon(
+                          Icons.check_circle_rounded,
+                          color: _success,
+                          size: 20,
+                        )
+                      : null,
                 ),
-                const SizedBox(height: 14),
-                _DarkField(
+                const SizedBox(height: 16),
+                _LabeledField(
                   key: ValueKey('phone_${_country.name}'),
+                  label: l10n.listener_reg_phone,
                   controller: _phoneController,
                   focusNode: _phoneFocus,
-                  icon: Icons.phone_outlined,
-                  hint: l10n.listener_reg_phone,
+                  hint: l10n.listener_reg_phone_hint,
                   keyboardType: TextInputType.phone,
                   textInputAction: TextInputAction.done,
                   onSubmitted: (_) => _submit(),
@@ -279,9 +318,7 @@ class _ListenerRegistrationStep1CreateAccountState
                     FilteringTextInputFormatter.digitsOnly,
                     LengthLimitingTextInputFormatter(_phoneLimits.max),
                   ],
-                  fill: _fieldFill,
-                  border: _fieldBorder,
-                  muted: _muted,
+                  hasError: showPhoneError,
                   errorText: showPhoneError
                       ? l10n.listener_reg_invalid_phone
                       : null,
@@ -315,16 +352,15 @@ class _ListenerRegistrationStep1CreateAccountState
                             width: 1,
                             height: 18,
                             margin: const EdgeInsets.symmetric(horizontal: 8),
-                            color: _fieldBorder,
+                            color: Colors.white.withValues(alpha: 0.12),
                           ),
                         ],
                       ),
                     ),
                   ),
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 22),
                 Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
                       width: 24,
@@ -334,12 +370,10 @@ class _ListenerRegistrationStep1CreateAccountState
                         onChanged: (v) {
                           setState(() => _agreedToTerms = v ?? false);
                         },
-                        activeColor: SplashColors.purpleMid,
+                        activeColor: _accent,
                         checkColor: Colors.white,
                         side: BorderSide(
-                          color: _agreedToTerms
-                              ? SplashColors.purpleMid
-                              : _muted,
+                          color: _agreedToTerms ? _accent : _muted,
                           width: 1.4,
                         ),
                         shape: RoundedRectangleBorder(
@@ -361,53 +395,67 @@ class _ListenerRegistrationStep1CreateAccountState
                           children: [
                             TextSpan(text: l10n.listener_reg_agree_prefix),
                             TextSpan(
-                              text: l10n.listener_reg_terms,
+                              text: l10n.listener_reg_terms_link,
                               style: GoogleFonts.inter(
-                                color: SplashColors.purpleMid,
+                                color: _accent,
                                 fontWeight: FontWeight.w600,
                               ),
                               recognizer: _termsRecognizer,
                             ),
                             TextSpan(text: l10n.listener_reg_agree_and),
                             TextSpan(
-                              text: l10n.listener_reg_privacy,
+                              text: l10n.listener_reg_privacy_link,
                               style: GoogleFonts.inter(
-                                color: SplashColors.purpleMid,
+                                color: _accent,
                                 fontWeight: FontWeight.w600,
                               ),
                               recognizer: _privacyRecognizer,
                             ),
-                            const TextSpan(text: '.'),
                           ],
                         ),
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 24),
-                SizedBox(
-                  height: 54,
-                  child: FilledButton(
-                    onPressed: _canContinue ? _submit : null,
-                    style: FilledButton.styleFrom(
-                      backgroundColor: SplashColors.purpleMid,
-                      disabledBackgroundColor: SplashColors.purpleMid
-                          .withValues(alpha: 0.35),
-                      foregroundColor: Colors.white,
-                      disabledForegroundColor: Colors.white,
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      textStyle: GoogleFonts.inter(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    child: Text(l10n.listener_reg_continue),
-                  ),
-                ),
               ],
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(24, 8, 24, 8),
+          child: SizedBox(
+            height: 56,
+            width: double.infinity,
+            child: FilledButton(
+              onPressed: _canContinue ? _submit : null,
+              style: FilledButton.styleFrom(
+                backgroundColor: _accent,
+                disabledBackgroundColor: _accent.withValues(alpha: 0.42),
+                foregroundColor: Colors.white,
+                disabledForegroundColor: Colors.white,
+                elevation: 0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(999),
+                ),
+                textStyle: GoogleFonts.inter(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              child: Text(l10n.listener_reg_continue),
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(24, 0, 24, 20),
+          child: Text(
+            l10n.listener_reg_step1_footer,
+            textAlign: TextAlign.center,
+            style: GoogleFonts.inter(
+              color: _muted,
+              fontSize: 11,
+              fontWeight: FontWeight.w400,
+              height: 1.45,
             ),
           ),
         ),
@@ -421,152 +469,152 @@ class _ProfilePhotoPicker extends StatelessWidget {
     required this.imagePath,
     required this.isLoading,
     required this.hasError,
-    required this.addLabel,
-    required this.changeLabel,
     required this.onTap,
   });
 
   final String? imagePath;
   final bool isLoading;
   final bool hasError;
-  final String addLabel;
-  final String changeLabel;
   final VoidCallback onTap;
+
+  static const _accent = Color(0xFF8A3CFE);
+  static const _fill = Color(0xFF1C1826);
 
   @override
   Widget build(BuildContext context) {
     final hasPhoto = imagePath != null;
+    final borderColor = hasError
+        ? const Color(0xFFE11D48)
+        : _accent.withValues(alpha: 0.85);
 
-    return Column(
-      children: [
-        Material(
-          color: Colors.transparent,
-          child: InkWell(
-            onTap: isLoading ? null : onTap,
-            customBorder: const CircleBorder(),
-            child: SizedBox(
-              width: 88,
-              height: 88,
-              child: Stack(
-                clipBehavior: Clip.none,
-                children: [
-                  Container(
-                    width: 88,
-                    height: 88,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                        color: hasError
-                            ? const Color(0xFFE11D48)
-                            : SplashColors.purpleMid.withValues(alpha: 0.7),
-                        width: 2,
-                      ),
-                      gradient: hasPhoto
-                          ? null
-                          : LinearGradient(
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                              colors: [
-                                SplashColors.purpleMid.withValues(alpha: 0.45),
-                                SplashColors.purpleDeep.withValues(alpha: 0.9),
-                              ],
-                            ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: SplashColors.purpleGlow.withValues(
-                            alpha: 0.35,
-                          ),
-                          blurRadius: 18,
-                          offset: const Offset(0, 6),
-                        ),
-                      ],
-                      image: hasPhoto
-                          ? DecorationImage(
-                              image: FileImage(File(imagePath!)),
-                              fit: BoxFit.cover,
-                            )
-                          : null,
-                    ),
-                    child: hasPhoto
-                        ? null
-                        : const Icon(
-                            Icons.add_a_photo_outlined,
-                            color: Colors.white,
-                            size: 32,
-                          ),
-                  ),
-                  if (isLoading)
-                    Container(
-                      width: 88,
-                      height: 88,
-                      decoration: BoxDecoration(
-                        color: Colors.black.withValues(alpha: 0.45),
-                        shape: BoxShape.circle,
-                      ),
-                      child: const Center(
-                        child: SizedBox(
-                          width: 24,
-                          height: 24,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2.2,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    )
-                  else
-                    Positioned(
-                      right: -2,
-                      bottom: -2,
-                      child: Container(
-                        width: 28,
-                        height: 28,
-                        decoration: BoxDecoration(
-                          color: SplashColors.purpleMid,
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                            color: SplashColors.backgroundTop,
-                            width: 2,
-                          ),
-                        ),
-                        child: Icon(
-                          hasPhoto
-                              ? Icons.edit_rounded
-                              : Icons.photo_library_outlined,
-                          color: Colors.white,
-                          size: 14,
-                        ),
-                      ),
-                    ),
-                ],
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: isLoading ? null : onTap,
+        customBorder: const CircleBorder(),
+        child: SizedBox(
+          width: 86,
+          height: 86,
+          child: Stack(
+            clipBehavior: Clip.none,
+            alignment: Alignment.center,
+            children: [
+              CustomPaint(
+                size: const Size(86, 86),
+                painter: _DashedCirclePainter(
+                  color: borderColor,
+                  strokeWidth: 2,
+                ),
               ),
-            ),
+              Container(
+                width: 76,
+                height: 76,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: _fill,
+                  image: hasPhoto
+                      ? DecorationImage(
+                          image: FileImage(File(imagePath!)),
+                          fit: BoxFit.cover,
+                        )
+                      : null,
+                ),
+                child: hasPhoto
+                    ? null
+                    : const Icon(
+                        Icons.person_rounded,
+                        color: Color(0xFF6B5F82),
+                        size: 36,
+                      ),
+              ),
+              if (isLoading)
+                Container(
+                  width: 76,
+                  height: 76,
+                  decoration: BoxDecoration(
+                    color: Colors.black.withValues(alpha: 0.45),
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Center(
+                    child: SizedBox(
+                      width: 22,
+                      height: 22,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2.2,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                )
+              else if (!hasPhoto)
+                Positioned(
+                  right: 6,
+                  bottom: 6,
+                  child: Container(
+                    width: 22,
+                    height: 22,
+                    decoration: const BoxDecoration(
+                      color: _accent,
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(
+                      Icons.add_rounded,
+                      color: Colors.white,
+                      size: 14,
+                    ),
+                  ),
+                ),
+            ],
           ),
         ),
-        const SizedBox(height: 8),
-        Text(
-          hasPhoto ? changeLabel : addLabel,
-          style: GoogleFonts.inter(
-            color: hasError ? const Color(0xFFE11D48) : SplashColors.purpleMid,
-            fontSize: 12,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-      ],
+      ),
     );
   }
 }
 
-class _DarkField extends StatelessWidget {
-  const _DarkField({
+class _DashedCirclePainter extends CustomPainter {
+  const _DashedCirclePainter({required this.color, required this.strokeWidth});
+
+  final Color color;
+  final double strokeWidth;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = color
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = strokeWidth;
+
+    final center = Offset(size.width / 2, size.height / 2);
+    final radius = (size.width - strokeWidth) / 2;
+    const dashCount = 28;
+    const gapFactor = 0.45;
+    final sweep = (2 * 3.141592653589793) / dashCount;
+
+    for (var i = 0; i < dashCount; i++) {
+      final start = i * sweep;
+      canvas.drawArc(
+        Rect.fromCircle(center: center, radius: radius),
+        start,
+        sweep * (1 - gapFactor),
+        false,
+        paint,
+      );
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant _DashedCirclePainter oldDelegate) =>
+      oldDelegate.color != color || oldDelegate.strokeWidth != strokeWidth;
+}
+
+class _LabeledField extends StatelessWidget {
+  const _LabeledField({
     super.key,
+    required this.label,
     required this.controller,
     required this.focusNode,
-    required this.icon,
     required this.hint,
-    required this.fill,
-    required this.border,
-    required this.muted,
     this.enabled = true,
     this.keyboardType,
     this.textInputAction,
@@ -574,16 +622,16 @@ class _DarkField extends StatelessWidget {
     this.inputFormatters,
     this.maxLength,
     this.prefix,
+    this.trailing,
+    this.hasError = false,
     this.errorText,
+    this.forceAccentBorder = false,
   });
 
+  final String label;
   final TextEditingController controller;
   final FocusNode focusNode;
-  final IconData icon;
   final String hint;
-  final Color fill;
-  final Color border;
-  final Color muted;
   final bool enabled;
   final TextInputType? keyboardType;
   final TextInputAction? textInputAction;
@@ -591,15 +639,35 @@ class _DarkField extends StatelessWidget {
   final List<TextInputFormatter>? inputFormatters;
   final int? maxLength;
   final Widget? prefix;
+  final Widget? trailing;
+  final bool hasError;
   final String? errorText;
+  final bool forceAccentBorder;
+
+  static const _fieldFill = Color(0xFF1C1826);
+  static const _muted = Color(0xFF9B93AB);
+  static const _accent = Color(0xFF8A3CFE);
 
   @override
   Widget build(BuildContext context) {
-    final hasError = errorText != null;
+    final borderColor = hasError
+        ? const Color(0xFFE11D48)
+        : (forceAccentBorder || focusNode.hasFocus)
+        ? _accent
+        : _accent.withValues(alpha: 0.55);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        Text(
+          label,
+          style: GoogleFonts.inter(
+            color: _muted,
+            fontSize: 13,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        const SizedBox(height: 10),
         TextField(
           controller: controller,
           focusNode: focusNode,
@@ -618,51 +686,53 @@ class _DarkField extends StatelessWidget {
                   required maxLength,
                 }) => null,
           style: GoogleFonts.inter(
-            color: enabled ? Colors.white : muted,
+            color: enabled
+                ? Colors.white
+                : Colors.white.withValues(alpha: 0.85),
             fontSize: 15,
             fontWeight: FontWeight.w500,
           ),
-          cursorColor: SplashColors.purpleMid,
+          cursorColor: _accent,
           decoration: InputDecoration(
             hintText: hint,
             hintStyle: GoogleFonts.inter(
-              color: muted,
+              color: _muted.withValues(alpha: 0.75),
               fontSize: 15,
               fontWeight: FontWeight.w400,
             ),
             filled: true,
-            fillColor: fill,
+            fillColor: _fieldFill,
             contentPadding: const EdgeInsets.symmetric(
-              horizontal: 14,
+              horizontal: 16,
               vertical: 16,
             ),
-            prefixIcon: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const SizedBox(width: 14),
-                Icon(icon, size: 22, color: muted),
-                const SizedBox(width: 10),
-                if (prefix != null) prefix!,
-              ],
-            ),
+            prefixIcon: prefix == null
+                ? null
+                : Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [const SizedBox(width: 12), prefix!],
+                  ),
             prefixIconConstraints: const BoxConstraints(),
+            suffixIcon: trailing == null
+                ? null
+                : Padding(
+                    padding: const EdgeInsetsDirectional.only(end: 12),
+                    child: trailing,
+                  ),
+            suffixIconConstraints: const BoxConstraints(),
             disabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(14),
-              borderSide: BorderSide(color: border),
+              borderSide: BorderSide(color: borderColor, width: 1.2),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(14),
-              borderSide: BorderSide(
-                color: hasError ? const Color(0xFFE11D48) : border,
-              ),
+              borderSide: BorderSide(color: borderColor, width: 1.2),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(14),
               borderSide: BorderSide(
-                color: hasError
-                    ? const Color(0xFFE11D48)
-                    : SplashColors.purpleMid,
-                width: 1.4,
+                color: hasError ? const Color(0xFFE11D48) : _accent,
+                width: 1.5,
               ),
             ),
           ),

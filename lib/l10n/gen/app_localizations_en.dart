@@ -35,7 +35,7 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
   String get account_tab_delete_account => 'Delete Account';
 
   @override
-  String get account_tab_logout => 'Logout';
+  String get account_tab_logout => 'Log Out';
 
   @override
   String get common_something_went_wrong => 'Something went wrong';
@@ -309,7 +309,7 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
   String get listener_reg_continue => 'Continue';
 
   @override
-  String get listener_reg_skip_for_now => 'Skip for now';
+  String get listener_reg_skip_for_now => 'Skip';
 
   @override
   String listener_reg_step_of(int current, int total) {
@@ -325,11 +325,10 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
   String get listener_reg_last_step => 'Last step';
 
   @override
-  String get listener_reg_step1_title => 'Welcome! Let\'s get you started';
+  String get listener_reg_step1_title => 'Let\'s set up your account';
 
   @override
-  String get listener_reg_step1_subtitle =>
-      'Create your account to begin your journey as a listener.';
+  String get listener_reg_step1_subtitle => 'You\'re joining as a listener';
 
   @override
   String get listener_reg_add_profile_photo => 'Add photo';
@@ -342,42 +341,64 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
       'Please add a profile photo';
 
   @override
-  String get listener_reg_full_name => 'Full name';
+  String get listener_reg_full_name => 'Full Name';
+
+  @override
+  String get listener_reg_full_name_hint => 'e.g. John Doe';
 
   @override
   String get listener_reg_email => 'Email';
 
   @override
-  String get listener_reg_phone => 'Phone number';
+  String get listener_reg_email_hint => 'e.g. johndoe@gmail.com';
+
+  @override
+  String get listener_reg_phone => 'Phone Number';
+
+  @override
+  String get listener_reg_phone_hint => 'e.g. 345566789';
 
   @override
   String get listener_reg_invalid_phone =>
       'Please enter a valid phone number for the selected country';
 
   @override
-  String get listener_reg_select_country => 'Select country';
+  String get listener_reg_select_country => 'Select Country';
 
   @override
   String get listener_reg_search_country => 'Search by country or code';
 
   @override
-  String get listener_reg_agree_prefix => 'I agree to the ';
+  String get listener_reg_agree_prefix => 'I agree to ';
 
   @override
   String get listener_reg_terms => 'Terms of Service';
 
   @override
-  String get listener_reg_agree_and => ' and ';
+  String get listener_reg_terms_link => 'Terms';
+
+  @override
+  String get listener_reg_agree_and => ' & ';
 
   @override
   String get listener_reg_privacy => 'Privacy Policy';
 
   @override
-  String get listener_reg_boundaries_title => 'Set your boundaries';
+  String get listener_reg_privacy_link => 'Privacy';
+
+  @override
+  String get listener_reg_step1_footer =>
+      'Your data is encrypted · Never shared with third parties.\nYou control what\'s visible on your profile.';
+
+  @override
+  String get listener_reg_boundaries_title => 'Select your Boundaries';
 
   @override
   String get listener_reg_boundaries_subtitle =>
-      'Topics you don\'t want to discuss. We will respect your choice.';
+      'Topics you prefer not to discuss. We respect your choice.';
+
+  @override
+  String get catalog_boundaries_load_error => 'Couldn\'t load boundaries.';
 
   @override
   String get listener_reg_boundary_suicide => 'Suicide or self-harm';
@@ -414,10 +435,10 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
       'This helps us match you with the right conversations.';
 
   @override
-  String get listener_reg_date_of_birth => 'Date of birth';
+  String get listener_reg_date_of_birth => 'Date of Birth';
 
   @override
-  String get listener_reg_select_date => 'Select date';
+  String get listener_reg_select_date => 'Select Date';
 
   @override
   String get listener_reg_country => 'Country';
@@ -426,16 +447,19 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
   String get listener_reg_city => 'City';
 
   @override
-  String get listener_reg_enter_city => 'Enter your city';
+  String get listener_reg_enter_city => 'Enter your City';
 
   @override
   String get listener_reg_languages_you_speak => 'Languages you speak';
 
   @override
-  String get listener_reg_select_languages => 'Select languages';
+  String get listener_reg_select_languages => 'Select language';
 
   @override
   String get listener_reg_search_language => 'Search languages';
+
+  @override
+  String get listener_reg_must_be_18 => 'You must be at least 18 years old';
 
   @override
   String get listener_reg_done => 'Done';
@@ -445,7 +469,22 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
 
   @override
   String get listener_reg_areas_subtitle =>
-      'Choose the topics you feel comfortable supporting others with.';
+      'Topics you\'re comfortable supporting others with.';
+
+  @override
+  String listener_reg_areas_topics_selected(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count topics selected',
+      one: '1 topic selected',
+      zero: '0 topic selected',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get catalog_categories_load_error => 'Couldn\'t load topics.';
 
   @override
   String get listener_reg_area_relationships => 'Relationships';
@@ -481,11 +520,11 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
   String get listener_reg_area_other_hint => 'Please specify';
 
   @override
-  String get listener_reg_voice_title => 'Record a short introduction';
+  String get listener_reg_voice_title => 'Record your Introduction';
 
   @override
   String get listener_reg_voice_subtitle =>
-      'Introduce yourself so users can get to know you.';
+      'Venters hear this before booking. Make it warm.';
 
   @override
   String get listener_reg_voice_speak_hint => 'Speak for about 60 seconds';
@@ -621,23 +660,22 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
 
   @override
   String get listener_reg_experience_subtitle =>
-      'Select what applies to you. This helps people find someone who understands.';
+      'Helps people find someone who truly understands.';
 
   @override
-  String get listener_reg_exp_section_relationship => 'Relationship';
+  String get listener_reg_exp_section_relationship => 'Relationship Status';
 
   @override
-  String get listener_reg_exp_section_family => 'Family';
+  String get listener_reg_exp_section_family => 'Family Role';
 
   @override
-  String get listener_reg_exp_section_experiences =>
-      'Experiences (select all that apply)';
+  String get listener_reg_exp_section_experiences => 'Life Experiences';
 
   @override
   String get listener_reg_exp_single => 'Single';
 
   @override
-  String get listener_reg_exp_in_relationship => 'In a relationship';
+  String get listener_reg_exp_in_relationship => 'In relationship';
 
   @override
   String get listener_reg_exp_married => 'Married';
@@ -652,7 +690,7 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
   String get listener_reg_exp_parent => 'Parent';
 
   @override
-  String get listener_reg_exp_single_parent => 'Single parent';
+  String get listener_reg_exp_single_parent => 'Single Parent';
 
   @override
   String get listener_reg_exp_caregiver => 'Caregiver';
@@ -688,6 +726,9 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
   String get listener_reg_exp_add_more => 'Add more';
 
   @override
+  String get listener_reg_exp_load_error => 'Couldn\'t load life experiences.';
+
+  @override
   String get listener_reg_add_experience_title => 'Add experience';
 
   @override
@@ -704,25 +745,35 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
 
   @override
   String get listener_reg_identity_subtitle =>
-      'This helps us keep our community safe and trusted.';
+      'Keeps our community safe & trusted';
 
   @override
-  String get listener_reg_identity_upload_id_title => 'Upload Government ID';
+  String get listener_reg_identity_upload_id_title => 'Upload Govt. ID';
 
   @override
   String get listener_reg_identity_upload_id_subtitle =>
-      'Passport, Driver\'s License or National ID.';
+      'Passport. Driver license';
 
   @override
-  String get listener_reg_identity_selfie_title => 'Take a selfie';
+  String get listener_reg_identity_selfie_title => 'Take a Selfie';
 
   @override
-  String get listener_reg_identity_selfie_subtitle =>
-      'Make sure your face is clearly visible';
+  String get listener_reg_identity_selfie_subtitle => 'Face clearly Visible';
 
   @override
-  String get listener_reg_identity_secure_note =>
-      'Your data is encrypted and secure';
+  String get listener_reg_identity_how_title => 'HOW VERIFICATION WORKS';
+
+  @override
+  String get listener_reg_identity_how_step1 => 'Upload your ID document';
+
+  @override
+  String get listener_reg_identity_how_step2 => 'Take a matching selfie';
+
+  @override
+  String get listener_reg_identity_how_step3 => 'We verify within 24 hours';
+
+  @override
+  String get listener_reg_identity_secure_note => 'Upload both to Continue';
 
   @override
   String get listener_profile_under_review_title =>
@@ -730,17 +781,36 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
 
   @override
   String get listener_profile_under_review_subtitle =>
-      'Our team is reviewing your information to ensure a safe and trusted community.';
+      'Our team is reviewing your info to ensure a safe and trusted community.';
 
   @override
   String get listener_profile_review_time_title => 'Review time';
 
   @override
   String get listener_profile_review_time_body =>
-      'It usually takes 2–3 working days. We\'ll notify you as soon as there\'s an update.';
+      'Usually takes 24–48 hours. We\'ll notify you right away.';
 
   @override
-  String get listener_profile_got_it => 'Got it';
+  String get listener_profile_what_happens_next_title => 'What happens Next';
+
+  @override
+  String get listener_profile_what_happens_next_1 =>
+      'Team reviews your submission';
+
+  @override
+  String get listener_profile_what_happens_next_2 =>
+      'You get a notification on approval';
+
+  @override
+  String get listener_profile_what_happens_next_3 =>
+      'Your profile goes live for Venters';
+
+  @override
+  String get listener_profile_what_happens_next_4 =>
+      'First session requests arrive';
+
+  @override
+  String get listener_profile_got_it => 'Got it!';
 
   @override
   String get listener_profile_go_to_dashboard => 'Go to Dashboard';
@@ -797,17 +867,78 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
   String get listener_reg_step_notifications => 'Notifications';
 
   @override
-  String get listener_reg_notif_title => 'Stay Updated';
+  String get listener_reg_notif_title => 'Stay in the loop';
 
   @override
   String get listener_reg_notif_subtitle =>
-      'Get notified when your profile review is complete, and about sessions, rewards, and important updates.';
+      'Get notified when your profile is approved, sessions are booked, and rewards are ready.';
+
+  @override
+  String get listener_reg_notif_about_title => 'You will be notified about';
+
+  @override
+  String get listener_reg_notif_about_1 => 'Profile approval status';
+
+  @override
+  String get listener_reg_notif_about_2 => 'Incoming session requests';
+
+  @override
+  String get listener_reg_notif_about_3 => 'Earnings & payout updates';
+
+  @override
+  String get listener_reg_notif_about_4 => 'Reward milestones';
 
   @override
   String get listener_reg_notif_enable => 'Enable Notifications';
 
   @override
   String get listener_reg_notif_skip => 'Skip';
+
+  @override
+  String get listener_reg_submit_title => 'Submitting your profile';
+
+  @override
+  String get listener_reg_submit_subtitle =>
+      'We\'re securely uploading your details. This may take a moment — please keep the app open.';
+
+  @override
+  String get listener_reg_submit_progress_title => 'What we\'re sending';
+
+  @override
+  String get listener_reg_submit_progress_profile =>
+      'Profile photo, contact info, and about you';
+
+  @override
+  String get listener_reg_submit_progress_identity =>
+      'Identity verification documents';
+
+  @override
+  String get listener_reg_submit_progress_voice =>
+      'Voice introduction and experiences';
+
+  @override
+  String get listener_reg_submit_progress_preferences =>
+      'Availability and notification preferences';
+
+  @override
+  String get listener_reg_submit_error_title => 'Couldn\'t submit your profile';
+
+  @override
+  String get listener_reg_submit_error_generic =>
+      'Something went wrong while submitting your profile. Please try again.';
+
+  @override
+  String get listener_reg_submit_error_hint =>
+      'Check your connection and try again. Your answers are saved — you won\'t need to re-enter them.';
+
+  @override
+  String get listener_reg_submit_back_to_notifications =>
+      'Back to notifications';
+
+  @override
+  String listener_reg_submit_retrying(int attempt) {
+    return 'Retry attempt $attempt';
+  }
 
   @override
   String get ventor_reg_title => 'What should we Call you?';
@@ -910,6 +1041,31 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
 
   @override
   String get ventor_reg_finish => 'Find my listeners';
+
+  @override
+  String get ventor_reg_notif_title => 'Stay in the loop';
+
+  @override
+  String get ventor_reg_notif_subtitle =>
+      'Get notified when listeners accept your session, reminders are due, and rewards are ready.';
+
+  @override
+  String get ventor_reg_notif_about_title => 'You will be notified about';
+
+  @override
+  String get ventor_reg_notif_about_1 => 'Session acceptances and reminders';
+
+  @override
+  String get ventor_reg_notif_about_2 => 'Upcoming booked sessions';
+
+  @override
+  String get ventor_reg_notif_about_3 => 'Rewards and promo updates';
+
+  @override
+  String get ventor_reg_notif_about_4 => 'Important account updates';
+
+  @override
+  String get ventor_reg_notif_enable => 'Enable Notifications';
 
   @override
   String ventor_reg_interests_selected_footer(int count) {
@@ -2039,19 +2195,33 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
   String get ventor_profile_settings_title => 'Settings';
 
   @override
-  String get ventor_profile_settings_privacy => 'Privacy';
+  String get ventor_profile_settings_section_preferences => 'PREFERENCES';
 
   @override
-  String get ventor_profile_settings_privacy_sub => 'Control your privacy';
+  String get ventor_profile_settings_section_security => 'SECURITY & ACCOUNT';
+
+  @override
+  String get ventor_profile_settings_section_support => 'SUPPORT & ABOUT';
+
+  @override
+  String get ventor_profile_settings_privacy => 'Privacy Controls';
+
+  @override
+  String get ventor_profile_settings_privacy_sub => 'Managed';
 
   @override
   String get ventor_profile_settings_notifications => 'Notifications';
 
   @override
-  String get ventor_profile_settings_notifications_sub => 'Manage what you get';
+  String get ventor_profile_settings_notifications_sub => 'Enabled';
 
   @override
-  String get ventor_profile_settings_help_sub => 'We\'re here for you';
+  String get ventor_profile_settings_help_sub => 'FAQ & Chat';
+
+  @override
+  String ventor_profile_settings_version(String version) {
+    return 'v$version';
+  }
 
   @override
   String get ventor_notif_section_push => 'Push notifications';

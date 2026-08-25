@@ -499,7 +499,7 @@ Used by: ventor registration language step, listener registration languages, dis
 | `sort_order` | Number |
 | `is_active` | Toggle |
 
-Used by: ventor registration interests step (`audience=ventor`), listener comfort tags.
+Used by: ventor registration interests step and listener comfort areas step — both call `GET /v1/catalog/categories` (same list; mobile does not filter by `audience`).
 
 ---
 
@@ -619,7 +619,7 @@ Mobile may expose public `GET /v1/cms/pages/{slug}` and `GET /v1/cms/banners` (2
 | `/sessions` | Sessions | A28–A33 |
 | `/reports` | Safety queue | A34–A36 |
 | `/payouts` | Finance | A41–A47 |
-| `/catalogs` | Lookups — languages (`flag_emoji` / `flag_url`), comfort areas (`icon_emoji` / `icon_url`) | A48–A52 (+ media upload) |
+| `/catalogs` | Lookups — languages (`flag_emoji` / `flag_url`), comfort areas (`icon_emoji` / `icon_url`), boundaries (`icon_emoji` / `icon_url`) | A48–A52 (+ media upload) |
 | `/rewards` | Offers | A53–A56 |
 | `/promos` | Promo codes | A57–A60 |
 | `/training` | Modules | A61–A63 |

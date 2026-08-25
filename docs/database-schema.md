@@ -34,7 +34,6 @@
 | 2 | `refresh_tokens` | Auth |
 | 2b | `auth_identities` | Auth — social *(proposed)* |
 | 2c | `password_reset_tokens` | Auth — forgot-password one-time links |
-| 2b | `auth_identities` | Auth (social — proposed) |
 | 3 | `ventor_profiles` | Ventor |
 | 4 | `listener_profiles` | Listener |
 | 5 | `listener_identity_verifications` | Listener onboarding |
@@ -245,6 +244,20 @@ Used by `#2b forgot-password` / `#2c reset-password`. Store **hash only**, never
 
 **Indexes:** `UQ(token_hash)`, `IDX(user_id)`, `IDX(expires_at)`
 
+### 2d. `user_push_tokens`
+
+Optional FCM device tokens from `#8` / `#22` registration (`fcm_token`). Registration succeeds without a token.
+
+| Column | Type | Notes |
+|--------|------|-------|
+| `id` | UUID | **PK** |
+| `user_id` | UUID | **FK → users** |
+| `token` | VARCHAR(512) | **UQ** — raw FCM token |
+| `created_at` | TIMESTAMPTZ | |
+| `updated_at` | TIMESTAMPTZ | |
+
+**Indexes:** `UQ(token)`, `IDX(user_id)`
+
 ---
 
 ## 2. Profiles
@@ -316,6 +329,8 @@ Used by `#2b forgot-password` / `#2c reset-password`. Store **hash only**, never
 
 ### 5. `listener_identity_verifications`
 
+Used for listener KYC documents. **First upload** is created from `#22 listeners/register`. **Resubmit** after admin rejection uses `#23 identity-verification` (new row or superseding pending attempt — do not require full re-registration).
+
 | Column | Type | Notes |
 |--------|------|-------|
 | `id` | UUID | **PK** |
@@ -373,7 +388,7 @@ Stable catalogs (seed once). App uses string ids like `anxiety_stress`, `en`, `p
 | `icon_url` | TEXT | ? optional CDN image URL; mobile prefers `icon_url` when set, else `icon_emoji` |
 | `sort_order` | INT | default 0 — ascending display order |
 | `allows_custom_text` | BOOLEAN | default false — e.g. `other` shows free-text field |
-| `audience` | VARCHAR(32) | `ventor` \| `listener` \| `all` — who may select this category |
+| `audience` | VARCHAR(32) | `ventor` \| `listener` \| `all` — optional admin metadata; **mobile `#74` does not filter by this** — both ventor and listener see the same active list |
 | `topic_group` | VARCHAR(64) | ? e.g. anxiety, relationships |
 | `is_active` | BOOLEAN | |
 
@@ -384,7 +399,10 @@ Stable catalogs (seed once). App uses string ids like `anxiety_stress`, `en`, `p
 | `id` | VARCHAR(64) | **PK** |
 | `name_en` | VARCHAR(120) | |
 | `name_ar` | VARCHAR(120) | |
+| `sort_order` | INT | Ascending — portal-managed |
 | `is_active` | BOOLEAN | |
+
+Exposed publicly via `#76 GET /v1/catalog/life-experiences` (active rows only).
 
 ### 9. `boundaries`
 
@@ -393,7 +411,13 @@ Stable catalogs (seed once). App uses string ids like `anxiety_stress`, `en`, `p
 | `id` | VARCHAR(64) | **PK** |
 | `name_en` | VARCHAR(120) | |
 | `name_ar` | VARCHAR(120) | |
+| `icon_emoji` | VARCHAR(16) | Unicode emoji — same pattern as `comfort_areas.icon_emoji` |
+| `icon_url` | TEXT | ? optional CDN image URL |
+| `sort_order` | INT | Ascending — portal-managed |
+| `allows_custom_text` | BOOLEAN | default false — e.g. optional “Other” |
 | `is_active` | BOOLEAN | |
+
+Exposed publicly via `#77 GET /v1/catalog/boundaries` (active rows only).
 
 ### 10. `ventor_languages`
 
@@ -428,6 +452,7 @@ Written from `#8 POST /v1/ventors/register` (`language_ids`). Same `languages` c
 |--------|------|-------|
 | `listener_id` | UUID | **FK** |
 | `comfort_area_id` | VARCHAR(64) | **FK** |
+| `custom_text` | TEXT | ? when category `allows_custom_text` — from `#22` `custom_comfort_area_text` |
 | | | **PK (listener_id, comfort_area_id)** |
 
 **Extra:** store custom free-text experiences on listener if needed:
@@ -447,6 +472,7 @@ Written from `#8 POST /v1/ventors/register` (`language_ids`). Same `languages` c
 |--------|------|-------|
 | `listener_id` | UUID | **FK** |
 | `boundary_id` | VARCHAR(64) | **FK** |
+| `custom_text` | TEXT | ? when boundary `allows_custom_text` — from `#22` `custom_boundary_text` |
 | | | **PK (listener_id, boundary_id)** |
 
 ---

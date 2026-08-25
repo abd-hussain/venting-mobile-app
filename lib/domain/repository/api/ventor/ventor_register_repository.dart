@@ -16,9 +16,13 @@ class VentorRegisterRepository extends BaseRepository {
     String? otherInterestText,
     int? avatarPresetIndex,
     String? avatarFilePath,
+    required bool notificationsEnabled,
+    String? fcmToken,
   }) {
     final trimmedOther = otherInterestText?.trim();
     final hasOtherText = trimmedOther != null && trimmedOther.isNotEmpty;
+    final trimmedToken = fcmToken?.trim();
+    final hasToken = trimmedToken != null && trimmedToken.isNotEmpty;
 
     if (avatarFilePath != null && avatarFilePath.trim().isNotEmpty) {
       return TaskEither(() async {
@@ -26,7 +30,13 @@ class VentorRegisterRepository extends BaseRepository {
           final formData = FormData();
           formData.fields
             ..add(MapEntry('nickname', nickname))
-            ..add(MapEntry('gender', gender));
+            ..add(MapEntry('gender', gender))
+            ..add(
+              MapEntry(
+                'notifications_enabled',
+                notificationsEnabled.toString(),
+              ),
+            );
           for (final id in languageIds) {
             formData.fields.add(MapEntry('language_ids', id));
           }
@@ -40,6 +50,9 @@ class VentorRegisterRepository extends BaseRepository {
             formData.fields.add(
               MapEntry('avatar_preset_index', '$avatarPresetIndex'),
             );
+          }
+          if (hasToken) {
+            formData.fields.add(MapEntry('fcm_token', trimmedToken));
           }
           final path = avatarFilePath.trim();
           formData.files.add(
@@ -78,9 +91,11 @@ class VentorRegisterRepository extends BaseRepository {
           'gender': gender,
           'language_ids': languageIds,
           'interest_ids': interestIds,
+          'notifications_enabled': notificationsEnabled,
           if (hasOtherText) 'other_interest_text': trimmedOther,
           if (avatarPresetIndex != null)
             'avatar_preset_index': avatarPresetIndex,
+          'fcm_token': hasToken ? trimmedToken : null,
         },
       ),
       fromJson: VentorProfileResponseModel.fromJson,

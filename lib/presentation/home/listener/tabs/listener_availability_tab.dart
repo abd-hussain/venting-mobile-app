@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:venting_mobile_app/domain/data/api/catalog_language_model.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
 import 'package:venting_mobile_app/presentation/home/listener/availability/listener_availability_option_bottom_sheet.dart';
 import 'package:venting_mobile_app/presentation/home/listener/availability/listener_availability_widgets.dart';
 import 'package:venting_mobile_app/presentation/home/listener/availability/listener_day_schedule_bottom_sheet.dart';
 import 'package:venting_mobile_app/presentation/home/listener/profile/listener_profile_theme.dart';
-import 'package:venting_mobile_app/presentation/listener_registration/widgets/language_options.dart';
 import 'package:venting_mobile_app/presentation/listener_registration/widgets/spoken_languages_picker.dart';
 import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dart';
 
@@ -36,7 +36,7 @@ class _ListenerAvailabilityTabState extends State<ListenerAvailabilityTab> {
 
   int _sessionLength = 30;
   int _breakLength = 15;
-  Set<String> _selectedLanguageIds = {'en', 'ar'};
+  List<CatalogLanguageModel> _selectedLanguages = const [];
 
   late List<DaySchedule> _days;
 
@@ -50,7 +50,7 @@ class _ListenerAvailabilityTabState extends State<ListenerAvailabilityTab> {
     return [
       const DaySchedule(
         label: 'Mon',
-        slots: const [
+        slots: [
           TimeSlot(
             start: TimeOfDay(hour: 9, minute: 0),
             end: TimeOfDay(hour: 12, minute: 0),
@@ -63,7 +63,7 @@ class _ListenerAvailabilityTabState extends State<ListenerAvailabilityTab> {
       ),
       const DaySchedule(
         label: 'Tue',
-        slots: const [
+        slots: [
           TimeSlot(
             start: TimeOfDay(hour: 9, minute: 0),
             end: TimeOfDay(hour: 13, minute: 0),
@@ -76,7 +76,7 @@ class _ListenerAvailabilityTabState extends State<ListenerAvailabilityTab> {
       ),
       const DaySchedule(
         label: 'Wed',
-        slots: const [
+        slots: [
           TimeSlot(
             start: TimeOfDay(hour: 10, minute: 0),
             end: TimeOfDay(hour: 14, minute: 0),
@@ -89,7 +89,7 @@ class _ListenerAvailabilityTabState extends State<ListenerAvailabilityTab> {
       ),
       const DaySchedule(
         label: 'Thu',
-        slots: const [
+        slots: [
           TimeSlot(
             start: TimeOfDay(hour: 9, minute: 0),
             end: TimeOfDay(hour: 12, minute: 0),
@@ -102,7 +102,7 @@ class _ListenerAvailabilityTabState extends State<ListenerAvailabilityTab> {
       ),
       const DaySchedule(
         label: 'Fri',
-        slots: const [
+        slots: [
           TimeSlot(
             start: TimeOfDay(hour: 9, minute: 0),
             end: TimeOfDay(hour: 13, minute: 0),
@@ -115,7 +115,7 @@ class _ListenerAvailabilityTabState extends State<ListenerAvailabilityTab> {
       ),
       const DaySchedule(
         label: 'Sat',
-        slots: const [
+        slots: [
           TimeSlot(
             start: TimeOfDay(hour: 10, minute: 0),
             end: TimeOfDay(hour: 14, minute: 0),
@@ -145,12 +145,11 @@ class _ListenerAvailabilityTabState extends State<ListenerAvailabilityTab> {
   }
 
   String _languagesLabel(BuildContext context) {
+    if (_selectedLanguages.isEmpty) return '—';
     final languageCode = Localizations.localeOf(context).languageCode;
-    final labels = _selectedLanguageIds
-        .map((id) => spokenLanguageById(id)?.label(languageCode) ?? id)
-        .toList();
-    if (labels.isEmpty) return '—';
-    return labels.join(', ');
+    return _selectedLanguages
+        .map((lang) => catalogLanguageLabel(lang, languageCode))
+        .join(', ');
   }
 
   Future<void> _onSessionLength() async {
@@ -184,11 +183,11 @@ class _ListenerAvailabilityTabState extends State<ListenerAvailabilityTab> {
   Future<void> _onLanguages() async {
     final selected = await showSpokenLanguagesPicker(
       context: context,
-      selectedIds: _selectedLanguageIds,
+      selectedIds: _selectedLanguages.map((e) => e.id).toSet(),
     );
     if (!mounted || selected == null) return;
     // TODO: Persist spoken languages via API.
-    setState(() => _selectedLanguageIds = selected);
+    setState(() => _selectedLanguages = selected);
   }
 
   void _onInstantCallToggled(bool v) {

@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
 import 'package:venting_mobile_app/presentation/listener_registration/listener_registration_step.dart';
-import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dart';
-import 'package:venting_mobile_app/shared_widgets/app_language_selector.dart';
 
 /// Shared top chrome for all listener registration steps.
 class ListenerRegistrationHeader extends StatelessWidget {
@@ -18,96 +16,89 @@ class ListenerRegistrationHeader extends StatelessWidget {
   final VoidCallback onBack;
   final VoidCallback onSkip;
 
+  static const _accent = Color(0xFF8A3CFE);
+  static const _backFill = Color(0xFF1C1826);
+  static const _progressTrack = Color(0xFF3A2F52);
+
   @override
   Widget build(BuildContext context) {
     final l10n = VentingMobLocalizations.of(context);
     final total = ListenerRegistrationStepX.total;
     final current = step.number;
-    final remaining = total - current;
-    final progress = current / total;
 
     return Padding(
-      padding: const EdgeInsets.fromLTRB(8, 4, 8, 8),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+      padding: const EdgeInsets.fromLTRB(16, 8, 12, 4),
+      child: Row(
         children: [
-          Row(
-            children: [
-              IconButton(
-                onPressed: onBack,
-                icon: const Icon(
-                  Icons.arrow_back_ios_new_rounded,
+          Material(
+            color: _backFill,
+            shape: const CircleBorder(),
+            child: InkWell(
+              customBorder: const CircleBorder(),
+              onTap: onBack,
+              child: Container(
+                width: 42,
+                height: 42,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(color: _accent.withValues(alpha: 0.45)),
+                ),
+                child: const Icon(
+                  Icons.arrow_back_rounded,
                   size: 20,
                   color: Colors.white,
                 ),
               ),
-              const Spacer(),
-              const AppLanguageSelector(),
-              const SizedBox(width: 4),
-              TextButton(
-                onPressed: onSkip,
-                style: TextButton.styleFrom(
-                  foregroundColor: Colors.white.withValues(alpha: 0.75),
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                ),
-                child: Text(
-                  l10n.listener_reg_skip_for_now,
-                  style: GoogleFonts.inter(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-            ],
+            ),
           ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 4, 16, 0),
+          Expanded(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Row(
-                  children: [
-                    Text(
-                      l10n.listener_reg_step_of(current, total),
-                      style: GoogleFonts.inter(
-                        color: Colors.white,
-                        fontSize: 13,
-                        fontWeight: FontWeight.w600,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: List.generate(total, (i) {
+                    final active = i < current;
+                    return Padding(
+                      padding: EdgeInsetsDirectional.only(
+                        start: i == 0 ? 0 : 4,
                       ),
-                    ),
-                    const Spacer(),
-                    Text(
-                      remaining == 0
-                          ? l10n.listener_reg_last_step
-                          : l10n.listener_reg_steps_remaining(remaining),
-                      style: GoogleFonts.inter(
-                        color: Colors.white.withValues(alpha: 0.65),
-                        fontSize: 12,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 10),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(999),
-                  child: TweenAnimationBuilder<double>(
-                    tween: Tween(begin: 0, end: progress),
-                    duration: const Duration(milliseconds: 320),
-                    curve: Curves.easeOutCubic,
-                    builder: (context, value, _) {
-                      return LinearProgressIndicator(
-                        value: value,
-                        minHeight: 6,
-                        backgroundColor: Colors.white.withValues(alpha: 0.12),
-                        valueColor: const AlwaysStoppedAnimation(
-                          SplashColors.purpleMid,
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 220),
+                        width: active ? 18 : 14,
+                        height: 5,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(999),
+                          color: active ? _accent : _progressTrack,
                         ),
-                      );
-                    },
+                      ),
+                    );
+                  }),
+                ),
+                const SizedBox(height: 6),
+                Text(
+                  '$current/$total',
+                  style: GoogleFonts.inter(
+                    color: Colors.white.withValues(alpha: 0.7),
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
               ],
+            ),
+          ),
+          TextButton(
+            onPressed: onSkip,
+            style: TextButton.styleFrom(
+              foregroundColor: const Color(0xFFC9B8E8),
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              minimumSize: const Size(48, 40),
+            ),
+            child: Text(
+              l10n.listener_reg_skip_for_now,
+              style: GoogleFonts.inter(
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ),
         ],

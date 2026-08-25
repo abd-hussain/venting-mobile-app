@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:venting_mobile_app/di/di_container.dart';
+import 'package:venting_mobile_app/domain/data/app/registration_notifications_data.dart';
 import 'package:venting_mobile_app/domain/data/exceptions/main_api_exception.dart';
 import 'package:venting_mobile_app/domain/usecase/ventor_register_usecase.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
@@ -15,6 +16,7 @@ import 'package:venting_mobile_app/presentation/homescreen.dart';
 import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dart';
 import 'package:venting_mobile_app/presentation/ventor_registration/steps/ventor_registration_interests_step.dart';
 import 'package:venting_mobile_app/presentation/ventor_registration/steps/ventor_registration_language_step.dart';
+import 'package:venting_mobile_app/presentation/ventor_registration/steps/ventor_registration_notifications_step.dart';
 import 'package:venting_mobile_app/utils/router_config.dart';
 
 class VentorRegistrationArgs {
@@ -51,7 +53,7 @@ class _VentorRegistrationScreenState extends State<VentorRegistrationScreen> {
   static const _accent = Color(0xFF8A3CFE);
   static const _chipFill = Color(0xFF2A2140);
   static const _progressTrack = Color(0xFF3A2F52);
-  static const _totalSteps = 3;
+  static const _totalSteps = 4;
   static const _maxNicknameLength = 20;
 
   static const _presetAvatarAssets = <String>[
@@ -73,6 +75,7 @@ class _VentorRegistrationScreenState extends State<VentorRegistrationScreen> {
   bool _pickingPhoto = false;
   bool _isSubmitting = false;
   Set<String> _selectedLanguageIds = {};
+  VentorInterestsSelection? _interestsSelection;
 
   @override
   void initState() {
@@ -154,9 +157,21 @@ class _VentorRegistrationScreenState extends State<VentorRegistrationScreen> {
     };
   }
 
-  Future<void> _onFinishInterests(VentorInterestsSelection selection) async {
+  void _onContinueInterests(VentorInterestsSelection selection) {
+    setState(() {
+      _interestsSelection = selection;
+      _stepIndex = 3;
+    });
+  }
+
+  Future<void> _onFinishNotifications(
+    RegistrationNotificationsData notifications,
+  ) async {
     if (_isSubmitting) return;
-    if (_gender == null || _selectedLanguageIds.isEmpty) return;
+    final interests = _interestsSelection;
+    if (interests == null || _gender == null || _selectedLanguageIds.isEmpty) {
+      return;
+    }
 
     setState(() => _isSubmitting = true);
 
@@ -164,12 +179,14 @@ class _VentorRegistrationScreenState extends State<VentorRegistrationScreen> {
       nickname: _nickname,
       gender: _genderApiValue,
       languageIds: _selectedLanguageIds.toList(growable: false),
-      interestIds: selection.interestIds,
-      otherInterestText: selection.otherInterestText,
+      interestIds: interests.interestIds,
+      otherInterestText: interests.otherInterestText,
       avatarPresetIndex: _galleryPhotoPath == null
           ? _selectedAvatarIndex
           : null,
       avatarFilePath: _galleryPhotoPath,
+      notificationsEnabled: notifications.notificationsEnabled,
+      fcmToken: notifications.fcmToken,
     ).run();
 
     if (!mounted) return;
@@ -246,7 +263,12 @@ class _VentorRegistrationScreenState extends State<VentorRegistrationScreen> {
               ),
               2 => VentorRegistrationInterestsStep(
                 onBack: _onBack,
-                onFinish: _onFinishInterests,
+                onContinue: _onContinueInterests,
+                initialSelection: _interestsSelection,
+              ),
+              3 => VentorRegistrationNotificationsStep(
+                onBack: _onBack,
+                onContinue: _onFinishNotifications,
                 isSubmitting: _isSubmitting,
               ),
               _ => Column(

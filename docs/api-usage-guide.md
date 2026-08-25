@@ -75,17 +75,21 @@ Use these for **both** ventor and listener unless a screen is role-specific.
 | # | Endpoint | Screen / place | When |
 |---|----------|----------------|------|
 | 75 *(proposed)* | `GET /v1/catalog/languages` | Ventor registration → **language step** | On step open — load speaking languages from **`languages`** table (`flag_url`, native + English names). Same catalog as listener languages — no second table. |
-| 74 *(proposed)* | `GET /v1/catalog/categories?audience=ventor` | Ventor registration → **interests step** | On step open — load categories (`id`, localized name, **`icon_emoji`** + optional `icon_url`). Do **not** hardcode labels or icons. |
-| 8 | `POST /v1/ventors/register` | Ventor registration (nickname, gender, avatar, languages, interests) | Final submit — `language_ids` + `interest_ids` + optional `other_interest_text` when “Other” is selected |
+| 74 *(proposed)* | `GET /v1/catalog/categories` | Ventor registration → **interests step**; Listener registration → **comfort areas step** | On step open — load categories (`id`, localized name, **`icon_emoji`** + optional `icon_url`). Same list for both roles; **no `audience` query param**. Shimmer while loading. |
+| 76 *(proposed)* | `GET /v1/catalog/life-experiences` | Listener registration → **life experiences** step | On step open — load tags from **`life_experiences`**. Show shimmer until loaded. Do **not** hardcode experience chips. |
+| 77 *(proposed)* | `GET /v1/catalog/boundaries` | Listener registration → **boundaries** step | On step open — load boundary rows (`icon_emoji` + optional `icon_url`). Shimmer while loading. Selection optional. |
+| 74 *(proposed)* | `GET /v1/catalog/categories` | Listener registration → **comfort areas** step | On step open — same categories as ventor interests; shimmer while loading |
+| 8 | `POST /v1/ventors/register` | Ventor registration (profile → languages → interests → **notifications**) | Final submit after notifications step — includes `notifications_enabled` + optional `fcm_token` (`null`/omitted if permission denied) |
 
-> **Never call** `GET /v1/catalog` (combined dump). Use `#74` / `#75` only.
+> **Never call** `GET /v1/catalog` (combined dump). Use `#74` / `#75` / `#76` / `#77` only.
 
 **Ventor onboarding steps:**
 
 1. Profile (nickname / gender / avatar)  
 2. `#75` speaking language(s) from `languages` — ≥1 required; flags are CDN URLs managed in the portal  
 3. `#74` interest categories from `comfort_areas` — emoji (`icon_emoji`) like language flags; optional CDN `icon_url`  
-4. `#8` submit all (creates ventor profile; sets `registration_complete`)
+4. **Enable notifications** (optional) — request OS permission; fetch FCM token when granted  
+5. `#8` submit all (creates ventor profile; sets `registration_complete`)
 
 **Languages flow:**
 
@@ -99,11 +103,14 @@ Use these for **both** ventor and listener unless a screen is role-specific.
 2. User selects one or more.
 3. If a selected category has `allows_custom_text` (e.g. `other`) → show free-text field; require non-empty trim.
 4. Leading icon per row = `icon_url` if set, else `icon_emoji` (same pattern as languages).
-5. Finish → `#8` with:
-   - profile fields (nickname, gender, avatar / preset)
-   - `language_ids`
-   - `interest_ids`
-   - `other_interest_text` **only when** Other (or another custom-text category) is selected
+5. Continue → notifications step (step 4).
+
+**Notifications flow (ventor + listener):**
+
+1. User taps **Enable Notifications**.
+2. App requests OS permission + FCM token.
+3. On register submit send `notifications_enabled: true|false`.
+4. Send `fcm_token` **only when** a non-empty token was obtained; otherwise omit (multipart) or send `null` (JSON). Registration must succeed either way.
 
 **`#8` “Other” interest contract:**
 
@@ -111,6 +118,12 @@ Use these for **both** ventor and listener unless a screen is role-specific.
 |----------|------|
 | `interest_ids` includes `other` | Must include `other_interest_text` (trimmed, non-empty) |
 | No custom-text category | Omit `other_interest_text` |
+
+**`#8` submit payload (after notifications step):**
+
+- Profile fields (nickname, gender, avatar / preset)
+- `language_ids`, `interest_ids`, optional `other_interest_text`
+- `notifications_enabled`, optional `fcm_token`
 
 ### B2. Ventor home & wellness
 
@@ -187,8 +200,9 @@ Use these for **both** ventor and listener unless a screen is role-specific.
 
 | # | Endpoint | Screen / place | When |
 |---|----------|----------------|------|
-| 22 | `POST /v1/listeners/register` | Listener registration steps 1–9 | Prefer **one submit at the end** (all steps); field map matches steps (profile, ID, about, experiences, comfort, boundaries, voice, availability, notifications) |
-| 23 | `POST /v1/listeners/me/identity-verification` | Step 2 or re-verify | Upload document front/back + selfie; or resubmit after rejection |
+| 22 | `POST /v1/listeners/register` | Listener registration steps 1–9 | Prefer **one submit at the end** after step 9 loading screen. Multipart: files + **JSON-encoded strings** for array/object fields (`language_ids`, `life_experience_ids`, `comfort_area_ids`, `boundary_ids`, `availability`); `session_minutes` is a **single integer** string. Sends `notifications_enabled` + optional `fcm_token` (`null`/omitted if permission denied). Do **not** also call `#23` here. |
+| 76 *(proposed)* | `GET /v1/catalog/life-experiences` | Listener registration → life experiences step | On step open — load experience chips; shimmer while loading |
+| 23 | `POST /v1/listeners/me/identity-verification` | KYC rejected / resubmit screen | **Only after admin rejects KYC** — resubmit document front/back + selfie to re-enter review. Not used for first-time registration. |
 
 ### C2. Listener dashboard & setup
 
@@ -397,7 +411,7 @@ Terms, Privacy, and Help are **static HTML** (6 pages: 3 × EN/AR) under one sha
 | Notifications `#68–70` | — | ✓ (inbox as specified) |
 | Training `#71–72` | — | ✓ |
 | Promo `#73` | ✓ | — |
-| Catalog `#74–75` | ✓ | ✓ (listener languages/comfort) |
+| Catalog `#74–77` | ✓ | ✓ (listener languages / life experiences / comfort / boundaries) |
 
 ---
 

@@ -21,6 +21,8 @@ class VentorRegisterUsecase {
     String? otherInterestText,
     int? avatarPresetIndex,
     String? avatarFilePath,
+    required bool notificationsEnabled,
+    String? fcmToken,
   }) {
     return TaskEither(() async {
       final result = await _ventorRegisterRepository
@@ -32,6 +34,8 @@ class VentorRegisterUsecase {
             otherInterestText: otherInterestText,
             avatarPresetIndex: avatarPresetIndex,
             avatarFilePath: avatarFilePath,
+            notificationsEnabled: notificationsEnabled,
+            fcmToken: fcmToken,
           )
           .run();
 

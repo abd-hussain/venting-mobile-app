@@ -7,7 +7,6 @@ class GetCatalogCategoriesUsecase {
 
   final CatalogCategoriesRepository _catalogCategoriesRepository;
 
-  TaskEither<Exception, CatalogCategoriesResponseModel> call({
-    String audience = 'ventor',
-  }) => _catalogCategoriesRepository.call(audience: audience);
+  TaskEither<Exception, CatalogCategoriesResponseModel> call() =>
+      _catalogCategoriesRepository.call();
 }

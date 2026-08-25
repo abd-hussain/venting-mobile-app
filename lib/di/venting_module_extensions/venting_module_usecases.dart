@@ -12,8 +12,11 @@ import 'package:venting_mobile_app/domain/repository/api/auth/auth_me_repository
 import 'package:venting_mobile_app/domain/repository/api/auth/auth_refresh_token_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/auth/auth_register_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/auth/auth_social_repository.dart';
+import 'package:venting_mobile_app/domain/repository/api/catalog/catalog_boundaries_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/catalog/catalog_categories_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/catalog/catalog_languages_repository.dart';
+import 'package:venting_mobile_app/domain/repository/api/catalog/catalog_life_experiences_repository.dart';
+import 'package:venting_mobile_app/domain/repository/api/listener/listener_register_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/ventor/ventor_register_repository.dart';
 import 'package:venting_mobile_app/domain/repository/app/auth_me_cache_repository.dart';
 import 'package:venting_mobile_app/domain/repository/app/social_sign_in_repository.dart';
@@ -29,8 +32,11 @@ import 'package:venting_mobile_app/domain/usecase/auth_register_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/auth_social_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/clear_auth_session_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_cached_auth_me_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/get_catalog_boundaries_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_catalog_categories_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_catalog_languages_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/get_catalog_life_experiences_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/listener_register_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/sign_in_with_apple_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/sign_in_with_google_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/ventor_register_usecase.dart';
@@ -116,10 +122,23 @@ mixin VentingModuleUsecases on VentingModule {
     CatalogLanguagesRepository catalogLanguagesRepository,
   ) => GetCatalogLanguagesUsecase(catalogLanguagesRepository);
 
+  GetCatalogLifeExperiencesUsecase getCatalogLifeExperiencesUsecase(
+    CatalogLifeExperiencesRepository catalogLifeExperiencesRepository,
+  ) => GetCatalogLifeExperiencesUsecase(catalogLifeExperiencesRepository);
+
+  GetCatalogBoundariesUsecase getCatalogBoundariesUsecase(
+    CatalogBoundariesRepository catalogBoundariesRepository,
+  ) => GetCatalogBoundariesUsecase(catalogBoundariesRepository);
+
   VentorRegisterUsecase ventorRegisterUsecase(
     VentorRegisterRepository ventorRegisterRepository,
     VentingPreferences ventingPreferences,
   ) => VentorRegisterUsecase(ventorRegisterRepository, ventingPreferences);
+
+  ListenerRegisterUsecase listenerRegisterUsecase(
+    ListenerRegisterRepository listenerRegisterRepository,
+    VentingPreferences ventingPreferences,
+  ) => ListenerRegisterUsecase(listenerRegisterRepository, ventingPreferences);
 
   /// Registers all usecase dependencies
   void registerUsecases(GetIt getIt, AppConfig appConfig) {
@@ -190,9 +209,23 @@ mixin VentingModuleUsecases on VentingModule {
     getIt.registerFactory<GetCatalogLanguagesUsecase>(
       () => getCatalogLanguagesUsecase(getIt<CatalogLanguagesRepository>()),
     );
+    getIt.registerFactory<GetCatalogLifeExperiencesUsecase>(
+      () => getCatalogLifeExperiencesUsecase(
+        getIt<CatalogLifeExperiencesRepository>(),
+      ),
+    );
+    getIt.registerFactory<GetCatalogBoundariesUsecase>(
+      () => getCatalogBoundariesUsecase(getIt<CatalogBoundariesRepository>()),
+    );
     getIt.registerFactory<VentorRegisterUsecase>(
       () => ventorRegisterUsecase(
         getIt<VentorRegisterRepository>(),
+        getIt<VentingPreferences>(),
+      ),
+    );
+    getIt.registerFactory<ListenerRegisterUsecase>(
+      () => listenerRegisterUsecase(
+        getIt<ListenerRegisterRepository>(),
         getIt<VentingPreferences>(),
       ),
     );

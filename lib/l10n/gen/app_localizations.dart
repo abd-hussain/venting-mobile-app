@@ -152,7 +152,7 @@ abstract class VentingMobLocalizations {
   /// No description provided for @account_tab_logout.
   ///
   /// In en, this message translates to:
-  /// **'Logout'**
+  /// **'Log Out'**
   String get account_tab_logout;
 
   /// No description provided for @common_something_went_wrong.
@@ -662,7 +662,7 @@ abstract class VentingMobLocalizations {
   /// No description provided for @listener_reg_skip_for_now.
   ///
   /// In en, this message translates to:
-  /// **'Skip for now'**
+  /// **'Skip'**
   String get listener_reg_skip_for_now;
 
   /// No description provided for @listener_reg_step_of.
@@ -686,13 +686,13 @@ abstract class VentingMobLocalizations {
   /// No description provided for @listener_reg_step1_title.
   ///
   /// In en, this message translates to:
-  /// **'Welcome! Let\'s get you started'**
+  /// **'Let\'s set up your account'**
   String get listener_reg_step1_title;
 
   /// No description provided for @listener_reg_step1_subtitle.
   ///
   /// In en, this message translates to:
-  /// **'Create your account to begin your journey as a listener.'**
+  /// **'You\'re joining as a listener'**
   String get listener_reg_step1_subtitle;
 
   /// No description provided for @listener_reg_add_profile_photo.
@@ -716,8 +716,14 @@ abstract class VentingMobLocalizations {
   /// No description provided for @listener_reg_full_name.
   ///
   /// In en, this message translates to:
-  /// **'Full name'**
+  /// **'Full Name'**
   String get listener_reg_full_name;
+
+  /// No description provided for @listener_reg_full_name_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. John Doe'**
+  String get listener_reg_full_name_hint;
 
   /// No description provided for @listener_reg_email.
   ///
@@ -725,11 +731,23 @@ abstract class VentingMobLocalizations {
   /// **'Email'**
   String get listener_reg_email;
 
+  /// No description provided for @listener_reg_email_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. johndoe@gmail.com'**
+  String get listener_reg_email_hint;
+
   /// No description provided for @listener_reg_phone.
   ///
   /// In en, this message translates to:
-  /// **'Phone number'**
+  /// **'Phone Number'**
   String get listener_reg_phone;
+
+  /// No description provided for @listener_reg_phone_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. 345566789'**
+  String get listener_reg_phone_hint;
 
   /// No description provided for @listener_reg_invalid_phone.
   ///
@@ -740,7 +758,7 @@ abstract class VentingMobLocalizations {
   /// No description provided for @listener_reg_select_country.
   ///
   /// In en, this message translates to:
-  /// **'Select country'**
+  /// **'Select Country'**
   String get listener_reg_select_country;
 
   /// No description provided for @listener_reg_search_country.
@@ -752,7 +770,7 @@ abstract class VentingMobLocalizations {
   /// No description provided for @listener_reg_agree_prefix.
   ///
   /// In en, this message translates to:
-  /// **'I agree to the '**
+  /// **'I agree to '**
   String get listener_reg_agree_prefix;
 
   /// No description provided for @listener_reg_terms.
@@ -761,10 +779,16 @@ abstract class VentingMobLocalizations {
   /// **'Terms of Service'**
   String get listener_reg_terms;
 
+  /// No description provided for @listener_reg_terms_link.
+  ///
+  /// In en, this message translates to:
+  /// **'Terms'**
+  String get listener_reg_terms_link;
+
   /// No description provided for @listener_reg_agree_and.
   ///
   /// In en, this message translates to:
-  /// **' and '**
+  /// **' & '**
   String get listener_reg_agree_and;
 
   /// No description provided for @listener_reg_privacy.
@@ -773,17 +797,35 @@ abstract class VentingMobLocalizations {
   /// **'Privacy Policy'**
   String get listener_reg_privacy;
 
+  /// No description provided for @listener_reg_privacy_link.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy'**
+  String get listener_reg_privacy_link;
+
+  /// No description provided for @listener_reg_step1_footer.
+  ///
+  /// In en, this message translates to:
+  /// **'Your data is encrypted · Never shared with third parties.\nYou control what\'s visible on your profile.'**
+  String get listener_reg_step1_footer;
+
   /// No description provided for @listener_reg_boundaries_title.
   ///
   /// In en, this message translates to:
-  /// **'Set your boundaries'**
+  /// **'Select your Boundaries'**
   String get listener_reg_boundaries_title;
 
   /// No description provided for @listener_reg_boundaries_subtitle.
   ///
   /// In en, this message translates to:
-  /// **'Topics you don\'t want to discuss. We will respect your choice.'**
+  /// **'Topics you prefer not to discuss. We respect your choice.'**
   String get listener_reg_boundaries_subtitle;
+
+  /// No description provided for @catalog_boundaries_load_error.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load boundaries.'**
+  String get catalog_boundaries_load_error;
 
   /// No description provided for @listener_reg_boundary_suicide.
   ///
@@ -854,13 +896,13 @@ abstract class VentingMobLocalizations {
   /// No description provided for @listener_reg_date_of_birth.
   ///
   /// In en, this message translates to:
-  /// **'Date of birth'**
+  /// **'Date of Birth'**
   String get listener_reg_date_of_birth;
 
   /// No description provided for @listener_reg_select_date.
   ///
   /// In en, this message translates to:
-  /// **'Select date'**
+  /// **'Select Date'**
   String get listener_reg_select_date;
 
   /// No description provided for @listener_reg_country.
@@ -878,7 +920,7 @@ abstract class VentingMobLocalizations {
   /// No description provided for @listener_reg_enter_city.
   ///
   /// In en, this message translates to:
-  /// **'Enter your city'**
+  /// **'Enter your City'**
   String get listener_reg_enter_city;
 
   /// No description provided for @listener_reg_languages_you_speak.
@@ -890,7 +932,7 @@ abstract class VentingMobLocalizations {
   /// No description provided for @listener_reg_select_languages.
   ///
   /// In en, this message translates to:
-  /// **'Select languages'**
+  /// **'Select language'**
   String get listener_reg_select_languages;
 
   /// No description provided for @listener_reg_search_language.
@@ -898,6 +940,12 @@ abstract class VentingMobLocalizations {
   /// In en, this message translates to:
   /// **'Search languages'**
   String get listener_reg_search_language;
+
+  /// No description provided for @listener_reg_must_be_18.
+  ///
+  /// In en, this message translates to:
+  /// **'You must be at least 18 years old'**
+  String get listener_reg_must_be_18;
 
   /// No description provided for @listener_reg_done.
   ///
@@ -914,8 +962,20 @@ abstract class VentingMobLocalizations {
   /// No description provided for @listener_reg_areas_subtitle.
   ///
   /// In en, this message translates to:
-  /// **'Choose the topics you feel comfortable supporting others with.'**
+  /// **'Topics you\'re comfortable supporting others with.'**
   String get listener_reg_areas_subtitle;
+
+  /// No description provided for @listener_reg_areas_topics_selected.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{0 topic selected} =1{1 topic selected} other{{count} topics selected}}'**
+  String listener_reg_areas_topics_selected(int count);
+
+  /// No description provided for @catalog_categories_load_error.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load topics.'**
+  String get catalog_categories_load_error;
 
   /// No description provided for @listener_reg_area_relationships.
   ///
@@ -986,13 +1046,13 @@ abstract class VentingMobLocalizations {
   /// No description provided for @listener_reg_voice_title.
   ///
   /// In en, this message translates to:
-  /// **'Record a short introduction'**
+  /// **'Record your Introduction'**
   String get listener_reg_voice_title;
 
   /// No description provided for @listener_reg_voice_subtitle.
   ///
   /// In en, this message translates to:
-  /// **'Introduce yourself so users can get to know you.'**
+  /// **'Venters hear this before booking. Make it warm.'**
   String get listener_reg_voice_subtitle;
 
   /// No description provided for @listener_reg_voice_speak_hint.
@@ -1238,25 +1298,25 @@ abstract class VentingMobLocalizations {
   /// No description provided for @listener_reg_experience_subtitle.
   ///
   /// In en, this message translates to:
-  /// **'Select what applies to you. This helps people find someone who understands.'**
+  /// **'Helps people find someone who truly understands.'**
   String get listener_reg_experience_subtitle;
 
   /// No description provided for @listener_reg_exp_section_relationship.
   ///
   /// In en, this message translates to:
-  /// **'Relationship'**
+  /// **'Relationship Status'**
   String get listener_reg_exp_section_relationship;
 
   /// No description provided for @listener_reg_exp_section_family.
   ///
   /// In en, this message translates to:
-  /// **'Family'**
+  /// **'Family Role'**
   String get listener_reg_exp_section_family;
 
   /// No description provided for @listener_reg_exp_section_experiences.
   ///
   /// In en, this message translates to:
-  /// **'Experiences (select all that apply)'**
+  /// **'Life Experiences'**
   String get listener_reg_exp_section_experiences;
 
   /// No description provided for @listener_reg_exp_single.
@@ -1268,7 +1328,7 @@ abstract class VentingMobLocalizations {
   /// No description provided for @listener_reg_exp_in_relationship.
   ///
   /// In en, this message translates to:
-  /// **'In a relationship'**
+  /// **'In relationship'**
   String get listener_reg_exp_in_relationship;
 
   /// No description provided for @listener_reg_exp_married.
@@ -1298,7 +1358,7 @@ abstract class VentingMobLocalizations {
   /// No description provided for @listener_reg_exp_single_parent.
   ///
   /// In en, this message translates to:
-  /// **'Single parent'**
+  /// **'Single Parent'**
   String get listener_reg_exp_single_parent;
 
   /// No description provided for @listener_reg_exp_caregiver.
@@ -1367,6 +1427,12 @@ abstract class VentingMobLocalizations {
   /// **'Add more'**
   String get listener_reg_exp_add_more;
 
+  /// No description provided for @listener_reg_exp_load_error.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load life experiences.'**
+  String get listener_reg_exp_load_error;
+
   /// No description provided for @listener_reg_add_experience_title.
   ///
   /// In en, this message translates to:
@@ -1400,37 +1466,61 @@ abstract class VentingMobLocalizations {
   /// No description provided for @listener_reg_identity_subtitle.
   ///
   /// In en, this message translates to:
-  /// **'This helps us keep our community safe and trusted.'**
+  /// **'Keeps our community safe & trusted'**
   String get listener_reg_identity_subtitle;
 
   /// No description provided for @listener_reg_identity_upload_id_title.
   ///
   /// In en, this message translates to:
-  /// **'Upload Government ID'**
+  /// **'Upload Govt. ID'**
   String get listener_reg_identity_upload_id_title;
 
   /// No description provided for @listener_reg_identity_upload_id_subtitle.
   ///
   /// In en, this message translates to:
-  /// **'Passport, Driver\'s License or National ID.'**
+  /// **'Passport. Driver license'**
   String get listener_reg_identity_upload_id_subtitle;
 
   /// No description provided for @listener_reg_identity_selfie_title.
   ///
   /// In en, this message translates to:
-  /// **'Take a selfie'**
+  /// **'Take a Selfie'**
   String get listener_reg_identity_selfie_title;
 
   /// No description provided for @listener_reg_identity_selfie_subtitle.
   ///
   /// In en, this message translates to:
-  /// **'Make sure your face is clearly visible'**
+  /// **'Face clearly Visible'**
   String get listener_reg_identity_selfie_subtitle;
+
+  /// No description provided for @listener_reg_identity_how_title.
+  ///
+  /// In en, this message translates to:
+  /// **'HOW VERIFICATION WORKS'**
+  String get listener_reg_identity_how_title;
+
+  /// No description provided for @listener_reg_identity_how_step1.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload your ID document'**
+  String get listener_reg_identity_how_step1;
+
+  /// No description provided for @listener_reg_identity_how_step2.
+  ///
+  /// In en, this message translates to:
+  /// **'Take a matching selfie'**
+  String get listener_reg_identity_how_step2;
+
+  /// No description provided for @listener_reg_identity_how_step3.
+  ///
+  /// In en, this message translates to:
+  /// **'We verify within 24 hours'**
+  String get listener_reg_identity_how_step3;
 
   /// No description provided for @listener_reg_identity_secure_note.
   ///
   /// In en, this message translates to:
-  /// **'Your data is encrypted and secure'**
+  /// **'Upload both to Continue'**
   String get listener_reg_identity_secure_note;
 
   /// No description provided for @listener_profile_under_review_title.
@@ -1442,7 +1532,7 @@ abstract class VentingMobLocalizations {
   /// No description provided for @listener_profile_under_review_subtitle.
   ///
   /// In en, this message translates to:
-  /// **'Our team is reviewing your information to ensure a safe and trusted community.'**
+  /// **'Our team is reviewing your info to ensure a safe and trusted community.'**
   String get listener_profile_under_review_subtitle;
 
   /// No description provided for @listener_profile_review_time_title.
@@ -1454,13 +1544,43 @@ abstract class VentingMobLocalizations {
   /// No description provided for @listener_profile_review_time_body.
   ///
   /// In en, this message translates to:
-  /// **'It usually takes 2–3 working days. We\'ll notify you as soon as there\'s an update.'**
+  /// **'Usually takes 24–48 hours. We\'ll notify you right away.'**
   String get listener_profile_review_time_body;
+
+  /// No description provided for @listener_profile_what_happens_next_title.
+  ///
+  /// In en, this message translates to:
+  /// **'What happens Next'**
+  String get listener_profile_what_happens_next_title;
+
+  /// No description provided for @listener_profile_what_happens_next_1.
+  ///
+  /// In en, this message translates to:
+  /// **'Team reviews your submission'**
+  String get listener_profile_what_happens_next_1;
+
+  /// No description provided for @listener_profile_what_happens_next_2.
+  ///
+  /// In en, this message translates to:
+  /// **'You get a notification on approval'**
+  String get listener_profile_what_happens_next_2;
+
+  /// No description provided for @listener_profile_what_happens_next_3.
+  ///
+  /// In en, this message translates to:
+  /// **'Your profile goes live for Venters'**
+  String get listener_profile_what_happens_next_3;
+
+  /// No description provided for @listener_profile_what_happens_next_4.
+  ///
+  /// In en, this message translates to:
+  /// **'First session requests arrive'**
+  String get listener_profile_what_happens_next_4;
 
   /// No description provided for @listener_profile_got_it.
   ///
   /// In en, this message translates to:
-  /// **'Got it'**
+  /// **'Got it!'**
   String get listener_profile_got_it;
 
   /// No description provided for @listener_profile_go_to_dashboard.
@@ -1556,14 +1676,44 @@ abstract class VentingMobLocalizations {
   /// No description provided for @listener_reg_notif_title.
   ///
   /// In en, this message translates to:
-  /// **'Stay Updated'**
+  /// **'Stay in the loop'**
   String get listener_reg_notif_title;
 
   /// No description provided for @listener_reg_notif_subtitle.
   ///
   /// In en, this message translates to:
-  /// **'Get notified when your profile review is complete, and about sessions, rewards, and important updates.'**
+  /// **'Get notified when your profile is approved, sessions are booked, and rewards are ready.'**
   String get listener_reg_notif_subtitle;
+
+  /// No description provided for @listener_reg_notif_about_title.
+  ///
+  /// In en, this message translates to:
+  /// **'You will be notified about'**
+  String get listener_reg_notif_about_title;
+
+  /// No description provided for @listener_reg_notif_about_1.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile approval status'**
+  String get listener_reg_notif_about_1;
+
+  /// No description provided for @listener_reg_notif_about_2.
+  ///
+  /// In en, this message translates to:
+  /// **'Incoming session requests'**
+  String get listener_reg_notif_about_2;
+
+  /// No description provided for @listener_reg_notif_about_3.
+  ///
+  /// In en, this message translates to:
+  /// **'Earnings & payout updates'**
+  String get listener_reg_notif_about_3;
+
+  /// No description provided for @listener_reg_notif_about_4.
+  ///
+  /// In en, this message translates to:
+  /// **'Reward milestones'**
+  String get listener_reg_notif_about_4;
 
   /// No description provided for @listener_reg_notif_enable.
   ///
@@ -1576,6 +1726,78 @@ abstract class VentingMobLocalizations {
   /// In en, this message translates to:
   /// **'Skip'**
   String get listener_reg_notif_skip;
+
+  /// No description provided for @listener_reg_submit_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Submitting your profile'**
+  String get listener_reg_submit_title;
+
+  /// No description provided for @listener_reg_submit_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'We\'re securely uploading your details. This may take a moment — please keep the app open.'**
+  String get listener_reg_submit_subtitle;
+
+  /// No description provided for @listener_reg_submit_progress_title.
+  ///
+  /// In en, this message translates to:
+  /// **'What we\'re sending'**
+  String get listener_reg_submit_progress_title;
+
+  /// No description provided for @listener_reg_submit_progress_profile.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile photo, contact info, and about you'**
+  String get listener_reg_submit_progress_profile;
+
+  /// No description provided for @listener_reg_submit_progress_identity.
+  ///
+  /// In en, this message translates to:
+  /// **'Identity verification documents'**
+  String get listener_reg_submit_progress_identity;
+
+  /// No description provided for @listener_reg_submit_progress_voice.
+  ///
+  /// In en, this message translates to:
+  /// **'Voice introduction and experiences'**
+  String get listener_reg_submit_progress_voice;
+
+  /// No description provided for @listener_reg_submit_progress_preferences.
+  ///
+  /// In en, this message translates to:
+  /// **'Availability and notification preferences'**
+  String get listener_reg_submit_progress_preferences;
+
+  /// No description provided for @listener_reg_submit_error_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t submit your profile'**
+  String get listener_reg_submit_error_title;
+
+  /// No description provided for @listener_reg_submit_error_generic.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong while submitting your profile. Please try again.'**
+  String get listener_reg_submit_error_generic;
+
+  /// No description provided for @listener_reg_submit_error_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Check your connection and try again. Your answers are saved — you won\'t need to re-enter them.'**
+  String get listener_reg_submit_error_hint;
+
+  /// No description provided for @listener_reg_submit_back_to_notifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Back to notifications'**
+  String get listener_reg_submit_back_to_notifications;
+
+  /// No description provided for @listener_reg_submit_retrying.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry attempt {attempt}'**
+  String listener_reg_submit_retrying(int attempt);
 
   /// No description provided for @ventor_reg_title.
   ///
@@ -1774,6 +1996,54 @@ abstract class VentingMobLocalizations {
   /// In en, this message translates to:
   /// **'Find my listeners'**
   String get ventor_reg_finish;
+
+  /// No description provided for @ventor_reg_notif_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Stay in the loop'**
+  String get ventor_reg_notif_title;
+
+  /// No description provided for @ventor_reg_notif_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Get notified when listeners accept your session, reminders are due, and rewards are ready.'**
+  String get ventor_reg_notif_subtitle;
+
+  /// No description provided for @ventor_reg_notif_about_title.
+  ///
+  /// In en, this message translates to:
+  /// **'You will be notified about'**
+  String get ventor_reg_notif_about_title;
+
+  /// No description provided for @ventor_reg_notif_about_1.
+  ///
+  /// In en, this message translates to:
+  /// **'Session acceptances and reminders'**
+  String get ventor_reg_notif_about_1;
+
+  /// No description provided for @ventor_reg_notif_about_2.
+  ///
+  /// In en, this message translates to:
+  /// **'Upcoming booked sessions'**
+  String get ventor_reg_notif_about_2;
+
+  /// No description provided for @ventor_reg_notif_about_3.
+  ///
+  /// In en, this message translates to:
+  /// **'Rewards and promo updates'**
+  String get ventor_reg_notif_about_3;
+
+  /// No description provided for @ventor_reg_notif_about_4.
+  ///
+  /// In en, this message translates to:
+  /// **'Important account updates'**
+  String get ventor_reg_notif_about_4;
+
+  /// No description provided for @ventor_reg_notif_enable.
+  ///
+  /// In en, this message translates to:
+  /// **'Enable Notifications'**
+  String get ventor_reg_notif_enable;
 
   /// No description provided for @ventor_reg_interests_selected_footer.
   ///
@@ -3740,16 +4010,34 @@ abstract class VentingMobLocalizations {
   /// **'Settings'**
   String get ventor_profile_settings_title;
 
+  /// No description provided for @ventor_profile_settings_section_preferences.
+  ///
+  /// In en, this message translates to:
+  /// **'PREFERENCES'**
+  String get ventor_profile_settings_section_preferences;
+
+  /// No description provided for @ventor_profile_settings_section_security.
+  ///
+  /// In en, this message translates to:
+  /// **'SECURITY & ACCOUNT'**
+  String get ventor_profile_settings_section_security;
+
+  /// No description provided for @ventor_profile_settings_section_support.
+  ///
+  /// In en, this message translates to:
+  /// **'SUPPORT & ABOUT'**
+  String get ventor_profile_settings_section_support;
+
   /// No description provided for @ventor_profile_settings_privacy.
   ///
   /// In en, this message translates to:
-  /// **'Privacy'**
+  /// **'Privacy Controls'**
   String get ventor_profile_settings_privacy;
 
   /// No description provided for @ventor_profile_settings_privacy_sub.
   ///
   /// In en, this message translates to:
-  /// **'Control your privacy'**
+  /// **'Managed'**
   String get ventor_profile_settings_privacy_sub;
 
   /// No description provided for @ventor_profile_settings_notifications.
@@ -3761,14 +4049,20 @@ abstract class VentingMobLocalizations {
   /// No description provided for @ventor_profile_settings_notifications_sub.
   ///
   /// In en, this message translates to:
-  /// **'Manage what you get'**
+  /// **'Enabled'**
   String get ventor_profile_settings_notifications_sub;
 
   /// No description provided for @ventor_profile_settings_help_sub.
   ///
   /// In en, this message translates to:
-  /// **'We\'re here for you'**
+  /// **'FAQ & Chat'**
   String get ventor_profile_settings_help_sub;
+
+  /// No description provided for @ventor_profile_settings_version.
+  ///
+  /// In en, this message translates to:
+  /// **'v{version}'**
+  String ventor_profile_settings_version(String version);
 
   /// No description provided for @ventor_notif_section_push.
   ///
