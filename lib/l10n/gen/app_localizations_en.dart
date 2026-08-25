@@ -139,13 +139,22 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
       'Choose your preferred language to continue';
 
   @override
-  String get welcome_tagline => 'A safe space to be lighter';
+  String get welcome_tagline => 'A safe place to be heard';
 
   @override
-  String get welcome_i_am_ventor => 'I am a Ventor';
+  String get welcome_i_am_ventor => 'I want to Vent';
 
   @override
-  String get welcome_i_am_listener => 'I am a Listener';
+  String get welcome_vent_subtitle => 'Find someone who listens';
+
+  @override
+  String get welcome_i_am_listener => 'I want to Listen';
+
+  @override
+  String get welcome_listen_subtitle => 'Earn by lending an ear';
+
+  @override
+  String get welcome_anonymous_footer => 'Speak freely. Stay private.';
 
   @override
   String get onboarding_skip => 'Skip';
@@ -198,15 +207,13 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
   String get auth_ventor_title => 'Welcome, Ventor';
 
   @override
-  String get auth_ventor_subtitle =>
-      'Sign in or create an account to talk and feel heard.';
+  String get auth_ventor_subtitle => 'Sign in to continue venting';
 
   @override
   String get auth_listener_title => 'Welcome, Listener';
 
   @override
-  String get auth_listener_subtitle =>
-      'Sign in or create an account to listen and support others.';
+  String get auth_listener_subtitle => 'Sign in to continue listening';
 
   @override
   String get auth_continue_with_apple => 'Continue with Apple';
@@ -216,6 +223,9 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
 
   @override
   String get auth_continue_with_email => 'Continue with Email';
+
+  @override
+  String get auth_or_divider => 'OR';
 
   @override
   String get email_registration_title => 'Continue with Email';

@@ -27,10 +27,12 @@ class VentorRegistrationInterestsStep extends StatefulWidget {
     super.key,
     required this.onBack,
     required this.onFinish,
+    this.isSubmitting = false,
   });
 
   final VoidCallback onBack;
   final ValueChanged<VentorInterestsSelection> onFinish;
+  final bool isSubmitting;
 
   @override
   State<VentorRegistrationInterestsStep> createState() =>
@@ -152,7 +154,7 @@ class _VentorRegistrationInterestsStepState
   }
 
   void _onFinish() {
-    if (!_canContinue) return;
+    if (!_canContinue || widget.isSubmitting) return;
     final custom = _customTextCategory;
     widget.onFinish(
       VentorInterestsSelection(
@@ -272,7 +274,9 @@ class _VentorRegistrationInterestsStepState
                     child: SizedBox(
                       height: 54,
                       child: FilledButton(
-                        onPressed: _canContinue ? _onFinish : null,
+                        onPressed: (_canContinue && !widget.isSubmitting)
+                            ? _onFinish
+                            : null,
                         style: FilledButton.styleFrom(
                           backgroundColor: SplashColors.purpleMid,
                           disabledBackgroundColor: SplashColors.purpleMid
@@ -288,7 +292,16 @@ class _VentorRegistrationInterestsStepState
                             fontWeight: FontWeight.w700,
                           ),
                         ),
-                        child: Text(l10n.ventor_reg_finish),
+                        child: widget.isSubmitting
+                            ? const SizedBox(
+                                width: 22,
+                                height: 22,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2.2,
+                                  color: Colors.white,
+                                ),
+                              )
+                            : Text(l10n.ventor_reg_finish),
                       ),
                     ),
                   ),
@@ -363,6 +376,7 @@ class _VentorRegistrationInterestsStepState
         return _InterestRow(
           label: _labelFor(category, locale),
           iconUrl: category.icon_url,
+          iconEmoji: category.icon_emoji,
           selected: selected,
           selectedFill: _rowSelected,
           muted: _muted,
@@ -378,6 +392,7 @@ class _InterestRow extends StatelessWidget {
   const _InterestRow({
     required this.label,
     required this.iconUrl,
+    required this.iconEmoji,
     required this.selected,
     required this.selectedFill,
     required this.muted,
@@ -387,6 +402,7 @@ class _InterestRow extends StatelessWidget {
 
   final String label;
   final String iconUrl;
+  final String iconEmoji;
   final bool selected;
   final Color selectedFill;
   final Color muted;
@@ -405,7 +421,12 @@ class _InterestRow extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
           child: Row(
             children: [
-              _InterestIcon(url: iconUrl, selected: selected, muted: muted),
+              _InterestIcon(
+                url: iconUrl,
+                emoji: iconEmoji,
+                selected: selected,
+                muted: muted,
+              ),
               const SizedBox(width: 12),
               Expanded(
                 child: Text(
@@ -448,17 +469,22 @@ class _InterestRow extends StatelessWidget {
 class _InterestIcon extends StatelessWidget {
   const _InterestIcon({
     required this.url,
+    required this.emoji,
     required this.selected,
     required this.muted,
   });
 
   final String url;
+  final String emoji;
   final bool selected;
   final Color muted;
 
   @override
   Widget build(BuildContext context) {
-    final trimmed = url.trim();
+    final trimmedUrl = url.trim();
+    final trimmedEmoji = emoji.trim();
+    final hasUrl = trimmedUrl.isNotEmpty;
+
     return Container(
       width: 40,
       height: 40,
@@ -469,26 +495,40 @@ class _InterestIcon extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
       ),
       clipBehavior: Clip.antiAlias,
-      child: trimmed.isEmpty
-          ? Icon(
-              Icons.category_outlined,
-              size: 22,
-              color: selected ? SplashColors.purpleMid : muted,
-            )
-          : CachedNetworkImage(
-              imageUrl: trimmed,
+      alignment: Alignment.center,
+      child: hasUrl
+          ? CachedNetworkImage(
+              imageUrl: trimmedUrl,
               fit: BoxFit.cover,
-              placeholder: (_, _) => Icon(
-                Icons.category_outlined,
-                size: 22,
-                color: muted.withValues(alpha: 0.6),
+              width: 40,
+              height: 40,
+              placeholder: (_, _) => _emojiOrFallback(
+                trimmedEmoji,
+                selected: selected,
+                muted: muted,
               ),
-              errorWidget: (_, _, _) => Icon(
-                Icons.category_outlined,
-                size: 22,
-                color: selected ? SplashColors.purpleMid : muted,
+              errorWidget: (_, _, _) => _emojiOrFallback(
+                trimmedEmoji,
+                selected: selected,
+                muted: muted,
               ),
-            ),
+            )
+          : _emojiOrFallback(trimmedEmoji, selected: selected, muted: muted),
+    );
+  }
+
+  static Widget _emojiOrFallback(
+    String emoji, {
+    required bool selected,
+    required Color muted,
+  }) {
+    if (emoji.isNotEmpty) {
+      return Text(emoji, style: const TextStyle(fontSize: 20));
+    }
+    return Icon(
+      Icons.category_outlined,
+      size: 22,
+      color: selected ? SplashColors.purpleMid : muted,
     );
   }
 }

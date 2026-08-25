@@ -14,6 +14,7 @@ import 'package:venting_mobile_app/domain/repository/api/auth/auth_register_repo
 import 'package:venting_mobile_app/domain/repository/api/auth/auth_social_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/catalog/catalog_categories_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/catalog/catalog_languages_repository.dart';
+import 'package:venting_mobile_app/domain/repository/api/ventor/ventor_register_repository.dart';
 import 'package:venting_mobile_app/domain/repository/app/auth_me_cache_repository.dart';
 import 'package:venting_mobile_app/domain/repository/app/social_sign_in_repository.dart';
 
@@ -65,6 +66,9 @@ mixin VentingModuleRepositories on VentingModule {
     ApiClientBase apiClient,
   ) => CatalogLanguagesRepository(apiClient);
 
+  VentorRegisterRepository ventorRegisterRepository(ApiClientBase apiClient) =>
+      VentorRegisterRepository(apiClient);
+
   /// Registers all repository dependencies
   void registerRepositories(GetIt getIt) {
     getIt.registerFactory<AuthCheckEmailRepository>(
@@ -105,6 +109,9 @@ mixin VentingModuleRepositories on VentingModule {
     );
     getIt.registerFactory<CatalogLanguagesRepository>(
       () => catalogLanguagesRepository(getIt<ApiClientBase>()),
+    );
+    getIt.registerFactory<VentorRegisterRepository>(
+      () => ventorRegisterRepository(getIt<ApiClientBase>()),
     );
   }
 }

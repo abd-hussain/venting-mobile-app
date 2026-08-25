@@ -73,8 +73,8 @@ Use these for **both** ventor and listener unless a screen is role-specific.
 | # | Endpoint | Screen / place | When |
 |---|----------|----------------|------|
 | 75 *(proposed)* | `GET /v1/catalog/languages` | Ventor registration → **language step** | On step open — load speaking languages from **`languages`** table (`flag_url`, native + English names). Same catalog as listener languages — no second table. |
-| 74 *(proposed)* | `GET /v1/catalog/categories?audience=ventor` | Ventor registration → **interests step** | On step open — load categories (`id`, localized name, **`icon_url`**). Do **not** hardcode labels or icons. |
-| 8 | `POST /v1/ventors/register` | Ventor registration (nickname, gender, avatar, languages, interests) | Final submit — body includes `language_ids` + `interest_ids` |
+| 74 *(proposed)* | `GET /v1/catalog/categories?audience=ventor` | Ventor registration → **interests step** | On step open — load categories (`id`, localized name, **`icon_emoji`** + optional `icon_url`). Do **not** hardcode labels or icons. |
+| 8 | `POST /v1/ventors/register` | Ventor registration (nickname, gender, avatar, languages, interests) | Final submit — `language_ids` + `interest_ids` + optional `other_interest_text` when “Other” is selected |
 
 > **Never call** `GET /v1/catalog` (combined dump). Use `#74` / `#75` only.
 
@@ -82,8 +82,8 @@ Use these for **both** ventor and listener unless a screen is role-specific.
 
 1. Profile (nickname / gender / avatar)  
 2. `#75` speaking language(s) from `languages` — ≥1 required; flags are CDN URLs managed in the portal  
-3. `#74` interest categories from `comfort_areas` — icons are CDN URLs managed in the portal  
-4. `#8` submit all
+3. `#74` interest categories from `comfort_areas` — emoji (`icon_emoji`) like language flags; optional CDN `icon_url`  
+4. `#8` submit all (creates ventor profile; sets `registration_complete`)
 
 **Languages flow:**
 
@@ -94,9 +94,21 @@ Use these for **both** ventor and listener unless a screen is role-specific.
 **Interests flow:**
 
 1. Step opens → `#74` load categories.
-2. User selects one or more (`other` may require free text when `allows_custom_text`).
-3. Leading image per row = `icon_url` from backend.
-4. Finish → `#8` with `language_ids` + `interest_ids` (+ optional `other_interest_text`).
+2. User selects one or more.
+3. If a selected category has `allows_custom_text` (e.g. `other`) → show free-text field; require non-empty trim.
+4. Leading icon per row = `icon_url` if set, else `icon_emoji` (same pattern as languages).
+5. Finish → `#8` with:
+   - profile fields (nickname, gender, avatar / preset)
+   - `language_ids`
+   - `interest_ids`
+   - `other_interest_text` **only when** Other (or another custom-text category) is selected
+
+**`#8` “Other” interest contract:**
+
+| Selected | Body |
+|----------|------|
+| `interest_ids` includes `other` | Must include `other_interest_text` (trimmed, non-empty) |
+| No custom-text category | Omit `other_interest_text` |
 
 ### B2. Ventor home & wellness
 

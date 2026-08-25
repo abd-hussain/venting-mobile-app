@@ -13,6 +13,7 @@ import 'package:venting_mobile_app/domain/repository/api/auth/auth_register_repo
 import 'package:venting_mobile_app/domain/repository/api/auth/auth_social_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/catalog/catalog_categories_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/catalog/catalog_languages_repository.dart';
+import 'package:venting_mobile_app/domain/repository/api/ventor/ventor_register_repository.dart';
 import 'package:venting_mobile_app/domain/repository/app/auth_me_cache_repository.dart';
 import 'package:venting_mobile_app/domain/repository/app/social_sign_in_repository.dart';
 import 'package:venting_mobile_app/domain/usecase/auth_change_password_usecase.dart';
@@ -30,6 +31,7 @@ import 'package:venting_mobile_app/domain/usecase/get_catalog_categories_usecase
 import 'package:venting_mobile_app/domain/usecase/get_catalog_languages_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/sign_in_with_apple_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/sign_in_with_google_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/ventor_register_usecase.dart';
 
 /// Usecases mixin for VentingModule
 /// Handles all usecase factory methods
@@ -108,6 +110,11 @@ mixin VentingModuleUsecases on VentingModule {
     CatalogLanguagesRepository catalogLanguagesRepository,
   ) => GetCatalogLanguagesUsecase(catalogLanguagesRepository);
 
+  VentorRegisterUsecase ventorRegisterUsecase(
+    VentorRegisterRepository ventorRegisterRepository,
+    VentingPreferences ventingPreferences,
+  ) => VentorRegisterUsecase(ventorRegisterRepository, ventingPreferences);
+
   /// Registers all usecase dependencies
   void registerUsecases(GetIt getIt, AppConfig appConfig) {
     getIt.registerFactory<AuthCheckEmailUsecase>(
@@ -173,6 +180,12 @@ mixin VentingModuleUsecases on VentingModule {
     );
     getIt.registerFactory<GetCatalogLanguagesUsecase>(
       () => getCatalogLanguagesUsecase(getIt<CatalogLanguagesRepository>()),
+    );
+    getIt.registerFactory<VentorRegisterUsecase>(
+      () => ventorRegisterUsecase(
+        getIt<VentorRegisterRepository>(),
+        getIt<VentingPreferences>(),
+      ),
     );
   }
 }

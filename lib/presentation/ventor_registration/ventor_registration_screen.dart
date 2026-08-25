@@ -5,6 +5,9 @@ import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:venting_mobile_app/di/di_container.dart';
+import 'package:venting_mobile_app/domain/data/exceptions/main_api_exception.dart';
+import 'package:venting_mobile_app/domain/usecase/ventor_register_usecase.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
 import 'package:venting_mobile_app/presentation/auth/auth_screen.dart';
 import 'package:venting_mobile_app/presentation/homescreen.dart';
@@ -55,6 +58,7 @@ class _VentorRegistrationScreenState extends State<VentorRegistrationScreen> {
   VentorGender? _gender;
   bool _submitted = false;
   bool _pickingPhoto = false;
+  bool _isSubmitting = false;
   Set<String> _selectedLanguageIds = {};
 
   @override
@@ -129,16 +133,62 @@ class _VentorRegistrationScreenState extends State<VentorRegistrationScreen> {
     });
   }
 
-  void _onFinishInterests(VentorInterestsSelection selection) {
-    // TODO: #8 POST /v1/ventors/register with nickname, gender, avatar,
-    // language_ids: _selectedLanguageIds, interest_ids / other_interest_text
-    context.go(
-      AppRoutes.tabHome,
-      extra: const HomeScreenArgs(userType: AuthUserType.ventor),
+  String get _genderApiValue {
+    return switch (_gender!) {
+      VentorGender.male => 'male',
+      VentorGender.female => 'female',
+      VentorGender.preferNotToSay => 'prefer_not_to_say',
+    };
+  }
+
+  Future<void> _onFinishInterests(VentorInterestsSelection selection) async {
+    if (_isSubmitting) return;
+    if (_gender == null || _selectedLanguageIds.isEmpty) return;
+
+    setState(() => _isSubmitting = true);
+
+    final result = await diContainer<VentorRegisterUsecase>()(
+      nickname: _nickname,
+      gender: _genderApiValue,
+      languageIds: _selectedLanguageIds.toList(growable: false),
+      interestIds: selection.interestIds,
+      otherInterestText: selection.otherInterestText,
+      avatarPresetIndex: _galleryPhotoPath == null
+          ? _selectedAvatarIndex
+          : null,
+      avatarFilePath: _galleryPhotoPath,
+    ).run();
+
+    if (!mounted) return;
+
+    result.match(
+      (error) {
+        setState(() => _isSubmitting = false);
+        final message = _mapRegisterError(error);
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(message)));
+      },
+      (_) {
+        context.go(
+          AppRoutes.tabHome,
+          extra: const HomeScreenArgs(userType: AuthUserType.ventor),
+        );
+      },
     );
   }
 
+  String _mapRegisterError(Object error) {
+    if (error is MainAPIException) {
+      final localized = error.getLocalizedMessage();
+      if (localized.isNotEmpty) return localized;
+      if (error.message.isNotEmpty) return error.message;
+    }
+    return VentingMobLocalizations.of(context).common_unknown_error;
+  }
+
   void _onBack() {
+    if (_isSubmitting) return;
     if (_stepIndex > 0) {
       setState(() => _stepIndex -= 1);
       return;
@@ -184,6 +234,7 @@ class _VentorRegistrationScreenState extends State<VentorRegistrationScreen> {
               2 => VentorRegistrationInterestsStep(
                 onBack: _onBack,
                 onFinish: _onFinishInterests,
+                isSubmitting: _isSubmitting,
               ),
               _ => Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,

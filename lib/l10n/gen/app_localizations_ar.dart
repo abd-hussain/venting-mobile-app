@@ -138,13 +138,22 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
   String get choose_preferred_language => 'اختر لغتك المفضلة للمتابعة.';
 
   @override
-  String get welcome_tagline => 'مساحة آمنة لتشعر بخفة أكثر';
+  String get welcome_tagline => 'مكان آمن لتُسمَع';
 
   @override
-  String get welcome_i_am_ventor => 'أنا فينتور';
+  String get welcome_i_am_ventor => 'أريد أن أفرّغ';
 
   @override
-  String get welcome_i_am_listener => 'أنا مستمع';
+  String get welcome_vent_subtitle => 'اعثر على من يستمع إليك';
+
+  @override
+  String get welcome_i_am_listener => 'أريد أن أستمع';
+
+  @override
+  String get welcome_listen_subtitle => 'اربح من خلال الإصغاء';
+
+  @override
+  String get welcome_anonymous_footer => 'تحدث بحرية. ابقَ خاصاً.';
 
   @override
   String get onboarding_skip => 'تخطي';
@@ -197,15 +206,13 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
   String get auth_ventor_title => 'مرحبًا، فينتور';
 
   @override
-  String get auth_ventor_subtitle =>
-      'سجّل الدخول أو أنشئ حسابًا للتحدث والشعور بأنك مسموع.';
+  String get auth_ventor_subtitle => 'سجّل الدخول لمتابعة التفريغ';
 
   @override
   String get auth_listener_title => 'مرحبًا، مستمع';
 
   @override
-  String get auth_listener_subtitle =>
-      'سجّل الدخول أو أنشئ حسابًا للاستماع ودعم الآخرين.';
+  String get auth_listener_subtitle => 'سجّل الدخول لمتابعة الاستماع';
 
   @override
   String get auth_continue_with_apple => 'المتابعة مع Apple';
@@ -215,6 +222,9 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
 
   @override
   String get auth_continue_with_email => 'المتابعة بالبريد الإلكتروني';
+
+  @override
+  String get auth_or_divider => 'أو';
 
   @override
   String get email_registration_title => 'المتابعة بالبريد الإلكتروني';

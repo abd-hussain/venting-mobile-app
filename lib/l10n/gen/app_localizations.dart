@@ -350,20 +350,38 @@ abstract class VentingMobLocalizations {
   /// No description provided for @welcome_tagline.
   ///
   /// In en, this message translates to:
-  /// **'A safe space to be lighter'**
+  /// **'A safe place to be heard'**
   String get welcome_tagline;
 
   /// No description provided for @welcome_i_am_ventor.
   ///
   /// In en, this message translates to:
-  /// **'I am a Ventor'**
+  /// **'I want to Vent'**
   String get welcome_i_am_ventor;
+
+  /// No description provided for @welcome_vent_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Find someone who listens'**
+  String get welcome_vent_subtitle;
 
   /// No description provided for @welcome_i_am_listener.
   ///
   /// In en, this message translates to:
-  /// **'I am a Listener'**
+  /// **'I want to Listen'**
   String get welcome_i_am_listener;
+
+  /// No description provided for @welcome_listen_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Earn by lending an ear'**
+  String get welcome_listen_subtitle;
+
+  /// No description provided for @welcome_anonymous_footer.
+  ///
+  /// In en, this message translates to:
+  /// **'Speak freely. Stay private.'**
+  String get welcome_anonymous_footer;
 
   /// No description provided for @onboarding_skip.
   ///
@@ -458,7 +476,7 @@ abstract class VentingMobLocalizations {
   /// No description provided for @auth_ventor_subtitle.
   ///
   /// In en, this message translates to:
-  /// **'Sign in or create an account to talk and feel heard.'**
+  /// **'Sign in to continue venting'**
   String get auth_ventor_subtitle;
 
   /// No description provided for @auth_listener_title.
@@ -470,7 +488,7 @@ abstract class VentingMobLocalizations {
   /// No description provided for @auth_listener_subtitle.
   ///
   /// In en, this message translates to:
-  /// **'Sign in or create an account to listen and support others.'**
+  /// **'Sign in to continue listening'**
   String get auth_listener_subtitle;
 
   /// No description provided for @auth_continue_with_apple.
@@ -490,6 +508,12 @@ abstract class VentingMobLocalizations {
   /// In en, this message translates to:
   /// **'Continue with Email'**
   String get auth_continue_with_email;
+
+  /// No description provided for @auth_or_divider.
+  ///
+  /// In en, this message translates to:
+  /// **'OR'**
+  String get auth_or_divider;
 
   /// No description provided for @email_registration_title.
   ///

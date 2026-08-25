@@ -11,7 +11,10 @@ import 'package:venting_mobile_app/utils/app_language.dart';
 /// Compact control that opens a language picker sheet.
 /// Used on onboarding and welcome screens.
 class AppLanguageSelector extends StatelessWidget {
-  const AppLanguageSelector({super.key});
+  const AppLanguageSelector({super.key, this.showFullName = false});
+
+  /// When true, shows e.g. "English" instead of "EN".
+  final bool showFullName;
 
   LanguageModel get _currentLanguage {
     final code = VentingMobLocalizationsHolder.currentLanguageCode;
@@ -58,12 +61,14 @@ class AppLanguageSelector extends StatelessWidget {
               Icon(Icons.language_rounded, size: 18, color: foreground),
               const SizedBox(width: 6),
               Text(
-                language.languageCode.toUpperCase(),
+                showFullName
+                    ? language.name
+                    : language.languageCode.toUpperCase(),
                 style: GoogleFonts.inter(
                   color: foreground,
                   fontSize: 13,
                   fontWeight: FontWeight.w600,
-                  letterSpacing: 0.4,
+                  letterSpacing: showFullName ? 0 : 0.4,
                 ),
               ),
               const SizedBox(width: 2),

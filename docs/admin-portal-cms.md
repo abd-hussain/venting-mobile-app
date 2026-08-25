@@ -32,7 +32,7 @@ A **Flutter Web CMS** used only by internal staff (ops, support, finance, conten
 | **Sessions** | Inspect bookings, cancel/refund edge cases | `sessions`, `session_payments` |
 | **Reports & safety** | Triage `session_reports`, ban/warn | User flags + notifications |
 | **Earnings & payouts** | Approve/reject payouts, adjust wallet | `payouts`, ledger adjustments |
-| **Catalogs** | Languages (**one** speaking-language table), comfort areas / interests (with `icon_url`), experiences, boundaries | Lookup tables used by registration — upload flag/icon images here |
+| **Catalogs** | Languages (**one** speaking-language table with `flag_emoji` / `flag_url`), comfort areas / interests (with `icon_emoji` / `icon_url`), experiences, boundaries | Lookup tables used by registration |
 | **Rewards & promo** | CRUD offers, promo codes | Rewards tab + checkout |
 | **Training** | Modules, content URLs, force complete | Listener training sheet |
 | **Achievements** | Catalog + optional grant | Ventor achievements |
@@ -492,7 +492,8 @@ Used by: ventor registration language step, listener registration languages, dis
 |-------|------|
 | `id` | Create-only |
 | `name_en` / `name_ar` | Text |
-| `icon_url` | Image upload preview (required before activate) |
+| `icon_emoji` | Text / emoji picker (required before activate) |
+| `icon_url` | Optional image upload preview |
 | `audience` | `ventor` / `listener` / `all` |
 | `allows_custom_text` | Toggle (e.g. `other`) |
 | `sort_order` | Number |
@@ -617,7 +618,7 @@ Mobile may expose public `GET /v1/cms/pages/{slug}` and `GET /v1/cms/banners` (2
 | `/sessions` | Sessions | A28–A33 |
 | `/reports` | Safety queue | A34–A36 |
 | `/payouts` | Finance | A41–A47 |
-| `/catalogs` | Lookups — languages (`flag_url`), comfort areas (`icon_url`) | A48–A52 (+ media upload) |
+| `/catalogs` | Lookups — languages (`flag_emoji` / `flag_url`), comfort areas (`icon_emoji` / `icon_url`) | A48–A52 (+ media upload) |
 | `/rewards` | Offers | A53–A56 |
 | `/promos` | Promo codes | A57–A60 |
 | `/training` | Modules | A61–A63 |
