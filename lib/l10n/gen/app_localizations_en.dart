@@ -874,6 +874,22 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
   String get ventor_reg_finish => 'Go to Dashboard';
 
   @override
+  String get ventor_reg_language_title => 'Choose your Language';
+
+  @override
+  String get ventor_reg_language_subtitle =>
+      'You can change the app language at any time from settings.';
+
+  @override
+  String get ventor_reg_language_search_hint => 'Search language';
+
+  @override
+  String get ventor_reg_language_continue => 'Save & Continue';
+
+  @override
+  String get ventor_reg_language_empty => 'No languages found';
+
+  @override
   String get home_tab_dashboard => 'Dashboard';
 
   @override

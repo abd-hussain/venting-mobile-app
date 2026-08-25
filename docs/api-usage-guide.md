@@ -72,14 +72,31 @@ Use these for **both** ventor and listener unless a screen is role-specific.
 
 | # | Endpoint | Screen / place | When |
 |---|----------|----------------|------|
-| 74 *(proposed)* | `GET /v1/catalog/categories?audience=ventor` | Ventor registration → **interests step** | On step open — load category chips (id, localized name, icon_key). Do **not** hardcode the list. |
-| 8 | `POST /v1/ventors/register` | Ventor registration (nickname, gender, avatar, interests) | Final submit of ventor onboarding — body includes `interest_ids` from #74 |
+| 75 *(proposed)* | `GET /v1/catalog/languages` | Ventor registration → **language step** | On step open — load speaking languages from **`languages`** table (`flag_url`, native + English names). Same catalog as listener languages — no second table. |
+| 74 *(proposed)* | `GET /v1/catalog/categories?audience=ventor` | Ventor registration → **interests step** | On step open — load categories (`id`, localized name, **`icon_url`**). Do **not** hardcode labels or icons. |
+| 8 | `POST /v1/ventors/register` | Ventor registration (nickname, gender, avatar, languages, interests) | Final submit — body includes `language_ids` + `interest_ids` |
+
+> **Never call** `GET /v1/catalog` (combined dump). Use `#74` / `#75` only.
+
+**Ventor onboarding steps:**
+
+1. Profile (nickname / gender / avatar)  
+2. `#75` speaking language(s) from `languages` — ≥1 required; flags are CDN URLs managed in the portal  
+3. `#74` interest categories from `comfort_areas` — icons are CDN URLs managed in the portal  
+4. `#8` submit all
+
+**Languages flow:**
+
+1. Step opens → `#75` load languages (portal-managed `languages` rows).
+2. User multi-selects (≥1); search filters client-side for v1.
+3. Continue → keep `language_ids` for `#8`.
 
 **Interests flow:**
 
-1. Step 2 opens → `#74` load categories.
+1. Step opens → `#74` load categories.
 2. User selects one or more (`other` may require free text when `allows_custom_text`).
-3. Finish → `#8` with `interest_ids` (+ optional `other_interest_text`).
+3. Leading image per row = `icon_url` from backend.
+4. Finish → `#8` with `language_ids` + `interest_ids` (+ optional `other_interest_text`).
 
 ### B2. Ventor home & wellness
 

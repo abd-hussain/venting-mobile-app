@@ -568,7 +568,7 @@ as List<CatalogCategoryModel>,
 /// @nodoc
 mixin _$CatalogCategoryModel {
 
- String get id; String get name_en; String get name_ar; String get icon_key; int get sort_order; bool get allows_custom_text; String? get topic_group;
+ String get id; String get name_en; String get name_ar; String get icon_url; int get sort_order; bool get allows_custom_text; String? get topic_group;
 /// Create a copy of CatalogCategoryModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -581,16 +581,16 @@ $CatalogCategoryModelCopyWith<CatalogCategoryModel> get copyWith => _$CatalogCat
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CatalogCategoryModel&&(identical(other.id, id) || other.id == id)&&(identical(other.name_en, name_en) || other.name_en == name_en)&&(identical(other.name_ar, name_ar) || other.name_ar == name_ar)&&(identical(other.icon_key, icon_key) || other.icon_key == icon_key)&&(identical(other.sort_order, sort_order) || other.sort_order == sort_order)&&(identical(other.allows_custom_text, allows_custom_text) || other.allows_custom_text == allows_custom_text)&&(identical(other.topic_group, topic_group) || other.topic_group == topic_group));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CatalogCategoryModel&&(identical(other.id, id) || other.id == id)&&(identical(other.name_en, name_en) || other.name_en == name_en)&&(identical(other.name_ar, name_ar) || other.name_ar == name_ar)&&(identical(other.icon_url, icon_url) || other.icon_url == icon_url)&&(identical(other.sort_order, sort_order) || other.sort_order == sort_order)&&(identical(other.allows_custom_text, allows_custom_text) || other.allows_custom_text == allows_custom_text)&&(identical(other.topic_group, topic_group) || other.topic_group == topic_group));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name_en,name_ar,icon_key,sort_order,allows_custom_text,topic_group);
+int get hashCode => Object.hash(runtimeType,id,name_en,name_ar,icon_url,sort_order,allows_custom_text,topic_group);
 
 @override
 String toString() {
-  return 'CatalogCategoryModel(id: $id, name_en: $name_en, name_ar: $name_ar, icon_key: $icon_key, sort_order: $sort_order, allows_custom_text: $allows_custom_text, topic_group: $topic_group)';
+  return 'CatalogCategoryModel(id: $id, name_en: $name_en, name_ar: $name_ar, icon_url: $icon_url, sort_order: $sort_order, allows_custom_text: $allows_custom_text, topic_group: $topic_group)';
 }
 
 
@@ -601,7 +601,7 @@ abstract mixin class $CatalogCategoryModelCopyWith<$Res>  {
   factory $CatalogCategoryModelCopyWith(CatalogCategoryModel value, $Res Function(CatalogCategoryModel) _then) = _$CatalogCategoryModelCopyWithImpl;
 @useResult
 $Res call({
- String id, String name_en, String name_ar, String icon_key, int sort_order, bool allows_custom_text, String? topic_group
+ String id, String name_en, String name_ar, String icon_url, int sort_order, bool allows_custom_text, String? topic_group
 });
 
 
@@ -618,12 +618,12 @@ class _$CatalogCategoryModelCopyWithImpl<$Res>
 
 /// Create a copy of CatalogCategoryModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name_en = null,Object? name_ar = null,Object? icon_key = null,Object? sort_order = null,Object? allows_custom_text = null,Object? topic_group = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name_en = null,Object? name_ar = null,Object? icon_url = null,Object? sort_order = null,Object? allows_custom_text = null,Object? topic_group = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name_en: null == name_en ? _self.name_en : name_en // ignore: cast_nullable_to_non_nullable
 as String,name_ar: null == name_ar ? _self.name_ar : name_ar // ignore: cast_nullable_to_non_nullable
-as String,icon_key: null == icon_key ? _self.icon_key : icon_key // ignore: cast_nullable_to_non_nullable
+as String,icon_url: null == icon_url ? _self.icon_url : icon_url // ignore: cast_nullable_to_non_nullable
 as String,sort_order: null == sort_order ? _self.sort_order : sort_order // ignore: cast_nullable_to_non_nullable
 as int,allows_custom_text: null == allows_custom_text ? _self.allows_custom_text : allows_custom_text // ignore: cast_nullable_to_non_nullable
 as bool,topic_group: freezed == topic_group ? _self.topic_group : topic_group // ignore: cast_nullable_to_non_nullable
@@ -712,10 +712,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name_en,  String name_ar,  String icon_key,  int sort_order,  bool allows_custom_text,  String? topic_group)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name_en,  String name_ar,  String icon_url,  int sort_order,  bool allows_custom_text,  String? topic_group)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _CatalogCategoryModel() when $default != null:
-return $default(_that.id,_that.name_en,_that.name_ar,_that.icon_key,_that.sort_order,_that.allows_custom_text,_that.topic_group);case _:
+return $default(_that.id,_that.name_en,_that.name_ar,_that.icon_url,_that.sort_order,_that.allows_custom_text,_that.topic_group);case _:
   return orElse();
 
 }
@@ -733,10 +733,10 @@ return $default(_that.id,_that.name_en,_that.name_ar,_that.icon_key,_that.sort_o
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name_en,  String name_ar,  String icon_key,  int sort_order,  bool allows_custom_text,  String? topic_group)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name_en,  String name_ar,  String icon_url,  int sort_order,  bool allows_custom_text,  String? topic_group)  $default,) {final _that = this;
 switch (_that) {
 case _CatalogCategoryModel():
-return $default(_that.id,_that.name_en,_that.name_ar,_that.icon_key,_that.sort_order,_that.allows_custom_text,_that.topic_group);case _:
+return $default(_that.id,_that.name_en,_that.name_ar,_that.icon_url,_that.sort_order,_that.allows_custom_text,_that.topic_group);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -753,10 +753,10 @@ return $default(_that.id,_that.name_en,_that.name_ar,_that.icon_key,_that.sort_o
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name_en,  String name_ar,  String icon_key,  int sort_order,  bool allows_custom_text,  String? topic_group)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name_en,  String name_ar,  String icon_url,  int sort_order,  bool allows_custom_text,  String? topic_group)?  $default,) {final _that = this;
 switch (_that) {
 case _CatalogCategoryModel() when $default != null:
-return $default(_that.id,_that.name_en,_that.name_ar,_that.icon_key,_that.sort_order,_that.allows_custom_text,_that.topic_group);case _:
+return $default(_that.id,_that.name_en,_that.name_ar,_that.icon_url,_that.sort_order,_that.allows_custom_text,_that.topic_group);case _:
   return null;
 
 }
@@ -768,13 +768,13 @@ return $default(_that.id,_that.name_en,_that.name_ar,_that.icon_key,_that.sort_o
 @JsonSerializable()
 
 class _CatalogCategoryModel implements CatalogCategoryModel {
-  const _CatalogCategoryModel({required this.id, required this.name_en, required this.name_ar, required this.icon_key, this.sort_order = 0, this.allows_custom_text = false, this.topic_group});
+  const _CatalogCategoryModel({required this.id, required this.name_en, required this.name_ar, required this.icon_url, this.sort_order = 0, this.allows_custom_text = false, this.topic_group});
   factory _CatalogCategoryModel.fromJson(Map<String, dynamic> json) => _$CatalogCategoryModelFromJson(json);
 
 @override final  String id;
 @override final  String name_en;
 @override final  String name_ar;
-@override final  String icon_key;
+@override final  String icon_url;
 @override@JsonKey() final  int sort_order;
 @override@JsonKey() final  bool allows_custom_text;
 @override final  String? topic_group;
@@ -792,16 +792,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CatalogCategoryModel&&(identical(other.id, id) || other.id == id)&&(identical(other.name_en, name_en) || other.name_en == name_en)&&(identical(other.name_ar, name_ar) || other.name_ar == name_ar)&&(identical(other.icon_key, icon_key) || other.icon_key == icon_key)&&(identical(other.sort_order, sort_order) || other.sort_order == sort_order)&&(identical(other.allows_custom_text, allows_custom_text) || other.allows_custom_text == allows_custom_text)&&(identical(other.topic_group, topic_group) || other.topic_group == topic_group));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CatalogCategoryModel&&(identical(other.id, id) || other.id == id)&&(identical(other.name_en, name_en) || other.name_en == name_en)&&(identical(other.name_ar, name_ar) || other.name_ar == name_ar)&&(identical(other.icon_url, icon_url) || other.icon_url == icon_url)&&(identical(other.sort_order, sort_order) || other.sort_order == sort_order)&&(identical(other.allows_custom_text, allows_custom_text) || other.allows_custom_text == allows_custom_text)&&(identical(other.topic_group, topic_group) || other.topic_group == topic_group));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name_en,name_ar,icon_key,sort_order,allows_custom_text,topic_group);
+int get hashCode => Object.hash(runtimeType,id,name_en,name_ar,icon_url,sort_order,allows_custom_text,topic_group);
 
 @override
 String toString() {
-  return 'CatalogCategoryModel(id: $id, name_en: $name_en, name_ar: $name_ar, icon_key: $icon_key, sort_order: $sort_order, allows_custom_text: $allows_custom_text, topic_group: $topic_group)';
+  return 'CatalogCategoryModel(id: $id, name_en: $name_en, name_ar: $name_ar, icon_url: $icon_url, sort_order: $sort_order, allows_custom_text: $allows_custom_text, topic_group: $topic_group)';
 }
 
 
@@ -812,7 +812,7 @@ abstract mixin class _$CatalogCategoryModelCopyWith<$Res> implements $CatalogCat
   factory _$CatalogCategoryModelCopyWith(_CatalogCategoryModel value, $Res Function(_CatalogCategoryModel) _then) = __$CatalogCategoryModelCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String name_en, String name_ar, String icon_key, int sort_order, bool allows_custom_text, String? topic_group
+ String id, String name_en, String name_ar, String icon_url, int sort_order, bool allows_custom_text, String? topic_group
 });
 
 
@@ -829,12 +829,12 @@ class __$CatalogCategoryModelCopyWithImpl<$Res>
 
 /// Create a copy of CatalogCategoryModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name_en = null,Object? name_ar = null,Object? icon_key = null,Object? sort_order = null,Object? allows_custom_text = null,Object? topic_group = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name_en = null,Object? name_ar = null,Object? icon_url = null,Object? sort_order = null,Object? allows_custom_text = null,Object? topic_group = freezed,}) {
   return _then(_CatalogCategoryModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name_en: null == name_en ? _self.name_en : name_en // ignore: cast_nullable_to_non_nullable
 as String,name_ar: null == name_ar ? _self.name_ar : name_ar // ignore: cast_nullable_to_non_nullable
-as String,icon_key: null == icon_key ? _self.icon_key : icon_key // ignore: cast_nullable_to_non_nullable
+as String,icon_url: null == icon_url ? _self.icon_url : icon_url // ignore: cast_nullable_to_non_nullable
 as String,sort_order: null == sort_order ? _self.sort_order : sort_order // ignore: cast_nullable_to_non_nullable
 as int,allows_custom_text: null == allows_custom_text ? _self.allows_custom_text : allows_custom_text // ignore: cast_nullable_to_non_nullable
 as bool,topic_group: freezed == topic_group ? _self.topic_group : topic_group // ignore: cast_nullable_to_non_nullable

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:venting_mobile_app/di/di_container.dart';
@@ -132,22 +133,6 @@ class _VentorRegistrationInterestsStepState
       return category.name_ar;
     }
     return category.name_en;
-  }
-
-  IconData _iconFor(String iconKey) {
-    return switch (iconKey) {
-      'favorite' => Icons.favorite_rounded,
-      'favorite_border' => Icons.favorite_border_rounded,
-      'family_restroom' => Icons.family_restroom_rounded,
-      'work_outline' => Icons.work_outline_rounded,
-      'psychology_alt' => Icons.psychology_alt_outlined,
-      'person_outline' => Icons.person_outline_rounded,
-      'school' => Icons.school_outlined,
-      'attach_money' => Icons.attach_money_rounded,
-      'health_and_safety' => Icons.health_and_safety_outlined,
-      'add_circle_outline' => Icons.add_circle_outline_rounded,
-      _ => Icons.category_outlined,
-    };
   }
 
   void _toggle(String id) {
@@ -377,7 +362,7 @@ class _VentorRegistrationInterestsStepState
         final selected = _selectedIds.contains(category.id);
         return _InterestRow(
           label: _labelFor(category, locale),
-          icon: _iconFor(category.icon_key),
+          iconUrl: category.icon_url,
           selected: selected,
           selectedFill: _rowSelected,
           muted: _muted,
@@ -392,7 +377,7 @@ class _VentorRegistrationInterestsStepState
 class _InterestRow extends StatelessWidget {
   const _InterestRow({
     required this.label,
-    required this.icon,
+    required this.iconUrl,
     required this.selected,
     required this.selectedFill,
     required this.muted,
@@ -401,7 +386,7 @@ class _InterestRow extends StatelessWidget {
   });
 
   final String label;
-  final IconData icon;
+  final String iconUrl;
   final bool selected;
   final Color selectedFill;
   final Color muted;
@@ -420,21 +405,7 @@ class _InterestRow extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
           child: Row(
             children: [
-              Container(
-                width: 40,
-                height: 40,
-                decoration: BoxDecoration(
-                  color: selected
-                      ? SplashColors.purpleMid.withValues(alpha: 0.22)
-                      : Colors.white.withValues(alpha: 0.05),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Icon(
-                  icon,
-                  size: 22,
-                  color: selected ? SplashColors.purpleMid : muted,
-                ),
-              ),
+              _InterestIcon(url: iconUrl, selected: selected, muted: muted),
               const SizedBox(width: 12),
               Expanded(
                 child: Text(
@@ -470,6 +441,54 @@ class _InterestRow extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class _InterestIcon extends StatelessWidget {
+  const _InterestIcon({
+    required this.url,
+    required this.selected,
+    required this.muted,
+  });
+
+  final String url;
+  final bool selected;
+  final Color muted;
+
+  @override
+  Widget build(BuildContext context) {
+    final trimmed = url.trim();
+    return Container(
+      width: 40,
+      height: 40,
+      decoration: BoxDecoration(
+        color: selected
+            ? SplashColors.purpleMid.withValues(alpha: 0.22)
+            : Colors.white.withValues(alpha: 0.05),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      clipBehavior: Clip.antiAlias,
+      child: trimmed.isEmpty
+          ? Icon(
+              Icons.category_outlined,
+              size: 22,
+              color: selected ? SplashColors.purpleMid : muted,
+            )
+          : CachedNetworkImage(
+              imageUrl: trimmed,
+              fit: BoxFit.cover,
+              placeholder: (_, _) => Icon(
+                Icons.category_outlined,
+                size: 22,
+                color: muted.withValues(alpha: 0.6),
+              ),
+              errorWidget: (_, _, _) => Icon(
+                Icons.category_outlined,
+                size: 22,
+                color: selected ? SplashColors.purpleMid : muted,
+              ),
+            ),
     );
   }
 }

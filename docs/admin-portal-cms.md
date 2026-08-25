@@ -32,7 +32,7 @@ A **Flutter Web CMS** used only by internal staff (ops, support, finance, conten
 | **Sessions** | Inspect bookings, cancel/refund edge cases | `sessions`, `session_payments` |
 | **Reports & safety** | Triage `session_reports`, ban/warn | User flags + notifications |
 | **Earnings & payouts** | Approve/reject payouts, adjust wallet | `payouts`, ledger adjustments |
-| **Catalogs** | Languages, comfort areas, experiences, boundaries | Lookup tables used by registration |
+| **Catalogs** | Languages (**one** speaking-language table), comfort areas / interests (with `icon_url`), experiences, boundaries | Lookup tables used by registration — upload flag/icon images here |
 | **Rewards & promo** | CRUD offers, promo codes | Rewards tab + checkout |
 | **Training** | Modules, content URLs, force complete | Listener training sheet |
 | **Achievements** | Catalog + optional grant | Ventor achievements |
@@ -90,7 +90,7 @@ flowchart LR
 
 ### 4.1 Existing mobile schema (reuse — do not duplicate)
 
-From [`database-schema.md`](./database-schema.md): **43 tables**.
+From [`database-schema.md`](./database-schema.md): **44 tables**.
 
 Portal **reads/writes** these heavily:
 
@@ -127,9 +127,9 @@ Portal **reads/writes** these heavily:
 
 | Metric | Count |
 |--------|------:|
-| Existing mobile tables | **43** |
+| Existing mobile tables | **44** |
 | **New CMS tables** | **12** |
-| **Grand total tables** | **55** |
+| **Grand total tables** | **56** |
 
 ---
 
@@ -459,15 +459,46 @@ On approve: update `listener_profiles.profile_status`, push notification to list
 
 ### 7.8 Catalogs (8)
 
+> Portal owns the **same** lookup tables the mobile app reads via `#74` / `#75`.  
+> Do **not** create a separate “speaking languages” catalog — ventor + listener both use `languages`.
+
 | # | Method | Path | Use |
 |--:|--------|------|-----|
-| A48 | `GET` | `/v1/admin/catalog/languages` | List |
-| A49 | `PUT` | `/v1/admin/catalog/languages/{id}` | Upsert / deactivate |
-| A50 | `GET`/`PUT` | `/v1/admin/catalog/comfort-areas`… | Same pattern |
+| A48 | `GET` | `/v1/admin/catalog/languages` | List all languages (incl. inactive) |
+| A49 | `PUT` | `/v1/admin/catalog/languages/{id}` | Upsert / deactivate; body includes names + `sort_order` + `is_active` |
+| A49b | `POST` | `/v1/admin/catalog/languages/{id}/flag` | Multipart image upload → store CDN URL on `languages.flag_url` |
+| A50 | `GET`/`PUT` | `/v1/admin/catalog/comfort-areas`… | Same pattern for interests / comfort categories |
+| A50b | `POST` | `/v1/admin/catalog/comfort-areas/{id}/icon` | Multipart image upload → store CDN URL on `comfort_areas.icon_url` |
 | A51 | `GET`/`PUT` | `/v1/admin/catalog/life-experiences`… | Same |
 | A52 | `GET`/`PUT` | `/v1/admin/catalog/boundaries`… | Same |
 
-Count as **8** if each catalog has list + upsert (4×2). Collapse to fewer with a generic `/catalog/{type}` if preferred.
+Count as **8** if each catalog has list + upsert (4×2). Collapse to fewer with a generic `/catalog/{type}` if preferred. Flag/icon upload endpoints can share a generic `POST /v1/admin/media` that returns `{ url }` then attach via PUT.
+
+#### Portal UX — Languages
+
+| Field | Edit |
+|-------|------|
+| `id` | Create-only (immutable after seed) |
+| `name_en` / `name_native` / `name_ar` | Text |
+| `flag_url` | Image upload preview (required before activate) |
+| `sort_order` | Number |
+| `is_active` | Toggle |
+
+Used by: ventor registration language step, listener registration languages, discovery language filters.
+
+#### Portal UX — Comfort areas / interests
+
+| Field | Edit |
+|-------|------|
+| `id` | Create-only |
+| `name_en` / `name_ar` | Text |
+| `icon_url` | Image upload preview (required before activate) |
+| `audience` | `ventor` / `listener` / `all` |
+| `allows_custom_text` | Toggle (e.g. `other`) |
+| `sort_order` | Number |
+| `is_active` | Toggle |
+
+Used by: ventor registration interests step (`audience=ventor`), listener comfort tags.
 
 ---
 
@@ -586,7 +617,7 @@ Mobile may expose public `GET /v1/cms/pages/{slug}` and `GET /v1/cms/banners` (2
 | `/sessions` | Sessions | A28–A33 |
 | `/reports` | Safety queue | A34–A36 |
 | `/payouts` | Finance | A41–A47 |
-| `/catalogs` | Lookups | A48–A52 |
+| `/catalogs` | Lookups — languages (`flag_url`), comfort areas (`icon_url`) | A48–A52 (+ media upload) |
 | `/rewards` | Offers | A53–A56 |
 | `/promos` | Promo codes | A57–A60 |
 | `/training` | Modules | A61–A63 |
@@ -780,7 +811,7 @@ Share DTOs / OpenAPI with the mobile backend; do **not** import mobile UI packag
 
 | Doc | Role |
 |-----|------|
-| [`database-schema.md`](./database-schema.md) | Mobile 43 tables |
+| [`database-schema.md`](./database-schema.md) | Mobile 44 tables |
 | [`api-endpoints.md`](./api-endpoints.md) | Mobile 73 APIs |
 | [`api-usage-guide.md`](./api-usage-guide.md) | Where mobile calls APIs |
 | **This doc** | CMS product, +12 tables, ~100 admin APIs, GA |

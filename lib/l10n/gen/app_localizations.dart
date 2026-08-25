@@ -1703,6 +1703,36 @@ abstract class VentingMobLocalizations {
   /// **'Go to Dashboard'**
   String get ventor_reg_finish;
 
+  /// No description provided for @ventor_reg_language_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose your Language'**
+  String get ventor_reg_language_title;
+
+  /// No description provided for @ventor_reg_language_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'You can change the app language at any time from settings.'**
+  String get ventor_reg_language_subtitle;
+
+  /// No description provided for @ventor_reg_language_search_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search language'**
+  String get ventor_reg_language_search_hint;
+
+  /// No description provided for @ventor_reg_language_continue.
+  ///
+  /// In en, this message translates to:
+  /// **'Save & Continue'**
+  String get ventor_reg_language_continue;
+
+  /// No description provided for @ventor_reg_language_empty.
+  ///
+  /// In en, this message translates to:
+  /// **'No languages found'**
+  String get ventor_reg_language_empty;
+
   /// No description provided for @home_tab_dashboard.
   ///
   /// In en, this message translates to:

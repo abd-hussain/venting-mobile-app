@@ -12,6 +12,7 @@ import 'package:venting_mobile_app/domain/repository/api/auth/auth_refresh_token
 import 'package:venting_mobile_app/domain/repository/api/auth/auth_register_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/auth/auth_social_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/catalog/catalog_categories_repository.dart';
+import 'package:venting_mobile_app/domain/repository/api/catalog/catalog_languages_repository.dart';
 import 'package:venting_mobile_app/domain/repository/app/auth_me_cache_repository.dart';
 import 'package:venting_mobile_app/domain/repository/app/social_sign_in_repository.dart';
 import 'package:venting_mobile_app/domain/usecase/auth_change_password_usecase.dart';
@@ -26,6 +27,7 @@ import 'package:venting_mobile_app/domain/usecase/auth_social_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/clear_auth_session_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_cached_auth_me_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_catalog_categories_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/get_catalog_languages_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/sign_in_with_apple_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/sign_in_with_google_usecase.dart';
 
@@ -102,6 +104,10 @@ mixin VentingModuleUsecases on VentingModule {
     CatalogCategoriesRepository catalogCategoriesRepository,
   ) => GetCatalogCategoriesUsecase(catalogCategoriesRepository);
 
+  GetCatalogLanguagesUsecase getCatalogLanguagesUsecase(
+    CatalogLanguagesRepository catalogLanguagesRepository,
+  ) => GetCatalogLanguagesUsecase(catalogLanguagesRepository);
+
   /// Registers all usecase dependencies
   void registerUsecases(GetIt getIt, AppConfig appConfig) {
     getIt.registerFactory<AuthCheckEmailUsecase>(
@@ -164,6 +170,9 @@ mixin VentingModuleUsecases on VentingModule {
     );
     getIt.registerFactory<GetCatalogCategoriesUsecase>(
       () => getCatalogCategoriesUsecase(getIt<CatalogCategoriesRepository>()),
+    );
+    getIt.registerFactory<GetCatalogLanguagesUsecase>(
+      () => getCatalogLanguagesUsecase(getIt<CatalogLanguagesRepository>()),
     );
   }
 }

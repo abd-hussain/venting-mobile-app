@@ -31,7 +31,7 @@ abstract class CatalogCategoryModel with _$CatalogCategoryModel {
     required String id,
     required String name_en,
     required String name_ar,
-    required String icon_key,
+    required String icon_url,
     @Default(0) int sort_order,
     @Default(false) bool allows_custom_text,
     String? topic_group,

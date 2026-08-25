@@ -868,6 +868,22 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
   String get ventor_reg_finish => 'الذهاب إلى لوحة التحكم';
 
   @override
+  String get ventor_reg_language_title => 'اختر لغتك';
+
+  @override
+  String get ventor_reg_language_subtitle =>
+      'يمكنك تغيير لغة التطبيق في أي وقت من الإعدادات.';
+
+  @override
+  String get ventor_reg_language_search_hint => 'ابحث عن لغة';
+
+  @override
+  String get ventor_reg_language_continue => 'حفظ ومتابعة';
+
+  @override
+  String get ventor_reg_language_empty => 'لم يتم العثور على لغات';
+
+  @override
   String get home_tab_dashboard => 'لوحة التحكم';
 
   @override

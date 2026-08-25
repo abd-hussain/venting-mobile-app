@@ -74,8 +74,8 @@ List responses may include:
 | Notifications | 3 | 68–70 |
 | Training | 2 | 71–72 |
 | Promo | 1 | 73 |
-| Catalog / categories | 1 | 74 |
-| **Total** | **76** | |
+| Catalog / categories | 2 | 74–75 |
+| **Total** | **77** | |
 
 ---
 
@@ -318,7 +318,7 @@ Password rules (UI): min 8, 1 uppercase, 1 number.
 |--|--|
 | **Auth** | Bearer |
 | **Screen** | Ventor registration (profile + interests) |
-| **Body** | `nickname` (≤20), `gender` (`male` \| `female` \| `prefer_not_to_say`), `avatar` (multipart file **or** `avatar_preset_index`), `interest_ids` (string[]) |
+| **Body** | `nickname` (≤20), `gender` (`male` \| `female` \| `prefer_not_to_say`), `avatar` (multipart file **or** `avatar_preset_index`), `language_ids` (string[], ≥1), `interest_ids` (string[]) |
 | **Response** | Ventor profile object (see #9) |
 
 ---
@@ -329,7 +329,7 @@ Password rules (UI): min 8, 1 uppercase, 1 number.
 |--|--|
 | **Auth** | Bearer (ventor) |
 | **Screen** | Ventor profile tab |
-| **Response** | `{ id, nickname, email, avatar_url, gender, quote?, is_anonymous, stats: { sessions_count, points, streak_days }, interest_ids }` |
+| **Response** | `{ id, nickname, email, avatar_url, gender, quote?, is_anonymous, stats: { sessions_count, points, streak_days }, language_ids, interest_ids }` |
 
 ---
 
@@ -1043,11 +1043,19 @@ Demo codes in UI today: `SAVE10`, `VENT5`, `WELCOME15` (replace with real catalo
 > Shared lookup lists for registration and filters. Seeded in DB (`comfort_areas`, `languages`, …).  
 > Mobile **must not** hardcode category labels long-term — fetch from here.
 
+> **Do not use** `GET /v1/catalog` (combined dump of languages + comfort areas + life experiences + boundaries).  
+> That route is **not part of this contract** — remove it from the backend if it still exists.  
+> Mobile and other clients must call the focused endpoints only:
+> - `#74` `GET /v1/catalog/categories`
+> - `#75` `GET /v1/catalog/languages`
+> (Listener registration may later add focused endpoints for life experiences / boundaries — never the mega dump.)
+
 ### 74. `GET /v1/catalog/categories` *(proposed)*
 
-> **Status:** Proposed — replace the hardcoded list in `VentorRegistrationInterestsStep`.  
+> **Status:** Proposed — ventor registration interests from portal-managed `comfort_areas`.  
 > **Purpose:** Return active interest / comfort categories for ventor (and optionally listener) registration.  
-> **DB source:** `comfort_areas` (ids also used as `interest_ids` on `#8 POST /v1/ventors/register`).
+> **DB source:** `comfort_areas` (ids also used as `interest_ids` on `#8 POST /v1/ventors/register`).  
+> **Icons:** `icon_url` (CDN) uploaded in admin portal — mobile does not map Material icon keys.
 
 | | |
 |--|--|
@@ -1071,7 +1079,7 @@ Demo codes in UI today: `SAVE10`, `VENT5`, `WELCOME15` (replace with real catalo
 | `id` | string | yes | Stable slug PK — same value sent later in `#8` `interest_ids` |
 | `name_en` | string | yes | English label |
 | `name_ar` | string | yes | Arabic label |
-| `icon_key` | string | yes | Machine key for UI icon (see seed table). **Not** a URL. |
+| `icon_url` | string | yes | Absolute HTTPS URL of the category icon/image (CDN). Mobile renders this image — **not** a Material `icon_key`. |
 | `sort_order` | number | yes | Ascending; lower first |
 | `allows_custom_text` | boolean | yes | `true` → show free-text field (e.g. `other`) |
 | `topic_group` | string \| null | no | Optional grouping for admin / filters |
@@ -1092,7 +1100,7 @@ Accept-Language: en
         "id": "relationships",
         "name_en": "Relationships",
         "name_ar": "العلاقات",
-        "icon_key": "favorite",
+        "icon_url": "https://cdn.venting.app/catalog/comfort/relationships.png",
         "sort_order": 10,
         "allows_custom_text": false,
         "topic_group": "relationships"
@@ -1101,7 +1109,7 @@ Accept-Language: en
         "id": "marriage",
         "name_en": "Marriage",
         "name_ar": "الزواج",
-        "icon_key": "favorite_border",
+        "icon_url": "https://cdn.venting.app/catalog/comfort/marriage.png",
         "sort_order": 20,
         "allows_custom_text": false,
         "topic_group": "relationships"
@@ -1110,7 +1118,7 @@ Accept-Language: en
         "id": "parenting",
         "name_en": "Parenting",
         "name_ar": "الأبوة والأمومة",
-        "icon_key": "family_restroom",
+        "icon_url": "https://cdn.venting.app/catalog/comfort/parenting.png",
         "sort_order": 30,
         "allows_custom_text": false,
         "topic_group": "family"
@@ -1119,7 +1127,7 @@ Accept-Language: en
         "id": "career_work",
         "name_en": "Career & work",
         "name_ar": "المهنة والعمل",
-        "icon_key": "work_outline",
+        "icon_url": "https://cdn.venting.app/catalog/comfort/career_work.png",
         "sort_order": 40,
         "allows_custom_text": false,
         "topic_group": "work"
@@ -1128,7 +1136,7 @@ Accept-Language: en
         "id": "stress_anxiety",
         "name_en": "Stress & anxiety",
         "name_ar": "التوتر والقلق",
-        "icon_key": "psychology_alt",
+        "icon_url": "https://cdn.venting.app/catalog/comfort/stress_anxiety.png",
         "sort_order": 50,
         "allows_custom_text": false,
         "topic_group": "mental"
@@ -1137,7 +1145,7 @@ Accept-Language: en
         "id": "loneliness",
         "name_en": "Loneliness",
         "name_ar": "الوحدة",
-        "icon_key": "person_outline",
+        "icon_url": "https://cdn.venting.app/catalog/comfort/loneliness.png",
         "sort_order": 60,
         "allows_custom_text": false,
         "topic_group": "mental"
@@ -1146,7 +1154,7 @@ Accept-Language: en
         "id": "student_life",
         "name_en": "Student life",
         "name_ar": "حياة الطالب",
-        "icon_key": "school",
+        "icon_url": "https://cdn.venting.app/catalog/comfort/student_life.png",
         "sort_order": 70,
         "allows_custom_text": false,
         "topic_group": "life"
@@ -1155,7 +1163,7 @@ Accept-Language: en
         "id": "financial_stress",
         "name_en": "Financial stress",
         "name_ar": "الضغط المالي",
-        "icon_key": "attach_money",
+        "icon_url": "https://cdn.venting.app/catalog/comfort/financial_stress.png",
         "sort_order": 80,
         "allows_custom_text": false,
         "topic_group": "money"
@@ -1164,7 +1172,7 @@ Accept-Language: en
         "id": "health_wellness",
         "name_en": "Health & wellness",
         "name_ar": "الصحة والعافية",
-        "icon_key": "health_and_safety",
+        "icon_url": "https://cdn.venting.app/catalog/comfort/health_wellness.png",
         "sort_order": 90,
         "allows_custom_text": false,
         "topic_group": "health"
@@ -1173,7 +1181,7 @@ Accept-Language: en
         "id": "other",
         "name_en": "Other",
         "name_ar": "أخرى",
-        "icon_key": "add_circle_outline",
+        "icon_url": "https://cdn.venting.app/catalog/comfort/other.png",
         "sort_order": 1000,
         "allows_custom_text": true,
         "topic_group": null
@@ -1183,22 +1191,14 @@ Accept-Language: en
 }
 ```
 
-#### Seed / `icon_key` contract (mobile mapping)
+#### Seed notes
 
-| `id` | `icon_key` | Flutter `Icons.*` (approx) |
-|------|------------|----------------------------|
-| `relationships` | `favorite` | `Icons.favorite_rounded` |
-| `marriage` | `favorite_border` | `Icons.favorite_border_rounded` |
-| `parenting` | `family_restroom` | `Icons.family_restroom_rounded` |
-| `career_work` | `work_outline` | `Icons.work_outline_rounded` |
-| `stress_anxiety` | `psychology_alt` | `Icons.psychology_alt_outlined` |
-| `loneliness` | `person_outline` | `Icons.person_outline_rounded` |
-| `student_life` | `school` | `Icons.school_outlined` |
-| `financial_stress` | `attach_money` | `Icons.attach_money_rounded` |
-| `health_wellness` | `health_and_safety` | `Icons.health_and_safety_outlined` |
-| `other` | `add_circle_outline` | `Icons.add_circle_outline_rounded` |
+| `id` | `allows_custom_text` | Notes |
+|------|----------------------|-------|
+| `relationships` … `health_wellness` | `false` | Icons uploaded in portal → stored as `icon_url` |
+| `other` | `true` | Free-text required on mobile when selected |
 
-Unknown `icon_key` → mobile falls back to `Icons.category_outlined`.
+Mobile must **not** hardcode category labels or icons. Missing/broken `icon_url` → show a generic placeholder image/icon.
 
 #### Mobile usage
 
@@ -1206,8 +1206,9 @@ Unknown `icon_key` → mobile falls back to `Icons.category_outlined`.
 2. `GET /v1/catalog/categories?audience=ventor`.
 3. Render `items` sorted by `sort_order`.
 4. Localized label: `locale == ar ? name_ar : name_en`.
-5. If item has `allows_custom_text == true` and is selected → show free-text field; require non-empty trim before Finish.
-6. On Finish → collect selected `id`s (+ optional custom text for `other`) → send as `interest_ids` (and optional `other_text`) on `#8 POST /v1/ventors/register`.
+5. Leading image: load `icon_url` (cached network image).
+6. If item has `allows_custom_text == true` and is selected → show free-text field; require non-empty trim before Finish.
+7. On Finish → collect selected `id`s (+ optional custom text for `other`) → send as `interest_ids` (and optional `other_interest_text`) on `#8 POST /v1/ventors/register`.
 
 #### Errors
 
@@ -1223,17 +1224,19 @@ Empty active catalog → still `200` with `"items": []` (mobile shows empty + re
 
 - Only return rows with `is_active = true`.
 - IDs are immutable once shipped — changing an `id` breaks existing `ventor_interests` / `interest_ids`.
-- Add/remove/reorder categories via admin CMS later (`/v1/admin/catalog/…`); this public GET is read-only.
+- Add/remove/reorder/upload icons via admin CMS (`/v1/admin/catalog/comfort-areas`); this public GET is read-only.
+- `icon_url` must be a public absolute HTTPS URL (CDN). Portal uploads the asset, then stores the resulting URL on the row.
 - Cache-friendly: `Cache-Control: public, max-age=300` recommended (optional).
 
 #### Acceptance criteria
 
-- [ ] `GET /v1/catalog/categories?audience=ventor` returns the seed set above (or equivalent active rows)
+- [ ] `GET /v1/catalog/categories?audience=ventor` returns active rows with `icon_url`
 - [ ] Standard `{ status, data: { items } }` envelope
 - [ ] Both `name_en` and `name_ar` present
 - [ ] `other` has `allows_custom_text: true`
 - [ ] Inactive rows omitted
 - [ ] Same `id` values accepted by `#8` `interest_ids`
+- [ ] Portal can create/update categories and upload/replace `icon_url`
 
 #### Link to register
 
@@ -1249,6 +1252,7 @@ Optional body extension on `#8` when `other` selected:
   "nickname": "QuietFox",
   "gender": "prefer_not_to_say",
   "avatar_preset_index": 2,
+  "language_ids": ["en", "ar"],
   "interest_ids": ["stress_anxiety", "other"],
   "other_interest_text": "Grief after moving cities"
 }
@@ -1256,6 +1260,126 @@ Optional body extension on `#8` when `other` selected:
 
 ---
 
+### 75. `GET /v1/catalog/languages` *(proposed)*
+
+> **Status:** Proposed — ventor (and listener) speaking-language picker.  
+> **Purpose:** Return active spoken languages from the **single** `languages` table.  
+> **DB source:** `languages` only — there is **no** separate speaking-languages catalog.  
+> **Managed by:** Admin portal `/catalogs` → Languages (`A48`/`A49`).
+
+| | |
+|--|--|
+| **Auth** | Public (Bearer accepted if present) |
+| **Screen** | Ventor registration → **Choose your Language** step (also listener language pickers / filters) |
+| **When** | Step open / search retry |
+| **Query** | `q` (optional search string — filters `name_en`, `name_native`, `name_ar`) |
+| **Response** | `{ items: Language[] }` |
+
+#### `Language` object
+
+| Field | Type | Required | Notes |
+|-------|------|----------|-------|
+| `id` | string | yes | Stable code PK — e.g. `en`, `ar`, `hi` — sent as `language_ids` on `#8` / listener profile |
+| `name_en` | string | yes | English display name (`English`) |
+| `name_native` | string | yes | Native script name (`العربية`, `हिन्दी`) |
+| `name_ar` | string | yes | Arabic translation of the language name |
+| `flag_url` | string | yes | Absolute HTTPS URL of flag image (CDN). Mobile shows this in the circular avatar. |
+| `flag_emoji` | string \| null | no | Optional emoji fallback only; mobile **prefers `flag_url`** |
+| `sort_order` | number | yes | Ascending |
+
+#### Success example
+
+```json
+{
+  "status": "success",
+  "data": {
+    "items": [
+      {
+        "id": "en",
+        "name_en": "English",
+        "name_native": "English",
+        "name_ar": "الإنجليزية",
+        "flag_url": "https://cdn.venting.app/catalog/flags/en.png",
+        "flag_emoji": "🇺🇸",
+        "sort_order": 10
+      },
+      {
+        "id": "hi",
+        "name_en": "Hindi",
+        "name_native": "हिन्दी",
+        "name_ar": "الهندية",
+        "flag_url": "https://cdn.venting.app/catalog/flags/hi.png",
+        "flag_emoji": "🇮🇳",
+        "sort_order": 20
+      },
+      {
+        "id": "es",
+        "name_en": "Spanish",
+        "name_native": "Español",
+        "name_ar": "الإسبانية",
+        "flag_url": "https://cdn.venting.app/catalog/flags/es.png",
+        "flag_emoji": "🇪🇸",
+        "sort_order": 30
+      },
+      {
+        "id": "ar",
+        "name_en": "Arabic",
+        "name_native": "العربية",
+        "name_ar": "العربية",
+        "flag_url": "https://cdn.venting.app/catalog/flags/ar.png",
+        "flag_emoji": "🇸🇦",
+        "sort_order": 40
+      },
+      {
+        "id": "bn",
+        "name_en": "Bengali",
+        "name_native": "বাংলা",
+        "name_ar": "البنغالية",
+        "flag_url": "https://cdn.venting.app/catalog/flags/bn.png",
+        "flag_emoji": "🇧🇩",
+        "sort_order": 50
+      },
+      {
+        "id": "tr",
+        "name_en": "Turkish",
+        "name_native": "Türkçe",
+        "name_ar": "التركية",
+        "flag_url": "https://cdn.venting.app/catalog/flags/tr.png",
+        "flag_emoji": "🇹🇷",
+        "sort_order": 60
+      }
+    ]
+  }
+}
+```
+
+#### Mobile list row
+
+Display: `[flag circle from flag_url]  {name_native} ({name_en})  [checkbox]`  
+Selected: purple border on tile + filled purple checkbox.  
+Multi-select allowed; **at least one** required before Continue.
+
+Same endpoint powers listener language selection — do not invent a second languages API/table.
+
+#### Errors
+
+| HTTP | type | code | When |
+|------|------|------|------|
+| 400 | validation | 750 | Invalid query |
+| 500 / 503 | server | … | Failure |
+
+Empty → `200` + `items: []`.
+
+#### Acceptance
+
+- [ ] Public `GET /v1/catalog/languages` reads **only** from `languages`
+- [ ] Each active item has a non-empty `flag_url` (HTTPS CDN)
+- [ ] Seed includes en, hi, es, ar, bn, tr (minimum)
+- [ ] `#8` accepts `language_ids` subset of active language ids → writes `ventor_languages`
+- [ ] Portal can upsert languages and upload/replace flag images
+- [ ] Search `q` filters server-side **or** mobile filters client-side (either OK for v1; prefer client filter for small lists)
+
+---
 ## Efficiency guidelines (for implementers)
 
 1. **Prefer aggregates** — `#11` ventor home and `#30` listener dashboard load one screen in one round-trip.
@@ -1294,8 +1418,8 @@ Optional body extension on `#8` when `other` selected:
 | Notifications | 3 |
 | Training | 2 |
 | Promo | 1 |
-| Catalog / categories | 1 |
-| **Total unique API endpoints** | **76** |
+| Catalog / categories | 2 |
+| **Total unique API endpoints** | **77** |
 
 ### Master checklist (method + path)
 
@@ -1377,6 +1501,7 @@ Optional body extension on `#8` when `other` selected:
 | 72 | POST | `/v1/listeners/me/training/{moduleId}/complete` |
 | 73 | POST | `/v1/promo/validate` |
 | 74 | GET | `/v1/catalog/categories` *(proposed)* |
+| 75 | GET | `/v1/catalog/languages` *(proposed)* |
 
 ---
 
