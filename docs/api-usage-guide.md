@@ -39,6 +39,8 @@ Use these for **both** ventor and listener unless a screen is role-specific.
 | 3 | `POST /v1/auth/refresh` | Dio / auth interceptor (background) | Access token expired; rotate tokens |
 | 1 | `POST /v1/auth/register` | Email registration (create account) | Submit email + password + role when `#0` returns `exists: false` (or without `#0`) |
 | 2 | `POST /v1/auth/login` | Email sign-in | Submit credentials when `#0` returns `exists: true` |
+| 2b *(proposed)* | `POST /v1/auth/forgot-password` | Forgot password confirmation | User confirms email → backend emails secure reset link |
+| 2c *(proposed)* | `POST /v1/auth/reset-password` | Reset password **web page** (not mobile) | User sets new password via emailed link |
 | 1b *(proposed)* | `POST /v1/auth/social` | AuthScreen (Google / Apple buttons) | After native sign-in; send `provider`, `id_token`, `role`; then `#7` for routing |
 | 4 | `POST /v1/auth/logout` | Ventor profile settings · Listener profile settings | User taps Log out; clear local tokens after success |
 | 5 | `DELETE /v1/auth/account` | Delete account confirm screen | User confirms permanent deletion |
@@ -401,6 +403,6 @@ Terms, Privacy, and Help are **static HTML** (6 pages: 3 × EN/AR) under one sha
 
 ## Endpoint count
 
-**77** unique REST endpoints — full contracts in [`api-endpoints.md`](./api-endpoints.md).
+**79** unique REST endpoints — full contracts in [`api-endpoints.md`](./api-endpoints.md).
 
 *Usage mapping derived from the proposed screen audit and presentation-layer TODO markers.*

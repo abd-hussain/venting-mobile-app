@@ -2,6 +2,7 @@ import 'package:get_it/get_it.dart';
 import 'package:preferences/preferences.dart';
 import 'package:venting_mobile_app/di/venting_module.dart';
 import 'package:venting_mobile_app/domain/usecase/auth_check_email_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/auth_forgot_password_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/auth_login_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/auth_me_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/auth_register_usecase.dart';
@@ -13,6 +14,8 @@ import 'package:venting_mobile_app/domain/usecase/sign_in_with_google_usecase.da
 import 'package:venting_mobile_app/presentation/auth/auth_screen.dart';
 import 'package:venting_mobile_app/presentation/auth/bloc/auth_bloc.dart';
 import 'package:venting_mobile_app/presentation/auth/bloc/email_registration_bloc.dart';
+import 'package:venting_mobile_app/presentation/auth/bloc/forgot_password_bloc.dart';
+import 'package:venting_mobile_app/presentation/auth/forgot_password_screen.dart';
 import 'package:venting_mobile_app/presentation/splash/bloc/splash_bloc.dart';
 
 /// Blocs mixin for VentingModule
@@ -47,6 +50,17 @@ mixin VentingModuleBlocs on VentingModule {
         getIt<AuthMeUsecase>(),
         getIt<VentingPreferences>(),
         userType: userType,
+      ),
+    );
+    getIt.registerFactoryParam<
+      ForgotPasswordBloc,
+      ForgotPasswordRouteArgs,
+      void
+    >(
+      (args, _) => ForgotPasswordBloc(
+        getIt<AuthForgotPasswordUsecase>(),
+        email: args.email,
+        userType: args.userType,
       ),
     );
   }

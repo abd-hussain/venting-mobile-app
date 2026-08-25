@@ -39,9 +39,35 @@ abstract class AuthSessionData with _$AuthSessionData {
     if (rawUser is! Map) {
       throw const FormatException('Auth session response missing user object');
     }
+
+    final rawTokens = json['tokens'];
+    final tokens = rawTokens is Map
+        ? Map<String, dynamic>.from(rawTokens)
+        : const <String, dynamic>{};
+
+    final access =
+        json['access_token'] ??
+        json['accessToken'] ??
+        tokens['access_token'] ??
+        tokens['accessToken'];
+    final refresh =
+        json['refresh_token'] ??
+        json['refreshToken'] ??
+        tokens['refresh_token'] ??
+        tokens['refreshToken'];
+
+    if (access is! String || access.isEmpty) {
+      throw const FormatException('Auth session response missing access_token');
+    }
+    if (refresh is! String || refresh.isEmpty) {
+      throw const FormatException(
+        'Auth session response missing refresh_token',
+      );
+    }
+
     return AuthSessionData(
-      access_token: json['access_token'] as String,
-      refresh_token: json['refresh_token'] as String,
+      access_token: access,
+      refresh_token: refresh,
       user: AuthUserModel.fromJson(Map<String, dynamic>.from(rawUser)),
     );
   }

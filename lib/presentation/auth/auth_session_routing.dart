@@ -12,7 +12,11 @@ class AuthSessionRouting {
     _ => AuthUserType.ventor,
   };
 
-  static AuthDestination destinationForSessionUser(AuthUserModel user) {
+  /// Maps login/register/social `user` (+ optional check-email status) to a destination.
+  static AuthDestination destinationForSessionUser(
+    AuthUserModel user, {
+    String? listenerProfileStatus,
+  }) {
     final mappedType = mapRole(user.role);
     if (!user.registration_complete) {
       if (mappedType == AuthUserType.ventor) {
@@ -20,6 +24,22 @@ class AuthSessionRouting {
       }
       return AuthDestination.listenerRegistration(email: user.email);
     }
+
+    if (mappedType == AuthUserType.lissener) {
+      switch (listenerProfileStatus) {
+        case 'under_review':
+          return const AuthDestination.listenerUnderReview();
+        case 'rejected':
+          return const AuthDestination.listenerRejected();
+        case 'incomplete':
+          return AuthDestination.listenerRegistration(email: user.email);
+        case 'approved':
+        case null:
+        default:
+          break;
+      }
+    }
+
     return AuthDestination.home(userType: mappedType);
   }
 

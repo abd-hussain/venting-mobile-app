@@ -270,6 +270,30 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
   String get email_registration_sign_in => 'Sign in';
 
   @override
+  String get email_registration_forgot_password => 'Forgot Password?';
+
+  @override
+  String get forgot_password_title => 'Forgot password?';
+
+  @override
+  String get forgot_password_subtitle =>
+      'Confirm your email and we’ll send a secure link to reset your password.';
+
+  @override
+  String get forgot_password_continue => 'Continue';
+
+  @override
+  String get forgot_password_sent_title => 'Check your email';
+
+  @override
+  String forgot_password_sent_body(String email) {
+    return 'If an account exists for $email, you’ll receive a reset link shortly. Open it to choose a new password.';
+  }
+
+  @override
+  String get forgot_password_back_to_sign_in => 'Back to Sign in';
+
+  @override
   String get email_registration_invalid_email =>
       'Please enter a valid email address';
 
@@ -786,13 +810,17 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
   String get listener_reg_notif_skip => 'Skip';
 
   @override
-  String get ventor_reg_title => 'Choose a nickname';
+  String get ventor_reg_title => 'What should we Call you?';
 
   @override
-  String get ventor_reg_subtitle => 'This is how listeners will see you.';
+  String get ventor_reg_subtitle =>
+      'Listeners will see this. Stay anonymous — your real name is never required.';
 
   @override
-  String get ventor_reg_nickname_hint => 'e.g. QuietSoul';
+  String get ventor_reg_nickname_label => 'Your Nick Name';
+
+  @override
+  String get ventor_reg_nickname_hint => 'e.g. johndoe';
 
   @override
   String get ventor_reg_nickname_required => 'Please enter a nickname';
@@ -825,27 +853,27 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
   String get ventor_reg_gender_female => 'Female';
 
   @override
-  String get ventor_reg_gender_prefer_not => 'Prefer not to say';
+  String get ventor_reg_gender_prefer_not => 'Not prefer';
 
   @override
   String get ventor_reg_gender_required => 'Please select a gender option';
 
   @override
-  String get ventor_reg_avatar_label => 'Add a profile avatar (optional)';
+  String get ventor_reg_avatar_label => 'Pick an Avatar';
 
   @override
   String get ventor_reg_avatar_gallery => 'Gallery';
 
   @override
   String get ventor_reg_change_anytime =>
-      'You can change it anytime from your profile settings';
+      'You can change this anytime in settings';
 
   @override
-  String get ventor_reg_interests_title => 'What do you want to vent about?';
+  String get ventor_reg_interests_title => 'What\'s on your mind?';
 
   @override
   String get ventor_reg_interests_subtitle =>
-      'Choose one or more topics. This helps us match you with the right listeners.';
+      'Pick topics. We\'ll match you with the right listeners instantly.';
 
   @override
   String get ventor_reg_interest_relationships => 'Relationships';
@@ -881,7 +909,12 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
   String get ventor_reg_interest_other_hint => 'Please specify';
 
   @override
-  String get ventor_reg_finish => 'Go to Dashboard';
+  String get ventor_reg_finish => 'Find my listeners';
+
+  @override
+  String ventor_reg_interests_selected_footer(int count) {
+    return '$count selected, you can change this later';
+  }
 
   @override
   String get ventor_reg_language_title => 'Choose your Language';

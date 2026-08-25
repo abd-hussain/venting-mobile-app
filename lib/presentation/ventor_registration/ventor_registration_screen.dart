@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
@@ -46,7 +47,19 @@ class _VentorRegistrationScreenState extends State<VentorRegistrationScreen> {
 
   static const _fieldFill = Color(0xFF1C1826);
   static const _muted = Color(0xFF9B93AB);
+  static const _label = Color(0xFF9B93AB);
+  static const _accent = Color(0xFF8A3CFE);
+  static const _chipFill = Color(0xFF2A2140);
+  static const _progressTrack = Color(0xFF3A2F52);
+  static const _totalSteps = 3;
   static const _maxNicknameLength = 20;
+
+  static const _presetAvatarAssets = <String>[
+    'assets/images/avatar1.svg',
+    'assets/images/avatar2.svg',
+    'assets/images/avatar3.png',
+    'assets/images/avatar4.png',
+  ];
 
   final _nicknameController = TextEditingController();
   final _nicknameFocus = FocusNode();
@@ -239,20 +252,68 @@ class _VentorRegistrationScreenState extends State<VentorRegistrationScreen> {
               _ => Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Align(
-                    alignment: AlignmentDirectional.centerStart,
-                    child: IconButton(
-                      onPressed: _onBack,
-                      icon: const Icon(
-                        Icons.arrow_back_ios_new_rounded,
-                        size: 20,
-                        color: Colors.white,
-                      ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+                    child: Row(
+                      children: [
+                        Material(
+                          color: _fieldFill,
+                          shape: const CircleBorder(),
+                          child: InkWell(
+                            customBorder: const CircleBorder(),
+                            onTap: _onBack,
+                            child: Container(
+                              width: 42,
+                              height: 42,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  color: _accent.withValues(alpha: 0.55),
+                                ),
+                              ),
+                              child: const Icon(
+                                Icons.arrow_back_rounded,
+                                size: 20,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                        const Spacer(),
+                        Text(
+                          '1/$_totalSteps',
+                          style: GoogleFonts.inter(
+                            color: Colors.white,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        Row(
+                          children: List.generate(_totalSteps, (i) {
+                            final active = i == 0;
+                            return Padding(
+                              padding: EdgeInsetsDirectional.only(
+                                start: i == 0 ? 0 : 5,
+                              ),
+                              child: AnimatedContainer(
+                                duration: const Duration(milliseconds: 220),
+                                width: active ? 28 : 18,
+                                height: 5,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(999),
+                                  color: active ? _accent : _progressTrack,
+                                ),
+                              ),
+                            );
+                          }),
+                        ),
+                      ],
                     ),
                   ),
                   Expanded(
                     child: SingleChildScrollView(
-                      padding: const EdgeInsets.fromLTRB(24, 8, 24, 16),
+                      padding: const EdgeInsets.fromLTRB(24, 28, 24, 16),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
@@ -260,22 +321,31 @@ class _VentorRegistrationScreenState extends State<VentorRegistrationScreen> {
                             l10n.ventor_reg_title,
                             style: GoogleFonts.inter(
                               color: Colors.white,
-                              fontSize: 28,
+                              fontSize: 30,
                               fontWeight: FontWeight.w700,
-                              height: 1.2,
+                              height: 1.15,
                             ),
                           ),
-                          const SizedBox(height: 8),
+                          const SizedBox(height: 10),
                           Text(
                             l10n.ventor_reg_subtitle,
                             style: GoogleFonts.inter(
-                              color: Colors.white.withValues(alpha: 0.65),
-                              fontSize: 15,
+                              color: _muted,
+                              fontSize: 14,
                               fontWeight: FontWeight.w400,
-                              height: 1.4,
+                              height: 1.45,
                             ),
                           ),
                           const SizedBox(height: 28),
+                          Text(
+                            l10n.ventor_reg_nickname_label,
+                            style: GoogleFonts.inter(
+                              color: _label,
+                              fontSize: 13,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          const SizedBox(height: 10),
                           TextField(
                             controller: _nicknameController,
                             focusNode: _nicknameFocus,
@@ -285,9 +355,9 @@ class _VentorRegistrationScreenState extends State<VentorRegistrationScreen> {
                             style: GoogleFonts.inter(
                               color: Colors.white,
                               fontSize: 16,
-                              fontWeight: FontWeight.w600,
+                              fontWeight: FontWeight.w500,
                             ),
-                            cursorColor: SplashColors.purpleMid,
+                            cursorColor: _accent,
                             inputFormatters: [
                               FilteringTextInputFormatter.allow(
                                 RegExp(r'[a-zA-Z0-9_\u0600-\u06FF ]'),
@@ -299,7 +369,7 @@ class _VentorRegistrationScreenState extends State<VentorRegistrationScreen> {
                             decoration: InputDecoration(
                               hintText: l10n.ventor_reg_nickname_hint,
                               hintStyle: GoogleFonts.inter(
-                                color: _muted,
+                                color: _muted.withValues(alpha: 0.75),
                                 fontSize: 15,
                                 fontWeight: FontWeight.w400,
                               ),
@@ -315,7 +385,8 @@ class _VentorRegistrationScreenState extends State<VentorRegistrationScreen> {
                                 borderSide: BorderSide(
                                   color: showNicknameError
                                       ? const Color(0xFFE11D48)
-                                      : Colors.white.withValues(alpha: 0.08),
+                                      : _accent,
+                                  width: 1.2,
                                 ),
                               ),
                               focusedBorder: OutlineInputBorder(
@@ -323,8 +394,8 @@ class _VentorRegistrationScreenState extends State<VentorRegistrationScreen> {
                                 borderSide: BorderSide(
                                   color: showNicknameError
                                       ? const Color(0xFFE11D48)
-                                      : SplashColors.purpleMid,
-                                  width: 1.4,
+                                      : _accent,
+                                  width: 1.5,
                                 ),
                               ),
                             ),
@@ -355,11 +426,10 @@ class _VentorRegistrationScreenState extends State<VentorRegistrationScreen> {
                               ),
                             ],
                           ),
-                          const SizedBox(height: 14),
                           Text(
                             l10n.ventor_reg_suggestions_label,
                             style: GoogleFonts.inter(
-                              color: Colors.white.withValues(alpha: 0.7),
+                              color: _label,
                               fontSize: 13,
                               fontWeight: FontWeight.w500,
                             ),
@@ -377,16 +447,16 @@ class _VentorRegistrationScreenState extends State<VentorRegistrationScreen> {
                                 ),
                             ],
                           ),
-                          const SizedBox(height: 28),
+                          const SizedBox(height: 24),
                           Text(
                             l10n.ventor_reg_gender_label,
                             style: GoogleFonts.inter(
-                              color: Colors.white.withValues(alpha: 0.85),
-                              fontSize: 15,
-                              fontWeight: FontWeight.w600,
+                              color: _label,
+                              fontSize: 13,
+                              fontWeight: FontWeight.w500,
                             ),
                           ),
-                          const SizedBox(height: 12),
+                          const SizedBox(height: 10),
                           Wrap(
                             spacing: 8,
                             runSpacing: 8,
@@ -428,60 +498,65 @@ class _VentorRegistrationScreenState extends State<VentorRegistrationScreen> {
                               ),
                             ),
                           ],
-                          const SizedBox(height: 28),
+                          const SizedBox(height: 24),
                           Text(
                             l10n.ventor_reg_avatar_label,
                             style: GoogleFonts.inter(
-                              color: Colors.white.withValues(alpha: 0.85),
-                              fontSize: 15,
-                              fontWeight: FontWeight.w600,
+                              color: _label,
+                              fontSize: 13,
+                              fontWeight: FontWeight.w500,
                             ),
                           ),
-                          const SizedBox(height: 16),
-                          GridView.builder(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: _VentorAvatarStyle.values.length + 1,
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 3,
-                                  mainAxisSpacing: 16,
-                                  crossAxisSpacing: 16,
-                                ),
-                            itemBuilder: (context, index) {
-                              if (index == 0) {
-                                return _GalleryAvatarOption(
-                                  photoPath: _galleryPhotoPath,
-                                  selected: _galleryPhotoPath != null,
-                                  picking: _pickingPhoto,
-                                  label: l10n.ventor_reg_avatar_gallery,
-                                  onTap: _pickFromGallery,
-                                  onClear: _galleryPhotoPath == null
-                                      ? null
-                                      : () {
-                                          setState(
-                                            () => _galleryPhotoPath = null,
-                                          );
-                                        },
-                                );
-                              }
+                          const SizedBox(height: 14),
+                          SizedBox(
+                            height: 72,
+                            child: ListView.separated(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: _presetAvatarAssets.length + 1,
+                              separatorBuilder: (_, _) =>
+                                  const SizedBox(width: 12),
+                              itemBuilder: (context, index) {
+                                if (index == 0) {
+                                  return SizedBox(
+                                    width: 72,
+                                    height: 72,
+                                    child: _GalleryAvatarOption(
+                                      photoPath: _galleryPhotoPath,
+                                      selected: _galleryPhotoPath != null,
+                                      picking: _pickingPhoto,
+                                      onTap: _pickFromGallery,
+                                      onClear: _galleryPhotoPath == null
+                                          ? null
+                                          : () {
+                                              setState(
+                                                () => _galleryPhotoPath = null,
+                                              );
+                                            },
+                                    ),
+                                  );
+                                }
 
-                              final avatarIndex = index - 1;
-                              final selected =
-                                  _selectedAvatarIndex == avatarIndex;
-                              return _AvatarOption(
-                                style: _VentorAvatarStyle.values[avatarIndex],
-                                selected: selected,
-                                onTap: () {
-                                  setState(() {
-                                    _galleryPhotoPath = null;
-                                    _selectedAvatarIndex = selected
-                                        ? null
-                                        : avatarIndex;
-                                  });
-                                },
-                              );
-                            },
+                                final avatarIndex = index - 1;
+                                final selected =
+                                    _selectedAvatarIndex == avatarIndex;
+                                return SizedBox(
+                                  width: 72,
+                                  height: 72,
+                                  child: _AvatarOption(
+                                    assetPath: _presetAvatarAssets[avatarIndex],
+                                    selected: selected,
+                                    onTap: () {
+                                      setState(() {
+                                        _galleryPhotoPath = null;
+                                        _selectedAvatarIndex = selected
+                                            ? null
+                                            : avatarIndex;
+                                      });
+                                    },
+                                  ),
+                                );
+                              },
+                            ),
                           ),
                         ],
                       ),
@@ -490,18 +565,18 @@ class _VentorRegistrationScreenState extends State<VentorRegistrationScreen> {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(24, 8, 24, 8),
                     child: SizedBox(
-                      height: 54,
+                      height: 56,
                       child: FilledButton(
                         onPressed: _onContinue,
                         style: FilledButton.styleFrom(
-                          backgroundColor: SplashColors.purpleMid,
-                          disabledBackgroundColor: SplashColors.purpleMid
-                              .withValues(alpha: 0.35),
+                          backgroundColor: _canContinue
+                              ? _accent
+                              : _accent.withValues(alpha: 0.42),
                           foregroundColor: Colors.white,
                           disabledForegroundColor: Colors.white,
                           elevation: 0,
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16),
+                            borderRadius: BorderRadius.circular(999),
                           ),
                           textStyle: GoogleFonts.inter(
                             fontSize: 16,
@@ -514,27 +589,14 @@ class _VentorRegistrationScreenState extends State<VentorRegistrationScreen> {
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(24, 0, 24, 20),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.lock_outline_rounded,
-                          size: 14,
-                          color: Colors.white.withValues(alpha: 0.55),
-                        ),
-                        const SizedBox(width: 6),
-                        Flexible(
-                          child: Text(
-                            l10n.ventor_reg_change_anytime,
-                            textAlign: TextAlign.center,
-                            style: GoogleFonts.inter(
-                              color: Colors.white.withValues(alpha: 0.55),
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ],
+                    child: Text(
+                      l10n.ventor_reg_change_anytime,
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.inter(
+                        color: _muted,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ),
                 ],
@@ -562,28 +624,26 @@ class _SuggestionChip extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       color: selected
-          ? SplashColors.purpleMid.withValues(alpha: 0.22)
-          : _VentorRegistrationScreenState._fieldFill,
-      borderRadius: BorderRadius.circular(999),
+          ? _VentorRegistrationScreenState._accent.withValues(alpha: 0.28)
+          : _VentorRegistrationScreenState._chipFill,
+      borderRadius: BorderRadius.circular(12),
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(999),
+        borderRadius: BorderRadius.circular(12),
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(999),
+            borderRadius: BorderRadius.circular(12),
             border: Border.all(
               color: selected
-                  ? SplashColors.purpleMid
-                  : Colors.white.withValues(alpha: 0.1),
+                  ? _VentorRegistrationScreenState._accent
+                  : Colors.transparent,
             ),
           ),
           child: Text(
             label,
             style: GoogleFonts.inter(
-              color: selected
-                  ? Colors.white
-                  : _VentorRegistrationScreenState._muted,
+              color: selected ? Colors.white : const Color(0xFFC9B8E8),
               fontSize: 13,
               fontWeight: FontWeight.w600,
             ),
@@ -608,21 +668,19 @@ class _GenderChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: selected
-          ? SplashColors.purpleMid.withValues(alpha: 0.22)
-          : _VentorRegistrationScreenState._fieldFill,
+      color: _VentorRegistrationScreenState._chipFill,
       borderRadius: BorderRadius.circular(14),
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(14),
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(14),
             border: Border.all(
               color: selected
-                  ? SplashColors.purpleMid
-                  : Colors.white.withValues(alpha: 0.1),
+                  ? _VentorRegistrationScreenState._accent
+                  : Colors.transparent,
               width: selected ? 1.4 : 1,
             ),
           ),
@@ -647,7 +705,6 @@ class _GalleryAvatarOption extends StatelessWidget {
     required this.photoPath,
     required this.selected,
     required this.picking,
-    required this.label,
     required this.onTap,
     this.onClear,
   });
@@ -655,7 +712,6 @@ class _GalleryAvatarOption extends StatelessWidget {
   final String? photoPath;
   final bool selected;
   final bool picking;
-  final String label;
   final VoidCallback onTap;
   final VoidCallback? onClear;
 
@@ -673,20 +729,13 @@ class _GalleryAvatarOption extends StatelessWidget {
           duration: const Duration(milliseconds: 180),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
+            color: _VentorRegistrationScreenState._chipFill,
             border: Border.all(
-              color: selected
-                  ? SplashColors.purpleMid
+              color: selected || !hasPhoto
+                  ? _VentorRegistrationScreenState._accent
                   : Colors.white.withValues(alpha: 0.12),
-              width: selected ? 2.5 : 1.2,
+              width: selected ? 2.2 : 1.4,
             ),
-            boxShadow: selected
-                ? [
-                    BoxShadow(
-                      color: SplashColors.purpleMid.withValues(alpha: 0.35),
-                      blurRadius: 12,
-                    ),
-                  ]
-                : null,
           ),
           child: Padding(
             padding: const EdgeInsets.all(3),
@@ -714,35 +763,21 @@ class _GalleryAvatarOption extends StatelessWidget {
                             ),
                         ],
                       )
-                    : Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          if (picking)
-                            const SizedBox(
-                              width: 22,
-                              height: 22,
-                              child: CircularProgressIndicator(
-                                strokeWidth: 2,
-                                color: SplashColors.purpleMid,
+                    : Center(
+                        child: picking
+                            ? const SizedBox(
+                                width: 22,
+                                height: 22,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                  color: _VentorRegistrationScreenState._accent,
+                                ),
+                              )
+                            : const Icon(
+                                Icons.add_rounded,
+                                color: _VentorRegistrationScreenState._accent,
+                                size: 30,
                               ),
-                            )
-                          else
-                            const Icon(
-                              Icons.add_a_photo_outlined,
-                              color: SplashColors.purpleMid,
-                              size: 26,
-                            ),
-                          const SizedBox(height: 6),
-                          Text(
-                            label,
-                            textAlign: TextAlign.center,
-                            style: GoogleFonts.inter(
-                              color: _VentorRegistrationScreenState._muted,
-                              fontSize: 11,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ],
                       ),
               ),
             ),
@@ -753,23 +788,14 @@ class _GalleryAvatarOption extends StatelessWidget {
   }
 }
 
-enum _VentorAvatarStyle {
-  nightPeaks,
-  mistValley,
-  twinSpires,
-  moonRidge,
-  crystalPeak,
-  duskHorizon,
-}
-
 class _AvatarOption extends StatelessWidget {
   const _AvatarOption({
-    required this.style,
+    required this.assetPath,
     required this.selected,
     required this.onTap,
   });
 
-  final _VentorAvatarStyle style;
+  final String assetPath;
   final bool selected;
   final VoidCallback onTap;
 
@@ -786,14 +812,16 @@ class _AvatarOption extends StatelessWidget {
             shape: BoxShape.circle,
             border: Border.all(
               color: selected
-                  ? SplashColors.purpleMid
+                  ? _VentorRegistrationScreenState._accent
                   : Colors.white.withValues(alpha: 0.12),
-              width: selected ? 2.5 : 1.2,
+              width: selected ? 2.2 : 1.2,
             ),
             boxShadow: selected
                 ? [
                     BoxShadow(
-                      color: SplashColors.purpleMid.withValues(alpha: 0.35),
+                      color: _VentorRegistrationScreenState._accent.withValues(
+                        alpha: 0.35,
+                      ),
                       blurRadius: 12,
                     ),
                   ]
@@ -802,168 +830,23 @@ class _AvatarOption extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(3),
             child: ClipOval(
-              child: CustomPaint(
-                painter: _VentorAvatarPainter(style: style),
-                child: const SizedBox.expand(),
-              ),
+              child: assetPath.endsWith('.svg')
+                  ? SvgPicture.asset(
+                      assetPath,
+                      fit: BoxFit.cover,
+                      width: double.infinity,
+                      height: double.infinity,
+                    )
+                  : Image.asset(
+                      assetPath,
+                      fit: BoxFit.cover,
+                      width: double.infinity,
+                      height: double.infinity,
+                    ),
             ),
           ),
         ),
       ),
     );
   }
-}
-
-class _VentorAvatarPainter extends CustomPainter {
-  const _VentorAvatarPainter({required this.style});
-
-  final _VentorAvatarStyle style;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final rect = Offset.zero & size;
-    final bg = Paint()
-      ..shader = LinearGradient(
-        begin: Alignment.topCenter,
-        end: Alignment.bottomCenter,
-        colors: _bgColors,
-      ).createShader(rect);
-    canvas.drawRect(rect, bg);
-
-    final mountain = Paint()..color = _mountainColor;
-    final accent = Paint()..color = _accentColor;
-
-    switch (style) {
-      case _VentorAvatarStyle.nightPeaks:
-        _drawPeaks(canvas, size, mountain, [0.15, 0.5, 0.85], 0.55);
-        _drawMoon(canvas, size, accent, const Offset(0.72, 0.28), 0.1);
-      case _VentorAvatarStyle.mistValley:
-        _drawPeaks(canvas, size, mountain, [0.2, 0.55, 0.9], 0.62);
-        _drawGlow(canvas, size, accent, const Offset(0.5, 0.42), 0.18);
-      case _VentorAvatarStyle.twinSpires:
-        _drawPeaks(canvas, size, mountain, [0.28, 0.72], 0.48);
-        _drawMoon(canvas, size, accent, const Offset(0.5, 0.22), 0.08);
-      case _VentorAvatarStyle.moonRidge:
-        _drawPeaks(canvas, size, mountain, [0.18, 0.48, 0.78], 0.58);
-        _drawMoon(canvas, size, accent, const Offset(0.3, 0.26), 0.12);
-      case _VentorAvatarStyle.crystalPeak:
-        _drawPeaks(canvas, size, mountain, [0.5], 0.42);
-        _drawGlow(canvas, size, accent, const Offset(0.5, 0.35), 0.14);
-      case _VentorAvatarStyle.duskHorizon:
-        _drawPeaks(canvas, size, mountain, [0.22, 0.6, 0.88], 0.66);
-        _drawMoon(canvas, size, accent, const Offset(0.78, 0.34), 0.09);
-    }
-
-    canvas.drawCircle(
-      Offset(size.width / 2, size.height / 2),
-      size.width * 0.52,
-      Paint()
-        ..shader = RadialGradient(
-          colors: [Colors.transparent, Colors.black.withValues(alpha: 0.25)],
-        ).createShader(rect),
-    );
-  }
-
-  List<Color> get _bgColors => switch (style) {
-    _VentorAvatarStyle.nightPeaks => const [
-      Color(0xFF2A1848),
-      Color(0xFF12081F),
-    ],
-    _VentorAvatarStyle.mistValley => const [
-      Color(0xFF3A1F5C),
-      Color(0xFF1A0F2E),
-    ],
-    _VentorAvatarStyle.twinSpires => const [
-      Color(0xFF24143F),
-      Color(0xFF0E0718),
-    ],
-    _VentorAvatarStyle.moonRidge => const [
-      Color(0xFF321C52),
-      Color(0xFF140A24),
-    ],
-    _VentorAvatarStyle.crystalPeak => const [
-      Color(0xFF4A2680),
-      Color(0xFF1C0F33),
-    ],
-    _VentorAvatarStyle.duskHorizon => const [
-      Color(0xFF3B1858),
-      Color(0xFF160A28),
-    ],
-  };
-
-  Color get _mountainColor => switch (style) {
-    _VentorAvatarStyle.nightPeaks => const Color(0xFF7B3FD6),
-    _VentorAvatarStyle.mistValley => const Color(0xFF9B5CFF),
-    _VentorAvatarStyle.twinSpires => const Color(0xFF6A32C4),
-    _VentorAvatarStyle.moonRidge => const Color(0xFF8E4AE8),
-    _VentorAvatarStyle.crystalPeak => const Color(0xFFB44DFF),
-    _VentorAvatarStyle.duskHorizon => const Color(0xFF7C3AED),
-  };
-
-  Color get _accentColor => SplashColors.purpleLight.withValues(alpha: 0.85);
-
-  void _drawPeaks(
-    Canvas canvas,
-    Size size,
-    Paint paint,
-    List<double> xs,
-    double peakY,
-  ) {
-    final path = Path()
-      ..moveTo(0, size.height)
-      ..lineTo(0, size.height * 0.78);
-
-    for (final x in xs) {
-      path.lineTo(size.width * x, size.height * peakY);
-      path.lineTo(size.width * (x + 0.12).clamp(0.0, 1.0), size.height * 0.78);
-    }
-
-    path
-      ..lineTo(size.width, size.height * 0.78)
-      ..lineTo(size.width, size.height)
-      ..close();
-    canvas.drawPath(path, paint);
-  }
-
-  void _drawMoon(
-    Canvas canvas,
-    Size size,
-    Paint paint,
-    Offset relative,
-    double radiusFactor,
-  ) {
-    canvas.drawCircle(
-      Offset(size.width * relative.dx, size.height * relative.dy),
-      size.width * radiusFactor,
-      paint,
-    );
-  }
-
-  void _drawGlow(
-    Canvas canvas,
-    Size size,
-    Paint paint,
-    Offset relative,
-    double radiusFactor,
-  ) {
-    final center = Offset(size.width * relative.dx, size.height * relative.dy);
-    canvas.drawCircle(
-      center,
-      size.width * radiusFactor,
-      Paint()
-        ..shader =
-            RadialGradient(
-              colors: [paint.color, paint.color.withValues(alpha: 0)],
-            ).createShader(
-              Rect.fromCircle(
-                center: center,
-                radius: size.width * radiusFactor,
-              ),
-            ),
-    );
-  }
-
-  @override
-  bool shouldRepaint(covariant _VentorAvatarPainter oldDelegate) =>
-      oldDelegate.style != style;
 }

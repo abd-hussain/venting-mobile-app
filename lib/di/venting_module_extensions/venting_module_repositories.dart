@@ -6,6 +6,7 @@ import 'package:venting_mobile_app/di/venting_module.dart';
 import 'package:venting_mobile_app/domain/repository/api/auth/auth_change_password_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/auth/auth_check_email_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/auth/auth_delete_account_repository.dart';
+import 'package:venting_mobile_app/domain/repository/api/auth/auth_forgot_password_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/auth/auth_login_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/auth/auth_logout_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/auth/auth_me_repository.dart';
@@ -29,6 +30,10 @@ mixin VentingModuleRepositories on VentingModule {
 
   AuthLoginRepository authLoginRepository(ApiClientBase apiClient) =>
       AuthLoginRepository(apiClient);
+
+  AuthForgotPasswordRepository authForgotPasswordRepository(
+    ApiClientBase apiClient,
+  ) => AuthForgotPasswordRepository(apiClient);
 
   AuthRefreshTokenRepository authRefreshTokenRepository(
     ApiClientBase apiClient,
@@ -79,6 +84,9 @@ mixin VentingModuleRepositories on VentingModule {
     );
     getIt.registerFactory<AuthLoginRepository>(
       () => authLoginRepository(getIt<ApiClientBase>()),
+    );
+    getIt.registerFactory<AuthForgotPasswordRepository>(
+      () => authForgotPasswordRepository(getIt<ApiClientBase>()),
     );
     getIt.registerFactory<AuthRefreshTokenRepository>(
       () => authRefreshTokenRepository(getIt<ApiClientBase>()),

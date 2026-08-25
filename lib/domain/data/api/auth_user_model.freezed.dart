@@ -11,7 +11,6 @@ part of 'auth_user_model.dart';
 
 // dart format off
 T _$identity<T>(T value) => value;
-
 /// @nodoc
 mixin _$AuthUserModel {
 
@@ -22,8 +21,6 @@ mixin _$AuthUserModel {
 @pragma('vm:prefer-inline')
 $AuthUserModelCopyWith<AuthUserModel> get copyWith => _$AuthUserModelCopyWithImpl<AuthUserModel>(this as AuthUserModel, _$identity);
 
-  /// Serializes this AuthUserModel to a JSON map.
-  Map<String, dynamic> toJson();
 
 
 @override
@@ -31,7 +28,7 @@ bool operator ==(Object other) {
   return identical(this, other) || (other.runtimeType == runtimeType&&other is AuthUserModel&&(identical(other.id, id) || other.id == id)&&(identical(other.email, email) || other.email == email)&&(identical(other.role, role) || other.role == role)&&(identical(other.is_new, is_new) || other.is_new == is_new)&&(identical(other.registration_complete, registration_complete) || other.registration_complete == registration_complete));
 }
 
-@JsonKey(includeFromJson: false, includeToJson: false)
+
 @override
 int get hashCode => Object.hash(runtimeType,id,email,role,is_new,registration_complete);
 
@@ -210,11 +207,11 @@ return $default(_that.id,_that.email,_that.role,_that.is_new,_that.registration_
 }
 
 /// @nodoc
-@JsonSerializable()
 
-class _AuthUserModel implements AuthUserModel {
-  const _AuthUserModel({required this.id, required this.email, required this.role, this.is_new = false, this.registration_complete = false});
-  factory _AuthUserModel.fromJson(Map<String, dynamic> json) => _$AuthUserModelFromJson(json);
+
+class _AuthUserModel extends AuthUserModel {
+  const _AuthUserModel({required this.id, required this.email, required this.role, this.is_new = false, this.registration_complete = false}): super._();
+  
 
 @override final  String id;
 @override final  String email;
@@ -228,17 +225,14 @@ class _AuthUserModel implements AuthUserModel {
 @pragma('vm:prefer-inline')
 _$AuthUserModelCopyWith<_AuthUserModel> get copyWith => __$AuthUserModelCopyWithImpl<_AuthUserModel>(this, _$identity);
 
-@override
-Map<String, dynamic> toJson() {
-  return _$AuthUserModelToJson(this, );
-}
+
 
 @override
 bool operator ==(Object other) {
   return identical(this, other) || (other.runtimeType == runtimeType&&other is _AuthUserModel&&(identical(other.id, id) || other.id == id)&&(identical(other.email, email) || other.email == email)&&(identical(other.role, role) || other.role == role)&&(identical(other.is_new, is_new) || other.is_new == is_new)&&(identical(other.registration_complete, registration_complete) || other.registration_complete == registration_complete));
 }
 
-@JsonKey(includeFromJson: false, includeToJson: false)
+
 @override
 int get hashCode => Object.hash(runtimeType,id,email,role,is_new,registration_complete);
 

@@ -295,7 +295,6 @@ $AuthMeDataCopyWith<$Res> get data {
 }
 }
 
-
 /// @nodoc
 mixin _$AuthMeData {
 
@@ -306,8 +305,6 @@ mixin _$AuthMeData {
 @pragma('vm:prefer-inline')
 $AuthMeDataCopyWith<AuthMeData> get copyWith => _$AuthMeDataCopyWithImpl<AuthMeData>(this as AuthMeData, _$identity);
 
-  /// Serializes this AuthMeData to a JSON map.
-  Map<String, dynamic> toJson();
 
 
 @override
@@ -315,7 +312,7 @@ bool operator ==(Object other) {
   return identical(this, other) || (other.runtimeType == runtimeType&&other is AuthMeData&&(identical(other.id, id) || other.id == id)&&(identical(other.email, email) || other.email == email)&&(identical(other.role, role) || other.role == role)&&(identical(other.display_name, display_name) || other.display_name == display_name)&&(identical(other.avatar_url, avatar_url) || other.avatar_url == avatar_url)&&(identical(other.registration_complete, registration_complete) || other.registration_complete == registration_complete)&&(identical(other.listener_profile_status, listener_profile_status) || other.listener_profile_status == listener_profile_status));
 }
 
-@JsonKey(includeFromJson: false, includeToJson: false)
+
 @override
 int get hashCode => Object.hash(runtimeType,id,email,role,display_name,avatar_url,registration_complete,listener_profile_status);
 
@@ -496,11 +493,11 @@ return $default(_that.id,_that.email,_that.role,_that.display_name,_that.avatar_
 }
 
 /// @nodoc
-@JsonSerializable()
 
-class _AuthMeData implements AuthMeData {
-  const _AuthMeData({required this.id, required this.email, required this.role, this.display_name, this.avatar_url, this.registration_complete = false, this.listener_profile_status});
-  factory _AuthMeData.fromJson(Map<String, dynamic> json) => _$AuthMeDataFromJson(json);
+
+class _AuthMeData extends AuthMeData {
+  const _AuthMeData({required this.id, required this.email, required this.role, this.display_name, this.avatar_url, this.registration_complete = false, this.listener_profile_status}): super._();
+  
 
 @override final  String id;
 @override final  String email;
@@ -516,17 +513,14 @@ class _AuthMeData implements AuthMeData {
 @pragma('vm:prefer-inline')
 _$AuthMeDataCopyWith<_AuthMeData> get copyWith => __$AuthMeDataCopyWithImpl<_AuthMeData>(this, _$identity);
 
-@override
-Map<String, dynamic> toJson() {
-  return _$AuthMeDataToJson(this, );
-}
+
 
 @override
 bool operator ==(Object other) {
   return identical(this, other) || (other.runtimeType == runtimeType&&other is _AuthMeData&&(identical(other.id, id) || other.id == id)&&(identical(other.email, email) || other.email == email)&&(identical(other.role, role) || other.role == role)&&(identical(other.display_name, display_name) || other.display_name == display_name)&&(identical(other.avatar_url, avatar_url) || other.avatar_url == avatar_url)&&(identical(other.registration_complete, registration_complete) || other.registration_complete == registration_complete)&&(identical(other.listener_profile_status, listener_profile_status) || other.listener_profile_status == listener_profile_status));
 }
 
-@JsonKey(includeFromJson: false, includeToJson: false)
+
 @override
 int get hashCode => Object.hash(runtimeType,id,email,role,display_name,avatar_url,registration_complete,listener_profile_status);
 

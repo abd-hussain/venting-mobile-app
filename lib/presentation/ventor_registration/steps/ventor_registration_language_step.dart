@@ -6,7 +6,6 @@ import 'package:venting_mobile_app/domain/data/api/catalog_language_model.dart';
 import 'package:venting_mobile_app/domain/data/exceptions/main_api_exception.dart';
 import 'package:venting_mobile_app/domain/usecase/get_catalog_languages_usecase.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
-import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dart';
 
 class VentorLanguagesSelection {
   const VentorLanguagesSelection({required this.languageIds});
@@ -37,9 +36,14 @@ class VentorRegistrationLanguageStep extends StatefulWidget {
 class _VentorRegistrationLanguageStepState
     extends State<VentorRegistrationLanguageStep> {
   static const _rowFill = Color(0xFF1C1826);
+  static const _iconFill = Color(0xFF2A2140);
   static const _muted = Color(0xFF9B93AB);
-  static const _checkboxBorder = Color(0xFF4A425C);
+  static const _accent = Color(0xFF8A3CFE);
+  static const _progressTrack = Color(0xFF3A2F52);
+  static const _checkboxBorder = Color(0xFF6B5F82);
   static const _searchFill = Color(0xFF14101C);
+  static const _totalSteps = 3;
+  static const _currentStep = 2;
 
   final _searchController = TextEditingController();
   final Set<String> _selectedIds = {};
@@ -157,95 +161,136 @@ class _VentorRegistrationLanguageStepState
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8),
+          padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
           child: Row(
             children: [
-              IconButton(
-                onPressed: widget.onBack,
-                icon: const Icon(
-                  Icons.arrow_back_ios_new_rounded,
-                  size: 20,
-                  color: Colors.white,
+              Material(
+                color: _rowFill,
+                shape: const CircleBorder(),
+                child: InkWell(
+                  customBorder: const CircleBorder(),
+                  onTap: widget.onBack,
+                  child: Container(
+                    width: 42,
+                    height: 42,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: _accent.withValues(alpha: 0.55),
+                      ),
+                    ),
+                    child: const Icon(
+                      Icons.arrow_back_rounded,
+                      size: 20,
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
               ),
               const Spacer(),
-              if (!_isSearching)
+              Text(
+                '$_currentStep/$_totalSteps',
+                style: GoogleFonts.inter(
+                  color: Colors.white,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              const SizedBox(width: 10),
+              Row(
+                children: List.generate(_totalSteps, (i) {
+                  final active = i == _currentStep - 1;
+                  return Padding(
+                    padding: EdgeInsetsDirectional.only(start: i == 0 ? 0 : 5),
+                    child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 220),
+                      width: active ? 28 : 18,
+                      height: 5,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(999),
+                        color: active ? _accent : _progressTrack,
+                      ),
+                    ),
+                  );
+                }),
+              ),
+              if (!_isSearching) ...[
+                const SizedBox(width: 4),
                 IconButton(
                   onPressed: _isLoading ? null : _openSearch,
                   icon: const Icon(
                     Icons.search_rounded,
-                    size: 24,
+                    size: 22,
                     color: Colors.white,
                   ),
                 ),
+              ],
             ],
           ),
         ),
         Expanded(
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                if (_isSearching)
-                  _SearchField(
-                    controller: _searchController,
-                    hint: l10n.ventor_reg_language_search_hint,
-                    onClear: _closeSearch,
-                    fill: _searchFill,
-                    muted: _muted,
-                  )
-                else ...[
-                  Text(
-                    l10n.ventor_reg_language_title,
-                    style: GoogleFonts.inter(
-                      color: Colors.white,
-                      fontSize: 28,
-                      fontWeight: FontWeight.w700,
-                      height: 1.2,
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  Text(
-                    l10n.ventor_reg_language_subtitle,
-                    style: GoogleFonts.inter(
-                      color: _muted,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                      height: 1.4,
-                    ),
-                  ),
-                ],
-                const SizedBox(height: 20),
-                Expanded(child: _buildBody(l10n)),
-                const SizedBox(height: 16),
-                SizedBox(
-                  height: 54,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(24, 28, 24, 0),
+                child: _isSearching
+                    ? _SearchField(
+                        controller: _searchController,
+                        hint: l10n.ventor_reg_language_search_hint,
+                        onClear: _closeSearch,
+                      )
+                    : Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            l10n.ventor_reg_language_title,
+                            style: GoogleFonts.inter(
+                              color: Colors.white,
+                              fontSize: 30,
+                              fontWeight: FontWeight.w700,
+                              height: 1.15,
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          Text(
+                            l10n.ventor_reg_language_subtitle,
+                            style: GoogleFonts.inter(
+                              color: _muted,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                              height: 1.45,
+                            ),
+                          ),
+                        ],
+                      ),
+              ),
+              Expanded(child: _buildBody(l10n)),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(24, 8, 24, 20),
+                child: SizedBox(
+                  height: 56,
                   child: FilledButton(
                     onPressed: _canContinue ? _onContinue : null,
                     style: FilledButton.styleFrom(
-                      backgroundColor: SplashColors.purpleMid,
-                      disabledBackgroundColor: SplashColors.purpleMid
-                          .withValues(alpha: 0.35),
+                      backgroundColor: _accent,
+                      disabledBackgroundColor: _accent.withValues(alpha: 0.42),
                       foregroundColor: Colors.white,
                       disabledForegroundColor: Colors.white,
                       elevation: 0,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
+                        borderRadius: BorderRadius.circular(999),
                       ),
                       textStyle: GoogleFonts.inter(
-                        fontSize: 15,
+                        fontSize: 16,
                         fontWeight: FontWeight.w700,
-                        letterSpacing: 0.3,
                       ),
                     ),
-                    child: Text(
-                      l10n.ventor_reg_language_continue.toUpperCase(),
-                    ),
+                    child: Text(l10n.ventor_reg_language_continue),
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ],
@@ -255,39 +300,39 @@ class _VentorRegistrationLanguageStepState
   Widget _buildBody(VentingMobLocalizations l10n) {
     if (_isLoading) {
       return const Center(
-        child: CircularProgressIndicator(
-          strokeWidth: 2.4,
-          color: SplashColors.purpleMid,
-        ),
+        child: CircularProgressIndicator(strokeWidth: 2.4, color: _accent),
       );
     }
 
     if (_errorMessage != null) {
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            _errorMessage!,
-            textAlign: TextAlign.center,
-            style: GoogleFonts.inter(
-              color: const Color(0xFFF87171),
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
-              height: 1.4,
-            ),
-          ),
-          const SizedBox(height: 16),
-          TextButton(
-            onPressed: _loadLanguages,
-            child: Text(
-              l10n.common_retry,
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              _errorMessage!,
+              textAlign: TextAlign.center,
               style: GoogleFonts.inter(
-                color: SplashColors.purpleMid,
-                fontWeight: FontWeight.w600,
+                color: const Color(0xFFF87171),
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+                height: 1.4,
               ),
             ),
-          ),
-        ],
+            const SizedBox(height: 16),
+            TextButton(
+              onPressed: _loadLanguages,
+              child: Text(
+                l10n.common_retry,
+                style: GoogleFonts.inter(
+                  color: _accent,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+          ],
+        ),
       );
     }
 
@@ -303,6 +348,7 @@ class _VentorRegistrationLanguageStepState
     }
 
     return ListView.separated(
+      padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
       itemCount: items.length,
       separatorBuilder: (_, _) => const SizedBox(height: 10),
       itemBuilder: (context, index) {
@@ -311,9 +357,6 @@ class _VentorRegistrationLanguageStepState
         return _LanguageRow(
           language: language,
           selected: selected,
-          rowFill: _rowFill,
-          muted: _muted,
-          checkboxBorder: _checkboxBorder,
           onTap: () => _toggle(language.id),
         );
       },
@@ -326,15 +369,11 @@ class _SearchField extends StatelessWidget {
     required this.controller,
     required this.hint,
     required this.onClear,
-    required this.fill,
-    required this.muted,
   });
 
   final TextEditingController controller;
   final String hint;
   final VoidCallback onClear;
-  final Color fill;
-  final Color muted;
 
   @override
   Widget build(BuildContext context) {
@@ -346,33 +385,43 @@ class _SearchField extends StatelessWidget {
         fontSize: 15,
         fontWeight: FontWeight.w500,
       ),
-      cursorColor: SplashColors.purpleMid,
+      cursorColor: _VentorRegistrationLanguageStepState._accent,
       decoration: InputDecoration(
         hintText: hint,
         hintStyle: GoogleFonts.inter(
-          color: muted,
+          color: _VentorRegistrationLanguageStepState._muted,
           fontSize: 15,
           fontWeight: FontWeight.w400,
         ),
-        prefixIcon: Icon(Icons.search_rounded, color: muted),
+        prefixIcon: const Icon(
+          Icons.search_rounded,
+          color: _VentorRegistrationLanguageStepState._muted,
+        ),
         suffixIcon: IconButton(
           onPressed: onClear,
-          icon: Icon(Icons.close_rounded, color: muted),
+          icon: const Icon(
+            Icons.close_rounded,
+            color: _VentorRegistrationLanguageStepState._muted,
+          ),
         ),
         filled: true,
-        fillColor: fill,
+        fillColor: _VentorRegistrationLanguageStepState._searchFill,
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 16,
           vertical: 14,
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16),
-          borderSide: BorderSide(color: Colors.white.withValues(alpha: 0.08)),
+          borderRadius: BorderRadius.circular(14),
+          borderSide: BorderSide(
+            color: _VentorRegistrationLanguageStepState._accent.withValues(
+              alpha: 0.55,
+            ),
+          ),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(14),
           borderSide: const BorderSide(
-            color: SplashColors.purpleMid,
+            color: _VentorRegistrationLanguageStepState._accent,
             width: 1.4,
           ),
         ),
@@ -385,43 +434,37 @@ class _LanguageRow extends StatelessWidget {
   const _LanguageRow({
     required this.language,
     required this.selected,
-    required this.rowFill,
-    required this.muted,
-    required this.checkboxBorder,
     required this.onTap,
   });
 
   final CatalogLanguageModel language;
   final bool selected;
-  final Color rowFill;
-  final Color muted;
-  final Color checkboxBorder;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: rowFill,
+      color: _VentorRegistrationLanguageStepState._rowFill,
       borderRadius: BorderRadius.circular(16),
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(16),
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 160),
+        child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
             border: Border.all(
               color: selected
-                  ? SplashColors.purpleMid
+                  ? _VentorRegistrationLanguageStepState._accent.withValues(
+                      alpha: 0.55,
+                    )
                   : Colors.white.withValues(alpha: 0.06),
-              width: selected ? 1.6 : 1,
             ),
           ),
           child: Row(
             children: [
               _FlagAvatar(language: language),
-              const SizedBox(width: 12),
+              const SizedBox(width: 14),
               Expanded(
                 child: Text.rich(
                   TextSpan(
@@ -429,15 +472,20 @@ class _LanguageRow extends StatelessWidget {
                       TextSpan(
                         text: language.name_native,
                         style: GoogleFonts.inter(
-                          color: Colors.white,
+                          color: selected
+                              ? Colors.white
+                              : _VentorRegistrationLanguageStepState._muted,
                           fontSize: 15,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: selected
+                              ? FontWeight.w700
+                              : FontWeight.w500,
                         ),
                       ),
                       TextSpan(
                         text: ' (${language.name_en})',
                         style: GoogleFonts.inter(
-                          color: muted,
+                          color: _VentorRegistrationLanguageStepState._muted
+                              .withValues(alpha: selected ? 0.85 : 0.7),
                           fontSize: 14,
                           fontWeight: FontWeight.w400,
                         ),
@@ -448,21 +496,23 @@ class _LanguageRow extends StatelessWidget {
               ),
               AnimatedContainer(
                 duration: const Duration(milliseconds: 160),
-                width: 24,
-                height: 24,
+                width: 22,
+                height: 22,
                 decoration: BoxDecoration(
-                  color: selected ? SplashColors.purpleMid : Colors.transparent,
-                  borderRadius: BorderRadius.circular(6),
+                  color: Colors.transparent,
+                  borderRadius: BorderRadius.circular(5),
                   border: Border.all(
-                    color: selected ? SplashColors.purpleMid : checkboxBorder,
-                    width: 1.6,
+                    color: selected
+                        ? _VentorRegistrationLanguageStepState._accent
+                        : _VentorRegistrationLanguageStepState._checkboxBorder,
+                    width: 1.5,
                   ),
                 ),
                 child: selected
                     ? const Icon(
                         Icons.check_rounded,
-                        size: 16,
-                        color: Colors.white,
+                        size: 14,
+                        color: _VentorRegistrationLanguageStepState._accent,
                       )
                     : null,
               ),
@@ -483,22 +533,38 @@ class _FlagAvatar extends StatelessWidget {
   Widget build(BuildContext context) {
     final url = language.flag_url.trim();
     final hasUrl = url.isNotEmpty;
-    return CircleAvatar(
-      radius: 22,
-      backgroundColor: Colors.white.withValues(alpha: 0.08),
-      backgroundImage: hasUrl ? CachedNetworkImageProvider(url) : null,
+    return Container(
+      width: 40,
+      height: 40,
+      decoration: const BoxDecoration(
+        color: _VentorRegistrationLanguageStepState._iconFill,
+        shape: BoxShape.circle,
+      ),
+      clipBehavior: Clip.antiAlias,
+      alignment: Alignment.center,
       child: hasUrl
-          ? null
-          : Text(
-              language.flag_emoji.isNotEmpty
-                  ? language.flag_emoji
-                  : language.id.toUpperCase(),
-              style: GoogleFonts.inter(
-                fontSize: language.flag_emoji.isNotEmpty ? 22 : 12,
-                fontWeight: FontWeight.w700,
-                color: Colors.white,
-              ),
-            ),
+          ? CachedNetworkImage(
+              imageUrl: url,
+              fit: BoxFit.cover,
+              width: 40,
+              height: 40,
+              placeholder: (_, _) => _fallback(),
+              errorWidget: (_, _, _) => _fallback(),
+            )
+          : _fallback(),
+    );
+  }
+
+  Widget _fallback() {
+    return Text(
+      language.flag_emoji.isNotEmpty
+          ? language.flag_emoji
+          : language.id.toUpperCase(),
+      style: GoogleFonts.inter(
+        fontSize: language.flag_emoji.isNotEmpty ? 20 : 12,
+        fontWeight: FontWeight.w700,
+        color: Colors.white,
+      ),
     );
   }
 }

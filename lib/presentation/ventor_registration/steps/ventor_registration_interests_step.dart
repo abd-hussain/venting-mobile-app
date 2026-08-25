@@ -6,7 +6,6 @@ import 'package:venting_mobile_app/domain/data/api/catalog_category_model.dart';
 import 'package:venting_mobile_app/domain/data/exceptions/main_api_exception.dart';
 import 'package:venting_mobile_app/domain/usecase/get_catalog_categories_usecase.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
-import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dart';
 
 /// Result of the interests step — passed to parent for `#8 ventors/register`.
 class VentorInterestsSelection {
@@ -41,11 +40,15 @@ class VentorRegistrationInterestsStep extends StatefulWidget {
 
 class _VentorRegistrationInterestsStepState
     extends State<VentorRegistrationInterestsStep> {
-  static const _cardFill = Color(0xFF1C1826);
-  static const _rowSelected = Color(0xFF2A1F3D);
+  static const _rowFill = Color(0xFF1C1826);
+  static const _iconFill = Color(0xFF2A2140);
   static const _muted = Color(0xFF9B93AB);
-  static const _checkboxBorder = Color(0xFF4A425C);
+  static const _accent = Color(0xFF8A3CFE);
+  static const _progressTrack = Color(0xFF3A2F52);
+  static const _checkboxBorder = Color(0xFF6B5F82);
   static const _fieldFill = Color(0xFF14101C);
+  static const _totalSteps = 3;
+  static const _currentStep = 3;
 
   final Set<String> _selectedIds = {};
   final _otherController = TextEditingController();
@@ -173,141 +176,188 @@ class _VentorRegistrationInterestsStepState
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Align(
-          alignment: AlignmentDirectional.centerStart,
-          child: IconButton(
-            onPressed: widget.onBack,
-            icon: const Icon(
-              Icons.arrow_back_ios_new_rounded,
-              size: 20,
-              color: Colors.white,
-            ),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+          child: Row(
+            children: [
+              Material(
+                color: _rowFill,
+                shape: const CircleBorder(),
+                child: InkWell(
+                  customBorder: const CircleBorder(),
+                  onTap: widget.isSubmitting ? null : widget.onBack,
+                  child: Container(
+                    width: 42,
+                    height: 42,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: _accent.withValues(alpha: 0.55),
+                      ),
+                    ),
+                    child: const Icon(
+                      Icons.arrow_back_rounded,
+                      size: 20,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+              const Spacer(),
+              Text(
+                '$_currentStep/$_totalSteps',
+                style: GoogleFonts.inter(
+                  color: Colors.white,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              const SizedBox(width: 10),
+              Row(
+                children: List.generate(_totalSteps, (i) {
+                  final active = i == _currentStep - 1;
+                  return Padding(
+                    padding: EdgeInsetsDirectional.only(start: i == 0 ? 0 : 5),
+                    child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 220),
+                      width: active ? 28 : 18,
+                      height: 5,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(999),
+                        color: active ? _accent : _progressTrack,
+                      ),
+                    ),
+                  );
+                }),
+              ),
+            ],
           ),
         ),
         Expanded(
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
-            child: Container(
-              decoration: BoxDecoration(
-                color: _cardFill,
-                borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: Colors.white.withValues(alpha: 0.06)),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 20, 20, 8),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          l10n.ventor_reg_interests_title,
-                          style: GoogleFonts.inter(
-                            color: Colors.white,
-                            fontSize: 22,
-                            fontWeight: FontWeight.w700,
-                            height: 1.25,
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          l10n.ventor_reg_interests_subtitle,
-                          style: GoogleFonts.inter(
-                            color: Colors.white.withValues(alpha: 0.65),
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            height: 1.4,
-                          ),
-                        ),
-                      ],
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(24, 28, 24, 0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      l10n.ventor_reg_interests_title,
+                      style: GoogleFonts.inter(
+                        color: Colors.white,
+                        fontSize: 30,
+                        fontWeight: FontWeight.w700,
+                        height: 1.15,
+                      ),
                     ),
-                  ),
-                  Expanded(child: _buildBody(l10n, locale)),
-                  if (customCategory != null)
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
-                      child: TextField(
-                        controller: _otherController,
-                        autofocus: true,
-                        style: GoogleFonts.inter(
-                          color: Colors.white,
-                          fontSize: 15,
-                          fontWeight: FontWeight.w500,
+                    const SizedBox(height: 10),
+                    Text(
+                      l10n.ventor_reg_interests_subtitle,
+                      style: GoogleFonts.inter(
+                        color: _muted,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                        height: 1.45,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(child: _buildBody(l10n, locale)),
+              if (customCategory != null)
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(24, 0, 24, 8),
+                  child: TextField(
+                    controller: _otherController,
+                    autofocus: true,
+                    style: GoogleFonts.inter(
+                      color: Colors.white,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w500,
+                    ),
+                    cursorColor: _accent,
+                    textCapitalization: TextCapitalization.sentences,
+                    textInputAction: TextInputAction.done,
+                    decoration: InputDecoration(
+                      hintText: l10n.ventor_reg_interest_other_hint,
+                      hintStyle: GoogleFonts.inter(
+                        color: _muted,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w400,
+                      ),
+                      filled: true,
+                      fillColor: _fieldFill,
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 14,
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(14),
+                        borderSide: BorderSide(
+                          color: _accent.withValues(alpha: 0.55),
                         ),
-                        cursorColor: SplashColors.purpleMid,
-                        textCapitalization: TextCapitalization.sentences,
-                        textInputAction: TextInputAction.done,
-                        decoration: InputDecoration(
-                          hintText: l10n.ventor_reg_interest_other_hint,
-                          hintStyle: GoogleFonts.inter(
-                            color: _muted,
-                            fontSize: 15,
-                            fontWeight: FontWeight.w400,
-                          ),
-                          filled: true,
-                          fillColor: _fieldFill,
-                          contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 16,
-                            vertical: 14,
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(14),
-                            borderSide: BorderSide(
-                              color: SplashColors.purpleMid.withValues(
-                                alpha: 0.35,
-                              ),
-                            ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(14),
-                            borderSide: const BorderSide(
-                              color: SplashColors.purpleMid,
-                              width: 1.4,
-                            ),
-                          ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(14),
+                        borderSide: const BorderSide(
+                          color: _accent,
+                          width: 1.4,
                         ),
                       ),
                     ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
-                    child: SizedBox(
-                      height: 54,
-                      child: FilledButton(
-                        onPressed: (_canContinue && !widget.isSubmitting)
-                            ? _onFinish
-                            : null,
-                        style: FilledButton.styleFrom(
-                          backgroundColor: SplashColors.purpleMid,
-                          disabledBackgroundColor: SplashColors.purpleMid
-                              .withValues(alpha: 0.35),
-                          foregroundColor: Colors.white,
-                          disabledForegroundColor: Colors.white,
-                          elevation: 0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                          textStyle: GoogleFonts.inter(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                        child: widget.isSubmitting
-                            ? const SizedBox(
-                                width: 22,
-                                height: 22,
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 2.2,
-                                  color: Colors.white,
-                                ),
-                              )
-                            : Text(l10n.ventor_reg_finish),
+                  ),
+                ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(24, 8, 24, 8),
+                child: SizedBox(
+                  height: 56,
+                  child: FilledButton(
+                    onPressed: (_canContinue && !widget.isSubmitting)
+                        ? _onFinish
+                        : null,
+                    style: FilledButton.styleFrom(
+                      backgroundColor: _accent,
+                      disabledBackgroundColor: _accent.withValues(alpha: 0.42),
+                      foregroundColor: Colors.white,
+                      disabledForegroundColor: Colors.white,
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(999),
+                      ),
+                      textStyle: GoogleFonts.inter(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
                       ),
                     ),
+                    child: widget.isSubmitting
+                        ? const SizedBox(
+                            width: 22,
+                            height: 22,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2.2,
+                              color: Colors.white,
+                            ),
+                          )
+                        : Text(l10n.ventor_reg_finish),
                   ),
-                ],
+                ),
               ),
-            ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(24, 0, 24, 20),
+                child: Text(
+                  l10n.ventor_reg_interests_selected_footer(
+                    _selectedIds.length,
+                  ),
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.inter(
+                    color: _muted,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ],
@@ -317,10 +367,7 @@ class _VentorRegistrationInterestsStepState
   Widget _buildBody(VentingMobLocalizations l10n, Locale locale) {
     if (_isLoading) {
       return const Center(
-        child: CircularProgressIndicator(
-          strokeWidth: 2.4,
-          color: SplashColors.purpleMid,
-        ),
+        child: CircularProgressIndicator(strokeWidth: 2.4, color: _accent),
       );
     }
 
@@ -346,7 +393,7 @@ class _VentorRegistrationInterestsStepState
               child: Text(
                 l10n.common_retry,
                 style: GoogleFonts.inter(
-                  color: SplashColors.purpleMid,
+                  color: _accent,
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -367,9 +414,9 @@ class _VentorRegistrationInterestsStepState
     }
 
     return ListView.separated(
-      padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
+      padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
       itemCount: _categories.length,
-      separatorBuilder: (_, _) => const SizedBox(height: 6),
+      separatorBuilder: (_, _) => const SizedBox(height: 10),
       itemBuilder: (context, index) {
         final category = _categories[index];
         final selected = _selectedIds.contains(category.id);
@@ -378,9 +425,6 @@ class _VentorRegistrationInterestsStepState
           iconUrl: category.icon_url,
           iconEmoji: category.icon_emoji,
           selected: selected,
-          selectedFill: _rowSelected,
-          muted: _muted,
-          checkboxBorder: _checkboxBorder,
           onTap: () => _toggle(category.id),
         );
       },
@@ -394,9 +438,6 @@ class _InterestRow extends StatelessWidget {
     required this.iconUrl,
     required this.iconEmoji,
     required this.selected,
-    required this.selectedFill,
-    required this.muted,
-    required this.checkboxBorder,
     required this.onTap,
   });
 
@@ -404,57 +445,63 @@ class _InterestRow extends StatelessWidget {
   final String iconUrl;
   final String iconEmoji;
   final bool selected;
-  final Color selectedFill;
-  final Color muted;
-  final Color checkboxBorder;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: selected ? selectedFill : Colors.transparent,
-      borderRadius: BorderRadius.circular(14),
+      color: _VentorRegistrationInterestsStepState._rowFill,
+      borderRadius: BorderRadius.circular(16),
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(14),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        borderRadius: BorderRadius.circular(16),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(
+              color: selected
+                  ? _VentorRegistrationInterestsStepState._accent.withValues(
+                      alpha: 0.55,
+                    )
+                  : Colors.white.withValues(alpha: 0.06),
+            ),
+          ),
           child: Row(
             children: [
-              _InterestIcon(
-                url: iconUrl,
-                emoji: iconEmoji,
-                selected: selected,
-                muted: muted,
-              ),
-              const SizedBox(width: 12),
+              _InterestIcon(url: iconUrl, emoji: iconEmoji, selected: selected),
+              const SizedBox(width: 14),
               Expanded(
                 child: Text(
                   label,
                   style: GoogleFonts.inter(
-                    color: selected ? Colors.white : muted,
+                    color: selected
+                        ? Colors.white
+                        : _VentorRegistrationInterestsStepState._muted,
                     fontSize: 15,
-                    fontWeight: selected ? FontWeight.w600 : FontWeight.w500,
+                    fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
                   ),
                 ),
               ),
               AnimatedContainer(
                 duration: const Duration(milliseconds: 160),
-                width: 24,
-                height: 24,
+                width: 22,
+                height: 22,
                 decoration: BoxDecoration(
-                  color: selected ? SplashColors.purpleMid : Colors.transparent,
-                  borderRadius: BorderRadius.circular(6),
+                  color: Colors.transparent,
+                  borderRadius: BorderRadius.circular(5),
                   border: Border.all(
-                    color: selected ? SplashColors.purpleMid : checkboxBorder,
-                    width: 1.6,
+                    color: selected
+                        ? _VentorRegistrationInterestsStepState._accent
+                        : _VentorRegistrationInterestsStepState._checkboxBorder,
+                    width: 1.5,
                   ),
                 ),
                 child: selected
                     ? const Icon(
                         Icons.check_rounded,
-                        size: 16,
-                        color: Colors.white,
+                        size: 14,
+                        color: _VentorRegistrationInterestsStepState._accent,
                       )
                     : null,
               ),
@@ -471,13 +518,11 @@ class _InterestIcon extends StatelessWidget {
     required this.url,
     required this.emoji,
     required this.selected,
-    required this.muted,
   });
 
   final String url;
   final String emoji;
   final bool selected;
-  final Color muted;
 
   @override
   Widget build(BuildContext context) {
@@ -489,9 +534,7 @@ class _InterestIcon extends StatelessWidget {
       width: 40,
       height: 40,
       decoration: BoxDecoration(
-        color: selected
-            ? SplashColors.purpleMid.withValues(alpha: 0.22)
-            : Colors.white.withValues(alpha: 0.05),
+        color: _VentorRegistrationInterestsStepState._iconFill,
         borderRadius: BorderRadius.circular(12),
       ),
       clipBehavior: Clip.antiAlias,
@@ -502,33 +545,25 @@ class _InterestIcon extends StatelessWidget {
               fit: BoxFit.cover,
               width: 40,
               height: 40,
-              placeholder: (_, _) => _emojiOrFallback(
-                trimmedEmoji,
-                selected: selected,
-                muted: muted,
-              ),
-              errorWidget: (_, _, _) => _emojiOrFallback(
-                trimmedEmoji,
-                selected: selected,
-                muted: muted,
-              ),
+              placeholder: (_, _) =>
+                  _emojiOrFallback(trimmedEmoji, selected: selected),
+              errorWidget: (_, _, _) =>
+                  _emojiOrFallback(trimmedEmoji, selected: selected),
             )
-          : _emojiOrFallback(trimmedEmoji, selected: selected, muted: muted),
+          : _emojiOrFallback(trimmedEmoji, selected: selected),
     );
   }
 
-  static Widget _emojiOrFallback(
-    String emoji, {
-    required bool selected,
-    required Color muted,
-  }) {
+  static Widget _emojiOrFallback(String emoji, {required bool selected}) {
     if (emoji.isNotEmpty) {
       return Text(emoji, style: const TextStyle(fontSize: 20));
     }
     return Icon(
       Icons.category_outlined,
       size: 22,
-      color: selected ? SplashColors.purpleMid : muted,
+      color: selected
+          ? _VentorRegistrationInterestsStepState._accent
+          : _VentorRegistrationInterestsStepState._muted,
     );
   }
 }

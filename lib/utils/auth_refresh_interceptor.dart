@@ -28,6 +28,8 @@ class AuthRefreshInterceptor extends Interceptor {
     'v1/auth/register',
     'v1/auth/social',
     'v1/auth/check-email',
+    'v1/auth/forgot-password',
+    'v1/auth/reset-password',
     'v1/auth/refresh',
   ];
 

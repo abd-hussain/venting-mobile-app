@@ -269,6 +269,30 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
   String get email_registration_sign_in => 'تسجيل الدخول';
 
   @override
+  String get email_registration_forgot_password => 'نسيت كلمة المرور؟';
+
+  @override
+  String get forgot_password_title => 'نسيت كلمة المرور؟';
+
+  @override
+  String get forgot_password_subtitle =>
+      'أكّد بريدك وسنرسل رابطاً آمناً لإعادة تعيين كلمة المرور.';
+
+  @override
+  String get forgot_password_continue => 'متابعة';
+
+  @override
+  String get forgot_password_sent_title => 'تحقق من بريدك';
+
+  @override
+  String forgot_password_sent_body(String email) {
+    return 'إذا وُجد حساب لـ $email، ستصلك رسالة لإعادة التعيين قريباً. افتح الرابط لاختيار كلمة مرور جديدة.';
+  }
+
+  @override
+  String get forgot_password_back_to_sign_in => 'العودة لتسجيل الدخول';
+
+  @override
   String get email_registration_invalid_email =>
       'يرجى إدخال بريد إلكتروني صالح';
 
@@ -780,13 +804,17 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
   String get listener_reg_notif_skip => 'تخطي';
 
   @override
-  String get ventor_reg_title => 'اختر اسمًا مستعارًا';
+  String get ventor_reg_title => 'بما نناديك؟';
 
   @override
-  String get ventor_reg_subtitle => 'هكذا سيراك المستمعون.';
+  String get ventor_reg_subtitle =>
+      'سيراك المستمعون بهذا الاسم. ابقَ مجهولًا — اسمك الحقيقي غير مطلوب أبدًا.';
 
   @override
-  String get ventor_reg_nickname_hint => 'مثال: QuietSoul';
+  String get ventor_reg_nickname_label => 'اسمك المستعار';
+
+  @override
+  String get ventor_reg_nickname_hint => 'مثال: johndoe';
 
   @override
   String get ventor_reg_nickname_required => 'يرجى إدخال اسم مستعار';
@@ -795,19 +823,19 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
   String get ventor_reg_suggestions_label => 'جرّب أحد هذه الأسماء';
 
   @override
-  String get ventor_reg_suggestion_1 => 'QuietSoul';
+  String get ventor_reg_suggestion_1 => 'روح هادئة';
 
   @override
-  String get ventor_reg_suggestion_2 => 'SoftRain';
+  String get ventor_reg_suggestion_2 => 'مطر ناعم';
 
   @override
-  String get ventor_reg_suggestion_3 => 'NightOwl';
+  String get ventor_reg_suggestion_3 => 'بومة الليل';
 
   @override
-  String get ventor_reg_suggestion_4 => 'CalmWave';
+  String get ventor_reg_suggestion_4 => 'موج هادئ';
 
   @override
-  String get ventor_reg_suggestion_5 => 'GentleSky';
+  String get ventor_reg_suggestion_5 => 'سماء لطيفة';
 
   @override
   String get ventor_reg_gender_label => 'الجنس';
@@ -825,21 +853,21 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
   String get ventor_reg_gender_required => 'يرجى اختيار خيار الجنس';
 
   @override
-  String get ventor_reg_avatar_label => 'أضف صورة رمزية للملف (اختياري)';
+  String get ventor_reg_avatar_label => 'اختر صورة رمزية';
 
   @override
   String get ventor_reg_avatar_gallery => 'المعرض';
 
   @override
   String get ventor_reg_change_anytime =>
-      'يمكنك تغييره في أي وقت من إعدادات ملفك';
+      'يمكنك تغيير ذلك في أي وقت من الإعدادات';
 
   @override
-  String get ventor_reg_interests_title => 'عن ماذا تريد أن تتحدث؟';
+  String get ventor_reg_interests_title => 'ما الذي يشغل بالك؟';
 
   @override
   String get ventor_reg_interests_subtitle =>
-      'اختر موضوعًا واحدًا أو أكثر. هذا يساعدنا في ربطك بالمستمعين المناسبين.';
+      'اختر المواضيع. سنطابقك فورًا مع المستمعين المناسبين.';
 
   @override
   String get ventor_reg_interest_relationships => 'العلاقات';
@@ -875,7 +903,12 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
   String get ventor_reg_interest_other_hint => 'يرجى التوضيح';
 
   @override
-  String get ventor_reg_finish => 'الذهاب إلى لوحة التحكم';
+  String get ventor_reg_finish => 'اعثر على مستمعِيّ';
+
+  @override
+  String ventor_reg_interests_selected_footer(int count) {
+    return '$count محدد، يمكنك تغيير ذلك لاحقًا';
+  }
 
   @override
   String get ventor_reg_language_title => 'اختر لغتك';

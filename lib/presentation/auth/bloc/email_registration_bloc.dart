@@ -5,7 +5,6 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:logger_manager/logger_manager.dart';
 import 'package:preferences/preferences.dart';
 import 'package:venting_mobile_app/domain/data/api/auth_check_email_response_model.dart';
-import 'package:venting_mobile_app/domain/data/api/auth_me_response_model.dart';
 import 'package:venting_mobile_app/domain/data/api/auth_session_response_model.dart';
 import 'package:venting_mobile_app/domain/data/exceptions/main_api_exception.dart';
 import 'package:venting_mobile_app/domain/usecase/auth_check_email_usecase.dart';
@@ -238,50 +237,33 @@ class EmailRegistrationBloc
         return;
       }
 
-      await _persistSessionTokens(session);
+      await _persistSession(session);
       SessionExpiredHandler.suppressNavigationFor(const Duration(seconds: 20));
 
       final sessionUser = session.data.user;
-
-      // Incomplete registration (e.g. l@l.com) → route from session immediately.
-      // Do not wait on /me; a failure there was showing a false error after login.
-      if (!sessionUser.registration_complete) {
-        if (!emit.isDone) {
-          emit(
-            state.copyWith(
-              isSubmitting: false,
-              submitErrorMessage: '',
-              destination: AuthSessionRouting.destinationForSessionUser(
-                sessionUser,
-              ),
-            ),
-          );
-        }
-        unawaited(_refreshAuthMeInBackground());
-        return;
-      }
-
-      // Completed accounts: /me decides listener under_review / home / etc.
-      final meResult = await _authMeUsecase().run();
-      final authMe = meResult.fold<AuthMeData?>((error) {
-        LoggerManagerBase.logErrorMessage(
-          error: error,
-          message: 'EmailRegistrationBloc: /v1/auth/me failed after auth',
-        );
-        return null;
-      }, (response) => response.data);
+      // Route immediately from the session (same as social). Waiting on /me
+      // after a successful login kept the spinner spinning / kicked users out.
+      final destination = AuthSessionRouting.destinationForSessionUser(
+        sessionUser,
+        listenerProfileStatus: state.checkEmailData?.listener_profile_status,
+      );
+      LoggerManagerBase.logInfo(
+        message:
+            'EmailRegistrationBloc: auth ok → $destination '
+            '(registration_complete=${sessionUser.registration_complete}, '
+            'role=${sessionUser.role})',
+      );
 
       if (!emit.isDone) {
         emit(
           state.copyWith(
             isSubmitting: false,
             submitErrorMessage: '',
-            destination: authMe != null
-                ? AuthSessionRouting.destinationForAuthMe(authMe)
-                : AuthSessionRouting.destinationForSessionUser(sessionUser),
+            destination: destination,
           ),
         );
       }
+      unawaited(_refreshAuthMeInBackground());
     } on Object catch (error) {
       LoggerManagerBase.logErrorMessage(
         error: error,
@@ -310,7 +292,8 @@ class EmailRegistrationBloc
     }, (_) {});
   }
 
-  Future<void> _persistSessionTokens(AuthSessionResponseModel session) async {
+  Future<void> _persistSession(AuthSessionResponseModel session) async {
+    final user = session.data.user;
     await _ventingPreferences.setValue(
       SavedConstants.accessToken,
       session.data.access_token,
@@ -318,6 +301,15 @@ class EmailRegistrationBloc
     await _ventingPreferences.setValue(
       SavedConstants.refreshToken,
       session.data.refresh_token,
+    );
+    await _ventingPreferences.setValue(SavedConstants.alreadyUser, user.email);
+    await _ventingPreferences.setValue(
+      SavedConstants.compleateRegistration,
+      user.registration_complete.toString(),
+    );
+    await _ventingPreferences.setValue(
+      SavedConstants.userType,
+      user.role == 'listener' ? 'lissener' : 'ventor',
     );
   }
 

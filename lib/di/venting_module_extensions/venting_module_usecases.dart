@@ -5,6 +5,7 @@ import 'package:venting_mobile_app/di/venting_module.dart';
 import 'package:venting_mobile_app/domain/repository/api/auth/auth_change_password_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/auth/auth_check_email_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/auth/auth_delete_account_repository.dart';
+import 'package:venting_mobile_app/domain/repository/api/auth/auth_forgot_password_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/auth/auth_login_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/auth/auth_logout_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/auth/auth_me_repository.dart';
@@ -19,6 +20,7 @@ import 'package:venting_mobile_app/domain/repository/app/social_sign_in_reposito
 import 'package:venting_mobile_app/domain/usecase/auth_change_password_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/auth_check_email_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/auth_delete_account_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/auth_forgot_password_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/auth_login_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/auth_logout_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/auth_me_usecase.dart';
@@ -46,6 +48,10 @@ mixin VentingModuleUsecases on VentingModule {
 
   AuthLoginUsecase authLoginUsecase(AuthLoginRepository authLoginRepository) =>
       AuthLoginUsecase(authLoginRepository);
+
+  AuthForgotPasswordUsecase authForgotPasswordUsecase(
+    AuthForgotPasswordRepository authForgotPasswordRepository,
+  ) => AuthForgotPasswordUsecase(authForgotPasswordRepository);
 
   AuthRefreshTokenUsecase authRefreshTokenUsecase(
     AuthRefreshTokenRepository authRefreshTokenRepository,
@@ -125,6 +131,9 @@ mixin VentingModuleUsecases on VentingModule {
     );
     getIt.registerFactory<AuthLoginUsecase>(
       () => authLoginUsecase(getIt<AuthLoginRepository>()),
+    );
+    getIt.registerFactory<AuthForgotPasswordUsecase>(
+      () => authForgotPasswordUsecase(getIt<AuthForgotPasswordRepository>()),
     );
     getIt.registerFactory<AuthRefreshTokenUsecase>(
       () => authRefreshTokenUsecase(

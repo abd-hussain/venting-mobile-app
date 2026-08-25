@@ -593,6 +593,48 @@ abstract class VentingMobLocalizations {
   /// **'Sign in'**
   String get email_registration_sign_in;
 
+  /// No description provided for @email_registration_forgot_password.
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot Password?'**
+  String get email_registration_forgot_password;
+
+  /// No description provided for @forgot_password_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot password?'**
+  String get forgot_password_title;
+
+  /// No description provided for @forgot_password_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm your email and we’ll send a secure link to reset your password.'**
+  String get forgot_password_subtitle;
+
+  /// No description provided for @forgot_password_continue.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get forgot_password_continue;
+
+  /// No description provided for @forgot_password_sent_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Check your email'**
+  String get forgot_password_sent_title;
+
+  /// No description provided for @forgot_password_sent_body.
+  ///
+  /// In en, this message translates to:
+  /// **'If an account exists for {email}, you’ll receive a reset link shortly. Open it to choose a new password.'**
+  String forgot_password_sent_body(String email);
+
+  /// No description provided for @forgot_password_back_to_sign_in.
+  ///
+  /// In en, this message translates to:
+  /// **'Back to Sign in'**
+  String get forgot_password_back_to_sign_in;
+
   /// No description provided for @email_registration_invalid_email.
   ///
   /// In en, this message translates to:
@@ -1538,19 +1580,25 @@ abstract class VentingMobLocalizations {
   /// No description provided for @ventor_reg_title.
   ///
   /// In en, this message translates to:
-  /// **'Choose a nickname'**
+  /// **'What should we Call you?'**
   String get ventor_reg_title;
 
   /// No description provided for @ventor_reg_subtitle.
   ///
   /// In en, this message translates to:
-  /// **'This is how listeners will see you.'**
+  /// **'Listeners will see this. Stay anonymous — your real name is never required.'**
   String get ventor_reg_subtitle;
+
+  /// No description provided for @ventor_reg_nickname_label.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Nick Name'**
+  String get ventor_reg_nickname_label;
 
   /// No description provided for @ventor_reg_nickname_hint.
   ///
   /// In en, this message translates to:
-  /// **'e.g. QuietSoul'**
+  /// **'e.g. johndoe'**
   String get ventor_reg_nickname_hint;
 
   /// No description provided for @ventor_reg_nickname_required.
@@ -1616,7 +1664,7 @@ abstract class VentingMobLocalizations {
   /// No description provided for @ventor_reg_gender_prefer_not.
   ///
   /// In en, this message translates to:
-  /// **'Prefer not to say'**
+  /// **'Not prefer'**
   String get ventor_reg_gender_prefer_not;
 
   /// No description provided for @ventor_reg_gender_required.
@@ -1628,7 +1676,7 @@ abstract class VentingMobLocalizations {
   /// No description provided for @ventor_reg_avatar_label.
   ///
   /// In en, this message translates to:
-  /// **'Add a profile avatar (optional)'**
+  /// **'Pick an Avatar'**
   String get ventor_reg_avatar_label;
 
   /// No description provided for @ventor_reg_avatar_gallery.
@@ -1640,19 +1688,19 @@ abstract class VentingMobLocalizations {
   /// No description provided for @ventor_reg_change_anytime.
   ///
   /// In en, this message translates to:
-  /// **'You can change it anytime from your profile settings'**
+  /// **'You can change this anytime in settings'**
   String get ventor_reg_change_anytime;
 
   /// No description provided for @ventor_reg_interests_title.
   ///
   /// In en, this message translates to:
-  /// **'What do you want to vent about?'**
+  /// **'What\'s on your mind?'**
   String get ventor_reg_interests_title;
 
   /// No description provided for @ventor_reg_interests_subtitle.
   ///
   /// In en, this message translates to:
-  /// **'Choose one or more topics. This helps us match you with the right listeners.'**
+  /// **'Pick topics. We\'ll match you with the right listeners instantly.'**
   String get ventor_reg_interests_subtitle;
 
   /// No description provided for @ventor_reg_interest_relationships.
@@ -1724,8 +1772,14 @@ abstract class VentingMobLocalizations {
   /// No description provided for @ventor_reg_finish.
   ///
   /// In en, this message translates to:
-  /// **'Go to Dashboard'**
+  /// **'Find my listeners'**
   String get ventor_reg_finish;
+
+  /// No description provided for @ventor_reg_interests_selected_footer.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} selected, you can change this later'**
+  String ventor_reg_interests_selected_footer(int count);
 
   /// No description provided for @ventor_reg_language_title.
   ///
