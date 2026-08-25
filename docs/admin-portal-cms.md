@@ -116,8 +116,8 @@ Portal **reads/writes** these heavily:
 | 49 | `admin_audit_logs` | Immutable action history |
 | 50 | `admin_notes` | Internal notes on a user/session/report |
 | 51 | `app_feature_flags` | Remote flags for mobile |
-| 52 | `app_config_kv` | Key/value config (tier rates, fees, URLs) |
-| 53 | `cms_pages` | Help / legal / marketing HTML or markdown |
+| 52 | `app_config_kv` | Key/value config (tier rates, fees, etc.) |
+| 53 | `cms_pages` | Marketing / optional CMS HTML (not the 6 static legal/help pages) |
 | 54 | `cms_banners` | In-app or portal promo banners |
 | 55 | `moderation_actions` | Warn / suspend / ban history (normalized) |
 
@@ -127,9 +127,9 @@ Portal **reads/writes** these heavily:
 
 | Metric | Count |
 |--------|------:|
-| Existing mobile tables | **44** |
+| Existing mobile tables | **43** |
 | **New CMS tables** | **12** |
-| **Grand total tables** | **56** |
+| **Grand total tables** | **55** |
 
 ---
 
@@ -242,10 +242,10 @@ Mobile fetches via a small public/config endpoint or remote-config SDK.
 | `updated_by` | UUID | ? |
 | `updated_at` | TIMESTAMPTZ | |
 
-Examples: `earnings_tiers`, `voice_change_fee`, `terms_url`, `privacy_url`, `min_payout_amount`, `support_email`.
+Examples: `earnings_tiers`, `voice_change_fee`, `min_payout_amount`, `support_email`.
 
----
 
+### 53. `cms_pages`
 ### 53. `cms_pages`
 
 | Column | Type | Notes |
@@ -569,8 +569,9 @@ Used by: ventor registration interests step (`audience=ventor`), listener comfor
 
 Mobile may expose public `GET /v1/cms/pages/{slug}` and `GET /v1/cms/banners` (2 extra public endpoints — optional).
 
----
+> **Static legal/help:** Terms, Privacy, and Help are **6 static HTML files** (EN/AR) hosted at `webContentBaseUrl` — see mobile [`docs/static-web/`](./static-web/README.md). Not portal CMS tables or mobile REST endpoints.
 
+### 7.14 Admins
 ### 7.14 Admins & RBAC (7)
 
 | # | Method | Path | Use |
@@ -625,8 +626,9 @@ Mobile may expose public `GET /v1/cms/pages/{slug}` and `GET /v1/cms/banners` (2
 | `/achievements` | Achievements | A64–A65 |
 | `/notifications` | Broadcast | A67–A69 |
 | `/config` | Flags + KV | A70–A75 |
-| `/cms/pages` | Help content | A76–A79 |
+| `/cms/pages` | Optional CMS content | A76–A79 |
 | `/cms/banners` | Banners | A80–A83 |
+| *(static host)* | Terms / Privacy / Help EN+AR | Deploy `docs/static-web/` — not admin APIs |
 | `/staff` | Admins | A84–A90 |
 | `/audit` | Audit log | A91 |
 | `/analytics` | GA + funnels | A95–A97 + GA4 |

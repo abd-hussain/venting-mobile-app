@@ -1466,6 +1466,8 @@ Empty → `200` + `items: []`.
 - [ ] Search `q` filters server-side **or** mobile filters client-side (either OK for v1; prefer client filter for small lists)
 
 ---
+
+
 ## Efficiency guidelines (for implementers)
 
 1. **Prefer aggregates** — `#11` ventor home and `#30` listener dashboard load one screen in one round-trip.
@@ -1481,11 +1483,25 @@ Empty → `200` + `items: []`.
 
 | URL | Use | 
 |-----|-----|
-| `{termsUrl}` | Terms WebView |
-| `{privacyUrl}` | Privacy WebView |
-| `{helpCenterBaseUrl}/…` | Help articles |
+| Static HTML (see below) | Terms / Privacy / Help (EN + AR) — opened in WebView |
 | `mailto:support@venting.app` | Support email |
 | WhatsApp `wa.me` | Support / share |
+
+### Static legal & help pages *(not REST — no server API round-trip for metadata)*
+
+Ship **6** static files under one shared `webContentBaseUrl` for both flavors:
+
+`https://venting-3a5ebaed4621.herokuapp.com`
+
+Source HTML lives in [`docs/static-web/`](./static-web/README.md).
+
+| Page | EN | AR |
+|------|----|----|
+| Terms of Service | `/legal/en/terms.html` | `/legal/ar/terms.html` |
+| Privacy Policy | `/legal/en/privacy.html` | `/legal/ar/privacy.html` |
+| Help & Support | `/help/en/index.html` | `/help/ar/index.html` |
+
+Mobile picks locale from the app language and opens the matching URL (Help tiles append `#fragment` anchors on the same help page). **No** `GET /v1/legal/*` or `GET /v1/help/*` endpoints.
 
 ---
 
@@ -1593,9 +1609,9 @@ Empty → `200` + `items: []`.
 
 ## Final count
 
-**Total unique API endpoints: 73**
+**Total unique API endpoints: 77**
 
-**Live / wired in the mobile app today: 0**
+**Live / wired in the mobile app today: 0** (auth + catalog clients exist; backend contracts still proposed where marked). Static legal/help HTML is separate from this REST count.
 
 ---
 

@@ -3,9 +3,9 @@ import 'package:venting_mobile_app/config/venting_env.dart';
 abstract interface class AppConfig {
   String get baseUrl;
   VentingEnv get env;
-  String get termsOfServiceUrl;
-  String get privacyPolicyUrl;
-  String get helpCenterBaseUrl;
+
+  /// Base URL for static legal/help HTML (same host for dev + prod).
+  String get webContentBaseUrl;
 
   /// Web OAuth client ID — preferred `aud` / serverClientId for ID tokens.
   String get googleWebClientId;

@@ -909,7 +909,6 @@ Append-only money movement (earnings chart + audit).
 | `created_at` | TIMESTAMPTZ | |
 | | | **UQ (promo_code_id, ventor_id, session_id)** optional |
 
----
 
 ## Design choices (performance & efficiency)
 
@@ -929,7 +928,7 @@ Append-only money movement (earnings chart + audit).
 | Store privacy + notification prefs as JSONB on profiles | 4 | Harder to enforce bool columns / migrate |
 | Skip `promo_redemptions` (log only on `session_payments`) | 1 | Weaker promo abuse control |
 
-**Recommended production set: keep all 44.**
+**Recommended production set: keep all 43.** Legal/help pages are static HTML (see `docs/static-web/`), not DB tables.
 
 ---
 
@@ -963,6 +962,7 @@ Append-only money movement (earnings chart + audit).
 | Rewards / invites | `reward_offers`, `reward_trades`, `invite_codes`, `invite_events` |
 | Notifications | `notifications` |
 | Promo | `promo_codes`, `promo_redemptions` |
+| Static legal/help | Hosted HTML under `webContentBaseUrl` — not database tables |
 
 ---
 

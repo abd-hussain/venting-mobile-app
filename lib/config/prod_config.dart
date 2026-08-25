@@ -10,16 +10,8 @@ class ProdConfig implements AppConfig {
   @override
   VentingEnv get env => VentingEnv.prod;
 
-  // TODO: Replace with real production Terms / Privacy URLs.
   @override
-  String get termsOfServiceUrl => 'https://venting.app/terms';
-
-  @override
-  String get privacyPolicyUrl => 'https://venting.app/privacy';
-
-  // TODO: Replace with real listener help center URLs.
-  @override
-  String get helpCenterBaseUrl => 'https://venting.app/help';
+  String get webContentBaseUrl => 'https://venting-3a5ebaed4621.herokuapp.com';
 
   @override
   String get googleWebClientId =>

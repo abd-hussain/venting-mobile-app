@@ -367,12 +367,14 @@ Treat accept / decline / redeem / cancel as **idempotent**: safe to retry; handl
 
 ---
 
-## Part G — Non-API URLs (do not invent REST for these)
+## Part G — Static web content & other non-session URLs
 
-| URL / action | Where |
-|--------------|--------|
-| Terms / Privacy WebViews | Registration & settings links |
-| Help center articles | Help / support screens |
+Terms, Privacy, and Help are **static HTML** (6 pages: 3 × EN/AR) under one shared host for both flavors: `https://venting-3a5ebaed4621.herokuapp.com` (`AppConfig.webContentBaseUrl`). See [`static-web/README.md`](./static-web/README.md). No REST call before opening WebView.
+
+| # / URL | Where |
+|---------|--------|
+| Static `/legal/{en\|ar}/terms.html` · `privacy.html` | Auth, registration, About — locale from app language |
+| Static `/help/{en\|ar}/index.html#…` | Help & Support tiles, About guidelines/licenses |
 | `mailto:support@venting.app` | Contact support |
 | WhatsApp `wa.me` | Support or share |
 
@@ -393,11 +395,12 @@ Treat accept / decline / redeem / cancel as **idempotent**: safe to retry; handl
 | Notifications `#68–70` | — | ✓ (inbox as specified) |
 | Training `#71–72` | — | ✓ |
 | Promo `#73` | ✓ | — |
+| Catalog `#74–75` | ✓ | ✓ (listener languages/comfort) |
 
 ---
 
 ## Endpoint count
 
-**73** unique REST endpoints — full contracts in [`api-endpoints.md`](./api-endpoints.md).
+**77** unique REST endpoints — full contracts in [`api-endpoints.md`](./api-endpoints.md).
 
 *Usage mapping derived from the proposed screen audit and presentation-layer TODO markers.*

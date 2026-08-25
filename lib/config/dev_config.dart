@@ -10,16 +10,8 @@ class DevConfig implements AppConfig {
   @override
   VentingEnv get env => VentingEnv.dev;
 
-  // TODO: Replace with real dev Terms / Privacy URLs.
   @override
-  String get termsOfServiceUrl => 'https://dev.venting.app/terms';
-
-  @override
-  String get privacyPolicyUrl => 'https://dev.venting.app/privacy';
-
-  // TODO: Replace with real listener help center URLs.
-  @override
-  String get helpCenterBaseUrl => 'https://dev.venting.app/help';
+  String get webContentBaseUrl => 'https://venting-3a5ebaed4621.herokuapp.com';
 
   @override
   String get googleWebClientId =>

@@ -46,8 +46,31 @@ class $AssetsImagesGen {
   /// File path: assets/images/language_english_icon.svg
   String get languageEnglishIcon => 'assets/images/language_english_icon.svg';
 
+  /// File path: assets/images/listener_welcom_icon.svg
+  String get listenerWelcomIcon => 'assets/images/listener_welcom_icon.svg';
+
+  /// File path: assets/images/sign_apple_icon.svg
+  String get signAppleIcon => 'assets/images/sign_apple_icon.svg';
+
+  /// File path: assets/images/sign_email_icon.svg
+  String get signEmailIcon => 'assets/images/sign_email_icon.svg';
+
+  /// File path: assets/images/sign_google_icon.svg
+  String get signGoogleIcon => 'assets/images/sign_google_icon.svg';
+
+  /// File path: assets/images/ventor_welcome_icon.svg
+  String get ventorWelcomeIcon => 'assets/images/ventor_welcome_icon.svg';
+
   /// List of all assets
-  List<String> get values => [languageArabicIcon, languageEnglishIcon];
+  List<String> get values => [
+    languageArabicIcon,
+    languageEnglishIcon,
+    listenerWelcomIcon,
+    signAppleIcon,
+    signEmailIcon,
+    signGoogleIcon,
+    ventorWelcomeIcon,
+  ];
 }
 
 class Assets {

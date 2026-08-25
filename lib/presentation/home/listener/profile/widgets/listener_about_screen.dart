@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:venting_mobile_app/config/app_config.dart';
-import 'package:venting_mobile_app/di/di_container.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
 import 'package:venting_mobile_app/presentation/home/listener/profile/listener_profile_theme.dart';
 import 'package:venting_mobile_app/presentation/home/listener/profile/widgets/whats_new_bottom_sheet.dart';
 import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dart';
-import 'package:venting_mobile_app/shared_widgets/app_webview_screen.dart';
+import 'package:venting_mobile_app/utils/help_topic_opener.dart';
+import 'package:venting_mobile_app/utils/legal_document_opener.dart';
+import 'package:venting_mobile_app/utils/static_web_content.dart';
 
 /// Opens the About Venting screen.
 Future<void> openListenerAboutScreen({required BuildContext context}) {
@@ -61,19 +61,9 @@ class _ListenerAboutScreenState extends State<ListenerAboutScreen> {
     }
   }
 
-  Future<void> _openWebView({required String title, required String url}) {
-    return Navigator.of(context).push<void>(
-      MaterialPageRoute(
-        builder: (_) => AppWebViewScreen(title: title, url: url),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final l10n = VentingMobLocalizations.of(context);
-    final config = diContainer<AppConfig>();
-    final helpBase = config.helpCenterBaseUrl;
     final versionLabel = _version == null || _buildNumber == null
         ? null
         : l10n.listener_about_version(_version!, _buildNumber!);
@@ -179,30 +169,38 @@ class _ListenerAboutScreenState extends State<ListenerAboutScreen> {
                   ),
                   _AboutTile(
                     label: l10n.listener_about_terms,
-                    onTap: () => _openWebView(
+                    onTap: () => openLegalDocument(
+                      context,
+                      kind: LegalDocumentKind.terms,
                       title: l10n.listener_about_terms,
-                      url: config.termsOfServiceUrl,
+                      useGoRouter: false,
                     ),
                   ),
                   _AboutTile(
                     label: l10n.listener_about_privacy,
-                    onTap: () => _openWebView(
+                    onTap: () => openLegalDocument(
+                      context,
+                      kind: LegalDocumentKind.privacy,
                       title: l10n.listener_about_privacy,
-                      url: config.privacyPolicyUrl,
+                      useGoRouter: false,
                     ),
                   ),
                   _AboutTile(
                     label: l10n.listener_about_community_guidelines,
-                    onTap: () => _openWebView(
+                    onTap: () => openHelpTopic(
+                      context,
+                      topic: HelpTopicKind.communityGuidelines,
                       title: l10n.listener_about_community_guidelines,
-                      url: '$helpBase/community-guidelines',
+                      useGoRouter: false,
                     ),
                   ),
                   _AboutTile(
                     label: l10n.listener_about_licenses,
-                    onTap: () => _openWebView(
+                    onTap: () => openHelpTopic(
+                      context,
+                      topic: HelpTopicKind.licenses,
                       title: l10n.listener_about_licenses,
-                      url: '$helpBase/licenses',
+                      useGoRouter: false,
                     ),
                     showDivider: false,
                   ),

@@ -4,14 +4,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:venting_mobile_app/config/app_config.dart';
 import 'package:venting_mobile_app/di/di_container.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
 import 'package:venting_mobile_app/presentation/auth/auth_navigation.dart';
 import 'package:venting_mobile_app/presentation/auth/bloc/auth_bloc.dart';
 import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dart';
-import 'package:venting_mobile_app/shared_widgets/app_webview_screen.dart';
+import 'package:venting_mobile_app/utils/legal_document_opener.dart';
 import 'package:venting_mobile_app/utils/router_config.dart';
+import 'package:venting_mobile_app/utils/static_web_content.dart';
 
 enum AuthUserType { ventor, lissener }
 
@@ -62,27 +62,21 @@ class _AuthView extends StatelessWidget {
   final AuthUserType userType;
   final String Function(VentingMobLocalizations l10n) subtitleBuilder;
 
-  void _openTerms(BuildContext context) {
+  Future<void> _openTerms(BuildContext context) {
     final l10n = VentingMobLocalizations.of(context);
-    final config = diContainer<AppConfig>();
-    context.push(
-      AppRoutes.webView,
-      extra: AppWebViewArgs(
-        title: l10n.listener_reg_terms,
-        url: config.termsOfServiceUrl,
-      ),
+    return openLegalDocument(
+      context,
+      kind: LegalDocumentKind.terms,
+      title: l10n.listener_reg_terms,
     );
   }
 
-  void _openPrivacy(BuildContext context) {
+  Future<void> _openPrivacy(BuildContext context) {
     final l10n = VentingMobLocalizations.of(context);
-    final config = diContainer<AppConfig>();
-    context.push(
-      AppRoutes.webView,
-      extra: AppWebViewArgs(
-        title: l10n.listener_reg_privacy,
-        url: config.privacyPolicyUrl,
-      ),
+    return openLegalDocument(
+      context,
+      kind: LegalDocumentKind.privacy,
+      title: l10n.listener_reg_privacy,
     );
   }
 
