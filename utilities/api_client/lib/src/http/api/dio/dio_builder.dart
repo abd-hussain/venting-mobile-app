@@ -1,9 +1,9 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:dio/io.dart';
 import 'package:flutter/foundation.dart';
 import 'package:logger_manager/logger_manager.dart';
-import 'package:native_dio_adapter/native_dio_adapter.dart';
 
 class DioBuilder {
   @visibleForTesting
@@ -11,8 +11,6 @@ class DioBuilder {
     'FLUTTER_TEST',
   );
 
-  @visibleForTesting
-  static HttpClientAdapter Function() createNativeAdapter = NativeAdapter.new;
   String? _baseUrl;
   final List<Interceptor> _interceptors = [];
   HttpClientAdapter? _clientAdapter;
@@ -38,9 +36,10 @@ class DioBuilder {
     return this;
   }
 
+  /// Uses Dart [IOHttpClientAdapter] — reliable for multipart file uploads.
   DioBuilder withNativeAdapter() {
     if (useNativeAdapter) {
-      _clientAdapter = createNativeAdapter();
+      _clientAdapter = IOHttpClientAdapter();
     }
     return this;
   }
@@ -49,27 +48,24 @@ class DioBuilder {
     final dio = Dio(
       BaseOptions(
         baseUrl: _baseUrl ?? '',
-        connectTimeout: const Duration(seconds: 10),
-        receiveTimeout: const Duration(seconds: 20),
-        sendTimeout: const Duration(seconds: 20),
+        connectTimeout: const Duration(seconds: 30),
+        receiveTimeout: const Duration(minutes: 5),
+        sendTimeout: const Duration(minutes: 5),
       ),
     );
 
-    // Add interceptors
     for (final interceptor in _interceptors) {
       dio.interceptors.add(interceptor);
     }
 
-    // Set client adapter
     if (_clientAdapter != null) {
       dio.httpClientAdapter = _clientAdapter!;
     }
 
-    // Add reporter if requested
     if (_withReporter) {
       dio.interceptors.add(
         LogInterceptor(
-          requestBody: true,
+          responseHeader: false,
           responseBody: true,
           logPrint: (obj) => LoggerManagerBase.logInfo(message: '[Dio] $obj'),
         ),

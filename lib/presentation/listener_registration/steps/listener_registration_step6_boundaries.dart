@@ -57,6 +57,7 @@ class _ListenerRegistrationStep6BoundariesState
 
   bool get _canContinue {
     if (_isLoading) return false;
+    if (_selectedIds.isEmpty) return false;
     final custom = _customTextBoundary;
     if (custom != null && _otherController.text.trim().isEmpty) {
       return false;

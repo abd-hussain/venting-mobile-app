@@ -1,145 +1,215 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:fpdart/fpdart.dart';
-import 'package:http_parser/http_parser.dart';
 import 'package:phone_numbers_parser/phone_numbers_parser.dart';
+import 'package:venting_mobile_app/domain/data/api/listener_registration_progress_model.dart';
 import 'package:venting_mobile_app/domain/data/api/listener_register_response_model.dart';
 import 'package:venting_mobile_app/domain/data/app/listener_registration_draft.dart';
+import 'package:venting_mobile_app/domain/data/app/listener_registration_step_slug.dart';
 import 'package:venting_mobile_app/domain/data/exceptions/main_api_exception.dart';
 import 'package:venting_mobile_app/domain/repository/api/base_repository.dart';
 import 'package:venting_mobile_app/utils/registration_media_storage.dart';
 
-/// `#22 POST /v1/listeners/register`
+/// Step-based listener registration (`#22a`–`#22j`).
 class ListenerRegisterRepository extends BaseRepository {
   const ListenerRegisterRepository(super.apiClient);
 
-  TaskEither<Exception, ListenerRegisterResponseModel> call({
-    required ListenerRegistrationDraft draft,
-  }) {
+  TaskEither<Exception, ListenerRegistrationProgressModel> getProgress() {
     return TaskEither(() async {
       try {
-        final formData = await _buildFormData(draft);
-        return await executeRequest(
-          request: apiClient.post<Object?>(
-            'v1/listeners/register',
-            data: formData,
-          ),
-          fromJson: ListenerRegisterResponseModel.fromJson,
-        ).run();
-      } on MainAPIException catch (error) {
-        return Left(error);
+        final result = await apiClient
+            .get<Object?>('v1/listeners/register/progress')
+            .run();
+        return result.fold(Left.new, (response) {
+          final json = normalizeToJsonMap(response.data);
+          if (json['status'] == 'failed') {
+            return Left(MainAPIException.fromJson(json));
+          }
+          return Right(ListenerRegistrationProgressModel.fromJson(json));
+        });
       } on Object catch (error, stackTrace) {
-        return Left(
-          MainAPIException(
-            status: 'failed',
-            type: 'unknown',
-            code: -1,
-            message: error.toString(),
-            stackTrace: stackTrace,
-          ),
-        );
+        return Left(mapUnknownErrorToException(error, stackTrace));
       }
     });
   }
 
-  Future<FormData> _buildFormData(ListenerRegistrationDraft draft) async {
-    final formData = FormData();
-
-    // Attach files first — temp camera paths may be purged before submit.
-    await _addFile(formData, 'avatar', draft.profilePhotoPath!);
-    await _addFile(formData, 'document_front', draft.idImagePath!);
-    await _addFile(formData, 'selfie', draft.selfieImagePath!);
-    await _addFile(formData, 'voice_intro', draft.voiceIntroPath!);
-
-    formData.fields
-      ..add(MapEntry('full_name', draft.fullName.trim()))
-      ..add(MapEntry('phone', _formatPhoneE164(draft)))
-      ..add(MapEntry('phone_country', draft.phoneCountryIso))
-      ..add(MapEntry('agreed_to_terms', draft.agreedToTerms.toString()))
-      ..add(MapEntry('date_of_birth', _formatDate(draft.dateOfBirth!)))
-      ..add(MapEntry('country_iso', draft.countryIso!))
-      ..add(MapEntry('city', draft.city.trim()))
-      ..add(
-        MapEntry('accept_instant_calls', draft.acceptInstantCalls.toString()),
-      )
-      ..add(
-        MapEntry(
-          'notifications_enabled',
-          draft.notificationsEnabled.toString(),
-        ),
-      )
-      ..add(MapEntry('voice_intro_seconds', '${draft.voiceIntroSeconds}'));
-
-    final fcmToken = draft.fcmToken?.trim();
-    if (fcmToken != null && fcmToken.isNotEmpty) {
-      formData.fields.add(MapEntry('fcm_token', fcmToken));
-    }
-
-    final comfortOther = draft.comfortAreaOtherText?.trim();
-    if (comfortOther != null && comfortOther.isNotEmpty) {
-      formData.fields.add(MapEntry('custom_comfort_area_text', comfortOther));
-    }
-
-    final boundaryOther = draft.boundaryOtherText?.trim();
-    if (boundaryOther != null && boundaryOther.isNotEmpty) {
-      formData.fields.add(MapEntry('custom_boundary_text', boundaryOther));
-    }
-
-    _addJsonArrayField(formData, 'language_ids', draft.languageIds);
-    _addJsonArrayField(
-      formData,
-      'life_experience_ids',
-      draft.lifeExperienceIds,
+  TaskEither<Exception, ListenerRegistrationProgressModel> saveProfileStep({
+    required ListenerRegistrationStep1Data data,
+  }) {
+    return _saveMultipartStep(
+      slug: ListenerRegistrationStepSlug.profile,
+      buildFormData: (formData) async {
+        await _addLocalFile(formData, 'avatar', data.profilePhotoPath);
+        formData.fields
+          ..add(MapEntry('full_name', data.fullName.trim()))
+          ..add(MapEntry('phone', _formatPhoneE164(data)))
+          ..add(MapEntry('phone_country', data.phoneCountryIso));
+      },
     );
-    if (draft.customExperiences.isNotEmpty) {
-      _addJsonArrayField(
-        formData,
-        'custom_experiences',
-        draft.customExperiences,
-      );
-    }
-    _addJsonArrayField(formData, 'comfort_area_ids', draft.comfortAreaIds);
-    if (draft.boundaryIds.isNotEmpty) {
-      _addJsonArrayField(formData, 'boundary_ids', draft.boundaryIds);
-    }
-    formData.fields.add(
-      MapEntry(
-        'session_minutes',
-        '${_resolveSessionMinutes(draft.sessionMinutes)}',
+  }
+
+  TaskEither<Exception, ListenerRegistrationProgressModel> saveIdentityStep({
+    required ListenerRegistrationStep2Data data,
+  }) {
+    return _saveMultipartStep(
+      slug: ListenerRegistrationStepSlug.identity,
+      buildFormData: (formData) async {
+        await _addLocalFile(formData, 'identity_document', data.idImagePath);
+        await _addLocalFile(formData, 'selfie', data.selfieImagePath);
+      },
+    );
+  }
+
+  TaskEither<Exception, ListenerRegistrationProgressModel> saveAboutStep({
+    required ListenerRegistrationStep3Data data,
+  }) {
+    return _saveJsonStep(
+      slug: ListenerRegistrationStepSlug.about,
+      body: {
+        'date_of_birth': _formatDate(data.dateOfBirth),
+        'country_iso': data.countryIso,
+        'city': data.city.trim(),
+        'language_ids': data.languageIds,
+      },
+    );
+  }
+
+  TaskEither<Exception, ListenerRegistrationProgressModel> saveExperiencesStep({
+    required ListenerRegistrationStep4Data data,
+  }) {
+    final ids = [
+      if (data.relationshipId != null) data.relationshipId!,
+      ...data.familyIds,
+      ...data.experienceIds,
+    ];
+
+    return _saveJsonStep(
+      slug: ListenerRegistrationStepSlug.experiences,
+      body: {
+        'life_experience_ids': ids,
+        if (data.customExperiences.isNotEmpty)
+          'custom_experiences': data.customExperiences,
+      },
+    );
+  }
+
+  TaskEither<Exception, ListenerRegistrationProgressModel>
+  saveComfortAreasStep({required ListenerRegistrationStep5Data data}) {
+    return _saveJsonStep(
+      slug: ListenerRegistrationStepSlug.comfortAreas,
+      body: {
+        'comfort_area_ids': data.comfortAreaIds,
+        if (data.comfortAreaOtherText?.trim().isNotEmpty ?? false)
+          'custom_comfort_area_text': data.comfortAreaOtherText!.trim(),
+      },
+    );
+  }
+
+  TaskEither<Exception, ListenerRegistrationProgressModel> saveBoundariesStep({
+    required ListenerRegistrationStep6Data data,
+  }) {
+    return _saveJsonStep(
+      slug: ListenerRegistrationStepSlug.boundaries,
+      body: {
+        'boundary_ids': data.boundaryIds,
+        if (data.boundaryOtherText?.trim().isNotEmpty ?? false)
+          'custom_boundary_text': data.boundaryOtherText!.trim(),
+      },
+    );
+  }
+
+  TaskEither<Exception, ListenerRegistrationProgressModel> saveVoiceIntroStep({
+    required ListenerRegistrationStep7Data data,
+  }) {
+    return _saveMultipartStep(
+      slug: ListenerRegistrationStepSlug.voiceIntro,
+      buildFormData: (formData) async {
+        await _addLocalFile(formData, 'voice_intro', data.voiceIntroPath);
+        formData.fields.add(
+          MapEntry('voice_intro_seconds', '${data.voiceIntroSeconds}'),
+        );
+      },
+    );
+  }
+
+  TaskEither<Exception, ListenerRegistrationProgressModel>
+  saveAvailabilityStep({required ListenerRegistrationStep8Data data}) {
+    return _saveJsonStep(
+      slug: ListenerRegistrationStepSlug.availability,
+      body: {
+        'accept_instant_calls': data.acceptInstantCalls,
+        'session_minutes': _resolveSessionMinutes(data.sessionMinutes),
+        'availability': _availabilityPayload(data),
+      },
+    );
+  }
+
+  TaskEither<Exception, ListenerRegisterResponseModel> completeRegistration({
+    String? fcmToken,
+  }) {
+    final trimmed = fcmToken?.trim();
+    return executeRequest(
+      request: apiClient.post<Object?>(
+        'v1/listeners/register/complete',
+        data: trimmed != null && trimmed.isNotEmpty
+            ? {'fcm_token': trimmed}
+            : const <String, dynamic>{},
       ),
+      fromJson: ListenerRegisterResponseModel.fromJson,
     );
-
-    formData.fields.add(
-      MapEntry('availability', jsonEncode(_availabilityPayload(draft))),
-    );
-
-    return formData;
   }
 
-  void _addJsonArrayField(
-    FormData formData,
-    String field,
-    List<String> values,
-  ) {
-    formData.fields.add(MapEntry(field, jsonEncode(values)));
+  TaskEither<Exception, ListenerRegistrationProgressModel> _saveJsonStep({
+    required ListenerRegistrationStepSlug slug,
+    required Map<String, Object?> body,
+  }) {
+    return executeRequest(
+      request: apiClient.patch<Object?>(
+        'v1/listeners/register/steps/${slug.pathSegment}',
+        data: body,
+      ),
+      fromJson: ListenerRegistrationProgressModel.fromJson,
+    );
   }
 
-  /// Backend `#22` accepts one integer (`session_length_minutes` semantics).
-  /// When the UI has both 30 and 60 selected, send the shortest option.
+  TaskEither<Exception, ListenerRegistrationProgressModel> _saveMultipartStep({
+    required ListenerRegistrationStepSlug slug,
+    required Future<void> Function(FormData formData) buildFormData,
+  }) {
+    return TaskEither(() async {
+      try {
+        final formData = FormData();
+        await buildFormData(formData);
+        return await executeRequest(
+          request: apiClient.patch<Object?>(
+            'v1/listeners/register/steps/${slug.pathSegment}',
+            data: formData,
+          ),
+          fromJson: ListenerRegistrationProgressModel.fromJson,
+        ).run();
+      } on MainAPIException catch (error) {
+        return Left(error);
+      } on Object catch (error, stackTrace) {
+        return Left(mapUnknownErrorToException(error, stackTrace));
+      }
+    });
+  }
+
   int _resolveSessionMinutes(List<int> values) {
     if (values.isEmpty) return 30;
     return values.reduce((a, b) => a < b ? a : b);
   }
 
-  Map<String, Object?> _availabilityPayload(ListenerRegistrationDraft draft) {
-    final from = listenerRegistrationTimeTo24Hour(draft.availabilityFrom);
-    final to = listenerRegistrationTimeTo24Hour(draft.availabilityTo);
+  Map<String, Object?> _availabilityPayload(
+    ListenerRegistrationStep8Data data,
+  ) {
+    final from = listenerRegistrationTimeTo24Hour(data.availabilityFrom);
+    final to = listenerRegistrationTimeTo24Hour(data.availabilityTo);
 
     return {
-      'time_zone_id': draft.timeZoneId,
-      'days': draft.availabilityDays
+      'time_zone_id': data.timeZoneId,
+      'days': data.availabilityDays
           .map(
             (day) => {
               'day': day,
@@ -159,9 +229,9 @@ class ListenerRegisterRepository extends BaseRepository {
     return '$y-$m-$d';
   }
 
-  String _formatPhoneE164(ListenerRegistrationDraft draft) {
-    final iso = IsoCode.values.byName(draft.phoneCountryIso);
-    final national = draft.phoneNational.replaceAll(RegExp(r'\D'), '');
+  String _formatPhoneE164(ListenerRegistrationStep1Data data) {
+    final iso = IsoCode.values.byName(data.phoneCountryIso);
+    final national = data.phoneNational.replaceAll(RegExp(r'\D'), '');
     try {
       final phone = PhoneNumber.parse(
         national,
@@ -175,7 +245,13 @@ class ListenerRegisterRepository extends BaseRepository {
     }
   }
 
-  Future<void> _addFile(FormData formData, String field, String path) async {
+  Future<void> _addLocalFile(
+    FormData formData,
+    String field,
+    String path,
+  ) async {
+    if (_isRemoteUrl(path)) return;
+
     final normalized = RegistrationMediaStorage.normalizePath(path);
     final file = File(normalized);
     if (!await file.exists()) {
@@ -187,8 +263,7 @@ class ListenerRegisterRepository extends BaseRepository {
       );
     }
 
-    final bytes = await file.readAsBytes();
-    if (bytes.isEmpty) {
+    if (await file.length() == 0) {
       throw MainAPIException(
         status: 'failed',
         type: 'validation',
@@ -200,43 +275,22 @@ class ListenerRegisterRepository extends BaseRepository {
     formData.files.add(
       MapEntry(
         field,
-        MultipartFile.fromBytes(
-          bytes,
-          filename: _uploadFilename(field, normalized),
-          contentType: _contentTypeFor(field, normalized),
+        await MultipartFile.fromFile(
+          normalized,
+          filename: _basename(normalized),
         ),
       ),
     );
   }
 
-  static String _uploadFilename(String field, String path) {
-    final ext = _extension(path);
-    return '$field$ext';
+  static bool _isRemoteUrl(String path) {
+    final trimmed = path.trim().toLowerCase();
+    return trimmed.startsWith('http://') || trimmed.startsWith('https://');
   }
 
-  static String _extension(String path) {
-    final dot = path.lastIndexOf('.');
-    if (dot <= 0 || dot == path.length - 1) {
-      return '.jpg';
-    }
-    return path.substring(dot).toLowerCase();
-  }
-
-  static MediaType _contentTypeFor(String field, String path) {
-    if (field == 'voice_intro') {
-      return switch (_extension(path)) {
-        '.wav' => MediaType('audio', 'wav'),
-        '.ogg' => MediaType('audio', 'ogg'),
-        '.amr' => MediaType('audio', 'amr'),
-        _ => MediaType('audio', 'mp4'),
-      };
-    }
-
-    return switch (_extension(path)) {
-      '.png' => MediaType('image', 'png'),
-      '.webp' => MediaType('image', 'webp'),
-      '.heic' || '.heif' => MediaType('image', 'heic'),
-      _ => MediaType('image', 'jpeg'),
-    };
+  static String _basename(String path) {
+    final normalized = path.replaceAll('\\', '/');
+    final index = normalized.lastIndexOf('/');
+    return index < 0 ? normalized : normalized.substring(index + 1);
   }
 }

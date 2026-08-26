@@ -2,8 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:phone_numbers_parser/phone_numbers_parser.dart';
+import 'package:venting_mobile_app/di/di_container.dart';
+import 'package:venting_mobile_app/domain/data/api/listener_registration_progress_model.dart';
 import 'package:venting_mobile_app/domain/data/app/listener_registration_draft.dart';
 import 'package:venting_mobile_app/domain/data/app/registration_notifications_data.dart';
+import 'package:venting_mobile_app/domain/data/exceptions/main_api_exception.dart';
+import 'package:venting_mobile_app/domain/usecase/get_listener_registration_progress_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/save_listener_registration_step_usecase.dart';
+import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
 import 'package:venting_mobile_app/presentation/auth/auth_screen.dart';
 import 'package:venting_mobile_app/presentation/homescreen.dart';
 import 'package:venting_mobile_app/presentation/listener_registration/listener_registration_step.dart';
@@ -60,6 +66,8 @@ class _ListenerRegistrationScreenState
   late final ListenerRegistrationDraft _draft;
   var _showSubmit = false;
   var _showUnderReview = false;
+  var _isLoadingProgress = true;
+  var _isSavingStep = false;
 
   @override
   void initState() {
@@ -68,6 +76,42 @@ class _ListenerRegistrationScreenState
     if (widget.initialStep != null) {
       _step = widget.initialStep!;
     }
+    WidgetsBinding.instance.addPostFrameCallback((_) => _loadProgress());
+  }
+
+  Future<void> _loadProgress() async {
+    final result = await diContainer<GetListenerRegistrationProgressUsecase>()()
+        .run();
+
+    if (!mounted) return;
+
+    result.match(
+      (_) {
+        setState(() => _isLoadingProgress = false);
+      },
+      (progress) {
+        progress.applySavedToDraft(_draft);
+
+        if (progress.registrationComplete) {
+          setState(() {
+            _isLoadingProgress = false;
+            _showUnderReview = progress.profileStatus == 'under_review';
+          });
+          if (!_showUnderReview) {
+            _onSkipForNow();
+          }
+          return;
+        }
+
+        final resumeStep =
+            widget.initialStep ?? progress.resolveResumeStep() ?? _step;
+
+        setState(() {
+          _step = resumeStep;
+          _isLoadingProgress = false;
+        });
+      },
+    );
   }
 
   void _goTo(ListenerRegistrationStep step) {
@@ -78,6 +122,8 @@ class _ListenerRegistrationScreenState
   }
 
   void _onBack() {
+    if (_isSavingStep) return;
+
     if (_showUnderReview) {
       setState(() => _showUnderReview = false);
       return;
@@ -98,44 +144,125 @@ class _ListenerRegistrationScreenState
     _goTo(previous);
   }
 
-  void _onStep1Continue(ListenerRegistrationStep1Data data) {
+  Future<void> _saveStep(Future<dynamic> Function() request) async {
+    if (_isSavingStep) return;
+    setState(() => _isSavingStep = true);
+
+    final result = await request();
+
+    if (!mounted) return;
+
+    if (result is Exception) {
+      setState(() => _isSavingStep = false);
+      _showError(result);
+      return;
+    }
+
+    setState(() => _isSavingStep = false);
+  }
+
+  Future<void> _onStep1Continue(ListenerRegistrationStep1Data data) async {
     _draft.applyStep1(data);
-    _goTo(ListenerRegistrationStep.identityVerification);
+    await _saveStep(() async {
+      final result = await diContainer<SaveListenerRegistrationStepUsecase>()
+          .saveProfile(data)
+          .run();
+      return result.match((error) => error, (_) {
+        _goTo(ListenerRegistrationStep.identityVerification);
+        return null;
+      });
+    });
   }
 
-  void _onStep2Continue(ListenerRegistrationStep2Data data) {
+  Future<void> _onStep2Continue(ListenerRegistrationStep2Data data) async {
     _draft.applyStep2(data);
-    _goTo(ListenerRegistrationStep.aboutYou);
+    await _saveStep(() async {
+      final result = await diContainer<SaveListenerRegistrationStepUsecase>()
+          .saveIdentity(data)
+          .run();
+      return result.match((error) => error, (_) {
+        _goTo(ListenerRegistrationStep.aboutYou);
+        return null;
+      });
+    });
   }
 
-  void _onStep3Continue(ListenerRegistrationStep3Data data) {
+  Future<void> _onStep3Continue(ListenerRegistrationStep3Data data) async {
     _draft.applyStep3(data);
-    _goTo(ListenerRegistrationStep.experience);
+    await _saveStep(() async {
+      final result = await diContainer<SaveListenerRegistrationStepUsecase>()
+          .saveAbout(data)
+          .run();
+      return result.match((error) => error, (_) {
+        _goTo(ListenerRegistrationStep.experience);
+        return null;
+      });
+    });
   }
 
-  void _onStep4Continue(ListenerRegistrationStep4Data data) {
+  Future<void> _onStep4Continue(ListenerRegistrationStep4Data data) async {
     _draft.applyStep4(data);
-    _goTo(ListenerRegistrationStep.expertise);
+    await _saveStep(() async {
+      final result = await diContainer<SaveListenerRegistrationStepUsecase>()
+          .saveExperiences(data)
+          .run();
+      return result.match((error) => error, (_) {
+        _goTo(ListenerRegistrationStep.expertise);
+        return null;
+      });
+    });
   }
 
-  void _onStep5Continue(ListenerRegistrationStep5Data data) {
+  Future<void> _onStep5Continue(ListenerRegistrationStep5Data data) async {
     _draft.applyStep5(data);
-    _goTo(ListenerRegistrationStep.boundaries);
+    await _saveStep(() async {
+      final result = await diContainer<SaveListenerRegistrationStepUsecase>()
+          .saveComfortAreas(data)
+          .run();
+      return result.match((error) => error, (_) {
+        _goTo(ListenerRegistrationStep.boundaries);
+        return null;
+      });
+    });
   }
 
-  void _onStep6Continue(ListenerRegistrationStep6Data data) {
+  Future<void> _onStep6Continue(ListenerRegistrationStep6Data data) async {
     _draft.applyStep6(data);
-    _goTo(ListenerRegistrationStep.voiceIntro);
+    await _saveStep(() async {
+      final result = await diContainer<SaveListenerRegistrationStepUsecase>()
+          .saveBoundaries(data)
+          .run();
+      return result.match((error) => error, (_) {
+        _goTo(ListenerRegistrationStep.voiceIntro);
+        return null;
+      });
+    });
   }
 
-  void _onStep7Continue(ListenerRegistrationStep7Data data) {
+  Future<void> _onStep7Continue(ListenerRegistrationStep7Data data) async {
     _draft.applyStep7(data);
-    _goTo(ListenerRegistrationStep.availability);
+    await _saveStep(() async {
+      final result = await diContainer<SaveListenerRegistrationStepUsecase>()
+          .saveVoiceIntro(data)
+          .run();
+      return result.match((error) => error, (_) {
+        _goTo(ListenerRegistrationStep.availability);
+        return null;
+      });
+    });
   }
 
-  void _onStep8Continue(ListenerRegistrationStep8Data data) {
+  Future<void> _onStep8Continue(ListenerRegistrationStep8Data data) async {
     _draft.applyStep8(data);
-    _goTo(ListenerRegistrationStep.notifications);
+    await _saveStep(() async {
+      final result = await diContainer<SaveListenerRegistrationStepUsecase>()
+          .saveAvailability(data)
+          .run();
+      return result.match((error) => error, (_) {
+        _goTo(ListenerRegistrationStep.notifications);
+        return null;
+      });
+    });
   }
 
   void _onStep9Continue(RegistrationNotificationsData data) {
@@ -162,6 +289,19 @@ class _ListenerRegistrationScreenState
       AppRoutes.tabHome,
       extra: const HomeScreenArgs(userType: AuthUserType.lissener),
     );
+  }
+
+  void _showError(Object error) {
+    final l10n = VentingMobLocalizations.of(context);
+    final message = error is MainAPIException
+        ? (error.getLocalizedMessage().isNotEmpty
+              ? error.getLocalizedMessage()
+              : error.message)
+        : l10n.common_unknown_error;
+
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(message)));
   }
 
   IsoCode? _phoneCountryFromDraft() {
@@ -248,7 +388,7 @@ class _ListenerRegistrationScreenState
 
     if (_showSubmit) {
       return ListenerRegistrationSubmitScreen(
-        draft: _draft,
+        fcmToken: _draft.fcmToken,
         onSuccess: _onSubmitSuccess,
         onRetryFromNotifications: _onRetryFromNotifications,
       );
@@ -270,14 +410,23 @@ class _ListenerRegistrationScreenState
             ),
           ),
           child: SafeArea(
-            child: Column(
+            child: Stack(
               children: [
-                ListenerRegistrationHeader(
-                  step: _step,
-                  onBack: _onBack,
-                  onSkip: _onSkipForNow,
+                Column(
+                  children: [
+                    ListenerRegistrationHeader(
+                      step: _step,
+                      onBack: _onBack,
+                      onSkip: _onSkipForNow,
+                    ),
+                    Expanded(child: _buildStep()),
+                  ],
                 ),
-                Expanded(child: _buildStep()),
+                if (_isLoadingProgress || _isSavingStep)
+                  const ColoredBox(
+                    color: Color(0x99000000),
+                    child: Center(child: CircularProgressIndicator()),
+                  ),
               ],
             ),
           ),

@@ -2,24 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:venting_mobile_app/di/di_container.dart';
-import 'package:venting_mobile_app/domain/data/app/listener_registration_draft.dart';
 import 'package:venting_mobile_app/domain/data/exceptions/main_api_exception.dart';
-import 'package:venting_mobile_app/domain/usecase/listener_register_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/complete_listener_registration_usecase.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
 import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dart';
 
 enum _SubmitPhase { submitting, success, error }
 
-/// Full-screen loading step shown after notifications while `#22` runs.
+/// Finalizes listener registration via `POST /v1/listeners/register/complete`.
 class ListenerRegistrationSubmitScreen extends StatefulWidget {
   const ListenerRegistrationSubmitScreen({
     super.key,
-    required this.draft,
+    required this.fcmToken,
     required this.onSuccess,
     required this.onRetryFromNotifications,
   });
 
-  final ListenerRegistrationDraft draft;
+  final String? fcmToken;
   final VoidCallback onSuccess;
   final VoidCallback onRetryFromNotifications;
 
@@ -72,8 +71,8 @@ class _ListenerRegistrationSubmitScreenState
       _attempt += 1;
     });
 
-    final result = await diContainer<ListenerRegisterUsecase>()(
-      draft: widget.draft,
+    final result = await diContainer<CompleteListenerRegistrationUsecase>()(
+      fcmToken: widget.fcmToken,
     ).run();
 
     if (!mounted) return;

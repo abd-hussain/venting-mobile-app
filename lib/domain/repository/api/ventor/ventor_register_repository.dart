@@ -1,60 +1,56 @@
 import 'package:dio/dio.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:venting_mobile_app/domain/data/api/ventor_profile_response_model.dart';
+import 'package:venting_mobile_app/domain/data/api/ventor_registration_progress_model.dart';
+import 'package:venting_mobile_app/domain/data/app/ventor_registration_step_slug.dart';
 import 'package:venting_mobile_app/domain/data/exceptions/main_api_exception.dart';
 import 'package:venting_mobile_app/domain/repository/api/base_repository.dart';
+import 'package:venting_mobile_app/utils/registration_media_storage.dart';
 
-/// `#8 POST /v1/ventors/register`
+/// Step-based ventor registration (`#8a`–`#8e`).
 class VentorRegisterRepository extends BaseRepository {
   const VentorRegisterRepository(super.apiClient);
 
-  TaskEither<Exception, VentorProfileResponseModel> call({
+  TaskEither<Exception, VentorRegistrationProgressModel> getProgress() {
+    return TaskEither(() async {
+      try {
+        final result = await apiClient
+            .get<Object?>('v1/ventors/register/progress')
+            .run();
+        return result.fold(Left.new, (response) {
+          final json = normalizeToJsonMap(response.data);
+          if (json['status'] == 'failed') {
+            return Left(MainAPIException.fromJson(json));
+          }
+          return Right(VentorRegistrationProgressModel.fromJson(json));
+        });
+      } on Object catch (error, stackTrace) {
+        return Left(mapUnknownErrorToException(error, stackTrace));
+      }
+    });
+  }
+
+  TaskEither<Exception, VentorRegistrationProgressModel> saveProfileStep({
     required String nickname,
     required String gender,
-    required List<String> languageIds,
-    required List<String> interestIds,
-    String? otherInterestText,
     int? avatarPresetIndex,
     String? avatarFilePath,
-    required bool notificationsEnabled,
-    String? fcmToken,
   }) {
-    final trimmedOther = otherInterestText?.trim();
-    final hasOtherText = trimmedOther != null && trimmedOther.isNotEmpty;
-    final trimmedToken = fcmToken?.trim();
-    final hasToken = trimmedToken != null && trimmedToken.isNotEmpty;
+    final trimmedPath = avatarFilePath?.trim();
+    final hasGalleryAvatar =
+        trimmedPath != null &&
+        trimmedPath.isNotEmpty &&
+        !_isRemoteUrl(trimmedPath);
 
-    if (avatarFilePath != null && avatarFilePath.trim().isNotEmpty) {
+    if (hasGalleryAvatar) {
       return TaskEither(() async {
         try {
           final formData = FormData();
           formData.fields
             ..add(MapEntry('nickname', nickname))
-            ..add(MapEntry('gender', gender))
-            ..add(
-              MapEntry(
-                'notifications_enabled',
-                notificationsEnabled.toString(),
-              ),
-            );
-          for (final id in languageIds) {
-            formData.fields.add(MapEntry('language_ids', id));
-          }
-          for (final id in interestIds) {
-            formData.fields.add(MapEntry('interest_ids', id));
-          }
-          if (hasOtherText) {
-            formData.fields.add(MapEntry('other_interest_text', trimmedOther));
-          }
-          if (avatarPresetIndex != null) {
-            formData.fields.add(
-              MapEntry('avatar_preset_index', '$avatarPresetIndex'),
-            );
-          }
-          if (hasToken) {
-            formData.fields.add(MapEntry('fcm_token', trimmedToken));
-          }
-          final path = avatarFilePath.trim();
+            ..add(MapEntry('gender', gender));
+
+          final path = RegistrationMediaStorage.normalizePath(trimmedPath);
           formData.files.add(
             MapEntry(
               'avatar',
@@ -62,44 +58,98 @@ class VentorRegisterRepository extends BaseRepository {
             ),
           );
 
-          return await executeRequest(
-            request: apiClient.post<Object?>(
-              'v1/ventors/register',
-              data: formData,
-            ),
-            fromJson: VentorProfileResponseModel.fromJson,
+          return await _saveMultipartStep(
+            slug: VentorRegistrationStepSlug.profile,
+            formData: formData,
           ).run();
         } on Object catch (error, stackTrace) {
-          return Left(
-            MainAPIException(
-              status: 'failed',
-              type: 'unknown',
-              code: -1,
-              message: error.toString(),
-              stackTrace: stackTrace,
-            ),
-          );
+          return Left(mapUnknownErrorToException(error, stackTrace));
         }
       });
     }
 
+    return _saveJsonStep(
+      slug: VentorRegistrationStepSlug.profile,
+      body: {
+        'nickname': nickname,
+        'gender': gender,
+        if (avatarPresetIndex != null) 'avatar_preset_index': avatarPresetIndex,
+      },
+    );
+  }
+
+  TaskEither<Exception, VentorRegistrationProgressModel> saveLanguagesStep({
+    required List<String> languageIds,
+  }) {
+    return _saveJsonStep(
+      slug: VentorRegistrationStepSlug.languages,
+      body: {'language_ids': languageIds},
+    );
+  }
+
+  TaskEither<Exception, VentorRegistrationProgressModel> saveInterestsStep({
+    required List<String> interestIds,
+    String? otherInterestText,
+  }) {
+    final trimmedOther = otherInterestText?.trim();
+    return _saveJsonStep(
+      slug: VentorRegistrationStepSlug.interests,
+      body: {
+        'interest_ids': interestIds,
+        if (trimmedOther != null && trimmedOther.isNotEmpty)
+          'other_interest_text': trimmedOther,
+      },
+    );
+  }
+
+  TaskEither<Exception, VentorProfileResponseModel> completeRegistration({
+    required bool notificationsEnabled,
+    String? fcmToken,
+  }) {
+    final trimmedToken = fcmToken?.trim();
+    final hasToken = trimmedToken != null && trimmedToken.isNotEmpty;
+
     return executeRequest(
       request: apiClient.post<Object?>(
-        'v1/ventors/register',
-        data: <String, Object?>{
-          'nickname': nickname,
-          'gender': gender,
-          'language_ids': languageIds,
-          'interest_ids': interestIds,
+        'v1/ventors/register/complete',
+        data: {
           'notifications_enabled': notificationsEnabled,
-          if (hasOtherText) 'other_interest_text': trimmedOther,
-          if (avatarPresetIndex != null)
-            'avatar_preset_index': avatarPresetIndex,
-          'fcm_token': hasToken ? trimmedToken : null,
+          if (hasToken) 'fcm_token': trimmedToken,
         },
       ),
       fromJson: VentorProfileResponseModel.fromJson,
     );
+  }
+
+  TaskEither<Exception, VentorRegistrationProgressModel> _saveJsonStep({
+    required VentorRegistrationStepSlug slug,
+    required Map<String, Object?> body,
+  }) {
+    return executeRequest(
+      request: apiClient.patch<Object?>(
+        'v1/ventors/register/steps/${slug.pathSegment}',
+        data: body,
+      ),
+      fromJson: VentorRegistrationProgressModel.fromJson,
+    );
+  }
+
+  TaskEither<Exception, VentorRegistrationProgressModel> _saveMultipartStep({
+    required VentorRegistrationStepSlug slug,
+    required FormData formData,
+  }) {
+    return executeRequest(
+      request: apiClient.patch<Object?>(
+        'v1/ventors/register/steps/${slug.pathSegment}',
+        data: formData,
+      ),
+      fromJson: VentorRegistrationProgressModel.fromJson,
+    );
+  }
+
+  static bool _isRemoteUrl(String path) {
+    final trimmed = path.trim().toLowerCase();
+    return trimmed.startsWith('http://') || trimmed.startsWith('https://');
   }
 
   static String _basename(String path) {

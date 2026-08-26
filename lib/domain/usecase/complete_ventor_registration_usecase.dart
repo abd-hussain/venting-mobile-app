@@ -4,36 +4,22 @@ import 'package:venting_mobile_app/domain/data/api/ventor_profile_response_model
 import 'package:venting_mobile_app/domain/data/exceptions/main_api_exception.dart';
 import 'package:venting_mobile_app/domain/repository/api/ventor/ventor_register_repository.dart';
 
-class VentorRegisterUsecase {
-  const VentorRegisterUsecase(
-    this._ventorRegisterRepository,
+class CompleteVentorRegistrationUsecase {
+  const CompleteVentorRegistrationUsecase(
+    this._repository,
     this._ventingPreferences,
   );
 
-  final VentorRegisterRepository _ventorRegisterRepository;
+  final VentorRegisterRepository _repository;
   final VentingPreferences _ventingPreferences;
 
   TaskEither<Exception, VentorProfileResponseModel> call({
-    required String nickname,
-    required String gender,
-    required List<String> languageIds,
-    required List<String> interestIds,
-    String? otherInterestText,
-    int? avatarPresetIndex,
-    String? avatarFilePath,
     required bool notificationsEnabled,
     String? fcmToken,
   }) {
     return TaskEither(() async {
-      final result = await _ventorRegisterRepository
-          .call(
-            nickname: nickname,
-            gender: gender,
-            languageIds: languageIds,
-            interestIds: interestIds,
-            otherInterestText: otherInterestText,
-            avatarPresetIndex: avatarPresetIndex,
-            avatarFilePath: avatarFilePath,
+      final result = await _repository
+          .completeRegistration(
             notificationsEnabled: notificationsEnabled,
             fcmToken: fcmToken,
           )
@@ -44,7 +30,7 @@ class VentorRegisterUsecase {
       }
 
       final response = result.getOrElse(
-        (_) => throw StateError('Expected register success'),
+        (_) => throw StateError('Expected ventor registration complete'),
       );
 
       try {

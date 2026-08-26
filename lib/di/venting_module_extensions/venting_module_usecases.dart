@@ -31,15 +31,19 @@ import 'package:venting_mobile_app/domain/usecase/auth_refresh_token_usecase.dar
 import 'package:venting_mobile_app/domain/usecase/auth_register_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/auth_social_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/clear_auth_session_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/complete_listener_registration_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/complete_ventor_registration_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_cached_auth_me_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_catalog_boundaries_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_catalog_categories_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_catalog_languages_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_catalog_life_experiences_usecase.dart';
-import 'package:venting_mobile_app/domain/usecase/listener_register_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/get_listener_registration_progress_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/get_ventor_registration_progress_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/save_listener_registration_step_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/save_ventor_registration_step_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/sign_in_with_apple_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/sign_in_with_google_usecase.dart';
-import 'package:venting_mobile_app/domain/usecase/ventor_register_usecase.dart';
 
 /// Usecases mixin for VentingModule
 /// Handles all usecase factory methods
@@ -130,15 +134,37 @@ mixin VentingModuleUsecases on VentingModule {
     CatalogBoundariesRepository catalogBoundariesRepository,
   ) => GetCatalogBoundariesUsecase(catalogBoundariesRepository);
 
-  VentorRegisterUsecase ventorRegisterUsecase(
-    VentorRegisterRepository ventorRegisterRepository,
-    VentingPreferences ventingPreferences,
-  ) => VentorRegisterUsecase(ventorRegisterRepository, ventingPreferences);
+  GetListenerRegistrationProgressUsecase getListenerRegistrationProgressUsecase(
+    ListenerRegisterRepository listenerRegisterRepository,
+  ) => GetListenerRegistrationProgressUsecase(listenerRegisterRepository);
 
-  ListenerRegisterUsecase listenerRegisterUsecase(
+  SaveListenerRegistrationStepUsecase saveListenerRegistrationStepUsecase(
+    ListenerRegisterRepository listenerRegisterRepository,
+  ) => SaveListenerRegistrationStepUsecase(listenerRegisterRepository);
+
+  CompleteListenerRegistrationUsecase completeListenerRegistrationUsecase(
     ListenerRegisterRepository listenerRegisterRepository,
     VentingPreferences ventingPreferences,
-  ) => ListenerRegisterUsecase(listenerRegisterRepository, ventingPreferences);
+  ) => CompleteListenerRegistrationUsecase(
+    listenerRegisterRepository,
+    ventingPreferences,
+  );
+
+  GetVentorRegistrationProgressUsecase getVentorRegistrationProgressUsecase(
+    VentorRegisterRepository ventorRegisterRepository,
+  ) => GetVentorRegistrationProgressUsecase(ventorRegisterRepository);
+
+  SaveVentorRegistrationStepUsecase saveVentorRegistrationStepUsecase(
+    VentorRegisterRepository ventorRegisterRepository,
+  ) => SaveVentorRegistrationStepUsecase(ventorRegisterRepository);
+
+  CompleteVentorRegistrationUsecase completeVentorRegistrationUsecase(
+    VentorRegisterRepository ventorRegisterRepository,
+    VentingPreferences ventingPreferences,
+  ) => CompleteVentorRegistrationUsecase(
+    ventorRegisterRepository,
+    ventingPreferences,
+  );
 
   /// Registers all usecase dependencies
   void registerUsecases(GetIt getIt, AppConfig appConfig) {
@@ -217,15 +243,34 @@ mixin VentingModuleUsecases on VentingModule {
     getIt.registerFactory<GetCatalogBoundariesUsecase>(
       () => getCatalogBoundariesUsecase(getIt<CatalogBoundariesRepository>()),
     );
-    getIt.registerFactory<VentorRegisterUsecase>(
-      () => ventorRegisterUsecase(
-        getIt<VentorRegisterRepository>(),
+    getIt.registerFactory<GetListenerRegistrationProgressUsecase>(
+      () => getListenerRegistrationProgressUsecase(
+        getIt<ListenerRegisterRepository>(),
+      ),
+    );
+    getIt.registerFactory<SaveListenerRegistrationStepUsecase>(
+      () => saveListenerRegistrationStepUsecase(
+        getIt<ListenerRegisterRepository>(),
+      ),
+    );
+    getIt.registerFactory<CompleteListenerRegistrationUsecase>(
+      () => completeListenerRegistrationUsecase(
+        getIt<ListenerRegisterRepository>(),
         getIt<VentingPreferences>(),
       ),
     );
-    getIt.registerFactory<ListenerRegisterUsecase>(
-      () => listenerRegisterUsecase(
-        getIt<ListenerRegisterRepository>(),
+    getIt.registerFactory<GetVentorRegistrationProgressUsecase>(
+      () => getVentorRegistrationProgressUsecase(
+        getIt<VentorRegisterRepository>(),
+      ),
+    );
+    getIt.registerFactory<SaveVentorRegistrationStepUsecase>(
+      () =>
+          saveVentorRegistrationStepUsecase(getIt<VentorRegisterRepository>()),
+    );
+    getIt.registerFactory<CompleteVentorRegistrationUsecase>(
+      () => completeVentorRegistrationUsecase(
+        getIt<VentorRegisterRepository>(),
         getIt<VentingPreferences>(),
       ),
     );

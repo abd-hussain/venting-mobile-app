@@ -79,7 +79,11 @@ Use these for **both** ventor and listener unless a screen is role-specific.
 | 76 *(proposed)* | `GET /v1/catalog/life-experiences` | Listener registration → **life experiences** step | On step open — load tags from **`life_experiences`**. Show shimmer until loaded. Do **not** hardcode experience chips. |
 | 77 *(proposed)* | `GET /v1/catalog/boundaries` | Listener registration → **boundaries** step | On step open — load boundary rows (`icon_emoji` + optional `icon_url`). Shimmer while loading. Selection optional. |
 | 74 *(proposed)* | `GET /v1/catalog/categories` | Listener registration → **comfort areas** step | On step open — same categories as ventor interests; shimmer while loading |
-| 8 | `POST /v1/ventors/register` | Ventor registration (profile → languages → interests → **notifications**) | Final submit after notifications step — includes `notifications_enabled` + optional `fcm_token` (`null`/omitted if permission denied) |
+| 8a | `GET /v1/ventors/register/progress` | Ventor registration screen open | Resume saved steps + hydrate UI |
+| 8b | `PATCH /v1/ventors/register/steps/profile` | Profile step → Continue | Save nickname, gender, avatar/preset |
+| 8c | `PATCH /v1/ventors/register/steps/languages` | Language step → Continue | Save `language_ids` |
+| 8d | `PATCH /v1/ventors/register/steps/interests` | Interests step → Continue | Save `interest_ids` + optional `other_interest_text` |
+| 8e | `POST /v1/ventors/register/complete` | Notifications step | `notifications_enabled` + optional `fcm_token`; sets `registration_complete` |
 
 > **Never call** `GET /v1/catalog` (combined dump). Use `#74` / `#75` / `#76` / `#77` only.
 
@@ -200,9 +204,11 @@ Use these for **both** ventor and listener unless a screen is role-specific.
 
 | # | Endpoint | Screen / place | When |
 |---|----------|----------------|------|
-| 22 | `POST /v1/listeners/register` | Listener registration steps 1–9 | Prefer **one submit at the end** after step 9 loading screen. Multipart: files + **JSON-encoded strings** for array/object fields (`language_ids`, `life_experience_ids`, `comfort_area_ids`, `boundary_ids`, `availability`); `session_minutes` is a **single integer** string. Sends `notifications_enabled` + optional `fcm_token` (`null`/omitted if permission denied). Do **not** also call `#23` here. |
+| 22a | `GET /v1/listeners/register/progress` | Listener registration screen open | Resume saved steps + hydrate draft |
+| 22b–22i | `PATCH /v1/listeners/register/steps/{step}` | Each step → Continue | Save that step only (profile, identity, about, experiences, comfort-areas, boundaries, voice-intro, availability) |
+| 22j | `POST /v1/listeners/register/complete` | After notifications step | Optional `fcm_token`; returns `profile_status: under_review` |
 | 76 *(proposed)* | `GET /v1/catalog/life-experiences` | Listener registration → life experiences step | On step open — load experience chips; shimmer while loading |
-| 23 | `POST /v1/listeners/me/identity-verification` | KYC rejected / resubmit screen | **Only after admin rejects KYC** — resubmit document front/back + selfie to re-enter review. Not used for first-time registration. |
+| 23 | `POST /v1/listeners/me/identity-verification` | KYC rejected / resubmit screen | **Only after admin rejects KYC** — resubmit `identity_document` + `selfie` (not front/back). Not used for first-time registration. |
 
 ### C2. Listener dashboard & setup
 

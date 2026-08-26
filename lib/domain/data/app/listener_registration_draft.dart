@@ -49,8 +49,7 @@ class ListenerRegistrationDraft {
   bool acceptInstantCalls = true;
   List<int> sessionMinutes = const [30, 60];
 
-  // Step 9 — Notifications
-  bool notificationsEnabled = false;
+  // Step 9 — Notifications (FCM token only; optional if permission denied)
   String? fcmToken;
 
   List<String> get lifeExperienceIds {
@@ -65,21 +64,58 @@ class ListenerRegistrationDraft {
       profilePhotoPath != null &&
       fullName.trim().isNotEmpty &&
       phoneNational.trim().isNotEmpty &&
-      agreedToTerms &&
       idImagePath != null &&
       selfieImagePath != null &&
       dateOfBirth != null &&
       countryIso != null &&
       city.trim().isNotEmpty &&
       languageIds.isNotEmpty &&
-      (relationshipId != null ||
-          familyIds.isNotEmpty ||
-          experienceIds.isNotEmpty ||
-          customExperiences.isNotEmpty) &&
+      lifeExperienceIds.isNotEmpty &&
       comfortAreaIds.isNotEmpty &&
+      boundaryIds.isNotEmpty &&
       voiceIntroPath != null &&
+      voiceIntroSeconds > 0 &&
+      timeZoneId.trim().isNotEmpty &&
       availabilityDays.isNotEmpty &&
-      sessionMinutes.isNotEmpty;
+      sessionMinutes.isNotEmpty &&
+      _isAvailabilityWindowValid;
+
+  bool get _isAvailabilityWindowValid {
+    final fromIndex = _hourIndex(availabilityFrom);
+    final toIndex = _hourIndex(availabilityTo);
+    if (fromIndex < 0 || toIndex < 0) return false;
+    return fromIndex < toIndex;
+  }
+
+  static int _hourIndex(String label) {
+    const hours = [
+      '12:00 AM',
+      '01:00 AM',
+      '02:00 AM',
+      '03:00 AM',
+      '04:00 AM',
+      '05:00 AM',
+      '06:00 AM',
+      '07:00 AM',
+      '08:00 AM',
+      '09:00 AM',
+      '10:00 AM',
+      '11:00 AM',
+      '12:00 PM',
+      '01:00 PM',
+      '02:00 PM',
+      '03:00 PM',
+      '04:00 PM',
+      '05:00 PM',
+      '06:00 PM',
+      '07:00 PM',
+      '08:00 PM',
+      '09:00 PM',
+      '10:00 PM',
+      '11:00 PM',
+    ];
+    return hours.indexOf(label);
+  }
 }
 
 /// Step 1 payload passed back to the parent wizard.
@@ -238,7 +274,6 @@ extension ListenerRegistrationDraftMerge on ListenerRegistrationDraft {
   }
 
   void applyStep9(RegistrationNotificationsData data) {
-    notificationsEnabled = data.notificationsEnabled;
     fcmToken = data.fcmToken;
   }
 }

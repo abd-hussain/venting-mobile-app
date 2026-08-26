@@ -48,10 +48,12 @@ class ListenerRegistrationStep8Availability extends StatefulWidget {
 class _ListenerRegistrationStep8AvailabilityState
     extends State<ListenerRegistrationStep8Availability> {
   static const _accent = Color(0xFF8A3CFE);
-  static const _fieldFill = Color(0xFF1C1826);
-  static const _chipFill = Color(0xFF1C1826);
+  static const _fieldFill = Color(0xFF14101C);
+  static const _chipFill = Color(0xFF14101C);
   static const _muted = Color(0xFF9B93AB);
-  static const _sectionLabel = Color(0xFFB7AEC9);
+  static const _sectionLabel = Color(0xFF9B93AB);
+  static const _border = Color(0xFF6B4BB8);
+  static const _sheetFill = Color(0xFF16121F);
 
   static List<_TimeZoneOption>? _cachedTimeZones;
 
@@ -186,7 +188,7 @@ class _ListenerRegistrationStep8AvailabilityState
     return showModalBottomSheet<T>(
       context: context,
       isScrollControlled: true,
-      backgroundColor: const Color(0xFF16121F),
+      backgroundColor: _sheetFill,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
@@ -260,20 +262,20 @@ class _ListenerRegistrationStep8AvailabilityState
                               vertical: 12,
                             ),
                             enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(14),
+                              borderRadius: BorderRadius.circular(16),
                               borderSide: BorderSide(
-                                color: _accent.withValues(alpha: 0.55),
+                                color: _border.withValues(alpha: 0.75),
                               ),
                             ),
                             focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(14),
+                              borderRadius: BorderRadius.circular(16),
                               borderSide: const BorderSide(
                                 color: _accent,
                                 width: 1.4,
                               ),
                             ),
                             border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(14),
+                              borderRadius: BorderRadius.circular(16),
                               borderSide: BorderSide.none,
                             ),
                           ),
@@ -375,9 +377,9 @@ class _ListenerRegistrationStep8AvailabilityState
             l10n.listener_reg_avail_title,
             style: GoogleFonts.inter(
               color: Colors.white,
-              fontSize: 28,
+              fontSize: 30,
               fontWeight: FontWeight.w700,
-              height: 1.2,
+              height: 1.15,
             ),
           ),
           const SizedBox(height: 10),
@@ -385,12 +387,12 @@ class _ListenerRegistrationStep8AvailabilityState
             l10n.listener_reg_avail_subtitle,
             style: GoogleFonts.inter(
               color: _muted,
-              fontSize: 15,
+              fontSize: 14,
               fontWeight: FontWeight.w400,
               height: 1.45,
             ),
           ),
-          const SizedBox(height: 24),
+          const SizedBox(height: 28),
           Expanded(
             child: SingleChildScrollView(
               child: Column(
@@ -454,15 +456,13 @@ class _ListenerRegistrationStep8AvailabilityState
                   const SizedBox(height: 20),
                   Container(
                     padding: const EdgeInsets.symmetric(
-                      horizontal: 14,
-                      vertical: 12,
+                      horizontal: 16,
+                      vertical: 14,
                     ),
                     decoration: BoxDecoration(
                       color: _fieldFill,
-                      borderRadius: BorderRadius.circular(14),
-                      border: Border.all(
-                        color: _accent.withValues(alpha: 0.35),
-                      ),
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(color: _border.withValues(alpha: 0.7)),
                     ),
                     child: Row(
                       children: [
@@ -475,7 +475,7 @@ class _ListenerRegistrationStep8AvailabilityState
                                 style: GoogleFonts.inter(
                                   color: Colors.white,
                                   fontSize: 15,
-                                  fontWeight: FontWeight.w600,
+                                  fontWeight: FontWeight.w700,
                                 ),
                               ),
                               const SizedBox(height: 4),
@@ -494,10 +494,10 @@ class _ListenerRegistrationStep8AvailabilityState
                         const SizedBox(width: 10),
                         Switch.adaptive(
                           value: _acceptInstantCall,
-                          activeThumbColor: Colors.white,
-                          activeTrackColor: _accent,
-                          inactiveThumbColor: Colors.white70,
-                          inactiveTrackColor: const Color(0xFF3A2F52),
+                          activeThumbColor: _accent,
+                          activeTrackColor: const Color(0xFF4A2A8A),
+                          inactiveThumbColor: _muted,
+                          inactiveTrackColor: const Color(0xFF2A2140),
                           onChanged: (value) {
                             setState(() => _acceptInstantCall = value);
                           },
@@ -526,7 +526,7 @@ class _ListenerRegistrationStep8AvailabilityState
                             },
                           ),
                         ),
-                        if (minutes != 60) const SizedBox(width: 10),
+                        if (minutes != 60) const SizedBox(width: 12),
                       ],
                     ],
                   ),
@@ -535,10 +535,10 @@ class _ListenerRegistrationStep8AvailabilityState
                     width: double.infinity,
                     padding: const EdgeInsets.fromLTRB(14, 14, 14, 14),
                     decoration: BoxDecoration(
-                      color: _accent.withValues(alpha: 0.1),
-                      borderRadius: BorderRadius.circular(14),
+                      color: _fieldFill,
+                      borderRadius: BorderRadius.circular(16),
                       border: Border.all(
-                        color: _accent.withValues(alpha: 0.28),
+                        color: _border.withValues(alpha: 0.45),
                       ),
                     ),
                     child: Row(
@@ -623,23 +623,24 @@ class _DropdownField extends StatelessWidget {
   final String value;
   final VoidCallback onTap;
 
+  static const _accent = _ListenerRegistrationStep8AvailabilityState._accent;
+  static const _fieldFill =
+      _ListenerRegistrationStep8AvailabilityState._fieldFill;
+  static const _border = _ListenerRegistrationStep8AvailabilityState._border;
+
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: _ListenerRegistrationStep8AvailabilityState._fieldFill,
-      borderRadius: BorderRadius.circular(14),
+      color: _fieldFill,
+      borderRadius: BorderRadius.circular(16),
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: BorderRadius.circular(16),
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(14),
-            border: Border.all(
-              color: _ListenerRegistrationStep8AvailabilityState._accent
-                  .withValues(alpha: 0.55),
-              width: 1.2,
-            ),
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(color: _border.withValues(alpha: 0.75)),
           ),
           child: Row(
             children: [
@@ -657,8 +658,8 @@ class _DropdownField extends StatelessWidget {
               ),
               const Icon(
                 Icons.keyboard_arrow_down_rounded,
-                color: _ListenerRegistrationStep8AvailabilityState._accent,
-                size: 22,
+                color: _accent,
+                size: 24,
               ),
             ],
           ),
@@ -679,31 +680,36 @@ class _DayChip extends StatelessWidget {
   final bool selected;
   final VoidCallback onTap;
 
+  static const _accent = _ListenerRegistrationStep8AvailabilityState._accent;
+  static const _chipFill =
+      _ListenerRegistrationStep8AvailabilityState._chipFill;
+  static const _muted = _ListenerRegistrationStep8AvailabilityState._muted;
+  static const _border = _ListenerRegistrationStep8AvailabilityState._border;
+
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: _ListenerRegistrationStep8AvailabilityState._chipFill,
+      color: selected ? _accent : _chipFill,
       shape: const CircleBorder(),
       child: InkWell(
         customBorder: const CircleBorder(),
         onTap: onTap,
         child: Container(
-          width: 38,
-          height: 38,
+          width: 40,
+          height: 40,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
+            color: selected ? _accent : _chipFill,
             border: Border.all(
-              color: selected
-                  ? _ListenerRegistrationStep8AvailabilityState._accent
-                  : Colors.white.withValues(alpha: 0.08),
-              width: selected ? 1.5 : 1,
+              color: selected ? _accent : _border.withValues(alpha: 0.75),
+              width: 1.2,
             ),
           ),
           child: Center(
             child: Text(
               label,
               style: GoogleFonts.inter(
-                color: Colors.white,
+                color: selected ? Colors.white : _muted,
                 fontSize: 13,
                 fontWeight: FontWeight.w700,
               ),
@@ -726,24 +732,27 @@ class _SessionLengthChip extends StatelessWidget {
   final bool selected;
   final VoidCallback onTap;
 
+  static const _accent = _ListenerRegistrationStep8AvailabilityState._accent;
+  static const _chipFill =
+      _ListenerRegistrationStep8AvailabilityState._chipFill;
+  static const _border = _ListenerRegistrationStep8AvailabilityState._border;
+
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: _ListenerRegistrationStep8AvailabilityState._chipFill,
-      borderRadius: BorderRadius.circular(22),
+      color: selected ? _accent.withValues(alpha: 0.18) : _chipFill,
+      borderRadius: BorderRadius.circular(16),
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(22),
+        borderRadius: BorderRadius.circular(16),
         child: Container(
-          height: 44,
+          height: 48,
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(22),
+            borderRadius: BorderRadius.circular(16),
             border: Border.all(
-              color: selected
-                  ? _ListenerRegistrationStep8AvailabilityState._accent
-                  : Colors.white.withValues(alpha: 0.08),
-              width: selected ? 1.5 : 1,
+              color: selected ? _accent : _border.withValues(alpha: 0.75),
+              width: selected ? 1.4 : 1,
             ),
           ),
           child: Text(
@@ -751,7 +760,7 @@ class _SessionLengthChip extends StatelessWidget {
             style: GoogleFonts.inter(
               color: Colors.white,
               fontSize: 14,
-              fontWeight: FontWeight.w500,
+              fontWeight: FontWeight.w600,
             ),
           ),
         ),

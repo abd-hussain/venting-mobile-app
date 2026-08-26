@@ -79,6 +79,25 @@ void main() {
     expect(options.headers['accept-language'], 'ar');
   });
 
+  test('does not force JSON content-type for FormData', () {
+    final options = RequestOptions(
+      path: '/v1/listeners/register',
+      data: FormData.fromMap({
+        'document_front': MultipartFile.fromString(
+          'fake',
+          filename: 'document_front.jpg',
+        ),
+      }),
+    );
+
+    interceptor.onRequest(options, handler);
+
+    expect(options.headers.containsKey('content-type'), isFalse);
+    expect(options.headers.containsKey(Headers.contentTypeHeader), isFalse);
+    expect(options.contentType, isNull);
+    verify(() => handler.next(options)).called(1);
+  });
+
   test('skips language headers when getter returns empty', () {
     interceptor = CommonHeadersInterceptor(
       platform: 'android',

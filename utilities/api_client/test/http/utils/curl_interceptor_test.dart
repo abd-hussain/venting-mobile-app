@@ -44,7 +44,7 @@ void main() {
     verify(() => errorHandler.next(err)).called(1);
   });
 
-  test('converts FormData when enabled', () {
+  test('converts FormData when enabled without mutating request', () {
     final formData = FormData.fromMap({'field': 'value'});
     final options = RequestOptions(
       path: 'https://api.test/upload',
@@ -55,6 +55,7 @@ void main() {
 
     interceptor.onResponse(response, responseHandler);
 
+    expect(options.data, same(formData));
     verify(() => responseHandler.next(response)).called(1);
   });
 
@@ -70,6 +71,7 @@ void main() {
 
     interceptor.onResponse(response, responseHandler);
 
+    expect(options.data, same(formData));
     verify(() => responseHandler.next(response)).called(1);
   });
 }

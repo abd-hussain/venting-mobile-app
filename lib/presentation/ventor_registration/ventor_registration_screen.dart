@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -7,9 +5,12 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:venting_mobile_app/di/di_container.dart';
+import 'package:venting_mobile_app/domain/data/api/ventor_registration_progress_model.dart';
 import 'package:venting_mobile_app/domain/data/app/registration_notifications_data.dart';
 import 'package:venting_mobile_app/domain/data/exceptions/main_api_exception.dart';
-import 'package:venting_mobile_app/domain/usecase/ventor_register_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/complete_ventor_registration_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/get_ventor_registration_progress_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/save_ventor_registration_step_usecase.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
 import 'package:venting_mobile_app/presentation/auth/auth_screen.dart';
 import 'package:venting_mobile_app/presentation/homescreen.dart';
@@ -17,6 +18,8 @@ import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dar
 import 'package:venting_mobile_app/presentation/ventor_registration/steps/ventor_registration_interests_step.dart';
 import 'package:venting_mobile_app/presentation/ventor_registration/steps/ventor_registration_language_step.dart';
 import 'package:venting_mobile_app/presentation/ventor_registration/steps/ventor_registration_notifications_step.dart';
+import 'package:venting_mobile_app/utils/registration_image.dart';
+import 'package:venting_mobile_app/utils/registration_media_storage.dart';
 import 'package:venting_mobile_app/utils/router_config.dart';
 
 class VentorRegistrationArgs {
@@ -74,6 +77,8 @@ class _VentorRegistrationScreenState extends State<VentorRegistrationScreen> {
   bool _submitted = false;
   bool _pickingPhoto = false;
   bool _isSubmitting = false;
+  bool _isLoadingProgress = true;
+  bool _isSavingStep = false;
   Set<String> _selectedLanguageIds = {};
   VentorInterestsSelection? _interestsSelection;
 
@@ -81,6 +86,53 @@ class _VentorRegistrationScreenState extends State<VentorRegistrationScreen> {
   void initState() {
     super.initState();
     _nicknameController.addListener(() => setState(() {}));
+    WidgetsBinding.instance.addPostFrameCallback((_) => _loadProgress());
+  }
+
+  Future<void> _loadProgress() async {
+    final result = await diContainer<GetVentorRegistrationProgressUsecase>()()
+        .run();
+
+    if (!mounted) return;
+
+    result.match((_) => setState(() => _isLoadingProgress = false), (progress) {
+      if (progress.registrationComplete) {
+        setState(() => _isLoadingProgress = false);
+        context.go(
+          AppRoutes.tabHome,
+          extra: const HomeScreenArgs(userType: AuthUserType.ventor),
+        );
+        return;
+      }
+
+      final saved = VentorRegistrationSavedState.fromProgress(progress);
+      _nicknameController.text = saved.nickname;
+      _gender = _genderFromApi(saved.gender);
+      _galleryPhotoPath = saved.avatarUrl;
+      _selectedAvatarIndex = saved.avatarPresetIndex;
+      _selectedLanguageIds = saved.languageIds.toSet();
+      _interestsSelection = saved.interestsSelection;
+      _stepIndex = progress.resolveResumeStepIndex();
+
+      setState(() => _isLoadingProgress = false);
+    });
+  }
+
+  VentorGender? _genderFromApi(String? value) {
+    return switch (value) {
+      'male' => VentorGender.male,
+      'female' => VentorGender.female,
+      'prefer_not_to_say' => VentorGender.preferNotToSay,
+      _ => null,
+    };
+  }
+
+  void _onSkipForNow() {
+    if (_isSavingStep || _isSubmitting) return;
+    context.go(
+      AppRoutes.tabHome,
+      extra: const HomeScreenArgs(userType: AuthUserType.ventor),
+    );
   }
 
   @override
@@ -121,8 +173,13 @@ class _VentorRegistrationScreenState extends State<VentorRegistrationScreen> {
         imageQuality: 85,
       );
       if (!mounted || file == null) return;
+      final persisted = await RegistrationMediaStorage.persistImage(
+        file.path,
+        prefix: 'avatar',
+      );
+      if (!mounted) return;
       setState(() {
-        _galleryPhotoPath = file.path;
+        _galleryPhotoPath = persisted;
         _selectedAvatarIndex = null;
       });
     } catch (_) {
@@ -136,17 +193,61 @@ class _VentorRegistrationScreenState extends State<VentorRegistrationScreen> {
     }
   }
 
-  void _onContinue() {
+  Future<void> _onContinue() async {
     setState(() => _submitted = true);
-    if (!_canContinue) return;
-    setState(() => _stepIndex = 1);
+    if (!_canContinue || _isSavingStep) return;
+
+    setState(() => _isSavingStep = true);
+    final result = await diContainer<SaveVentorRegistrationStepUsecase>()
+        .saveProfile(
+          nickname: _nickname,
+          gender: _genderApiValue,
+          avatarPresetIndex: _galleryPhotoPath == null
+              ? _selectedAvatarIndex
+              : null,
+          avatarFilePath: _galleryPhotoPath,
+        )
+        .run();
+
+    if (!mounted) return;
+
+    result.match(
+      (error) {
+        setState(() => _isSavingStep = false);
+        _showError(error);
+      },
+      (_) {
+        setState(() {
+          _isSavingStep = false;
+          _stepIndex = 1;
+        });
+      },
+    );
   }
 
-  void _onContinueLanguages(VentorLanguagesSelection selection) {
-    setState(() {
-      _selectedLanguageIds = selection.languageIds.toSet();
-      _stepIndex = 2;
-    });
+  Future<void> _onContinueLanguages(VentorLanguagesSelection selection) async {
+    if (_isSavingStep) return;
+    setState(() => _isSavingStep = true);
+
+    final result = await diContainer<SaveVentorRegistrationStepUsecase>()
+        .saveLanguages(languageIds: selection.languageIds)
+        .run();
+
+    if (!mounted) return;
+
+    result.match(
+      (error) {
+        setState(() => _isSavingStep = false);
+        _showError(error);
+      },
+      (_) {
+        setState(() {
+          _isSavingStep = false;
+          _selectedLanguageIds = selection.languageIds.toSet();
+          _stepIndex = 2;
+        });
+      },
+    );
   }
 
   String get _genderApiValue {
@@ -157,11 +258,32 @@ class _VentorRegistrationScreenState extends State<VentorRegistrationScreen> {
     };
   }
 
-  void _onContinueInterests(VentorInterestsSelection selection) {
-    setState(() {
-      _interestsSelection = selection;
-      _stepIndex = 3;
-    });
+  Future<void> _onContinueInterests(VentorInterestsSelection selection) async {
+    if (_isSavingStep) return;
+    setState(() => _isSavingStep = true);
+
+    final result = await diContainer<SaveVentorRegistrationStepUsecase>()
+        .saveInterests(
+          interestIds: selection.interestIds,
+          otherInterestText: selection.otherInterestText,
+        )
+        .run();
+
+    if (!mounted) return;
+
+    result.match(
+      (error) {
+        setState(() => _isSavingStep = false);
+        _showError(error);
+      },
+      (_) {
+        setState(() {
+          _isSavingStep = false;
+          _interestsSelection = selection;
+          _stepIndex = 3;
+        });
+      },
+    );
   }
 
   Future<void> _onFinishNotifications(
@@ -175,16 +297,7 @@ class _VentorRegistrationScreenState extends State<VentorRegistrationScreen> {
 
     setState(() => _isSubmitting = true);
 
-    final result = await diContainer<VentorRegisterUsecase>()(
-      nickname: _nickname,
-      gender: _genderApiValue,
-      languageIds: _selectedLanguageIds.toList(growable: false),
-      interestIds: interests.interestIds,
-      otherInterestText: interests.otherInterestText,
-      avatarPresetIndex: _galleryPhotoPath == null
-          ? _selectedAvatarIndex
-          : null,
-      avatarFilePath: _galleryPhotoPath,
+    final result = await diContainer<CompleteVentorRegistrationUsecase>()(
       notificationsEnabled: notifications.notificationsEnabled,
       fcmToken: notifications.fcmToken,
     ).run();
@@ -208,6 +321,13 @@ class _VentorRegistrationScreenState extends State<VentorRegistrationScreen> {
     );
   }
 
+  void _showError(Object error) {
+    final message = _mapRegisterError(error);
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(message)));
+  }
+
   String _mapRegisterError(Object error) {
     if (error is MainAPIException) {
       final localized = error.getLocalizedMessage();
@@ -218,7 +338,7 @@ class _VentorRegistrationScreenState extends State<VentorRegistrationScreen> {
   }
 
   void _onBack() {
-    if (_isSubmitting) return;
+    if (_isSubmitting || _isSavingStep) return;
     if (_stepIndex > 0) {
       setState(() => _stepIndex -= 1);
       return;
@@ -255,375 +375,403 @@ class _VentorRegistrationScreenState extends State<VentorRegistrationScreen> {
             ),
           ),
           child: SafeArea(
-            child: switch (_stepIndex) {
-              1 => VentorRegistrationLanguageStep(
-                onBack: _onBack,
-                onContinue: _onContinueLanguages,
-                initialSelectedIds: _selectedLanguageIds,
-              ),
-              2 => VentorRegistrationInterestsStep(
-                onBack: _onBack,
-                onContinue: _onContinueInterests,
-                initialSelection: _interestsSelection,
-              ),
-              3 => VentorRegistrationNotificationsStep(
-                onBack: _onBack,
-                onContinue: _onFinishNotifications,
-                isSubmitting: _isSubmitting,
-              ),
-              _ => Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
-                    child: Row(
-                      children: [
-                        Material(
-                          color: _fieldFill,
-                          shape: const CircleBorder(),
-                          child: InkWell(
-                            customBorder: const CircleBorder(),
-                            onTap: _onBack,
-                            child: Container(
-                              width: 42,
-                              height: 42,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                  color: _accent.withValues(alpha: 0.55),
-                                ),
-                              ),
-                              child: const Icon(
-                                Icons.arrow_back_rounded,
-                                size: 20,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ),
-                        const Spacer(),
-                        Text(
-                          '1/$_totalSteps',
-                          style: GoogleFonts.inter(
-                            color: Colors.white,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        Row(
-                          children: List.generate(_totalSteps, (i) {
-                            final active = i == 0;
-                            return Padding(
-                              padding: EdgeInsetsDirectional.only(
-                                start: i == 0 ? 0 : 5,
-                              ),
-                              child: AnimatedContainer(
-                                duration: const Duration(milliseconds: 220),
-                                width: active ? 28 : 18,
-                                height: 5,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(999),
-                                  color: active ? _accent : _progressTrack,
-                                ),
-                              ),
-                            );
-                          }),
-                        ),
-                      ],
-                    ),
+            child: Stack(
+              children: [
+                switch (_stepIndex) {
+                  1 => VentorRegistrationLanguageStep(
+                    onBack: _onBack,
+                    onContinue: _onContinueLanguages,
+                    initialSelectedIds: _selectedLanguageIds,
                   ),
-                  Expanded(
-                    child: SingleChildScrollView(
-                      padding: const EdgeInsets.fromLTRB(24, 28, 24, 16),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          Text(
-                            l10n.ventor_reg_title,
-                            style: GoogleFonts.inter(
-                              color: Colors.white,
-                              fontSize: 30,
-                              fontWeight: FontWeight.w700,
-                              height: 1.15,
-                            ),
-                          ),
-                          const SizedBox(height: 10),
-                          Text(
-                            l10n.ventor_reg_subtitle,
-                            style: GoogleFonts.inter(
-                              color: _muted,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              height: 1.45,
-                            ),
-                          ),
-                          const SizedBox(height: 28),
-                          Text(
-                            l10n.ventor_reg_nickname_label,
-                            style: GoogleFonts.inter(
-                              color: _label,
-                              fontSize: 13,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                          const SizedBox(height: 10),
-                          TextField(
-                            controller: _nicknameController,
-                            focusNode: _nicknameFocus,
-                            maxLength: _maxNicknameLength,
-                            textInputAction: TextInputAction.done,
-                            onSubmitted: (_) => _onContinue(),
-                            style: GoogleFonts.inter(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                            ),
-                            cursorColor: _accent,
-                            inputFormatters: [
-                              FilteringTextInputFormatter.allow(
-                                RegExp(r'[a-zA-Z0-9_\u0600-\u06FF ]'),
-                              ),
-                              LengthLimitingTextInputFormatter(
-                                _maxNicknameLength,
-                              ),
-                            ],
-                            decoration: InputDecoration(
-                              hintText: l10n.ventor_reg_nickname_hint,
-                              hintStyle: GoogleFonts.inter(
-                                color: _muted.withValues(alpha: 0.75),
-                                fontSize: 15,
-                                fontWeight: FontWeight.w400,
-                              ),
-                              counterText: '',
-                              filled: true,
-                              fillColor: _fieldFill,
-                              contentPadding: const EdgeInsets.symmetric(
-                                horizontal: 16,
-                                vertical: 16,
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(14),
-                                borderSide: BorderSide(
-                                  color: showNicknameError
-                                      ? const Color(0xFFE11D48)
-                                      : _accent,
-                                  width: 1.2,
-                                ),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(14),
-                                borderSide: BorderSide(
-                                  color: showNicknameError
-                                      ? const Color(0xFFE11D48)
-                                      : _accent,
-                                  width: 1.5,
+                  2 => VentorRegistrationInterestsStep(
+                    onBack: _onBack,
+                    onContinue: _onContinueInterests,
+                    initialSelection: _interestsSelection,
+                  ),
+                  3 => VentorRegistrationNotificationsStep(
+                    onBack: _onBack,
+                    onContinue: _onFinishNotifications,
+                    isSubmitting: _isSubmitting,
+                  ),
+                  _ => Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+                        child: Row(
+                          children: [
+                            Material(
+                              color: _fieldFill,
+                              shape: const CircleBorder(),
+                              child: InkWell(
+                                customBorder: const CircleBorder(),
+                                onTap: _onBack,
+                                child: Container(
+                                  width: 42,
+                                  height: 42,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    border: Border.all(
+                                      color: _accent.withValues(alpha: 0.55),
+                                    ),
+                                  ),
+                                  child: const Icon(
+                                    Icons.arrow_back_rounded,
+                                    size: 20,
+                                    color: Colors.white,
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                          const SizedBox(height: 6),
-                          Row(
+                            const Spacer(),
+                            TextButton(
+                              onPressed: _onSkipForNow,
+                              child: Text(
+                                l10n.listener_reg_skip_for_now,
+                                style: GoogleFonts.inter(
+                                  color: _accent,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            Text(
+                              '1/$_totalSteps',
+                              style: GoogleFonts.inter(
+                                color: Colors.white,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            const SizedBox(width: 10),
+                            Row(
+                              children: List.generate(_totalSteps, (i) {
+                                final active = i == 0;
+                                return Padding(
+                                  padding: EdgeInsetsDirectional.only(
+                                    start: i == 0 ? 0 : 5,
+                                  ),
+                                  child: AnimatedContainer(
+                                    duration: const Duration(milliseconds: 220),
+                                    width: active ? 28 : 18,
+                                    height: 5,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(999),
+                                      color: active ? _accent : _progressTrack,
+                                    ),
+                                  ),
+                                );
+                              }),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        child: SingleChildScrollView(
+                          padding: const EdgeInsets.fromLTRB(24, 28, 24, 16),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
-                              if (showNicknameError)
-                                Expanded(
-                                  child: Text(
-                                    l10n.ventor_reg_nickname_required,
+                              Text(
+                                l10n.ventor_reg_title,
+                                style: GoogleFonts.inter(
+                                  color: Colors.white,
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.w700,
+                                  height: 1.15,
+                                ),
+                              ),
+                              const SizedBox(height: 10),
+                              Text(
+                                l10n.ventor_reg_subtitle,
+                                style: GoogleFonts.inter(
+                                  color: _muted,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w400,
+                                  height: 1.45,
+                                ),
+                              ),
+                              const SizedBox(height: 28),
+                              Text(
+                                l10n.ventor_reg_nickname_label,
+                                style: GoogleFonts.inter(
+                                  color: _label,
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              const SizedBox(height: 10),
+                              TextField(
+                                controller: _nicknameController,
+                                focusNode: _nicknameFocus,
+                                maxLength: _maxNicknameLength,
+                                textInputAction: TextInputAction.done,
+                                onSubmitted: (_) => _onContinue(),
+                                style: GoogleFonts.inter(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                                cursorColor: _accent,
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.allow(
+                                    RegExp(r'[a-zA-Z0-9_\u0600-\u06FF ]'),
+                                  ),
+                                  LengthLimitingTextInputFormatter(
+                                    _maxNicknameLength,
+                                  ),
+                                ],
+                                decoration: InputDecoration(
+                                  hintText: l10n.ventor_reg_nickname_hint,
+                                  hintStyle: GoogleFonts.inter(
+                                    color: _muted.withValues(alpha: 0.75),
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                  counterText: '',
+                                  filled: true,
+                                  fillColor: _fieldFill,
+                                  contentPadding: const EdgeInsets.symmetric(
+                                    horizontal: 16,
+                                    vertical: 16,
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(14),
+                                    borderSide: BorderSide(
+                                      color: showNicknameError
+                                          ? const Color(0xFFE11D48)
+                                          : _accent,
+                                      width: 1.2,
+                                    ),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(14),
+                                    borderSide: BorderSide(
+                                      color: showNicknameError
+                                          ? const Color(0xFFE11D48)
+                                          : _accent,
+                                      width: 1.5,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 6),
+                              Row(
+                                children: [
+                                  if (showNicknameError)
+                                    Expanded(
+                                      child: Text(
+                                        l10n.ventor_reg_nickname_required,
+                                        style: GoogleFonts.inter(
+                                          color: const Color(0xFFE11D48),
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    )
+                                  else
+                                    const Spacer(),
+                                  Text(
+                                    '$count/$_maxNicknameLength',
                                     style: GoogleFonts.inter(
-                                      color: const Color(0xFFE11D48),
+                                      color: _muted,
                                       fontSize: 12,
                                       fontWeight: FontWeight.w500,
                                     ),
                                   ),
-                                )
-                              else
-                                const Spacer(),
+                                ],
+                              ),
                               Text(
-                                '$count/$_maxNicknameLength',
+                                l10n.ventor_reg_suggestions_label,
                                 style: GoogleFonts.inter(
-                                  color: _muted,
-                                  fontSize: 12,
+                                  color: _label,
+                                  fontSize: 13,
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
-                            ],
-                          ),
-                          Text(
-                            l10n.ventor_reg_suggestions_label,
-                            style: GoogleFonts.inter(
-                              color: _label,
-                              fontSize: 13,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                          const SizedBox(height: 10),
-                          Wrap(
-                            spacing: 8,
-                            runSpacing: 8,
-                            children: [
-                              for (final suggestion in suggestions)
-                                _SuggestionChip(
-                                  label: suggestion,
-                                  selected: _nickname == suggestion,
-                                  onTap: () => _applySuggestion(suggestion),
-                                ),
-                            ],
-                          ),
-                          const SizedBox(height: 24),
-                          Text(
-                            l10n.ventor_reg_gender_label,
-                            style: GoogleFonts.inter(
-                              color: _label,
-                              fontSize: 13,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                          const SizedBox(height: 10),
-                          Wrap(
-                            spacing: 8,
-                            runSpacing: 8,
-                            children: [
-                              _GenderChip(
-                                label: l10n.ventor_reg_gender_male,
-                                selected: _gender == VentorGender.male,
-                                onTap: () {
-                                  setState(() => _gender = VentorGender.male);
-                                },
-                              ),
-                              _GenderChip(
-                                label: l10n.ventor_reg_gender_female,
-                                selected: _gender == VentorGender.female,
-                                onTap: () {
-                                  setState(() => _gender = VentorGender.female);
-                                },
-                              ),
-                              _GenderChip(
-                                label: l10n.ventor_reg_gender_prefer_not,
-                                selected:
-                                    _gender == VentorGender.preferNotToSay,
-                                onTap: () {
-                                  setState(
-                                    () => _gender = VentorGender.preferNotToSay,
-                                  );
-                                },
-                              ),
-                            ],
-                          ),
-                          if (showGenderError) ...[
-                            const SizedBox(height: 8),
-                            Text(
-                              l10n.ventor_reg_gender_required,
-                              style: GoogleFonts.inter(
-                                color: const Color(0xFFE11D48),
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ],
-                          const SizedBox(height: 24),
-                          Text(
-                            l10n.ventor_reg_avatar_label,
-                            style: GoogleFonts.inter(
-                              color: _label,
-                              fontSize: 13,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                          const SizedBox(height: 14),
-                          SizedBox(
-                            height: 72,
-                            child: ListView.separated(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: _presetAvatarAssets.length + 1,
-                              separatorBuilder: (_, _) =>
-                                  const SizedBox(width: 12),
-                              itemBuilder: (context, index) {
-                                if (index == 0) {
-                                  return SizedBox(
-                                    width: 72,
-                                    height: 72,
-                                    child: _GalleryAvatarOption(
-                                      photoPath: _galleryPhotoPath,
-                                      selected: _galleryPhotoPath != null,
-                                      picking: _pickingPhoto,
-                                      onTap: _pickFromGallery,
-                                      onClear: _galleryPhotoPath == null
-                                          ? null
-                                          : () {
-                                              setState(
-                                                () => _galleryPhotoPath = null,
-                                              );
-                                            },
+                              const SizedBox(height: 10),
+                              Wrap(
+                                spacing: 8,
+                                runSpacing: 8,
+                                children: [
+                                  for (final suggestion in suggestions)
+                                    _SuggestionChip(
+                                      label: suggestion,
+                                      selected: _nickname == suggestion,
+                                      onTap: () => _applySuggestion(suggestion),
                                     ),
-                                  );
-                                }
-
-                                final avatarIndex = index - 1;
-                                final selected =
-                                    _selectedAvatarIndex == avatarIndex;
-                                return SizedBox(
-                                  width: 72,
-                                  height: 72,
-                                  child: _AvatarOption(
-                                    assetPath: _presetAvatarAssets[avatarIndex],
-                                    selected: selected,
+                                ],
+                              ),
+                              const SizedBox(height: 24),
+                              Text(
+                                l10n.ventor_reg_gender_label,
+                                style: GoogleFonts.inter(
+                                  color: _label,
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              const SizedBox(height: 10),
+                              Wrap(
+                                spacing: 8,
+                                runSpacing: 8,
+                                children: [
+                                  _GenderChip(
+                                    label: l10n.ventor_reg_gender_male,
+                                    selected: _gender == VentorGender.male,
                                     onTap: () {
-                                      setState(() {
-                                        _galleryPhotoPath = null;
-                                        _selectedAvatarIndex = selected
-                                            ? null
-                                            : avatarIndex;
-                                      });
+                                      setState(
+                                        () => _gender = VentorGender.male,
+                                      );
                                     },
                                   ),
-                                );
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(24, 8, 24, 8),
-                    child: SizedBox(
-                      height: 56,
-                      child: FilledButton(
-                        onPressed: _onContinue,
-                        style: FilledButton.styleFrom(
-                          backgroundColor: _canContinue
-                              ? _accent
-                              : _accent.withValues(alpha: 0.42),
-                          foregroundColor: Colors.white,
-                          disabledForegroundColor: Colors.white,
-                          elevation: 0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(999),
-                          ),
-                          textStyle: GoogleFonts.inter(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w700,
+                                  _GenderChip(
+                                    label: l10n.ventor_reg_gender_female,
+                                    selected: _gender == VentorGender.female,
+                                    onTap: () {
+                                      setState(
+                                        () => _gender = VentorGender.female,
+                                      );
+                                    },
+                                  ),
+                                  _GenderChip(
+                                    label: l10n.ventor_reg_gender_prefer_not,
+                                    selected:
+                                        _gender == VentorGender.preferNotToSay,
+                                    onTap: () {
+                                      setState(
+                                        () => _gender =
+                                            VentorGender.preferNotToSay,
+                                      );
+                                    },
+                                  ),
+                                ],
+                              ),
+                              if (showGenderError) ...[
+                                const SizedBox(height: 8),
+                                Text(
+                                  l10n.ventor_reg_gender_required,
+                                  style: GoogleFonts.inter(
+                                    color: const Color(0xFFE11D48),
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                              const SizedBox(height: 24),
+                              Text(
+                                l10n.ventor_reg_avatar_label,
+                                style: GoogleFonts.inter(
+                                  color: _label,
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              const SizedBox(height: 14),
+                              SizedBox(
+                                height: 72,
+                                child: ListView.separated(
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: _presetAvatarAssets.length + 1,
+                                  separatorBuilder: (_, _) =>
+                                      const SizedBox(width: 12),
+                                  itemBuilder: (context, index) {
+                                    if (index == 0) {
+                                      return SizedBox(
+                                        width: 72,
+                                        height: 72,
+                                        child: _GalleryAvatarOption(
+                                          photoPath: _galleryPhotoPath,
+                                          selected: _galleryPhotoPath != null,
+                                          picking: _pickingPhoto,
+                                          onTap: _pickFromGallery,
+                                          onClear: _galleryPhotoPath == null
+                                              ? null
+                                              : () {
+                                                  setState(
+                                                    () => _galleryPhotoPath =
+                                                        null,
+                                                  );
+                                                },
+                                        ),
+                                      );
+                                    }
+
+                                    final avatarIndex = index - 1;
+                                    final selected =
+                                        _selectedAvatarIndex == avatarIndex;
+                                    return SizedBox(
+                                      width: 72,
+                                      height: 72,
+                                      child: _AvatarOption(
+                                        assetPath:
+                                            _presetAvatarAssets[avatarIndex],
+                                        selected: selected,
+                                        onTap: () {
+                                          setState(() {
+                                            _galleryPhotoPath = null;
+                                            _selectedAvatarIndex = selected
+                                                ? null
+                                                : avatarIndex;
+                                          });
+                                        },
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                        child: Text(l10n.listener_reg_continue),
                       ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(24, 0, 24, 20),
-                    child: Text(
-                      l10n.ventor_reg_change_anytime,
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.inter(
-                        color: _muted,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w500,
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(24, 8, 24, 8),
+                        child: SizedBox(
+                          height: 56,
+                          child: FilledButton(
+                            onPressed: _onContinue,
+                            style: FilledButton.styleFrom(
+                              backgroundColor: _canContinue
+                                  ? _accent
+                                  : _accent.withValues(alpha: 0.42),
+                              foregroundColor: Colors.white,
+                              disabledForegroundColor: Colors.white,
+                              elevation: 0,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(999),
+                              ),
+                              textStyle: GoogleFonts.inter(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                            child: Text(l10n.listener_reg_continue),
+                          ),
+                        ),
                       ),
-                    ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(24, 0, 24, 20),
+                        child: Text(
+                          l10n.ventor_reg_change_anytime,
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.inter(
+                            color: _muted,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            },
+                },
+                if (_isLoadingProgress || _isSavingStep)
+                  const ColoredBox(
+                    color: Color(0x99000000),
+                    child: Center(child: CircularProgressIndicator()),
+                  ),
+              ],
+            ),
           ),
         ),
       ),
@@ -768,7 +916,10 @@ class _GalleryAvatarOption extends StatelessWidget {
                     ? Stack(
                         fit: StackFit.expand,
                         children: [
-                          Image.file(File(photoPath!), fit: BoxFit.cover),
+                          Image(
+                            image: registrationImageProvider(photoPath)!,
+                            fit: BoxFit.cover,
+                          ),
                           if (picking)
                             const ColoredBox(
                               color: Color(0x66000000),

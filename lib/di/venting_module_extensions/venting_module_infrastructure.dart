@@ -71,6 +71,7 @@ mixin VentingModuleInfrastructure on VentingModule {
   ApiClientBase apiClient(DioBuilder diobuilder) {
     final dio = diobuilder.build();
     dio.interceptors.add(AuthRefreshInterceptor(dio));
+    dio.interceptors.add(const MultipartFormDataInterceptor());
     return DioApiClient(dio);
   }
 
@@ -98,6 +99,7 @@ mixin VentingModuleInfrastructure on VentingModule {
   ) {
     final dio = diobuilder.build();
     dio.interceptors.add(AuthRefreshInterceptor(dio));
+    dio.interceptors.add(const MultipartFormDataInterceptor());
     return DioApiClient(dio);
   }
 

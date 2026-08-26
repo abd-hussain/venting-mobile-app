@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -6,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:venting_mobile_app/domain/data/app/listener_registration_draft.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
+import 'package:venting_mobile_app/utils/registration_image.dart';
 import 'package:venting_mobile_app/utils/registration_media_storage.dart';
 
 /// Step 2 — Identity verification (government ID + selfie).
@@ -61,7 +61,7 @@ class _ListenerRegistrationStep2IdentityVerificationState
       if (!mounted || file == null) return;
       final persisted = await RegistrationMediaStorage.persistImage(
         file.path,
-        prefix: 'document_front',
+        prefix: 'identity_document',
       );
       if (!mounted) return;
       setState(() => _idImagePath = persisted);
@@ -286,8 +286,8 @@ class _VerificationCaptureCard extends StatelessWidget {
                       ),
                       clipBehavior: Clip.antiAlias,
                       child: hasImage
-                          ? Image.file(
-                              File(imagePath!),
+                          ? Image(
+                              image: registrationImageProvider(imagePath)!,
                               fit: BoxFit.cover,
                               width: 48,
                               height: 48,

@@ -426,88 +426,72 @@ Password rules (UI): min 8, 1 uppercase, 1 number.
 
 ## 2. Ventor profile / home / wellness
 
-### 8. `POST /v1/ventors/register`
+### 8. Ventor registration (step-based)
+
+> **Replaces** the old one-shot `POST /v1/ventors/register`. Each wizard step saves independently so the user can **Skip** and finish later.
+
+| Step | Endpoint | When |
+|------|----------|------|
+| Resume | `GET /v1/ventors/register/progress` | On registration screen open |
+| 1 Profile | `PATCH /v1/ventors/register/steps/profile` | Continue from profile step |
+| 2 Languages | `PATCH /v1/ventors/register/steps/languages` | Continue from language step |
+| 3 Interests | `PATCH /v1/ventors/register/steps/interests` | Continue from interests step |
+| 4 Notifications | `POST /v1/ventors/register/complete` | After notifications permission |
+
+#### 8a. `GET /v1/ventors/register/progress`
 
 | | |
 |--|--|
-| **Auth** | Bearer (user already authenticated via `#1` / `#1b` / `#2`; `registration_complete` still `false`) |
-| **Screen** | Ventor registration — **final step** (after profile → languages → interests → **notifications**) |
-| **When** | User taps **Enable Notifications** on the notifications step (submits `#8` immediately after) |
-| **Content-Type** | `application/json` **or** `multipart/form-data` (required when uploading `avatar` file) |
-| **Response** | Ventor profile object (same shape as #9), wrapped in `{ status, data }` |
+| **Auth** | Bearer (`registration_complete = false`) |
+| **Response** | `{ registration_complete, next_step, completed_steps[], saved: { profile?, languages?, interests? } }` |
 
-#### Body fields
+`next_step`: `profile` \| `languages` \| `interests` \| `notifications`  
+`completed_steps`: subset of `profile`, `languages`, `interests`  
+`saved.profile`: `{ nickname, gender, avatar_url?, avatar_preset_index? }`  
+`saved.languages`: `{ language_ids[] }`  
+`saved.interests`: `{ interest_ids[], other_interest_text? }`
 
-| Field | Type | Required | Notes |
-|-------|------|----------|-------|
-| `nickname` | string | yes | Trimmed, 1–20 chars |
-| `gender` | string | yes | `male` \| `female` \| `prefer_not_to_say` |
-| `language_ids` | string[] | yes | ≥1 ids from `#75` / `languages` table → writes `ventor_languages` |
-| `interest_ids` | string[] | yes | ≥1 ids from `#74` / `comfort_areas` → writes `ventor_interests` |
-| `other_interest_text` | string | conditional | **Required** when `interest_ids` contains a category with `allows_custom_text: true` (typically `other`). Trimmed free text; omit or `null` otherwise. Stored on `ventor_interests.custom_text`. |
-| `avatar_preset_index` | number | no* | 0-based preset index when user picks a built-in avatar |
-| `avatar` | file | no* | Multipart image file when user picks from gallery |
-| `notifications_enabled` | boolean | yes | Whether the user granted push permission on the final notifications step |
-| `fcm_token` | string \| null | no | Firebase device token — **`null` or omitted** when permission denied or token unavailable. Never required for registration to succeed. |
+Each step `PATCH` returns the **same progress envelope** as `#8a`.
 
-\* Provide **either** `avatar` **or** `avatar_preset_index`, or neither (backend may assign a default). Do not send both.
+#### 8b. `PATCH /v1/ventors/register/steps/profile`
 
-#### JSON example (preset avatar, with “Other” interest)
+| Field | Required | Notes |
+|-------|----------|-------|
+| `nickname` | yes | 1–20 chars |
+| `gender` | yes | `male` \| `female` \| `prefer_not_to_say` |
+| `avatar` | no | Multipart file when gallery photo chosen |
+| `avatar_preset_index` | no | 0-based preset when no gallery photo |
 
-```http
-POST /v1/ventors/register
-Authorization: Bearer <access_token>
-Content-Type: application/json
-```
+JSON or multipart (multipart when uploading `avatar`).
 
-```json
-{
-  "nickname": "QuietFox",
-  "gender": "prefer_not_to_say",
-  "avatar_preset_index": 2,
-  "language_ids": ["en", "ar"],
-  "interest_ids": ["stress_anxiety", "other"],
-  "other_interest_text": "Grief after moving cities"
-}
-```
+#### 8c. `PATCH /v1/ventors/register/steps/languages`
 
-#### Multipart example (gallery photo)
+| Field | Required | Notes |
+|-------|----------|-------|
+| `language_ids` | yes | JSON array, ≥1 from `#75` |
 
-Form fields (repeat `language_ids` / `interest_ids` once per value):
+#### 8d. `PATCH /v1/ventors/register/steps/interests`
 
-| Part | Value |
-|------|--------|
-| `nickname` | `QuietFox` |
-| `gender` | `male` |
-| `language_ids` | `en` (repeat for each) |
-| `interest_ids` | `relationships` (repeat for each) |
-| `other_interest_text` | *(omit unless Other selected)* |
-| `notifications_enabled` | `true` or `false` |
-| `fcm_token` | *(omit when null / permission denied)* |
-| `avatar` | image file |
+| Field | Required | Notes |
+|-------|----------|-------|
+| `interest_ids` | yes | JSON array, ≥1 from `#74` |
+| `other_interest_text` | conditional | When an `allows_custom_text` id is selected |
 
-#### Rules
+#### 8e. `POST /v1/ventors/register/complete`
 
-- Call only after languages (≥1) and interests (≥1) are chosen.
-- If `other` (or any `allows_custom_text` id) is in `interest_ids` and `other_interest_text` is missing/blank → `400` validation.
-- Sets `users` / session `registration_complete = true` on success.
-- Idempotent-ish: second call while already complete → `409` or return existing profile (backend choice; document in error table).
+| Field | Required | Notes |
+|-------|----------|-------|
+| `notifications_enabled` | yes | Result of OS permission on step 4 |
+| `fcm_token` | no | Omit when permission denied |
 
-#### Errors
-
-| HTTP | type | code | When |
-|------|------|------|------|
-| 400 | validation | 800 | Missing/invalid nickname, gender, ids, or missing `other_interest_text` |
-| 401 | auth | 401 | Missing/invalid Bearer |
-| 409 | conflict | 809 | Profile already registered |
-| 500 / 503 | server | … | Failure |
+**Response:** Ventor profile (#9). Sets `users.registration_complete = true`.
 
 #### Mobile flow
 
-1. Profile step → nickname, gender, optional avatar/preset.  
-2. Language step → `#75` → keep `language_ids`.  
-3. Interests step → `#74` → keep `interest_ids` + optional `other_interest_text`.  
-4. Finish → `#8` with all fields → on success refresh `#7 me` (optional) → ventor home.
+1. Open registration → `#8a` → hydrate UI + jump to `next_step`.  
+2. Each **Continue** → save that step (`#8b`–`#8d`).  
+3. **Skip** → home without calling the current step (prior saved steps remain).  
+4. Notifications step → `#8e` → ventor home.
 
 ### 9. `GET /v1/ventors/me`
 
@@ -644,66 +628,85 @@ Form fields (repeat `language_ids` / `interest_ids` once per value):
 
 ## 3. Listener profile / onboarding / dashboard
 
-### 22. `POST /v1/listeners/register`
+### 22. Listener registration (step-based)
+
+> **Replaces** the old one-shot `POST /v1/listeners/register`. Each wizard step saves independently so the user can **Skip for now** and finish later.
+
+| Step | Endpoint | Content-Type |
+|------|----------|----------------|
+| Resume | `GET /v1/listeners/register/progress` | JSON |
+| 1 Profile | `PATCH /v1/listeners/register/steps/profile` | multipart (`avatar`) |
+| 2 Identity | `PATCH /v1/listeners/register/steps/identity` | multipart (`identity_document`, `selfie`) |
+| 3 About you | `PATCH /v1/listeners/register/steps/about` | JSON |
+| 4 Experiences | `PATCH /v1/listeners/register/steps/experiences` | JSON |
+| 5 Comfort areas | `PATCH /v1/listeners/register/steps/comfort-areas` | JSON |
+| 6 Boundaries | `PATCH /v1/listeners/register/steps/boundaries` | JSON |
+| 7 Voice intro | `PATCH /v1/listeners/register/steps/voice-intro` | multipart (`voice_intro`) |
+| 8 Availability | `PATCH /v1/listeners/register/steps/availability` | JSON |
+| 9 Notifications | `POST /v1/listeners/register/complete` | JSON |
+
+#### 22a. `GET /v1/listeners/register/progress`
 
 | | |
 |--|--|
-| **Auth** | Bearer (or Public if register creates account in one shot) |
-| **Screen** | Listener registration steps 1–9 (multipart / JSON) |
-| **Body** | See table below |
-| **Response** | `{ listener_id, profile_status: "under_review" }` |
+| **Auth** | Bearer (`registration_complete = false`) |
+| **Response** | `{ registration_complete, profile_status?, next_step, completed_steps[], saved: { profile?, identity?, about?, … } }` |
 
-| Field | From step | Type |
-|-------|-----------|------|
-| `full_name`, `phone`, `phone_country`, `avatar`, `agreed_to_terms` | 1 | string / file / bool |
-| `document_front`, `selfie` | 2 | multipart (`document_back` optional if UI captures one ID image) |
-| `date_of_birth`, `country_iso`, `city`, `language_ids` | 3 | date / string / string[] |
-| `life_experience_ids`, `custom_experiences?` | 4 | string[] (includes client-local relationship/family slugs + catalog ids) |
-| `comfort_area_ids`, `custom_comfort_area_text?` | 5 | string[] / string |
-| `boundary_ids`, `custom_boundary_text?` | 6 | string[] / string |
-| `voice_intro`, `voice_intro_seconds?` | 7 | audio multipart / int |
-| `availability` (JSON — `#37` days/slots shape), `accept_instant_calls`, `session_minutes` | 8 | object / bool / **int** (preferred session length in minutes; if UI allows 30+60, send shortest selected, e.g. `30`) |
-| `notifications_enabled`, `fcm_token?` | 9 | bool / string \| null — **`fcm_token` omitted or `null` when permission denied**; registration must still succeed |
+`next_step`: `profile` \| `identity` \| `about` \| `experiences` \| `comfort-areas` \| `boundaries` \| `voice-intro` \| `availability` \| `notifications`  
+`saved.*` returns previously saved field values and media URLs for resume.  
+Each step `PATCH` returns the **same progress envelope** as `#22a`.
 
-#### Multipart encoding (`#22`)
+#### Step payloads (save on Continue)
 
-When using `multipart/form-data` (required for file uploads), **array and object fields must be JSON-encoded strings** — do **not** repeat the same field name per item (Heroku returns `422` for repeated `language_ids`).
+| Step | Fields |
+|------|--------|
+| **profile** | `avatar` (file), `full_name`, `phone` (E.164), `phone_country` |
+| **identity** | `identity_document` (file), `selfie` (file) — **not** `document_front` / `document_back` |
+| **about** | `date_of_birth`, `country_iso`, `city`, `language_ids[]` |
+| **experiences** | `life_experience_ids[]`, optional `custom_experiences[]` |
+| **comfort-areas** | `comfort_area_ids[]`, optional `custom_comfort_area_text` |
+| **boundaries** | `boundary_ids[]` (≥1), optional `custom_boundary_text` |
+| **voice-intro** | `voice_intro` (file), `voice_intro_seconds` |
+| **availability** | `accept_instant_calls`, `session_minutes` (int), `availability` object (`#37` shape) |
 
-| Field | Multipart value example |
-|-------|-------------------------|
-| `language_ids` | `["en","ar"]` |
-| `life_experience_ids` | `["single","parent","stress_anxiety"]` |
-| `custom_experiences` | `["Career change"]` |
-| `comfort_area_ids` | `["relationships","other"]` |
-| `boundary_ids` | `["suicide_self_harm"]` |
-| `session_minutes` | `30` (integer string, not JSON array) |
-| `availability` | `{"time_zone_id":"America/Chicago","days":[...]}` |
+**Do not send:** `agreed_to_terms`, `notifications_enabled`, `document_front`, `document_back`.
 
-Scalars (`agreed_to_terms`, `accept_instant_calls`, `notifications_enabled`) are sent as `"true"` / `"false"` strings. `fcm_token` is omitted when null.
+Multipart steps: omit file parts when the user did not change an already-uploaded asset (server keeps existing URLs).
 
-**Efficiency note:** Prefer one submit at end (`POST`) + optional `PATCH /v1/listeners/me/registration/{step}` for resume. If you split by step, keep the same field names.
+#### 22j. `POST /v1/listeners/register/complete`
 
-**Identity documents:** Include front/back + selfie on **this** `#22` call for first-time registration. Do **not** also call `#23` during initial onboarding.
+| Field | Required | Notes |
+|-------|----------|-------|
+| `fcm_token` | no | Omit when notifications permission denied |
+
+**Response:** `{ listener_id, profile_status: "under_review" }`. Requires all prior steps complete. Sets `users.registration_complete = true`.
+
+#### Mobile flow
+
+1. Open registration → `#22a` → hydrate draft + jump to `next_step`.  
+2. Each **Continue** → `PATCH …/steps/{step}` for that step.  
+3. **Skip for now** → home; saved steps remain on server.  
+4. Step 9 → `#22j` → under-review screen.
 
 ---
 
 ### 23. `POST /v1/listeners/me/identity-verification`
 
 > **Purpose:** Resubmit KYC / identity documents **after an admin rejects** the listener’s previous verification.  
-> **Not for first-time registration** — first upload is part of `#22 POST /v1/listeners/register`.
+> **Not for first-time registration** — first upload is part of `#22` step `identity`.
 
 | | |
 |--|--|
 | **Auth** | Bearer (listener) |
 | **When** | Listener `profile_status` (or identity verification status) is **`rejected`** and the user taps resubmit / re-verify |
 | **Screen** | KYC rejected / resubmit identity screen (not the initial registration step 2 submit) |
-| **Body** | multipart: `document_front`, `document_back?`, `selfie` |
+| **Body** | multipart: `identity_document`, `selfie` (same naming as `#22`; no front/back) |
 | **Response** | `{ status: "pending" }` — returns to admin review queue |
 
 #### Rules
 
 - Call **only** when prior KYC was **rejected by admin** (or an explicit re-verify flow after rejection).
-- Do **not** call during first registration — identity files belong on `#22`.
+- Do **not** call during first registration — identity files belong on `#22` step `identity`.
 - On success: set verification status back to **pending** / `under_review`; clear or archive the rejected attempt as needed.
 - Listener does **not** redo full `#22` registration for a KYC-only rejection.
 
@@ -712,6 +715,7 @@ Scalars (`agreed_to_terms`, `accept_instant_calls`, `notifications_enabled`) are
 - [ ] Rejected listeners can resubmit docs without re-entering profile / experiences / voice / availability
 - [ ] First-time onboarding never requires `#23`
 - [ ] Successful resubmit puts the case back in the admin review queue
+- [ ] Field names match `#22` (`identity_document` + `selfie`)
 
 ---
 
@@ -1277,7 +1281,7 @@ Demo codes in UI today: `SAVE10`, `VENT5`, `WELCOME15` (replace with real catalo
 
 > **Status:** Proposed — ventor & listener registration topic picker from portal-managed `comfort_areas`.  
 > **Purpose:** Return active interest / comfort categories for **both** ventor interests and listener comfort areas.  
-> **DB source:** `comfort_areas` (ids used as `interest_ids` on `#8 POST /v1/ventors/register` and `comfort_area_ids` on `#22 POST /v1/listeners/register`).  
+> **DB source:** `comfort_areas` (ids used as `interest_ids` on ventor registration step `interests` and `comfort_area_ids` on listener registration step `comfort-areas`).  
 > **Icons:** `icon_emoji` (like language `flag_emoji`) plus optional `icon_url` (CDN). Mobile does **not** map Material `icon_key`s.
 
 | | |
@@ -1485,8 +1489,8 @@ Empty active catalog → still `200` with `"items": []` (mobile shows empty + re
 | Step | API |
 |------|-----|
 | Load list | `#74 GET /v1/catalog/categories` |
-| Submit profile + interests | `#8 POST /v1/ventors/register` with `interest_ids: ["relationships", "career_work", …]` |
-| Submit listener registration | `#22 POST /v1/listeners/register` with `comfort_area_ids: ["stress_anxiety", …]` |
+| Submit profile + interests | `#8d PATCH /v1/ventors/register/steps/interests` with `interest_ids: ["relationships", "career_work", …]` |
+| Submit listener comfort areas | `#22f PATCH /v1/listeners/register/steps/comfort-areas` with `comfort_area_ids: ["stress_anxiety", …]` |
 
 Optional body extension on `#8` when `other` selected:
 
@@ -1958,7 +1962,11 @@ Password reset pages are opened from the **email link** (browser / OS), not from
 | 5 | DELETE | `/v1/auth/account` |
 | 6 | POST | `/v1/auth/change-password` |
 | 7 | GET | `/v1/auth/me` |
-| 8 | POST | `/v1/ventors/register` |
+| 8a | GET | `/v1/ventors/register/progress` |
+| 8b | PATCH | `/v1/ventors/register/steps/profile` |
+| 8c | PATCH | `/v1/ventors/register/steps/languages` |
+| 8d | PATCH | `/v1/ventors/register/steps/interests` |
+| 8e | POST | `/v1/ventors/register/complete` |
 | 9 | GET | `/v1/ventors/me` |
 | 10 | PATCH | `/v1/ventors/me` |
 | 11 | GET | `/v1/ventors/me/home` |
@@ -1972,7 +1980,16 @@ Password reset pages are opened from the **email link** (browser / OS), not from
 | 19 | PUT | `/v1/ventors/me/privacy` |
 | 20 | GET | `/v1/ventors/me/notification-preferences` |
 | 21 | PUT | `/v1/ventors/me/notification-preferences` |
-| 22 | POST | `/v1/listeners/register` |
+| 22a | GET | `/v1/listeners/register/progress` |
+| 22b | PATCH | `/v1/listeners/register/steps/profile` |
+| 22c | PATCH | `/v1/listeners/register/steps/identity` |
+| 22d | PATCH | `/v1/listeners/register/steps/about` |
+| 22e | PATCH | `/v1/listeners/register/steps/experiences` |
+| 22f | PATCH | `/v1/listeners/register/steps/comfort-areas` |
+| 22g | PATCH | `/v1/listeners/register/steps/boundaries` |
+| 22h | PATCH | `/v1/listeners/register/steps/voice-intro` |
+| 22i | PATCH | `/v1/listeners/register/steps/availability` |
+| 22j | POST | `/v1/listeners/register/complete` |
 | 23 | POST | `/v1/listeners/me/identity-verification` |
 | 24 | GET | `/v1/listeners/me` |
 | 25 | PATCH | `/v1/listeners/me` |
@@ -2033,7 +2050,7 @@ Password reset pages are opened from the **email link** (browser / OS), not from
 
 ## Final count
 
-**Total unique API endpoints: 79**
+**Total unique API endpoints: 92**
 
 **Live / wired in the mobile app today: 0** (auth + catalog clients exist; backend contracts still proposed where marked). Static legal/help HTML is separate from this REST count.
 

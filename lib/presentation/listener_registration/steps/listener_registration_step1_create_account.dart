@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -10,6 +8,7 @@ import 'package:venting_mobile_app/domain/data/app/listener_registration_draft.d
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
 import 'package:venting_mobile_app/presentation/listener_registration/widgets/phone_country_picker.dart';
 import 'package:venting_mobile_app/utils/legal_document_opener.dart';
+import 'package:venting_mobile_app/utils/registration_image.dart';
 import 'package:venting_mobile_app/utils/registration_media_storage.dart';
 import 'package:venting_mobile_app/utils/static_web_content.dart';
 
@@ -514,7 +513,7 @@ class _ProfilePhotoPicker extends StatelessWidget {
                   color: _fill,
                   image: hasPhoto
                       ? DecorationImage(
-                          image: FileImage(File(imagePath!)),
+                          image: registrationImageProvider(imagePath)!,
                           fit: BoxFit.cover,
                         )
                       : null,
