@@ -101,6 +101,8 @@ class _ListenerProfileTabState extends State<ListenerProfileTab> {
   // TODO: Load location / languages from listener profile API / repository.
   IsoCode _country = IsoCode.JO;
   var _city = 'Amman';
+  IsoCode _phoneCountry = IsoCode.US;
+  var _phoneNational = '5551234567';
   List<CatalogLanguageModel> _selectedLanguages = const [];
 
   var _aboutExpanded = false;
@@ -281,13 +283,18 @@ class _ListenerProfileTabState extends State<ListenerProfileTab> {
     );
   }
 
-  Future<void> _onOpenSettings() {
-    return openListenerProfileSettingsScreen(
+  Future<void> _onOpenSettings() async {
+    final updatedPhone = await openListenerProfileSettingsScreen(
       context: context,
       email: _mockEmail,
-      // TODO: Pass real phone from listener profile API / repository.
-      phoneNumber: '+1 (555) 123-4567',
+      phoneCountryIso: _phoneCountry.name,
+      phoneNationalNumber: _phoneNational,
     );
+    if (!mounted || updatedPhone == null) return;
+    setState(() {
+      _phoneCountry = updatedPhone.country;
+      _phoneNational = updatedPhone.nationalNumber;
+    });
   }
 
   String _countryLabel(BuildContext context) {

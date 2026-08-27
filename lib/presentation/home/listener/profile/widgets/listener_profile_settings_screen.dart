@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:phone_numbers_parser/phone_numbers_parser.dart';
 import 'package:venting_mobile_app/domain/constants/language_constant.dart';
+import 'package:venting_mobile_app/domain/data/app/listener_phone.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
 import 'package:venting_mobile_app/l10n/venting_mob_localizations_holder.dart';
 import 'package:venting_mobile_app/presentation/change_password/change_password_screen.dart';
@@ -20,15 +22,21 @@ import 'package:venting_mobile_app/shared_widgets/bottom_sheets/logout_delete_ac
 import 'package:venting_mobile_app/utils/app_language.dart';
 
 /// Opens the listener Account & Settings screen.
-Future<void> openListenerProfileSettingsScreen({
+///
+/// Returns updated phone details when the user saves a new number.
+Future<EditPhoneResult?> openListenerProfileSettingsScreen({
   required BuildContext context,
   String? email,
-  String? phoneNumber,
+  String? phoneCountryIso,
+  String? phoneNationalNumber,
 }) {
-  return Navigator.of(context).push<void>(
+  return Navigator.of(context).push<EditPhoneResult>(
     MaterialPageRoute(
-      builder: (_) =>
-          ListenerProfileSettingsScreen(email: email, phoneNumber: phoneNumber),
+      builder: (_) => ListenerProfileSettingsScreen(
+        email: email,
+        phoneCountryIso: phoneCountryIso,
+        phoneNationalNumber: phoneNationalNumber,
+      ),
     ),
   );
 }
@@ -37,11 +45,13 @@ class ListenerProfileSettingsScreen extends StatefulWidget {
   const ListenerProfileSettingsScreen({
     super.key,
     this.email,
-    this.phoneNumber,
+    this.phoneCountryIso,
+    this.phoneNationalNumber,
   });
 
   final String? email;
-  final String? phoneNumber;
+  final String? phoneCountryIso;
+  final String? phoneNationalNumber;
 
   @override
   State<ListenerProfileSettingsScreen> createState() =>
@@ -59,17 +69,39 @@ class _ListenerProfileSettingsScreenState
   );
 
   // TODO: Load account details from listener profile API / repository.
-  static const _mockPhone = '+1 (555) 123-4567';
 
   String? _appVersion;
-  late String _phone;
+  late IsoCode _phoneCountry;
+  late String _phoneNational;
+  EditPhoneResult? _updatedPhone;
 
   @override
   void initState() {
     super.initState();
-    _phone = widget.phoneNumber ?? _mockPhone;
+    _phoneCountry = _parseCountryIso(widget.phoneCountryIso);
+    _phoneNational =
+        widget.phoneNationalNumber?.replaceAll(RegExp(r'\D'), '') ?? '';
     unawaited(_loadAppVersion());
   }
+
+  IsoCode _parseCountryIso(String? iso) {
+    if (iso == null || iso.trim().isEmpty) return IsoCode.JO;
+    try {
+      return IsoCode.values.byName(iso.trim().toUpperCase());
+    } catch (_) {
+      return IsoCode.JO;
+    }
+  }
+
+  String get _phoneDisplay {
+    if (_phoneNational.isEmpty) return '—';
+    return ListenerPhone.fromInput(
+      country: _phoneCountry,
+      nationalNumber: _phoneNational,
+    ).displayLabel;
+  }
+
+  void _popWithResult() => Navigator.of(context).pop(_updatedPhone);
 
   Future<void> _loadAppVersion() async {
     try {
@@ -85,10 +117,15 @@ class _ListenerProfileSettingsScreenState
   Future<void> _onEditPhone() async {
     final updated = await showEditPhoneBottomSheet(
       context: context,
-      initialPhoneDisplay: _phone,
+      initialCountry: _phoneCountry,
+      initialNationalNumber: _phoneNational,
     );
     if (!mounted || updated == null) return;
-    setState(() => _phone = updated.displayLabel);
+    setState(() {
+      _phoneCountry = updated.country;
+      _phoneNational = updated.nationalNumber;
+      _updatedPhone = updated;
+    });
   }
 
   String get _languageLabel {
@@ -135,126 +172,134 @@ class _ListenerProfileSettingsScreenState
         ? '—'
         : l10n.listener_profile_settings_version(_appVersion!);
 
-    return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: _overlayStyle,
-      child: Scaffold(
-        backgroundColor: SplashColors.backgroundBottom,
-        appBar: AppBar(
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) {
+        if (didPop) return;
+        _popWithResult();
+      },
+      child: AnnotatedRegion<SystemUiOverlayStyle>(
+        value: _overlayStyle,
+        child: Scaffold(
           backgroundColor: SplashColors.backgroundBottom,
-          elevation: 0,
-          scrolledUnderElevation: 0,
-          centerTitle: true,
-          leading: IconButton(
-            onPressed: () => Navigator.of(context).pop(),
-            icon: const Icon(Icons.arrow_back_ios_new_rounded, size: 18),
-            color: Colors.white,
-          ),
-          title: Text(
-            l10n.listener_profile_account_settings,
-            style: GoogleFonts.inter(
+          appBar: AppBar(
+            backgroundColor: SplashColors.backgroundBottom,
+            elevation: 0,
+            scrolledUnderElevation: 0,
+            centerTitle: true,
+            leading: IconButton(
+              onPressed: _popWithResult,
+              icon: const Icon(Icons.arrow_back_ios_new_rounded, size: 18),
               color: Colors.white,
-              fontSize: 17,
-              fontWeight: FontWeight.w700,
+            ),
+            title: Text(
+              l10n.listener_profile_account_settings,
+              style: GoogleFonts.inter(
+                color: Colors.white,
+                fontSize: 17,
+                fontWeight: FontWeight.w700,
+              ),
             ),
           ),
-        ),
-        body: ListView(
-          padding: const EdgeInsets.fromLTRB(16, 8, 16, 32),
-          children: [
-            _SettingsSection(
-              title: l10n.listener_profile_settings_section_account,
-              children: [
-                _SettingsTile(
-                  icon: Icons.language_rounded,
-                  label: l10n.change_language,
-                  value: _languageLabel,
-                  onTap: _onChangeLanguage,
-                ),
-                _SettingsTile(
-                  icon: Icons.lock_outline_rounded,
-                  label: l10n.account_tab_change_password,
-                  onTap: () => openChangePasswordScreen(context),
-                ),
-                _SettingsTile(
-                  icon: Icons.phone_outlined,
-                  label: l10n.listener_profile_settings_phone,
-                  value: _phone,
-                  onTap: _onEditPhone,
-                ),
-              ],
-            ),
-            const SizedBox(height: 18),
-            _SettingsSection(
-              title: l10n.listener_profile_settings_section_preferences,
-              children: [
-                _SettingsTile(
-                  icon: Icons.notifications_none_rounded,
-                  label: l10n.listener_profile_notification_preferences,
-                  onTap: () => openListenerNotificationPreferencesScreen(
-                    context: context,
+          body: ListView(
+            padding: const EdgeInsets.fromLTRB(16, 8, 16, 32),
+            children: [
+              _SettingsSection(
+                title: l10n.listener_profile_settings_section_account,
+                children: [
+                  _SettingsTile(
+                    icon: Icons.language_rounded,
+                    label: l10n.change_language,
+                    value: _languageLabel,
+                    onTap: _onChangeLanguage,
                   ),
-                ),
-                _SettingsTile(
-                  icon: Icons.gps_fixed_rounded,
-                  label: l10n.listener_profile_privacy_visibility,
-                  onTap: () =>
-                      openListenerPrivacyVisibilityScreen(context: context),
-                  showDivider: false,
-                ),
-              ],
-            ),
-            const SizedBox(height: 18),
-            _SettingsSection(
-              title: l10n.listener_profile_settings_section_earnings,
-              children: [
-                _SettingsTile(
-                  icon: Icons.credit_card_rounded,
-                  label: l10n.listener_profile_payment_payouts,
-                  onTap: () =>
-                      openListenerPaymentPayoutsScreen(context: context),
-                ),
-              ],
-            ),
-            const SizedBox(height: 18),
-            _SettingsSection(
-              title: l10n.listener_profile_settings_section_support,
-              children: [
-                _SettingsTile(
-                  icon: Icons.help_outline_rounded,
-                  label: l10n.listener_profile_help_support,
-                  onTap: () => openListenerHelpSupportScreen(context: context),
-                ),
-                _SettingsTile(
-                  icon: Icons.info_outline_rounded,
-                  label: l10n.listener_profile_settings_about,
-                  value: versionLabel,
-                  onTap: () => openAboutScreen(context: context),
-                  showDivider: false,
-                ),
-              ],
-            ),
-            const SizedBox(height: 18),
-            _SettingsSection(
-              title: l10n.listener_profile_settings_section_account,
-              children: [
-                _SettingsTile(
-                  icon: Icons.logout_rounded,
-                  label: l10n.account_tab_logout,
-                  onTap: _onLogout,
-                  destructive: true,
-                  showChevron: false,
-                ),
-                _SettingsTile(
-                  icon: Icons.delete_outline_rounded,
-                  label: l10n.account_tab_delete_account,
-                  onTap: _onDeleteAccount,
-                  destructive: true,
-                  showChevron: false,
-                  showDivider: false,
-                ),
-              ],
-            ),
-          ],
+                  _SettingsTile(
+                    icon: Icons.lock_outline_rounded,
+                    label: l10n.account_tab_change_password,
+                    onTap: () => openChangePasswordScreen(context),
+                  ),
+                  _SettingsTile(
+                    icon: Icons.phone_outlined,
+                    label: l10n.listener_profile_settings_phone,
+                    value: _phoneDisplay,
+                    onTap: _onEditPhone,
+                  ),
+                ],
+              ),
+              const SizedBox(height: 18),
+              _SettingsSection(
+                title: l10n.listener_profile_settings_section_preferences,
+                children: [
+                  _SettingsTile(
+                    icon: Icons.notifications_none_rounded,
+                    label: l10n.listener_profile_notification_preferences,
+                    onTap: () => openListenerNotificationPreferencesScreen(
+                      context: context,
+                    ),
+                  ),
+                  _SettingsTile(
+                    icon: Icons.gps_fixed_rounded,
+                    label: l10n.listener_profile_privacy_visibility,
+                    onTap: () =>
+                        openListenerPrivacyVisibilityScreen(context: context),
+                    showDivider: false,
+                  ),
+                ],
+              ),
+              const SizedBox(height: 18),
+              _SettingsSection(
+                title: l10n.listener_profile_settings_section_earnings,
+                children: [
+                  _SettingsTile(
+                    icon: Icons.credit_card_rounded,
+                    label: l10n.listener_profile_payment_payouts,
+                    onTap: () =>
+                        openListenerPaymentPayoutsScreen(context: context),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 18),
+              _SettingsSection(
+                title: l10n.listener_profile_settings_section_support,
+                children: [
+                  _SettingsTile(
+                    icon: Icons.help_outline_rounded,
+                    label: l10n.listener_profile_help_support,
+                    onTap: () =>
+                        openListenerHelpSupportScreen(context: context),
+                  ),
+                  _SettingsTile(
+                    icon: Icons.info_outline_rounded,
+                    label: l10n.listener_profile_settings_about,
+                    value: versionLabel,
+                    onTap: () => openAboutScreen(context: context),
+                    showDivider: false,
+                  ),
+                ],
+              ),
+              const SizedBox(height: 18),
+              _SettingsSection(
+                title: l10n.listener_profile_settings_section_account,
+                children: [
+                  _SettingsTile(
+                    icon: Icons.logout_rounded,
+                    label: l10n.account_tab_logout,
+                    onTap: _onLogout,
+                    destructive: true,
+                    showChevron: false,
+                  ),
+                  _SettingsTile(
+                    icon: Icons.delete_outline_rounded,
+                    label: l10n.account_tab_delete_account,
+                    onTap: _onDeleteAccount,
+                    destructive: true,
+                    showChevron: false,
+                    showDivider: false,
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -18,6 +18,7 @@ import 'package:venting_mobile_app/domain/repository/api/catalog/catalog_languag
 import 'package:venting_mobile_app/domain/repository/api/catalog/catalog_life_experiences_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/listener/listener_notification_preferences_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/listener/listener_privacy_repository.dart';
+import 'package:venting_mobile_app/domain/repository/api/listener/listener_profile_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/listener/listener_register_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/ventor/ventor_register_repository.dart';
 import 'package:venting_mobile_app/domain/repository/app/auth_me_cache_repository.dart';
@@ -49,6 +50,7 @@ import 'package:venting_mobile_app/domain/usecase/save_ventor_registration_step_
 import 'package:venting_mobile_app/domain/usecase/sign_in_with_apple_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/sign_in_with_google_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/update_listener_notification_preferences_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/update_listener_phone_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/update_listener_privacy_usecase.dart';
 
 /// Usecases mixin for VentingModule
@@ -172,6 +174,12 @@ mixin VentingModuleUsecases on VentingModule {
     listenerPrivacyRepository,
     ventingPreferences,
   );
+
+  UpdateListenerPhoneUsecase updateListenerPhoneUsecase(
+    ListenerProfileRepository listenerProfileRepository,
+    VentingPreferences ventingPreferences,
+  ) =>
+      UpdateListenerPhoneUsecase(listenerProfileRepository, ventingPreferences);
 
   GetListenerRegistrationProgressUsecase getListenerRegistrationProgressUsecase(
     ListenerRegisterRepository listenerRegisterRepository,
@@ -303,6 +311,12 @@ mixin VentingModuleUsecases on VentingModule {
     getIt.registerFactory<UpdateListenerPrivacyUsecase>(
       () => updateListenerPrivacyUsecase(
         getIt<ListenerPrivacyRepository>(),
+        getIt<VentingPreferences>(),
+      ),
+    );
+    getIt.registerFactory<UpdateListenerPhoneUsecase>(
+      () => updateListenerPhoneUsecase(
+        getIt<ListenerProfileRepository>(),
         getIt<VentingPreferences>(),
       ),
     );
