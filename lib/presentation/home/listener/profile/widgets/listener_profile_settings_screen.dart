@@ -7,10 +7,10 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:venting_mobile_app/domain/constants/language_constant.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
 import 'package:venting_mobile_app/l10n/venting_mob_localizations_holder.dart';
+import 'package:venting_mobile_app/presentation/change_password/change_password_screen.dart';
 import 'package:venting_mobile_app/presentation/home/listener/profile/listener_profile_theme.dart';
 import 'package:venting_mobile_app/presentation/home/listener/profile/widgets/edit_phone_bottom_sheet.dart';
 import 'package:venting_mobile_app/presentation/home/listener/profile/widgets/listener_about_screen.dart';
-import 'package:venting_mobile_app/presentation/home/listener/profile/widgets/listener_change_password_screen.dart';
 import 'package:venting_mobile_app/presentation/home/listener/profile/widgets/listener_destructive_confirm_bottom_sheet.dart';
 import 'package:venting_mobile_app/presentation/home/listener/profile/widgets/listener_help_support_screen.dart';
 import 'package:venting_mobile_app/presentation/home/listener/profile/widgets/listener_notification_preferences_screen.dart';
@@ -184,7 +184,7 @@ class _ListenerProfileSettingsScreenState
                 _SettingsTile(
                   icon: Icons.lock_outline_rounded,
                   label: l10n.account_tab_change_password,
-                  onTap: () => openListenerChangePasswordScreen(context),
+                  onTap: () => openChangePasswordScreen(context),
                 ),
                 _SettingsTile(
                   icon: Icons.phone_outlined,

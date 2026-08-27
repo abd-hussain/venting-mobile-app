@@ -44,7 +44,14 @@ Use these for **both** ventor and listener unless a screen is role-specific.
 | 1b *(proposed)* | `POST /v1/auth/social` | AuthScreen (Google / Apple buttons) | After native sign-in; send `provider`, `id_token`, `role`; then `#7` for routing |
 | 4 | `POST /v1/auth/logout` | Ventor profile settings · Listener profile settings | User taps Log out; clear local tokens after success |
 | 5 | `DELETE /v1/auth/account` | Delete account confirm screen | User confirms permanent deletion |
-| 6 | `POST /v1/auth/change-password` | Listener change password screen | User submits current + new password |
+| 6 | `POST /v1/auth/change-password` | Shared change password screen (ventor + listener settings) | User submits current + new password; Bearer **`access_token`** only (interceptor). On `401`, show error — do **not** call `#3` refresh |
+
+**`#6` change-password auth:**
+
+1. User is logged in → read `access_token` from secure storage.
+2. `POST /v1/auth/change-password` with explicit `Authorization: Bearer {access_token}` header (from `SavedConstants.accessToken`) and body `{ current_password, new_password }`.
+3. Never put `refresh_token` on this call — refresh is only for `#3`.
+4. `401` = wrong current password (or bad access token) → show API error on screen; interceptor must not retry via refresh.
 
 **Routing hints from `#0` *(proposed)*:**
 

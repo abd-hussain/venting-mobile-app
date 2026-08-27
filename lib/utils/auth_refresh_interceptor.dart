@@ -21,9 +21,8 @@ class AuthRefreshInterceptor extends Interceptor {
 
   static const _retriedKey = 'authRefreshRetried';
 
-  /// Public auth endpoints where 401 means invalid credentials / validation,
-  /// not an expired access token. Never attempt refresh for these.
-  static const _publicAuthPathFragments = <String>[
+  /// Unauthenticated auth calls — interceptor must not attach Bearer or refresh.
+  static const _unauthenticatedAuthPathFragments = <String>[
     'v1/auth/login',
     'v1/auth/register',
     'v1/auth/social',
@@ -33,11 +32,23 @@ class AuthRefreshInterceptor extends Interceptor {
     'v1/auth/refresh',
   ];
 
+  /// Authenticated calls where `401` means validation failed (e.g. wrong
+  /// current password), not "access token expired". Do not call `#3` refresh.
+  static const _noRefreshOn401PathFragments = <String>[
+    ..._unauthenticatedAuthPathFragments,
+    'v1/auth/change-password',
+  ];
+
   static Future<_RefreshOutcome>? _refreshInFlight;
 
-  static bool _isPublicAuthPath(String path) {
+  static bool _isUnauthenticatedAuthPath(String path) {
     final normalized = path.toLowerCase();
-    return _publicAuthPathFragments.any(normalized.contains);
+    return _unauthenticatedAuthPathFragments.any(normalized.contains);
+  }
+
+  static bool _skipRefreshOn401(String path) {
+    final normalized = path.toLowerCase();
+    return _noRefreshOn401PathFragments.any(normalized.contains);
   }
 
   @override
@@ -45,13 +56,12 @@ class AuthRefreshInterceptor extends Interceptor {
     RequestOptions options,
     RequestInterceptorHandler handler,
   ) async {
-    final isPublicAuth = _isPublicAuthPath(options.path);
+    final isUnauthenticatedAuth = _isUnauthenticatedAuthPath(options.path);
     final prefs = diContainer<VentingPreferences>();
     final accessToken = prefs.getValue(SavedConstants.accessToken, '');
 
-    // Do not attach / refresh tokens on public auth calls — a 401 there is
-    // "wrong password", not "session expired".
-    if (isPublicAuth) {
+    // Login/register/etc. — no Bearer header, no proactive refresh.
+    if (isUnauthenticatedAuth) {
       handler.next(options);
       return;
     }
@@ -92,8 +102,8 @@ class AuthRefreshInterceptor extends Interceptor {
   ) async {
     final status = err.response?.statusCode;
     final alreadyRetried = err.requestOptions.extra[_retriedKey] == true;
-    final isPublicAuth = _isPublicAuthPath(err.requestOptions.path);
-    final shouldRefresh = status == 401 && !alreadyRetried && !isPublicAuth;
+    final skipRefreshOn401 = _skipRefreshOn401(err.requestOptions.path);
+    final shouldRefresh = status == 401 && !alreadyRetried && !skipRefreshOn401;
 
     if (shouldRefresh) {
       try {

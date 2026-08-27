@@ -404,10 +404,16 @@ Password rules (UI): min 8, 1 uppercase, 1 number.
 
 | | |
 |--|--|
-| **Auth** | Bearer |
-| **Screen** | Listener change password |
+| **Auth** | `Authorization: Bearer {access_token}` — JWT access token only; **do not** send `refresh_token` in header or body |
+| **Screen** | Shared change password (ventor + listener settings) |
 | **Body** | `current_password`, `new_password` |
-| **Response** | `{ "ok": true }` |
+| **Response** | `{ "status": "success", "data": { "ok": true } }` |
+
+**Mobile contract:**
+
+- Read `access_token` from secure storage (`SavedConstants.accessToken`) and send as `Authorization: Bearer {access_token}` on every request (repository header + Dio interceptor).
+- `401` on this endpoint means wrong `current_password` or invalid/missing access token — **must not** trigger `#3` token refresh (unlike `#7` / profile APIs).
+- `refresh_token` is only used by `#3 POST /v1/auth/refresh`, never for change-password.
 
 ---
 
