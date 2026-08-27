@@ -841,7 +841,34 @@ Finalizes listener registration after all step saves. JSON body.
 |--|--|
 | **Auth** | Bearer |
 | **Screen** | Privacy & visibility |
-| **Response** | `{ show_online_status, show_languages, show_comfort_areas, show_experience_and_ratings, show_boundaries, visible_in_all_countries, visible_countries, allow_search_indexing }` |
+| **Response** | `{ profile_visible, show_online_status, visible_in_all_countries, visible_countries, allow_search_indexing }` |
+
+**Fields**
+
+| Field | Type | Default | Notes |
+|-------|------|---------|-------|
+| `profile_visible` | bool | `true` | When `false`, listener is hidden from in-app discovery and browse |
+| `show_online_status` | bool | `true` | Show online indicator to ventors |
+| `visible_in_all_countries` | bool | `true` | When `false`, only `visible_countries` apply |
+| `visible_countries` | string[] | `[]` | ISO 3166-1 alpha-2 codes; required (non-empty) when `visible_in_all_countries` is `false` |
+| `allow_search_indexing` | bool | `true` | Allow public search-engine indexing of profile |
+
+Profile information (languages, comfort areas, experience, boundaries) is **always shown** on the listener profile when `profile_visible` is `true` — not configurable via this endpoint.
+
+**Example**
+
+```json
+{
+  "status": "success",
+  "data": {
+    "profile_visible": true,
+    "show_online_status": true,
+    "visible_in_all_countries": true,
+    "visible_countries": [],
+    "allow_search_indexing": true
+  }
+}
+```
 
 ---
 
@@ -852,6 +879,11 @@ Finalizes listener registration after all step saves. JSON body.
 | **Auth** | Bearer |
 | **Body** | Same fields as #33 (`visible_countries` = ISO codes[]) |
 | **Response** | Updated privacy object |
+
+**Validation**
+
+- `400` if `visible_in_all_countries` is `false` and `visible_countries` is empty
+- When `profile_visible` is `false`, `show_online_status` and country targeting are ignored server-side (listener hidden from app)
 
 ---
 

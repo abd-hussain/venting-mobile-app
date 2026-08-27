@@ -289,8 +289,8 @@ Listener (`POST /v1/listeners/register/complete`):
 
 | # | Endpoint | Screen / place | When |
 |---|----------|----------------|------|
-| 33 | `GET /v1/listeners/me/privacy` | Privacy & visibility | Screen open |
-| 34 | `PUT /v1/listeners/me/privacy` | Same | Save visibility / country targeting |
+| 33 | `GET /v1/listeners/me/privacy` | Privacy & visibility | Screen open — load `profile_visible`, online status, country targeting, search indexing |
+| 34 | `PUT /v1/listeners/me/privacy` | Same | Save profile visibility, online status, country targeting, search indexing |
 | 35 | `GET /v1/listeners/me/notification-preferences` | Listener notification preferences | Screen open |
 | 36 | `PUT /v1/listeners/me/notification-preferences` | Same | Save prefs |
 

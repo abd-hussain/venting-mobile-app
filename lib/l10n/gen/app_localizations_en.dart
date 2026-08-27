@@ -1614,6 +1614,13 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
   String get listener_privacy_section_visibility => 'Profile Visibility';
 
   @override
+  String get listener_privacy_profile_visible => 'Show my profile in the app';
+
+  @override
+  String get listener_privacy_profile_visible_sub =>
+      'Turn off to hide your profile from ventors';
+
+  @override
   String get listener_privacy_online_status => 'Online status';
 
   @override

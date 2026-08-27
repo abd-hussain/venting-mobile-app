@@ -1603,6 +1603,13 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
   String get listener_privacy_section_visibility => 'ظهور الملف';
 
   @override
+  String get listener_privacy_profile_visible => 'إظهار ملفي في التطبيق';
+
+  @override
+  String get listener_privacy_profile_visible_sub =>
+      'أوقف هذا الخيار لإخفاء ملفك عن فينتور';
+
+  @override
   String get listener_privacy_online_status => 'حالة الاتصال';
 
   @override

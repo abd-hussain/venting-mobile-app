@@ -2999,6 +2999,18 @@ abstract class VentingMobLocalizations {
   /// **'Profile Visibility'**
   String get listener_privacy_section_visibility;
 
+  /// No description provided for @listener_privacy_profile_visible.
+  ///
+  /// In en, this message translates to:
+  /// **'Show my profile in the app'**
+  String get listener_privacy_profile_visible;
+
+  /// No description provided for @listener_privacy_profile_visible_sub.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn off to hide your profile from ventors'**
+  String get listener_privacy_profile_visible_sub;
+
   /// No description provided for @listener_privacy_online_status.
   ///
   /// In en, this message translates to:

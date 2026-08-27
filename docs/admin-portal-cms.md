@@ -26,7 +26,7 @@ A **Flutter Web CMS** used only by internal staff (ops, support, finance, conten
 
 | Module | What admins do | Mobile impact |
 |--------|----------------|---------------|
-| **Dashboard** | KPIs, charts, alerts queue | Read-only aggregates |
+| **Dashboard** | KPIs, charts, alerts queue — incl. **registrations vs account deletions** (all-time + this month) | Read-only aggregates from `users` |
 | **Listener review** | Approve / reject profiles & identity docs | Sets `listener_profiles.profile_status` |
 | **Users** | Search ventors/listeners, suspend, force logout, soft-delete | `users.is_active`, `deleted_at` |
 | **Sessions** | Inspect bookings, cancel/refund edge cases | `sessions`, `session_payments` |
@@ -373,14 +373,75 @@ All admin routes: prefix `/v1/admin`, auth `Authorization: Bearer {adminAccessTo
 
 | # | Method | Path | Use |
 |--:|--------|------|-----|
-| A6 | `GET` | `/v1/admin/stats/overview` | KPI cards: users, sessions today, GMV, pending reviews, open reports |
-| A7 | `GET` | `/v1/admin/stats/users` | Signups by day/role; active vs suspended |
+| A6 | `GET` | `/v1/admin/stats/overview` | KPI cards: users, **registrations / deletions (all-time + this month)**, sessions today, GMV, pending reviews, open reports |
+| A7 | `GET` | `/v1/admin/stats/users` | Signups by day/role; active vs suspended; optional trend series for registrations & deletions |
 | A8 | `GET` | `/v1/admin/stats/sessions` | Booked / completed / cancelled / missed trends |
 | A9 | `GET` | `/v1/admin/stats/revenue` | Payments, tips, refunds, discounts |
 | A10 | `GET` | `/v1/admin/stats/listeners` | Online now, by tier, by country, approval funnel |
 | A11 | `GET` | `/v1/admin/stats/wellness` | Mood check-in distribution (aggregated, privacy-safe) |
 
 Query params: `from`, `to`, `granularity` (`day`\|`week`\|`month`).
+
+#### 7.2.1 Dashboard KPIs — user registrations vs account deletions
+
+**Goal:** On the portal **home dashboard** (`/`), staff see at a glance how many accounts were **created** vs **deleted**, both **all-time** and **this calendar month** (UTC), with optional breakdown by role.
+
+**Data source (Postgres — not GA4):**
+
+| Metric | SQL basis | Mobile trigger |
+|--------|-----------|----------------|
+| Registrations (all-time) | `COUNT(*)` from `users` | `#1 POST /v1/auth/register`, `#1b POST /v1/auth/social` (new account) |
+| Registrations (this month) | same, `WHERE created_at >= date_trunc('month', now() AT TIME ZONE 'UTC')` | same |
+| Account deletions (all-time) | `COUNT(*)` where `deleted_at IS NOT NULL` | `#5 DELETE /v1/auth/account` |
+| Account deletions (this month) | same, `WHERE deleted_at >= date_trunc('month', now() AT TIME ZONE 'UTC')` | same |
+
+**Rules:**
+
+- Count **every** `users` row for registrations (ventor + listener); include social and email sign-ups.
+- A deleted user remains one registration; deletions are a separate counter (do not subtract from registration total on the card — show both metrics side by side).
+- `deleted_at` is set by mobile `#5`; admin soft-delete on a user dossier uses the same column — include both in deletion stats.
+- Optional filters on A7: `role` (`ventor` \| `listener`), `from`, `to`.
+
+**`GET /v1/admin/stats/overview` (A6) — extend `data` with:**
+
+```json
+{
+  "user_lifecycle": {
+    "registrations": {
+      "all_time": 12450,
+      "this_month": 312,
+      "by_role": {
+        "ventor": { "all_time": 8200, "this_month": 198 },
+        "listener": { "all_time": 4250, "this_month": 114 }
+      }
+    },
+    "account_deletions": {
+      "all_time": 89,
+      "this_month": 7,
+      "by_role": {
+        "ventor": { "all_time": 52, "this_month": 4 },
+        "listener": { "all_time": 37, "this_month": 3 }
+      }
+    },
+    "net_this_month": 305
+  }
+}
+```
+
+`net_this_month` = `registrations.this_month - account_deletions.this_month` (server-computed).
+
+**Portal UI (dashboard `/`):**
+
+| Widget | Content |
+|--------|---------|
+| **Registrations** card | Large number: all-time; subtitle: “This month: {n}”; optional sparkline from A7 |
+| **Account deletions** card | Large number: all-time; subtitle: “This month: {n}” |
+| **Net growth (month)** card | `registrations_this_month − deletions_this_month` with ↑/↓ vs prior month (optional v1.1) |
+| Comparison row | Side-by-side bar or two KPI tiles so ops can compare “joined” vs “left” at a glance |
+
+**Permissions:** `analytics:read` (all roles with dashboard access per §10).
+
+**Audit:** Read-only — no `admin_audit_logs` entry for viewing stats.
 
 ---
 
@@ -612,7 +673,7 @@ Mobile may expose public `GET /v1/cms/pages/{slug}` and `GET /v1/cms/banners` (2
 | Route (suggested) | Screen | Primary APIs |
 |-------------------|--------|--------------|
 | `/login` | Admin login | A1 |
-| `/` | Dashboard | A6–A11, A95 |
+| `/` | Dashboard | A6–A11, A95 — **top row:** registrations & account deletions (all-time + this month) |
 | `/reviews` | Listener approval queue | A22–A27 |
 | `/users` | User directory | A12–A21 |
 | `/users/:id` | User dossier + notes | A13, A92–A93, A37–A38 |
@@ -682,7 +743,7 @@ Mobile may expose public `GET /v1/cms/pages/{slug}` and `GET /v1/cms/banners` (2
 
 Backend or mobile already should emit (to Firebase/GA4): `sign_up`, `listener_submit_review`, `session_booked`, `session_completed`, `reward_redeem`, `payout_requested`.
 
-Admin **dashboard stats (A6–A11)** come from **Postgres**, not from GA — GA is for behavior/funnels; SQL is for money and ops queues.
+Admin **dashboard stats (A6–A11)** come from **Postgres**, not from GA — GA is for behavior/funnels; SQL is for money and ops queues. User **registrations** (`users.created_at`) and **account deletions** (`users.deleted_at` from mobile `#5`) are core dashboard KPIs on A6 — see §7.2.1.
 
 ---
 

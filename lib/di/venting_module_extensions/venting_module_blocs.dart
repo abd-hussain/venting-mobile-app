@@ -12,14 +12,17 @@ import 'package:venting_mobile_app/domain/usecase/auth_register_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/auth_social_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/clear_auth_session_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_cached_auth_me_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/get_listener_privacy_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/sign_in_with_apple_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/sign_in_with_google_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/update_listener_privacy_usecase.dart';
 import 'package:venting_mobile_app/presentation/auth/auth_screen.dart';
 import 'package:venting_mobile_app/presentation/auth/bloc/auth_bloc.dart';
 import 'package:venting_mobile_app/presentation/auth/bloc/email_registration_bloc.dart';
 import 'package:venting_mobile_app/presentation/auth/bloc/forgot_password_bloc.dart';
 import 'package:venting_mobile_app/presentation/auth/forgot_password_screen.dart';
 import 'package:venting_mobile_app/presentation/change_password/bloc/change_password_bloc.dart';
+import 'package:venting_mobile_app/presentation/home/listener/profile/bloc/listener_privacy_visibility_bloc.dart';
 import 'package:venting_mobile_app/presentation/splash/bloc/splash_bloc.dart';
 import 'package:venting_mobile_app/shared_widgets/bottom_sheets/logout_delete_account_confirm/bloc/logout_delete_account_confirm_bloc.dart';
 
@@ -70,6 +73,12 @@ mixin VentingModuleBlocs on VentingModule {
     );
     getIt.registerFactory<ChangePasswordBloc>(
       () => ChangePasswordBloc(getIt<AuthChangePasswordUsecase>()),
+    );
+    getIt.registerFactory<ListenerPrivacyVisibilityBloc>(
+      () => ListenerPrivacyVisibilityBloc(
+        getIt<GetListenerPrivacyUsecase>(),
+        getIt<UpdateListenerPrivacyUsecase>(),
+      ),
     );
     getIt.registerFactory<LogoutDeleteAccountConfirmBloc>(
       () => LogoutDeleteAccountConfirmBloc(

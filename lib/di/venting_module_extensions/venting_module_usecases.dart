@@ -16,6 +16,7 @@ import 'package:venting_mobile_app/domain/repository/api/catalog/catalog_boundar
 import 'package:venting_mobile_app/domain/repository/api/catalog/catalog_categories_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/catalog/catalog_languages_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/catalog/catalog_life_experiences_repository.dart';
+import 'package:venting_mobile_app/domain/repository/api/listener/listener_privacy_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/listener/listener_register_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/ventor/ventor_register_repository.dart';
 import 'package:venting_mobile_app/domain/repository/app/auth_me_cache_repository.dart';
@@ -38,12 +39,14 @@ import 'package:venting_mobile_app/domain/usecase/get_catalog_boundaries_usecase
 import 'package:venting_mobile_app/domain/usecase/get_catalog_categories_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_catalog_languages_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_catalog_life_experiences_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/get_listener_privacy_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_listener_registration_progress_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_ventor_registration_progress_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/save_listener_registration_step_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/save_ventor_registration_step_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/sign_in_with_apple_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/sign_in_with_google_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/update_listener_privacy_usecase.dart';
 
 /// Usecases mixin for VentingModule
 /// Handles all usecase factory methods
@@ -133,6 +136,19 @@ mixin VentingModuleUsecases on VentingModule {
   GetCatalogBoundariesUsecase getCatalogBoundariesUsecase(
     CatalogBoundariesRepository catalogBoundariesRepository,
   ) => GetCatalogBoundariesUsecase(catalogBoundariesRepository);
+
+  GetListenerPrivacyUsecase getListenerPrivacyUsecase(
+    ListenerPrivacyRepository listenerPrivacyRepository,
+    VentingPreferences ventingPreferences,
+  ) => GetListenerPrivacyUsecase(listenerPrivacyRepository, ventingPreferences);
+
+  UpdateListenerPrivacyUsecase updateListenerPrivacyUsecase(
+    ListenerPrivacyRepository listenerPrivacyRepository,
+    VentingPreferences ventingPreferences,
+  ) => UpdateListenerPrivacyUsecase(
+    listenerPrivacyRepository,
+    ventingPreferences,
+  );
 
   GetListenerRegistrationProgressUsecase getListenerRegistrationProgressUsecase(
     ListenerRegisterRepository listenerRegisterRepository,
@@ -242,6 +258,18 @@ mixin VentingModuleUsecases on VentingModule {
     );
     getIt.registerFactory<GetCatalogBoundariesUsecase>(
       () => getCatalogBoundariesUsecase(getIt<CatalogBoundariesRepository>()),
+    );
+    getIt.registerFactory<GetListenerPrivacyUsecase>(
+      () => getListenerPrivacyUsecase(
+        getIt<ListenerPrivacyRepository>(),
+        getIt<VentingPreferences>(),
+      ),
+    );
+    getIt.registerFactory<UpdateListenerPrivacyUsecase>(
+      () => updateListenerPrivacyUsecase(
+        getIt<ListenerPrivacyRepository>(),
+        getIt<VentingPreferences>(),
+      ),
     );
     getIt.registerFactory<GetListenerRegistrationProgressUsecase>(
       () => getListenerRegistrationProgressUsecase(

@@ -17,6 +17,7 @@ import 'package:venting_mobile_app/domain/repository/api/catalog/catalog_boundar
 import 'package:venting_mobile_app/domain/repository/api/catalog/catalog_categories_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/catalog/catalog_languages_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/catalog/catalog_life_experiences_repository.dart';
+import 'package:venting_mobile_app/domain/repository/api/listener/listener_privacy_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/listener/listener_register_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/ventor/ventor_register_repository.dart';
 import 'package:venting_mobile_app/domain/repository/app/auth_me_cache_repository.dart';
@@ -82,6 +83,10 @@ mixin VentingModuleRepositories on VentingModule {
     ApiClientBase apiClient,
   ) => CatalogBoundariesRepository(apiClient);
 
+  ListenerPrivacyRepository listenerPrivacyRepository(
+    ApiClientBase apiClient,
+  ) => ListenerPrivacyRepository(apiClient);
+
   ListenerRegisterRepository listenerRegisterRepository(
     ApiClientBase apiClient,
   ) => ListenerRegisterRepository(apiClient);
@@ -138,6 +143,9 @@ mixin VentingModuleRepositories on VentingModule {
     );
     getIt.registerFactory<CatalogBoundariesRepository>(
       () => catalogBoundariesRepository(getIt<ApiClientBase>()),
+    );
+    getIt.registerFactory<ListenerPrivacyRepository>(
+      () => listenerPrivacyRepository(getIt<ApiClientBase>()),
     );
     getIt.registerFactory<ListenerRegisterRepository>(
       () => listenerRegisterRepository(getIt<ApiClientBase>()),
