@@ -382,10 +382,12 @@ Password rules (UI): min 8, 1 uppercase, 1 number.
 
 | | |
 |--|--|
-| **Auth** | Bearer |
-| **Screen** | Ventor / Listener profile settings |
-| **Body** | optional `refresh_token` |
-| **Response** | `{ "ok": true }` |
+| **Auth** | `Authorization: Bearer {access_token}` |
+| **Screen** | Shared destructive confirm sheet (ventor + listener settings) |
+| **Body** | optional `refresh_token` (to revoke that session server-side) |
+| **Response** | `{ "status": "success", "data": { "ok": true } }` |
+
+Mobile: on success clear local session and go to welcome.
 
 ---
 
@@ -393,10 +395,12 @@ Password rules (UI): min 8, 1 uppercase, 1 number.
 
 | | |
 |--|--|
-| **Auth** | Bearer |
-| **Screen** | Delete account confirm |
+| **Auth** | `Authorization: Bearer {access_token}` |
+| **Screen** | Shared destructive confirm sheet (ventor + listener settings) |
 | **Body** | optional `password` |
-| **Response** | `{ "ok": true }` |
+| **Response** | `{ "status": "success", "data": { "ok": true } }` |
+
+Mobile: on success clear local session and go to welcome.
 
 ---
 

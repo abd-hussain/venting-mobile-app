@@ -3,8 +3,10 @@ import 'package:preferences/preferences.dart';
 import 'package:venting_mobile_app/di/venting_module.dart';
 import 'package:venting_mobile_app/domain/usecase/auth_change_password_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/auth_check_email_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/auth_delete_account_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/auth_forgot_password_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/auth_login_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/auth_logout_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/auth_me_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/auth_register_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/auth_social_usecase.dart';
@@ -19,6 +21,7 @@ import 'package:venting_mobile_app/presentation/auth/bloc/forgot_password_bloc.d
 import 'package:venting_mobile_app/presentation/auth/forgot_password_screen.dart';
 import 'package:venting_mobile_app/presentation/change_password/bloc/change_password_bloc.dart';
 import 'package:venting_mobile_app/presentation/splash/bloc/splash_bloc.dart';
+import 'package:venting_mobile_app/shared_widgets/bottom_sheets/logout_delete_account_confirm/bloc/logout_delete_account_confirm_bloc.dart';
 
 /// Blocs mixin for VentingModule
 /// Handles all bloc factory methods
@@ -67,6 +70,13 @@ mixin VentingModuleBlocs on VentingModule {
     );
     getIt.registerFactory<ChangePasswordBloc>(
       () => ChangePasswordBloc(getIt<AuthChangePasswordUsecase>()),
+    );
+    getIt.registerFactory<LogoutDeleteAccountConfirmBloc>(
+      () => LogoutDeleteAccountConfirmBloc(
+        getIt<AuthLogoutUsecase>(),
+        getIt<AuthDeleteAccountUsecase>(),
+        getIt<ClearAuthSessionUsecase>(),
+      ),
     );
   }
 }

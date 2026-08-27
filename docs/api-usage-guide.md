@@ -42,8 +42,8 @@ Use these for **both** ventor and listener unless a screen is role-specific.
 | 2b *(proposed)* | `POST /v1/auth/forgot-password` | Forgot password confirmation | User confirms email → backend emails secure reset link |
 | 2c *(proposed)* | `POST /v1/auth/reset-password` | Reset password **web page** (not mobile) | User sets new password via emailed link |
 | 1b *(proposed)* | `POST /v1/auth/social` | AuthScreen (Google / Apple buttons) | After native sign-in; send `provider`, `id_token`, `role`; then `#7` for routing |
-| 4 | `POST /v1/auth/logout` | Ventor profile settings · Listener profile settings | User taps Log out; clear local tokens after success |
-| 5 | `DELETE /v1/auth/account` | Delete account confirm screen | User confirms permanent deletion |
+| 4 | `POST /v1/auth/logout` | Shared destructive confirm sheet (ventor + listener settings) | User confirms Log out → Bearer `access_token` (+ optional body `refresh_token`); clear session → welcome |
+| 5 | `DELETE /v1/auth/account` | Shared destructive confirm sheet (ventor + listener settings) | User confirms Delete account → Bearer `access_token`; clear session → welcome |
 | 6 | `POST /v1/auth/change-password` | Shared change password screen (ventor + listener settings) | User submits current + new password; Bearer **`access_token`** only (interceptor). On `401`, show error — do **not** call `#3` refresh |
 
 **`#6` change-password auth:**
