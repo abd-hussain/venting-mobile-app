@@ -479,10 +479,14 @@ JSON or multipart (multipart when uploading `avatar`).
 
 #### 8e. `POST /v1/ventors/register/complete`
 
+Finalizes ventor registration. JSON body.
+
 | Field | Required | Notes |
 |-------|----------|-------|
-| `notifications_enabled` | yes | Result of OS permission on step 4 |
-| `fcm_token` | no | Omit when permission denied |
+| `notifications_enabled` | yes | `true` when OS notification permission was granted (or provisional on iOS); `false` when denied |
+| `fcm_token` | no | Include when the app has a non-empty FCM device token; omit the field entirely when unavailable. Registration must succeed without it |
+
+**FCM storage:** When `fcm_token` is present, the server upserts into `user_push_tokens` for the authenticated user.
 
 **Response:** Ventor profile (#9). Sets `users.registration_complete = true`.
 
@@ -675,9 +679,13 @@ Multipart steps: omit file parts when the user did not change an already-uploade
 
 #### 22j. `POST /v1/listeners/register/complete`
 
+Finalizes listener registration after all step saves. JSON body.
+
 | Field | Required | Notes |
 |-------|----------|-------|
-| `fcm_token` | no | Omit when notifications permission denied |
+| `fcm_token` | no | Include when the app has a non-empty FCM device token; omit the field entirely when unavailable. Registration must succeed without it |
+
+**FCM storage:** When `fcm_token` is present, the server upserts into `user_push_tokens` for the authenticated user.
 
 **Response:** `{ listener_id, profile_status: "under_review" }`. Requires all prior steps complete. Sets `users.registration_complete = true`.
 

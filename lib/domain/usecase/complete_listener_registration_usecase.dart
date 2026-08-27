@@ -3,6 +3,7 @@ import 'package:preferences/preferences.dart';
 import 'package:venting_mobile_app/domain/data/api/listener_register_response_model.dart';
 import 'package:venting_mobile_app/domain/data/exceptions/main_api_exception.dart';
 import 'package:venting_mobile_app/domain/repository/api/listener/listener_register_repository.dart';
+import 'package:venting_mobile_app/utils/registration_fcm.dart';
 
 class CompleteListenerRegistrationUsecase {
   const CompleteListenerRegistrationUsecase(
@@ -17,8 +18,9 @@ class CompleteListenerRegistrationUsecase {
     String? fcmToken,
   }) {
     return TaskEither(() async {
+      final resolvedFcmToken = await resolveRegistrationFcmToken(fcmToken);
       final result = await _repository
-          .completeRegistration(fcmToken: fcmToken)
+          .completeRegistration(fcmToken: resolvedFcmToken)
           .run();
 
       if (result.isLeft()) {

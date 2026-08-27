@@ -1,11 +1,8 @@
-import 'dart:io';
-
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:venting_mobile_app/domain/data/app/registration_notifications_data.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
+import 'package:venting_mobile_app/utils/registration_fcm.dart';
 
 /// Ventor registration step 4 — enable push notifications (optional).
 class VentorRegistrationNotificationsStep extends StatefulWidget {
@@ -41,37 +38,10 @@ class _VentorRegistrationNotificationsStepState
     if (_isRequesting || widget.isSubmitting) return;
     setState(() => _isRequesting = true);
 
-    var notificationsEnabled = false;
-    String? fcmToken;
-
-    try {
-      if (Platform.isAndroid) {
-        final status = await Permission.notification.request();
-        notificationsEnabled = status.isGranted || status.isLimited;
-      }
-
-      final settings = await FirebaseMessaging.instance.requestPermission();
-      notificationsEnabled =
-          notificationsEnabled ||
-          settings.authorizationStatus == AuthorizationStatus.authorized ||
-          settings.authorizationStatus == AuthorizationStatus.provisional;
-
-      if (notificationsEnabled) {
-        fcmToken = await FirebaseMessaging.instance.getToken();
-      }
-    } catch (_) {
-      notificationsEnabled = false;
-      fcmToken = null;
-    } finally {
-      if (mounted) {
-        setState(() => _isRequesting = false);
-        widget.onContinue(
-          RegistrationNotificationsData(
-            notificationsEnabled: notificationsEnabled,
-            fcmToken: fcmToken,
-          ),
-        );
-      }
+    final notifications = await requestRegistrationNotifications();
+    if (mounted) {
+      setState(() => _isRequesting = false);
+      widget.onContinue(notifications);
     }
   }
 
@@ -105,7 +75,9 @@ class _VentorRegistrationNotificationsStepState
                     height: 42,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      border: Border.all(color: _accent.withValues(alpha: 0.55)),
+                      border: Border.all(
+                        color: _accent.withValues(alpha: 0.55),
+                      ),
                     ),
                     child: const Icon(
                       Icons.arrow_back_rounded,

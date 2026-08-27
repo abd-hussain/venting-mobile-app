@@ -1,4 +1,4 @@
-/// Optional push notification result for registration submit (`#8` / `#22`).
+/// Optional push notification result for registration complete (`#8e` / `#22j`).
 class RegistrationNotificationsData {
   const RegistrationNotificationsData({
     required this.notificationsEnabled,

@@ -3,6 +3,7 @@ import 'package:preferences/preferences.dart';
 import 'package:venting_mobile_app/domain/data/api/ventor_profile_response_model.dart';
 import 'package:venting_mobile_app/domain/data/exceptions/main_api_exception.dart';
 import 'package:venting_mobile_app/domain/repository/api/ventor/ventor_register_repository.dart';
+import 'package:venting_mobile_app/utils/registration_fcm.dart';
 
 class CompleteVentorRegistrationUsecase {
   const CompleteVentorRegistrationUsecase(
@@ -18,10 +19,11 @@ class CompleteVentorRegistrationUsecase {
     String? fcmToken,
   }) {
     return TaskEither(() async {
+      final resolvedFcmToken = await resolveRegistrationFcmToken(fcmToken);
       final result = await _repository
           .completeRegistration(
             notificationsEnabled: notificationsEnabled,
-            fcmToken: fcmToken,
+            fcmToken: resolvedFcmToken,
           )
           .run();
 

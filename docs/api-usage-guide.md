@@ -112,9 +112,33 @@ Use these for **both** ventor and listener unless a screen is role-specific.
 **Notifications flow (ventor + listener):**
 
 1. User taps **Enable Notifications**.
-2. App requests OS permission + FCM token.
-3. On register submit send `notifications_enabled: true|false`.
-4. Send `fcm_token` **only when** a non-empty token was obtained; otherwise omit (multipart) or send `null` (JSON). Registration must succeed either way.
+2. App requests OS permission and reads FCM via Firebase (`requestRegistrationNotifications` in `lib/utils/registration_fcm.dart`).
+3. **Ventor** complete (`#8e`): always send `notifications_enabled`; add `fcm_token` only when non-empty.
+4. **Listener** complete (`#22j`): send optional `fcm_token` only when non-empty.
+5. On complete, the app re-resolves the token (`resolveRegistrationFcmToken`) so a token obtained earlier—or still available without permission on some platforms—is submitted when possible.
+6. Registration must succeed whether or not a token is sent.
+
+**Example complete payloads:**
+
+Ventor (`POST /v1/ventors/register/complete`):
+
+```json
+{ "notifications_enabled": true, "fcm_token": "dK3…" }
+```
+
+```json
+{ "notifications_enabled": false }
+```
+
+Listener (`POST /v1/listeners/register/complete`):
+
+```json
+{ "fcm_token": "dK3…" }
+```
+
+```json
+{}
+```
 
 **`#8` “Other” interest contract:**
 
@@ -123,11 +147,10 @@ Use these for **both** ventor and listener unless a screen is role-specific.
 | `interest_ids` includes `other` | Must include `other_interest_text` (trimmed, non-empty) |
 | No custom-text category | Omit `other_interest_text` |
 
-**`#8` submit payload (after notifications step):**
+**`#8e` submit payload (notifications step → complete):**
 
-- Profile fields (nickname, gender, avatar / preset)
-- `language_ids`, `interest_ids`, optional `other_interest_text`
-- `notifications_enabled`, optional `fcm_token`
+- `notifications_enabled` (required)
+- optional `fcm_token` when available
 
 ### B2. Ventor home & wellness
 

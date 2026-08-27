@@ -248,7 +248,7 @@ Used by `#2b forgot-password` / `#2c reset-password`. Store **hash only**, never
 
 ### 2d. `user_push_tokens`
 
-Optional FCM device tokens from `#8` / `#22` registration (`fcm_token`). Registration succeeds without a token.
+Optional FCM device tokens from ventor `#8e` / listener `#22j` registration complete (`fcm_token`). Registration succeeds without a token.
 
 | Column | Type | Notes |
 |--------|------|-------|
