@@ -1465,9 +1465,6 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
   }
 
   @override
-  String get listener_about_whats_new => 'What\'s New';
-
-  @override
   String get listener_about_terms => 'Terms of Service';
 
   @override
@@ -1478,44 +1475,6 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
 
   @override
   String get listener_about_licenses => 'Licenses';
-
-  @override
-  String get listener_whats_new_subtitle =>
-      'Highlights from the latest Venting updates.';
-
-  @override
-  String get listener_whats_new_date_aug_2026 => 'August 2026';
-
-  @override
-  String get listener_whats_new_date_jul_2026 => 'July 2026';
-
-  @override
-  String get listener_whats_new_1_2_0_item_1 =>
-      'New listener Account & Settings experience.';
-
-  @override
-  String get listener_whats_new_1_2_0_item_2 =>
-      'Payment & Payouts with bank details and history.';
-
-  @override
-  String get listener_whats_new_1_2_0_item_3 =>
-      'Privacy controls for countries and profile visibility.';
-
-  @override
-  String get listener_whats_new_1_2_0_item_4 =>
-      'Help & Support with WhatsApp and help topics.';
-
-  @override
-  String get listener_whats_new_1_1_0_item_1 =>
-      'Improved session reminders and notification preferences.';
-
-  @override
-  String get listener_whats_new_1_1_0_item_2 =>
-      'Faster profile editing for languages, city, and bio.';
-
-  @override
-  String get listener_whats_new_1_1_0_item_3 =>
-      'Stability and performance improvements.';
 
   @override
   String listener_profile_settings_version(String version) {

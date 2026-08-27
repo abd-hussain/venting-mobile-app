@@ -2735,12 +2735,6 @@ abstract class VentingMobLocalizations {
   /// **'Version {version} ({build})'**
   String listener_about_version(String version, String build);
 
-  /// No description provided for @listener_about_whats_new.
-  ///
-  /// In en, this message translates to:
-  /// **'What\'s New'**
-  String get listener_about_whats_new;
-
   /// No description provided for @listener_about_terms.
   ///
   /// In en, this message translates to:
@@ -2764,66 +2758,6 @@ abstract class VentingMobLocalizations {
   /// In en, this message translates to:
   /// **'Licenses'**
   String get listener_about_licenses;
-
-  /// No description provided for @listener_whats_new_subtitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Highlights from the latest Venting updates.'**
-  String get listener_whats_new_subtitle;
-
-  /// No description provided for @listener_whats_new_date_aug_2026.
-  ///
-  /// In en, this message translates to:
-  /// **'August 2026'**
-  String get listener_whats_new_date_aug_2026;
-
-  /// No description provided for @listener_whats_new_date_jul_2026.
-  ///
-  /// In en, this message translates to:
-  /// **'July 2026'**
-  String get listener_whats_new_date_jul_2026;
-
-  /// No description provided for @listener_whats_new_1_2_0_item_1.
-  ///
-  /// In en, this message translates to:
-  /// **'New listener Account & Settings experience.'**
-  String get listener_whats_new_1_2_0_item_1;
-
-  /// No description provided for @listener_whats_new_1_2_0_item_2.
-  ///
-  /// In en, this message translates to:
-  /// **'Payment & Payouts with bank details and history.'**
-  String get listener_whats_new_1_2_0_item_2;
-
-  /// No description provided for @listener_whats_new_1_2_0_item_3.
-  ///
-  /// In en, this message translates to:
-  /// **'Privacy controls for countries and profile visibility.'**
-  String get listener_whats_new_1_2_0_item_3;
-
-  /// No description provided for @listener_whats_new_1_2_0_item_4.
-  ///
-  /// In en, this message translates to:
-  /// **'Help & Support with WhatsApp and help topics.'**
-  String get listener_whats_new_1_2_0_item_4;
-
-  /// No description provided for @listener_whats_new_1_1_0_item_1.
-  ///
-  /// In en, this message translates to:
-  /// **'Improved session reminders and notification preferences.'**
-  String get listener_whats_new_1_1_0_item_1;
-
-  /// No description provided for @listener_whats_new_1_1_0_item_2.
-  ///
-  /// In en, this message translates to:
-  /// **'Faster profile editing for languages, city, and bio.'**
-  String get listener_whats_new_1_1_0_item_2;
-
-  /// No description provided for @listener_whats_new_1_1_0_item_3.
-  ///
-  /// In en, this message translates to:
-  /// **'Stability and performance improvements.'**
-  String get listener_whats_new_1_1_0_item_3;
 
   /// No description provided for @listener_profile_settings_version.
   ///

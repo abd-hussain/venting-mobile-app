@@ -5,28 +5,26 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
-import 'package:venting_mobile_app/presentation/home/listener/profile/listener_profile_theme.dart';
-import 'package:venting_mobile_app/presentation/home/listener/profile/widgets/whats_new_bottom_sheet.dart';
 import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dart';
 import 'package:venting_mobile_app/utils/help_topic_opener.dart';
 import 'package:venting_mobile_app/utils/legal_document_opener.dart';
 import 'package:venting_mobile_app/utils/static_web_content.dart';
 
-/// Opens the About Venting screen.
-Future<void> openListenerAboutScreen({required BuildContext context}) {
+/// Opens the shared About Venting screen (ventor + listener).
+Future<void> openAboutScreen({required BuildContext context}) {
   return Navigator.of(
     context,
-  ).push<void>(MaterialPageRoute(builder: (_) => const ListenerAboutScreen()));
+  ).push<void>(MaterialPageRoute(builder: (_) => const AboutScreen()));
 }
 
-class ListenerAboutScreen extends StatefulWidget {
-  const ListenerAboutScreen({super.key});
+class AboutScreen extends StatefulWidget {
+  const AboutScreen({super.key});
 
   @override
-  State<ListenerAboutScreen> createState() => _ListenerAboutScreenState();
+  State<AboutScreen> createState() => _AboutScreenState();
 }
 
-class _ListenerAboutScreenState extends State<ListenerAboutScreen> {
+class _AboutScreenState extends State<AboutScreen> {
   static const _overlayStyle = SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
     statusBarBrightness: Brightness.dark,
@@ -34,6 +32,10 @@ class _ListenerAboutScreenState extends State<ListenerAboutScreen> {
     systemNavigationBarColor: SplashColors.backgroundBottom,
     systemNavigationBarIconBrightness: Brightness.light,
   );
+
+  static const _muted = Color(0xFF9B93AB);
+  static const _cardFill = Color(0xFF1C1826);
+  static const _cardBorder = Color(0xFF2A2238);
 
   String? _version;
   String? _buildNumber;
@@ -134,7 +136,7 @@ class _ListenerAboutScreenState extends State<ListenerAboutScreen> {
                 versionLabel,
                 textAlign: TextAlign.center,
                 style: GoogleFonts.inter(
-                  color: ListenerProfileTheme.muted,
+                  color: _muted,
                   fontSize: 13,
                   fontWeight: FontWeight.w500,
                 ),
@@ -147,7 +149,7 @@ class _ListenerAboutScreenState extends State<ListenerAboutScreen> {
                 l10n.listener_about_tagline,
                 textAlign: TextAlign.center,
                 style: GoogleFonts.inter(
-                  color: ListenerProfileTheme.muted,
+                  color: _muted,
                   fontSize: 14,
                   fontWeight: FontWeight.w400,
                   height: 1.4,
@@ -157,16 +159,12 @@ class _ListenerAboutScreenState extends State<ListenerAboutScreen> {
             const SizedBox(height: 28),
             DecoratedBox(
               decoration: BoxDecoration(
-                color: ListenerProfileTheme.cardFill,
+                color: _cardFill,
                 borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: ListenerProfileTheme.cardBorder),
+                border: Border.all(color: _cardBorder),
               ),
               child: Column(
                 children: [
-                  _AboutTile(
-                    label: l10n.listener_about_whats_new,
-                    onTap: () => showWhatsNewBottomSheet(context: context),
-                  ),
                   _AboutTile(
                     label: l10n.listener_about_terms,
                     onTap: () => openLegalDocument(

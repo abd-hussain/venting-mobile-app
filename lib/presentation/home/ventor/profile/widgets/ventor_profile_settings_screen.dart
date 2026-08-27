@@ -8,12 +8,12 @@ import 'package:venting_mobile_app/domain/constants/language_constant.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
 import 'package:venting_mobile_app/l10n/venting_mob_localizations_holder.dart';
 import 'package:venting_mobile_app/presentation/change_password/change_password_screen.dart';
-import 'package:venting_mobile_app/presentation/home/listener/profile/widgets/listener_about_screen.dart';
 import 'package:venting_mobile_app/presentation/home/listener/profile/widgets/listener_help_support_screen.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/profile/ventor_profile_theme.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/profile/widgets/ventor_notification_preferences_screen.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/profile/widgets/ventor_privacy_settings_screen.dart';
 import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dart';
+import 'package:venting_mobile_app/shared_widgets/about/about_screen.dart';
 import 'package:venting_mobile_app/shared_widgets/bottom_sheets/logout_delete_account_confirm/logout_delete_account_confirm_sheet.dart';
 import 'package:venting_mobile_app/utils/app_language.dart';
 
@@ -197,8 +197,7 @@ class _VentorProfileSettingsScreenState
                           icon: Icons.info_outline_rounded,
                           label: l10n.listener_profile_settings_about,
                           value: versionLabel,
-                          onTap: () =>
-                              openListenerAboutScreen(context: context),
+                          onTap: () => openAboutScreen(context: context),
                           showDivider: false,
                         ),
                       ],

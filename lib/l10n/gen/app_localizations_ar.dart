@@ -1456,9 +1456,6 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
   }
 
   @override
-  String get listener_about_whats_new => 'ما الجديد';
-
-  @override
   String get listener_about_terms => 'شروط الخدمة';
 
   @override
@@ -1469,43 +1466,6 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
 
   @override
   String get listener_about_licenses => 'التراخيص';
-
-  @override
-  String get listener_whats_new_subtitle =>
-      'أبرز التحديثات في أحدث إصدارات Venting.';
-
-  @override
-  String get listener_whats_new_date_aug_2026 => 'أغسطس 2026';
-
-  @override
-  String get listener_whats_new_date_jul_2026 => 'يوليو 2026';
-
-  @override
-  String get listener_whats_new_1_2_0_item_1 =>
-      'تجربة جديدة لحساب وإعدادات المستمع.';
-
-  @override
-  String get listener_whats_new_1_2_0_item_2 =>
-      'المدفوعات والتحويلات مع بيانات البنك والسجل.';
-
-  @override
-  String get listener_whats_new_1_2_0_item_3 =>
-      'إعدادات خصوصية للدول وظهور الملف الشخصي.';
-
-  @override
-  String get listener_whats_new_1_2_0_item_4 =>
-      'المساعدة والدعم مع واتساب ومواضيع المساعدة.';
-
-  @override
-  String get listener_whats_new_1_1_0_item_1 =>
-      'تحسين تذكيرات الجلسات وتفضيلات الإشعارات.';
-
-  @override
-  String get listener_whats_new_1_1_0_item_2 =>
-      'تعديل أسرع للغات والمدينة والنبذة الشخصية.';
-
-  @override
-  String get listener_whats_new_1_1_0_item_3 => 'تحسينات في الاستقرار والأداء.';
 
   @override
   String listener_profile_settings_version(String version) {
