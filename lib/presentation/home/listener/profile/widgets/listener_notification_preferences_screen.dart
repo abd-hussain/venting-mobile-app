@@ -1,106 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shimmer_manager/shimmer_manager.dart';
+import 'package:venting_mobile_app/di/di_container.dart';
+import 'package:venting_mobile_app/domain/data/app/listener_notification_preferences.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
+import 'package:venting_mobile_app/presentation/home/listener/profile/bloc/notification_preferences/listener_notification_preferences_bloc.dart';
 import 'package:venting_mobile_app/presentation/home/listener/profile/listener_profile_theme.dart';
 import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dart';
-
-class ListenerNotificationPreferences {
-  const ListenerNotificationPreferences({
-    this.pushEnabled = true,
-    this.newSessionRequests = true,
-    this.sessionReminder15Min = true,
-    this.sessionReminder10Min = true,
-    this.sessionReminder5Min = true,
-    this.reviewsFeedback = true,
-    this.tipsEarnings = true,
-    this.promotionsUpdates = false,
-    this.emailEnabled = true,
-  });
-
-  final bool pushEnabled;
-  final bool newSessionRequests;
-  final bool sessionReminder15Min;
-  final bool sessionReminder10Min;
-  final bool sessionReminder5Min;
-  final bool reviewsFeedback;
-  final bool tipsEarnings;
-  final bool promotionsUpdates;
-  final bool emailEnabled;
-
-  ListenerNotificationPreferences copyWith({
-    bool? pushEnabled,
-    bool? newSessionRequests,
-    bool? sessionReminder15Min,
-    bool? sessionReminder10Min,
-    bool? sessionReminder5Min,
-    bool? reviewsFeedback,
-    bool? tipsEarnings,
-    bool? promotionsUpdates,
-    bool? emailEnabled,
-  }) {
-    return ListenerNotificationPreferences(
-      pushEnabled: pushEnabled ?? this.pushEnabled,
-      newSessionRequests: newSessionRequests ?? this.newSessionRequests,
-      sessionReminder15Min: sessionReminder15Min ?? this.sessionReminder15Min,
-      sessionReminder10Min: sessionReminder10Min ?? this.sessionReminder10Min,
-      sessionReminder5Min: sessionReminder5Min ?? this.sessionReminder5Min,
-      reviewsFeedback: reviewsFeedback ?? this.reviewsFeedback,
-      tipsEarnings: tipsEarnings ?? this.tipsEarnings,
-      promotionsUpdates: promotionsUpdates ?? this.promotionsUpdates,
-      emailEnabled: emailEnabled ?? this.emailEnabled,
-    );
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return other is ListenerNotificationPreferences &&
-        other.pushEnabled == pushEnabled &&
-        other.newSessionRequests == newSessionRequests &&
-        other.sessionReminder15Min == sessionReminder15Min &&
-        other.sessionReminder10Min == sessionReminder10Min &&
-        other.sessionReminder5Min == sessionReminder5Min &&
-        other.reviewsFeedback == reviewsFeedback &&
-        other.tipsEarnings == tipsEarnings &&
-        other.promotionsUpdates == promotionsUpdates &&
-        other.emailEnabled == emailEnabled;
-  }
-
-  @override
-  int get hashCode => Object.hash(
-    pushEnabled,
-    newSessionRequests,
-    sessionReminder15Min,
-    sessionReminder10Min,
-    sessionReminder5Min,
-    reviewsFeedback,
-    tipsEarnings,
-    promotionsUpdates,
-    emailEnabled,
-  );
-}
 
 /// Opens the Notification Preferences screen.
 Future<void> openListenerNotificationPreferencesScreen({
   required BuildContext context,
-  ListenerNotificationPreferences? initial,
 }) {
   return Navigator.of(context).push<void>(
     MaterialPageRoute(
-      builder: (_) => ListenerNotificationPreferencesScreen(
-        initial: initial ?? const ListenerNotificationPreferences(),
+      builder: (_) => BlocProvider(
+        create: (_) =>
+            diContainer<ListenerNotificationPreferencesBloc>()
+              ..add(const ListenerNotificationPreferencesEvent.started()),
+        child: const ListenerNotificationPreferencesScreen(),
       ),
     ),
   );
 }
 
 class ListenerNotificationPreferencesScreen extends StatefulWidget {
-  const ListenerNotificationPreferencesScreen({
-    super.key,
-    this.initial = const ListenerNotificationPreferences(),
-  });
-
-  final ListenerNotificationPreferences initial;
+  const ListenerNotificationPreferencesScreen({super.key});
 
   @override
   State<ListenerNotificationPreferencesScreen> createState() =>
@@ -117,33 +44,292 @@ class _ListenerNotificationPreferencesScreenState
     systemNavigationBarIconBrightness: Brightness.light,
   );
 
-  late ListenerNotificationPreferences _prefs;
-  late final ListenerNotificationPreferences _initial;
+  ListenerNotificationPreferences? _prefs;
+  ListenerNotificationPreferences? _initial;
 
-  @override
-  void initState() {
-    super.initState();
-    _initial = widget.initial;
-    _prefs = widget.initial;
+  bool get _hasChanges => _prefs != null && _prefs != _initial;
+
+  void _applyLoadedPreferences(ListenerNotificationPreferences preferences) {
+    if (_prefs != null) return;
+    setState(() {
+      _initial = preferences;
+      _prefs = preferences;
+    });
   }
 
-  bool get _hasChanges => _prefs != _initial;
-
   void _onSave() {
+    final prefs = _prefs;
+    if (prefs == null) return;
+
     if (!_hasChanges) {
       Navigator.of(context).pop();
       return;
     }
-    // TODO: Persist notification preferences via listener profile API.
-    debugPrint('TODO: save notification preferences $_prefs');
-    Navigator.of(context).pop();
+
+    context.read<ListenerNotificationPreferencesBloc>().add(
+      ListenerNotificationPreferencesEvent.saveRequested(preferences: prefs),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     final l10n = VentingMobLocalizations.of(context);
-    final categoriesEnabled = _prefs.pushEnabled;
 
+    return BlocConsumer<
+      ListenerNotificationPreferencesBloc,
+      ListenerNotificationPreferencesState
+    >(
+      listenWhen: (previous, current) =>
+          previous.status != current.status ||
+          previous.errorMessage != current.errorMessage,
+      listener: (context, state) {
+        if (state.isReady && state.savedPreferences != null) {
+          _applyLoadedPreferences(state.savedPreferences!);
+        }
+
+        if (state.isSaveSuccess) {
+          Navigator.of(context).pop();
+        }
+      },
+      builder: (context, state) {
+        if (state.isLoadFailure) {
+          return _buildScaffold(
+            l10n: l10n,
+            body: _ErrorBody(
+              message: state.errorMessage,
+              onRetry: () => context
+                  .read<ListenerNotificationPreferencesBloc>()
+                  .add(const ListenerNotificationPreferencesEvent.started()),
+            ),
+          );
+        }
+
+        if (state.isLoading || _prefs == null) {
+          return _buildScaffold(
+            l10n: l10n,
+            body: const _ListenerNotificationPreferencesShimmer(),
+          );
+        }
+
+        final prefs = _prefs!;
+        final categoriesEnabled = prefs.pushEnabled;
+        final isSaving = state.isSaving;
+
+        return _buildScaffold(
+          l10n: l10n,
+          body: Column(
+            children: [
+              Expanded(
+                child: ListView(
+                  padding: const EdgeInsets.fromLTRB(16, 8, 16, 20),
+                  children: [
+                    if (state.isSaveFailure && state.errorMessage.isNotEmpty)
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 12),
+                        child: Text(
+                          state.errorMessage,
+                          style: GoogleFonts.inter(
+                            color: const Color(0xFFEF4444),
+                            fontSize: 13,
+                            height: 1.35,
+                          ),
+                        ),
+                      ),
+                    _SectionLabel(label: l10n.listener_notif_section_push),
+                    const SizedBox(height: 8),
+                    _ToggleCard(
+                      children: [
+                        _PreferenceToggle(
+                          label: l10n.listener_notif_receive_push,
+                          value: prefs.pushEnabled,
+                          onChanged: isSaving
+                              ? null
+                              : (value) {
+                                  setState(
+                                    () => _prefs = prefs.copyWith(
+                                      pushEnabled: value,
+                                    ),
+                                  );
+                                },
+                          showDivider: false,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 22),
+                    _SectionLabel(
+                      label: l10n.listener_notif_section_notify_about,
+                    ),
+                    const SizedBox(height: 8),
+                    _ToggleCard(
+                      children: [
+                        _PreferenceToggle(
+                          label: l10n.listener_notif_new_session_requests,
+                          value: prefs.newSessionRequests,
+                          enabled: categoriesEnabled && !isSaving,
+                          onChanged: (value) {
+                            setState(
+                              () => _prefs = prefs.copyWith(
+                                newSessionRequests: value,
+                              ),
+                            );
+                          },
+                        ),
+                        _PreferenceToggle(
+                          label: l10n.listener_notif_reviews_feedback,
+                          value: prefs.reviewsFeedback,
+                          enabled: categoriesEnabled && !isSaving,
+                          onChanged: (value) {
+                            setState(
+                              () => _prefs = prefs.copyWith(
+                                reviewsFeedback: value,
+                              ),
+                            );
+                          },
+                        ),
+                        _PreferenceToggle(
+                          label: l10n.listener_notif_tips_earnings,
+                          value: prefs.tipsEarnings,
+                          enabled: categoriesEnabled && !isSaving,
+                          onChanged: (value) {
+                            setState(
+                              () =>
+                                  _prefs = prefs.copyWith(tipsEarnings: value),
+                            );
+                          },
+                        ),
+                        _PreferenceToggle(
+                          label: l10n.listener_notif_promotions_updates,
+                          value: prefs.promotionsUpdates,
+                          enabled: categoriesEnabled && !isSaving,
+                          onChanged: (value) {
+                            setState(
+                              () => _prefs = prefs.copyWith(
+                                promotionsUpdates: value,
+                              ),
+                            );
+                          },
+                          showDivider: false,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 22),
+                    _SectionLabel(
+                      label: l10n.listener_notif_section_session_reminders,
+                    ),
+                    const SizedBox(height: 8),
+                    _ToggleCard(
+                      children: [
+                        _PreferenceToggle(
+                          label: l10n.listener_notif_session_reminder_15,
+                          value: prefs.sessionReminder15Min,
+                          enabled: categoriesEnabled && !isSaving,
+                          onChanged: (value) {
+                            setState(
+                              () => _prefs = prefs.copyWith(
+                                sessionReminder15Min: value,
+                              ),
+                            );
+                          },
+                        ),
+                        _PreferenceToggle(
+                          label: l10n.listener_notif_session_reminder_10,
+                          value: prefs.sessionReminder10Min,
+                          enabled: categoriesEnabled && !isSaving,
+                          onChanged: (value) {
+                            setState(
+                              () => _prefs = prefs.copyWith(
+                                sessionReminder10Min: value,
+                              ),
+                            );
+                          },
+                        ),
+                        _PreferenceToggle(
+                          label: l10n.listener_notif_session_reminder_5,
+                          value: prefs.sessionReminder5Min,
+                          enabled: categoriesEnabled && !isSaving,
+                          onChanged: (value) {
+                            setState(
+                              () => _prefs = prefs.copyWith(
+                                sessionReminder5Min: value,
+                              ),
+                            );
+                          },
+                          showDivider: false,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 22),
+                    _SectionLabel(label: l10n.listener_notif_section_email),
+                    const SizedBox(height: 8),
+                    _ToggleCard(
+                      children: [
+                        _PreferenceToggle(
+                          label: l10n.listener_notif_receive_email,
+                          value: prefs.emailEnabled,
+                          onChanged: isSaving
+                              ? null
+                              : (value) {
+                                  setState(
+                                    () => _prefs = prefs.copyWith(
+                                      emailEnabled: value,
+                                    ),
+                                  );
+                                },
+                          showDivider: false,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 8, 20, 16),
+                child: SizedBox(
+                  width: double.infinity,
+                  height: 54,
+                  child: FilledButton(
+                    onPressed: isSaving ? null : _onSave,
+                    style: FilledButton.styleFrom(
+                      backgroundColor: SplashColors.purpleMid,
+                      foregroundColor: Colors.white,
+                      disabledBackgroundColor: SplashColors.purpleMid
+                          .withValues(alpha: 0.55),
+                      disabledForegroundColor: Colors.white.withValues(
+                        alpha: 0.7,
+                      ),
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(14),
+                      ),
+                      textStyle: GoogleFonts.inter(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    child: isSaving
+                        ? const SizedBox(
+                            width: 22,
+                            height: 22,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2.2,
+                              color: Colors.white,
+                            ),
+                          )
+                        : Text(l10n.listener_notif_save),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildScaffold({
+    required VentingMobLocalizations l10n,
+    required Widget body,
+  }) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: _overlayStyle,
       child: Scaffold(
@@ -167,179 +353,221 @@ class _ListenerNotificationPreferencesScreenState
             ),
           ),
         ),
-        body: SafeArea(
-          child: Column(
-            children: [
-              Expanded(
-                child: ListView(
-                  padding: const EdgeInsets.fromLTRB(16, 8, 16, 20),
+        body: SafeArea(child: body),
+      ),
+    );
+  }
+}
+
+class _ListenerNotificationPreferencesShimmer extends StatelessWidget {
+  const _ListenerNotificationPreferencesShimmer();
+
+  static const _baseColor = Color(0xFF2A2140);
+  static const _highlightColor = Color(0xFF3A2F52);
+
+  @override
+  Widget build(BuildContext context) {
+    return Shimmer.fromColors(
+      baseColor: _baseColor,
+      highlightColor: _highlightColor,
+      child: Column(
+        children: [
+          Expanded(
+            child: ListView(
+              padding: const EdgeInsets.fromLTRB(16, 8, 16, 20),
+              children: const [
+                _ShimmerSectionLabel(width: 96),
+                SizedBox(height: 8),
+                _ShimmerToggleCard(
+                  children: [_ShimmerToggleRow(showDivider: false)],
+                ),
+                SizedBox(height: 22),
+                _ShimmerSectionLabel(width: 88),
+                SizedBox(height: 8),
+                _ShimmerToggleCard(
                   children: [
-                    _SectionLabel(label: l10n.listener_notif_section_push),
-                    const SizedBox(height: 8),
-                    _ToggleCard(
-                      children: [
-                        _PreferenceToggle(
-                          label: l10n.listener_notif_receive_push,
-                          value: _prefs.pushEnabled,
-                          onChanged: (value) {
-                            setState(
-                              () =>
-                                  _prefs = _prefs.copyWith(pushEnabled: value),
-                            );
-                          },
-                          showDivider: false,
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 22),
-                    _SectionLabel(
-                      label: l10n.listener_notif_section_notify_about,
-                    ),
-                    const SizedBox(height: 8),
-                    _ToggleCard(
-                      children: [
-                        _PreferenceToggle(
-                          label: l10n.listener_notif_new_session_requests,
-                          value: _prefs.newSessionRequests,
-                          enabled: categoriesEnabled,
-                          onChanged: (value) {
-                            setState(
-                              () => _prefs = _prefs.copyWith(
-                                newSessionRequests: value,
-                              ),
-                            );
-                          },
-                        ),
-                        _PreferenceToggle(
-                          label: l10n.listener_notif_reviews_feedback,
-                          value: _prefs.reviewsFeedback,
-                          enabled: categoriesEnabled,
-                          onChanged: (value) {
-                            setState(
-                              () => _prefs = _prefs.copyWith(
-                                reviewsFeedback: value,
-                              ),
-                            );
-                          },
-                        ),
-                        _PreferenceToggle(
-                          label: l10n.listener_notif_tips_earnings,
-                          value: _prefs.tipsEarnings,
-                          enabled: categoriesEnabled,
-                          onChanged: (value) {
-                            setState(
-                              () =>
-                                  _prefs = _prefs.copyWith(tipsEarnings: value),
-                            );
-                          },
-                        ),
-                        _PreferenceToggle(
-                          label: l10n.listener_notif_promotions_updates,
-                          value: _prefs.promotionsUpdates,
-                          enabled: categoriesEnabled,
-                          onChanged: (value) {
-                            setState(
-                              () => _prefs = _prefs.copyWith(
-                                promotionsUpdates: value,
-                              ),
-                            );
-                          },
-                          showDivider: false,
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 22),
-                    _SectionLabel(
-                      label: l10n.listener_notif_section_session_reminders,
-                    ),
-                    const SizedBox(height: 8),
-                    _ToggleCard(
-                      children: [
-                        _PreferenceToggle(
-                          label: l10n.listener_notif_session_reminder_15,
-                          value: _prefs.sessionReminder15Min,
-                          enabled: categoriesEnabled,
-                          onChanged: (value) {
-                            setState(
-                              () => _prefs = _prefs.copyWith(
-                                sessionReminder15Min: value,
-                              ),
-                            );
-                          },
-                        ),
-                        _PreferenceToggle(
-                          label: l10n.listener_notif_session_reminder_10,
-                          value: _prefs.sessionReminder10Min,
-                          enabled: categoriesEnabled,
-                          onChanged: (value) {
-                            setState(
-                              () => _prefs = _prefs.copyWith(
-                                sessionReminder10Min: value,
-                              ),
-                            );
-                          },
-                        ),
-                        _PreferenceToggle(
-                          label: l10n.listener_notif_session_reminder_5,
-                          value: _prefs.sessionReminder5Min,
-                          enabled: categoriesEnabled,
-                          onChanged: (value) {
-                            setState(
-                              () => _prefs = _prefs.copyWith(
-                                sessionReminder5Min: value,
-                              ),
-                            );
-                          },
-                          showDivider: false,
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 22),
-                    _SectionLabel(label: l10n.listener_notif_section_email),
-                    const SizedBox(height: 8),
-                    _ToggleCard(
-                      children: [
-                        _PreferenceToggle(
-                          label: l10n.listener_notif_receive_email,
-                          value: _prefs.emailEnabled,
-                          onChanged: (value) {
-                            setState(
-                              () =>
-                                  _prefs = _prefs.copyWith(emailEnabled: value),
-                            );
-                          },
-                          showDivider: false,
-                        ),
-                      ],
-                    ),
+                    _ShimmerToggleRow(),
+                    _ShimmerDivider(),
+                    _ShimmerToggleRow(),
+                    _ShimmerDivider(),
+                    _ShimmerToggleRow(),
+                    _ShimmerDivider(),
+                    _ShimmerToggleRow(showDivider: false),
                   ],
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(20, 8, 20, 16),
-                child: SizedBox(
-                  width: double.infinity,
-                  height: 54,
-                  child: FilledButton(
-                    onPressed: _onSave,
-                    style: FilledButton.styleFrom(
-                      backgroundColor: SplashColors.purpleMid,
-                      foregroundColor: Colors.white,
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(14),
-                      ),
-                      textStyle: GoogleFonts.inter(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    child: Text(l10n.listener_notif_save),
-                  ),
+                SizedBox(height: 22),
+                _ShimmerSectionLabel(width: 132),
+                SizedBox(height: 8),
+                _ShimmerToggleCard(
+                  children: [
+                    _ShimmerToggleRow(),
+                    _ShimmerDivider(),
+                    _ShimmerToggleRow(),
+                    _ShimmerDivider(),
+                    _ShimmerToggleRow(showDivider: false),
+                  ],
                 ),
+                SizedBox(height: 22),
+                _ShimmerSectionLabel(width: 120),
+                SizedBox(height: 8),
+                _ShimmerToggleCard(
+                  children: [_ShimmerToggleRow(showDivider: false)],
+                ),
+              ],
+            ),
+          ),
+          const Padding(
+            padding: EdgeInsets.fromLTRB(20, 8, 20, 16),
+            child: _ShimmerLine(
+              width: double.infinity,
+              height: 54,
+              borderRadius: BorderRadius.all(Radius.circular(14)),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ShimmerSectionLabel extends StatelessWidget {
+  const _ShimmerSectionLabel({required this.width});
+
+  final double width;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 4),
+      child: _ShimmerLine(
+        width: width,
+        height: 13,
+        borderRadius: const BorderRadius.all(Radius.circular(4)),
+      ),
+    );
+  }
+}
+
+class _ShimmerToggleCard extends StatelessWidget {
+  const _ShimmerToggleCard({required this.children});
+
+  final List<Widget> children;
+
+  @override
+  Widget build(BuildContext context) {
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: ListenerProfileTheme.cardFill,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: ListenerProfileTheme.cardBorder),
+      ),
+      child: Column(children: children),
+    );
+  }
+}
+
+class _ShimmerToggleRow extends StatelessWidget {
+  const _ShimmerToggleRow({this.showDivider = true});
+
+  final bool showDivider;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+          child: Row(
+            children: [
+              Expanded(child: _ShimmerLine(width: 180, height: 14)),
+              SizedBox(width: 12),
+              _ShimmerLine(
+                width: 46,
+                height: 28,
+                borderRadius: BorderRadius.all(Radius.circular(14)),
               ),
             ],
           ),
+        ),
+        if (showDivider) const _ShimmerDivider(),
+      ],
+    );
+  }
+}
+
+class _ShimmerDivider extends StatelessWidget {
+  const _ShimmerDivider();
+
+  @override
+  Widget build(BuildContext context) {
+    return Divider(
+      height: 1,
+      indent: 14,
+      endIndent: 14,
+      color: Colors.white.withValues(alpha: 0.06),
+    );
+  }
+}
+
+class _ShimmerLine extends StatelessWidget {
+  const _ShimmerLine({
+    required this.width,
+    required this.height,
+    this.borderRadius = const BorderRadius.all(Radius.circular(6)),
+  });
+
+  final double width;
+  final double height;
+  final BorderRadius borderRadius;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: width,
+      height: height,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: borderRadius,
+      ),
+    );
+  }
+}
+
+class _ErrorBody extends StatelessWidget {
+  const _ErrorBody({required this.message, required this.onRetry});
+
+  final String message;
+  final VoidCallback onRetry;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = VentingMobLocalizations.of(context);
+
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              message,
+              textAlign: TextAlign.center,
+              style: GoogleFonts.inter(
+                color: Colors.white.withValues(alpha: 0.85),
+                fontSize: 14,
+                height: 1.4,
+              ),
+            ),
+            const SizedBox(height: 16),
+            FilledButton(
+              onPressed: onRetry,
+              style: FilledButton.styleFrom(
+                backgroundColor: SplashColors.purpleMid,
+                foregroundColor: Colors.white,
+              ),
+              child: Text(l10n.common_retry),
+            ),
+          ],
         ),
       ),
     );
@@ -396,12 +624,14 @@ class _PreferenceToggle extends StatelessWidget {
 
   final String label;
   final bool value;
-  final ValueChanged<bool> onChanged;
+  final ValueChanged<bool>? onChanged;
   final bool enabled;
   final bool showDivider;
 
   @override
   Widget build(BuildContext context) {
+    final interactive = enabled && onChanged != null;
+
     return Column(
       children: [
         Padding(
@@ -412,7 +642,7 @@ class _PreferenceToggle extends StatelessWidget {
                 child: Text(
                   label,
                   style: GoogleFonts.inter(
-                    color: enabled
+                    color: interactive
                         ? Colors.white
                         : Colors.white.withValues(alpha: 0.4),
                     fontSize: 14,
@@ -422,7 +652,7 @@ class _PreferenceToggle extends StatelessWidget {
               ),
               Switch(
                 value: value,
-                onChanged: enabled ? onChanged : null,
+                onChanged: interactive ? onChanged : null,
                 activeThumbColor: Colors.white,
                 activeTrackColor: SplashColors.purpleMid,
                 inactiveThumbColor: Colors.white,

@@ -16,6 +16,7 @@ import 'package:venting_mobile_app/domain/repository/api/catalog/catalog_boundar
 import 'package:venting_mobile_app/domain/repository/api/catalog/catalog_categories_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/catalog/catalog_languages_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/catalog/catalog_life_experiences_repository.dart';
+import 'package:venting_mobile_app/domain/repository/api/listener/listener_notification_preferences_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/listener/listener_privacy_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/listener/listener_register_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/ventor/ventor_register_repository.dart';
@@ -39,6 +40,7 @@ import 'package:venting_mobile_app/domain/usecase/get_catalog_boundaries_usecase
 import 'package:venting_mobile_app/domain/usecase/get_catalog_categories_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_catalog_languages_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_catalog_life_experiences_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/get_listener_notification_preferences_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_listener_privacy_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_listener_registration_progress_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_ventor_registration_progress_usecase.dart';
@@ -46,6 +48,7 @@ import 'package:venting_mobile_app/domain/usecase/save_listener_registration_ste
 import 'package:venting_mobile_app/domain/usecase/save_ventor_registration_step_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/sign_in_with_apple_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/sign_in_with_google_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/update_listener_notification_preferences_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/update_listener_privacy_usecase.dart';
 
 /// Usecases mixin for VentingModule
@@ -136,6 +139,26 @@ mixin VentingModuleUsecases on VentingModule {
   GetCatalogBoundariesUsecase getCatalogBoundariesUsecase(
     CatalogBoundariesRepository catalogBoundariesRepository,
   ) => GetCatalogBoundariesUsecase(catalogBoundariesRepository);
+
+  GetListenerNotificationPreferencesUsecase
+  getListenerNotificationPreferencesUsecase(
+    ListenerNotificationPreferencesRepository
+    listenerNotificationPreferencesRepository,
+    VentingPreferences ventingPreferences,
+  ) => GetListenerNotificationPreferencesUsecase(
+    listenerNotificationPreferencesRepository,
+    ventingPreferences,
+  );
+
+  UpdateListenerNotificationPreferencesUsecase
+  updateListenerNotificationPreferencesUsecase(
+    ListenerNotificationPreferencesRepository
+    listenerNotificationPreferencesRepository,
+    VentingPreferences ventingPreferences,
+  ) => UpdateListenerNotificationPreferencesUsecase(
+    listenerNotificationPreferencesRepository,
+    ventingPreferences,
+  );
 
   GetListenerPrivacyUsecase getListenerPrivacyUsecase(
     ListenerPrivacyRepository listenerPrivacyRepository,
@@ -258,6 +281,18 @@ mixin VentingModuleUsecases on VentingModule {
     );
     getIt.registerFactory<GetCatalogBoundariesUsecase>(
       () => getCatalogBoundariesUsecase(getIt<CatalogBoundariesRepository>()),
+    );
+    getIt.registerFactory<GetListenerNotificationPreferencesUsecase>(
+      () => getListenerNotificationPreferencesUsecase(
+        getIt<ListenerNotificationPreferencesRepository>(),
+        getIt<VentingPreferences>(),
+      ),
+    );
+    getIt.registerFactory<UpdateListenerNotificationPreferencesUsecase>(
+      () => updateListenerNotificationPreferencesUsecase(
+        getIt<ListenerNotificationPreferencesRepository>(),
+        getIt<VentingPreferences>(),
+      ),
     );
     getIt.registerFactory<GetListenerPrivacyUsecase>(
       () => getListenerPrivacyUsecase(

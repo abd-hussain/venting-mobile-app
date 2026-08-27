@@ -6,7 +6,7 @@ import 'package:shimmer_manager/shimmer_manager.dart';
 import 'package:venting_mobile_app/di/di_container.dart';
 import 'package:venting_mobile_app/domain/data/app/listener_privacy_settings.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
-import 'package:venting_mobile_app/presentation/home/listener/profile/bloc/listener_privacy_visibility_bloc.dart';
+import 'package:venting_mobile_app/presentation/home/listener/profile/bloc/privacy_visibility/listener_privacy_visibility_bloc.dart';
 import 'package:venting_mobile_app/presentation/home/listener/profile/listener_profile_theme.dart';
 import 'package:venting_mobile_app/presentation/home/listener/profile/widgets/visible_countries_picker.dart';
 import 'package:venting_mobile_app/presentation/listener_registration/widgets/country_display_names.dart';
