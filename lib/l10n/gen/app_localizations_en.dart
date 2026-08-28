@@ -2280,7 +2280,22 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
   String get listener_avail_session_length => 'Preferred Session Length';
 
   @override
+  String get listener_avail_session_length_any => 'Any';
+
+  @override
+  String get listener_avail_session_length_subtitle =>
+      'Choose Any or up to two session lengths.';
+
+  @override
   String get listener_avail_break_between => 'Break Between Sessions';
+
+  @override
+  String get listener_avail_break_none => 'No Break';
+
+  @override
+  String listener_avail_break_minutes(int minutes) {
+    return '$minutes Min';
+  }
 
   @override
   String get listener_avail_languages => 'Languages';
@@ -2296,6 +2311,27 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
   @override
   String get listener_avail_instant_calls_hint =>
       'Allow ventors to reach you for immediate sessions without scheduling.';
+
+  @override
+  String get listener_avail_instant_calls_earnings_highlight =>
+      'Instant calls can help you earn extra income.';
+
+  @override
+  String get listener_avail_online_status => 'Appear Online';
+
+  @override
+  String get listener_avail_online_status_hint =>
+      'When online, ventors can see you\'re available for sessions.';
+
+  @override
+  String get listener_avail_online_status_offline_hint =>
+      'You\'re offline. Turn this on when you\'re ready to accept sessions.';
+
+  @override
+  String get listener_avail_status_online => 'Online';
+
+  @override
+  String get listener_avail_status_offline => 'Offline';
 
   @override
   String get listener_avail_day_available => 'Available on this day';

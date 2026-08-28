@@ -8,7 +8,7 @@ import 'package:venting_mobile_app/presentation/home/listener/tabs/listener_prof
 import 'package:venting_mobile_app/presentation/home/listener/tabs/listener_sessions_tab.dart';
 import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dart';
 
-/// Listener main shell: Dashboard, Sessions, Availability, Earnings, Profile.
+/// Listener main shell: Dashboard, Earnings, Sessions, Availability, Profile.
 class ListenerHomeShell extends StatefulWidget {
   const ListenerHomeShell({super.key});
 
@@ -24,10 +24,10 @@ class _ListenerHomeShellState extends State<ListenerHomeShell> {
   void initState() {
     super.initState();
     _tabs = [
-      ListenerDashboardTab(onOpenSessions: () => setState(() => _index = 1)),
+      ListenerDashboardTab(onOpenSessions: () => setState(() => _index = 2)),
+      const ListenerEarningsTab(),
       const ListenerSessionsTab(),
       const ListenerAvailabilityTab(),
-      const ListenerEarningsTab(),
       const ListenerProfileTab(),
     ];
   }
@@ -77,6 +77,11 @@ class _ListenerHomeShellState extends State<ListenerHomeShell> {
               label: l10n.home_tab_dashboard,
             ),
             NavigationDestination(
+              icon: const Icon(Icons.payments_outlined),
+              selectedIcon: const Icon(Icons.payments_rounded),
+              label: l10n.home_tab_earnings,
+            ),
+            NavigationDestination(
               icon: const Icon(Icons.headphones_outlined),
               selectedIcon: const Icon(Icons.headphones_rounded),
               label: l10n.home_tab_sessions,
@@ -85,11 +90,6 @@ class _ListenerHomeShellState extends State<ListenerHomeShell> {
               icon: const Icon(Icons.calendar_month_outlined),
               selectedIcon: const Icon(Icons.calendar_month_rounded),
               label: l10n.home_tab_availability,
-            ),
-            NavigationDestination(
-              icon: const Icon(Icons.payments_outlined),
-              selectedIcon: const Icon(Icons.payments_rounded),
-              label: l10n.home_tab_earnings,
             ),
             NavigationDestination(
               icon: const Icon(Icons.person_outline_rounded),

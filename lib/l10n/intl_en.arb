@@ -1668,8 +1668,22 @@
   "@listener_avail_session_settings": {},
   "listener_avail_session_length": "Preferred Session Length",
   "@listener_avail_session_length": {},
+  "listener_avail_session_length_any": "Any",
+  "@listener_avail_session_length_any": {},
+  "listener_avail_session_length_subtitle": "Choose Any or up to two session lengths.",
+  "@listener_avail_session_length_subtitle": {},
   "listener_avail_break_between": "Break Between Sessions",
   "@listener_avail_break_between": {},
+  "listener_avail_break_none": "No Break",
+  "@listener_avail_break_none": {},
+  "listener_avail_break_minutes": "{minutes} Min",
+  "@listener_avail_break_minutes": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
   "listener_avail_languages": "Languages",
   "@listener_avail_languages": {},
   "listener_avail_min_value": "{minutes} min",
@@ -1684,6 +1698,18 @@
   "@listener_avail_instant_calls": {},
   "listener_avail_instant_calls_hint": "Allow ventors to reach you for immediate sessions without scheduling.",
   "@listener_avail_instant_calls_hint": {},
+  "listener_avail_instant_calls_earnings_highlight": "Instant calls can help you earn extra income.",
+  "@listener_avail_instant_calls_earnings_highlight": {},
+  "listener_avail_online_status": "Appear Online",
+  "@listener_avail_online_status": {},
+  "listener_avail_online_status_hint": "When online, ventors can see you're available for sessions.",
+  "@listener_avail_online_status_hint": {},
+  "listener_avail_online_status_offline_hint": "You're offline. Turn this on when you're ready to accept sessions.",
+  "@listener_avail_online_status_offline_hint": {},
+  "listener_avail_status_online": "Online",
+  "@listener_avail_status_online": {},
+  "listener_avail_status_offline": "Offline",
+  "@listener_avail_status_offline": {},
   "listener_avail_day_available": "Available on this day",
   "@listener_avail_day_available": {},
   "listener_avail_add_slot": "Add time slot",

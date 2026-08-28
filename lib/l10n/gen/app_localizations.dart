@@ -4184,11 +4184,35 @@ abstract class VentingMobLocalizations {
   /// **'Preferred Session Length'**
   String get listener_avail_session_length;
 
+  /// No description provided for @listener_avail_session_length_any.
+  ///
+  /// In en, this message translates to:
+  /// **'Any'**
+  String get listener_avail_session_length_any;
+
+  /// No description provided for @listener_avail_session_length_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose Any or up to two session lengths.'**
+  String get listener_avail_session_length_subtitle;
+
   /// No description provided for @listener_avail_break_between.
   ///
   /// In en, this message translates to:
   /// **'Break Between Sessions'**
   String get listener_avail_break_between;
+
+  /// No description provided for @listener_avail_break_none.
+  ///
+  /// In en, this message translates to:
+  /// **'No Break'**
+  String get listener_avail_break_none;
+
+  /// No description provided for @listener_avail_break_minutes.
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes} Min'**
+  String listener_avail_break_minutes(int minutes);
 
   /// No description provided for @listener_avail_languages.
   ///
@@ -4213,6 +4237,42 @@ abstract class VentingMobLocalizations {
   /// In en, this message translates to:
   /// **'Allow ventors to reach you for immediate sessions without scheduling.'**
   String get listener_avail_instant_calls_hint;
+
+  /// No description provided for @listener_avail_instant_calls_earnings_highlight.
+  ///
+  /// In en, this message translates to:
+  /// **'Instant calls can help you earn extra income.'**
+  String get listener_avail_instant_calls_earnings_highlight;
+
+  /// No description provided for @listener_avail_online_status.
+  ///
+  /// In en, this message translates to:
+  /// **'Appear Online'**
+  String get listener_avail_online_status;
+
+  /// No description provided for @listener_avail_online_status_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'When online, ventors can see you\'re available for sessions.'**
+  String get listener_avail_online_status_hint;
+
+  /// No description provided for @listener_avail_online_status_offline_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'re offline. Turn this on when you\'re ready to accept sessions.'**
+  String get listener_avail_online_status_offline_hint;
+
+  /// No description provided for @listener_avail_status_online.
+  ///
+  /// In en, this message translates to:
+  /// **'Online'**
+  String get listener_avail_status_online;
+
+  /// No description provided for @listener_avail_status_offline.
+  ///
+  /// In en, this message translates to:
+  /// **'Offline'**
+  String get listener_avail_status_offline;
 
   /// No description provided for @listener_avail_day_available.
   ///

@@ -42,6 +42,7 @@ import 'package:venting_mobile_app/domain/usecase/get_catalog_categories_usecase
 import 'package:venting_mobile_app/domain/usecase/get_catalog_languages_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_catalog_life_experiences_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_listener_notification_preferences_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/get_listener_online_status_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_listener_privacy_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_listener_profile_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_listener_registration_progress_usecase.dart';
@@ -54,6 +55,7 @@ import 'package:venting_mobile_app/domain/usecase/sign_in_with_google_usecase.da
 import 'package:venting_mobile_app/domain/usecase/update_listener_about_me_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/update_listener_avatar_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/update_listener_notification_preferences_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/update_listener_online_status_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/update_listener_phone_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/update_listener_privacy_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/update_listener_profile_usecase.dart';
@@ -173,6 +175,14 @@ mixin VentingModuleUsecases on VentingModule {
     VentingPreferences ventingPreferences,
   ) => GetListenerPrivacyUsecase(listenerPrivacyRepository, ventingPreferences);
 
+  GetListenerOnlineStatusUsecase getListenerOnlineStatusUsecase(
+    ListenerProfileRepository listenerProfileRepository,
+    VentingPreferences ventingPreferences,
+  ) => GetListenerOnlineStatusUsecase(
+    listenerProfileRepository,
+    ventingPreferences,
+  );
+
   GetListenerProfileUsecase getListenerProfileUsecase(
     ListenerProfileRepository listenerProfileRepository,
     VentingPreferences ventingPreferences,
@@ -193,6 +203,14 @@ mixin VentingModuleUsecases on VentingModule {
     VentingPreferences ventingPreferences,
   ) => UpdateListenerPrivacyUsecase(
     listenerPrivacyRepository,
+    ventingPreferences,
+  );
+
+  UpdateListenerOnlineStatusUsecase updateListenerOnlineStatusUsecase(
+    ListenerProfileRepository listenerProfileRepository,
+    VentingPreferences ventingPreferences,
+  ) => UpdateListenerOnlineStatusUsecase(
+    listenerProfileRepository,
     ventingPreferences,
   );
 
@@ -369,6 +387,12 @@ mixin VentingModuleUsecases on VentingModule {
         getIt<VentingPreferences>(),
       ),
     );
+    getIt.registerFactory<GetListenerOnlineStatusUsecase>(
+      () => getListenerOnlineStatusUsecase(
+        getIt<ListenerProfileRepository>(),
+        getIt<VentingPreferences>(),
+      ),
+    );
     getIt.registerFactory<GetListenerProfileUsecase>(
       () => getListenerProfileUsecase(
         getIt<ListenerProfileRepository>(),
@@ -385,6 +409,12 @@ mixin VentingModuleUsecases on VentingModule {
     getIt.registerFactory<UpdateListenerPrivacyUsecase>(
       () => updateListenerPrivacyUsecase(
         getIt<ListenerPrivacyRepository>(),
+        getIt<VentingPreferences>(),
+      ),
+    );
+    getIt.registerFactory<UpdateListenerOnlineStatusUsecase>(
+      () => updateListenerOnlineStatusUsecase(
+        getIt<ListenerProfileRepository>(),
         getIt<VentingPreferences>(),
       ),
     );

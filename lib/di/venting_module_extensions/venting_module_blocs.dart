@@ -13,6 +13,7 @@ import 'package:venting_mobile_app/domain/usecase/auth_social_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/clear_auth_session_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_cached_auth_me_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_listener_notification_preferences_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/get_listener_online_status_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_listener_privacy_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_listener_profile_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_listener_reviews_usecase.dart';
@@ -21,6 +22,7 @@ import 'package:venting_mobile_app/domain/usecase/sign_in_with_google_usecase.da
 import 'package:venting_mobile_app/domain/usecase/update_listener_about_me_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/update_listener_avatar_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/update_listener_notification_preferences_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/update_listener_online_status_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/update_listener_phone_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/update_listener_privacy_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/update_listener_profile_usecase.dart';
@@ -31,6 +33,7 @@ import 'package:venting_mobile_app/presentation/auth/bloc/email_registration_blo
 import 'package:venting_mobile_app/presentation/auth/bloc/forgot_password_bloc.dart';
 import 'package:venting_mobile_app/presentation/auth/forgot_password_screen.dart';
 import 'package:venting_mobile_app/presentation/change_password/bloc/change_password_bloc.dart';
+import 'package:venting_mobile_app/presentation/home/listener/availability/bloc/listener_availability_bloc.dart';
 import 'package:venting_mobile_app/presentation/home/listener/profile/bloc/edit_phone/edit_phone_bloc.dart';
 import 'package:venting_mobile_app/presentation/home/listener/profile/bloc/listener_profile/listener_profile_bloc.dart';
 import 'package:venting_mobile_app/presentation/home/listener/profile/bloc/notification_preferences/listener_notification_preferences_bloc.dart';
@@ -88,6 +91,12 @@ mixin VentingModuleBlocs on VentingModule {
     );
     getIt.registerFactory<EditPhoneBloc>(
       () => EditPhoneBloc(getIt<UpdateListenerPhoneUsecase>()),
+    );
+    getIt.registerFactory<ListenerAvailabilityBloc>(
+      () => ListenerAvailabilityBloc(
+        getIt<GetListenerOnlineStatusUsecase>(),
+        getIt<UpdateListenerOnlineStatusUsecase>(),
+      ),
     );
     getIt.registerFactory<ListenerProfileBloc>(
       () => ListenerProfileBloc(

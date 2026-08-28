@@ -1668,8 +1668,22 @@
   "@listener_avail_session_settings": {},
   "listener_avail_session_length": "مدة الجلسة المفضلة",
   "@listener_avail_session_length": {},
+  "listener_avail_session_length_any": "أي مدة",
+  "@listener_avail_session_length_any": {},
+  "listener_avail_session_length_subtitle": "اختر أي مدة أو حتى خيارين للجلسة.",
+  "@listener_avail_session_length_subtitle": {},
   "listener_avail_break_between": "استراحة بين الجلسات",
   "@listener_avail_break_between": {},
+  "listener_avail_break_none": "بدون استراحة",
+  "@listener_avail_break_none": {},
+  "listener_avail_break_minutes": "{minutes} دقيقة",
+  "@listener_avail_break_minutes": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
   "listener_avail_languages": "اللغات",
   "@listener_avail_languages": {},
   "listener_avail_min_value": "{minutes} دقيقة",
@@ -1684,6 +1698,18 @@
   "@listener_avail_instant_calls": {},
   "listener_avail_instant_calls_hint": "اسمح للمتحدثين بالوصول إليك لجلسات فورية بدون حجز مسبق.",
   "@listener_avail_instant_calls_hint": {},
+  "listener_avail_instant_calls_earnings_highlight": "المكالمات الفورية تساعدك على كسب دخل إضافي.",
+  "@listener_avail_instant_calls_earnings_highlight": {},
+  "listener_avail_online_status": "الظهور كمتصل",
+  "@listener_avail_online_status": {},
+  "listener_avail_online_status_hint": "عندما تكون متصلاً، يمكن للمتحدثين رؤية أنك متاح للجلسات.",
+  "@listener_avail_online_status_hint": {},
+  "listener_avail_online_status_offline_hint": "أنت غير متصل. فعّل هذا عندما تكون مستعداً لاستقبال الجلسات.",
+  "@listener_avail_online_status_offline_hint": {},
+  "listener_avail_status_online": "متصل",
+  "@listener_avail_status_online": {},
+  "listener_avail_status_offline": "غير متصل",
+  "@listener_avail_status_offline": {},
   "listener_avail_day_available": "متاح في هذا اليوم",
   "@listener_avail_day_available": {},
   "listener_avail_add_slot": "إضافة فترة زمنية",

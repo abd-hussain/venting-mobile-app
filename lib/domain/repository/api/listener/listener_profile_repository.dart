@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:fpdart/fpdart.dart';
+import 'package:venting_mobile_app/domain/data/api/listener_online_status_response_model.dart';
 import 'package:venting_mobile_app/domain/data/api/listener_profile_response_model.dart';
 import 'package:venting_mobile_app/domain/data/api/listener_reviews_response_model.dart';
 import 'package:venting_mobile_app/domain/data/api/listener_voice_intro_response_model.dart';
@@ -100,6 +101,16 @@ class ListenerProfileRepository extends BaseRepository {
       }
     });
   }
+
+  TaskEither<Exception, ListenerOnlineStatusResponseModel> updateOnlineStatus({
+    required bool isOnline,
+  }) => executeRequest(
+    request: apiClient.patch<Object?>(
+      'v1/listeners/me/online-status',
+      data: <String, dynamic>{'is_online': isOnline},
+    ),
+    fromJson: ListenerOnlineStatusResponseModel.fromJson,
+  );
 }
 
 Future<void> _addLocalFile(FormData formData, String field, String path) async {

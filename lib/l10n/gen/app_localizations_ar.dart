@@ -2266,7 +2266,22 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
   String get listener_avail_session_length => 'مدة الجلسة المفضلة';
 
   @override
+  String get listener_avail_session_length_any => 'أي مدة';
+
+  @override
+  String get listener_avail_session_length_subtitle =>
+      'اختر أي مدة أو حتى خيارين للجلسة.';
+
+  @override
   String get listener_avail_break_between => 'استراحة بين الجلسات';
+
+  @override
+  String get listener_avail_break_none => 'بدون استراحة';
+
+  @override
+  String listener_avail_break_minutes(int minutes) {
+    return '$minutes دقيقة';
+  }
 
   @override
   String get listener_avail_languages => 'اللغات';
@@ -2282,6 +2297,27 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
   @override
   String get listener_avail_instant_calls_hint =>
       'اسمح للمتحدثين بالوصول إليك لجلسات فورية بدون حجز مسبق.';
+
+  @override
+  String get listener_avail_instant_calls_earnings_highlight =>
+      'المكالمات الفورية تساعدك على كسب دخل إضافي.';
+
+  @override
+  String get listener_avail_online_status => 'الظهور كمتصل';
+
+  @override
+  String get listener_avail_online_status_hint =>
+      'عندما تكون متصلاً، يمكن للمتحدثين رؤية أنك متاح للجلسات.';
+
+  @override
+  String get listener_avail_online_status_offline_hint =>
+      'أنت غير متصل. فعّل هذا عندما تكون مستعداً لاستقبال الجلسات.';
+
+  @override
+  String get listener_avail_status_online => 'متصل';
+
+  @override
+  String get listener_avail_status_offline => 'غير متصل';
 
   @override
   String get listener_avail_day_available => 'متاح في هذا اليوم';
