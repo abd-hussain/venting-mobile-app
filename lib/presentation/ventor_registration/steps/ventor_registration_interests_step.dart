@@ -5,7 +5,7 @@ import 'package:venting_mobile_app/domain/data/api/catalog_category_model.dart';
 import 'package:venting_mobile_app/domain/data/exceptions/main_api_exception.dart';
 import 'package:venting_mobile_app/domain/usecase/get_catalog_categories_usecase.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
-import 'package:venting_mobile_app/presentation/catalog/widgets/catalog_category_widgets.dart';
+import 'package:venting_mobile_app/shared_widgets/catalog_category_widgets.dart';
 
 /// Result of the interests step — passed to parent for `#8 ventors/register`.
 class VentorInterestsSelection {
