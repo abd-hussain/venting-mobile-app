@@ -4943,7 +4943,7 @@ abstract class VentingMobLocalizations {
   /// No description provided for @listener_dashboard_setup_identity.
   ///
   /// In en, this message translates to:
-  /// **'Identity Verified'**
+  /// **'Identity Verification'**
   String get listener_dashboard_setup_identity;
 
   /// No description provided for @listener_dashboard_setup_profile.
@@ -4951,6 +4951,54 @@ abstract class VentingMobLocalizations {
   /// In en, this message translates to:
   /// **'Profile Info'**
   String get listener_dashboard_setup_profile;
+
+  /// No description provided for @listener_dashboard_setup_account.
+  ///
+  /// In en, this message translates to:
+  /// **'Account Setup'**
+  String get listener_dashboard_setup_account;
+
+  /// No description provided for @listener_dashboard_setup_about.
+  ///
+  /// In en, this message translates to:
+  /// **'About You'**
+  String get listener_dashboard_setup_about;
+
+  /// No description provided for @listener_dashboard_setup_experience.
+  ///
+  /// In en, this message translates to:
+  /// **'Life Experience'**
+  String get listener_dashboard_setup_experience;
+
+  /// No description provided for @listener_dashboard_setup_comfort_areas.
+  ///
+  /// In en, this message translates to:
+  /// **'Comfort Areas'**
+  String get listener_dashboard_setup_comfort_areas;
+
+  /// No description provided for @listener_dashboard_setup_boundaries.
+  ///
+  /// In en, this message translates to:
+  /// **'Boundaries'**
+  String get listener_dashboard_setup_boundaries;
+
+  /// No description provided for @listener_dashboard_setup_voice_intro.
+  ///
+  /// In en, this message translates to:
+  /// **'Voice Introduction'**
+  String get listener_dashboard_setup_voice_intro;
+
+  /// No description provided for @listener_dashboard_setup_notifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get listener_dashboard_setup_notifications;
+
+  /// No description provided for @listener_dashboard_setup_pending.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending'**
+  String get listener_dashboard_setup_pending;
 
   /// No description provided for @listener_dashboard_setup_availability.
   ///
@@ -4970,6 +5018,24 @@ abstract class VentingMobLocalizations {
   /// **'First Session Tutorial'**
   String get listener_dashboard_setup_tutorial;
 
+  /// No description provided for @listener_dashboard_setup_book_first_session.
+  ///
+  /// In en, this message translates to:
+  /// **'First session with us'**
+  String get listener_dashboard_setup_book_first_session;
+
+  /// No description provided for @listener_dashboard_setup_book_first_session_cta.
+  ///
+  /// In en, this message translates to:
+  /// **'Got it — I\'m ready'**
+  String get listener_dashboard_setup_book_first_session_cta;
+
+  /// No description provided for @listener_dashboard_setup_book_first_session_availability.
+  ///
+  /// In en, this message translates to:
+  /// **'Update my availability'**
+  String get listener_dashboard_setup_book_first_session_availability;
+
   /// No description provided for @listener_dashboard_setup_done.
   ///
   /// In en, this message translates to:
@@ -4981,6 +5047,12 @@ abstract class VentingMobLocalizations {
   /// In en, this message translates to:
   /// **'In Progress'**
   String get listener_dashboard_setup_in_progress;
+
+  /// No description provided for @listener_dashboard_setup_under_review.
+  ///
+  /// In en, this message translates to:
+  /// **'Under Review'**
+  String get listener_dashboard_setup_under_review;
 
   /// No description provided for @listener_dashboard_setup_locked.
   ///
@@ -5096,6 +5168,48 @@ abstract class VentingMobLocalizations {
   /// **'Before taking sessions, complete the onboarding journey and tutorials.'**
   String get listener_dashboard_profile_approved_message;
 
+  /// No description provided for @listener_dashboard_profile_under_review_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile under review'**
+  String get listener_dashboard_profile_under_review_title;
+
+  /// No description provided for @listener_dashboard_profile_under_review_message.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish training and book your first session while we review your profile. You won\'t appear online to ventors until approved.'**
+  String get listener_dashboard_profile_under_review_message;
+
+  /// No description provided for @listener_dashboard_profile_rejected_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile needs updates'**
+  String get listener_dashboard_profile_rejected_title;
+
+  /// No description provided for @listener_dashboard_profile_rejected_message.
+  ///
+  /// In en, this message translates to:
+  /// **'An admin flagged one or more steps below. Update them and we\'ll review your profile again.'**
+  String get listener_dashboard_profile_rejected_message;
+
+  /// No description provided for @listener_dashboard_setup_needs_refill.
+  ///
+  /// In en, this message translates to:
+  /// **'Needs update'**
+  String get listener_dashboard_setup_needs_refill;
+
+  /// No description provided for @listener_dashboard_go_online_requires_approval.
+  ///
+  /// In en, this message translates to:
+  /// **'Your profile must be approved before you can go online.'**
+  String get listener_dashboard_go_online_requires_approval;
+
+  /// No description provided for @listener_dashboard_availability_hidden_until_approved.
+  ///
+  /// In en, this message translates to:
+  /// **'Hidden from ventors until your profile is approved'**
+  String get listener_dashboard_availability_hidden_until_approved;
+
   /// No description provided for @listener_dashboard_locked_accept_title.
   ///
   /// In en, this message translates to:
@@ -5177,43 +5291,43 @@ abstract class VentingMobLocalizations {
   /// No description provided for @listener_first_session_continue.
   ///
   /// In en, this message translates to:
-  /// **'Open last step'**
+  /// **'Open first session info'**
   String get listener_first_session_continue;
 
   /// No description provided for @listener_first_session_title.
   ///
   /// In en, this message translates to:
-  /// **'Congratulations — you’re almost there!'**
+  /// **'First session with us'**
   String get listener_first_session_title;
 
   /// No description provided for @listener_first_session_body.
   ///
   /// In en, this message translates to:
-  /// **'One last step remains. We’ll send you a 30-minute session call very soon — this will be your first session tutorial. We can’t wait to see you there.'**
+  /// **'You\'re almost there. Based on the availability you set, our team will call you for a short live session before we approve your profile.'**
   String get listener_first_session_body;
 
   /// No description provided for @listener_first_session_bullet_call.
   ///
   /// In en, this message translates to:
-  /// **'Expect a 30-minute tutorial call soon. Join when it arrives so we can walk through your first live session together.'**
+  /// **'We\'ll reach out during the time slots you shared — keep your phone nearby and notifications on.'**
   String get listener_first_session_bullet_call;
 
   /// No description provided for @listener_first_session_bullet_guidelines.
   ///
   /// In en, this message translates to:
-  /// **'Don’t forget the guidelines from your Active Listening Training — keep them in mind during this call.'**
+  /// **'On the call we\'ll walk through real scenarios and test your listening skills.'**
   String get listener_first_session_bullet_guidelines;
 
   /// No description provided for @listener_first_session_bullet_available.
   ///
   /// In en, this message translates to:
-  /// **'After this tutorial session, you’ll be fully available for any incoming calls.'**
+  /// **'If you pass, we\'ll approve your profile and you can start accepting sessions.'**
   String get listener_first_session_bullet_available;
 
   /// No description provided for @listener_first_session_cta.
   ///
   /// In en, this message translates to:
-  /// **'Got it — I’m ready'**
+  /// **'Got it — I\'m ready'**
   String get listener_first_session_cta;
 
   /// No description provided for @ventor_sessions_title.

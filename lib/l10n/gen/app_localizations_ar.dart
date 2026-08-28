@@ -2699,6 +2699,30 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
   String get listener_dashboard_setup_profile => 'معلومات الملف الشخصي';
 
   @override
+  String get listener_dashboard_setup_account => 'إعداد الحساب';
+
+  @override
+  String get listener_dashboard_setup_about => 'نبذة عنك';
+
+  @override
+  String get listener_dashboard_setup_experience => 'تجارب الحياة';
+
+  @override
+  String get listener_dashboard_setup_comfort_areas => 'مجالات الراحة';
+
+  @override
+  String get listener_dashboard_setup_boundaries => 'الحدود';
+
+  @override
+  String get listener_dashboard_setup_voice_intro => 'المقدمة الصوتية';
+
+  @override
+  String get listener_dashboard_setup_notifications => 'الإشعارات';
+
+  @override
+  String get listener_dashboard_setup_pending => 'معلق';
+
+  @override
   String get listener_dashboard_setup_availability => 'التوفر';
 
   @override
@@ -2708,10 +2732,24 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
   String get listener_dashboard_setup_tutorial => 'دليل الجلسة الأولى';
 
   @override
+  String get listener_dashboard_setup_book_first_session => 'جلستك الأولى معنا';
+
+  @override
+  String get listener_dashboard_setup_book_first_session_cta =>
+      'حسناً — أنا مستعد';
+
+  @override
+  String get listener_dashboard_setup_book_first_session_availability =>
+      'تحديث توفري';
+
+  @override
   String get listener_dashboard_setup_done => 'مكتمل';
 
   @override
   String get listener_dashboard_setup_in_progress => 'قيد التقدم';
+
+  @override
+  String get listener_dashboard_setup_under_review => 'قيد المراجعة';
 
   @override
   String get listener_dashboard_setup_locked => 'مقفل';
@@ -2775,6 +2813,32 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
       'قبل استقبال الجلسات، أكمل رحلة الإعداد والدروس.';
 
   @override
+  String get listener_dashboard_profile_under_review_title =>
+      'الملف قيد المراجعة';
+
+  @override
+  String get listener_dashboard_profile_under_review_message =>
+      'أكمل التدريب واحجز جلستك الأولى بينما نراجع ملفك. لن تظهر متاحاً للمستخدمين حتى تتم الموافقة.';
+
+  @override
+  String get listener_dashboard_profile_rejected_title => 'الملف يحتاج تحديثات';
+
+  @override
+  String get listener_dashboard_profile_rejected_message =>
+      'حدد المسؤول خطوة أو أكثر أدناه للتحديث. بعد التعديل سنعيد مراجعة ملفك.';
+
+  @override
+  String get listener_dashboard_setup_needs_refill => 'يحتاج تحديث';
+
+  @override
+  String get listener_dashboard_go_online_requires_approval =>
+      'يجب الموافقة على ملفك قبل أن تتمكن من الظهور متاحاً.';
+
+  @override
+  String get listener_dashboard_availability_hidden_until_approved =>
+      'مخفي عن المستخدمين حتى تتم الموافقة على ملفك';
+
+  @override
   String get listener_dashboard_locked_accept_title => 'قبول الجلسات';
 
   @override
@@ -2825,26 +2889,26 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
   String get listener_dashboard_notifications_delete => 'حذف';
 
   @override
-  String get listener_first_session_continue => 'افتح الخطوة الأخيرة';
+  String get listener_first_session_continue => 'عرض معلومات الجلسة الأولى';
 
   @override
-  String get listener_first_session_title => 'تهانينا — أنت على وشك الانتهاء!';
+  String get listener_first_session_title => 'جلستك الأولى معنا';
 
   @override
   String get listener_first_session_body =>
-      'تبقى خطوة أخيرة. سنرسل لك قريباً مكالمة جلسة لمدة 30 دقيقة — ستكون هذه أول جلسة تدريبية. نتطلع لرؤيتك هناك.';
+      'أنت على وشك الانتهاء. بناءً على التوفر الذي حددته، سيتواصل معك فريقنا في جلسة مباشرة قصيرة قبل الموافقة على ملفك.';
 
   @override
   String get listener_first_session_bullet_call =>
-      'توقّع مكالمة تدريبية مدتها 30 دقيقة قريباً. انضم عند وصولها لنمرّ معاً على أول جلسة مباشرة.';
+      'سنتواصل معك خلال الأوقات التي شاركتها — أبقِ هاتفك قريباً والإشعارات مفعّلة.';
 
   @override
   String get listener_first_session_bullet_guidelines =>
-      'لا تنسَ الإرشادات من تدريب الاستماع الفعّال — احتفظ بها في بالك أثناء هذه المكالمة.';
+      'خلال المكالمة سنمرّ على سيناريوهات حقيقية ونختبر مهارات الاستماع لديك.';
 
   @override
   String get listener_first_session_bullet_available =>
-      'بعد هذه الجلسة التدريبية ستكون متاحاً بالكامل لأي مكالمة واردة.';
+      'إذا نجحت في الاختبار، سنوافق على ملفك ويمكنك البدء باستقبال الجلسات.';
 
   @override
   String get listener_first_session_cta => 'حسناً — أنا مستعد';

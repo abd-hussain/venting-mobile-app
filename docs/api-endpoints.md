@@ -874,11 +874,133 @@ Mirror **#26** voice intro, but for images:
 | | |
 |--|--|
 | **Auth** | Bearer |
-| **Screen** | Listener dashboard setup |
-| **Response** | `{ profile_approved, progress_percent, steps: [{ id, status }] }` |
+| **Screen** | Listener dashboard — **Complete your setup** checklist |
+| **Response** | See fields below |
 
-`id`: `identity_verified` \| `profile_info` \| `availability` \| `training` \| `first_session_tutorial`  
-`status`: `done` \| `in_progress` \| `locked`
+**Contract:** Return **all 11 setup steps** plus **profile review state**. Step statuses reflect **listener completion only** (data saved). **Profile approval** is separate and applies to the **whole profile** (all registration fields + identity docs + tags + media), not individual step admin sign-off.
+
+| Field | Type | Notes |
+|-------|------|-------|
+| `profile_approved` | bool | `true` when `profile_status == approved` |
+| `profile_status` | string | `incomplete` \| `under_review` \| `approved` \| `rejected` |
+| `can_go_online` | bool | `false` until `profile_status == approved`. Listener may finish setup while `under_review` but stays **hidden/offline** to ventors |
+| `registration_complete` | bool | `true` after `#22j` complete — unlocks steps 10–11 (training, book first session) even when `profile_status == under_review` |
+| `steps_to_refill` | string[] | Present when `rejected` — setup step ids the admin flagged for correction (same ids as `steps[].id`) |
+| `rejection_reason` | string? | Optional admin note shown to listener |
+| `progress_percent` | int | `0–100` over all 11 steps |
+| `steps` | array | `{ id, status }` — always **11 items** |
+
+#### Setup step ids (fixed order)
+
+| # | Step `id` | Registration slug `#22` |
+|---|-----------|-------------------------|
+| 1 | `create_account` | `profile` |
+| 2 | `identity_verification` | `identity` |
+| 3 | `about_you` | `about` |
+| 4 | `experience` | `experiences` |
+| 5 | `comfort_areas` | `comfort-areas` |
+| 6 | `boundaries` | `boundaries` |
+| 7 | `voice_intro` | `voice-intro` |
+| 8 | `availability` | `availability` |
+| 9 | `notifications` | `#22j` complete |
+| 10 | `training` | — |
+| 11 | `book_first_session` | **First session with us** — listener acknowledges; team calls based on availability to assess skills before profile approval |
+
+#### Step `status` values
+
+| Status | Meaning |
+|--------|---------|
+| `done` | Listener completed/saved this step (includes identity **after upload** — review is profile-level) |
+| `in_progress` | Current editable step |
+| `pending` | Not done or **admin flagged for refill** (`needs_refill` alias) — tappable |
+| `locked` | Not yet available |
+
+**Aliases:** `uploaded`/`submitted` → `done`; `needs_refill` → `pending`.
+
+#### Profile review vs step completion
+
+| Event | `profile_status` | Identity step | Other incomplete steps | `can_go_online` |
+|-------|-------------------|---------------|------------------------|-----------------|
+| Listener uploads identity docs | unchanged / `under_review` after `#22j` | **`done`** | listener may continue | `false` |
+| Registration complete, awaiting admin | `under_review` | `done` (if uploaded) | registration steps `done`; **training / book_first_session** available (`pending`/`in_progress`) | `false` |
+| Admin approves whole profile | `approved` | `done` | unchanged | **`true`** |
+| Admin rejects profile | `rejected` | `done` unless in `steps_to_refill` → `pending` | flagged steps → `pending` | `false` |
+
+> **Do not** keep identity at `in_progress`/`under_review` after upload. Admin review applies to the **entire profile dossier**, not a per-step identity queue in the mobile checklist.
+
+**Example — under review, identity uploaded, still finishing comfort areas**
+
+```json
+{
+  "status": "success",
+  "data": {
+    "profile_approved": false,
+    "profile_status": "under_review",
+    "can_go_online": false,
+    "steps_to_refill": [],
+    "rejection_reason": "",
+    "progress_percent": 55,
+    "steps": [
+      { "id": "create_account", "status": "done" },
+      { "id": "identity_verification", "status": "done" },
+      { "id": "about_you", "status": "done" },
+      { "id": "experience", "status": "done" },
+      { "id": "comfort_areas", "status": "in_progress" },
+      { "id": "boundaries", "status": "locked" },
+      { "id": "voice_intro", "status": "locked" },
+      { "id": "availability", "status": "locked" },
+      { "id": "notifications", "status": "locked" },
+      { "id": "training", "status": "locked" },
+      { "id": "book_first_session", "status": "locked" }
+    ]
+  }
+}
+```
+
+**Example — registration complete, under review, training in progress**
+
+```json
+{
+  "status": "success",
+  "data": {
+    "profile_approved": false,
+    "profile_status": "under_review",
+    "can_go_online": false,
+    "registration_complete": true,
+    "steps_to_refill": [],
+    "rejection_reason": "",
+    "progress_percent": 85,
+    "steps": [
+      { "id": "create_account", "status": "done" },
+      { "id": "identity_verification", "status": "done" },
+      { "id": "about_you", "status": "done" },
+      { "id": "experience", "status": "done" },
+      { "id": "comfort_areas", "status": "done" },
+      { "id": "boundaries", "status": "done" },
+      { "id": "voice_intro", "status": "done" },
+      { "id": "availability", "status": "done" },
+      { "id": "notifications", "status": "done" },
+      { "id": "training", "status": "in_progress" },
+      { "id": "book_first_session", "status": "locked" }
+    ]
+  }
+}
+```
+
+**Example — rejected, admin wants identity + voice intro fixed**
+
+```json
+{
+  "profile_status": "rejected",
+  "can_go_online": false,
+  "steps_to_refill": ["identity_verification", "voice_intro"],
+  "rejection_reason": "Selfie was unclear. Please re-upload ID and record a new voice intro.",
+  "steps": [
+    { "id": "identity_verification", "status": "pending" },
+    { "id": "voice_intro", "status": "pending" }
+  ]
+}
+```
 
 ---
 
@@ -898,9 +1020,15 @@ Mirror **#26** voice intro, but for images:
 | | |
 |--|--|
 | **Auth** | Bearer |
-| **Screen** | Listener dashboard availability toggle |
+| **Screen** | Listener dashboard / availability online toggle |
 | **Body** | `{ "is_online": true }` |
 | **Response** | `{ "is_online": true }` |
+
+**Rules**
+
+- Reject `is_online: true` with **403** `profile_not_approved` when `listener_profiles.profile_status != approved` (or `can_go_online == false` from `#29`).
+- Listener may set `is_online: false` at any time.
+- While profile is `under_review` or `rejected`, listener stays **offline to ventors** even if they configured availability.
 
 ---
 
@@ -1398,7 +1526,8 @@ Backend should **create inbox rows** (and optional push) on these events. Do not
 | Account created (`#1` register or first social login with `is_new = true`) | ventor / listener | `welcome` | `open_registration` | Immediately |
 | `registration_complete = false` and user inactive ≥ 24h | ventor / listener | `complete_registration` | `open_registration` | Scheduled job; include `next_step` from register progress (`#8a` / `#22a`) |
 | Ventor registration complete (`#8` complete) and zero completed sessions | ventor | `book_first_session` | `book_first_session` | On complete + optional 48h reminder |
-| Listener approved (`profile_status = approved`) and zero completed sessions | listener | `book_first_session` | `open_availability` | On approval + optional 48h reminder |
+| Listener registration complete (`#22j`) and zero completed sessions | listener | `book_first_session` | `open_availability` | On registration complete + optional 48h reminder (even if `profile_status == under_review`) |
+| Listener approved (`profile_status = approved`) and zero completed sessions | listener | `book_first_session` | `open_availability` | On approval + optional 48h reminder if not already sent |
 
 **Suggested copy (EN — localize server-side or via CMS later):**
 
@@ -1407,7 +1536,7 @@ Backend should **create inbox rows** (and optional push) on these events. Do not
 | `welcome` | Welcome to Venting | Complete your profile so you can start connecting. |
 | `complete_registration` | Finish setting up | You're almost there — pick up where you left off. |
 | `book_first_session` (ventor) | Book your first session | Find a listener who's ready when you are. |
-| `book_first_session` (listener) | You're approved — go online | Set your availability and start helping people. |
+| `book_first_session` (listener) | Finish onboarding | Complete training and set your availability for your first session. |
 
 ---
 

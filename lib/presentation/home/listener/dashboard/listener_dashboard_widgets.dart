@@ -370,9 +370,12 @@ class ListenerDashboardAvailabilityCard extends StatelessWidget {
     required this.goOfflineLabel,
     required this.goOnlineLabel,
     required this.onToggle,
+    this.canGoOnline = true,
+    this.blockedFootnote,
   });
 
   final bool isOnline;
+  final bool canGoOnline;
   final String currentlyLabel;
   final String availableLabel;
   final String offlineLabel;
@@ -380,6 +383,7 @@ class ListenerDashboardAvailabilityCard extends StatelessWidget {
   final String pausedLabel;
   final String goOfflineLabel;
   final String goOnlineLabel;
+  final String? blockedFootnote;
   final VoidCallback onToggle;
 
   @override
@@ -447,6 +451,17 @@ class ListenerDashboardAvailabilityCard extends StatelessWidget {
                     fontSize: 12,
                   ),
                 ),
+                if (!canGoOnline && blockedFootnote != null) ...[
+                  const SizedBox(height: 6),
+                  Text(
+                    blockedFootnote!,
+                    style: GoogleFonts.inter(
+                      color: ListenerProfileTheme.muted,
+                      fontSize: 11,
+                      height: 1.35,
+                    ),
+                  ),
+                ],
               ],
             ),
           ),

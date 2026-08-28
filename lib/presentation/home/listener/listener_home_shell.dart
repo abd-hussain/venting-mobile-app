@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:venting_mobile_app/di/di_container.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
+import 'package:venting_mobile_app/presentation/home/listener/dashboard/bloc/listener_dashboard/listener_dashboard_bloc.dart';
 import 'package:venting_mobile_app/presentation/home/listener/tabs/listener_availability_tab.dart';
 import 'package:venting_mobile_app/presentation/home/listener/tabs/listener_dashboard_tab.dart';
 import 'package:venting_mobile_app/presentation/home/listener/tabs/listener_earnings_tab.dart';
@@ -39,8 +42,14 @@ class _ListenerHomeShellState extends State<ListenerHomeShell> {
   void initState() {
     super.initState();
     _tabs = [
-      ListenerDashboardTab(
-        onOpenSessions: () => goToTab(ListenerHomeShell.sessionsTab),
+      BlocProvider(
+        create: (_) =>
+            diContainer<ListenerDashboardBloc>()
+              ..add(const ListenerDashboardEvent.started()),
+        child: ListenerDashboardTab(
+          onOpenSessions: () => goToTab(ListenerHomeShell.sessionsTab),
+          onOpenAvailability: () => goToTab(ListenerHomeShell.availabilityTab),
+        ),
       ),
       const ListenerEarningsTab(),
       const ListenerSessionsTab(),

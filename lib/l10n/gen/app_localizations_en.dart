@@ -2711,10 +2711,34 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
       'Finish the remaining steps before going live.';
 
   @override
-  String get listener_dashboard_setup_identity => 'Identity Verified';
+  String get listener_dashboard_setup_identity => 'Identity Verification';
 
   @override
   String get listener_dashboard_setup_profile => 'Profile Info';
+
+  @override
+  String get listener_dashboard_setup_account => 'Account Setup';
+
+  @override
+  String get listener_dashboard_setup_about => 'About You';
+
+  @override
+  String get listener_dashboard_setup_experience => 'Life Experience';
+
+  @override
+  String get listener_dashboard_setup_comfort_areas => 'Comfort Areas';
+
+  @override
+  String get listener_dashboard_setup_boundaries => 'Boundaries';
+
+  @override
+  String get listener_dashboard_setup_voice_intro => 'Voice Introduction';
+
+  @override
+  String get listener_dashboard_setup_notifications => 'Notifications';
+
+  @override
+  String get listener_dashboard_setup_pending => 'Pending';
 
   @override
   String get listener_dashboard_setup_availability => 'Availability';
@@ -2726,10 +2750,25 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
   String get listener_dashboard_setup_tutorial => 'First Session Tutorial';
 
   @override
+  String get listener_dashboard_setup_book_first_session =>
+      'First session with us';
+
+  @override
+  String get listener_dashboard_setup_book_first_session_cta =>
+      'Got it — I\'m ready';
+
+  @override
+  String get listener_dashboard_setup_book_first_session_availability =>
+      'Update my availability';
+
+  @override
   String get listener_dashboard_setup_done => 'Done';
 
   @override
   String get listener_dashboard_setup_in_progress => 'In Progress';
+
+  @override
+  String get listener_dashboard_setup_under_review => 'Under Review';
 
   @override
   String get listener_dashboard_setup_locked => 'Locked';
@@ -2796,6 +2835,33 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
       'Before taking sessions, complete the onboarding journey and tutorials.';
 
   @override
+  String get listener_dashboard_profile_under_review_title =>
+      'Profile under review';
+
+  @override
+  String get listener_dashboard_profile_under_review_message =>
+      'Finish training and book your first session while we review your profile. You won\'t appear online to ventors until approved.';
+
+  @override
+  String get listener_dashboard_profile_rejected_title =>
+      'Profile needs updates';
+
+  @override
+  String get listener_dashboard_profile_rejected_message =>
+      'An admin flagged one or more steps below. Update them and we\'ll review your profile again.';
+
+  @override
+  String get listener_dashboard_setup_needs_refill => 'Needs update';
+
+  @override
+  String get listener_dashboard_go_online_requires_approval =>
+      'Your profile must be approved before you can go online.';
+
+  @override
+  String get listener_dashboard_availability_hidden_until_approved =>
+      'Hidden from ventors until your profile is approved';
+
+  @override
   String get listener_dashboard_locked_accept_title => 'Accept Sessions';
 
   @override
@@ -2847,30 +2913,29 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
   String get listener_dashboard_notifications_delete => 'Delete';
 
   @override
-  String get listener_first_session_continue => 'Open last step';
+  String get listener_first_session_continue => 'Open first session info';
 
   @override
-  String get listener_first_session_title =>
-      'Congratulations — you’re almost there!';
+  String get listener_first_session_title => 'First session with us';
 
   @override
   String get listener_first_session_body =>
-      'One last step remains. We’ll send you a 30-minute session call very soon — this will be your first session tutorial. We can’t wait to see you there.';
+      'You\'re almost there. Based on the availability you set, our team will call you for a short live session before we approve your profile.';
 
   @override
   String get listener_first_session_bullet_call =>
-      'Expect a 30-minute tutorial call soon. Join when it arrives so we can walk through your first live session together.';
+      'We\'ll reach out during the time slots you shared — keep your phone nearby and notifications on.';
 
   @override
   String get listener_first_session_bullet_guidelines =>
-      'Don’t forget the guidelines from your Active Listening Training — keep them in mind during this call.';
+      'On the call we\'ll walk through real scenarios and test your listening skills.';
 
   @override
   String get listener_first_session_bullet_available =>
-      'After this tutorial session, you’ll be fully available for any incoming calls.';
+      'If you pass, we\'ll approve your profile and you can start accepting sessions.';
 
   @override
-  String get listener_first_session_cta => 'Got it — I’m ready';
+  String get listener_first_session_cta => 'Got it — I\'m ready';
 
   @override
   String get ventor_sessions_title => 'Sessions';

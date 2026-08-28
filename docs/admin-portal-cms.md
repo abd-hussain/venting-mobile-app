@@ -27,7 +27,7 @@ A **Flutter Web CMS** used only by internal staff (ops, support, finance, conten
 | Module | What admins do | Mobile impact |
 |--------|----------------|---------------|
 | **Dashboard** | KPIs, charts, alerts queue — incl. **registrations vs account deletions** (all-time + this month) | Read-only aggregates from `users` |
-| **Listener review** | Approve / reject profiles & identity docs | Sets `listener_profiles.profile_status` |
+| **Listener review** | Approve / reject **whole listener profiles** (all registration data + identity + media) | Sets `listener_profiles.profile_status`; on reject, sets `steps_to_refill` |
 | **Users** | Search ventors/listeners, suspend, force logout, soft-delete | `users.is_active`, `deleted_at` |
 | **Sessions** | Inspect bookings, cancel/refund edge cases | `sessions`, `session_payments` |
 | **Reports & safety** | Triage `session_reports`, ban/warn | User flags + notifications |
@@ -462,18 +462,29 @@ Query params: `from`, `to`, `granularity` (`day`\|`week`\|`month`).
 
 ---
 
-### 7.4 Listener review & identity (6)
+### 7.4 Listener profile review (6)
+
+> Admin reviews the **entire listener dossier** (profile fields, comfort areas, boundaries, voice intro, availability, identity docs). Identity is one section of the profile — not a separate approval gate in the mobile setup checklist.
 
 | # | Method | Path | Use |
 |--:|--------|------|-----|
 | A22 | `GET` | `/v1/admin/listeners/queue` | `under_review` queue (sorted oldest first) |
-| A23 | `GET` | `/v1/admin/listeners/{listenerId}` | Full profile + tags + availability summary |
-| A24 | `GET` | `/v1/admin/listeners/{listenerId}/identity` | ID docs + selfie URLs (signed) |
-| A25 | `POST` | `/v1/admin/listeners/{listenerId}/approve` | Set `approved`, `is_verified` |
-| A26 | `POST` | `/v1/admin/listeners/{listenerId}/reject` | Body: `reason`, optional `needs_more_info` |
-| A27 | `POST` | `/v1/admin/identity/{verificationId}/decide` | Approve/reject a verification attempt |
+| A23 | `GET` | `/v1/admin/listeners/{listenerId}` | Full profile + tags + availability + latest identity attempt |
+| A24 | `GET` | `/v1/admin/listeners/{listenerId}/identity` | ID docs + selfie URLs (signed) — read-only section of dossier |
+| A25 | `POST` | `/v1/admin/listeners/{listenerId}/approve` | Set `profile_status = approved`, `is_verified = true`, `can_go_online = true` |
+| A26 | `POST` | `/v1/admin/listeners/{listenerId}/reject` | Set `profile_status = rejected`; body below |
+| A27 | `POST` | `/v1/admin/identity/{verificationId}/decide` | **Deprecated** — use A25/A26 whole-profile decision. Keep only for audit/history on a verification row |
 
-On approve: update `listener_profiles.profile_status`, push notification to listener, audit log.
+#### A26 reject body
+
+| Field | Required | Notes |
+|-------|----------|-------|
+| `reason` | yes | Shown to listener (`rejection_reason` in `#29`) |
+| `steps_to_refill` | yes | Array of setup step ids from `#29` (e.g. `identity_verification`, `voice_intro`, `about_you`). Server sets those steps to `pending` / `needs_refill` in setup progress |
+
+**On approve (A25):** `profile_status = approved`, notify listener, audit log, listener may go online (`can_go_online`).
+
+**On reject (A26):** `profile_status = rejected`, persist `steps_to_refill` + `rejection_reason`, notify listener, force offline. Listener fixes flagged steps via registration/edit flows, then profile returns to `under_review` on resubmit.
 
 ---
 
@@ -772,10 +783,10 @@ Admin **dashboard stats (A6–A11)** come from **Postgres**, not from GA — GA 
 ### 11.1 Approve a listener
 
 1. Open `/reviews` → `A22` queue  
-2. Open dossier `A23` + identity `A24`  
-3. `A25` approve **or** `A26` reject with reason  
-4. System: update `profile_status`, notify listener, write `admin_audit_logs`  
-5. Listener app: `#7 auth/me` shows `approved` → home
+2. Open full dossier `A23` (profile, tags, availability, media) + identity docs `A24`  
+3. **`A25` approve** whole profile **or** **`A26` reject** with `reason` + `steps_to_refill[]` (setup step ids the listener must fix)  
+4. System: update `profile_status`, `steps_to_refill`, notify listener, write `admin_audit_logs`  
+5. Listener app: `#29 setup-progress` shows profile banner + flagged steps; `#31` blocks go-online until `approved`
 
 ### 11.2 Triage a report
 

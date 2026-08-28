@@ -2,8 +2,8 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:venting_mobile_app/domain/data/app/listener_dashboard_setup.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
-import 'package:venting_mobile_app/presentation/home/listener/dashboard/listener_dashboard_setup.dart';
 import 'package:venting_mobile_app/presentation/home/listener/profile/listener_profile_theme.dart';
 import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dart';
 
@@ -13,45 +13,79 @@ class ListenerDashboardSetupSection extends StatelessWidget {
     required this.progress,
     required this.l10n,
     required this.onContinueSetup,
+    required this.onStepTap,
+    this.isLoading = false,
+    this.loadFailure = false,
+    this.errorMessage,
+    this.onRetry,
   });
 
-  final ListenerDashboardSetupProgress progress;
+  final ListenerDashboardSetupProgress? progress;
   final VentingMobLocalizations l10n;
   final VoidCallback onContinueSetup;
+  final ValueChanged<ListenerDashboardSetupStepId> onStepTap;
+  final bool isLoading;
+  final bool loadFailure;
+  final String? errorMessage;
+  final VoidCallback? onRetry;
 
   String _stepLabel(ListenerDashboardSetupStepId id) {
     return switch (id) {
-      ListenerDashboardSetupStepId.identityVerified =>
+      ListenerDashboardSetupStepId.createAccount =>
+        l10n.listener_dashboard_setup_account,
+      ListenerDashboardSetupStepId.identityVerification =>
         l10n.listener_dashboard_setup_identity,
-      ListenerDashboardSetupStepId.profileInfo =>
-        l10n.listener_dashboard_setup_profile,
+      ListenerDashboardSetupStepId.aboutYou =>
+        l10n.listener_dashboard_setup_about,
+      ListenerDashboardSetupStepId.experience =>
+        l10n.listener_dashboard_setup_experience,
+      ListenerDashboardSetupStepId.expertise =>
+        l10n.listener_dashboard_setup_comfort_areas,
+      ListenerDashboardSetupStepId.boundaries =>
+        l10n.listener_dashboard_setup_boundaries,
+      ListenerDashboardSetupStepId.voiceIntro =>
+        l10n.listener_dashboard_setup_voice_intro,
       ListenerDashboardSetupStepId.availability =>
         l10n.listener_dashboard_setup_availability,
+      ListenerDashboardSetupStepId.notifications =>
+        l10n.listener_dashboard_setup_notifications,
       ListenerDashboardSetupStepId.training =>
         l10n.listener_dashboard_setup_training,
-      ListenerDashboardSetupStepId.firstSessionTutorial =>
-        l10n.listener_dashboard_setup_tutorial,
+      ListenerDashboardSetupStepId.bookFirstSession =>
+        l10n.listener_dashboard_setup_book_first_session,
     };
   }
 
-  String _statusLabel(ListenerDashboardSetupStepStatus status) {
+  String _statusLabel(
+    ListenerDashboardSetupStepId stepId,
+    ListenerDashboardSetupStepStatus status,
+    ListenerDashboardSetupProgress? progress,
+  ) {
+    if (progress != null &&
+        progress.stepNeedsRefill(stepId) &&
+        status == ListenerDashboardSetupStepStatus.pending) {
+      return l10n.listener_dashboard_setup_needs_refill;
+    }
+
     return switch (status) {
       ListenerDashboardSetupStepStatus.done =>
         l10n.listener_dashboard_setup_done,
       ListenerDashboardSetupStepStatus.inProgress =>
         l10n.listener_dashboard_setup_in_progress,
+      ListenerDashboardSetupStepStatus.pending =>
+        l10n.listener_dashboard_setup_pending,
       ListenerDashboardSetupStepStatus.locked =>
         l10n.listener_dashboard_setup_locked,
     };
   }
 
   String get _continueLabel {
-    final next = progress.firstIncompleteStep;
+    final next = progress?.firstActionableStep;
     if (next == ListenerDashboardSetupStepId.training) {
       return l10n.listener_training_continue_learning;
     }
-    if (next == ListenerDashboardSetupStepId.firstSessionTutorial) {
-      return l10n.listener_first_session_continue;
+    if (next == ListenerDashboardSetupStepId.bookFirstSession) {
+      return l10n.listener_dashboard_setup_book_first_session_cta;
     }
     return l10n.listener_dashboard_setup_continue;
   }
@@ -100,43 +134,95 @@ class ListenerDashboardSetupSection extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 12),
-              _SetupProgressRing(percent: progress.progressPercent),
+              if (isLoading)
+                const SizedBox(
+                  width: 56,
+                  height: 56,
+                  child: Center(
+                    child: CircularProgressIndicator(strokeWidth: 2),
+                  ),
+                )
+              else
+                _SetupProgressRing(percent: progress?.progressPercent ?? 0),
             ],
           ),
           const SizedBox(height: 18),
-          ...progress.steps.map((step) {
-            return _SetupStepRow(
-              label: _stepLabel(step.id),
-              status: step.status,
-              statusLabel: _statusLabel(step.status),
-            );
-          }),
-          const SizedBox(height: 14),
-          FilledButton(
-            onPressed: onContinueSetup,
-            style: FilledButton.styleFrom(
-              backgroundColor: SplashColors.purpleMid,
-              foregroundColor: Colors.white,
-              padding: const EdgeInsets.symmetric(vertical: 14),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
+          if (loadFailure) ...[
+            Text(
+              errorMessage?.isNotEmpty == true
+                  ? errorMessage!
+                  : l10n.common_unknown_error,
+              style: GoogleFonts.inter(
+                color: ListenerProfileTheme.muted,
+                fontSize: 13,
+                height: 1.4,
               ),
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  _continueLabel,
-                  style: GoogleFonts.inter(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w700,
-                  ),
+            if (onRetry != null) ...[
+              const SizedBox(height: 12),
+              OutlinedButton(
+                onPressed: onRetry,
+                child: Text(l10n.common_retry),
+              ),
+            ],
+          ] else if (progress != null) ...[
+            ConstrainedBox(
+              constraints: const BoxConstraints(maxHeight: 360),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    for (final step in progress!.steps)
+                      _SetupStepRow(
+                        label: _stepLabel(step.id),
+                        status: step.status,
+                        statusLabel: _statusLabel(
+                          step.id,
+                          step.status,
+                          progress,
+                        ),
+                        onTap: step.isTappable
+                            ? () => onStepTap(step.id)
+                            : null,
+                      ),
+                  ],
                 ),
-                const SizedBox(width: 6),
-                const Icon(Icons.chevron_right_rounded, size: 20),
-              ],
+              ),
             ),
-          ),
+            const SizedBox(height: 14),
+            FilledButton(
+              onPressed:
+                  isLoading ||
+                      progress!.isComplete ||
+                      progress!.firstActionableStep == null
+                  ? null
+                  : onContinueSetup,
+              style: FilledButton.styleFrom(
+                backgroundColor: SplashColors.purpleMid,
+                foregroundColor: Colors.white,
+                disabledBackgroundColor: SplashColors.purpleMid.withValues(
+                  alpha: 0.35,
+                ),
+                padding: const EdgeInsets.symmetric(vertical: 14),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    _continueLabel,
+                    style: GoogleFonts.inter(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  const SizedBox(width: 6),
+                  const Icon(Icons.chevron_right_rounded, size: 20),
+                ],
+              ),
+            ),
+          ],
         ],
       ),
     );
@@ -224,21 +310,24 @@ class _SetupStepRow extends StatelessWidget {
     required this.label,
     required this.status,
     required this.statusLabel,
+    this.onTap,
   });
 
   final String label;
   final ListenerDashboardSetupStepStatus status;
   final String statusLabel;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
     final statusColor = switch (status) {
       ListenerDashboardSetupStepStatus.done => ListenerProfileTheme.success,
       ListenerDashboardSetupStepStatus.inProgress => SplashColors.purpleMid,
+      ListenerDashboardSetupStepStatus.pending => ListenerProfileTheme.gold,
       ListenerDashboardSetupStepStatus.locked => ListenerProfileTheme.muted,
     };
 
-    return Padding(
+    final content = Padding(
       padding: const EdgeInsets.only(bottom: 10),
       child: Row(
         children: [
@@ -252,7 +341,10 @@ class _SetupStepRow extends StatelessWidget {
                     ? ListenerProfileTheme.muted
                     : Colors.white,
                 fontSize: 14,
-                fontWeight: FontWeight.w500,
+                fontWeight:
+                    status == ListenerDashboardSetupStepStatus.inProgress
+                    ? FontWeight.w700
+                    : FontWeight.w500,
               ),
             ),
           ),
@@ -271,7 +363,26 @@ class _SetupStepRow extends StatelessWidget {
               ),
             ),
           ),
+          if (onTap != null) ...[
+            const SizedBox(width: 4),
+            Icon(
+              Icons.chevron_right_rounded,
+              size: 18,
+              color: statusColor.withValues(alpha: 0.9),
+            ),
+          ],
         ],
+      ),
+    );
+
+    if (onTap == null) return content;
+
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(10),
+        child: content,
       ),
     );
   }
@@ -298,6 +409,11 @@ class _StepIcon extends StatelessWidget {
           border: Border.all(color: SplashColors.purpleMid, width: 2),
         ),
       ),
+      ListenerDashboardSetupStepStatus.pending => Icon(
+        Icons.radio_button_unchecked_rounded,
+        size: 20,
+        color: ListenerProfileTheme.gold.withValues(alpha: 0.85),
+      ),
       ListenerDashboardSetupStepStatus.locked => const Icon(
         Icons.lock_outline_rounded,
         size: 18,
@@ -307,15 +423,19 @@ class _StepIcon extends StatelessWidget {
   }
 }
 
-class ListenerDashboardProfileApprovedCard extends StatelessWidget {
-  const ListenerDashboardProfileApprovedCard({
+class ListenerDashboardProfileStatusCard extends StatelessWidget {
+  const ListenerDashboardProfileStatusCard({
     super.key,
     required this.title,
     required this.message,
+    required this.icon,
+    required this.accentColor,
   });
 
   final String title;
   final String message;
+  final IconData icon;
+  final Color accentColor;
 
   @override
   Widget build(BuildContext context) {
@@ -324,9 +444,7 @@ class ListenerDashboardProfileApprovedCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: ListenerProfileTheme.cardFill,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-          color: ListenerProfileTheme.success.withValues(alpha: 0.45),
-        ),
+        border: Border.all(color: accentColor.withValues(alpha: 0.45)),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -335,37 +453,23 @@ class ListenerDashboardProfileApprovedCard extends StatelessWidget {
             width: 36,
             height: 36,
             decoration: BoxDecoration(
-              color: ListenerProfileTheme.success.withValues(alpha: 0.15),
+              color: accentColor.withValues(alpha: 0.15),
               borderRadius: BorderRadius.circular(10),
             ),
-            child: const Icon(
-              Icons.verified_user_outlined,
-              color: ListenerProfileTheme.success,
-              size: 20,
-            ),
+            child: Icon(icon, color: accentColor, size: 20),
           ),
           const SizedBox(width: 12),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  children: [
-                    Text(
-                      title,
-                      style: GoogleFonts.inter(
-                        color: ListenerProfileTheme.success,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    const SizedBox(width: 4),
-                    const Icon(
-                      Icons.check_circle_rounded,
-                      size: 16,
-                      color: ListenerProfileTheme.success,
-                    ),
-                  ],
+                Text(
+                  title,
+                  style: GoogleFonts.inter(
+                    color: accentColor,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
                 const SizedBox(height: 4),
                 Text(
@@ -381,6 +485,69 @@ class ListenerDashboardProfileApprovedCard extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class ListenerDashboardProfileApprovedCard extends StatelessWidget {
+  const ListenerDashboardProfileApprovedCard({
+    super.key,
+    required this.title,
+    required this.message,
+  });
+
+  final String title;
+  final String message;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListenerDashboardProfileStatusCard(
+      title: title,
+      message: message,
+      icon: Icons.verified_user_outlined,
+      accentColor: ListenerProfileTheme.success,
+    );
+  }
+}
+
+class ListenerDashboardProfileUnderReviewCard extends StatelessWidget {
+  const ListenerDashboardProfileUnderReviewCard({
+    super.key,
+    required this.title,
+    required this.message,
+  });
+
+  final String title;
+  final String message;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListenerDashboardProfileStatusCard(
+      title: title,
+      message: message,
+      icon: Icons.hourglass_top_rounded,
+      accentColor: SplashColors.purpleMid,
+    );
+  }
+}
+
+class ListenerDashboardProfileRejectedCard extends StatelessWidget {
+  const ListenerDashboardProfileRejectedCard({
+    super.key,
+    required this.title,
+    required this.message,
+  });
+
+  final String title;
+  final String message;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListenerDashboardProfileStatusCard(
+      title: title,
+      message: message,
+      icon: Icons.error_outline_rounded,
+      accentColor: const Color(0xFFE57373),
     );
   }
 }

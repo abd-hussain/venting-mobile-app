@@ -23,6 +23,8 @@ import 'package:venting_mobile_app/domain/repository/api/listener/listener_notif
 import 'package:venting_mobile_app/domain/repository/api/listener/listener_privacy_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/listener/listener_profile_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/listener/listener_register_repository.dart';
+import 'package:venting_mobile_app/domain/repository/api/listener/listener_setup_repository.dart';
+import 'package:venting_mobile_app/domain/repository/api/listener/listener_training_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/ventor/ventor_notifications_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/ventor/ventor_register_repository.dart';
 import 'package:venting_mobile_app/domain/repository/app/auth_me_cache_repository.dart';
@@ -112,6 +114,13 @@ mixin VentingModuleRepositories on VentingModule {
     ApiClientBase apiClient,
   ) => ListenerRegisterRepository(apiClient);
 
+  ListenerSetupRepository listenerSetupRepository(ApiClientBase apiClient) =>
+      ListenerSetupRepository(apiClient);
+
+  ListenerTrainingRepository listenerTrainingRepository(
+    ApiClientBase apiClient,
+  ) => ListenerTrainingRepository(apiClient);
+
   VentorNotificationsRepository ventorNotificationsRepository(
     ApiClientBase apiClient,
   ) => VentorNotificationsRepository(apiClient);
@@ -186,6 +195,12 @@ mixin VentingModuleRepositories on VentingModule {
     );
     getIt.registerFactory<ListenerRegisterRepository>(
       () => listenerRegisterRepository(getIt<ApiClientBase>()),
+    );
+    getIt.registerFactory<ListenerSetupRepository>(
+      () => listenerSetupRepository(getIt<ApiClientBase>()),
+    );
+    getIt.registerFactory<ListenerTrainingRepository>(
+      () => listenerTrainingRepository(getIt<ApiClientBase>()),
     );
     getIt.registerFactory<VentorRegisterRepository>(
       () => ventorRegisterRepository(getIt<ApiClientBase>()),

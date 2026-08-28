@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:venting_mobile_app/di/di_container.dart';
+import 'package:venting_mobile_app/domain/data/app/listener_dashboard_setup.dart';
+import 'package:venting_mobile_app/domain/usecase/get_cached_auth_me_usecase.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
-import 'package:venting_mobile_app/presentation/home/listener/dashboard/listener_dashboard_setup.dart';
+import 'package:venting_mobile_app/presentation/home/listener/dashboard/bloc/listener_dashboard/listener_dashboard_bloc.dart';
 import 'package:venting_mobile_app/presentation/home/listener/dashboard/listener_dashboard_setup_widgets.dart';
 import 'package:venting_mobile_app/presentation/home/listener/dashboard/listener_dashboard_widgets.dart';
-import 'package:venting_mobile_app/presentation/home/listener/dashboard/listener_first_session_tutorial_bottom_sheet.dart';
+import 'package:venting_mobile_app/presentation/home/listener/dashboard/listener_first_session_with_us.dart';
 import 'package:venting_mobile_app/presentation/home/listener/dashboard/listener_notifications_screen.dart';
 import 'package:venting_mobile_app/presentation/home/listener/dashboard/listener_training_bottom_sheet.dart';
 import 'package:venting_mobile_app/presentation/listener_registration/listener_registration_screen.dart';
@@ -14,9 +18,14 @@ import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dar
 import 'package:venting_mobile_app/utils/router_config.dart';
 
 class ListenerDashboardTab extends StatefulWidget {
-  const ListenerDashboardTab({super.key, this.onOpenSessions});
+  const ListenerDashboardTab({
+    super.key,
+    this.onOpenSessions,
+    this.onOpenAvailability,
+  });
 
   final VoidCallback? onOpenSessions;
+  final VoidCallback? onOpenAvailability;
 
   @override
   State<ListenerDashboardTab> createState() => _ListenerDashboardTabState();
@@ -34,12 +43,8 @@ class _ListenerDashboardTabState extends State<ListenerDashboardTab> {
   // TODO: Load listener display name from profile API.
   static const _listenerName = 'Lina';
 
-  // TODO: Load setup progress from listener onboarding API.
-  ListenerDashboardSetupProgress _setupProgress =
-      ListenerDashboardSetupProgress.mockAwaitingTraining;
-
   ListenerDashboardPeriod _period = ListenerDashboardPeriod.today;
-  bool _isOnline = true;
+  bool _isOnline = false;
 
   // TODO: Load today's impact stats / chart from listener dashboard API.
   static const _sessions = 5;
@@ -60,7 +65,13 @@ class _ListenerDashboardTabState extends State<ListenerDashboardTab> {
   static const _upcomingTime = '7:30 PM';
   static const _upcomingDuration = 30;
 
-  bool get _setupComplete => _setupProgress.isComplete;
+  String _userEmail() => diContainer<GetCachedAuthMeUsecase>()()?.email ?? '';
+
+  void _refreshSetup() {
+    context.read<ListenerDashboardBloc>().add(
+      const ListenerDashboardEvent.setupRefreshRequested(),
+    );
+  }
 
   String _greeting(VentingMobLocalizations l10n) {
     final hour = DateTime.now().hour;
@@ -74,100 +85,52 @@ class _ListenerDashboardTabState extends State<ListenerDashboardTab> {
   }
 
   String _periodLabel(VentingMobLocalizations l10n) {
-    switch (_period) {
-      case ListenerDashboardPeriod.today:
-        return l10n.listener_dashboard_period_today;
-      case ListenerDashboardPeriod.week:
-        return l10n.listener_dashboard_period_week;
-      case ListenerDashboardPeriod.month:
-        return l10n.listener_dashboard_period_month;
-    }
-  }
-
-  ListenerRegistrationStep? _registrationStepFor(
-    ListenerDashboardSetupStepId id,
-  ) {
-    return switch (id) {
-      ListenerDashboardSetupStepId.identityVerified =>
-        ListenerRegistrationStep.identityVerification,
-      ListenerDashboardSetupStepId.profileInfo =>
-        ListenerRegistrationStep.aboutYou,
-      ListenerDashboardSetupStepId.availability =>
-        ListenerRegistrationStep.availability,
-      ListenerDashboardSetupStepId.training => null,
-      ListenerDashboardSetupStepId.firstSessionTutorial => null,
+    return switch (_period) {
+      ListenerDashboardPeriod.today => l10n.listener_dashboard_period_today,
+      ListenerDashboardPeriod.week => l10n.listener_dashboard_period_week,
+      ListenerDashboardPeriod.month => l10n.listener_dashboard_period_month,
     };
   }
 
-  Future<void> _onContinueSetup() async {
-    final next = _setupProgress.firstIncompleteStep;
-    if (next == null) return;
+  Future<void> _openRegistrationStep(ListenerRegistrationStep step) async {
+    await context.push(
+      AppRoutes.listenerRegistration,
+      extra: ListenerRegistrationArgs(email: _userEmail(), initialStep: step),
+    );
+    if (!mounted) return;
+    _refreshSetup();
+  }
 
-    final registrationStep = _registrationStepFor(next);
+  Future<void> _handleSetupStep(ListenerDashboardSetupStepId stepId) async {
+    final registrationStep = ListenerDashboardSetupProgress.registrationStepFor(
+      stepId,
+    );
     if (registrationStep != null) {
-      await context.push(
-        AppRoutes.listenerRegistration,
-        extra: ListenerRegistrationArgs(
-          email: '',
-          initialStep: registrationStep,
-        ),
-      );
+      await _openRegistrationStep(registrationStep);
       return;
     }
 
-    if (next == ListenerDashboardSetupStepId.training) {
+    if (stepId == ListenerDashboardSetupStepId.training) {
       final completed = await openListenerTrainingBottomSheet(context: context);
       if (!mounted || completed != true) return;
-
-      setState(() {
-        _setupProgress = ListenerDashboardSetupProgress(
-          profileApproved: _setupProgress.profileApproved,
-          steps: [
-            for (final step in _setupProgress.steps)
-              if (step.id == ListenerDashboardSetupStepId.training)
-                const ListenerDashboardSetupStep(
-                  id: ListenerDashboardSetupStepId.training,
-                  status: ListenerDashboardSetupStepStatus.done,
-                )
-              else if (step.id ==
-                  ListenerDashboardSetupStepId.firstSessionTutorial)
-                const ListenerDashboardSetupStep(
-                  id: ListenerDashboardSetupStepId.firstSessionTutorial,
-                  status: ListenerDashboardSetupStepStatus.inProgress,
-                )
-              else
-                step,
-          ],
-        );
-      });
+      _refreshSetup();
       return;
     }
 
-    if (next == ListenerDashboardSetupStepId.firstSessionTutorial) {
-      final acknowledged = await openListenerFirstSessionTutorialBottomSheet(
+    if (stepId == ListenerDashboardSetupStepId.bookFirstSession) {
+      await openListenerFirstSessionWithUsBottomSheet(
         context: context,
+        onEditAvailability: widget.onOpenAvailability,
       );
-      if (!mounted || acknowledged != true) return;
-
-      // TODO: Mark first-session tutorial as acknowledged via onboarding API.
-      // The live 30-min tutorial call will be assigned separately.
-      setState(() {
-        _setupProgress = ListenerDashboardSetupProgress(
-          profileApproved: _setupProgress.profileApproved,
-          steps: [
-            for (final step in _setupProgress.steps)
-              if (step.id == ListenerDashboardSetupStepId.firstSessionTutorial)
-                const ListenerDashboardSetupStep(
-                  id: ListenerDashboardSetupStepId.firstSessionTutorial,
-                  status: ListenerDashboardSetupStepStatus.done,
-                )
-              else
-                step,
-          ],
-        );
-      });
-      return;
     }
+  }
+
+  Future<void> _onContinueSetup(
+    ListenerDashboardSetupProgress? progress,
+  ) async {
+    final next = progress?.firstActionableStep;
+    if (next == null) return;
+    await _handleSetupStep(next);
   }
 
   Future<void> _pickPeriod() async {
@@ -220,8 +183,17 @@ class _ListenerDashboardTabState extends State<ListenerDashboardTab> {
     setState(() => _period = selected);
   }
 
-  void _toggleAvailability() {
-    // TODO: Update listener online status via availability API.
+  void _toggleAvailability(ListenerDashboardSetupProgress? progress) {
+    final l10n = VentingMobLocalizations.of(context);
+    if (progress != null && !progress.canGoOnline && !_isOnline) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(l10n.listener_dashboard_go_online_requires_approval),
+        ),
+      );
+      return;
+    }
+    // TODO: Update listener online status via availability API (#31).
     setState(() => _isOnline = !_isOnline);
   }
 
@@ -229,7 +201,53 @@ class _ListenerDashboardTabState extends State<ListenerDashboardTab> {
     openListenerNotificationsScreen(context: context);
   }
 
-  List<Widget> _buildSetupDashboard(VentingMobLocalizations l10n) {
+  List<Widget> _profileReviewCards(
+    VentingMobLocalizations l10n,
+    ListenerDashboardSetupProgress? progress,
+  ) {
+    if (progress == null) return const [];
+
+    if (progress.isProfileRejected) {
+      final reason = progress.rejectionReason?.trim();
+      return [
+        ListenerDashboardProfileRejectedCard(
+          title: l10n.listener_dashboard_profile_rejected_title,
+          message: reason?.isNotEmpty == true
+              ? reason!
+              : l10n.listener_dashboard_profile_rejected_message,
+        ),
+      ];
+    }
+
+    if (progress.isProfileUnderReview) {
+      return [
+        ListenerDashboardProfileUnderReviewCard(
+          title: l10n.listener_dashboard_profile_under_review_title,
+          message: l10n.listener_dashboard_profile_under_review_message,
+        ),
+      ];
+    }
+
+    if (progress.profileApproved) {
+      return [
+        ListenerDashboardProfileApprovedCard(
+          title: l10n.listener_dashboard_profile_approved_title,
+          message: l10n.listener_dashboard_profile_approved_message,
+        ),
+      ];
+    }
+
+    return const [];
+  }
+
+  List<Widget> _buildSetupDashboard(
+    VentingMobLocalizations l10n,
+    ListenerDashboardState state,
+  ) {
+    final progress = state.setupProgress;
+    final showFirstSessionWithUs =
+        progress?.isAwaitingFirstSessionWithUs ?? false;
+
     return [
       ListenerDashboardTitleHeader(
         title: l10n.home_tab_dashboard,
@@ -237,18 +255,27 @@ class _ListenerDashboardTabState extends State<ListenerDashboardTab> {
         onNotifications: _onNotifications,
       ),
       const SizedBox(height: 20),
-      ListenerDashboardSetupSection(
-        progress: _setupProgress,
-        l10n: l10n,
-        onContinueSetup: _onContinueSetup,
-      ),
-      if (_setupProgress.profileApproved) ...[
-        const SizedBox(height: 14),
-        ListenerDashboardProfileApprovedCard(
-          title: l10n.listener_dashboard_profile_approved_title,
-          message: l10n.listener_dashboard_profile_approved_message,
+      if (showFirstSessionWithUs)
+        ListenerFirstSessionWithUsCard(
+          onEditAvailability: widget.onOpenAvailability,
+        )
+      else
+        ListenerDashboardSetupSection(
+          progress: progress,
+          l10n: l10n,
+          isLoading: state.isSetupLoading,
+          loadFailure: state.isSetupLoadFailure,
+          errorMessage: state.setupErrorMessage,
+          onRetry: () => context.read<ListenerDashboardBloc>().add(
+            const ListenerDashboardEvent.retrySetupLoad(),
+          ),
+          onContinueSetup: () => _onContinueSetup(progress),
+          onStepTap: _handleSetupStep,
         ),
-      ],
+      ..._profileReviewCards(
+        l10n,
+        progress,
+      ).expand((card) => [const SizedBox(height: 14), card]),
       const SizedBox(height: 14),
       ListenerDashboardLockedFeatureCard(
         title: l10n.listener_dashboard_locked_accept_title,
@@ -275,7 +302,13 @@ class _ListenerDashboardTabState extends State<ListenerDashboardTab> {
     ];
   }
 
-  List<Widget> _buildLiveDashboard(VentingMobLocalizations l10n) {
+  List<Widget> _buildLiveDashboard(
+    VentingMobLocalizations l10n,
+    ListenerDashboardSetupProgress? progress,
+  ) {
+    final canGoOnline = progress?.canGoOnline ?? false;
+    final displayOnline = canGoOnline && _isOnline;
+
     return [
       ListenerDashboardHeader(
         greeting: _greeting(l10n),
@@ -284,6 +317,10 @@ class _ListenerDashboardTabState extends State<ListenerDashboardTab> {
         onNotifications: _onNotifications,
       ),
       const SizedBox(height: 22),
+      ..._profileReviewCards(
+        l10n,
+        progress,
+      ).expand((card) => [card, const SizedBox(height: 14)]),
       ListenerDashboardImpactCard(
         title: l10n.listener_dashboard_impact_title,
         periodLabel: _periodLabel(l10n),
@@ -298,7 +335,8 @@ class _ListenerDashboardTabState extends State<ListenerDashboardTab> {
       ),
       const SizedBox(height: 14),
       ListenerDashboardAvailabilityCard(
-        isOnline: _isOnline,
+        isOnline: displayOnline,
+        canGoOnline: canGoOnline,
         currentlyLabel: l10n.listener_dashboard_currently,
         availableLabel: l10n.listener_dashboard_available,
         offlineLabel: l10n.listener_dashboard_offline,
@@ -306,7 +344,9 @@ class _ListenerDashboardTabState extends State<ListenerDashboardTab> {
         pausedLabel: l10n.listener_dashboard_paused,
         goOfflineLabel: l10n.listener_dashboard_go_offline,
         goOnlineLabel: l10n.listener_dashboard_go_online,
-        onToggle: _toggleAvailability,
+        blockedFootnote:
+            l10n.listener_dashboard_availability_hidden_until_approved,
+        onToggle: () => _toggleAvailability(progress),
       ),
       const SizedBox(height: 14),
       ListenerDashboardUpcomingCard(
@@ -333,19 +373,26 @@ class _ListenerDashboardTabState extends State<ListenerDashboardTab> {
   Widget build(BuildContext context) {
     final l10n = VentingMobLocalizations.of(context);
 
-    return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: _overlayStyle,
-      child: Scaffold(
-        backgroundColor: SplashColors.backgroundBottom,
-        body: SafeArea(
-          child: ListView(
-            padding: const EdgeInsets.fromLTRB(20, 16, 20, 28),
-            children: _setupComplete
-                ? _buildLiveDashboard(l10n)
-                : _buildSetupDashboard(l10n),
+    return BlocBuilder<ListenerDashboardBloc, ListenerDashboardState>(
+      builder: (context, state) {
+        final showLiveDashboard =
+            state.isSetupReady && (state.setupProgress?.isComplete ?? false);
+
+        return AnnotatedRegion<SystemUiOverlayStyle>(
+          value: _overlayStyle,
+          child: Scaffold(
+            backgroundColor: SplashColors.backgroundBottom,
+            body: SafeArea(
+              child: ListView(
+                padding: const EdgeInsets.fromLTRB(20, 16, 20, 28),
+                children: showLiveDashboard
+                    ? _buildLiveDashboard(l10n, state.setupProgress)
+                    : _buildSetupDashboard(l10n, state),
+              ),
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

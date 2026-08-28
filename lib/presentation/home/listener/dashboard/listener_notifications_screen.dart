@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:venting_mobile_app/di/di_container.dart';
 import 'package:venting_mobile_app/domain/data/app/listener_notification.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
-import 'package:venting_mobile_app/presentation/home/listener/dashboard/bloc/listener_notifications_bloc.dart';
+import 'package:venting_mobile_app/presentation/home/listener/dashboard/bloc/listener_notifications/listener_notifications_bloc.dart';
 import 'package:venting_mobile_app/presentation/home/listener/profile/listener_profile_theme.dart';
 import 'package:venting_mobile_app/presentation/notifications/inbox_notification_ui.dart';
 import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dart';

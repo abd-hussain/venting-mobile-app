@@ -245,8 +245,10 @@ Listener (`POST /v1/listeners/register/complete`):
 | # | Endpoint | Screen / place | When |
 |---|----------|----------------|------|
 | **32** | `GET /v1/listeners/me/dashboard` | **Listener dashboard tab** | On open / refresh — aggregate: setup, impact, next session, online flag, reminder |
-| 29 | `GET /v1/listeners/me/setup-progress` | Dashboard setup checklist (if not enough from #32) | Show step statuses |
-| 30 | `POST /v1/listeners/me/setup/first-session-tutorial` | First-session tutorial | User acknowledges tutorial |
+| 29 | `GET /v1/listeners/me/setup-progress` | Dashboard setup checklist | All 11 steps + `profile_status`, `registration_complete`, `can_go_online`, `steps_to_refill`. Training modules are not sequentially locked in the app during `under_review` |
+| 30 | `POST /v1/listeners/me/setup/first-session-tutorial` | First-session tutorial sheet → CTA | Acknowledge tutorial; returns updated setup progress (#29) |
+| 71 | `GET /v1/listeners/me/training` | Training bottom sheet open | Load module list + statuses |
+| 72 | `POST /v1/listeners/me/training/{moduleId}/complete` | After listener opens a module tutorial | Mark module complete; returns updated training + setup progress when all modules done |
 | 31 | `PATCH /v1/listeners/me/online-status` | Dashboard online/available toggle | User goes online/offline |
 
 ### C3. Availability
