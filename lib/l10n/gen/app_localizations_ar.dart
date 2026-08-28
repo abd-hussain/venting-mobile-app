@@ -2329,6 +2329,10 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
   String get listener_avail_remove_slot => 'إزالة';
 
   @override
+  String get listener_avail_slot_overlap_error =>
+      'لا يمكن أن تتداخل الفترات الزمنية. يجب أن تبدأ كل فترة جديدة عند انتهاء الفترة السابقة.';
+
+  @override
   String listener_sessions_filter_upcoming(int count) {
     return 'القادمة ($count)';
   }

@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:venting_mobile_app/di/di_container.dart';
+import 'package:venting_mobile_app/domain/data/app/listener_availability.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
 import 'package:venting_mobile_app/presentation/home/listener/availability/bloc/listener_availability_bloc.dart';
 import 'package:venting_mobile_app/presentation/home/listener/availability/listener_availability_option_bottom_sheet.dart';
@@ -25,16 +26,9 @@ class ListenerAvailabilityTab extends StatelessWidget {
   }
 }
 
-class _ListenerAvailabilityTabView extends StatefulWidget {
+class _ListenerAvailabilityTabView extends StatelessWidget {
   const _ListenerAvailabilityTabView();
 
-  @override
-  State<_ListenerAvailabilityTabView> createState() =>
-      _ListenerAvailabilityTabViewState();
-}
-
-class _ListenerAvailabilityTabViewState
-    extends State<_ListenerAvailabilityTabView> {
   static const _overlayStyle = SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
     statusBarBrightness: Brightness.dark,
@@ -43,121 +37,7 @@ class _ListenerAvailabilityTabViewState
     systemNavigationBarIconBrightness: Brightness.light,
   );
 
-  // TODO: Load schedule from listener availability API / repository.
-  bool _acceptInstantCalls = true;
-
-  // TODO: Load from API.
   static const _breakLengthOptions = [0, 5, 10, 15, 30, 60];
-
-  PreferredSessionLengthSelection _sessionLength =
-      const PreferredSessionLengthSelection();
-  int _breakLength = 15;
-
-  late List<DaySchedule> _days;
-
-  @override
-  void initState() {
-    super.initState();
-    _days = _buildMockDays();
-  }
-
-  List<DaySchedule> _buildMockDays() {
-    return [
-      const DaySchedule(
-        label: 'Mon',
-        slots: [
-          TimeSlot(
-            start: TimeOfDay(hour: 9, minute: 0),
-            end: TimeOfDay(hour: 12, minute: 0),
-          ),
-          TimeSlot(
-            start: TimeOfDay(hour: 18, minute: 0),
-            end: TimeOfDay(hour: 22, minute: 0),
-          ),
-        ],
-      ),
-      const DaySchedule(
-        label: 'Tue',
-        slots: [
-          TimeSlot(
-            start: TimeOfDay(hour: 9, minute: 0),
-            end: TimeOfDay(hour: 13, minute: 0),
-          ),
-          TimeSlot(
-            start: TimeOfDay(hour: 17, minute: 0),
-            end: TimeOfDay(hour: 21, minute: 0),
-          ),
-        ],
-      ),
-      const DaySchedule(
-        label: 'Wed',
-        slots: [
-          TimeSlot(
-            start: TimeOfDay(hour: 10, minute: 0),
-            end: TimeOfDay(hour: 14, minute: 0),
-          ),
-          TimeSlot(
-            start: TimeOfDay(hour: 18, minute: 0),
-            end: TimeOfDay(hour: 22, minute: 0),
-          ),
-        ],
-      ),
-      const DaySchedule(
-        label: 'Thu',
-        slots: [
-          TimeSlot(
-            start: TimeOfDay(hour: 9, minute: 0),
-            end: TimeOfDay(hour: 12, minute: 0),
-          ),
-          TimeSlot(
-            start: TimeOfDay(hour: 18, minute: 0),
-            end: TimeOfDay(hour: 22, minute: 0),
-          ),
-        ],
-      ),
-      const DaySchedule(
-        label: 'Fri',
-        slots: [
-          TimeSlot(
-            start: TimeOfDay(hour: 9, minute: 0),
-            end: TimeOfDay(hour: 13, minute: 0),
-          ),
-          TimeSlot(
-            start: TimeOfDay(hour: 17, minute: 0),
-            end: TimeOfDay(hour: 23, minute: 0),
-          ),
-        ],
-      ),
-      const DaySchedule(
-        label: 'Sat',
-        slots: [
-          TimeSlot(
-            start: TimeOfDay(hour: 10, minute: 0),
-            end: TimeOfDay(hour: 14, minute: 0),
-          ),
-        ],
-      ),
-      const DaySchedule(label: 'Sun', slots: [], enabled: false),
-    ];
-  }
-
-  Future<void> _onDayTap(int dayIndex) async {
-    final day = _days[dayIndex];
-    final result = await showDayScheduleBottomSheet(
-      context: context,
-      dayLabel: day.label,
-      initial: day,
-    );
-    if (!mounted || result == null) return;
-    // TODO: Persist day schedule via API.
-    setState(() {
-      _days[dayIndex] = DaySchedule(
-        label: day.label,
-        slots: result.slots,
-        enabled: result.enabled,
-      );
-    });
-  }
 
   String _breakLengthLabel(VentingMobLocalizations l10n, int minutes) {
     if (minutes == 0) return l10n.listener_avail_break_none;
@@ -175,7 +55,72 @@ class _ListenerAvailabilityTabViewState
         .join(', ');
   }
 
-  Future<void> _onSessionLength() async {
+  String _dayLabel(VentingMobLocalizations l10n, String dayId) {
+    return switch (dayId) {
+      'mon' => l10n.ventor_profile_day_mon,
+      'tue' => l10n.ventor_profile_day_tue,
+      'wed' => l10n.ventor_profile_day_wed,
+      'thu' => l10n.ventor_profile_day_thu,
+      'fri' => l10n.ventor_profile_day_fri,
+      'sat' => l10n.ventor_profile_day_sat,
+      'sun' => l10n.ventor_profile_day_sun,
+      _ => dayId,
+    };
+  }
+
+  List<DaySchedule> _mapDays(
+    VentingMobLocalizations l10n,
+    ListenerAvailability availability,
+  ) {
+    return availability.days
+        .map(
+          (day) => DaySchedule(
+            dayId: day.dayId,
+            label: _dayLabel(l10n, day.dayId),
+            slots: day.slots
+                .map((slot) => TimeSlot(start: slot.start, end: slot.end))
+                .toList(growable: false),
+            enabled: day.enabled,
+          ),
+        )
+        .toList(growable: false);
+  }
+
+  Future<void> _onDayTap(
+    BuildContext context,
+    VentingMobLocalizations l10n,
+    List<DaySchedule> days,
+    int dayIndex,
+  ) async {
+    final bloc = context.read<ListenerAvailabilityBloc>();
+    if (bloc.state.savingTarget != null) return;
+
+    final day = days[dayIndex];
+    final result = await showDayScheduleBottomSheet(
+      context: context,
+      dayLabel: day.label,
+      initial: day,
+    );
+    if (!context.mounted || result == null) return;
+
+    bloc.add(
+      ListenerAvailabilityEvent.dayScheduleChanged(
+        dayId: day.dayId,
+        enabled: result.enabled,
+        slots: result.slots,
+      ),
+    );
+  }
+
+  Future<void> _onSessionLength(BuildContext context) async {
+    final bloc = context.read<ListenerAvailabilityBloc>();
+    final availability = bloc.state.availability;
+    if (!bloc.state.isReady ||
+        availability == null ||
+        bloc.state.savingTarget != null) {
+      return;
+    }
+
     final l10n = VentingMobLocalizations.of(context);
     final selected = await showPreferredSessionLengthBottomSheet(
       context: context,
@@ -184,30 +129,39 @@ class _ListenerAvailabilityTabViewState
       anyLabel: l10n.listener_avail_session_length_any,
       minuteLabelOf: l10n.listener_avail_break_minutes,
       doneLabel: l10n.common_save,
-      initial: _sessionLength,
+      initial: availability.sessionLength,
     );
-    if (!mounted || selected == null) return;
-    // TODO: Persist session length via API.
-    setState(() => _sessionLength = selected);
+    if (!context.mounted || selected == null) return;
+
+    bloc.add(
+      ListenerAvailabilityEvent.sessionLengthChanged(sessionLength: selected),
+    );
   }
 
-  Future<void> _onBreakLength() async {
+  Future<void> _onBreakLength(BuildContext context) async {
+    final bloc = context.read<ListenerAvailabilityBloc>();
+    final availability = bloc.state.availability;
+    if (!bloc.state.isReady ||
+        availability == null ||
+        bloc.state.savingTarget != null) {
+      return;
+    }
+
     final l10n = VentingMobLocalizations.of(context);
     final selected = await showAvailabilityMinutesBottomSheet(
       context: context,
       title: l10n.listener_avail_break_between,
       options: _breakLengthOptions,
-      selected: _breakLength,
+      selected: availability.breakLengthMinutes,
       labelOf: (minutes) => _breakLengthLabel(l10n, minutes),
     );
-    if (!mounted || selected == null) return;
-    // TODO: Persist break length via API.
-    setState(() => _breakLength = selected);
-  }
+    if (!context.mounted || selected == null) return;
 
-  void _onInstantCallToggled(bool v) {
-    // TODO: Persist instant call preference via API.
-    setState(() => _acceptInstantCalls = v);
+    bloc.add(
+      ListenerAvailabilityEvent.breakLengthChanged(
+        breakLengthMinutes: selected,
+      ),
+    );
   }
 
   @override
@@ -231,75 +185,138 @@ class _ListenerAvailabilityTabViewState
           ),
           child: SafeArea(
             bottom: false,
-            child: ListView(
-              padding: const EdgeInsets.fromLTRB(16, 12, 16, 28),
-              children: [
-                Text(
-                  l10n.listener_avail_title,
-                  style: GoogleFonts.inter(
-                    color: Colors.white,
-                    fontSize: 24,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-                const SizedBox(height: 16),
-                BlocBuilder<
-                  ListenerAvailabilityBloc,
-                  ListenerAvailabilityState
-                >(
-                  builder: (context, availabilityState) {
-                    return OnlineAvailabilitySectionCard(
+            child: BlocBuilder<ListenerAvailabilityBloc, ListenerAvailabilityState>(
+              builder: (context, state) {
+                if (state.isLoading) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+
+                if (state.isLoadFailure) {
+                  return Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(24),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            state.errorMessage.isNotEmpty
+                                ? state.errorMessage
+                                : l10n.common_unknown_error,
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.inter(color: Colors.white),
+                          ),
+                          const SizedBox(height: 16),
+                          FilledButton(
+                            onPressed: () =>
+                                context.read<ListenerAvailabilityBloc>().add(
+                                  const ListenerAvailabilityEvent.retryLoad(),
+                                ),
+                            child: Text(l10n.common_retry),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                }
+
+                final availability = state.availability;
+                if (!state.isReady || availability == null) {
+                  return const SizedBox.shrink();
+                }
+
+                final days = _mapDays(l10n, availability);
+                final isSavingSettings = state.savingTarget != null;
+
+                return ListView(
+                  padding: const EdgeInsets.fromLTRB(16, 12, 16, 28),
+                  children: [
+                    Text(
+                      l10n.listener_avail_title,
+                      style: GoogleFonts.inter(
+                        color: Colors.white,
+                        fontSize: 24,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    OnlineAvailabilitySectionCard(
                       onlineTitle: l10n.listener_avail_online_status,
-                      onlineSubtitle: availabilityState.isOnline
+                      onlineSubtitle: state.isOnline
                           ? l10n.listener_avail_online_status_hint
                           : l10n.listener_avail_online_status_offline_hint,
                       onlineLabel: l10n.listener_avail_status_online,
                       offlineLabel: l10n.listener_avail_status_offline,
-                      isOnline: availabilityState.isOnline,
-                      isOnlineLoading: availabilityState.isLoading,
-                      isOnlineSaving: availabilityState.isSavingOnline,
-                      onOnlineChanged: (value) =>
-                          context.read<ListenerAvailabilityBloc>().add(
-                            ListenerAvailabilityEvent.onlineStatusChanged(
-                              isOnline: value,
-                            ),
-                          ),
+                      isOnline: state.isOnline,
+                      isOnlineLoading: false,
+                      isOnlineSaving: state.isSavingOnline,
+                      onOnlineChanged: state.savingTarget == null
+                          ? (value) =>
+                                context.read<ListenerAvailabilityBloc>().add(
+                                  ListenerAvailabilityEvent.onlineStatusChanged(
+                                    isOnline: value,
+                                  ),
+                                )
+                          : null,
                       instantTitle: l10n.listener_avail_instant_calls,
                       instantSubtitle: l10n.listener_avail_instant_calls_hint,
                       earningsHighlight:
                           l10n.listener_avail_instant_calls_earnings_highlight,
-                      acceptInstantCalls: _acceptInstantCalls,
-                      onInstantCallsChanged: _onInstantCallToggled,
-                    );
-                  },
-                ),
-                const SizedBox(height: 14),
-                WeeklyScheduleCard(
-                  title: l10n.listener_avail_weekly_schedule,
-                  subtitle: l10n.listener_avail_weekly_subtitle,
-                  days: _days,
-                  dayOffLabel: l10n.listener_avail_day_off,
-                  onDayTap: _onDayTap,
-                ),
-                const SizedBox(height: 14),
-                SessionSettingsCard(
-                  title: l10n.listener_avail_session_settings,
-                  items: [
-                    SessionSettingItem(
-                      icon: Icons.timer_outlined,
-                      label: l10n.listener_avail_session_length,
-                      value: _sessionLengthLabel(l10n, _sessionLength),
-                      onTap: _onSessionLength,
+                      acceptInstantCalls: availability.acceptInstantCalls,
+                      isInstantCallsSaving: state.isSavingInstantCalls,
+                      onInstantCallsChanged: state.savingTarget == null
+                          ? (value) =>
+                                context.read<ListenerAvailabilityBloc>().add(
+                                  ListenerAvailabilityEvent.instantCallsChanged(
+                                    acceptInstantCalls: value,
+                                  ),
+                                )
+                          : null,
                     ),
-                    SessionSettingItem(
-                      icon: Icons.pause_circle_outline_rounded,
-                      label: l10n.listener_avail_break_between,
-                      value: _breakLengthLabel(l10n, _breakLength),
-                      onTap: _onBreakLength,
+                    const SizedBox(height: 14),
+                    WeeklyScheduleCard(
+                      title: l10n.listener_avail_weekly_schedule,
+                      subtitle: l10n.listener_avail_weekly_subtitle,
+                      days: days,
+                      dayOffLabel: l10n.listener_avail_day_off,
+                      savingDayId: state.savingDayId,
+                      onDayTap: isSavingSettings
+                          ? null
+                          : (dayIndex) =>
+                                _onDayTap(context, l10n, days, dayIndex),
+                    ),
+                    const SizedBox(height: 14),
+                    SessionSettingsCard(
+                      title: l10n.listener_avail_session_settings,
+                      items: [
+                        SessionSettingItem(
+                          icon: Icons.timer_outlined,
+                          label: l10n.listener_avail_session_length,
+                          value: _sessionLengthLabel(
+                            l10n,
+                            availability.sessionLength,
+                          ),
+                          isSaving: state.isSavingSessionLength,
+                          onTap: isSavingSettings
+                              ? null
+                              : () => _onSessionLength(context),
+                        ),
+                        SessionSettingItem(
+                          icon: Icons.pause_circle_outline_rounded,
+                          label: l10n.listener_avail_break_between,
+                          value: _breakLengthLabel(
+                            l10n,
+                            availability.breakLengthMinutes,
+                          ),
+                          isSaving: state.isSavingBreakLength,
+                          onTap: isSavingSettings
+                              ? null
+                              : () => _onBreakLength(context),
+                        ),
+                      ],
                     ),
                   ],
-                ),
-              ],
+                );
+              },
             ),
           ),
         ),

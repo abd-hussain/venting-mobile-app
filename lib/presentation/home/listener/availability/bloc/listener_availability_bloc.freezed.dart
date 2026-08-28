@@ -55,12 +55,17 @@ extension ListenerAvailabilityEventPatterns on ListenerAvailabilityEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Started value)?  started,TResult Function( _OnlineStatusChanged value)?  onlineStatusChanged,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Started value)?  started,TResult Function( _RetryLoad value)?  retryLoad,TResult Function( _OnlineStatusChanged value)?  onlineStatusChanged,TResult Function( _InstantCallsChanged value)?  instantCallsChanged,TResult Function( _SessionLengthChanged value)?  sessionLengthChanged,TResult Function( _BreakLengthChanged value)?  breakLengthChanged,TResult Function( _DayScheduleChanged value)?  dayScheduleChanged,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case _Started() when started != null:
-return started(_that);case _OnlineStatusChanged() when onlineStatusChanged != null:
-return onlineStatusChanged(_that);case _:
+return started(_that);case _RetryLoad() when retryLoad != null:
+return retryLoad(_that);case _OnlineStatusChanged() when onlineStatusChanged != null:
+return onlineStatusChanged(_that);case _InstantCallsChanged() when instantCallsChanged != null:
+return instantCallsChanged(_that);case _SessionLengthChanged() when sessionLengthChanged != null:
+return sessionLengthChanged(_that);case _BreakLengthChanged() when breakLengthChanged != null:
+return breakLengthChanged(_that);case _DayScheduleChanged() when dayScheduleChanged != null:
+return dayScheduleChanged(_that);case _:
   return orElse();
 
 }
@@ -78,12 +83,17 @@ return onlineStatusChanged(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Started value)  started,required TResult Function( _OnlineStatusChanged value)  onlineStatusChanged,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Started value)  started,required TResult Function( _RetryLoad value)  retryLoad,required TResult Function( _OnlineStatusChanged value)  onlineStatusChanged,required TResult Function( _InstantCallsChanged value)  instantCallsChanged,required TResult Function( _SessionLengthChanged value)  sessionLengthChanged,required TResult Function( _BreakLengthChanged value)  breakLengthChanged,required TResult Function( _DayScheduleChanged value)  dayScheduleChanged,}){
 final _that = this;
 switch (_that) {
 case _Started():
-return started(_that);case _OnlineStatusChanged():
-return onlineStatusChanged(_that);}
+return started(_that);case _RetryLoad():
+return retryLoad(_that);case _OnlineStatusChanged():
+return onlineStatusChanged(_that);case _InstantCallsChanged():
+return instantCallsChanged(_that);case _SessionLengthChanged():
+return sessionLengthChanged(_that);case _BreakLengthChanged():
+return breakLengthChanged(_that);case _DayScheduleChanged():
+return dayScheduleChanged(_that);}
 }
 /// A variant of `map` that fallback to returning `null`.
 ///
@@ -97,12 +107,17 @@ return onlineStatusChanged(_that);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Started value)?  started,TResult? Function( _OnlineStatusChanged value)?  onlineStatusChanged,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Started value)?  started,TResult? Function( _RetryLoad value)?  retryLoad,TResult? Function( _OnlineStatusChanged value)?  onlineStatusChanged,TResult? Function( _InstantCallsChanged value)?  instantCallsChanged,TResult? Function( _SessionLengthChanged value)?  sessionLengthChanged,TResult? Function( _BreakLengthChanged value)?  breakLengthChanged,TResult? Function( _DayScheduleChanged value)?  dayScheduleChanged,}){
 final _that = this;
 switch (_that) {
 case _Started() when started != null:
-return started(_that);case _OnlineStatusChanged() when onlineStatusChanged != null:
-return onlineStatusChanged(_that);case _:
+return started(_that);case _RetryLoad() when retryLoad != null:
+return retryLoad(_that);case _OnlineStatusChanged() when onlineStatusChanged != null:
+return onlineStatusChanged(_that);case _InstantCallsChanged() when instantCallsChanged != null:
+return instantCallsChanged(_that);case _SessionLengthChanged() when sessionLengthChanged != null:
+return sessionLengthChanged(_that);case _BreakLengthChanged() when breakLengthChanged != null:
+return breakLengthChanged(_that);case _DayScheduleChanged() when dayScheduleChanged != null:
+return dayScheduleChanged(_that);case _:
   return null;
 
 }
@@ -119,11 +134,16 @@ return onlineStatusChanged(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  started,TResult Function( bool isOnline)?  onlineStatusChanged,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  started,TResult Function()?  retryLoad,TResult Function( bool isOnline)?  onlineStatusChanged,TResult Function( bool acceptInstantCalls)?  instantCallsChanged,TResult Function( PreferredSessionLengthSelection sessionLength)?  sessionLengthChanged,TResult Function( int breakLengthMinutes)?  breakLengthChanged,TResult Function( String dayId,  bool enabled,  List<TimeSlot> slots)?  dayScheduleChanged,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Started() when started != null:
-return started();case _OnlineStatusChanged() when onlineStatusChanged != null:
-return onlineStatusChanged(_that.isOnline);case _:
+return started();case _RetryLoad() when retryLoad != null:
+return retryLoad();case _OnlineStatusChanged() when onlineStatusChanged != null:
+return onlineStatusChanged(_that.isOnline);case _InstantCallsChanged() when instantCallsChanged != null:
+return instantCallsChanged(_that.acceptInstantCalls);case _SessionLengthChanged() when sessionLengthChanged != null:
+return sessionLengthChanged(_that.sessionLength);case _BreakLengthChanged() when breakLengthChanged != null:
+return breakLengthChanged(_that.breakLengthMinutes);case _DayScheduleChanged() when dayScheduleChanged != null:
+return dayScheduleChanged(_that.dayId,_that.enabled,_that.slots);case _:
   return orElse();
 
 }
@@ -141,11 +161,16 @@ return onlineStatusChanged(_that.isOnline);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  started,required TResult Function( bool isOnline)  onlineStatusChanged,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  started,required TResult Function()  retryLoad,required TResult Function( bool isOnline)  onlineStatusChanged,required TResult Function( bool acceptInstantCalls)  instantCallsChanged,required TResult Function( PreferredSessionLengthSelection sessionLength)  sessionLengthChanged,required TResult Function( int breakLengthMinutes)  breakLengthChanged,required TResult Function( String dayId,  bool enabled,  List<TimeSlot> slots)  dayScheduleChanged,}) {final _that = this;
 switch (_that) {
 case _Started():
-return started();case _OnlineStatusChanged():
-return onlineStatusChanged(_that.isOnline);}
+return started();case _RetryLoad():
+return retryLoad();case _OnlineStatusChanged():
+return onlineStatusChanged(_that.isOnline);case _InstantCallsChanged():
+return instantCallsChanged(_that.acceptInstantCalls);case _SessionLengthChanged():
+return sessionLengthChanged(_that.sessionLength);case _BreakLengthChanged():
+return breakLengthChanged(_that.breakLengthMinutes);case _DayScheduleChanged():
+return dayScheduleChanged(_that.dayId,_that.enabled,_that.slots);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -159,11 +184,16 @@ return onlineStatusChanged(_that.isOnline);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  started,TResult? Function( bool isOnline)?  onlineStatusChanged,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  started,TResult? Function()?  retryLoad,TResult? Function( bool isOnline)?  onlineStatusChanged,TResult? Function( bool acceptInstantCalls)?  instantCallsChanged,TResult? Function( PreferredSessionLengthSelection sessionLength)?  sessionLengthChanged,TResult? Function( int breakLengthMinutes)?  breakLengthChanged,TResult? Function( String dayId,  bool enabled,  List<TimeSlot> slots)?  dayScheduleChanged,}) {final _that = this;
 switch (_that) {
 case _Started() when started != null:
-return started();case _OnlineStatusChanged() when onlineStatusChanged != null:
-return onlineStatusChanged(_that.isOnline);case _:
+return started();case _RetryLoad() when retryLoad != null:
+return retryLoad();case _OnlineStatusChanged() when onlineStatusChanged != null:
+return onlineStatusChanged(_that.isOnline);case _InstantCallsChanged() when instantCallsChanged != null:
+return instantCallsChanged(_that.acceptInstantCalls);case _SessionLengthChanged() when sessionLengthChanged != null:
+return sessionLengthChanged(_that.sessionLength);case _BreakLengthChanged() when breakLengthChanged != null:
+return breakLengthChanged(_that.breakLengthMinutes);case _DayScheduleChanged() when dayScheduleChanged != null:
+return dayScheduleChanged(_that.dayId,_that.enabled,_that.slots);case _:
   return null;
 
 }
@@ -195,6 +225,38 @@ int get hashCode => runtimeType.hashCode;
 @override
 String toString() {
   return 'ListenerAvailabilityEvent.started()';
+}
+
+
+}
+
+
+
+
+/// @nodoc
+
+
+class _RetryLoad implements ListenerAvailabilityEvent {
+  const _RetryLoad();
+  
+
+
+
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _RetryLoad);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'ListenerAvailabilityEvent.retryLoad()';
 }
 
 
@@ -270,9 +332,283 @@ as bool,
 }
 
 /// @nodoc
+
+
+class _InstantCallsChanged implements ListenerAvailabilityEvent {
+  const _InstantCallsChanged({required this.acceptInstantCalls});
+  
+
+ final  bool acceptInstantCalls;
+
+/// Create a copy of ListenerAvailabilityEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$InstantCallsChangedCopyWith<_InstantCallsChanged> get copyWith => __$InstantCallsChangedCopyWithImpl<_InstantCallsChanged>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _InstantCallsChanged&&(identical(other.acceptInstantCalls, acceptInstantCalls) || other.acceptInstantCalls == acceptInstantCalls));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,acceptInstantCalls);
+
+@override
+String toString() {
+  return 'ListenerAvailabilityEvent.instantCallsChanged(acceptInstantCalls: $acceptInstantCalls)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$InstantCallsChangedCopyWith<$Res> implements $ListenerAvailabilityEventCopyWith<$Res> {
+  factory _$InstantCallsChangedCopyWith(_InstantCallsChanged value, $Res Function(_InstantCallsChanged) _then) = __$InstantCallsChangedCopyWithImpl;
+@useResult
+$Res call({
+ bool acceptInstantCalls
+});
+
+
+
+
+}
+/// @nodoc
+class __$InstantCallsChangedCopyWithImpl<$Res>
+    implements _$InstantCallsChangedCopyWith<$Res> {
+  __$InstantCallsChangedCopyWithImpl(this._self, this._then);
+
+  final _InstantCallsChanged _self;
+  final $Res Function(_InstantCallsChanged) _then;
+
+/// Create a copy of ListenerAvailabilityEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? acceptInstantCalls = null,}) {
+  return _then(_InstantCallsChanged(
+acceptInstantCalls: null == acceptInstantCalls ? _self.acceptInstantCalls : acceptInstantCalls // ignore: cast_nullable_to_non_nullable
+as bool,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class _SessionLengthChanged implements ListenerAvailabilityEvent {
+  const _SessionLengthChanged({required this.sessionLength});
+  
+
+ final  PreferredSessionLengthSelection sessionLength;
+
+/// Create a copy of ListenerAvailabilityEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$SessionLengthChangedCopyWith<_SessionLengthChanged> get copyWith => __$SessionLengthChangedCopyWithImpl<_SessionLengthChanged>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SessionLengthChanged&&(identical(other.sessionLength, sessionLength) || other.sessionLength == sessionLength));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,sessionLength);
+
+@override
+String toString() {
+  return 'ListenerAvailabilityEvent.sessionLengthChanged(sessionLength: $sessionLength)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$SessionLengthChangedCopyWith<$Res> implements $ListenerAvailabilityEventCopyWith<$Res> {
+  factory _$SessionLengthChangedCopyWith(_SessionLengthChanged value, $Res Function(_SessionLengthChanged) _then) = __$SessionLengthChangedCopyWithImpl;
+@useResult
+$Res call({
+ PreferredSessionLengthSelection sessionLength
+});
+
+
+
+
+}
+/// @nodoc
+class __$SessionLengthChangedCopyWithImpl<$Res>
+    implements _$SessionLengthChangedCopyWith<$Res> {
+  __$SessionLengthChangedCopyWithImpl(this._self, this._then);
+
+  final _SessionLengthChanged _self;
+  final $Res Function(_SessionLengthChanged) _then;
+
+/// Create a copy of ListenerAvailabilityEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? sessionLength = null,}) {
+  return _then(_SessionLengthChanged(
+sessionLength: null == sessionLength ? _self.sessionLength : sessionLength // ignore: cast_nullable_to_non_nullable
+as PreferredSessionLengthSelection,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class _BreakLengthChanged implements ListenerAvailabilityEvent {
+  const _BreakLengthChanged({required this.breakLengthMinutes});
+  
+
+ final  int breakLengthMinutes;
+
+/// Create a copy of ListenerAvailabilityEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$BreakLengthChangedCopyWith<_BreakLengthChanged> get copyWith => __$BreakLengthChangedCopyWithImpl<_BreakLengthChanged>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _BreakLengthChanged&&(identical(other.breakLengthMinutes, breakLengthMinutes) || other.breakLengthMinutes == breakLengthMinutes));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,breakLengthMinutes);
+
+@override
+String toString() {
+  return 'ListenerAvailabilityEvent.breakLengthChanged(breakLengthMinutes: $breakLengthMinutes)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$BreakLengthChangedCopyWith<$Res> implements $ListenerAvailabilityEventCopyWith<$Res> {
+  factory _$BreakLengthChangedCopyWith(_BreakLengthChanged value, $Res Function(_BreakLengthChanged) _then) = __$BreakLengthChangedCopyWithImpl;
+@useResult
+$Res call({
+ int breakLengthMinutes
+});
+
+
+
+
+}
+/// @nodoc
+class __$BreakLengthChangedCopyWithImpl<$Res>
+    implements _$BreakLengthChangedCopyWith<$Res> {
+  __$BreakLengthChangedCopyWithImpl(this._self, this._then);
+
+  final _BreakLengthChanged _self;
+  final $Res Function(_BreakLengthChanged) _then;
+
+/// Create a copy of ListenerAvailabilityEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? breakLengthMinutes = null,}) {
+  return _then(_BreakLengthChanged(
+breakLengthMinutes: null == breakLengthMinutes ? _self.breakLengthMinutes : breakLengthMinutes // ignore: cast_nullable_to_non_nullable
+as int,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class _DayScheduleChanged implements ListenerAvailabilityEvent {
+  const _DayScheduleChanged({required this.dayId, required this.enabled, required final  List<TimeSlot> slots}): _slots = slots;
+  
+
+ final  String dayId;
+ final  bool enabled;
+ final  List<TimeSlot> _slots;
+ List<TimeSlot> get slots {
+  if (_slots is EqualUnmodifiableListView) return _slots;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_slots);
+}
+
+
+/// Create a copy of ListenerAvailabilityEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$DayScheduleChangedCopyWith<_DayScheduleChanged> get copyWith => __$DayScheduleChangedCopyWithImpl<_DayScheduleChanged>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _DayScheduleChanged&&(identical(other.dayId, dayId) || other.dayId == dayId)&&(identical(other.enabled, enabled) || other.enabled == enabled)&&const DeepCollectionEquality().equals(other._slots, _slots));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,dayId,enabled,const DeepCollectionEquality().hash(_slots));
+
+@override
+String toString() {
+  return 'ListenerAvailabilityEvent.dayScheduleChanged(dayId: $dayId, enabled: $enabled, slots: $slots)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$DayScheduleChangedCopyWith<$Res> implements $ListenerAvailabilityEventCopyWith<$Res> {
+  factory _$DayScheduleChangedCopyWith(_DayScheduleChanged value, $Res Function(_DayScheduleChanged) _then) = __$DayScheduleChangedCopyWithImpl;
+@useResult
+$Res call({
+ String dayId, bool enabled, List<TimeSlot> slots
+});
+
+
+
+
+}
+/// @nodoc
+class __$DayScheduleChangedCopyWithImpl<$Res>
+    implements _$DayScheduleChangedCopyWith<$Res> {
+  __$DayScheduleChangedCopyWithImpl(this._self, this._then);
+
+  final _DayScheduleChanged _self;
+  final $Res Function(_DayScheduleChanged) _then;
+
+/// Create a copy of ListenerAvailabilityEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? dayId = null,Object? enabled = null,Object? slots = null,}) {
+  return _then(_DayScheduleChanged(
+dayId: null == dayId ? _self.dayId : dayId // ignore: cast_nullable_to_non_nullable
+as String,enabled: null == enabled ? _self.enabled : enabled // ignore: cast_nullable_to_non_nullable
+as bool,slots: null == slots ? _self._slots : slots // ignore: cast_nullable_to_non_nullable
+as List<TimeSlot>,
+  ));
+}
+
+
+}
+
+/// @nodoc
 mixin _$ListenerAvailabilityState {
 
- ListenerAvailabilityStatus get status; bool get isOnline; bool get isSavingOnline; String get errorMessage;
+ ListenerAvailabilityStatus get status; ListenerAvailability? get availability; bool get isOnline; ListenerAvailabilitySavingTarget? get savingTarget; String? get savingDayId; String get errorMessage;
 /// Create a copy of ListenerAvailabilityState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -283,16 +619,16 @@ $ListenerAvailabilityStateCopyWith<ListenerAvailabilityState> get copyWith => _$
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ListenerAvailabilityState&&(identical(other.status, status) || other.status == status)&&(identical(other.isOnline, isOnline) || other.isOnline == isOnline)&&(identical(other.isSavingOnline, isSavingOnline) || other.isSavingOnline == isSavingOnline)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ListenerAvailabilityState&&(identical(other.status, status) || other.status == status)&&(identical(other.availability, availability) || other.availability == availability)&&(identical(other.isOnline, isOnline) || other.isOnline == isOnline)&&(identical(other.savingTarget, savingTarget) || other.savingTarget == savingTarget)&&(identical(other.savingDayId, savingDayId) || other.savingDayId == savingDayId)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,status,isOnline,isSavingOnline,errorMessage);
+int get hashCode => Object.hash(runtimeType,status,availability,isOnline,savingTarget,savingDayId,errorMessage);
 
 @override
 String toString() {
-  return 'ListenerAvailabilityState(status: $status, isOnline: $isOnline, isSavingOnline: $isSavingOnline, errorMessage: $errorMessage)';
+  return 'ListenerAvailabilityState(status: $status, availability: $availability, isOnline: $isOnline, savingTarget: $savingTarget, savingDayId: $savingDayId, errorMessage: $errorMessage)';
 }
 
 
@@ -303,7 +639,7 @@ abstract mixin class $ListenerAvailabilityStateCopyWith<$Res>  {
   factory $ListenerAvailabilityStateCopyWith(ListenerAvailabilityState value, $Res Function(ListenerAvailabilityState) _then) = _$ListenerAvailabilityStateCopyWithImpl;
 @useResult
 $Res call({
- ListenerAvailabilityStatus status, bool isOnline, bool isSavingOnline, String errorMessage
+ ListenerAvailabilityStatus status, ListenerAvailability? availability, bool isOnline, ListenerAvailabilitySavingTarget? savingTarget, String? savingDayId, String errorMessage
 });
 
 
@@ -320,12 +656,14 @@ class _$ListenerAvailabilityStateCopyWithImpl<$Res>
 
 /// Create a copy of ListenerAvailabilityState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? status = null,Object? isOnline = null,Object? isSavingOnline = null,Object? errorMessage = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? status = null,Object? availability = freezed,Object? isOnline = null,Object? savingTarget = freezed,Object? savingDayId = freezed,Object? errorMessage = null,}) {
   return _then(_self.copyWith(
 status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
-as ListenerAvailabilityStatus,isOnline: null == isOnline ? _self.isOnline : isOnline // ignore: cast_nullable_to_non_nullable
-as bool,isSavingOnline: null == isSavingOnline ? _self.isSavingOnline : isSavingOnline // ignore: cast_nullable_to_non_nullable
-as bool,errorMessage: null == errorMessage ? _self.errorMessage : errorMessage // ignore: cast_nullable_to_non_nullable
+as ListenerAvailabilityStatus,availability: freezed == availability ? _self.availability : availability // ignore: cast_nullable_to_non_nullable
+as ListenerAvailability?,isOnline: null == isOnline ? _self.isOnline : isOnline // ignore: cast_nullable_to_non_nullable
+as bool,savingTarget: freezed == savingTarget ? _self.savingTarget : savingTarget // ignore: cast_nullable_to_non_nullable
+as ListenerAvailabilitySavingTarget?,savingDayId: freezed == savingDayId ? _self.savingDayId : savingDayId // ignore: cast_nullable_to_non_nullable
+as String?,errorMessage: null == errorMessage ? _self.errorMessage : errorMessage // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }
@@ -408,10 +746,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( ListenerAvailabilityStatus status,  bool isOnline,  bool isSavingOnline,  String errorMessage)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( ListenerAvailabilityStatus status,  ListenerAvailability? availability,  bool isOnline,  ListenerAvailabilitySavingTarget? savingTarget,  String? savingDayId,  String errorMessage)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ListenerAvailabilityState() when $default != null:
-return $default(_that.status,_that.isOnline,_that.isSavingOnline,_that.errorMessage);case _:
+return $default(_that.status,_that.availability,_that.isOnline,_that.savingTarget,_that.savingDayId,_that.errorMessage);case _:
   return orElse();
 
 }
@@ -429,10 +767,10 @@ return $default(_that.status,_that.isOnline,_that.isSavingOnline,_that.errorMess
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( ListenerAvailabilityStatus status,  bool isOnline,  bool isSavingOnline,  String errorMessage)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( ListenerAvailabilityStatus status,  ListenerAvailability? availability,  bool isOnline,  ListenerAvailabilitySavingTarget? savingTarget,  String? savingDayId,  String errorMessage)  $default,) {final _that = this;
 switch (_that) {
 case _ListenerAvailabilityState():
-return $default(_that.status,_that.isOnline,_that.isSavingOnline,_that.errorMessage);}
+return $default(_that.status,_that.availability,_that.isOnline,_that.savingTarget,_that.savingDayId,_that.errorMessage);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -446,10 +784,10 @@ return $default(_that.status,_that.isOnline,_that.isSavingOnline,_that.errorMess
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( ListenerAvailabilityStatus status,  bool isOnline,  bool isSavingOnline,  String errorMessage)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( ListenerAvailabilityStatus status,  ListenerAvailability? availability,  bool isOnline,  ListenerAvailabilitySavingTarget? savingTarget,  String? savingDayId,  String errorMessage)?  $default,) {final _that = this;
 switch (_that) {
 case _ListenerAvailabilityState() when $default != null:
-return $default(_that.status,_that.isOnline,_that.isSavingOnline,_that.errorMessage);case _:
+return $default(_that.status,_that.availability,_that.isOnline,_that.savingTarget,_that.savingDayId,_that.errorMessage);case _:
   return null;
 
 }
@@ -461,12 +799,14 @@ return $default(_that.status,_that.isOnline,_that.isSavingOnline,_that.errorMess
 
 
 class _ListenerAvailabilityState extends ListenerAvailabilityState {
-  const _ListenerAvailabilityState({this.status = ListenerAvailabilityStatus.initial, this.isOnline = false, this.isSavingOnline = false, this.errorMessage = ''}): super._();
+  const _ListenerAvailabilityState({this.status = ListenerAvailabilityStatus.initial, this.availability, this.isOnline = false, this.savingTarget, this.savingDayId, this.errorMessage = ''}): super._();
   
 
 @override@JsonKey() final  ListenerAvailabilityStatus status;
+@override final  ListenerAvailability? availability;
 @override@JsonKey() final  bool isOnline;
-@override@JsonKey() final  bool isSavingOnline;
+@override final  ListenerAvailabilitySavingTarget? savingTarget;
+@override final  String? savingDayId;
 @override@JsonKey() final  String errorMessage;
 
 /// Create a copy of ListenerAvailabilityState
@@ -479,16 +819,16 @@ _$ListenerAvailabilityStateCopyWith<_ListenerAvailabilityState> get copyWith => 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ListenerAvailabilityState&&(identical(other.status, status) || other.status == status)&&(identical(other.isOnline, isOnline) || other.isOnline == isOnline)&&(identical(other.isSavingOnline, isSavingOnline) || other.isSavingOnline == isSavingOnline)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ListenerAvailabilityState&&(identical(other.status, status) || other.status == status)&&(identical(other.availability, availability) || other.availability == availability)&&(identical(other.isOnline, isOnline) || other.isOnline == isOnline)&&(identical(other.savingTarget, savingTarget) || other.savingTarget == savingTarget)&&(identical(other.savingDayId, savingDayId) || other.savingDayId == savingDayId)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,status,isOnline,isSavingOnline,errorMessage);
+int get hashCode => Object.hash(runtimeType,status,availability,isOnline,savingTarget,savingDayId,errorMessage);
 
 @override
 String toString() {
-  return 'ListenerAvailabilityState(status: $status, isOnline: $isOnline, isSavingOnline: $isSavingOnline, errorMessage: $errorMessage)';
+  return 'ListenerAvailabilityState(status: $status, availability: $availability, isOnline: $isOnline, savingTarget: $savingTarget, savingDayId: $savingDayId, errorMessage: $errorMessage)';
 }
 
 
@@ -499,7 +839,7 @@ abstract mixin class _$ListenerAvailabilityStateCopyWith<$Res> implements $Liste
   factory _$ListenerAvailabilityStateCopyWith(_ListenerAvailabilityState value, $Res Function(_ListenerAvailabilityState) _then) = __$ListenerAvailabilityStateCopyWithImpl;
 @override @useResult
 $Res call({
- ListenerAvailabilityStatus status, bool isOnline, bool isSavingOnline, String errorMessage
+ ListenerAvailabilityStatus status, ListenerAvailability? availability, bool isOnline, ListenerAvailabilitySavingTarget? savingTarget, String? savingDayId, String errorMessage
 });
 
 
@@ -516,12 +856,14 @@ class __$ListenerAvailabilityStateCopyWithImpl<$Res>
 
 /// Create a copy of ListenerAvailabilityState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? status = null,Object? isOnline = null,Object? isSavingOnline = null,Object? errorMessage = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? status = null,Object? availability = freezed,Object? isOnline = null,Object? savingTarget = freezed,Object? savingDayId = freezed,Object? errorMessage = null,}) {
   return _then(_ListenerAvailabilityState(
 status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
-as ListenerAvailabilityStatus,isOnline: null == isOnline ? _self.isOnline : isOnline // ignore: cast_nullable_to_non_nullable
-as bool,isSavingOnline: null == isSavingOnline ? _self.isSavingOnline : isSavingOnline // ignore: cast_nullable_to_non_nullable
-as bool,errorMessage: null == errorMessage ? _self.errorMessage : errorMessage // ignore: cast_nullable_to_non_nullable
+as ListenerAvailabilityStatus,availability: freezed == availability ? _self.availability : availability // ignore: cast_nullable_to_non_nullable
+as ListenerAvailability?,isOnline: null == isOnline ? _self.isOnline : isOnline // ignore: cast_nullable_to_non_nullable
+as bool,savingTarget: freezed == savingTarget ? _self.savingTarget : savingTarget // ignore: cast_nullable_to_non_nullable
+as ListenerAvailabilitySavingTarget?,savingDayId: freezed == savingDayId ? _self.savingDayId : savingDayId // ignore: cast_nullable_to_non_nullable
+as String?,errorMessage: null == errorMessage ? _self.errorMessage : errorMessage // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }

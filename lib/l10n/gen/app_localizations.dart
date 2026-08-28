@@ -4292,6 +4292,12 @@ abstract class VentingMobLocalizations {
   /// **'Remove'**
   String get listener_avail_remove_slot;
 
+  /// No description provided for @listener_avail_slot_overlap_error.
+  ///
+  /// In en, this message translates to:
+  /// **'Time slots cannot overlap. Each new slot must start when the previous one ends.'**
+  String get listener_avail_slot_overlap_error;
+
   /// No description provided for @listener_sessions_filter_upcoming.
   ///
   /// In en, this message translates to:

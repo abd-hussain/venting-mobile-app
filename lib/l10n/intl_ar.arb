@@ -1716,6 +1716,8 @@
   "@listener_avail_add_slot": {},
   "listener_avail_remove_slot": "إزالة",
   "@listener_avail_remove_slot": {},
+  "listener_avail_slot_overlap_error": "لا يمكن أن تتداخل الفترات الزمنية. يجب أن تبدأ كل فترة جديدة عند انتهاء الفترة السابقة.",
+  "@listener_avail_slot_overlap_error": {},
   "listener_sessions_filter_upcoming": "القادمة ({count})",
   "@listener_sessions_filter_upcoming": {
     "placeholders": {

@@ -16,6 +16,7 @@ import 'package:venting_mobile_app/domain/repository/api/catalog/catalog_boundar
 import 'package:venting_mobile_app/domain/repository/api/catalog/catalog_categories_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/catalog/catalog_languages_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/catalog/catalog_life_experiences_repository.dart';
+import 'package:venting_mobile_app/domain/repository/api/listener/listener_availability_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/listener/listener_notification_preferences_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/listener/listener_privacy_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/listener/listener_profile_repository.dart';
@@ -41,6 +42,7 @@ import 'package:venting_mobile_app/domain/usecase/get_catalog_boundaries_usecase
 import 'package:venting_mobile_app/domain/usecase/get_catalog_categories_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_catalog_languages_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_catalog_life_experiences_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/get_listener_availability_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_listener_notification_preferences_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_listener_online_status_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_listener_privacy_usecase.dart';
@@ -53,6 +55,8 @@ import 'package:venting_mobile_app/domain/usecase/save_ventor_registration_step_
 import 'package:venting_mobile_app/domain/usecase/sign_in_with_apple_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/sign_in_with_google_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/update_listener_about_me_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/update_listener_availability_day_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/update_listener_availability_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/update_listener_avatar_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/update_listener_notification_preferences_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/update_listener_online_status_usecase.dart';
@@ -175,6 +179,14 @@ mixin VentingModuleUsecases on VentingModule {
     VentingPreferences ventingPreferences,
   ) => GetListenerPrivacyUsecase(listenerPrivacyRepository, ventingPreferences);
 
+  GetListenerAvailabilityUsecase getListenerAvailabilityUsecase(
+    ListenerAvailabilityRepository listenerAvailabilityRepository,
+    VentingPreferences ventingPreferences,
+  ) => GetListenerAvailabilityUsecase(
+    listenerAvailabilityRepository,
+    ventingPreferences,
+  );
+
   GetListenerOnlineStatusUsecase getListenerOnlineStatusUsecase(
     ListenerProfileRepository listenerProfileRepository,
     VentingPreferences ventingPreferences,
@@ -203,6 +215,22 @@ mixin VentingModuleUsecases on VentingModule {
     VentingPreferences ventingPreferences,
   ) => UpdateListenerPrivacyUsecase(
     listenerPrivacyRepository,
+    ventingPreferences,
+  );
+
+  UpdateListenerAvailabilityUsecase updateListenerAvailabilityUsecase(
+    ListenerAvailabilityRepository listenerAvailabilityRepository,
+    VentingPreferences ventingPreferences,
+  ) => UpdateListenerAvailabilityUsecase(
+    listenerAvailabilityRepository,
+    ventingPreferences,
+  );
+
+  UpdateListenerAvailabilityDayUsecase updateListenerAvailabilityDayUsecase(
+    ListenerAvailabilityRepository listenerAvailabilityRepository,
+    VentingPreferences ventingPreferences,
+  ) => UpdateListenerAvailabilityDayUsecase(
+    listenerAvailabilityRepository,
     ventingPreferences,
   );
 
@@ -387,6 +415,12 @@ mixin VentingModuleUsecases on VentingModule {
         getIt<VentingPreferences>(),
       ),
     );
+    getIt.registerFactory<GetListenerAvailabilityUsecase>(
+      () => getListenerAvailabilityUsecase(
+        getIt<ListenerAvailabilityRepository>(),
+        getIt<VentingPreferences>(),
+      ),
+    );
     getIt.registerFactory<GetListenerOnlineStatusUsecase>(
       () => getListenerOnlineStatusUsecase(
         getIt<ListenerProfileRepository>(),
@@ -409,6 +443,18 @@ mixin VentingModuleUsecases on VentingModule {
     getIt.registerFactory<UpdateListenerPrivacyUsecase>(
       () => updateListenerPrivacyUsecase(
         getIt<ListenerPrivacyRepository>(),
+        getIt<VentingPreferences>(),
+      ),
+    );
+    getIt.registerFactory<UpdateListenerAvailabilityUsecase>(
+      () => updateListenerAvailabilityUsecase(
+        getIt<ListenerAvailabilityRepository>(),
+        getIt<VentingPreferences>(),
+      ),
+    );
+    getIt.registerFactory<UpdateListenerAvailabilityDayUsecase>(
+      () => updateListenerAvailabilityDayUsecase(
+        getIt<ListenerAvailabilityRepository>(),
         getIt<VentingPreferences>(),
       ),
     );

@@ -1,27 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:venting_mobile_app/domain/data/app/listener_availability.dart';
 import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dart';
-
-class PreferredSessionLengthSelection {
-  const PreferredSessionLengthSelection({this.isAny = true, Set<int>? minutes})
-    : minutes = minutes ?? const {};
-
-  final bool isAny;
-  final Set<int> minutes;
-
-  static const minuteOptions = [30, 45, 60];
-  static const maxMinuteSelections = 2;
-
-  PreferredSessionLengthSelection copyWith({bool? isAny, Set<int>? minutes}) {
-    return PreferredSessionLengthSelection(
-      isAny: isAny ?? this.isAny,
-      minutes: minutes ?? this.minutes,
-    );
-  }
-
-  bool isMinuteSelected(int minutes) =>
-      !isAny && this.minutes.contains(minutes);
-}
 
 Future<int?> showAvailabilityMinutesBottomSheet({
   required BuildContext context,

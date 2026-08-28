@@ -1716,6 +1716,8 @@
   "@listener_avail_add_slot": {},
   "listener_avail_remove_slot": "Remove",
   "@listener_avail_remove_slot": {},
+  "listener_avail_slot_overlap_error": "Time slots cannot overlap. Each new slot must start when the previous one ends.",
+  "@listener_avail_slot_overlap_error": {},
   "listener_sessions_filter_upcoming": "Upcoming ({count})",
   "@listener_sessions_filter_upcoming": {
     "placeholders": {

@@ -26,11 +26,13 @@ class TimeSlot {
 
 class DaySchedule {
   const DaySchedule({
+    required this.dayId,
     required this.label,
     required this.slots,
     this.enabled = true,
   });
 
+  final String dayId;
   final String label;
   final List<TimeSlot> slots;
   final bool enabled;
@@ -47,14 +49,16 @@ class WeeklyScheduleCard extends StatelessWidget {
     required this.subtitle,
     required this.days,
     required this.dayOffLabel,
-    required this.onDayTap,
+    this.savingDayId,
+    this.onDayTap,
   });
 
   final String title;
   final String subtitle;
   final List<DaySchedule> days;
   final String dayOffLabel;
-  final void Function(int dayIndex) onDayTap;
+  final String? savingDayId;
+  final void Function(int dayIndex)? onDayTap;
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +93,8 @@ class WeeklyScheduleCard extends StatelessWidget {
             return _DayRow(
               day: day,
               dayOffLabel: dayOffLabel,
-              onTap: () => onDayTap(i),
+              isSaving: savingDayId == day.dayId,
+              onTap: onDayTap == null ? null : () => onDayTap!(i),
             );
           }),
         ],
@@ -102,12 +107,14 @@ class _DayRow extends StatelessWidget {
   const _DayRow({
     required this.day,
     required this.dayOffLabel,
-    required this.onTap,
+    this.isSaving = false,
+    this.onTap,
   });
 
   final DaySchedule day;
   final String dayOffLabel;
-  final VoidCallback onTap;
+  final bool isSaving;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -166,11 +173,18 @@ class _DayRow extends StatelessWidget {
                             .toList(),
                       ),
               ),
-              const Icon(
-                Icons.chevron_right_rounded,
-                color: ListenerProfileTheme.muted,
-                size: 20,
-              ),
+              if (isSaving)
+                const SizedBox(
+                  width: 20,
+                  height: 20,
+                  child: CircularProgressIndicator(strokeWidth: 2),
+                )
+              else
+                const Icon(
+                  Icons.chevron_right_rounded,
+                  color: ListenerProfileTheme.muted,
+                  size: 20,
+                ),
             ],
           ),
         ),
@@ -237,13 +251,15 @@ class SessionSettingItem {
     required this.icon,
     required this.label,
     required this.value,
-    required this.onTap,
+    this.isSaving = false,
+    this.onTap,
   });
 
   final IconData icon;
   final String label;
   final String value;
-  final VoidCallback onTap;
+  final bool isSaving;
+  final VoidCallback? onTap;
 }
 
 class _SessionSettingRow extends StatelessWidget {
@@ -275,11 +291,18 @@ class _SessionSettingRow extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 4),
-            const Icon(
-              Icons.chevron_right_rounded,
-              color: ListenerProfileTheme.muted,
-              size: 20,
-            ),
+            if (item.isSaving)
+              const SizedBox(
+                width: 20,
+                height: 20,
+                child: CircularProgressIndicator(strokeWidth: 2),
+              )
+            else
+              const Icon(
+                Icons.chevron_right_rounded,
+                color: ListenerProfileTheme.muted,
+                size: 20,
+              ),
           ],
         ),
       ),
@@ -301,12 +324,13 @@ class OnlineAvailabilitySectionCard extends StatelessWidget {
     required this.isOnline,
     required this.isOnlineLoading,
     required this.isOnlineSaving,
-    required this.onOnlineChanged,
+    this.onOnlineChanged,
     required this.instantTitle,
     required this.instantSubtitle,
     required this.earningsHighlight,
     required this.acceptInstantCalls,
-    required this.onInstantCallsChanged,
+    this.isInstantCallsSaving = false,
+    this.onInstantCallsChanged,
   });
 
   final String onlineTitle;
@@ -316,12 +340,13 @@ class OnlineAvailabilitySectionCard extends StatelessWidget {
   final bool isOnline;
   final bool isOnlineLoading;
   final bool isOnlineSaving;
-  final ValueChanged<bool> onOnlineChanged;
+  final ValueChanged<bool>? onOnlineChanged;
   final String instantTitle;
   final String instantSubtitle;
   final String earningsHighlight;
   final bool acceptInstantCalls;
-  final ValueChanged<bool> onInstantCallsChanged;
+  final bool isInstantCallsSaving;
+  final ValueChanged<bool>? onInstantCallsChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -355,6 +380,7 @@ class OnlineAvailabilitySectionCard extends StatelessWidget {
             subtitle: instantSubtitle,
             earningsHighlight: earningsHighlight,
             value: acceptInstantCalls,
+            isSaving: isInstantCallsSaving,
             onChanged: onInstantCallsChanged,
           ),
         ],
@@ -372,7 +398,7 @@ class _OnlineStatusContent extends StatelessWidget {
     required this.value,
     required this.isLoading,
     required this.isSaving,
-    required this.onChanged,
+    this.onChanged,
   });
 
   final String title;
@@ -382,7 +408,7 @@ class _OnlineStatusContent extends StatelessWidget {
   final bool value;
   final bool isLoading;
   final bool isSaving;
-  final ValueChanged<bool> onChanged;
+  final ValueChanged<bool>? onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -482,14 +508,16 @@ class _InstantCallContent extends StatelessWidget {
     required this.subtitle,
     required this.earningsHighlight,
     required this.value,
-    required this.onChanged,
+    this.isSaving = false,
+    this.onChanged,
   });
 
   final String title;
   final String subtitle;
   final String earningsHighlight;
   final bool value;
-  final ValueChanged<bool> onChanged;
+  final bool isSaving;
+  final ValueChanged<bool>? onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -510,11 +538,21 @@ class _InstantCallContent extends StatelessWidget {
                   ),
                 ),
               ),
-              Switch(
-                value: value,
-                onChanged: onChanged,
-                activeThumbColor: ListenerProfileTheme.success,
-              ),
+              if (isSaving)
+                const SizedBox(
+                  width: 24,
+                  height: 24,
+                  child: Padding(
+                    padding: EdgeInsets.all(2),
+                    child: CircularProgressIndicator(strokeWidth: 2),
+                  ),
+                )
+              else
+                Switch(
+                  value: value,
+                  onChanged: onChanged,
+                  activeThumbColor: ListenerProfileTheme.success,
+                ),
             ],
           ),
           const SizedBox(height: 4),

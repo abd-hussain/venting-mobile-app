@@ -12,6 +12,7 @@ import 'package:venting_mobile_app/domain/usecase/auth_register_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/auth_social_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/clear_auth_session_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_cached_auth_me_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/get_listener_availability_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_listener_notification_preferences_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_listener_online_status_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_listener_privacy_usecase.dart';
@@ -20,6 +21,8 @@ import 'package:venting_mobile_app/domain/usecase/get_listener_reviews_usecase.d
 import 'package:venting_mobile_app/domain/usecase/sign_in_with_apple_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/sign_in_with_google_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/update_listener_about_me_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/update_listener_availability_day_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/update_listener_availability_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/update_listener_avatar_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/update_listener_notification_preferences_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/update_listener_online_status_usecase.dart';
@@ -96,6 +99,9 @@ mixin VentingModuleBlocs on VentingModule {
       () => ListenerAvailabilityBloc(
         getIt<GetListenerOnlineStatusUsecase>(),
         getIt<UpdateListenerOnlineStatusUsecase>(),
+        getIt<GetListenerAvailabilityUsecase>(),
+        getIt<UpdateListenerAvailabilityUsecase>(),
+        getIt<UpdateListenerAvailabilityDayUsecase>(),
       ),
     );
     getIt.registerFactory<ListenerProfileBloc>(

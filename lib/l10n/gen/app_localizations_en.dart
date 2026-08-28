@@ -2343,6 +2343,10 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
   String get listener_avail_remove_slot => 'Remove';
 
   @override
+  String get listener_avail_slot_overlap_error =>
+      'Time slots cannot overlap. Each new slot must start when the previous one ends.';
+
+  @override
   String listener_sessions_filter_upcoming(int count) {
     return 'Upcoming ($count)';
   }
