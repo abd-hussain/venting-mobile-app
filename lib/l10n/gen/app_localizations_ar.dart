@@ -1208,6 +1208,10 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
   String get listener_profile_about_me => 'نبذة عني';
 
   @override
+  String get listener_profile_about_me_empty =>
+      'أضف نبذة عنك. اضغط تعديل لكتابة مقدمة قصيرة.';
+
+  @override
   String get listener_profile_edit_about_me_title => 'تعديل نبذة عني';
 
   @override

@@ -832,6 +832,8 @@
   "@listener_profile_edit_voice_re_record": {},
   "listener_profile_about_me": "نبذة عني",
   "@listener_profile_about_me": {},
+  "listener_profile_about_me_empty": "أضف نبذة عنك. اضغط تعديل لكتابة مقدمة قصيرة.",
+  "@listener_profile_about_me_empty": {},
   "listener_profile_edit_about_me_title": "تعديل نبذة عني",
   "@listener_profile_edit_about_me_title": {},
   "listener_profile_edit_about_me_subtitle": "اكتب مقدمة قصيرة ليتعرّف المتنفّسون على ما يمكن توقعه منك.",

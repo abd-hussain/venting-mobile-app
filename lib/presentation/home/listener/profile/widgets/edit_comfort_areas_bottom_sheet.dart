@@ -5,11 +5,17 @@ import 'package:venting_mobile_app/presentation/home/listener/profile/listener_p
 import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dart';
 
 class EditComfortAreasResult {
-  const EditComfortAreasResult({required this.selectedIds});
+  const EditComfortAreasResult({
+    required this.selectedIds,
+    this.otherText,
+  });
 
   final Set<String> selectedIds;
+  final String? otherText;
 
   bool get hasAny => selectedIds.isNotEmpty;
+
+  bool get requiresOtherText => selectedIds.contains('other');
 }
 
 class ComfortAreaOption {
@@ -85,7 +91,11 @@ abstract final class ListenerComfortAreaOptions {
   }) {
     return [
       for (final area in areas(l10n))
-        if (selection.selectedIds.contains(area.id)) area.label,
+        if (selection.selectedIds.contains(area.id))
+          if (area.id == 'other' && selection.otherText?.trim().isNotEmpty == true)
+            selection.otherText!.trim()
+          else
+            area.label,
     ];
   }
 }
@@ -120,27 +130,52 @@ class _EditComfortAreasBottomSheetState
     extends State<EditComfortAreasBottomSheet> {
   static const _rowSelected = Color(0xFF2A1F3D);
   static const _checkboxBorder = Color(0xFF4A425C);
+  static const _fieldFill = Color(0xFF1A1428);
 
   late final Set<String> _selectedIds;
+  late final TextEditingController _otherController;
 
   @override
   void initState() {
     super.initState();
     _selectedIds = {...?widget.initial?.selectedIds};
+    _otherController = TextEditingController(
+      text: widget.initial?.otherText ?? '',
+    );
+    _otherController.addListener(() => setState(() {}));
   }
 
+  @override
+  void dispose() {
+    _otherController.dispose();
+    super.dispose();
+  }
+
+  bool get _requiresOtherText => _selectedIds.contains('other');
+
   bool get _canSave {
-    final initial = widget.initial?.selectedIds ?? const <String>{};
+    final initial = widget.initial;
+    final initialIds = initial?.selectedIds ?? const <String>{};
     final hasAny = _selectedIds.isNotEmpty;
     if (!hasAny) return false;
-    return _selectedIds.length != initial.length ||
-        !_selectedIds.containsAll(initial);
+    if (_requiresOtherText && _otherController.text.trim().isEmpty) {
+      return false;
+    }
+
+    final other = _otherController.text.trim();
+    final initialOther = initial?.otherText?.trim() ?? '';
+    return _selectedIds.length != initialIds.length ||
+        !_selectedIds.containsAll(initialIds) ||
+        other != initialOther;
   }
 
   void _toggle(String id) {
     setState(() {
       if (_selectedIds.contains(id)) {
         _selectedIds.remove(id);
+        if (id == 'other') {
+          _otherController.clear();
+        }
       } else {
         _selectedIds.add(id);
       }
@@ -151,10 +186,13 @@ class _EditComfortAreasBottomSheetState
 
   void _onSave() {
     if (!_canSave) return;
-    // TODO: Persist comfort areas via listener profile API / repository.
-    Navigator.of(
-      context,
-    ).pop(EditComfortAreasResult(selectedIds: {..._selectedIds}));
+    final other = _otherController.text.trim();
+    Navigator.of(context).pop(
+      EditComfortAreasResult(
+        selectedIds: {..._selectedIds},
+        otherText: other.isEmpty ? null : other,
+      ),
+    );
   }
 
   @override
@@ -225,6 +263,46 @@ class _EditComfortAreasBottomSheetState
                   },
                 ),
               ),
+              if (_requiresOtherText) ...[
+                const SizedBox(height: 12),
+                TextField(
+                  controller: _otherController,
+                  style: GoogleFonts.inter(
+                    color: Colors.white,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  cursorColor: SplashColors.purpleMid,
+                  textCapitalization: TextCapitalization.sentences,
+                  textInputAction: TextInputAction.done,
+                  decoration: InputDecoration(
+                    hintText: l10n.listener_reg_area_other_hint,
+                    hintStyle: GoogleFonts.inter(
+                      color: ListenerProfileTheme.muted,
+                      fontSize: 15,
+                    ),
+                    filled: true,
+                    fillColor: _fieldFill,
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 14,
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(14),
+                      borderSide: BorderSide(
+                        color: SplashColors.purpleMid.withValues(alpha: 0.55),
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(14),
+                      borderSide: const BorderSide(
+                        color: SplashColors.purpleMid,
+                        width: 1.4,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
               const SizedBox(height: 16),
               Row(
                 children: [

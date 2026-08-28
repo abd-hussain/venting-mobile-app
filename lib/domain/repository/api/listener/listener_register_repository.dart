@@ -5,6 +5,7 @@ import 'package:fpdart/fpdart.dart';
 import 'package:phone_numbers_parser/phone_numbers_parser.dart';
 import 'package:venting_mobile_app/domain/data/api/listener_register_response_model.dart';
 import 'package:venting_mobile_app/domain/data/api/listener_registration_progress_model.dart';
+import 'package:venting_mobile_app/domain/data/app/listener_profile_patch.dart';
 import 'package:venting_mobile_app/domain/data/app/listener_registration_draft.dart';
 import 'package:venting_mobile_app/domain/data/app/listener_registration_step_slug.dart';
 import 'package:venting_mobile_app/domain/data/exceptions/main_api_exception.dart';
@@ -78,19 +79,14 @@ class ListenerRegisterRepository extends BaseRepository {
   TaskEither<Exception, ListenerRegistrationProgressModel> saveExperiencesStep({
     required ListenerRegistrationStep4Data data,
   }) {
-    final ids = [
-      if (data.relationshipId != null) data.relationshipId!,
-      ...data.familyIds,
-      ...data.experienceIds,
-    ];
-
     return _saveJsonStep(
       slug: ListenerRegistrationStepSlug.experiences,
-      body: {
-        'life_experience_ids': ids,
-        if (data.customExperiences.isNotEmpty)
-          'custom_experiences': data.customExperiences,
-      },
+      body: experiencesUpdateBody(
+        relationshipId: data.relationshipId,
+        familyIds: data.familyIds.toSet(),
+        experienceIds: data.experienceIds.toSet(),
+        customExperiences: data.customExperiences,
+      ),
     );
   }
 

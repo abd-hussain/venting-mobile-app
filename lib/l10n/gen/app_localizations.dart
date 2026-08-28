@@ -2303,6 +2303,12 @@ abstract class VentingMobLocalizations {
   /// **'About Me'**
   String get listener_profile_about_me;
 
+  /// No description provided for @listener_profile_about_me_empty.
+  ///
+  /// In en, this message translates to:
+  /// **'Add your about me. Tap Edit to write a short introduction.'**
+  String get listener_profile_about_me_empty;
+
   /// No description provided for @listener_profile_edit_about_me_title.
   ///
   /// In en, this message translates to:

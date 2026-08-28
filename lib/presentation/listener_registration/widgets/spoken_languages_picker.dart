@@ -24,6 +24,30 @@ String catalogLanguageLabel(
       : language.id;
 }
 
+List<CatalogLanguageModel>? _cachedCatalogLanguages;
+
+/// Resolves labels from the in-memory catalog cache (populated when the picker opens).
+List<String> cachedLanguageLabels(
+  Iterable<String> languageIds,
+  String languageCode,
+) {
+  final cached = _cachedCatalogLanguages;
+  if (cached == null || cached.isEmpty) {
+    return languageIds.map((id) => id).toList(growable: false);
+  }
+
+  return languageIds
+      .map((id) {
+        for (final language in cached) {
+          if (language.id == id) {
+            return catalogLanguageLabel(language, languageCode);
+          }
+        }
+        return id;
+      })
+      .toList(growable: false);
+}
+
 /// Multi-select spoken languages from `#75 GET /v1/catalog/languages`.
 Future<List<CatalogLanguageModel>?> showSpokenLanguagesPicker({
   required BuildContext context,
@@ -102,6 +126,7 @@ class _SpokenLanguagesPickerSheetState
           _isLoading = false;
           _errorMessage = null;
           _languages = items;
+          _cachedCatalogLanguages = items;
           _selected.removeWhere((id) => items.every((item) => item.id != id));
         });
       },

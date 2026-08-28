@@ -443,7 +443,6 @@ class _EditVoiceIntroBottomSheetState extends State<EditVoiceIntroBottomSheet>
     final path = _recordingPath;
     if (path == null) return;
 
-    // TODO: Upload / persist voice intro via listener profile API / repository.
     if (!mounted) return;
     Navigator.of(context).pop(
       EditVoiceIntroResult(filePath: path, durationSeconds: _recordedSeconds),

@@ -43,15 +43,21 @@ import 'package:venting_mobile_app/domain/usecase/get_catalog_languages_usecase.
 import 'package:venting_mobile_app/domain/usecase/get_catalog_life_experiences_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_listener_notification_preferences_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_listener_privacy_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/get_listener_profile_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_listener_registration_progress_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/get_listener_reviews_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_ventor_registration_progress_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/save_listener_registration_step_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/save_ventor_registration_step_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/sign_in_with_apple_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/sign_in_with_google_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/update_listener_about_me_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/update_listener_avatar_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/update_listener_notification_preferences_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/update_listener_phone_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/update_listener_privacy_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/update_listener_profile_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/update_listener_voice_intro_usecase.dart';
 
 /// Usecases mixin for VentingModule
 /// Handles all usecase factory methods
@@ -167,6 +173,21 @@ mixin VentingModuleUsecases on VentingModule {
     VentingPreferences ventingPreferences,
   ) => GetListenerPrivacyUsecase(listenerPrivacyRepository, ventingPreferences);
 
+  GetListenerProfileUsecase getListenerProfileUsecase(
+    ListenerProfileRepository listenerProfileRepository,
+    VentingPreferences ventingPreferences,
+    AppConfig appConfig,
+  ) => GetListenerProfileUsecase(
+    listenerProfileRepository,
+    ventingPreferences,
+    appConfig,
+  );
+
+  GetListenerReviewsUsecase getListenerReviewsUsecase(
+    ListenerProfileRepository listenerProfileRepository,
+    VentingPreferences ventingPreferences,
+  ) => GetListenerReviewsUsecase(listenerProfileRepository, ventingPreferences);
+
   UpdateListenerPrivacyUsecase updateListenerPrivacyUsecase(
     ListenerPrivacyRepository listenerPrivacyRepository,
     VentingPreferences ventingPreferences,
@@ -180,6 +201,46 @@ mixin VentingModuleUsecases on VentingModule {
     VentingPreferences ventingPreferences,
   ) =>
       UpdateListenerPhoneUsecase(listenerProfileRepository, ventingPreferences);
+
+  UpdateListenerAvatarUsecase updateListenerAvatarUsecase(
+    ListenerProfileRepository listenerProfileRepository,
+    VentingPreferences ventingPreferences,
+    AppConfig appConfig,
+  ) => UpdateListenerAvatarUsecase(
+    listenerProfileRepository,
+    ventingPreferences,
+    appConfig,
+  );
+
+  UpdateListenerAboutMeUsecase updateListenerAboutMeUsecase(
+    ListenerProfileRepository listenerProfileRepository,
+    VentingPreferences ventingPreferences,
+    AppConfig appConfig,
+  ) => UpdateListenerAboutMeUsecase(
+    listenerProfileRepository,
+    ventingPreferences,
+    appConfig,
+  );
+
+  UpdateListenerProfileUsecase updateListenerProfileUsecase(
+    ListenerProfileRepository listenerProfileRepository,
+    VentingPreferences ventingPreferences,
+    AppConfig appConfig,
+  ) => UpdateListenerProfileUsecase(
+    listenerProfileRepository,
+    ventingPreferences,
+    appConfig,
+  );
+
+  UpdateListenerVoiceIntroUsecase updateListenerVoiceIntroUsecase(
+    ListenerProfileRepository listenerProfileRepository,
+    VentingPreferences ventingPreferences,
+    AppConfig appConfig,
+  ) => UpdateListenerVoiceIntroUsecase(
+    listenerProfileRepository,
+    ventingPreferences,
+    appConfig,
+  );
 
   GetListenerRegistrationProgressUsecase getListenerRegistrationProgressUsecase(
     ListenerRegisterRepository listenerRegisterRepository,
@@ -308,6 +369,19 @@ mixin VentingModuleUsecases on VentingModule {
         getIt<VentingPreferences>(),
       ),
     );
+    getIt.registerFactory<GetListenerProfileUsecase>(
+      () => getListenerProfileUsecase(
+        getIt<ListenerProfileRepository>(),
+        getIt<VentingPreferences>(),
+        appConfig,
+      ),
+    );
+    getIt.registerFactory<GetListenerReviewsUsecase>(
+      () => getListenerReviewsUsecase(
+        getIt<ListenerProfileRepository>(),
+        getIt<VentingPreferences>(),
+      ),
+    );
     getIt.registerFactory<UpdateListenerPrivacyUsecase>(
       () => updateListenerPrivacyUsecase(
         getIt<ListenerPrivacyRepository>(),
@@ -318,6 +392,34 @@ mixin VentingModuleUsecases on VentingModule {
       () => updateListenerPhoneUsecase(
         getIt<ListenerProfileRepository>(),
         getIt<VentingPreferences>(),
+      ),
+    );
+    getIt.registerFactory<UpdateListenerAvatarUsecase>(
+      () => updateListenerAvatarUsecase(
+        getIt<ListenerProfileRepository>(),
+        getIt<VentingPreferences>(),
+        appConfig,
+      ),
+    );
+    getIt.registerFactory<UpdateListenerAboutMeUsecase>(
+      () => updateListenerAboutMeUsecase(
+        getIt<ListenerProfileRepository>(),
+        getIt<VentingPreferences>(),
+        appConfig,
+      ),
+    );
+    getIt.registerFactory<UpdateListenerProfileUsecase>(
+      () => updateListenerProfileUsecase(
+        getIt<ListenerProfileRepository>(),
+        getIt<VentingPreferences>(),
+        appConfig,
+      ),
+    );
+    getIt.registerFactory<UpdateListenerVoiceIntroUsecase>(
+      () => updateListenerVoiceIntroUsecase(
+        getIt<ListenerProfileRepository>(),
+        getIt<VentingPreferences>(),
+        appConfig,
       ),
     );
     getIt.registerFactory<GetListenerRegistrationProgressUsecase>(

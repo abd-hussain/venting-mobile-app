@@ -1215,6 +1215,10 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
   String get listener_profile_about_me => 'About Me';
 
   @override
+  String get listener_profile_about_me_empty =>
+      'Add your about me. Tap Edit to write a short introduction.';
+
+  @override
   String get listener_profile_edit_about_me_title => 'Edit About Me';
 
   @override

@@ -37,18 +37,48 @@ class RegistrationMediaStorage {
     String sourcePath, {
     required String prefix,
   }) async {
+    return _persistFile(
+      sourcePath,
+      prefix: prefix,
+      fallbackExtension: '.jpg',
+      emptyMessage: 'Image file is empty.',
+      missingMessage: 'Image file no longer exists.',
+    );
+  }
+
+  /// Copies a voice recording into the registration draft folder before upload.
+  static Future<String> persistAudio(
+    String sourcePath, {
+    required String prefix,
+  }) async {
+    return _persistFile(
+      sourcePath,
+      prefix: prefix,
+      fallbackExtension: '.m4a',
+      emptyMessage: 'Voice recording is empty.',
+      missingMessage: 'Voice recording no longer exists.',
+    );
+  }
+
+  static Future<String> _persistFile(
+    String sourcePath, {
+    required String prefix,
+    required String fallbackExtension,
+    required String emptyMessage,
+    required String missingMessage,
+  }) async {
     final normalized = normalizePath(sourcePath);
     final source = File(normalized);
     if (!await source.exists()) {
-      throw StateError('Image file no longer exists.');
+      throw StateError(missingMessage);
     }
     if (await source.length() == 0) {
-      throw StateError('Image file is empty.');
+      throw StateError(emptyMessage);
     }
 
     final dir = await draftDirectory();
     final destPath =
-        '${dir.path}/${prefix}_${_uuid.v4()}${_extension(normalized)}';
+        '${dir.path}/${prefix}_${_uuid.v4()}${_extension(normalized, fallback: fallbackExtension)}';
     await source.copy(destPath);
     return destPath;
   }

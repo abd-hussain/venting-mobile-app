@@ -56,10 +56,7 @@ abstract final class ListenerExperienceOptions {
     (id: 'grief_loss', label: l10n.listener_reg_exp_grief_loss),
     (id: 'anxiety_stress', label: l10n.listener_reg_exp_anxiety_stress),
     (id: 'health_challenge', label: l10n.listener_reg_exp_health_challenge),
-    (
-      id: 'addiction_recovery',
-      label: l10n.listener_reg_exp_addiction_recovery,
-    ),
+    (id: 'addiction_recovery', label: l10n.listener_reg_exp_addiction_recovery),
   ];
 
   /// Labels for profile chips from a saved selection.
@@ -111,7 +108,8 @@ class EditExperiencesBottomSheet extends StatefulWidget {
       _EditExperiencesBottomSheetState();
 }
 
-class _EditExperiencesBottomSheetState extends State<EditExperiencesBottomSheet> {
+class _EditExperiencesBottomSheetState
+    extends State<EditExperiencesBottomSheet> {
   String? _relationshipId;
   late final Set<String> _familyIds;
   late final Set<String> _experienceIds;
@@ -203,7 +201,6 @@ class _EditExperiencesBottomSheetState extends State<EditExperiencesBottomSheet>
 
   void _onSave() {
     if (!_canSave) return;
-    // TODO: Persist experiences via listener profile API / repository.
     Navigator.of(context).pop(
       EditExperiencesResult(
         relationshipId: _relationshipId,
@@ -230,153 +227,154 @@ class _EditExperiencesBottomSheetState extends State<EditExperiencesBottomSheet>
             bottom: 20 + MediaQuery.viewInsetsOf(context).bottom,
           ),
           child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Center(
-              child: Container(
-                width: 40,
-                height: 4,
-                decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: 0.18),
-                  borderRadius: BorderRadius.circular(2),
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Center(
+                child: Container(
+                  width: 40,
+                  height: 4,
+                  decoration: BoxDecoration(
+                    color: Colors.white.withValues(alpha: 0.18),
+                    borderRadius: BorderRadius.circular(2),
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(height: 18),
-            Text(
-              l10n.listener_profile_edit_experiences_title,
-              textAlign: TextAlign.center,
-              style: GoogleFonts.inter(
-                color: Colors.white,
-                fontSize: 18,
-                fontWeight: FontWeight.w700,
+              const SizedBox(height: 18),
+              Text(
+                l10n.listener_profile_edit_experiences_title,
+                textAlign: TextAlign.center,
+                style: GoogleFonts.inter(
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w700,
+                ),
               ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              l10n.listener_profile_edit_experiences_subtitle,
-              textAlign: TextAlign.center,
-              style: GoogleFonts.inter(
-                color: ListenerProfileTheme.muted,
-                fontSize: 13,
-                height: 1.4,
+              const SizedBox(height: 8),
+              Text(
+                l10n.listener_profile_edit_experiences_subtitle,
+                textAlign: TextAlign.center,
+                style: GoogleFonts.inter(
+                  color: ListenerProfileTheme.muted,
+                  fontSize: 13,
+                  height: 1.4,
+                ),
               ),
-            ),
-            const SizedBox(height: 18),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    _SectionTitle(l10n.listener_reg_exp_section_relationship),
-                    const SizedBox(height: 12),
-                    _ChipWrap(
-                      children: [
-                        for (final item
-                            in ListenerExperienceOptions.relationships(l10n))
-                          _SelectableChip(
-                            label: item.label,
-                            selected: _relationshipId == item.id,
-                            onTap: () => _selectRelationship(item.id),
+              const SizedBox(height: 18),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      _SectionTitle(l10n.listener_reg_exp_section_relationship),
+                      const SizedBox(height: 12),
+                      _ChipWrap(
+                        children: [
+                          for (final item
+                              in ListenerExperienceOptions.relationships(l10n))
+                            _SelectableChip(
+                              label: item.label,
+                              selected: _relationshipId == item.id,
+                              onTap: () => _selectRelationship(item.id),
+                            ),
+                        ],
+                      ),
+                      const SizedBox(height: 22),
+                      _SectionTitle(l10n.listener_reg_exp_section_family),
+                      const SizedBox(height: 12),
+                      _ChipWrap(
+                        children: [
+                          for (final item in ListenerExperienceOptions.family(
+                            l10n,
+                          ))
+                            _SelectableChip(
+                              label: item.label,
+                              selected: _familyIds.contains(item.id),
+                              onTap: () => _toggleFamily(item.id),
+                            ),
+                        ],
+                      ),
+                      const SizedBox(height: 22),
+                      _SectionTitle(l10n.listener_reg_exp_section_experiences),
+                      const SizedBox(height: 12),
+                      _ChipWrap(
+                        children: [
+                          for (final item
+                              in ListenerExperienceOptions.experiences(l10n))
+                            _SelectableChip(
+                              label: item.label,
+                              selected: _experienceIds.contains(item.id),
+                              onTap: () => _toggleExperience(item.id),
+                            ),
+                          for (final custom in _customExperiences)
+                            _SelectableChip(
+                              label: custom,
+                              selected: true,
+                              onTap: () => _removeCustom(custom),
+                              showClose: true,
+                            ),
+                          _AddMoreChip(
+                            label: l10n.listener_reg_exp_add_more,
+                            onTap: _addCustomExperience,
                           ),
-                      ],
-                    ),
-                    const SizedBox(height: 22),
-                    _SectionTitle(l10n.listener_reg_exp_section_family),
-                    const SizedBox(height: 12),
-                    _ChipWrap(
-                      children: [
-                        for (final item
-                            in ListenerExperienceOptions.family(l10n))
-                          _SelectableChip(
-                            label: item.label,
-                            selected: _familyIds.contains(item.id),
-                            onTap: () => _toggleFamily(item.id),
-                          ),
-                      ],
-                    ),
-                    const SizedBox(height: 22),
-                    _SectionTitle(l10n.listener_reg_exp_section_experiences),
-                    const SizedBox(height: 12),
-                    _ChipWrap(
-                      children: [
-                        for (final item
-                            in ListenerExperienceOptions.experiences(l10n))
-                          _SelectableChip(
-                            label: item.label,
-                            selected: _experienceIds.contains(item.id),
-                            onTap: () => _toggleExperience(item.id),
-                          ),
-                        for (final custom in _customExperiences)
-                          _SelectableChip(
-                            label: custom,
-                            selected: true,
-                            onTap: () => _removeCustom(custom),
-                            showClose: true,
-                          ),
-                        _AddMoreChip(
-                          label: l10n.listener_reg_exp_add_more,
-                          onTap: _addCustomExperience,
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+              Row(
+                children: [
+                  Expanded(
+                    child: OutlinedButton(
+                      onPressed: _onCancel,
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: Colors.white,
+                        side: BorderSide(
+                          color: Colors.white.withValues(alpha: 0.2),
                         ),
-                      ],
+                        minimumSize: const Size.fromHeight(52),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(14),
+                        ),
+                        textStyle: GoogleFonts.inter(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      child: Text(l10n.common_cancel),
                     ),
-                  ],
-                ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: FilledButton(
+                      onPressed: _canSave ? _onSave : null,
+                      style: FilledButton.styleFrom(
+                        backgroundColor: SplashColors.purpleMid,
+                        disabledBackgroundColor: SplashColors.purpleMid
+                            .withValues(alpha: 0.35),
+                        foregroundColor: Colors.white,
+                        disabledForegroundColor: Colors.white.withValues(
+                          alpha: 0.7,
+                        ),
+                        elevation: 0,
+                        minimumSize: const Size.fromHeight(52),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(14),
+                        ),
+                        textStyle: GoogleFonts.inter(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      child: Text(l10n.common_save),
+                    ),
+                  ),
+                ],
               ),
-            ),
-            const SizedBox(height: 16),
-            Row(
-              children: [
-                Expanded(
-                  child: OutlinedButton(
-                    onPressed: _onCancel,
-                    style: OutlinedButton.styleFrom(
-                      foregroundColor: Colors.white,
-                      side: BorderSide(
-                        color: Colors.white.withValues(alpha: 0.2),
-                      ),
-                      minimumSize: const Size.fromHeight(52),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(14),
-                      ),
-                      textStyle: GoogleFonts.inter(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    child: Text(l10n.common_cancel),
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: FilledButton(
-                    onPressed: _canSave ? _onSave : null,
-                    style: FilledButton.styleFrom(
-                      backgroundColor: SplashColors.purpleMid,
-                      disabledBackgroundColor: SplashColors.purpleMid
-                          .withValues(alpha: 0.35),
-                      foregroundColor: Colors.white,
-                      disabledForegroundColor: Colors.white.withValues(
-                        alpha: 0.7,
-                      ),
-                      elevation: 0,
-                      minimumSize: const Size.fromHeight(52),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(14),
-                      ),
-                      textStyle: GoogleFonts.inter(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    child: Text(l10n.common_save),
-                  ),
-                ),
-              ],
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
       ),
     );
   }

@@ -6,6 +6,7 @@ abstract final class ListenerProfileTheme {
   static const cardBorder = Color(0xFF2A2238);
   static const muted = Color(0xFF9B93AB);
   static const success = Color(0xFF22C55E);
+  static const offline = Color(0xFFF97316);
   static const gold = Color(0xFFFBBF24);
   static const accent = SplashColors.purpleMid;
 

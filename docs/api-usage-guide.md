@@ -281,9 +281,12 @@ Listener (`POST /v1/listeners/register/complete`):
 | # | Endpoint | Screen / place | When |
 |---|----------|----------------|------|
 | 24 | `GET /v1/listeners/me` | Listener profile tab + settings | Load full private profile |
-| 25 | `PATCH /v1/listeners/me` | Edit about / city / phone / experiences / comfort / boundaries / country / languages | Save any partial edit |
-| 26 | `POST /v1/listeners/me/voice-intro` | Edit voice intro sheet | Upload new m4a/aac intro |
+| 25 | `PATCH /v1/listeners/me` | Edit about / city / phone / experiences / comfort / boundaries / country / languages | Save partial edit — **JSON only** (no avatar file) |
+| 25b | `POST /v1/listeners/me/avatar` | Listener profile tab — edit photo | Upload new profile photo (`multipart` field `avatar`) |
+| 26 | `POST /v1/listeners/me/voice-intro` | Edit voice intro sheet | Upload new m4a/aac intro (`multipart` field `audio`) |
 | 27 | `GET /v1/listeners/me/reviews` | Profile reviews bottom sheet | Paginated reviews |
+
+**Media URLs:** `avatar_url` and `voice_intro_url` from #24 are often relative (`/static/uploads/...`). Mobile prefixes with `AppConfig.baseUrl` — see `docs/api-endpoints.md` → [Media URLs](#media-urls-static-uploads).
 
 ### C7. Listener privacy & notifications prefs
 
@@ -359,7 +362,7 @@ Module ids: `art_of_listening`, `empathy`, `boundaries`, `difficult_situations`,
 | Sessions | `#46`, `#47`, `#48`, `#49`, `#50` |
 | Availability | `#37`, `#38`, `#39` |
 | Earnings | `#56`, `#57`, `#58`, `#59`, `#60`, `#61`, `#62` |
-| Profile | `#24`, `#25`, `#26`, `#27`, `#33`/`#34`, `#35`/`#36`, `#4`, `#5`, `#6` |
+| Profile | `#24`, `#25`, `#25b`, `#26`, `#27`, `#33`/`#34`, `#35`/`#36`, `#4`, `#5`, `#6` |
 | Notifications | `#68`, `#69`, `#70` |
 | Call | `#51`, `#52`, `#54`, `#55` |
 | Registration | `#22`, `#23` |
@@ -410,8 +413,9 @@ Module ids: `art_of_listening`, `empathy`, `boundaries`, `difficult_situations`,
 | `#11` ventor home | Many separate calls for streak + upcoming + recent on first paint |
 | `#32` listener dashboard | Separate setup + impact + next session calls for first paint |
 | `#40` with query filters | One endpoint per filter chip |
-| `#25` / `#10` PATCH partial | Re-uploading the whole profile for one field |
-| Multipart only for files | JSON for avatars/voice/ID when binary is required |
+| `#25` / `#10` PATCH partial (JSON) | Re-uploading the whole profile for one text field |
+| `#25b` / `#26` POST multipart | Sending avatar/voice as JSON or via `PATCH /v1/listeners/me` |
+| Multipart only for files | JSON-encoding binary avatar/voice/ID data |
 
 Lists that should paginate: listeners (`#40`), sessions (`#43`/`#46`), reviews (`#27`), notifications (`#68`), payouts (`#61`).
 
