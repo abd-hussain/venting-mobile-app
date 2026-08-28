@@ -18,9 +18,11 @@ import 'package:venting_mobile_app/domain/repository/api/catalog/catalog_languag
 import 'package:venting_mobile_app/domain/repository/api/catalog/catalog_life_experiences_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/listener/listener_availability_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/listener/listener_notification_preferences_repository.dart';
+import 'package:venting_mobile_app/domain/repository/api/listener/listener_notifications_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/listener/listener_privacy_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/listener/listener_profile_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/listener/listener_register_repository.dart';
+import 'package:venting_mobile_app/domain/repository/api/ventor/ventor_notifications_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/ventor/ventor_register_repository.dart';
 import 'package:venting_mobile_app/domain/repository/app/auth_me_cache_repository.dart';
 import 'package:venting_mobile_app/domain/repository/app/social_sign_in_repository.dart';
@@ -37,6 +39,8 @@ import 'package:venting_mobile_app/domain/usecase/auth_social_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/clear_auth_session_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/complete_listener_registration_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/complete_ventor_registration_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/delete_listener_notification_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/delete_ventor_notification_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_cached_auth_me_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_catalog_boundaries_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_catalog_categories_usecase.dart';
@@ -44,12 +48,16 @@ import 'package:venting_mobile_app/domain/usecase/get_catalog_languages_usecase.
 import 'package:venting_mobile_app/domain/usecase/get_catalog_life_experiences_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_listener_availability_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_listener_notification_preferences_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/get_listener_notifications_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_listener_online_status_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_listener_privacy_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_listener_profile_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_listener_registration_progress_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_listener_reviews_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/get_ventor_notifications_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_ventor_registration_progress_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/mark_all_listener_notifications_read_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/mark_all_ventor_notifications_read_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/save_listener_registration_step_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/save_ventor_registration_step_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/sign_in_with_apple_usecase.dart';
@@ -171,6 +179,55 @@ mixin VentingModuleUsecases on VentingModule {
     VentingPreferences ventingPreferences,
   ) => UpdateListenerNotificationPreferencesUsecase(
     listenerNotificationPreferencesRepository,
+    ventingPreferences,
+  );
+
+  GetListenerNotificationsUsecase getListenerNotificationsUsecase(
+    ListenerNotificationsRepository listenerNotificationsRepository,
+    VentingPreferences ventingPreferences,
+  ) => GetListenerNotificationsUsecase(
+    listenerNotificationsRepository,
+    ventingPreferences,
+  );
+
+  MarkAllListenerNotificationsReadUsecase
+  markAllListenerNotificationsReadUsecase(
+    ListenerNotificationsRepository listenerNotificationsRepository,
+    VentingPreferences ventingPreferences,
+  ) => MarkAllListenerNotificationsReadUsecase(
+    listenerNotificationsRepository,
+    ventingPreferences,
+  );
+
+  DeleteListenerNotificationUsecase deleteListenerNotificationUsecase(
+    ListenerNotificationsRepository listenerNotificationsRepository,
+    VentingPreferences ventingPreferences,
+  ) => DeleteListenerNotificationUsecase(
+    listenerNotificationsRepository,
+    ventingPreferences,
+  );
+
+  GetVentorNotificationsUsecase getVentorNotificationsUsecase(
+    VentorNotificationsRepository ventorNotificationsRepository,
+    VentingPreferences ventingPreferences,
+  ) => GetVentorNotificationsUsecase(
+    ventorNotificationsRepository,
+    ventingPreferences,
+  );
+
+  MarkAllVentorNotificationsReadUsecase markAllVentorNotificationsReadUsecase(
+    VentorNotificationsRepository ventorNotificationsRepository,
+    VentingPreferences ventingPreferences,
+  ) => MarkAllVentorNotificationsReadUsecase(
+    ventorNotificationsRepository,
+    ventingPreferences,
+  );
+
+  DeleteVentorNotificationUsecase deleteVentorNotificationUsecase(
+    VentorNotificationsRepository ventorNotificationsRepository,
+    VentingPreferences ventingPreferences,
+  ) => DeleteVentorNotificationUsecase(
+    ventorNotificationsRepository,
     ventingPreferences,
   );
 
@@ -406,6 +463,42 @@ mixin VentingModuleUsecases on VentingModule {
     getIt.registerFactory<UpdateListenerNotificationPreferencesUsecase>(
       () => updateListenerNotificationPreferencesUsecase(
         getIt<ListenerNotificationPreferencesRepository>(),
+        getIt<VentingPreferences>(),
+      ),
+    );
+    getIt.registerFactory<GetListenerNotificationsUsecase>(
+      () => getListenerNotificationsUsecase(
+        getIt<ListenerNotificationsRepository>(),
+        getIt<VentingPreferences>(),
+      ),
+    );
+    getIt.registerFactory<MarkAllListenerNotificationsReadUsecase>(
+      () => markAllListenerNotificationsReadUsecase(
+        getIt<ListenerNotificationsRepository>(),
+        getIt<VentingPreferences>(),
+      ),
+    );
+    getIt.registerFactory<DeleteListenerNotificationUsecase>(
+      () => deleteListenerNotificationUsecase(
+        getIt<ListenerNotificationsRepository>(),
+        getIt<VentingPreferences>(),
+      ),
+    );
+    getIt.registerFactory<GetVentorNotificationsUsecase>(
+      () => getVentorNotificationsUsecase(
+        getIt<VentorNotificationsRepository>(),
+        getIt<VentingPreferences>(),
+      ),
+    );
+    getIt.registerFactory<MarkAllVentorNotificationsReadUsecase>(
+      () => markAllVentorNotificationsReadUsecase(
+        getIt<VentorNotificationsRepository>(),
+        getIt<VentingPreferences>(),
+      ),
+    );
+    getIt.registerFactory<DeleteVentorNotificationUsecase>(
+      () => deleteVentorNotificationUsecase(
+        getIt<VentorNotificationsRepository>(),
         getIt<VentingPreferences>(),
       ),
     );

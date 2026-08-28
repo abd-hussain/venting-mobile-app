@@ -163,7 +163,7 @@ erDiagram
 | `reward_offer_kind` | `percent_off`, `free_minutes`, `priority_match` |
 | `earnings_tier` | `starter`, `rising`, `trusted`, `expert`, `elite` |
 | `invite_status` | `pending`, `joined`, `first_session`, `booked_call` |
-| `notification_type` | `session_request`, `session_reminder`, `review`, `payout`, `system`, `rewards` |
+| `notification_type` | `welcome`, `complete_registration`, `book_first_session`, `session_request`, `session_reminder`, `review`, `payout`, `system`, `rewards` |
 | `training_status` | `not_started`, `in_progress`, `completed` |
 | `mood_kind` | `great`, `okay`, `anxious`, `sad`, `angry` |
 

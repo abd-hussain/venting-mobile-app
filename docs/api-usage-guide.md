@@ -316,6 +316,19 @@ Listener (`POST /v1/listeners/register/complete`):
 | 68 | `GET /v1/listeners/me/notifications` | Listener notifications list | Open inbox; optional `unread_only` |
 | 69 | `POST /v1/listeners/me/notifications/read-all` | Mark all read action | User clears unread |
 | 70 | `DELETE /v1/listeners/me/notifications/{notificationId}` | Swipe/delete one notification | User dismisses one item |
+| 70a | `GET /v1/ventors/me/notifications` | Ventor notifications list | Open inbox from dashboard bell |
+| 70b | `POST /v1/ventors/me/notifications/read-all` | Ventor mark all read | User clears unread |
+| 70c | `DELETE /v1/ventors/me/notifications/{notificationId}` | Ventor swipe/delete | User dismisses one item |
+
+**Welcome / onboarding notifications (server-created):**
+
+| `type` | Typical trigger | Tap action (`data.action`) |
+|--------|-----------------|----------------------------|
+| `welcome` | Account created | `open_registration` |
+| `complete_registration` | Incomplete registration after 24h | `open_registration` + `next_step` |
+| `book_first_session` | Registered but no sessions yet | `book_first_session` (ventor) / `open_availability` (listener) |
+
+See **§9 Notifications** in `api-endpoints.md` for full trigger table and payload shape.
 
 ### C10. Training
 

@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/call/ventor_call_args.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/call/ventor_call_flow.dart';
+import 'package:venting_mobile_app/presentation/home/ventor/dashboard/ventor_notifications_screen.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/home/ventor_home_models.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/home/ventor_mood_checkin_sheet.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/home/ventor_points_home_card.dart';
@@ -262,12 +263,6 @@ class _VentorDashboardTabState extends State<VentorDashboardTab> {
     );
   }
 
-  void _todoFeature(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message), behavior: SnackBarBehavior.floating),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final l10n = VentingMobLocalizations.of(context);
@@ -284,7 +279,7 @@ class _VentorDashboardTabState extends State<VentorDashboardTab> {
               greeting: '${_greeting(l10n)}, $name 👋',
               subtitle: l10n.ventor_home_safe_place,
               onNotifications: () =>
-                  _todoFeature(l10n.ventor_home_notifications_soon),
+                  openVentorNotificationsScreen(context: context),
             ),
             const SizedBox(height: 22),
 

@@ -12,6 +12,16 @@ import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dar
 class ListenerHomeShell extends StatefulWidget {
   const ListenerHomeShell({super.key});
 
+  static const dashboardTab = 0;
+  static const earningsTab = 1;
+  static const sessionsTab = 2;
+  static const availabilityTab = 3;
+  static const profileTab = 4;
+
+  static void goToTab(BuildContext context, int index) {
+    context.findAncestorStateOfType<_ListenerHomeShellState>()?.goToTab(index);
+  }
+
   @override
   State<ListenerHomeShell> createState() => _ListenerHomeShellState();
 }
@@ -20,11 +30,18 @@ class _ListenerHomeShellState extends State<ListenerHomeShell> {
   int _index = 0;
   late final List<Widget> _tabs;
 
+  void goToTab(int index) {
+    if (index < 0 || index >= _tabs.length || index == _index) return;
+    setState(() => _index = index);
+  }
+
   @override
   void initState() {
     super.initState();
     _tabs = [
-      ListenerDashboardTab(onOpenSessions: () => setState(() => _index = 2)),
+      ListenerDashboardTab(
+        onOpenSessions: () => goToTab(ListenerHomeShell.sessionsTab),
+      ),
       const ListenerEarningsTab(),
       const ListenerSessionsTab(),
       const ListenerAvailabilityTab(),

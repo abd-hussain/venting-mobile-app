@@ -5,28 +5,27 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:venting_mobile_app/di/di_container.dart';
 import 'package:venting_mobile_app/domain/data/app/listener_notification.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
-import 'package:venting_mobile_app/presentation/home/listener/dashboard/bloc/listener_notifications_bloc.dart';
 import 'package:venting_mobile_app/presentation/home/listener/profile/listener_profile_theme.dart';
+import 'package:venting_mobile_app/presentation/home/ventor/dashboard/bloc/ventor_notifications_bloc.dart';
 import 'package:venting_mobile_app/presentation/notifications/inbox_notification_ui.dart';
 import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dart';
 import 'package:venting_mobile_app/utils/notification_action_handler.dart';
 
-/// Opens the listener notifications inbox screen.
-Future<void> openListenerNotificationsScreen({required BuildContext context}) {
+Future<void> openVentorNotificationsScreen({required BuildContext context}) {
   return Navigator.of(context).push<void>(
     MaterialPageRoute(
       builder: (_) => BlocProvider(
         create: (_) =>
-            diContainer<ListenerNotificationsBloc>()
-              ..add(const ListenerNotificationsEvent.started()),
-        child: const ListenerNotificationsScreen(),
+            diContainer<VentorNotificationsBloc>()
+              ..add(const VentorNotificationsEvent.started()),
+        child: const VentorNotificationsScreen(),
       ),
     ),
   );
 }
 
-class ListenerNotificationsScreen extends StatelessWidget {
-  const ListenerNotificationsScreen({super.key});
+class VentorNotificationsScreen extends StatelessWidget {
+  const VentorNotificationsScreen({super.key});
 
   static const _overlayStyle = SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
@@ -72,14 +71,14 @@ class ListenerNotificationsScreen extends StatelessWidget {
     );
     if (confirmed != true || !context.mounted) return;
 
-    context.read<ListenerNotificationsBloc>().add(
-      ListenerNotificationsEvent.deleteRequested(notificationId: item.id),
+    context.read<VentorNotificationsBloc>().add(
+      VentorNotificationsEvent.deleteRequested(notificationId: item.id),
     );
   }
 
   void _onNotificationTap(BuildContext context, AppNotification item) {
-    context.read<ListenerNotificationsBloc>().add(
-      ListenerNotificationsEvent.notificationTapped(notificationId: item.id),
+    context.read<VentorNotificationsBloc>().add(
+      VentorNotificationsEvent.notificationTapped(notificationId: item.id),
     );
 
     if (item.action == AppNotificationAction.none) return;
@@ -87,7 +86,7 @@ class ListenerNotificationsScreen extends StatelessWidget {
     handleAppNotificationAction(
       context: context,
       notification: item,
-      audience: NotificationAudience.listener,
+      audience: NotificationAudience.ventor,
     );
   }
 
@@ -95,7 +94,7 @@ class ListenerNotificationsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = VentingMobLocalizations.of(context);
 
-    return BlocListener<ListenerNotificationsBloc, ListenerNotificationsState>(
+    return BlocListener<VentorNotificationsBloc, VentorNotificationsState>(
       listenWhen: (previous, current) =>
           current.errorMessage.isNotEmpty &&
           current.errorMessage != previous.errorMessage,
@@ -125,10 +124,7 @@ class ListenerNotificationsScreen extends StatelessWidget {
               ),
             ),
             actions: [
-              BlocBuilder<
-                ListenerNotificationsBloc,
-                ListenerNotificationsState
-              >(
+              BlocBuilder<VentorNotificationsBloc, VentorNotificationsState>(
                 buildWhen: (previous, current) =>
                     previous.hasUnread != current.hasUnread ||
                     previous.isMarkingAllAsRead != current.isMarkingAllAsRead,
@@ -138,8 +134,8 @@ class ListenerNotificationsScreen extends StatelessWidget {
                   return TextButton(
                     onPressed: state.isMarkingAllAsRead
                         ? null
-                        : () => context.read<ListenerNotificationsBloc>().add(
-                            const ListenerNotificationsEvent.markAllAsReadRequested(),
+                        : () => context.read<VentorNotificationsBloc>().add(
+                            const VentorNotificationsEvent.markAllAsReadRequested(),
                           ),
                     child: state.isMarkingAllAsRead
                         ? const SizedBox(
@@ -160,7 +156,7 @@ class ListenerNotificationsScreen extends StatelessWidget {
               ),
             ],
           ),
-          body: BlocBuilder<ListenerNotificationsBloc, ListenerNotificationsState>(
+          body: BlocBuilder<VentorNotificationsBloc, VentorNotificationsState>(
             builder: (context, state) {
               if (state.isLoading) {
                 return const Center(child: CircularProgressIndicator());
@@ -182,10 +178,9 @@ class ListenerNotificationsScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 16),
                         FilledButton(
-                          onPressed: () =>
-                              context.read<ListenerNotificationsBloc>().add(
-                                const ListenerNotificationsEvent.retryLoad(),
-                              ),
+                          onPressed: () => context
+                              .read<VentorNotificationsBloc>()
+                              .add(const VentorNotificationsEvent.retryLoad()),
                           child: Text(l10n.common_retry),
                         ),
                       ],
@@ -227,8 +222,8 @@ class ListenerNotificationsScreen extends StatelessWidget {
                               : ListenerProfileTheme.cardBorder,
                         ),
                         onSelected: (value) =>
-                            context.read<ListenerNotificationsBloc>().add(
-                              ListenerNotificationsEvent.unreadOnlyFilterChanged(
+                            context.read<VentorNotificationsBloc>().add(
+                              VentorNotificationsEvent.unreadOnlyFilterChanged(
                                 unreadOnly: value,
                               ),
                             ),
@@ -265,9 +260,9 @@ class ListenerNotificationsScreen extends StatelessWidget {
                                     const SizedBox(height: 12),
                                     TextButton(
                                       onPressed: () => context
-                                          .read<ListenerNotificationsBloc>()
+                                          .read<VentorNotificationsBloc>()
                                           .add(
-                                            const ListenerNotificationsEvent.unreadOnlyFilterChanged(
+                                            const VentorNotificationsEvent.unreadOnlyFilterChanged(
                                               unreadOnly: false,
                                             ),
                                           ),
