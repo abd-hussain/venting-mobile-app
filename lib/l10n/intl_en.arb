@@ -1513,8 +1513,10 @@
   "@ventor_profile_anonymous": {},
   "ventor_profile_sessions": "Sessions",
   "@ventor_profile_sessions": {},
-  "ventor_profile_day_streak": "Day Streak",
+  "ventor_profile_day_streak": "Days Streak",
   "@ventor_profile_day_streak": {},
+  "ventor_profile_progress_summary": "Progress Summary",
+  "@ventor_profile_progress_summary": {},
   "ventor_profile_mood_journey": "Mood Journey",
   "@ventor_profile_mood_journey": {},
   "ventor_profile_today": "Today",
@@ -1533,53 +1535,20 @@
   "@ventor_profile_day_sat": {},
   "ventor_profile_day_sun": "Sun",
   "@ventor_profile_day_sun": {},
-  "ventor_profile_achievements": "Achievements",
-  "@ventor_profile_achievements": {},
   "ventor_profile_see_all": "See all",
   "@ventor_profile_see_all": {},
-  "ventor_profile_achievement_first_step": "First Step",
-  "@ventor_profile_achievement_first_step": {},
-  "ventor_profile_achievement_first_step_desc": "1 Session",
-  "@ventor_profile_achievement_first_step_desc": {},
-  "ventor_profile_achievement_be_heard": "Be Heard",
-  "@ventor_profile_achievement_be_heard": {},
-  "ventor_profile_achievement_be_heard_desc": "5 Sessions",
-  "@ventor_profile_achievement_be_heard_desc": {},
-  "ventor_profile_achievement_week_warrior": "Week Warrior",
-  "@ventor_profile_achievement_week_warrior": {},
-  "ventor_profile_achievement_week_warrior_desc": "7 Day Streak",
-  "@ventor_profile_achievement_week_warrior_desc": {},
-  "ventor_profile_achievement_active_mind": "Active Mind",
-  "@ventor_profile_achievement_active_mind": {},
-  "ventor_profile_achievement_active_mind_desc": "20 Sessions",
-  "@ventor_profile_achievement_active_mind_desc": {},
-  "ventor_profile_achievement_first_step_detail": "Complete your first venting session. Taking that first step shows courage — and it unlocks your journey on Venting.",
-  "@ventor_profile_achievement_first_step_detail": {},
-  "ventor_profile_achievement_be_heard_detail": "Finish 5 sessions where you shared how you feel. Being heard consistently helps build trust and emotional clarity.",
-  "@ventor_profile_achievement_be_heard_detail": {},
-  "ventor_profile_achievement_week_warrior_detail": "Keep a 7-day streak by checking in or completing sessions. Small daily habits can make a big difference.",
-  "@ventor_profile_achievement_week_warrior_detail": {},
-  "ventor_profile_achievement_active_mind_detail": "Reach 20 total sessions. This badge celebrates showing up for yourself again and again.",
-  "@ventor_profile_achievement_active_mind_detail": {},
-  "ventor_profile_achievements_subtitle": "{unlocked} of {total} unlocked",
-  "@ventor_profile_achievements_subtitle": {
-    "placeholders": {
-      "unlocked": {
-        "type": "int"
-      },
-      "total": {
-        "type": "int"
-      }
-    }
-  },
-  "ventor_profile_achievement_unlocked": "Unlocked",
-  "@ventor_profile_achievement_unlocked": {},
-  "ventor_profile_achievement_locked": "Locked",
-  "@ventor_profile_achievement_locked": {},
   "ventor_profile_my_listeners": "My Listeners",
   "@ventor_profile_my_listeners": {},
   "ventor_profile_add_favorite": "Add Favorite",
   "@ventor_profile_add_favorite": {},
+  "ventor_profile_add_favorite_total": "Total ({count})",
+  "@ventor_profile_add_favorite_total": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "ventor_profile_quote": "It's okay to not be okay. You don't have to go through it alone.",
   "@ventor_profile_quote": {},
   "ventor_profile_edit_title": "Edit Profile",
@@ -1652,8 +1621,6 @@
   "@ventor_privacy_section_profile": {},
   "ventor_privacy_show_mood_journey": "Show Mood Journey",
   "@ventor_privacy_show_mood_journey": {},
-  "ventor_privacy_show_achievements": "Show Achievements",
-  "@ventor_privacy_show_achievements": {},
   "ventor_privacy_show_stats": "Show Sessions & Streak",
   "@ventor_privacy_show_stats": {},
   "ventor_privacy_show_favorite_listeners": "Show My Listeners",
@@ -1778,6 +1745,8 @@
   "@listener_sessions_accept_instant": {},
   "listener_sessions_assigned_snackbar": "Call assigned to you — join when ready.",
   "@listener_sessions_assigned_snackbar": {},
+  "listener_sessions_already_taken": "Another listener accepted this call first.",
+  "@listener_sessions_already_taken": {},
   "listener_sessions_waiting": "They're waiting for you",
   "@listener_sessions_waiting": {},
   "listener_sessions_join_now": "Join call now",

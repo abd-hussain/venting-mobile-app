@@ -606,7 +606,6 @@ $ListenerEarningsTierModelCopyWith<$Res>? get current_tier {
 }
 }
 
-
 /// @nodoc
 mixin _$ListenerEarningsTierModel {
 
@@ -804,11 +803,11 @@ return $default(_that.id,_that.min_sessions,_that.min_rating,_that.hourly_rate);
 }
 
 /// @nodoc
-@JsonSerializable()
+@JsonSerializable(createFactory: false)
 
 class _ListenerEarningsTierModel implements ListenerEarningsTierModel {
   const _ListenerEarningsTierModel({this.id = '', this.min_sessions = 0, this.min_rating = 0, this.hourly_rate = 0});
-  factory _ListenerEarningsTierModel.fromJson(Map<String, dynamic> json) => _$ListenerEarningsTierModelFromJson(json);
+  
 
 @override@JsonKey() final  String id;
 @override@JsonKey() final  int min_sessions;
@@ -1431,7 +1430,6 @@ as List<ListenerEarningsChartPointModel>,
 
 }
 
-
 /// @nodoc
 mixin _$ListenerEarningsChartPointModel {
 
@@ -1627,11 +1625,11 @@ return $default(_that.label,_that.amount);case _:
 }
 
 /// @nodoc
-@JsonSerializable()
+@JsonSerializable(createFactory: false)
 
 class _ListenerEarningsChartPointModel implements ListenerEarningsChartPointModel {
   const _ListenerEarningsChartPointModel({this.label = '', this.amount = 0});
-  factory _ListenerEarningsChartPointModel.fromJson(Map<String, dynamic> json) => _$ListenerEarningsChartPointModelFromJson(json);
+  
 
 @override@JsonKey() final  String label;
 @override@JsonKey() final  num amount;
@@ -1981,7 +1979,6 @@ $ListenerPayoutMethodsDataCopyWith<$Res> get data {
 }
 }
 
-
 /// @nodoc
 mixin _$ListenerPayoutMethodsData {
 
@@ -2177,11 +2174,11 @@ return $default(_that.default_method,_that.methods);case _:
 }
 
 /// @nodoc
-@JsonSerializable()
+@JsonSerializable(createFactory: false)
 
 class _ListenerPayoutMethodsData implements ListenerPayoutMethodsData {
   const _ListenerPayoutMethodsData({this.default_method, final  List<ListenerPayoutMethodModel> methods = const <ListenerPayoutMethodModel>[]}): _methods = methods;
-  factory _ListenerPayoutMethodsData.fromJson(Map<String, dynamic> json) => _$ListenerPayoutMethodsDataFromJson(json);
+  
 
 @override final  String? default_method;
  final  List<ListenerPayoutMethodModel> _methods;
@@ -2252,7 +2249,6 @@ as List<ListenerPayoutMethodModel>,
 
 
 }
-
 
 /// @nodoc
 mixin _$ListenerPayoutMethodModel {
@@ -2455,11 +2451,11 @@ return $default(_that.id,_that.type,_that.label,_that.account_holder_name,_that.
 }
 
 /// @nodoc
-@JsonSerializable()
+@JsonSerializable(createFactory: false)
 
 class _ListenerPayoutMethodModel implements ListenerPayoutMethodModel {
   const _ListenerPayoutMethodModel({this.id = '', this.type = '', this.label = '', this.account_holder_name, this.bank_name, this.iban_or_account, this.swift_code, this.paypal_email});
-  factory _ListenerPayoutMethodModel.fromJson(Map<String, dynamic> json) => _$ListenerPayoutMethodModelFromJson(json);
+  
 
 @override@JsonKey() final  String id;
 @override@JsonKey() final  String type;

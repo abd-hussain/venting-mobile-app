@@ -175,7 +175,6 @@ class _EditVentorProfileBottomSheetState
   void _onSave() {
     setState(() => _submitted = true);
     if (!_canSave) return;
-    // TODO: Persist name + avatar via ventor profile API / repository.
     Navigator.of(context).pop(
       EditVentorProfileResult(
         name: _trimmedName,

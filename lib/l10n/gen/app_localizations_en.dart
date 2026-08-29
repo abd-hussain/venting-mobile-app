@@ -2059,7 +2059,10 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
   String get ventor_profile_sessions => 'Sessions';
 
   @override
-  String get ventor_profile_day_streak => 'Day Streak';
+  String get ventor_profile_day_streak => 'Days Streak';
+
+  @override
+  String get ventor_profile_progress_summary => 'Progress Summary';
 
   @override
   String get ventor_profile_mood_journey => 'Mood Journey';
@@ -2089,67 +2092,18 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
   String get ventor_profile_day_sun => 'Sun';
 
   @override
-  String get ventor_profile_achievements => 'Achievements';
-
-  @override
   String get ventor_profile_see_all => 'See all';
-
-  @override
-  String get ventor_profile_achievement_first_step => 'First Step';
-
-  @override
-  String get ventor_profile_achievement_first_step_desc => '1 Session';
-
-  @override
-  String get ventor_profile_achievement_be_heard => 'Be Heard';
-
-  @override
-  String get ventor_profile_achievement_be_heard_desc => '5 Sessions';
-
-  @override
-  String get ventor_profile_achievement_week_warrior => 'Week Warrior';
-
-  @override
-  String get ventor_profile_achievement_week_warrior_desc => '7 Day Streak';
-
-  @override
-  String get ventor_profile_achievement_active_mind => 'Active Mind';
-
-  @override
-  String get ventor_profile_achievement_active_mind_desc => '20 Sessions';
-
-  @override
-  String get ventor_profile_achievement_first_step_detail =>
-      'Complete your first venting session. Taking that first step shows courage — and it unlocks your journey on Venting.';
-
-  @override
-  String get ventor_profile_achievement_be_heard_detail =>
-      'Finish 5 sessions where you shared how you feel. Being heard consistently helps build trust and emotional clarity.';
-
-  @override
-  String get ventor_profile_achievement_week_warrior_detail =>
-      'Keep a 7-day streak by checking in or completing sessions. Small daily habits can make a big difference.';
-
-  @override
-  String get ventor_profile_achievement_active_mind_detail =>
-      'Reach 20 total sessions. This badge celebrates showing up for yourself again and again.';
-
-  @override
-  String ventor_profile_achievements_subtitle(int unlocked, int total) {
-    return '$unlocked of $total unlocked';
-  }
-
-  @override
-  String get ventor_profile_achievement_unlocked => 'Unlocked';
-
-  @override
-  String get ventor_profile_achievement_locked => 'Locked';
 
   @override
   String get ventor_profile_my_listeners => 'My Listeners';
 
   @override
   String get ventor_profile_add_favorite => 'Add Favorite';
+
+  @override
+  String ventor_profile_add_favorite_total(int count) {
+    return 'Total ($count)';
+  }
 
   @override
   String get ventor_profile_quote =>
@@ -2253,9 +2207,6 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
 
   @override
   String get ventor_privacy_show_mood_journey => 'Show Mood Journey';
-
-  @override
-  String get ventor_privacy_show_achievements => 'Show Achievements';
 
   @override
   String get ventor_privacy_show_stats => 'Show Sessions & Streak';
@@ -2424,6 +2375,10 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
   @override
   String get listener_sessions_assigned_snackbar =>
       'Call assigned to you — join when ready.';
+
+  @override
+  String get listener_sessions_already_taken =>
+      'Another listener accepted this call first.';
 
   @override
   String get listener_sessions_waiting => 'They\'re waiting for you';

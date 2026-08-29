@@ -35,7 +35,6 @@ A **Flutter Web CMS** used only by internal staff (ops, support, finance, conten
 | **Catalogs** | Languages (**one** speaking-language table with `flag_emoji` / `flag_url`), comfort areas / interests (with `icon_emoji` / `icon_url`), experiences, boundaries | Lookup tables used by registration |
 | **Rewards & promo** | CRUD offers, promo codes | Rewards tab + checkout |
 | **Training** | Modules, content URLs, force complete | Listener training sheet |
-| **Achievements** | Catalog + optional grant | Ventor achievements |
 | **Notifications** | Broadcast system pushes | `notifications` + FCM |
 | **App config** | Feature flags, tier rates, support links | Remote config for mobile |
 | **CMS content** | Help articles, banners, legal version notes | WebViews / in-app links |
@@ -102,7 +101,7 @@ Portal **reads/writes** these heavily:
 | Sessions | `session_requests`, `sessions`, `session_payments`, ratings, feedback, `session_reports` |
 | Money | `listener_wallets`, `wallet_ledger_entries`, `payout_methods`, `payouts` |
 | Growth | `reward_offers`, `reward_trades`, `invite_*`, `promo_*` |
-| Ops | `notifications`, `training_modules`, `listener_training_progress`, `achievements` |
+| Ops | `notifications`, `training_modules`, `listener_training_progress` |
 
 ### 4.2 New tables for the CMS — **add 12**
 
@@ -330,7 +329,7 @@ These are **columns**, not new tables.
 | Payouts & wallet | 7 |
 | Catalogs (CRUD-ish) | 8 |
 | Rewards & promo | 8 |
-| Training & achievements | 6 |
+| Training | 4 |
 | Notifications (broadcast) | 3 |
 | Feature flags & config | 6 |
 | CMS pages & banners | 8 |
@@ -590,16 +589,14 @@ Used by: ventor registration interests step and listener comfort areas step — 
 
 ---
 
-### 7.10 Training & achievements (6)
+### 7.10 Training (4)
 
 | # | Method | Path | Use |
 |--:|--------|------|-----|
 | A61 | `GET`/`PUT` | `/v1/admin/training-modules` | Manage curriculum |
 | A62 | `GET` | `/v1/admin/listeners/{id}/training` | Progress |
 | A63 | `POST` | `/v1/admin/listeners/{id}/training/{moduleId}/complete` | Force complete |
-| A64 | `GET`/`PUT` | `/v1/admin/achievements` | Catalog |
-| A65 | `POST` | `/v1/admin/ventors/{id}/achievements/{achievementId}` | Grant |
-| A66 | `GET` | `/v1/admin/invite-stats` | Invite program performance |
+| A64 | `GET` | `/v1/admin/invite-stats` | Invite program performance |
 
 ---
 
@@ -694,8 +691,7 @@ Mobile may expose public `GET /v1/cms/pages/{slug}` and `GET /v1/cms/banners` (2
 | `/catalogs` | Lookups — languages (`flag_emoji` / `flag_url`), comfort areas (`icon_emoji` / `icon_url`), boundaries (`icon_emoji` / `icon_url`) | A48–A52 (+ media upload) |
 | `/rewards` | Offers | A53–A56 |
 | `/promos` | Promo codes | A57–A60 |
-| `/training` | Modules | A61–A63 |
-| `/achievements` | Achievements | A64–A65 |
+| `/training` | Modules | A61–A64 |
 | `/notifications` | Broadcast | A67–A69 |
 | `/config` | Flags + KV | A70–A75 |
 | `/cms/pages` | Optional CMS content | A76–A79 |
@@ -815,7 +811,7 @@ Admin **dashboard stats (A6–A11)** come from **Postgres**, not from GA — GA 
 |-------|--------|-------:|-----------:|
 | **P0 — MVP** | Auth, dashboard, listener queue approve/reject, user search, reports list, audit | +`admin_*` RBAC + audit (6 tables) | ~45 |
 | **P1** | Payouts, wallet adjust, sessions refund, moderation actions, notes | +`moderation_actions`, `admin_notes` | +20 |
-| **P2** | Catalogs, rewards, promo, training, achievements | (reuse mobile catalogs) | +20 |
+| **P2** | Catalogs, rewards, promo, training | (reuse mobile catalogs) | +18 |
 | **P3** | Feature flags, config, CMS pages/banners, GA embed | +flags, config, cms (4) | +15 |
 | **P4** | Polish: MFA, exports, BigQuery, advanced funnels | optional | +rest → ~100 |
 

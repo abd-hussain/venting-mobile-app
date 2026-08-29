@@ -367,6 +367,7 @@ class _ListenerDashboardTabState extends State<ListenerDashboardTab> {
           ventorName: _upcomingName,
           onView: () => widget.onOpenSessions?.call(),
         ),
+      const SizedBox(height: 16),
       if (dailyReminder != null) ...[
         ListenerDashboardReminderCard(
           title: dailyReminder.title,

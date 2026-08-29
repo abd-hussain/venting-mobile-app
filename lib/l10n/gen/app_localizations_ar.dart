@@ -2049,6 +2049,9 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
   String get ventor_profile_day_streak => 'سلسلة الأيام';
 
   @override
+  String get ventor_profile_progress_summary => 'ملخص التقدم';
+
+  @override
   String get ventor_profile_mood_journey => 'رحلة المزاج';
 
   @override
@@ -2076,67 +2079,18 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
   String get ventor_profile_day_sun => 'الأحد';
 
   @override
-  String get ventor_profile_achievements => 'الإنجازات';
-
-  @override
   String get ventor_profile_see_all => 'عرض الكل';
-
-  @override
-  String get ventor_profile_achievement_first_step => 'الخطوة الأولى';
-
-  @override
-  String get ventor_profile_achievement_first_step_desc => 'جلسة واحدة';
-
-  @override
-  String get ventor_profile_achievement_be_heard => 'أن تُسمَع';
-
-  @override
-  String get ventor_profile_achievement_be_heard_desc => '5 جلسات';
-
-  @override
-  String get ventor_profile_achievement_week_warrior => 'محارب الأسبوع';
-
-  @override
-  String get ventor_profile_achievement_week_warrior_desc => 'سلسلة 7 أيام';
-
-  @override
-  String get ventor_profile_achievement_active_mind => 'عقل نشط';
-
-  @override
-  String get ventor_profile_achievement_active_mind_desc => '20 جلسة';
-
-  @override
-  String get ventor_profile_achievement_first_step_detail =>
-      'أكمل أول جلسة تنفيس. اتخاذ هذه الخطوة الأولى يدل على شجاعة، وهو بداية رحلتك في Venting.';
-
-  @override
-  String get ventor_profile_achievement_be_heard_detail =>
-      'أنهِ 5 جلسات شاركت فيها مشاعرك. الاستماع المتكرر يبني الثقة والوضوح العاطفي.';
-
-  @override
-  String get ventor_profile_achievement_week_warrior_detail =>
-      'حافظ على سلسلة 7 أيام عبر تسجيل الدخول أو إكمال الجلسات. العادات اليومية الصغيرة تصنع فرقًا كبيرًا.';
-
-  @override
-  String get ventor_profile_achievement_active_mind_detail =>
-      'اوصل إلى 20 جلسة إجمالاً. هذه الشارة تحتفي باستمرارك في الاهتمام بنفسك.';
-
-  @override
-  String ventor_profile_achievements_subtitle(int unlocked, int total) {
-    return '$unlocked من $total مفتوحة';
-  }
-
-  @override
-  String get ventor_profile_achievement_unlocked => 'مفتوحة';
-
-  @override
-  String get ventor_profile_achievement_locked => 'مقفلة';
 
   @override
   String get ventor_profile_my_listeners => 'مستمعوّي';
 
   @override
   String get ventor_profile_add_favorite => 'إضافة مفضل';
+
+  @override
+  String ventor_profile_add_favorite_total(int count) {
+    return 'الإجمالي ($count)';
+  }
 
   @override
   String get ventor_profile_quote =>
@@ -2240,9 +2194,6 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
 
   @override
   String get ventor_privacy_show_mood_journey => 'إظهار رحلة المزاج';
-
-  @override
-  String get ventor_privacy_show_achievements => 'إظهار الإنجازات';
 
   @override
   String get ventor_privacy_show_stats => 'إظهار الجلسات والسلسلة';
@@ -2410,6 +2361,10 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
   @override
   String get listener_sessions_assigned_snackbar =>
       'تم تعيين المكالمة لك — انضم عندما تكون جاهزاً.';
+
+  @override
+  String get listener_sessions_already_taken =>
+      'قبل مستمع آخر هذه المكالمة أولاً.';
 
   @override
   String get listener_sessions_waiting => 'ينتظرونك';

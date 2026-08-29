@@ -1515,6 +1515,8 @@
   "@ventor_profile_sessions": {},
   "ventor_profile_day_streak": "سلسلة الأيام",
   "@ventor_profile_day_streak": {},
+  "ventor_profile_progress_summary": "ملخص التقدم",
+  "@ventor_profile_progress_summary": {},
   "ventor_profile_mood_journey": "رحلة المزاج",
   "@ventor_profile_mood_journey": {},
   "ventor_profile_today": "اليوم",
@@ -1533,53 +1535,20 @@
   "@ventor_profile_day_sat": {},
   "ventor_profile_day_sun": "الأحد",
   "@ventor_profile_day_sun": {},
-  "ventor_profile_achievements": "الإنجازات",
-  "@ventor_profile_achievements": {},
   "ventor_profile_see_all": "عرض الكل",
   "@ventor_profile_see_all": {},
-  "ventor_profile_achievement_first_step": "الخطوة الأولى",
-  "@ventor_profile_achievement_first_step": {},
-  "ventor_profile_achievement_first_step_desc": "جلسة واحدة",
-  "@ventor_profile_achievement_first_step_desc": {},
-  "ventor_profile_achievement_be_heard": "أن تُسمَع",
-  "@ventor_profile_achievement_be_heard": {},
-  "ventor_profile_achievement_be_heard_desc": "5 جلسات",
-  "@ventor_profile_achievement_be_heard_desc": {},
-  "ventor_profile_achievement_week_warrior": "محارب الأسبوع",
-  "@ventor_profile_achievement_week_warrior": {},
-  "ventor_profile_achievement_week_warrior_desc": "سلسلة 7 أيام",
-  "@ventor_profile_achievement_week_warrior_desc": {},
-  "ventor_profile_achievement_active_mind": "عقل نشط",
-  "@ventor_profile_achievement_active_mind": {},
-  "ventor_profile_achievement_active_mind_desc": "20 جلسة",
-  "@ventor_profile_achievement_active_mind_desc": {},
-  "ventor_profile_achievement_first_step_detail": "أكمل أول جلسة تنفيس. اتخاذ هذه الخطوة الأولى يدل على شجاعة، وهو بداية رحلتك في Venting.",
-  "@ventor_profile_achievement_first_step_detail": {},
-  "ventor_profile_achievement_be_heard_detail": "أنهِ 5 جلسات شاركت فيها مشاعرك. الاستماع المتكرر يبني الثقة والوضوح العاطفي.",
-  "@ventor_profile_achievement_be_heard_detail": {},
-  "ventor_profile_achievement_week_warrior_detail": "حافظ على سلسلة 7 أيام عبر تسجيل الدخول أو إكمال الجلسات. العادات اليومية الصغيرة تصنع فرقًا كبيرًا.",
-  "@ventor_profile_achievement_week_warrior_detail": {},
-  "ventor_profile_achievement_active_mind_detail": "اوصل إلى 20 جلسة إجمالاً. هذه الشارة تحتفي باستمرارك في الاهتمام بنفسك.",
-  "@ventor_profile_achievement_active_mind_detail": {},
-  "ventor_profile_achievements_subtitle": "{unlocked} من {total} مفتوحة",
-  "@ventor_profile_achievements_subtitle": {
-    "placeholders": {
-      "unlocked": {
-        "type": "int"
-      },
-      "total": {
-        "type": "int"
-      }
-    }
-  },
-  "ventor_profile_achievement_unlocked": "مفتوحة",
-  "@ventor_profile_achievement_unlocked": {},
-  "ventor_profile_achievement_locked": "مقفلة",
-  "@ventor_profile_achievement_locked": {},
   "ventor_profile_my_listeners": "مستمعوّي",
   "@ventor_profile_my_listeners": {},
   "ventor_profile_add_favorite": "إضافة مفضل",
   "@ventor_profile_add_favorite": {},
+  "ventor_profile_add_favorite_total": "الإجمالي ({count})",
+  "@ventor_profile_add_favorite_total": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "ventor_profile_quote": "من الطبيعي ألا تكون بخير. لست مضطرًا لمواجهة ذلك وحدك.",
   "@ventor_profile_quote": {},
   "ventor_profile_edit_title": "تعديل الملف الشخصي",
@@ -1652,8 +1621,6 @@
   "@ventor_privacy_section_profile": {},
   "ventor_privacy_show_mood_journey": "إظهار رحلة المزاج",
   "@ventor_privacy_show_mood_journey": {},
-  "ventor_privacy_show_achievements": "إظهار الإنجازات",
-  "@ventor_privacy_show_achievements": {},
   "ventor_privacy_show_stats": "إظهار الجلسات والسلسلة",
   "@ventor_privacy_show_stats": {},
   "ventor_privacy_show_favorite_listeners": "إظهار مستمعيّ",
@@ -1778,6 +1745,8 @@
   "@listener_sessions_accept_instant": {},
   "listener_sessions_assigned_snackbar": "تم تعيين المكالمة لك — انضم عندما تكون جاهزاً.",
   "@listener_sessions_assigned_snackbar": {},
+  "listener_sessions_already_taken": "قبل مستمع آخر هذه المكالمة أولاً.",
+  "@listener_sessions_already_taken": {},
   "listener_sessions_waiting": "ينتظرونك",
   "@listener_sessions_waiting": {},
   "listener_sessions_join_now": "انضم للمكالمة الآن",

@@ -25,12 +25,15 @@ import 'package:venting_mobile_app/domain/repository/api/listener/listener_payou
 import 'package:venting_mobile_app/domain/repository/api/listener/listener_privacy_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/listener/listener_profile_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/listener/listener_register_repository.dart';
+import 'package:venting_mobile_app/domain/repository/api/listener/listener_sessions_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/listener/listener_setup_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/listener/listener_training_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/ventor/ventor_notifications_repository.dart';
+import 'package:venting_mobile_app/domain/repository/api/ventor/ventor_profile_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/ventor/ventor_register_repository.dart';
 import 'package:venting_mobile_app/domain/repository/app/auth_me_cache_repository.dart';
 import 'package:venting_mobile_app/domain/repository/app/social_sign_in_repository.dart';
+import 'package:venting_mobile_app/domain/usecase/accept_listener_session_request_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/acknowledge_listener_first_session_tutorial_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/auth_change_password_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/auth_check_email_usecase.dart';
@@ -46,6 +49,7 @@ import 'package:venting_mobile_app/domain/usecase/clear_auth_session_usecase.dar
 import 'package:venting_mobile_app/domain/usecase/complete_listener_registration_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/complete_listener_training_module_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/complete_ventor_registration_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/decline_listener_session_request_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/delete_listener_notification_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/delete_ventor_notification_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_cached_auth_me_usecase.dart';
@@ -65,9 +69,11 @@ import 'package:venting_mobile_app/domain/usecase/get_listener_privacy_usecase.d
 import 'package:venting_mobile_app/domain/usecase/get_listener_profile_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_listener_registration_progress_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_listener_reviews_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/get_listener_sessions_overview_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_listener_setup_progress_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_listener_training_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_ventor_notifications_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/get_ventor_profile_overview_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_ventor_registration_progress_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/mark_all_listener_notifications_read_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/mark_all_ventor_notifications_read_usecase.dart';
@@ -87,6 +93,7 @@ import 'package:venting_mobile_app/domain/usecase/update_listener_phone_usecase.
 import 'package:venting_mobile_app/domain/usecase/update_listener_privacy_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/update_listener_profile_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/update_listener_voice_intro_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/update_ventor_profile_usecase.dart';
 
 /// Usecases mixin for VentingModule
 /// Handles all usecase factory methods
@@ -400,6 +407,18 @@ mixin VentingModuleUsecases on VentingModule {
     ListenerPayoutsRepository listenerPayoutsRepository,
   ) => RequestListenerPayoutUsecase(listenerPayoutsRepository);
 
+  GetListenerSessionsOverviewUsecase getListenerSessionsOverviewUsecase(
+    ListenerSessionsRepository listenerSessionsRepository,
+  ) => GetListenerSessionsOverviewUsecase(listenerSessionsRepository);
+
+  AcceptListenerSessionRequestUsecase acceptListenerSessionRequestUsecase(
+    ListenerSessionsRepository listenerSessionsRepository,
+  ) => AcceptListenerSessionRequestUsecase(listenerSessionsRepository);
+
+  DeclineListenerSessionRequestUsecase declineListenerSessionRequestUsecase(
+    ListenerSessionsRepository listenerSessionsRepository,
+  ) => DeclineListenerSessionRequestUsecase(listenerSessionsRepository);
+
   AcknowledgeListenerFirstSessionTutorialUsecase
   acknowledgeListenerFirstSessionTutorialUsecase(
     ListenerSetupRepository listenerSetupRepository,
@@ -451,6 +470,26 @@ mixin VentingModuleUsecases on VentingModule {
   ) => CompleteVentorRegistrationUsecase(
     ventorRegisterRepository,
     ventingPreferences,
+  );
+
+  GetVentorProfileOverviewUsecase getVentorProfileOverviewUsecase(
+    VentorProfileRepository ventorProfileRepository,
+    VentingPreferences ventingPreferences,
+    AppConfig appConfig,
+  ) => GetVentorProfileOverviewUsecase(
+    ventorProfileRepository,
+    ventingPreferences,
+    appConfig,
+  );
+
+  UpdateVentorProfileUsecase updateVentorProfileUsecase(
+    VentorProfileRepository ventorProfileRepository,
+    VentingPreferences ventingPreferences,
+    AppConfig appConfig,
+  ) => UpdateVentorProfileUsecase(
+    ventorProfileRepository,
+    ventingPreferences,
+    appConfig,
   );
 
   /// Registers all usecase dependencies
@@ -694,8 +733,7 @@ mixin VentingModuleUsecases on VentingModule {
           getListenerPaymentPayoutsUsecase(getIt<ListenerPayoutsRepository>()),
     );
     getIt.registerFactory<GetListenerPayoutHistoryUsecase>(
-      () =>
-          getListenerPayoutHistoryUsecase(getIt<ListenerPayoutsRepository>()),
+      () => getListenerPayoutHistoryUsecase(getIt<ListenerPayoutsRepository>()),
     );
     getIt.registerFactory<UpdateListenerPayoutMethodUsecase>(
       () =>
@@ -703,6 +741,21 @@ mixin VentingModuleUsecases on VentingModule {
     );
     getIt.registerFactory<RequestListenerPayoutUsecase>(
       () => requestListenerPayoutUsecase(getIt<ListenerPayoutsRepository>()),
+    );
+    getIt.registerFactory<GetListenerSessionsOverviewUsecase>(
+      () => getListenerSessionsOverviewUsecase(
+        getIt<ListenerSessionsRepository>(),
+      ),
+    );
+    getIt.registerFactory<AcceptListenerSessionRequestUsecase>(
+      () => acceptListenerSessionRequestUsecase(
+        getIt<ListenerSessionsRepository>(),
+      ),
+    );
+    getIt.registerFactory<DeclineListenerSessionRequestUsecase>(
+      () => declineListenerSessionRequestUsecase(
+        getIt<ListenerSessionsRepository>(),
+      ),
     );
     getIt.registerFactory<AcknowledgeListenerFirstSessionTutorialUsecase>(
       () => acknowledgeListenerFirstSessionTutorialUsecase(
@@ -746,6 +799,20 @@ mixin VentingModuleUsecases on VentingModule {
       () => completeVentorRegistrationUsecase(
         getIt<VentorRegisterRepository>(),
         getIt<VentingPreferences>(),
+      ),
+    );
+    getIt.registerFactory<GetVentorProfileOverviewUsecase>(
+      () => getVentorProfileOverviewUsecase(
+        getIt<VentorProfileRepository>(),
+        getIt<VentingPreferences>(),
+        appConfig,
+      ),
+    );
+    getIt.registerFactory<UpdateVentorProfileUsecase>(
+      () => updateVentorProfileUsecase(
+        getIt<VentorProfileRepository>(),
+        getIt<VentingPreferences>(),
+        appConfig,
       ),
     );
   }

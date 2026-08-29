@@ -3,6 +3,34 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'listener_earnings_response_model.freezed.dart';
 part 'listener_earnings_response_model.g.dart';
 
+String _stringFromJson(Object? json, {String fallback = ''}) {
+  return _optionalStringFromJson(json) ?? fallback;
+}
+
+String? _optionalStringFromJson(Object? json) {
+  if (json == null) return null;
+  if (json is String) return json;
+  if (json is num) return json.toString();
+  if (json is Map<String, dynamic>) {
+    for (final key in const ['id', 'en', 'value', 'name', 'label']) {
+      final nested = json[key];
+      if (nested is String && nested.trim().isNotEmpty) return nested;
+    }
+  }
+  return null;
+}
+
+String? _defaultMethodFromJson(Object? json) {
+  if (json == null) return null;
+  if (json is String) return json;
+  if (json is Map<String, dynamic>) {
+    final id = json['id'];
+    if (id is String) return id;
+    return _optionalStringFromJson(json);
+  }
+  return null;
+}
+
 @freezed
 abstract class ListenerEarningsResponseModel
     with _$ListenerEarningsResponseModel {
@@ -32,7 +60,7 @@ abstract class ListenerEarningsData with _$ListenerEarningsData {
       _$ListenerEarningsDataFromJson(json);
 }
 
-@freezed
+@Freezed(fromJson: false)
 abstract class ListenerEarningsTierModel with _$ListenerEarningsTierModel {
   const factory ListenerEarningsTierModel({
     @Default('') String id,
@@ -42,7 +70,12 @@ abstract class ListenerEarningsTierModel with _$ListenerEarningsTierModel {
   }) = _ListenerEarningsTierModel;
 
   factory ListenerEarningsTierModel.fromJson(Map<String, dynamic> json) =>
-      _$ListenerEarningsTierModelFromJson(json);
+      ListenerEarningsTierModel(
+        id: _stringFromJson(json['id']),
+        min_sessions: (json['min_sessions'] as num?)?.toInt() ?? 0,
+        min_rating: json['min_rating'] as num? ?? 0,
+        hourly_rate: json['hourly_rate'] as num? ?? 0,
+      );
 }
 
 @freezed
@@ -69,7 +102,7 @@ abstract class ListenerEarningsChartData with _$ListenerEarningsChartData {
       _$ListenerEarningsChartDataFromJson(json);
 }
 
-@freezed
+@Freezed(fromJson: false)
 abstract class ListenerEarningsChartPointModel
     with _$ListenerEarningsChartPointModel {
   const factory ListenerEarningsChartPointModel({
@@ -78,7 +111,10 @@ abstract class ListenerEarningsChartPointModel
   }) = _ListenerEarningsChartPointModel;
 
   factory ListenerEarningsChartPointModel.fromJson(Map<String, dynamic> json) =>
-      _$ListenerEarningsChartPointModelFromJson(json);
+      ListenerEarningsChartPointModel(
+        label: _stringFromJson(json['label']),
+        amount: json['amount'] as num? ?? 0,
+      );
 }
 
 @freezed
@@ -94,7 +130,7 @@ abstract class ListenerPayoutMethodsResponseModel
   ) => _$ListenerPayoutMethodsResponseModelFromJson(json);
 }
 
-@freezed
+@Freezed(fromJson: false)
 abstract class ListenerPayoutMethodsData with _$ListenerPayoutMethodsData {
   const factory ListenerPayoutMethodsData({
     String? default_method,
@@ -103,10 +139,21 @@ abstract class ListenerPayoutMethodsData with _$ListenerPayoutMethodsData {
   }) = _ListenerPayoutMethodsData;
 
   factory ListenerPayoutMethodsData.fromJson(Map<String, dynamic> json) =>
-      _$ListenerPayoutMethodsDataFromJson(json);
+      ListenerPayoutMethodsData(
+        default_method: _defaultMethodFromJson(json['default_method']),
+        methods:
+            (json['methods'] as List<dynamic>?)
+                ?.map(
+                  (item) => ListenerPayoutMethodModel.fromJson(
+                    item as Map<String, dynamic>,
+                  ),
+                )
+                .toList() ??
+            const <ListenerPayoutMethodModel>[],
+      );
 }
 
-@freezed
+@Freezed(fromJson: false)
 abstract class ListenerPayoutMethodModel with _$ListenerPayoutMethodModel {
   const factory ListenerPayoutMethodModel({
     @Default('') String id,
@@ -120,5 +167,16 @@ abstract class ListenerPayoutMethodModel with _$ListenerPayoutMethodModel {
   }) = _ListenerPayoutMethodModel;
 
   factory ListenerPayoutMethodModel.fromJson(Map<String, dynamic> json) =>
-      _$ListenerPayoutMethodModelFromJson(json);
+      ListenerPayoutMethodModel(
+        id: _stringFromJson(json['id']),
+        type: _stringFromJson(json['type']),
+        label: _stringFromJson(json['label']),
+        account_holder_name: _optionalStringFromJson(
+          json['account_holder_name'],
+        ),
+        bank_name: _optionalStringFromJson(json['bank_name']),
+        iban_or_account: _optionalStringFromJson(json['iban_or_account']),
+        swift_code: _optionalStringFromJson(json['swift_code']),
+        paypal_email: _optionalStringFromJson(json['paypal_email']),
+      );
 }

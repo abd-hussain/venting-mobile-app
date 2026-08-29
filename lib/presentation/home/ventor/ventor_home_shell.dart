@@ -27,6 +27,13 @@ class VentorHomeShell extends StatefulWidget {
     goToTab(context, dashboardTab);
   }
 
+  /// Opens the Sessions tab on the Find listeners section.
+  static void goToFindListeners(BuildContext context) {
+    context
+        .findAncestorStateOfType<_VentorHomeShellState>()
+        ?.goToFindListenersTab();
+  }
+
   @override
   State<VentorHomeShell> createState() => _VentorHomeShellState();
 }
@@ -34,18 +41,26 @@ class VentorHomeShell extends StatefulWidget {
 class _VentorHomeShellState extends State<VentorHomeShell> {
   int _index = 0;
   var _points = VentorRewardsCatalog.mockPoints;
+  final _sessionsTabKey = GlobalKey<VentorSessionsTabState>();
+
+  late final List<Widget> _tabs = <Widget>[
+    const VentorDashboardTab(),
+    VentorSessionsTab(key: _sessionsTabKey),
+    const VentorRewardsTab(),
+    const VentorProfileTab(),
+  ];
 
   void goToTab(int index) {
     if (index < 0 || index >= _tabs.length || index == _index) return;
     setState(() => _index = index);
   }
 
-  static const _tabs = <Widget>[
-    VentorDashboardTab(),
-    VentorSessionsTab(),
-    VentorRewardsTab(),
-    VentorProfileTab(),
-  ];
+  void goToFindListenersTab() {
+    _sessionsTabKey.currentState?.showFindSection();
+    if (_index != VentorHomeShell.sessionsTab) {
+      setState(() => _index = VentorHomeShell.sessionsTab);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -52,15 +52,6 @@ Map<String, dynamic> _$ListenerEarningsDataToJson(
   'tiers': instance.tiers,
 };
 
-_ListenerEarningsTierModel _$ListenerEarningsTierModelFromJson(
-  Map<String, dynamic> json,
-) => _ListenerEarningsTierModel(
-  id: json['id'] as String? ?? '',
-  min_sessions: (json['min_sessions'] as num?)?.toInt() ?? 0,
-  min_rating: json['min_rating'] as num? ?? 0,
-  hourly_rate: json['hourly_rate'] as num? ?? 0,
-);
-
 Map<String, dynamic> _$ListenerEarningsTierModelToJson(
   _ListenerEarningsTierModel instance,
 ) => <String, dynamic>{
@@ -101,13 +92,6 @@ Map<String, dynamic> _$ListenerEarningsChartDataToJson(
   _ListenerEarningsChartData instance,
 ) => <String, dynamic>{'points': instance.points};
 
-_ListenerEarningsChartPointModel _$ListenerEarningsChartPointModelFromJson(
-  Map<String, dynamic> json,
-) => _ListenerEarningsChartPointModel(
-  label: json['label'] as String? ?? '',
-  amount: json['amount'] as num? ?? 0,
-);
-
 Map<String, dynamic> _$ListenerEarningsChartPointModelToJson(
   _ListenerEarningsChartPointModel instance,
 ) => <String, dynamic>{'label': instance.label, 'amount': instance.amount};
@@ -125,39 +109,12 @@ Map<String, dynamic> _$ListenerPayoutMethodsResponseModelToJson(
   _ListenerPayoutMethodsResponseModel instance,
 ) => <String, dynamic>{'status': instance.status, 'data': instance.data};
 
-_ListenerPayoutMethodsData _$ListenerPayoutMethodsDataFromJson(
-  Map<String, dynamic> json,
-) => _ListenerPayoutMethodsData(
-  default_method: json['default_method'] as String?,
-  methods:
-      (json['methods'] as List<dynamic>?)
-          ?.map(
-            (e) =>
-                ListenerPayoutMethodModel.fromJson(e as Map<String, dynamic>),
-          )
-          .toList() ??
-      const <ListenerPayoutMethodModel>[],
-);
-
 Map<String, dynamic> _$ListenerPayoutMethodsDataToJson(
   _ListenerPayoutMethodsData instance,
 ) => <String, dynamic>{
   'default_method': instance.default_method,
   'methods': instance.methods,
 };
-
-_ListenerPayoutMethodModel _$ListenerPayoutMethodModelFromJson(
-  Map<String, dynamic> json,
-) => _ListenerPayoutMethodModel(
-  id: json['id'] as String? ?? '',
-  type: json['type'] as String? ?? '',
-  label: json['label'] as String? ?? '',
-  account_holder_name: json['account_holder_name'] as String?,
-  bank_name: json['bank_name'] as String?,
-  iban_or_account: json['iban_or_account'] as String?,
-  swift_code: json['swift_code'] as String?,
-  paypal_email: json['paypal_email'] as String?,
-);
 
 Map<String, dynamic> _$ListenerPayoutMethodModelToJson(
   _ListenerPayoutMethodModel instance,

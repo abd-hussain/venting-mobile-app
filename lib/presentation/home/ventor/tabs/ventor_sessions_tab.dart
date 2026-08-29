@@ -24,10 +24,10 @@ class VentorSessionsTab extends StatefulWidget {
   const VentorSessionsTab({super.key});
 
   @override
-  State<VentorSessionsTab> createState() => _VentorSessionsTabState();
+  State<VentorSessionsTab> createState() => VentorSessionsTabState();
 }
 
-class _VentorSessionsTabState extends State<VentorSessionsTab> {
+class VentorSessionsTabState extends State<VentorSessionsTab> {
   static const _overlayStyle = SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
     statusBarBrightness: Brightness.dark,
@@ -58,6 +58,12 @@ class _VentorSessionsTabState extends State<VentorSessionsTab> {
   void dispose() {
     _searchController.dispose();
     super.dispose();
+  }
+
+  /// Switches to the Find listeners section (e.g. from profile favorites).
+  void showFindSection() {
+    if (_section == _SessionsSection.find) return;
+    setState(() => _section = _SessionsSection.find);
   }
 
   String _topicLabel(VentingMobLocalizations l10n, String id) {

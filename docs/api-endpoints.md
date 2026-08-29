@@ -590,27 +590,17 @@ Finalizes ventor registration. JSON body.
 
 ---
 
-### 17. `GET /v1/ventors/me/achievements`
-
-| | |
-|--|--|
-| **Auth** | Bearer |
-| **Screen** | Achievements bottom sheet |
-| **Response** | `{ items: [{ id, title_key, subtitle_key, description_key, unlocked, unlocked_at? }] }` |
-
----
-
-### 18. `GET /v1/ventors/me/privacy`
+### 17. `GET /v1/ventors/me/privacy`
 
 | | |
 |--|--|
 | **Auth** | Bearer |
 | **Screen** | Ventor privacy settings |
-| **Response** | `{ show_mood_journey, show_achievements, show_stats, show_favorite_listeners, allow_listener_discovery }` |
+| **Response** | `{ show_mood_journey, show_stats, show_favorite_listeners, allow_listener_discovery }` |
 
 ---
 
-### 19. `PUT /v1/ventors/me/privacy`
+### 18. `PUT /v1/ventors/me/privacy`
 
 | | |
 |--|--|
@@ -620,7 +610,7 @@ Finalizes ventor registration. JSON body.
 
 ---
 
-### 20. `GET /v1/ventors/me/notification-preferences`
+### 19. `GET /v1/ventors/me/notification-preferences`
 
 | | |
 |--|--|
@@ -630,7 +620,7 @@ Finalizes ventor registration. JSON body.
 
 ---
 
-### 21. `PUT /v1/ventors/me/notification-preferences`
+### 20. `PUT /v1/ventors/me/notification-preferences`
 
 | | |
 |--|--|
@@ -2369,11 +2359,10 @@ Password reset pages are opened from the **email link** (browser / OS), not from
 | 14 | GET | `/v1/ventors/me/favorites` |
 | 15 | POST | `/v1/ventors/me/favorites/{listenerId}` |
 | 16 | DELETE | `/v1/ventors/me/favorites/{listenerId}` |
-| 17 | GET | `/v1/ventors/me/achievements` |
-| 18 | GET | `/v1/ventors/me/privacy` |
-| 19 | PUT | `/v1/ventors/me/privacy` |
-| 20 | GET | `/v1/ventors/me/notification-preferences` |
-| 21 | PUT | `/v1/ventors/me/notification-preferences` |
+| 17 | GET | `/v1/ventors/me/privacy` |
+| 18 | PUT | `/v1/ventors/me/privacy` |
+| 19 | GET | `/v1/ventors/me/notification-preferences` |
+| 20 | PUT | `/v1/ventors/me/notification-preferences` |
 | 22a | GET | `/v1/listeners/register/progress` |
 | 22b | PATCH | `/v1/listeners/register/steps/profile` |
 | 22c | PATCH | `/v1/listeners/register/steps/identity` |

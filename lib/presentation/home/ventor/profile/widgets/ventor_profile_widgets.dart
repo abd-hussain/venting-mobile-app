@@ -4,29 +4,8 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/profile/ventor_profile_theme.dart';
 import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dart';
-
-class VentorAchievement {
-  const VentorAchievement({
-    required this.id,
-    required this.title,
-    required this.subtitle,
-    required this.description,
-    required this.color,
-    required this.icon,
-    this.unlocked = true,
-  });
-
-  final String id;
-  final String title;
-  final String subtitle;
-  final String description;
-  final Color color;
-  final IconData icon;
-  final bool unlocked;
-}
 
 class VentorFavoriteListener {
   const VentorFavoriteListener({
@@ -50,13 +29,55 @@ class VentorMoodPoint {
   final double mood;
 }
 
+class VentorProfileCard extends StatelessWidget {
+  const VentorProfileCard({super.key, required this.child, this.padding});
+
+  final Widget child;
+  final EdgeInsetsGeometry? padding;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: VentorProfileTheme.cardFill,
+      borderRadius: BorderRadius.circular(20),
+      child: Container(
+        width: double.infinity,
+        padding: padding ?? const EdgeInsets.fromLTRB(16, 16, 16, 16),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: VentorProfileTheme.cardBorder),
+        ),
+        child: child,
+      ),
+    );
+  }
+}
+
+class VentorProfileSectionHeader extends StatelessWidget {
+  const VentorProfileSectionHeader({super.key, required this.title});
+
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      title.toUpperCase(),
+      style: GoogleFonts.inter(
+        color: VentorProfileTheme.muted,
+        fontSize: 12,
+        fontWeight: FontWeight.w700,
+        letterSpacing: 1.1,
+      ),
+    );
+  }
+}
+
 class VentorProfileHeader extends StatelessWidget {
   const VentorProfileHeader({
     super.key,
+    required this.title,
     required this.name,
-    required this.quote,
     required this.anonymousLabel,
-    required this.onEditPhoto,
     required this.onEditProfile,
     required this.onOpenSettings,
     this.avatarUrl,
@@ -64,13 +85,12 @@ class VentorProfileHeader extends StatelessWidget {
     this.isAnonymous = true,
   });
 
+  final String title;
   final String name;
-  final String quote;
   final String anonymousLabel;
   final String? avatarUrl;
   final String? avatarFilePath;
   final bool isAnonymous;
-  final VoidCallback onEditPhoto;
   final VoidCallback onEditProfile;
   final VoidCallback onOpenSettings;
 
@@ -82,7 +102,7 @@ class VentorProfileHeader extends StatelessWidget {
         fit: BoxFit.cover,
         errorBuilder: (_, _, _) => const ColoredBox(
           color: Color(0xFF2A1848),
-          child: Icon(Icons.person_rounded, color: Colors.white70, size: 48),
+          child: Icon(Icons.person_rounded, color: Colors.white70, size: 52),
         ),
       );
     }
@@ -92,13 +112,13 @@ class VentorProfileHeader extends StatelessWidget {
         fit: BoxFit.cover,
         errorBuilder: (_, _, _) => const ColoredBox(
           color: Color(0xFF2A1848),
-          child: Icon(Icons.person_rounded, color: Colors.white70, size: 48),
+          child: Icon(Icons.person_rounded, color: Colors.white70, size: 52),
         ),
       );
     }
     return const ColoredBox(
       color: Color(0xFF2A1848),
-      child: Icon(Icons.person_rounded, color: Colors.white70, size: 48),
+      child: Icon(Icons.person_rounded, color: Colors.white70, size: 52),
     );
   }
 
@@ -108,152 +128,78 @@ class VentorProfileHeader extends StatelessWidget {
       children: [
         Row(
           children: [
+            Text(
+              title,
+              style: GoogleFonts.inter(
+                color: Colors.white,
+                fontSize: 22,
+                fontWeight: FontWeight.w800,
+              ),
+            ),
             const Spacer(),
             IconButton(
               onPressed: onEditProfile,
               icon: const Icon(Icons.edit_outlined, size: 20),
-              color: Colors.white.withValues(alpha: 0.9),
+              color: Colors.white.withValues(alpha: 0.92),
+              visualDensity: VisualDensity.compact,
             ),
             IconButton(
               onPressed: onOpenSettings,
               icon: const Icon(Icons.settings_outlined, size: 22),
-              color: Colors.white.withValues(alpha: 0.9),
+              color: Colors.white.withValues(alpha: 0.92),
+              visualDensity: VisualDensity.compact,
             ),
           ],
         ),
-        Stack(
-          clipBehavior: Clip.none,
-          children: [
-            Container(
-              width: 96,
-              height: 96,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(
-                  color: SplashColors.purpleMid.withValues(alpha: 0.55),
-                  width: 2.5,
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: SplashColors.purpleGlow.withValues(alpha: 0.25),
-                    blurRadius: 20,
-                    offset: const Offset(0, 6),
-                  ),
-                ],
-              ),
-              child: ClipOval(child: _buildAvatar()),
+        const SizedBox(height: 18),
+        Container(
+          width: 104,
+          height: 104,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            border: Border.all(
+              color: Colors.white.withValues(alpha: 0.08),
+              width: 2,
             ),
-            Positioned(
-              right: -2,
-              bottom: -2,
-              child: Material(
-                color: SplashColors.purpleMid,
-                shape: const CircleBorder(),
-                child: InkWell(
-                  customBorder: const CircleBorder(),
-                  onTap: onEditPhoto,
-                  child: const Padding(
-                    padding: EdgeInsets.all(7),
-                    child: Icon(
-                      Icons.photo_camera_rounded,
-                      size: 14,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
+          ),
+          child: ClipOval(child: _buildAvatar()),
         ),
-        const SizedBox(height: 10),
+        const SizedBox(height: 12),
         Text(
           name,
           style: GoogleFonts.inter(
             color: Colors.white,
             fontSize: 24,
-            fontWeight: FontWeight.w700,
+            fontWeight: FontWeight.w800,
           ),
         ),
         if (isAnonymous) ...[
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-            decoration: BoxDecoration(
-              color: SplashColors.purpleMid.withValues(alpha: 0.16),
-              borderRadius: BorderRadius.circular(999),
-              border: Border.all(
-                color: SplashColors.purpleMid.withValues(alpha: 0.35),
-              ),
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(
-                  Icons.masks_outlined,
-                  size: 15,
-                  color: SplashColors.purpleMid.withValues(alpha: 0.95),
-                ),
-                const SizedBox(width: 6),
-                Text(
-                  anonymousLabel,
-                  style: GoogleFonts.inter(
-                    color: SplashColors.purpleMid,
-                    fontSize: 12,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ],
+          const SizedBox(height: 4),
+          Text(
+            anonymousLabel,
+            style: GoogleFonts.inter(
+              color: SplashColors.purpleMid,
+              fontSize: 14,
+              fontWeight: FontWeight.w600,
             ),
           ),
         ],
-        const SizedBox(height: 14),
-        Container(
-          width: double.infinity,
-          padding: const EdgeInsets.fromLTRB(14, 12, 14, 12),
-          decoration: BoxDecoration(
-            color: SplashColors.purpleMid.withValues(alpha: 0.1),
-            borderRadius: BorderRadius.circular(14),
-            border: Border.all(
-              color: SplashColors.purpleMid.withValues(alpha: 0.22),
-            ),
-          ),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Icon(
-                Icons.favorite_rounded,
-                color: SplashColors.purpleMid,
-                size: 16,
-              ),
-              const SizedBox(width: 8),
-              Expanded(
-                child: Text(
-                  quote,
-                  style: GoogleFonts.inter(
-                    color: Colors.white.withValues(alpha: 0.88),
-                    fontSize: 13,
-                    fontWeight: FontWeight.w500,
-                    height: 1.4,
-                    fontStyle: FontStyle.italic,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
       ],
     );
   }
 }
 
-class VentorStatsRow extends StatelessWidget {
-  const VentorStatsRow({
+class VentorProgressSummaryCard extends StatelessWidget {
+  const VentorProgressSummaryCard({
     super.key,
+    required this.title,
     required this.sessionsLabel,
     required this.sessionsValue,
     required this.streakLabel,
     required this.streakValue,
   });
 
+  final String title;
   final String sessionsLabel;
   final String sessionsValue;
   final String streakLabel;
@@ -261,81 +207,94 @@ class VentorStatsRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: _StatCard(
-            icon: Icons.person_outline_rounded,
-            iconColor: SplashColors.purpleMid,
-            label: sessionsLabel,
-            value: sessionsValue,
+    return VentorProfileCard(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: GoogleFonts.inter(
+              color: Colors.white,
+              fontSize: 16,
+              fontWeight: FontWeight.w700,
+            ),
           ),
-        ),
-        const SizedBox(width: 10),
-        Expanded(
-          child: _StatCard(
-            icon: Icons.local_fire_department_rounded,
-            iconColor: const Color(0xFFF97316),
-            label: streakLabel,
-            value: streakValue,
+          const SizedBox(height: 18),
+          Row(
+            children: [
+              Expanded(
+                child: _ProgressMetric(
+                  icon: Icons.headphones_rounded,
+                  value: sessionsValue,
+                  label: sessionsLabel,
+                ),
+              ),
+              Expanded(
+                child: _ProgressMetric(
+                  icon: Icons.local_fire_department_rounded,
+                  value: streakValue,
+                  label: streakLabel,
+                ),
+              ),
+            ],
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
 
-class _StatCard extends StatelessWidget {
-  const _StatCard({
+class _ProgressMetric extends StatelessWidget {
+  const _ProgressMetric({
     required this.icon,
-    required this.iconColor,
-    required this.label,
     required this.value,
+    required this.label,
   });
 
   final IconData icon;
-  final Color iconColor;
-  final String label;
   final String value;
+  final String label;
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: VentorProfileTheme.cardFill,
-      borderRadius: BorderRadius.circular(16),
-      child: Container(
-        padding: const EdgeInsets.fromLTRB(10, 14, 10, 12),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: VentorProfileTheme.cardBorder),
+    return Row(
+      children: [
+        Container(
+          width: 44,
+          height: 44,
+          decoration: BoxDecoration(
+            color: SplashColors.purpleMid.withValues(alpha: 0.22),
+            shape: BoxShape.circle,
+          ),
+          child: Icon(icon, color: SplashColors.purpleMid, size: 22),
         ),
-        child: Column(
-          children: [
-            Icon(icon, color: iconColor, size: 22),
-            const SizedBox(height: 8),
-            Text(
-              value,
-              style: GoogleFonts.inter(
-                color: Colors.white,
-                fontSize: 18,
-                fontWeight: FontWeight.w700,
-              ),
+        const SizedBox(width: 12),
+        Expanded(
+          child: RichText(
+            text: TextSpan(
+              style: GoogleFonts.inter(height: 1.25),
+              children: [
+                TextSpan(
+                  text: value,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
+                TextSpan(
+                  text: ' $label',
+                  style: TextStyle(
+                    color: Colors.white.withValues(alpha: 0.72),
+                    fontSize: 13,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
             ),
-            const SizedBox(height: 2),
-            Text(
-              label,
-              textAlign: TextAlign.center,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: GoogleFonts.inter(
-                color: VentorProfileTheme.muted,
-                fontSize: 11,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ],
+          ),
         ),
-      ),
+      ],
     );
   }
 }
@@ -348,6 +307,7 @@ class VentorMoodJourneyCard extends StatelessWidget {
     required this.dayLabels,
     required this.points,
     required this.todayIndex,
+    this.highlightedDayIndex,
   });
 
   final String title;
@@ -355,86 +315,82 @@ class VentorMoodJourneyCard extends StatelessWidget {
   final List<String> dayLabels;
   final List<VentorMoodPoint> points;
   final int todayIndex;
+  final int? highlightedDayIndex;
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: VentorProfileTheme.cardFill,
-      borderRadius: BorderRadius.circular(18),
-      child: Container(
-        padding: const EdgeInsets.fromLTRB(14, 14, 14, 12),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(18),
-          border: Border.all(color: VentorProfileTheme.cardBorder),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              title,
-              style: GoogleFonts.inter(
-                color: Colors.white,
-                fontSize: 16,
-                fontWeight: FontWeight.w700,
-              ),
+    final activeDayIndex = highlightedDayIndex ?? todayIndex;
+
+    return VentorProfileCard(
+      padding: const EdgeInsets.fromLTRB(16, 16, 16, 14),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: GoogleFonts.inter(
+              color: Colors.white,
+              fontSize: 16,
+              fontWeight: FontWeight.w700,
             ),
-            const SizedBox(height: 12),
-            SizedBox(
-              height: 150,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  const Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          ),
+          const SizedBox(height: 14),
+          SizedBox(
+            height: 156,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('😊', style: TextStyle(fontSize: 15)),
+                    Text('🙂', style: TextStyle(fontSize: 15)),
+                    Text('😐', style: TextStyle(fontSize: 15)),
+                    Text('😢', style: TextStyle(fontSize: 15)),
+                  ],
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Column(
                     children: [
-                      Text('😊', style: TextStyle(fontSize: 16)),
-                      Text('😐', style: TextStyle(fontSize: 16)),
-                      Text('😢', style: TextStyle(fontSize: 16)),
-                    ],
-                  ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: Column(
-                      children: [
-                        Expanded(
-                          child: CustomPaint(
-                            painter: _MoodLinePainter(
-                              points: points,
-                              todayIndex: todayIndex,
-                              todayLabel: todayLabel,
-                            ),
-                            child: const SizedBox.expand(),
+                      Expanded(
+                        child: CustomPaint(
+                          painter: _MoodLinePainter(
+                            points: points,
+                            todayIndex: todayIndex,
+                            todayLabel: todayLabel,
                           ),
+                          child: const SizedBox.expand(),
                         ),
-                        const SizedBox(height: 8),
-                        Row(
-                          children: [
-                            for (var i = 0; i < dayLabels.length; i++)
-                              Expanded(
-                                child: Text(
-                                  dayLabels[i],
-                                  textAlign: TextAlign.center,
-                                  style: GoogleFonts.inter(
-                                    color: i == todayIndex
-                                        ? SplashColors.purpleMid
-                                        : VentorProfileTheme.muted,
-                                    fontSize: 11,
-                                    fontWeight: i == todayIndex
-                                        ? FontWeight.w700
-                                        : FontWeight.w500,
-                                  ),
+                      ),
+                      const SizedBox(height: 10),
+                      Row(
+                        children: [
+                          for (var i = 0; i < dayLabels.length; i++)
+                            Expanded(
+                              child: Text(
+                                dayLabels[i],
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.inter(
+                                  color: i == activeDayIndex
+                                      ? SplashColors.purpleMid
+                                      : VentorProfileTheme.muted,
+                                  fontSize: 11,
+                                  fontWeight: i == activeDayIndex
+                                      ? FontWeight.w700
+                                      : FontWeight.w500,
                                 ),
                               ),
-                          ],
-                        ),
-                      ],
-                    ),
+                            ),
+                        ],
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -531,191 +487,6 @@ class _MoodLinePainter extends CustomPainter {
     return oldDelegate.points != points ||
         oldDelegate.todayIndex != todayIndex ||
         oldDelegate.todayLabel != todayLabel;
-  }
-}
-
-class VentorAchievementsSection extends StatelessWidget {
-  const VentorAchievementsSection({
-    super.key,
-    required this.title,
-    required this.seeAllLabel,
-    required this.achievements,
-    required this.onSeeAll,
-    required this.onTapAchievement,
-  });
-
-  final String title;
-  final String seeAllLabel;
-  final List<VentorAchievement> achievements;
-  final VoidCallback onSeeAll;
-  final ValueChanged<VentorAchievement> onTapAchievement;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            Expanded(
-              child: Text(
-                title,
-                style: GoogleFonts.inter(
-                  color: Colors.white,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-            ),
-            TextButton(
-              onPressed: onSeeAll,
-              style: TextButton.styleFrom(
-                foregroundColor: SplashColors.purpleMid,
-                padding: EdgeInsets.zero,
-                minimumSize: Size.zero,
-                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              ),
-              child: Text(
-                seeAllLabel,
-                style: GoogleFonts.inter(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 12),
-        SizedBox(
-          height: 118,
-          child: ListView.separated(
-            scrollDirection: Axis.horizontal,
-            itemCount: achievements.length,
-            separatorBuilder: (_, _) => const SizedBox(width: 12),
-            itemBuilder: (context, index) {
-              final item = achievements[index];
-              return _AchievementBadge(
-                achievement: item,
-                onTap: () => onTapAchievement(item),
-              );
-            },
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _AchievementBadge extends StatelessWidget {
-  const _AchievementBadge({required this.achievement, required this.onTap});
-
-  final VentorAchievement achievement;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    final color = achievement.unlocked
-        ? achievement.color
-        : VentorProfileTheme.muted.withValues(alpha: 0.45);
-
-    return GestureDetector(
-      onTap: onTap,
-      child: SizedBox(
-        width: 86,
-        child: Column(
-          children: [
-            SizedBox(
-              width: 64,
-              height: 70,
-              child: CustomPaint(
-                painter: _HexagonPainter(
-                  fill: color.withValues(
-                    alpha: achievement.unlocked ? 0.22 : 0.12,
-                  ),
-                  stroke: color,
-                ),
-                child: Center(
-                  child: Icon(
-                    achievement.unlocked
-                        ? achievement.icon
-                        : Icons.lock_outline_rounded,
-                    color: color,
-                    size: 24,
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(height: 6),
-            Text(
-              achievement.title,
-              textAlign: TextAlign.center,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: GoogleFonts.inter(
-                color: Colors.white,
-                fontSize: 11,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            Text(
-              achievement.subtitle,
-              textAlign: TextAlign.center,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: GoogleFonts.inter(
-                color: VentorProfileTheme.muted,
-                fontSize: 10,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _HexagonPainter extends CustomPainter {
-  _HexagonPainter({required this.fill, required this.stroke});
-
-  final Color fill;
-  final Color stroke;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final path = _hexPath(size);
-    canvas.drawPath(path, Paint()..color = fill);
-    canvas.drawPath(
-      path,
-      Paint()
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = 1.6
-        ..color = stroke,
-    );
-  }
-
-  Path _hexPath(Size size) {
-    final cx = size.width / 2;
-    final cy = size.height / 2;
-    final r = math.min(size.width, size.height) / 2 - 1;
-    final path = Path();
-    for (var i = 0; i < 6; i++) {
-      final angle = -math.pi / 2 + i * math.pi / 3;
-      final x = cx + r * math.cos(angle);
-      final y = cy + r * math.sin(angle);
-      if (i == 0) {
-        path.moveTo(x, y);
-      } else {
-        path.lineTo(x, y);
-      }
-    }
-    path.close();
-    return path;
-  }
-
-  @override
-  bool shouldRepaint(covariant _HexagonPainter oldDelegate) {
-    return oldDelegate.fill != fill || oldDelegate.stroke != stroke;
   }
 }
 
@@ -865,19 +636,17 @@ class VentorMyListenersSection extends StatelessWidget {
   const VentorMyListenersSection({
     super.key,
     required this.title,
-    required this.seeAllLabel,
     required this.addFavoriteLabel,
+    required this.totalCountLabel,
     required this.listeners,
-    required this.onSeeAll,
     required this.onAddFavorite,
     required this.onTapListener,
   });
 
   final String title;
-  final String seeAllLabel;
   final String addFavoriteLabel;
+  final String totalCountLabel;
   final List<VentorFavoriteListener> listeners;
-  final VoidCallback onSeeAll;
   final VoidCallback onAddFavorite;
   final ValueChanged<VentorFavoriteListener> onTapListener;
 
@@ -886,56 +655,31 @@ class VentorMyListenersSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          children: [
-            Expanded(
-              child: Text(
-                title,
-                style: GoogleFonts.inter(
-                  color: Colors.white,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-            ),
-            TextButton(
-              onPressed: onSeeAll,
-              style: TextButton.styleFrom(
-                foregroundColor: SplashColors.purpleMid,
-                padding: EdgeInsets.zero,
-                minimumSize: Size.zero,
-                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              ),
-              child: Text(
-                seeAllLabel,
-                style: GoogleFonts.inter(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 12),
-        SizedBox(
-          height: 108,
-          child: ListView.separated(
-            scrollDirection: Axis.horizontal,
-            itemCount: listeners.length + 1,
-            separatorBuilder: (_, _) => const SizedBox(width: 14),
-            itemBuilder: (context, index) {
-              if (index == listeners.length) {
-                return _AddFavoriteChip(
-                  label: addFavoriteLabel,
-                  onTap: onAddFavorite,
+        VentorProfileSectionHeader(title: title),
+        const SizedBox(height: 10),
+        VentorProfileCard(
+          padding: const EdgeInsets.fromLTRB(14, 18, 14, 18),
+          child: SizedBox(
+            height: 104,
+            child: ListView.separated(
+              scrollDirection: Axis.horizontal,
+              itemCount: listeners.length + 1,
+              separatorBuilder: (_, _) => const SizedBox(width: 16),
+              itemBuilder: (context, index) {
+                if (index == listeners.length) {
+                  return _AddFavoriteChip(
+                    label: addFavoriteLabel,
+                    totalCountLabel: totalCountLabel,
+                    onTap: onAddFavorite,
+                  );
+                }
+                final listener = listeners[index];
+                return _ListenerChip(
+                  listener: listener,
+                  onTap: () => onTapListener(listener),
                 );
-              }
-              final listener = listeners[index];
-              return _ListenerChip(
-                listener: listener,
-                onTap: () => onTapListener(listener),
-              );
-            },
+              },
+            ),
           ),
         ),
       ],
@@ -958,12 +702,12 @@ class _ListenerChip extends StatelessWidget {
         child: Column(
           children: [
             Container(
-              width: 58,
-              height: 58,
+              width: 60,
+              height: 60,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 border: Border.all(
-                  color: SplashColors.purpleMid.withValues(alpha: 0.4),
+                  color: Colors.white.withValues(alpha: 0.08),
                   width: 2,
                 ),
               ),
@@ -999,24 +743,13 @@ class _ListenerChip extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 2),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  listener.rating.toStringAsFixed(1),
-                  style: GoogleFonts.inter(
-                    color: VentorProfileTheme.muted,
-                    fontSize: 11,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                const SizedBox(width: 3),
-                const Icon(
-                  Icons.favorite_rounded,
-                  size: 11,
-                  color: SplashColors.purpleMid,
-                ),
-              ],
+            Text(
+              listener.rating.toStringAsFixed(1),
+              style: GoogleFonts.inter(
+                color: VentorProfileTheme.muted,
+                fontSize: 11,
+                fontWeight: FontWeight.w500,
+              ),
             ),
           ],
         ),
@@ -1026,9 +759,14 @@ class _ListenerChip extends StatelessWidget {
 }
 
 class _AddFavoriteChip extends StatelessWidget {
-  const _AddFavoriteChip({required this.label, required this.onTap});
+  const _AddFavoriteChip({
+    required this.label,
+    required this.totalCountLabel,
+    required this.onTap,
+  });
 
   final String label;
+  final String totalCountLabel;
   final VoidCallback onTap;
 
   @override
@@ -1036,12 +774,12 @@ class _AddFavoriteChip extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: SizedBox(
-        width: 76,
+        width: 78,
         child: Column(
           children: [
             Container(
-              width: 58,
-              height: 58,
+              width: 60,
+              height: 60,
               decoration: const BoxDecoration(shape: BoxShape.circle),
               child: CustomPaint(
                 painter: _DashedCirclePainter(
@@ -1060,13 +798,23 @@ class _AddFavoriteChip extends StatelessWidget {
             Text(
               label,
               textAlign: TextAlign.center,
-              maxLines: 2,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: GoogleFonts.inter(
+                color: Colors.white,
+                fontSize: 11,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            Text(
+              totalCountLabel,
+              textAlign: TextAlign.center,
+              maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: GoogleFonts.inter(
                 color: VentorProfileTheme.muted,
-                fontSize: 11,
+                fontSize: 10,
                 fontWeight: FontWeight.w500,
-                height: 1.2,
               ),
             ),
           ],
@@ -1109,43 +857,4 @@ class _DashedCirclePainter extends CustomPainter {
   bool shouldRepaint(covariant _DashedCirclePainter oldDelegate) {
     return oldDelegate.color != color;
   }
-}
-
-/// Helper to build localized achievement mocks.
-List<VentorAchievement> ventorMockAchievements(VentingMobLocalizations l10n) {
-  return [
-    VentorAchievement(
-      id: 'first_step',
-      title: l10n.ventor_profile_achievement_first_step,
-      subtitle: l10n.ventor_profile_achievement_first_step_desc,
-      description: l10n.ventor_profile_achievement_first_step_detail,
-      color: VentorProfileTheme.gold,
-      icon: Icons.emoji_events_rounded,
-    ),
-    VentorAchievement(
-      id: 'be_heard',
-      title: l10n.ventor_profile_achievement_be_heard,
-      subtitle: l10n.ventor_profile_achievement_be_heard_desc,
-      description: l10n.ventor_profile_achievement_be_heard_detail,
-      color: SplashColors.purpleMid,
-      icon: Icons.hearing_rounded,
-    ),
-    VentorAchievement(
-      id: 'week_warrior',
-      title: l10n.ventor_profile_achievement_week_warrior,
-      subtitle: l10n.ventor_profile_achievement_week_warrior_desc,
-      description: l10n.ventor_profile_achievement_week_warrior_detail,
-      color: const Color(0xFF14B8A6),
-      icon: Icons.local_fire_department_rounded,
-    ),
-    VentorAchievement(
-      id: 'active_mind',
-      title: l10n.ventor_profile_achievement_active_mind,
-      subtitle: l10n.ventor_profile_achievement_active_mind_desc,
-      description: l10n.ventor_profile_achievement_active_mind_detail,
-      color: VentorProfileTheme.muted,
-      icon: Icons.psychology_alt_rounded,
-      unlocked: false,
-    ),
-  ];
 }

@@ -167,7 +167,7 @@ Listener (`POST /v1/listeners/register/complete`):
 | 12 | `POST /v1/ventors/me/mood-checkins` | Mood check-in sheet | User picks a mood (and optional note) and saves |
 | 13 | `GET /v1/ventors/me/mood-journey` | Ventor profile — mood journey card | When profile (or that card) is shown; query `days` (default 7) |
 
-### B3. Ventor profile, favorites, achievements
+### B3. Ventor profile & favorites
 
 | # | Endpoint | Screen / place | When |
 |---|----------|----------------|------|
@@ -176,16 +176,15 @@ Listener (`POST /v1/listeners/register/complete`):
 | 14 | `GET /v1/ventors/me/favorites` | Profile — “My listeners” | Load favorite listeners list |
 | 15 | `POST /v1/ventors/me/favorites/{listenerId}` | Listener profile / find card heart | User favorites a listener |
 | 16 | `DELETE /v1/ventors/me/favorites/{listenerId}` | Same UI (unfavorite) | User removes favorite |
-| 17 | `GET /v1/ventors/me/achievements` | Achievements bottom sheet | Sheet opens |
 
 ### B4. Ventor settings
 
 | # | Endpoint | Screen / place | When |
 |---|----------|----------------|------|
-| 18 | `GET /v1/ventors/me/privacy` | Ventor privacy settings | Screen open |
-| 19 | `PUT /v1/ventors/me/privacy` | Same | User toggles privacy flags and saves |
-| 20 | `GET /v1/ventors/me/notification-preferences` | Ventor notification preferences | Screen open |
-| 21 | `PUT /v1/ventors/me/notification-preferences` | Same | User changes reminder / push / email prefs |
+| 17 | `GET /v1/ventors/me/privacy` | Ventor privacy settings | Screen open |
+| 18 | `PUT /v1/ventors/me/privacy` | Same | User toggles privacy flags and saves |
+| 19 | `GET /v1/ventors/me/notification-preferences` | Ventor notification preferences | Screen open |
+| 20 | `PUT /v1/ventors/me/notification-preferences` | Same | User changes reminder / push / email prefs |
 
 ### B5. Find listeners & book sessions
 

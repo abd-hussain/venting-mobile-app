@@ -3767,8 +3767,14 @@ abstract class VentingMobLocalizations {
   /// No description provided for @ventor_profile_day_streak.
   ///
   /// In en, this message translates to:
-  /// **'Day Streak'**
+  /// **'Days Streak'**
   String get ventor_profile_day_streak;
+
+  /// No description provided for @ventor_profile_progress_summary.
+  ///
+  /// In en, this message translates to:
+  /// **'Progress Summary'**
+  String get ventor_profile_progress_summary;
 
   /// No description provided for @ventor_profile_mood_journey.
   ///
@@ -3824,107 +3830,11 @@ abstract class VentingMobLocalizations {
   /// **'Sun'**
   String get ventor_profile_day_sun;
 
-  /// No description provided for @ventor_profile_achievements.
-  ///
-  /// In en, this message translates to:
-  /// **'Achievements'**
-  String get ventor_profile_achievements;
-
   /// No description provided for @ventor_profile_see_all.
   ///
   /// In en, this message translates to:
   /// **'See all'**
   String get ventor_profile_see_all;
-
-  /// No description provided for @ventor_profile_achievement_first_step.
-  ///
-  /// In en, this message translates to:
-  /// **'First Step'**
-  String get ventor_profile_achievement_first_step;
-
-  /// No description provided for @ventor_profile_achievement_first_step_desc.
-  ///
-  /// In en, this message translates to:
-  /// **'1 Session'**
-  String get ventor_profile_achievement_first_step_desc;
-
-  /// No description provided for @ventor_profile_achievement_be_heard.
-  ///
-  /// In en, this message translates to:
-  /// **'Be Heard'**
-  String get ventor_profile_achievement_be_heard;
-
-  /// No description provided for @ventor_profile_achievement_be_heard_desc.
-  ///
-  /// In en, this message translates to:
-  /// **'5 Sessions'**
-  String get ventor_profile_achievement_be_heard_desc;
-
-  /// No description provided for @ventor_profile_achievement_week_warrior.
-  ///
-  /// In en, this message translates to:
-  /// **'Week Warrior'**
-  String get ventor_profile_achievement_week_warrior;
-
-  /// No description provided for @ventor_profile_achievement_week_warrior_desc.
-  ///
-  /// In en, this message translates to:
-  /// **'7 Day Streak'**
-  String get ventor_profile_achievement_week_warrior_desc;
-
-  /// No description provided for @ventor_profile_achievement_active_mind.
-  ///
-  /// In en, this message translates to:
-  /// **'Active Mind'**
-  String get ventor_profile_achievement_active_mind;
-
-  /// No description provided for @ventor_profile_achievement_active_mind_desc.
-  ///
-  /// In en, this message translates to:
-  /// **'20 Sessions'**
-  String get ventor_profile_achievement_active_mind_desc;
-
-  /// No description provided for @ventor_profile_achievement_first_step_detail.
-  ///
-  /// In en, this message translates to:
-  /// **'Complete your first venting session. Taking that first step shows courage — and it unlocks your journey on Venting.'**
-  String get ventor_profile_achievement_first_step_detail;
-
-  /// No description provided for @ventor_profile_achievement_be_heard_detail.
-  ///
-  /// In en, this message translates to:
-  /// **'Finish 5 sessions where you shared how you feel. Being heard consistently helps build trust and emotional clarity.'**
-  String get ventor_profile_achievement_be_heard_detail;
-
-  /// No description provided for @ventor_profile_achievement_week_warrior_detail.
-  ///
-  /// In en, this message translates to:
-  /// **'Keep a 7-day streak by checking in or completing sessions. Small daily habits can make a big difference.'**
-  String get ventor_profile_achievement_week_warrior_detail;
-
-  /// No description provided for @ventor_profile_achievement_active_mind_detail.
-  ///
-  /// In en, this message translates to:
-  /// **'Reach 20 total sessions. This badge celebrates showing up for yourself again and again.'**
-  String get ventor_profile_achievement_active_mind_detail;
-
-  /// No description provided for @ventor_profile_achievements_subtitle.
-  ///
-  /// In en, this message translates to:
-  /// **'{unlocked} of {total} unlocked'**
-  String ventor_profile_achievements_subtitle(int unlocked, int total);
-
-  /// No description provided for @ventor_profile_achievement_unlocked.
-  ///
-  /// In en, this message translates to:
-  /// **'Unlocked'**
-  String get ventor_profile_achievement_unlocked;
-
-  /// No description provided for @ventor_profile_achievement_locked.
-  ///
-  /// In en, this message translates to:
-  /// **'Locked'**
-  String get ventor_profile_achievement_locked;
 
   /// No description provided for @ventor_profile_my_listeners.
   ///
@@ -3937,6 +3847,12 @@ abstract class VentingMobLocalizations {
   /// In en, this message translates to:
   /// **'Add Favorite'**
   String get ventor_profile_add_favorite;
+
+  /// No description provided for @ventor_profile_add_favorite_total.
+  ///
+  /// In en, this message translates to:
+  /// **'Total ({count})'**
+  String ventor_profile_add_favorite_total(int count);
 
   /// No description provided for @ventor_profile_quote.
   ///
@@ -4135,12 +4051,6 @@ abstract class VentingMobLocalizations {
   /// In en, this message translates to:
   /// **'Show Mood Journey'**
   String get ventor_privacy_show_mood_journey;
-
-  /// No description provided for @ventor_privacy_show_achievements.
-  ///
-  /// In en, this message translates to:
-  /// **'Show Achievements'**
-  String get ventor_privacy_show_achievements;
 
   /// No description provided for @ventor_privacy_show_stats.
   ///
@@ -4441,6 +4351,12 @@ abstract class VentingMobLocalizations {
   /// In en, this message translates to:
   /// **'Call assigned to you — join when ready.'**
   String get listener_sessions_assigned_snackbar;
+
+  /// No description provided for @listener_sessions_already_taken.
+  ///
+  /// In en, this message translates to:
+  /// **'Another listener accepted this call first.'**
+  String get listener_sessions_already_taken;
 
   /// No description provided for @listener_sessions_waiting.
   ///

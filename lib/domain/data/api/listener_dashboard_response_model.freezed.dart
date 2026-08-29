@@ -295,7 +295,6 @@ $ListenerDashboardDataCopyWith<$Res> get data {
 }
 }
 
-
 /// @nodoc
 mixin _$ListenerDashboardData {
 
@@ -503,11 +502,11 @@ return $default(_that.display_name,_that.reminder);case _:
 }
 
 /// @nodoc
-@JsonSerializable()
+@JsonSerializable(createFactory: false)
 
 class _ListenerDashboardData implements ListenerDashboardData {
   const _ListenerDashboardData({this.display_name = '', this.reminder});
-  factory _ListenerDashboardData.fromJson(Map<String, dynamic> json) => _$ListenerDashboardDataFromJson(json);
+  
 
 @override@JsonKey() final  String display_name;
 @override final  ListenerDashboardReminderModel? reminder;

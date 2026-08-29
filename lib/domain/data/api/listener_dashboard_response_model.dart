@@ -15,7 +15,20 @@ abstract class ListenerDashboardResponseModel
       _$ListenerDashboardResponseModelFromJson(json);
 }
 
-@freezed
+ListenerDashboardReminderModel? _reminderFromJson(Object? json) {
+  if (json == null) return null;
+  if (json is Map<String, dynamic>) {
+    return ListenerDashboardReminderModel.fromJson(json);
+  }
+  if (json is String) {
+    final message = json.trim();
+    if (message.isEmpty) return null;
+    return ListenerDashboardReminderModel(message: message);
+  }
+  return null;
+}
+
+@Freezed(fromJson: false)
 abstract class ListenerDashboardData with _$ListenerDashboardData {
   const factory ListenerDashboardData({
     @Default('') String display_name,
@@ -23,7 +36,10 @@ abstract class ListenerDashboardData with _$ListenerDashboardData {
   }) = _ListenerDashboardData;
 
   factory ListenerDashboardData.fromJson(Map<String, dynamic> json) =>
-      _$ListenerDashboardDataFromJson(json);
+      ListenerDashboardData(
+        display_name: json['display_name'] as String? ?? '',
+        reminder: _reminderFromJson(json['reminder']),
+      );
 }
 
 @freezed

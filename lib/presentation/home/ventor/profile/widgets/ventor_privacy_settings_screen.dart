@@ -8,28 +8,24 @@ import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dar
 class VentorPrivacySettings {
   const VentorPrivacySettings({
     this.showMoodJourney = true,
-    this.showAchievements = true,
     this.showStats = true,
     this.showFavoriteListeners = true,
     this.allowListenerDiscovery = true,
   });
 
   final bool showMoodJourney;
-  final bool showAchievements;
   final bool showStats;
   final bool showFavoriteListeners;
   final bool allowListenerDiscovery;
 
   VentorPrivacySettings copyWith({
     bool? showMoodJourney,
-    bool? showAchievements,
     bool? showStats,
     bool? showFavoriteListeners,
     bool? allowListenerDiscovery,
   }) {
     return VentorPrivacySettings(
       showMoodJourney: showMoodJourney ?? this.showMoodJourney,
-      showAchievements: showAchievements ?? this.showAchievements,
       showStats: showStats ?? this.showStats,
       showFavoriteListeners:
           showFavoriteListeners ?? this.showFavoriteListeners,
@@ -42,7 +38,6 @@ class VentorPrivacySettings {
   bool operator ==(Object other) {
     return other is VentorPrivacySettings &&
         other.showMoodJourney == showMoodJourney &&
-        other.showAchievements == showAchievements &&
         other.showStats == showStats &&
         other.showFavoriteListeners == showFavoriteListeners &&
         other.allowListenerDiscovery == allowListenerDiscovery;
@@ -51,7 +46,6 @@ class VentorPrivacySettings {
   @override
   int get hashCode => Object.hash(
     showMoodJourney,
-    showAchievements,
     showStats,
     showFavoriteListeners,
     allowListenerDiscovery,
@@ -162,17 +156,6 @@ class _VentorPrivacySettingsScreenState
                             setState(
                               () => _settings = _settings.copyWith(
                                 showMoodJourney: value,
-                              ),
-                            );
-                          },
-                        ),
-                        _PreferenceToggle(
-                          label: l10n.ventor_privacy_show_achievements,
-                          value: _settings.showAchievements,
-                          onChanged: (value) {
-                            setState(
-                              () => _settings = _settings.copyWith(
-                                showAchievements: value,
                               ),
                             );
                           },
