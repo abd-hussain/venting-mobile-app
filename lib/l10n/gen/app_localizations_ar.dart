@@ -1128,6 +1128,16 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
   String get listener_earnings_payout_methods => 'طرق السحب';
 
   @override
+  String get listener_earnings_payout_empty_title => 'أضف طريقة سحب';
+
+  @override
+  String get listener_earnings_payout_empty_subtitle =>
+      'اربط حسابك البنكي أو باي بال لتكون جاهزاً لاستلام أرباحك.';
+
+  @override
+  String get listener_earnings_payout_empty_action => 'إعداد';
+
+  @override
   String get listener_earnings_default => 'افتراضي';
 
   @override
@@ -1648,6 +1658,9 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
   String get listener_payout_this_month => 'هذا الشهر';
 
   @override
+  String get listener_payout_pending_balance => 'قيد الانتظار';
+
+  @override
   String get listener_payout_add_method => 'إضافة طريقة';
 
   @override
@@ -1684,6 +1697,9 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
 
   @override
   String get listener_payout_request_submitted => 'تم إرسال طلب السحب.';
+
+  @override
+  String get listener_payout_method_saved => 'تم حفظ طريقة السحب.';
 
   @override
   String get listener_payout_bank_subtitle =>

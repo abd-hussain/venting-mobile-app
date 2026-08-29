@@ -1,52 +1,61 @@
 import 'package:fpdart/fpdart.dart';
-import 'package:preferences/preferences.dart';
+import 'package:venting_mobile_app/domain/data/api/listener_earnings_response_model.dart';
 import 'package:venting_mobile_app/domain/data/app/listener_earnings.dart';
 import 'package:venting_mobile_app/domain/data/exceptions/main_api_exception.dart';
 import 'package:venting_mobile_app/domain/repository/api/listener/listener_earnings_repository.dart';
 
 class GetListenerEarningsOverviewUsecase {
   final ListenerEarningsRepository listenerEarningsRepository;
-  final VentingPreferences ventingPreferences;
 
-  const GetListenerEarningsOverviewUsecase(
-    this.listenerEarningsRepository,
-    this.ventingPreferences,
-  );
+  const GetListenerEarningsOverviewUsecase(this.listenerEarningsRepository);
 
   TaskEither<Exception, ListenerEarningsOverview> call() {
-    final accessToken = ventingPreferences
-        .getValue(SavedConstants.accessToken, '')
-        .trim();
-
-    if (accessToken.isEmpty) {
-      return TaskEither.left(
-        const MainAPIException(
-          status: 'failed',
-          type: 'auth',
-          code: 401,
-          message: 'Missing access token',
-        ),
-      );
-    }
-
     final chartRange = _defaultChartRange();
 
-    return listenerEarningsRepository.getEarnings().flatMap((earnings) {
-      return listenerEarningsRepository
-          .getEarningsChart(from: chartRange.from, to: chartRange.to)
-          .flatMap((chart) {
-            return listenerEarningsRepository.getPayoutMethods().map((
-              payoutMethods,
-            ) {
-              return listenerEarningsOverviewFromApi(
-                earnings: earnings.data,
-                chart: chart.data,
-                payoutMethods: payoutMethods.data,
-              );
-            });
-          });
-    });
+    return TaskEither.tryCatch(
+      () async {
+        final results = await Future.wait([
+          listenerEarningsRepository.getEarnings().run(),
+          listenerEarningsRepository
+              .getEarningsChart(from: chartRange.from, to: chartRange.to)
+              .run(),
+          listenerEarningsRepository.getPayoutMethods().run(),
+        ]);
+
+        final earnings = _unwrap<ListenerEarningsResponseModel>(
+          results[0] as Either<Exception, ListenerEarningsResponseModel>,
+        );
+        final chart = _unwrap<ListenerEarningsChartResponseModel>(
+          results[1] as Either<Exception, ListenerEarningsChartResponseModel>,
+        );
+        final payoutMethods = _unwrap<ListenerPayoutMethodsResponseModel>(
+          results[2] as Either<Exception, ListenerPayoutMethodsResponseModel>,
+        );
+
+        return listenerEarningsOverviewFromApi(
+          earnings: earnings.data,
+          chart: chart.data,
+          payoutMethods: payoutMethods.data,
+        );
+      },
+      _mapError,
+    );
   }
+}
+
+T _unwrap<T>(Either<Exception, T> either) {
+  return either.match((error) => throw error, (value) => value);
+}
+
+MainAPIException _mapError(Object error, StackTrace stackTrace) {
+  if (error is MainAPIException) return error;
+  return MainAPIException(
+    status: 'failed',
+    type: 'unknown',
+    code: -1,
+    message: error.toString(),
+    stackTrace: stackTrace,
+  );
 }
 
 ({String from, String to}) _defaultChartRange() {

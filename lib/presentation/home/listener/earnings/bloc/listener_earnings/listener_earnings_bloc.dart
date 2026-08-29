@@ -6,6 +6,7 @@ import 'package:logger_manager/logger_manager.dart';
 import 'package:venting_mobile_app/domain/data/app/listener_earnings.dart';
 import 'package:venting_mobile_app/domain/data/exceptions/main_api_exception.dart';
 import 'package:venting_mobile_app/domain/usecase/get_listener_earnings_overview_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/get_listener_setup_progress_usecase.dart';
 import 'package:venting_mobile_app/l10n/venting_mob_localizations_holder.dart';
 
 part 'listener_earnings_bloc.freezed.dart';
@@ -14,14 +15,17 @@ part 'listener_earnings_state.dart';
 
 class ListenerEarningsBloc
     extends Bloc<ListenerEarningsEvent, ListenerEarningsState> {
-  ListenerEarningsBloc(this._getListenerEarningsOverviewUsecase)
-    : super(const ListenerEarningsState()) {
+  ListenerEarningsBloc(
+    this._getListenerEarningsOverviewUsecase,
+    this._getListenerSetupProgressUsecase,
+  ) : super(const ListenerEarningsState()) {
     on<_Started>(_onStarted);
     on<_RetryLoad>(_onRetryLoad);
     on<_RefreshRequested>(_onRefreshRequested);
   }
 
   final GetListenerEarningsOverviewUsecase _getListenerEarningsOverviewUsecase;
+  final GetListenerSetupProgressUsecase _getListenerSetupProgressUsecase;
 
   Future<void> _onStarted(
     _Started event,
@@ -58,10 +62,16 @@ class ListenerEarningsBloc
     }
 
     try {
-      final result = await _getListenerEarningsOverviewUsecase().run();
+      final setupResult = await _getListenerSetupProgressUsecase().run();
+      final earningsResult = await _getListenerEarningsOverviewUsecase().run();
       if (emit.isDone) return;
 
-      result.match(
+      final isProfileUnderReview = setupResult.match(
+        (_) => false,
+        (progress) => progress.isProfileUnderReview,
+      );
+
+      earningsResult.match(
         (error) {
           final message = _mapError(error);
           LoggerManagerBase.logErrorMessage(
@@ -71,6 +81,7 @@ class ListenerEarningsBloc
           emit(
             state.copyWith(
               status: ListenerEarningsStatus.loadFailure,
+              isProfileUnderReview: isProfileUnderReview,
               errorMessage: message,
             ),
           );
@@ -80,6 +91,7 @@ class ListenerEarningsBloc
             state.copyWith(
               status: ListenerEarningsStatus.ready,
               overview: overview,
+              isProfileUnderReview: isProfileUnderReview,
               errorMessage: '',
             ),
           );
@@ -103,14 +115,15 @@ class ListenerEarningsBloc
 
   String _mapError(Object error) {
     if (error is MainAPIException) {
+      if (error.message.isNotEmpty) return error.message;
       final localized = error.getLocalizedMessage();
       if (localized.isNotEmpty) return localized;
-      if (error.message.isNotEmpty) return error.message;
     }
-    try {
-      return VentingMobLocalizationsHolder.current.common_unknown_error;
-    } on Object {
-      return 'Something went wrong. Please try again.';
-    }
+    final message = error.toString().trim();
+    if (message.isNotEmpty) return message;
+    return VentingMobLocalizationsHolder.withLocale(
+      VentingMobLocalizationsHolder.currentLanguageCode,
+      (l10n) => l10n.common_unknown_error,
+    );
   }
 }

@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shimmer_manager/shimmer_manager.dart';
+import 'package:venting_mobile_app/di/di_container.dart';
+import 'package:venting_mobile_app/domain/data/app/listener_payouts.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
+import 'package:venting_mobile_app/presentation/home/listener/profile/bloc/payout_history/listener_payout_history_bloc.dart';
 import 'package:venting_mobile_app/presentation/home/listener/profile/listener_profile_theme.dart';
 
 class ListenerPayoutHistoryItem {
@@ -24,10 +29,7 @@ class ListenerPayoutHistoryItem {
 enum ListenerPayoutStatus { completed, pending, failed }
 
 /// Shows payout history details in a bottom sheet.
-Future<void> showPayoutHistoryBottomSheet({
-  required BuildContext context,
-  required List<ListenerPayoutHistoryItem> items,
-}) {
+Future<void> showPayoutHistoryBottomSheet({required BuildContext context}) {
   return showModalBottomSheet<void>(
     context: context,
     isScrollControlled: true,
@@ -35,14 +37,17 @@ Future<void> showPayoutHistoryBottomSheet({
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
     ),
-    builder: (context) => PayoutHistoryBottomSheet(items: items),
+    builder: (context) => BlocProvider(
+      create: (_) =>
+          diContainer<ListenerPayoutHistoryBloc>()
+            ..add(const ListenerPayoutHistoryEvent.started()),
+      child: const PayoutHistoryBottomSheet(),
+    ),
   );
 }
 
 class PayoutHistoryBottomSheet extends StatelessWidget {
-  const PayoutHistoryBottomSheet({super.key, required this.items});
-
-  final List<ListenerPayoutHistoryItem> items;
+  const PayoutHistoryBottomSheet({super.key});
 
   String _money(double value) => '\$${value.toStringAsFixed(2)}';
 
@@ -71,6 +76,21 @@ class PayoutHistoryBottomSheet extends StatelessWidget {
     final m = local.month.toString().padLeft(2, '0');
     final d = local.day.toString().padLeft(2, '0');
     return '$y-$m-$d';
+  }
+
+  ListenerPayoutHistoryItem _toItem(ListenerPayoutHistoryEntry entry) {
+    return ListenerPayoutHistoryItem(
+      id: entry.id,
+      amount: entry.amount,
+      date: entry.date,
+      status: switch (entry.status) {
+        ListenerPayoutHistoryStatus.completed => ListenerPayoutStatus.completed,
+        ListenerPayoutHistoryStatus.pending => ListenerPayoutStatus.pending,
+        ListenerPayoutHistoryStatus.failed => ListenerPayoutStatus.failed,
+      },
+      methodLabel: entry.methodLabel,
+      reference: entry.reference,
+    );
   }
 
   @override
@@ -121,90 +141,172 @@ class PayoutHistoryBottomSheet extends StatelessWidget {
               ),
             ),
             Expanded(
-              child: items.isEmpty
-                  ? Center(
-                      child: Text(
-                        l10n.listener_payout_history_empty,
-                        style: GoogleFonts.inter(
-                          color: ListenerProfileTheme.muted,
-                          fontSize: 14,
-                        ),
-                      ),
-                    )
-                  : ListView.separated(
-                      padding: EdgeInsets.fromLTRB(16, 8, 16, 16 + bottomInset),
-                      itemCount: items.length,
-                      separatorBuilder: (_, _) => const SizedBox(height: 10),
-                      itemBuilder: (context, index) {
-                        final item = items[index];
-                        return Container(
-                          padding: const EdgeInsets.all(14),
-                          decoration: BoxDecoration(
-                            color: const Color(0xFF14101C),
-                            borderRadius: BorderRadius.circular(14),
-                            border: Border.all(
-                              color: ListenerProfileTheme.cardBorder,
+              child:
+                  BlocBuilder<
+                    ListenerPayoutHistoryBloc,
+                    ListenerPayoutHistoryState
+                  >(
+                    builder: (context, state) {
+                      if (state.isLoadingOrInitial) {
+                        return const _PayoutHistoryShimmer();
+                      }
+
+                      if (state.isLoadFailure) {
+                        return Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(24),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  state.errorMessage.isNotEmpty
+                                      ? state.errorMessage
+                                      : l10n.common_unknown_error,
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.inter(
+                                    color: Colors.white,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                                const SizedBox(height: 16),
+                                FilledButton(
+                                  onPressed: () => context
+                                      .read<ListenerPayoutHistoryBloc>()
+                                      .add(
+                                        const ListenerPayoutHistoryEvent.retryLoad(),
+                                      ),
+                                  child: Text(l10n.common_retry),
+                                ),
+                              ],
                             ),
                           ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: Text(
-                                      _money(item.amount),
-                                      style: GoogleFonts.inter(
-                                        color: Colors.white,
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 10,
-                                      vertical: 4,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: _statusColor(
-                                        item.status,
-                                      ).withValues(alpha: 0.15),
-                                      borderRadius: BorderRadius.circular(999),
-                                    ),
-                                    child: Text(
-                                      _statusLabel(l10n, item.status),
-                                      style: GoogleFonts.inter(
-                                        color: _statusColor(item.status),
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 10),
-                              _DetailRow(
-                                label: l10n.listener_payout_detail_date,
-                                value: _dateLabel(item.date),
-                              ),
-                              _DetailRow(
-                                label: l10n.listener_payout_detail_method,
-                                value: item.methodLabel,
-                              ),
-                              if (item.reference != null)
-                                _DetailRow(
-                                  label: l10n.listener_payout_detail_reference,
-                                  value: item.reference!,
-                                  showDivider: false,
-                                ),
-                            ],
+                        );
+                      }
+
+                      final items = state.items
+                          .map(_toItem)
+                          .toList(growable: false);
+                      if (!state.isReady || items.isEmpty) {
+                        return Center(
+                          child: Text(
+                            l10n.listener_payout_history_empty,
+                            style: GoogleFonts.inter(
+                              color: ListenerProfileTheme.muted,
+                              fontSize: 14,
+                            ),
                           ),
                         );
-                      },
-                    ),
+                      }
+
+                      return ListView.separated(
+                        padding: EdgeInsets.fromLTRB(
+                          16,
+                          8,
+                          16,
+                          16 + bottomInset,
+                        ),
+                        itemCount: items.length,
+                        separatorBuilder: (_, _) => const SizedBox(height: 10),
+                        itemBuilder: (context, index) {
+                          final item = items[index];
+                          return Container(
+                            padding: const EdgeInsets.all(14),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFF14101C),
+                              borderRadius: BorderRadius.circular(14),
+                              border: Border.all(
+                                color: ListenerProfileTheme.cardBorder,
+                              ),
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        _money(item.amount),
+                                        style: GoogleFonts.inter(
+                                          color: Colors.white,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 10,
+                                        vertical: 4,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        color: _statusColor(
+                                          item.status,
+                                        ).withValues(alpha: 0.15),
+                                        borderRadius: BorderRadius.circular(
+                                          999,
+                                        ),
+                                      ),
+                                      child: Text(
+                                        _statusLabel(l10n, item.status),
+                                        style: GoogleFonts.inter(
+                                          color: _statusColor(item.status),
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 10),
+                                _DetailRow(
+                                  label: l10n.listener_payout_detail_date,
+                                  value: _dateLabel(item.date),
+                                ),
+                                _DetailRow(
+                                  label: l10n.listener_payout_detail_method,
+                                  value: item.methodLabel,
+                                ),
+                                if (item.reference != null)
+                                  _DetailRow(
+                                    label:
+                                        l10n.listener_payout_detail_reference,
+                                    value: item.reference!,
+                                    showDivider: false,
+                                  ),
+                              ],
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class _PayoutHistoryShimmer extends StatelessWidget {
+  const _PayoutHistoryShimmer();
+
+  @override
+  Widget build(BuildContext context) {
+    return Shimmer.fromColors(
+      baseColor: Colors.white.withValues(alpha: 0.08),
+      highlightColor: Colors.white.withValues(alpha: 0.16),
+      child: ListView.separated(
+        padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+        itemCount: 4,
+        separatorBuilder: (_, _) => const SizedBox(height: 10),
+        itemBuilder: (_, _) => Container(
+          height: 132,
+          decoration: BoxDecoration(
+            color: ListenerProfileTheme.cardFill,
+            borderRadius: BorderRadius.circular(14),
+            border: Border.all(color: ListenerProfileTheme.cardBorder),
+          ),
         ),
       ),
     );

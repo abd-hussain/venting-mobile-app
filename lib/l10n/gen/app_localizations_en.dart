@@ -1135,6 +1135,16 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
   String get listener_earnings_payout_methods => 'Payout Methods';
 
   @override
+  String get listener_earnings_payout_empty_title => 'Add a payout method';
+
+  @override
+  String get listener_earnings_payout_empty_subtitle =>
+      'Link your bank or PayPal account so you\'re ready to cash out your earnings.';
+
+  @override
+  String get listener_earnings_payout_empty_action => 'Set up';
+
+  @override
   String get listener_earnings_default => 'Default';
 
   @override
@@ -1657,6 +1667,9 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
   String get listener_payout_this_month => 'This Month';
 
   @override
+  String get listener_payout_pending_balance => 'Pending';
+
+  @override
   String get listener_payout_add_method => 'Add method';
 
   @override
@@ -1693,6 +1706,9 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
 
   @override
   String get listener_payout_request_submitted => 'Payout request submitted.';
+
+  @override
+  String get listener_payout_method_saved => 'Payout method saved.';
 
   @override
   String get listener_payout_bank_subtitle =>

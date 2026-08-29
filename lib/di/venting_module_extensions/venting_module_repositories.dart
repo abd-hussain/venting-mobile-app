@@ -19,8 +19,10 @@ import 'package:venting_mobile_app/domain/repository/api/catalog/catalog_languag
 import 'package:venting_mobile_app/domain/repository/api/catalog/catalog_life_experiences_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/listener/listener_availability_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/listener/listener_dashboard_repository.dart';
+import 'package:venting_mobile_app/domain/repository/api/listener/listener_earnings_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/listener/listener_notification_preferences_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/listener/listener_notifications_repository.dart';
+import 'package:venting_mobile_app/domain/repository/api/listener/listener_payouts_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/listener/listener_privacy_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/listener/listener_profile_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/listener/listener_register_repository.dart';
@@ -98,6 +100,14 @@ mixin VentingModuleRepositories on VentingModule {
   ListenerDashboardRepository listenerDashboardRepository(
     ApiClientBase apiClient,
   ) => ListenerDashboardRepository(apiClient);
+
+  ListenerEarningsRepository listenerEarningsRepository(
+    ApiClientBase apiClient,
+  ) => ListenerEarningsRepository(apiClient);
+
+  ListenerPayoutsRepository listenerPayoutsRepository(
+    ApiClientBase apiClient,
+  ) => ListenerPayoutsRepository(apiClient);
 
   ListenerNotificationPreferencesRepository
   listenerNotificationPreferencesRepository(ApiClientBase apiClient) =>
@@ -188,6 +198,12 @@ mixin VentingModuleRepositories on VentingModule {
     );
     getIt.registerFactory<ListenerDashboardRepository>(
       () => listenerDashboardRepository(getIt<ApiClientBase>()),
+    );
+    getIt.registerFactory<ListenerEarningsRepository>(
+      () => listenerEarningsRepository(getIt<ApiClientBase>()),
+    );
+    getIt.registerFactory<ListenerPayoutsRepository>(
+      () => listenerPayoutsRepository(getIt<ApiClientBase>()),
     );
     getIt.registerFactory<ListenerNotificationPreferencesRepository>(
       () => listenerNotificationPreferencesRepository(getIt<ApiClientBase>()),

@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:venting_mobile_app/di/di_container.dart';
+import 'package:venting_mobile_app/domain/data/app/listener_payouts.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
+import 'package:venting_mobile_app/presentation/home/listener/profile/bloc/payment_payouts/listener_payment_payouts_bloc.dart';
 import 'package:venting_mobile_app/presentation/home/listener/profile/listener_profile_theme.dart';
 import 'package:venting_mobile_app/presentation/home/listener/profile/widgets/payout_history_bottom_sheet.dart';
 import 'package:venting_mobile_app/presentation/home/listener/profile/widgets/payout_methods_bottom_sheet.dart';
@@ -10,20 +14,20 @@ import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dar
 /// Opens the Payment & Payouts screen.
 Future<void> openListenerPaymentPayoutsScreen({required BuildContext context}) {
   return Navigator.of(context).push<void>(
-    MaterialPageRoute(builder: (_) => const ListenerPaymentPayoutsScreen()),
+    MaterialPageRoute(
+      builder: (_) => BlocProvider(
+        create: (_) =>
+            diContainer<ListenerPaymentPayoutsBloc>()
+              ..add(const ListenerPaymentPayoutsEvent.started()),
+        child: const ListenerPaymentPayoutsScreen(),
+      ),
+    ),
   );
 }
 
-class ListenerPaymentPayoutsScreen extends StatefulWidget {
+class ListenerPaymentPayoutsScreen extends StatelessWidget {
   const ListenerPaymentPayoutsScreen({super.key});
 
-  @override
-  State<ListenerPaymentPayoutsScreen> createState() =>
-      _ListenerPaymentPayoutsScreenState();
-}
-
-class _ListenerPaymentPayoutsScreenState
-    extends State<ListenerPaymentPayoutsScreen> {
   static const _overlayStyle = SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
     statusBarBrightness: Brightness.dark,
@@ -32,91 +36,80 @@ class _ListenerPaymentPayoutsScreenState
     systemNavigationBarIconBrightness: Brightness.light,
   );
 
-  static const _minPayoutAmount = 100.0;
-
-  // TODO: Load payout balances from listener earnings API / repository.
-  static const _availableBalance = 245.60;
-  static const _totalEarnings = 1245.80;
-  static const _monthEarnings = 345.20;
-
-  // TODO: Load bank accounts / payout history from API.
-  ListenerBankAccountInfo? _bankAccount = const ListenerBankAccountInfo(
-    accountHolderName: 'Nour Listener',
-    bankName: 'Arab Bank',
-    ibanOrAccountNumber: 'JO94CBJO0010000000000131000302',
-    swiftCode: 'ARABJOAX100',
-  );
-
-  static final _history = <ListenerPayoutHistoryItem>[
-    ListenerPayoutHistoryItem(
-      id: '1',
-      amount: 150,
-      date: DateTime.now().subtract(const Duration(days: 12)),
-      status: ListenerPayoutStatus.completed,
-      methodLabel: 'Arab Bank ••••0302',
-      reference: 'PO-10482',
-    ),
-    ListenerPayoutHistoryItem(
-      id: '2',
-      amount: 120,
-      date: DateTime.now().subtract(const Duration(days: 38)),
-      status: ListenerPayoutStatus.completed,
-      methodLabel: 'Arab Bank ••••0302',
-      reference: 'PO-09811',
-    ),
-    ListenerPayoutHistoryItem(
-      id: '3',
-      amount: 100,
-      date: DateTime.now().subtract(const Duration(days: 64)),
-      status: ListenerPayoutStatus.failed,
-      methodLabel: 'Arab Bank ••••0302',
-      reference: 'PO-09102',
-    ),
-  ];
-
   String _money(double value) => '\$${value.toStringAsFixed(2)}';
 
-  bool get _canRequestPayout =>
-      _availableBalance >= _minPayoutAmount && _bankAccount != null;
+  ListenerBankAccountInfo? _bankAccountInfo(ListenerBankAccount? account) {
+    if (account == null) return null;
+    return ListenerBankAccountInfo(
+      accountHolderName: account.accountHolderName,
+      bankName: account.bankName,
+      ibanOrAccountNumber: account.ibanOrAccountNumber,
+      swiftCode: account.swiftCode,
+    );
+  }
 
-  String? get _methodsValue {
-    final bank = _bankAccount;
+  String? _methodsValue(ListenerBankAccount? bank) {
     if (bank == null) return null;
     final iban = bank.ibanOrAccountNumber;
     final suffix = iban.length <= 4 ? iban : iban.substring(iban.length - 4);
     return '${bank.bankName} ••••$suffix';
   }
 
-  Future<void> _onPayoutMethods() async {
-    final updated = await showPayoutMethodsBottomSheet(
+  Future<void> _onPayoutHistory(BuildContext context) {
+    return showPayoutHistoryBottomSheet(context: context);
+  }
+
+  Future<void> _onPayoutMethods(
+    BuildContext context,
+    ListenerBankAccount? bankAccount,
+  ) async {
+    final bloc = context.read<ListenerPaymentPayoutsBloc>();
+
+    await showPayoutMethodsBottomSheet(
       context: context,
-      initial: _bankAccount,
+      initial: _bankAccountInfo(bankAccount),
+      onSave: (info) async {
+        bloc.add(
+          ListenerPaymentPayoutsEvent.updateMethodRequested(
+            accountHolderName: info.accountHolderName,
+            bankName: info.bankName,
+            ibanOrAccountNumber: info.ibanOrAccountNumber,
+            swiftCode: info.swiftCode,
+          ),
+        );
+        await bloc.stream.firstWhere((state) => !state.isSavingMethod);
+        final state = bloc.state;
+        if (state.mutationErrorMessage.isNotEmpty) {
+          throw Exception(state.mutationErrorMessage);
+        }
+      },
     );
-    if (!mounted || updated == null) return;
-    setState(() => _bankAccount = updated);
   }
 
-  Future<void> _onPayoutHistory() {
-    return showPayoutHistoryBottomSheet(context: context, items: _history);
-  }
-
-  void _onRequestPayout() {
+  void _onRequestPayout(
+    BuildContext context,
+    ListenerPaymentPayoutsState state,
+  ) {
     final l10n = VentingMobLocalizations.of(context);
-    if (_bankAccount == null) {
+    final overview = state.overview;
+    if (overview == null) return;
+
+    if (overview.bankAccount == null) {
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(SnackBar(content: Text(l10n.listener_payout_need_method)));
       return;
     }
-    if (_availableBalance < _minPayoutAmount) {
+    if (overview.balances.available <
+        ListenerPaymentPayoutsBloc.minPayoutAmount) {
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(SnackBar(content: Text(l10n.listener_payout_min_hint)));
       return;
     }
-    // TODO: Submit payout request via API.
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(l10n.listener_payout_request_submitted)),
+
+    context.read<ListenerPaymentPayoutsBloc>().add(
+      const ListenerPaymentPayoutsEvent.requestPayoutRequested(),
     );
   }
 
@@ -124,102 +117,206 @@ class _ListenerPaymentPayoutsScreenState
   Widget build(BuildContext context) {
     final l10n = VentingMobLocalizations.of(context);
 
-    return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: _overlayStyle,
-      child: Scaffold(
-        backgroundColor: SplashColors.backgroundBottom,
-        appBar: AppBar(
-          backgroundColor: SplashColors.backgroundBottom,
-          elevation: 0,
-          scrolledUnderElevation: 0,
-          centerTitle: true,
-          leading: IconButton(
-            onPressed: () => Navigator.of(context).pop(),
-            icon: const Icon(Icons.arrow_back_ios_new_rounded, size: 18),
-            color: Colors.white,
-          ),
-          title: Text(
-            l10n.listener_profile_payment_payouts,
-            style: GoogleFonts.inter(
-              color: Colors.white,
-              fontSize: 17,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-        ),
-        body: SafeArea(
-          child: Column(
-            children: [
-              Expanded(
-                child: ListView(
-                  padding: const EdgeInsets.fromLTRB(16, 8, 16, 20),
-                  children: [
-                    _BalanceCard(
-                      balanceLabel: l10n.listener_payout_your_balance,
-                      balance: _money(_availableBalance),
-                      availableLabel: l10n.listener_payout_available,
-                      totalLabel: l10n.listener_payout_total_earnings,
-                      totalValue: _money(_totalEarnings),
-                      monthLabel: l10n.listener_payout_this_month,
-                      monthValue: _money(_monthEarnings),
-                    ),
-                    const SizedBox(height: 10),
-                    Text(
-                      l10n.listener_payout_min_hint,
-                      style: GoogleFonts.inter(
-                        color: ListenerProfileTheme.muted,
-                        fontSize: 12,
-                        height: 1.4,
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    _MenuTile(
-                      icon: Icons.account_balance_wallet_outlined,
-                      label: l10n.listener_profile_settings_payout_methods,
-                      value: _methodsValue ?? l10n.listener_payout_add_method,
-                      onTap: _onPayoutMethods,
-                    ),
-                    const SizedBox(height: 10),
-                    _MenuTile(
-                      icon: Icons.history_rounded,
-                      label: l10n.listener_payout_history,
-                      onTap: _onPayoutHistory,
-                    ),
-                  ],
+    return BlocConsumer<
+      ListenerPaymentPayoutsBloc,
+      ListenerPaymentPayoutsState
+    >(
+      listenWhen: (previous, current) =>
+          previous.payoutRequestSucceeded != current.payoutRequestSucceeded ||
+          previous.methodUpdateSucceeded != current.methodUpdateSucceeded ||
+          (previous.mutationErrorMessage != current.mutationErrorMessage &&
+              current.mutationErrorMessage.isNotEmpty &&
+              !current.isSavingMethod &&
+              !current.isRequestingPayout),
+      listener: (context, state) {
+        if (state.payoutRequestSucceeded) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(l10n.listener_payout_request_submitted)),
+          );
+        } else if (state.methodUpdateSucceeded) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(l10n.listener_payout_method_saved)),
+          );
+        } else if (state.mutationErrorMessage.isNotEmpty) {
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text(state.mutationErrorMessage)));
+        }
+      },
+      builder: (context, state) {
+        return AnnotatedRegion<SystemUiOverlayStyle>(
+          value: _overlayStyle,
+          child: Scaffold(
+            backgroundColor: SplashColors.backgroundBottom,
+            appBar: AppBar(
+              backgroundColor: SplashColors.backgroundBottom,
+              elevation: 0,
+              scrolledUnderElevation: 0,
+              centerTitle: true,
+              leading: IconButton(
+                onPressed: () => Navigator.of(context).pop(),
+                icon: const Icon(Icons.arrow_back_ios_new_rounded, size: 18),
+                color: Colors.white,
+              ),
+              title: Text(
+                l10n.listener_profile_payment_payouts,
+                style: GoogleFonts.inter(
+                  color: Colors.white,
+                  fontSize: 17,
+                  fontWeight: FontWeight.w700,
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(20, 8, 20, 16),
-                child: SizedBox(
-                  width: double.infinity,
-                  height: 54,
-                  child: FilledButton(
-                    onPressed: _canRequestPayout ? _onRequestPayout : null,
-                    style: FilledButton.styleFrom(
-                      backgroundColor: SplashColors.purpleMid,
-                      disabledBackgroundColor: SplashColors.purpleMid
-                          .withValues(alpha: 0.35),
-                      foregroundColor: Colors.white,
-                      disabledForegroundColor: Colors.white.withValues(
-                        alpha: 0.7,
-                      ),
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(14),
-                      ),
-                      textStyle: GoogleFonts.inter(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    child: Text(l10n.listener_payout_request),
-                  ),
+            ),
+            body: SafeArea(child: _buildBody(context, l10n, state)),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildBody(
+    BuildContext context,
+    VentingMobLocalizations l10n,
+    ListenerPaymentPayoutsState state,
+  ) {
+    if (state.isLoadingOrInitial) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
+    if (state.isLoadFailure) {
+      return Center(
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                state.errorMessage.isNotEmpty
+                    ? state.errorMessage
+                    : l10n.common_unknown_error,
+                textAlign: TextAlign.center,
+                style: GoogleFonts.inter(color: Colors.white),
+              ),
+              const SizedBox(height: 16),
+              FilledButton(
+                onPressed: () => context.read<ListenerPaymentPayoutsBloc>().add(
+                  const ListenerPaymentPayoutsEvent.retryLoad(),
                 ),
+                child: Text(l10n.common_retry),
               ),
             ],
           ),
         ),
-      ),
+      );
+    }
+
+    final overview = state.overview;
+    if (!state.isReady || overview == null) {
+      return const SizedBox.shrink();
+    }
+
+    final bankAccount = overview.bankAccount;
+    final canRequestPayout =
+        overview.balances.available >=
+            ListenerPaymentPayoutsBloc.minPayoutAmount &&
+        bankAccount != null &&
+        !state.isRequestingPayout;
+
+    return Column(
+      children: [
+        Expanded(
+          child: RefreshIndicator(
+            onRefresh: () async {
+              context.read<ListenerPaymentPayoutsBloc>().add(
+                const ListenerPaymentPayoutsEvent.refreshRequested(),
+              );
+              await context
+                  .read<ListenerPaymentPayoutsBloc>()
+                  .stream
+                  .firstWhere((s) => !s.isLoading);
+            },
+            child: ListView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              padding: const EdgeInsets.fromLTRB(16, 8, 16, 20),
+              children: [
+                _BalanceCard(
+                  balanceLabel: l10n.listener_payout_your_balance,
+                  balance: _money(overview.balances.available),
+                  availableLabel: l10n.listener_payout_available,
+                  totalLabel: l10n.listener_payout_total_earnings,
+                  totalValue: _money(overview.balances.lifetime),
+                  monthLabel: l10n.listener_payout_pending_balance,
+                  monthValue: _money(overview.balances.pending),
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  l10n.listener_payout_min_hint,
+                  style: GoogleFonts.inter(
+                    color: ListenerProfileTheme.muted,
+                    fontSize: 12,
+                    height: 1.4,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                _MenuTile(
+                  icon: Icons.account_balance_wallet_outlined,
+                  label: l10n.listener_profile_settings_payout_methods,
+                  value:
+                      _methodsValue(bankAccount) ??
+                      l10n.listener_payout_add_method,
+                  onTap: state.isSavingMethod
+                      ? null
+                      : () => _onPayoutMethods(context, bankAccount),
+                ),
+                const SizedBox(height: 10),
+                _MenuTile(
+                  icon: Icons.history_rounded,
+                  label: l10n.listener_payout_history,
+                  onTap: () => _onPayoutHistory(context),
+                ),
+              ],
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(20, 8, 20, 16),
+          child: SizedBox(
+            width: double.infinity,
+            height: 54,
+            child: FilledButton(
+              onPressed: canRequestPayout
+                  ? () => _onRequestPayout(context, state)
+                  : null,
+              style: FilledButton.styleFrom(
+                backgroundColor: SplashColors.purpleMid,
+                disabledBackgroundColor: SplashColors.purpleMid.withValues(
+                  alpha: 0.35,
+                ),
+                foregroundColor: Colors.white,
+                disabledForegroundColor: Colors.white.withValues(alpha: 0.7),
+                elevation: 0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(14),
+                ),
+                textStyle: GoogleFonts.inter(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              child: state.isRequestingPayout
+                  ? const SizedBox(
+                      width: 22,
+                      height: 22,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        color: Colors.white,
+                      ),
+                    )
+                  : Text(l10n.listener_payout_request),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
@@ -385,7 +482,7 @@ class _MenuTile extends StatelessWidget {
   final IconData icon;
   final String label;
   final String? value;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {

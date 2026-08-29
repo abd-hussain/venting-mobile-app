@@ -7,6 +7,7 @@ sealed class ListenerEarningsState with _$ListenerEarningsState {
   const factory ListenerEarningsState({
     @Default(ListenerEarningsStatus.initial) ListenerEarningsStatus status,
     ListenerEarningsOverview? overview,
+    @Default(false) bool isProfileUnderReview,
     @Default('') String errorMessage,
   }) = _ListenerEarningsState;
 

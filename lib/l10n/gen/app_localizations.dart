@@ -2165,6 +2165,24 @@ abstract class VentingMobLocalizations {
   /// **'Payout Methods'**
   String get listener_earnings_payout_methods;
 
+  /// No description provided for @listener_earnings_payout_empty_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a payout method'**
+  String get listener_earnings_payout_empty_title;
+
+  /// No description provided for @listener_earnings_payout_empty_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Link your bank or PayPal account so you\'re ready to cash out your earnings.'**
+  String get listener_earnings_payout_empty_subtitle;
+
+  /// No description provided for @listener_earnings_payout_empty_action.
+  ///
+  /// In en, this message translates to:
+  /// **'Set up'**
+  String get listener_earnings_payout_empty_action;
+
   /// No description provided for @listener_earnings_default.
   ///
   /// In en, this message translates to:
@@ -3083,6 +3101,12 @@ abstract class VentingMobLocalizations {
   /// **'This Month'**
   String get listener_payout_this_month;
 
+  /// No description provided for @listener_payout_pending_balance.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending'**
+  String get listener_payout_pending_balance;
+
   /// No description provided for @listener_payout_add_method.
   ///
   /// In en, this message translates to:
@@ -3154,6 +3178,12 @@ abstract class VentingMobLocalizations {
   /// In en, this message translates to:
   /// **'Payout request submitted.'**
   String get listener_payout_request_submitted;
+
+  /// No description provided for @listener_payout_method_saved.
+  ///
+  /// In en, this message translates to:
+  /// **'Payout method saved.'**
+  String get listener_payout_method_saved;
 
   /// No description provided for @listener_payout_bank_subtitle.
   ///

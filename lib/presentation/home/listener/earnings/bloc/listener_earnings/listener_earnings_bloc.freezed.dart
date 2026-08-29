@@ -276,7 +276,7 @@ String toString() {
 /// @nodoc
 mixin _$ListenerEarningsState {
 
- ListenerEarningsStatus get status; ListenerEarningsOverview? get overview; String get errorMessage;
+ ListenerEarningsStatus get status; ListenerEarningsOverview? get overview; bool get isProfileUnderReview; String get errorMessage;
 /// Create a copy of ListenerEarningsState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -287,16 +287,16 @@ $ListenerEarningsStateCopyWith<ListenerEarningsState> get copyWith => _$Listener
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ListenerEarningsState&&(identical(other.status, status) || other.status == status)&&(identical(other.overview, overview) || other.overview == overview)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ListenerEarningsState&&(identical(other.status, status) || other.status == status)&&(identical(other.overview, overview) || other.overview == overview)&&(identical(other.isProfileUnderReview, isProfileUnderReview) || other.isProfileUnderReview == isProfileUnderReview)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,status,overview,errorMessage);
+int get hashCode => Object.hash(runtimeType,status,overview,isProfileUnderReview,errorMessage);
 
 @override
 String toString() {
-  return 'ListenerEarningsState(status: $status, overview: $overview, errorMessage: $errorMessage)';
+  return 'ListenerEarningsState(status: $status, overview: $overview, isProfileUnderReview: $isProfileUnderReview, errorMessage: $errorMessage)';
 }
 
 
@@ -307,7 +307,7 @@ abstract mixin class $ListenerEarningsStateCopyWith<$Res>  {
   factory $ListenerEarningsStateCopyWith(ListenerEarningsState value, $Res Function(ListenerEarningsState) _then) = _$ListenerEarningsStateCopyWithImpl;
 @useResult
 $Res call({
- ListenerEarningsStatus status, ListenerEarningsOverview? overview, String errorMessage
+ ListenerEarningsStatus status, ListenerEarningsOverview? overview, bool isProfileUnderReview, String errorMessage
 });
 
 
@@ -324,11 +324,12 @@ class _$ListenerEarningsStateCopyWithImpl<$Res>
 
 /// Create a copy of ListenerEarningsState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? status = null,Object? overview = freezed,Object? errorMessage = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? status = null,Object? overview = freezed,Object? isProfileUnderReview = null,Object? errorMessage = null,}) {
   return _then(_self.copyWith(
 status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as ListenerEarningsStatus,overview: freezed == overview ? _self.overview : overview // ignore: cast_nullable_to_non_nullable
-as ListenerEarningsOverview?,errorMessage: null == errorMessage ? _self.errorMessage : errorMessage // ignore: cast_nullable_to_non_nullable
+as ListenerEarningsOverview?,isProfileUnderReview: null == isProfileUnderReview ? _self.isProfileUnderReview : isProfileUnderReview // ignore: cast_nullable_to_non_nullable
+as bool,errorMessage: null == errorMessage ? _self.errorMessage : errorMessage // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }
@@ -411,10 +412,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( ListenerEarningsStatus status,  ListenerEarningsOverview? overview,  String errorMessage)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( ListenerEarningsStatus status,  ListenerEarningsOverview? overview,  bool isProfileUnderReview,  String errorMessage)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ListenerEarningsState() when $default != null:
-return $default(_that.status,_that.overview,_that.errorMessage);case _:
+return $default(_that.status,_that.overview,_that.isProfileUnderReview,_that.errorMessage);case _:
   return orElse();
 
 }
@@ -432,10 +433,10 @@ return $default(_that.status,_that.overview,_that.errorMessage);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( ListenerEarningsStatus status,  ListenerEarningsOverview? overview,  String errorMessage)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( ListenerEarningsStatus status,  ListenerEarningsOverview? overview,  bool isProfileUnderReview,  String errorMessage)  $default,) {final _that = this;
 switch (_that) {
 case _ListenerEarningsState():
-return $default(_that.status,_that.overview,_that.errorMessage);}
+return $default(_that.status,_that.overview,_that.isProfileUnderReview,_that.errorMessage);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -449,10 +450,10 @@ return $default(_that.status,_that.overview,_that.errorMessage);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( ListenerEarningsStatus status,  ListenerEarningsOverview? overview,  String errorMessage)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( ListenerEarningsStatus status,  ListenerEarningsOverview? overview,  bool isProfileUnderReview,  String errorMessage)?  $default,) {final _that = this;
 switch (_that) {
 case _ListenerEarningsState() when $default != null:
-return $default(_that.status,_that.overview,_that.errorMessage);case _:
+return $default(_that.status,_that.overview,_that.isProfileUnderReview,_that.errorMessage);case _:
   return null;
 
 }
@@ -464,11 +465,12 @@ return $default(_that.status,_that.overview,_that.errorMessage);case _:
 
 
 class _ListenerEarningsState extends ListenerEarningsState {
-  const _ListenerEarningsState({this.status = ListenerEarningsStatus.initial, this.overview, this.errorMessage = ''}): super._();
+  const _ListenerEarningsState({this.status = ListenerEarningsStatus.initial, this.overview, this.isProfileUnderReview = false, this.errorMessage = ''}): super._();
   
 
 @override@JsonKey() final  ListenerEarningsStatus status;
 @override final  ListenerEarningsOverview? overview;
+@override@JsonKey() final  bool isProfileUnderReview;
 @override@JsonKey() final  String errorMessage;
 
 /// Create a copy of ListenerEarningsState
@@ -481,16 +483,16 @@ _$ListenerEarningsStateCopyWith<_ListenerEarningsState> get copyWith => __$Liste
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ListenerEarningsState&&(identical(other.status, status) || other.status == status)&&(identical(other.overview, overview) || other.overview == overview)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ListenerEarningsState&&(identical(other.status, status) || other.status == status)&&(identical(other.overview, overview) || other.overview == overview)&&(identical(other.isProfileUnderReview, isProfileUnderReview) || other.isProfileUnderReview == isProfileUnderReview)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,status,overview,errorMessage);
+int get hashCode => Object.hash(runtimeType,status,overview,isProfileUnderReview,errorMessage);
 
 @override
 String toString() {
-  return 'ListenerEarningsState(status: $status, overview: $overview, errorMessage: $errorMessage)';
+  return 'ListenerEarningsState(status: $status, overview: $overview, isProfileUnderReview: $isProfileUnderReview, errorMessage: $errorMessage)';
 }
 
 
@@ -501,7 +503,7 @@ abstract mixin class _$ListenerEarningsStateCopyWith<$Res> implements $ListenerE
   factory _$ListenerEarningsStateCopyWith(_ListenerEarningsState value, $Res Function(_ListenerEarningsState) _then) = __$ListenerEarningsStateCopyWithImpl;
 @override @useResult
 $Res call({
- ListenerEarningsStatus status, ListenerEarningsOverview? overview, String errorMessage
+ ListenerEarningsStatus status, ListenerEarningsOverview? overview, bool isProfileUnderReview, String errorMessage
 });
 
 
@@ -518,11 +520,12 @@ class __$ListenerEarningsStateCopyWithImpl<$Res>
 
 /// Create a copy of ListenerEarningsState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? status = null,Object? overview = freezed,Object? errorMessage = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? status = null,Object? overview = freezed,Object? isProfileUnderReview = null,Object? errorMessage = null,}) {
   return _then(_ListenerEarningsState(
 status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as ListenerEarningsStatus,overview: freezed == overview ? _self.overview : overview // ignore: cast_nullable_to_non_nullable
-as ListenerEarningsOverview?,errorMessage: null == errorMessage ? _self.errorMessage : errorMessage // ignore: cast_nullable_to_non_nullable
+as ListenerEarningsOverview?,isProfileUnderReview: null == isProfileUnderReview ? _self.isProfileUnderReview : isProfileUnderReview // ignore: cast_nullable_to_non_nullable
+as bool,errorMessage: null == errorMessage ? _self.errorMessage : errorMessage // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }
