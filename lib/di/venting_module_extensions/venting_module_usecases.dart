@@ -17,6 +17,7 @@ import 'package:venting_mobile_app/domain/repository/api/catalog/catalog_categor
 import 'package:venting_mobile_app/domain/repository/api/catalog/catalog_languages_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/catalog/catalog_life_experiences_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/listener/listener_availability_repository.dart';
+import 'package:venting_mobile_app/domain/repository/api/listener/listener_dashboard_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/listener/listener_notification_preferences_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/listener/listener_notifications_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/listener/listener_privacy_repository.dart';
@@ -51,6 +52,7 @@ import 'package:venting_mobile_app/domain/usecase/get_catalog_categories_usecase
 import 'package:venting_mobile_app/domain/usecase/get_catalog_languages_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_catalog_life_experiences_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_listener_availability_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/get_listener_dashboard_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_listener_notification_preferences_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_listener_notifications_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_listener_online_status_usecase.dart';
@@ -363,6 +365,14 @@ mixin VentingModuleUsecases on VentingModule {
     ventingPreferences,
   );
 
+  GetListenerDashboardUsecase getListenerDashboardUsecase(
+    ListenerDashboardRepository listenerDashboardRepository,
+    VentingPreferences ventingPreferences,
+  ) => GetListenerDashboardUsecase(
+    listenerDashboardRepository,
+    ventingPreferences,
+  );
+
   AcknowledgeListenerFirstSessionTutorialUsecase
   acknowledgeListenerFirstSessionTutorialUsecase(
     ListenerSetupRepository listenerSetupRepository,
@@ -638,6 +648,12 @@ mixin VentingModuleUsecases on VentingModule {
     getIt.registerFactory<GetListenerSetupProgressUsecase>(
       () => getListenerSetupProgressUsecase(
         getIt<ListenerSetupRepository>(),
+        getIt<VentingPreferences>(),
+      ),
+    );
+    getIt.registerFactory<GetListenerDashboardUsecase>(
+      () => getListenerDashboardUsecase(
+        getIt<ListenerDashboardRepository>(),
         getIt<VentingPreferences>(),
       ),
     );

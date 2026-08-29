@@ -18,6 +18,7 @@ import 'package:venting_mobile_app/domain/repository/api/catalog/catalog_categor
 import 'package:venting_mobile_app/domain/repository/api/catalog/catalog_languages_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/catalog/catalog_life_experiences_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/listener/listener_availability_repository.dart';
+import 'package:venting_mobile_app/domain/repository/api/listener/listener_dashboard_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/listener/listener_notification_preferences_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/listener/listener_notifications_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/listener/listener_privacy_repository.dart';
@@ -93,6 +94,10 @@ mixin VentingModuleRepositories on VentingModule {
   ListenerAvailabilityRepository listenerAvailabilityRepository(
     ApiClientBase apiClient,
   ) => ListenerAvailabilityRepository(apiClient);
+
+  ListenerDashboardRepository listenerDashboardRepository(
+    ApiClientBase apiClient,
+  ) => ListenerDashboardRepository(apiClient);
 
   ListenerNotificationPreferencesRepository
   listenerNotificationPreferencesRepository(ApiClientBase apiClient) =>
@@ -180,6 +185,9 @@ mixin VentingModuleRepositories on VentingModule {
     );
     getIt.registerFactory<ListenerAvailabilityRepository>(
       () => listenerAvailabilityRepository(getIt<ApiClientBase>()),
+    );
+    getIt.registerFactory<ListenerDashboardRepository>(
+      () => listenerDashboardRepository(getIt<ApiClientBase>()),
     );
     getIt.registerFactory<ListenerNotificationPreferencesRepository>(
       () => listenerNotificationPreferencesRepository(getIt<ApiClientBase>()),

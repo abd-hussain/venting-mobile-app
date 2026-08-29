@@ -3,8 +3,12 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:logger_manager/logger_manager.dart';
+import 'package:venting_mobile_app/domain/data/app/listener_dashboard.dart';
 import 'package:venting_mobile_app/domain/data/app/listener_dashboard_setup.dart';
 import 'package:venting_mobile_app/domain/data/exceptions/main_api_exception.dart';
+import 'package:venting_mobile_app/domain/usecase/get_cached_auth_me_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/get_listener_dashboard_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/get_listener_profile_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_listener_setup_progress_usecase.dart';
 import 'package:venting_mobile_app/l10n/venting_mob_localizations_holder.dart';
 
@@ -14,14 +18,21 @@ part 'listener_dashboard_state.dart';
 
 class ListenerDashboardBloc
     extends Bloc<ListenerDashboardEvent, ListenerDashboardState> {
-  ListenerDashboardBloc(this._getListenerSetupProgressUsecase)
-    : super(const ListenerDashboardState()) {
+  ListenerDashboardBloc(
+    this._getListenerSetupProgressUsecase,
+    this._getListenerDashboardUsecase,
+    this._getListenerProfileUsecase,
+    this._getCachedAuthMeUsecase,
+  ) : super(const ListenerDashboardState()) {
     on<_Started>(_onStarted);
     on<_RetrySetupLoad>(_onRetrySetupLoad);
     on<_SetupRefreshRequested>(_onSetupRefreshRequested);
   }
 
   final GetListenerSetupProgressUsecase _getListenerSetupProgressUsecase;
+  final GetListenerDashboardUsecase _getListenerDashboardUsecase;
+  final GetListenerProfileUsecase _getListenerProfileUsecase;
+  final GetCachedAuthMeUsecase _getCachedAuthMeUsecase;
 
   Future<void> _onStarted(
     _Started event,
@@ -58,7 +69,11 @@ class ListenerDashboardBloc
     }
 
     try {
+      final displayNameFuture = _resolveListenerDisplayName();
+      final dashboardFuture = _resolveDailyReminder();
       final result = await _getListenerSetupProgressUsecase().run();
+      final listenerDisplayName = await displayNameFuture;
+      final dailyReminder = await dashboardFuture;
       if (emit.isDone) return;
 
       result.match(
@@ -72,6 +87,8 @@ class ListenerDashboardBloc
             state.copyWith(
               setupStatus: ListenerDashboardSetupStatus.loadFailure,
               setupErrorMessage: message,
+              listenerDisplayName: listenerDisplayName,
+              dailyReminder: dailyReminder,
             ),
           );
         },
@@ -81,6 +98,8 @@ class ListenerDashboardBloc
               setupStatus: ListenerDashboardSetupStatus.ready,
               setupProgress: progress,
               setupErrorMessage: '',
+              listenerDisplayName: listenerDisplayName,
+              dailyReminder: dailyReminder,
             ),
           );
         },
@@ -99,6 +118,53 @@ class ListenerDashboardBloc
         ),
       );
     }
+  }
+
+  Future<ListenerDashboardReminder?> _resolveDailyReminder() async {
+    final dashboardResult = await _getListenerDashboardUsecase().run();
+    return dashboardResult.match((error) {
+      LoggerManagerBase.logErrorMessage(
+        error: error,
+        message: 'ListenerDashboardBloc: load daily reminder failed',
+      );
+      return null;
+    }, (dashboard) => dashboard.reminder);
+  }
+
+  Future<String> _resolveListenerDisplayName() async {
+    final profileResult = await _getListenerProfileUsecase().run();
+    return profileResult.match(
+      (error) {
+        LoggerManagerBase.logErrorMessage(
+          error: error,
+          message:
+              'ListenerDashboardBloc: load profile for display name failed',
+        );
+        return _displayNameFromAuthMe();
+      },
+      (profile) {
+        final name = _firstNameFrom(profile.fullName);
+        return name.isNotEmpty ? name : _displayNameFromAuthMe();
+      },
+    );
+  }
+
+  String _displayNameFromAuthMe() {
+    final authMe = _getCachedAuthMeUsecase();
+    final displayName = authMe?.display_name?.trim() ?? '';
+    if (displayName.isNotEmpty) {
+      return _firstNameFrom(displayName);
+    }
+
+    final email = authMe?.email.trim() ?? '';
+    if (email.isEmpty) return '';
+    return email.split('@').first;
+  }
+
+  String _firstNameFrom(String raw) {
+    final trimmed = raw.trim();
+    if (trimmed.isEmpty) return '';
+    return trimmed.split(RegExp(r'\s+')).first;
   }
 
   String _mapError(Object error) {

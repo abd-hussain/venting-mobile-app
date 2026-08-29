@@ -55,14 +55,13 @@ extension ListenerDashboardEventPatterns on ListenerDashboardEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Started value)?  started,TResult Function( _RetrySetupLoad value)?  retrySetupLoad,TResult Function( _SetupRefreshRequested value)?  setupRefreshRequested,TResult Function( _AcknowledgeTutorialRequested value)?  acknowledgeTutorialRequested,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Started value)?  started,TResult Function( _RetrySetupLoad value)?  retrySetupLoad,TResult Function( _SetupRefreshRequested value)?  setupRefreshRequested,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case _Started() when started != null:
 return started(_that);case _RetrySetupLoad() when retrySetupLoad != null:
 return retrySetupLoad(_that);case _SetupRefreshRequested() when setupRefreshRequested != null:
-return setupRefreshRequested(_that);case _AcknowledgeTutorialRequested() when acknowledgeTutorialRequested != null:
-return acknowledgeTutorialRequested(_that);case _:
+return setupRefreshRequested(_that);case _:
   return orElse();
 
 }
@@ -80,14 +79,13 @@ return acknowledgeTutorialRequested(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Started value)  started,required TResult Function( _RetrySetupLoad value)  retrySetupLoad,required TResult Function( _SetupRefreshRequested value)  setupRefreshRequested,required TResult Function( _AcknowledgeTutorialRequested value)  acknowledgeTutorialRequested,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Started value)  started,required TResult Function( _RetrySetupLoad value)  retrySetupLoad,required TResult Function( _SetupRefreshRequested value)  setupRefreshRequested,}){
 final _that = this;
 switch (_that) {
 case _Started():
 return started(_that);case _RetrySetupLoad():
 return retrySetupLoad(_that);case _SetupRefreshRequested():
-return setupRefreshRequested(_that);case _AcknowledgeTutorialRequested():
-return acknowledgeTutorialRequested(_that);}
+return setupRefreshRequested(_that);}
 }
 /// A variant of `map` that fallback to returning `null`.
 ///
@@ -101,14 +99,13 @@ return acknowledgeTutorialRequested(_that);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Started value)?  started,TResult? Function( _RetrySetupLoad value)?  retrySetupLoad,TResult? Function( _SetupRefreshRequested value)?  setupRefreshRequested,TResult? Function( _AcknowledgeTutorialRequested value)?  acknowledgeTutorialRequested,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Started value)?  started,TResult? Function( _RetrySetupLoad value)?  retrySetupLoad,TResult? Function( _SetupRefreshRequested value)?  setupRefreshRequested,}){
 final _that = this;
 switch (_that) {
 case _Started() when started != null:
 return started(_that);case _RetrySetupLoad() when retrySetupLoad != null:
 return retrySetupLoad(_that);case _SetupRefreshRequested() when setupRefreshRequested != null:
-return setupRefreshRequested(_that);case _AcknowledgeTutorialRequested() when acknowledgeTutorialRequested != null:
-return acknowledgeTutorialRequested(_that);case _:
+return setupRefreshRequested(_that);case _:
   return null;
 
 }
@@ -125,13 +122,12 @@ return acknowledgeTutorialRequested(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  started,TResult Function()?  retrySetupLoad,TResult Function()?  setupRefreshRequested,TResult Function()?  acknowledgeTutorialRequested,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  started,TResult Function()?  retrySetupLoad,TResult Function()?  setupRefreshRequested,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Started() when started != null:
 return started();case _RetrySetupLoad() when retrySetupLoad != null:
 return retrySetupLoad();case _SetupRefreshRequested() when setupRefreshRequested != null:
-return setupRefreshRequested();case _AcknowledgeTutorialRequested() when acknowledgeTutorialRequested != null:
-return acknowledgeTutorialRequested();case _:
+return setupRefreshRequested();case _:
   return orElse();
 
 }
@@ -149,13 +145,12 @@ return acknowledgeTutorialRequested();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  started,required TResult Function()  retrySetupLoad,required TResult Function()  setupRefreshRequested,required TResult Function()  acknowledgeTutorialRequested,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  started,required TResult Function()  retrySetupLoad,required TResult Function()  setupRefreshRequested,}) {final _that = this;
 switch (_that) {
 case _Started():
 return started();case _RetrySetupLoad():
 return retrySetupLoad();case _SetupRefreshRequested():
-return setupRefreshRequested();case _AcknowledgeTutorialRequested():
-return acknowledgeTutorialRequested();}
+return setupRefreshRequested();}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -169,13 +164,12 @@ return acknowledgeTutorialRequested();}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  started,TResult? Function()?  retrySetupLoad,TResult? Function()?  setupRefreshRequested,TResult? Function()?  acknowledgeTutorialRequested,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  started,TResult? Function()?  retrySetupLoad,TResult? Function()?  setupRefreshRequested,}) {final _that = this;
 switch (_that) {
 case _Started() when started != null:
 return started();case _RetrySetupLoad() when retrySetupLoad != null:
 return retrySetupLoad();case _SetupRefreshRequested() when setupRefreshRequested != null:
-return setupRefreshRequested();case _AcknowledgeTutorialRequested() when acknowledgeTutorialRequested != null:
-return acknowledgeTutorialRequested();case _:
+return setupRefreshRequested();case _:
   return null;
 
 }
@@ -280,41 +274,9 @@ String toString() {
 
 
 /// @nodoc
-
-
-class _AcknowledgeTutorialRequested implements ListenerDashboardEvent {
-  const _AcknowledgeTutorialRequested();
-  
-
-
-
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AcknowledgeTutorialRequested);
-}
-
-
-@override
-int get hashCode => runtimeType.hashCode;
-
-@override
-String toString() {
-  return 'ListenerDashboardEvent.acknowledgeTutorialRequested()';
-}
-
-
-}
-
-
-
-
-/// @nodoc
 mixin _$ListenerDashboardState {
 
- ListenerDashboardSetupStatus get setupStatus; ListenerDashboardSetupProgress? get setupProgress; bool get isAcknowledgingTutorial; String get setupErrorMessage;
+ ListenerDashboardSetupStatus get setupStatus; ListenerDashboardSetupProgress? get setupProgress; String get setupErrorMessage; String get listenerDisplayName; ListenerDashboardReminder? get dailyReminder;
 /// Create a copy of ListenerDashboardState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -325,16 +287,16 @@ $ListenerDashboardStateCopyWith<ListenerDashboardState> get copyWith => _$Listen
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ListenerDashboardState&&(identical(other.setupStatus, setupStatus) || other.setupStatus == setupStatus)&&(identical(other.setupProgress, setupProgress) || other.setupProgress == setupProgress)&&(identical(other.isAcknowledgingTutorial, isAcknowledgingTutorial) || other.isAcknowledgingTutorial == isAcknowledgingTutorial)&&(identical(other.setupErrorMessage, setupErrorMessage) || other.setupErrorMessage == setupErrorMessage));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ListenerDashboardState&&(identical(other.setupStatus, setupStatus) || other.setupStatus == setupStatus)&&(identical(other.setupProgress, setupProgress) || other.setupProgress == setupProgress)&&(identical(other.setupErrorMessage, setupErrorMessage) || other.setupErrorMessage == setupErrorMessage)&&(identical(other.listenerDisplayName, listenerDisplayName) || other.listenerDisplayName == listenerDisplayName)&&(identical(other.dailyReminder, dailyReminder) || other.dailyReminder == dailyReminder));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,setupStatus,setupProgress,isAcknowledgingTutorial,setupErrorMessage);
+int get hashCode => Object.hash(runtimeType,setupStatus,setupProgress,setupErrorMessage,listenerDisplayName,dailyReminder);
 
 @override
 String toString() {
-  return 'ListenerDashboardState(setupStatus: $setupStatus, setupProgress: $setupProgress, isAcknowledgingTutorial: $isAcknowledgingTutorial, setupErrorMessage: $setupErrorMessage)';
+  return 'ListenerDashboardState(setupStatus: $setupStatus, setupProgress: $setupProgress, setupErrorMessage: $setupErrorMessage, listenerDisplayName: $listenerDisplayName, dailyReminder: $dailyReminder)';
 }
 
 
@@ -345,7 +307,7 @@ abstract mixin class $ListenerDashboardStateCopyWith<$Res>  {
   factory $ListenerDashboardStateCopyWith(ListenerDashboardState value, $Res Function(ListenerDashboardState) _then) = _$ListenerDashboardStateCopyWithImpl;
 @useResult
 $Res call({
- ListenerDashboardSetupStatus setupStatus, ListenerDashboardSetupProgress? setupProgress, bool isAcknowledgingTutorial, String setupErrorMessage
+ ListenerDashboardSetupStatus setupStatus, ListenerDashboardSetupProgress? setupProgress, String setupErrorMessage, String listenerDisplayName, ListenerDashboardReminder? dailyReminder
 });
 
 
@@ -362,13 +324,14 @@ class _$ListenerDashboardStateCopyWithImpl<$Res>
 
 /// Create a copy of ListenerDashboardState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? setupStatus = null,Object? setupProgress = freezed,Object? isAcknowledgingTutorial = null,Object? setupErrorMessage = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? setupStatus = null,Object? setupProgress = freezed,Object? setupErrorMessage = null,Object? listenerDisplayName = null,Object? dailyReminder = freezed,}) {
   return _then(_self.copyWith(
 setupStatus: null == setupStatus ? _self.setupStatus : setupStatus // ignore: cast_nullable_to_non_nullable
 as ListenerDashboardSetupStatus,setupProgress: freezed == setupProgress ? _self.setupProgress : setupProgress // ignore: cast_nullable_to_non_nullable
-as ListenerDashboardSetupProgress?,isAcknowledgingTutorial: null == isAcknowledgingTutorial ? _self.isAcknowledgingTutorial : isAcknowledgingTutorial // ignore: cast_nullable_to_non_nullable
-as bool,setupErrorMessage: null == setupErrorMessage ? _self.setupErrorMessage : setupErrorMessage // ignore: cast_nullable_to_non_nullable
-as String,
+as ListenerDashboardSetupProgress?,setupErrorMessage: null == setupErrorMessage ? _self.setupErrorMessage : setupErrorMessage // ignore: cast_nullable_to_non_nullable
+as String,listenerDisplayName: null == listenerDisplayName ? _self.listenerDisplayName : listenerDisplayName // ignore: cast_nullable_to_non_nullable
+as String,dailyReminder: freezed == dailyReminder ? _self.dailyReminder : dailyReminder // ignore: cast_nullable_to_non_nullable
+as ListenerDashboardReminder?,
   ));
 }
 
@@ -450,10 +413,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( ListenerDashboardSetupStatus setupStatus,  ListenerDashboardSetupProgress? setupProgress,  bool isAcknowledgingTutorial,  String setupErrorMessage)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( ListenerDashboardSetupStatus setupStatus,  ListenerDashboardSetupProgress? setupProgress,  String setupErrorMessage,  String listenerDisplayName,  ListenerDashboardReminder? dailyReminder)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ListenerDashboardState() when $default != null:
-return $default(_that.setupStatus,_that.setupProgress,_that.isAcknowledgingTutorial,_that.setupErrorMessage);case _:
+return $default(_that.setupStatus,_that.setupProgress,_that.setupErrorMessage,_that.listenerDisplayName,_that.dailyReminder);case _:
   return orElse();
 
 }
@@ -471,10 +434,10 @@ return $default(_that.setupStatus,_that.setupProgress,_that.isAcknowledgingTutor
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( ListenerDashboardSetupStatus setupStatus,  ListenerDashboardSetupProgress? setupProgress,  bool isAcknowledgingTutorial,  String setupErrorMessage)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( ListenerDashboardSetupStatus setupStatus,  ListenerDashboardSetupProgress? setupProgress,  String setupErrorMessage,  String listenerDisplayName,  ListenerDashboardReminder? dailyReminder)  $default,) {final _that = this;
 switch (_that) {
 case _ListenerDashboardState():
-return $default(_that.setupStatus,_that.setupProgress,_that.isAcknowledgingTutorial,_that.setupErrorMessage);}
+return $default(_that.setupStatus,_that.setupProgress,_that.setupErrorMessage,_that.listenerDisplayName,_that.dailyReminder);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -488,10 +451,10 @@ return $default(_that.setupStatus,_that.setupProgress,_that.isAcknowledgingTutor
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( ListenerDashboardSetupStatus setupStatus,  ListenerDashboardSetupProgress? setupProgress,  bool isAcknowledgingTutorial,  String setupErrorMessage)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( ListenerDashboardSetupStatus setupStatus,  ListenerDashboardSetupProgress? setupProgress,  String setupErrorMessage,  String listenerDisplayName,  ListenerDashboardReminder? dailyReminder)?  $default,) {final _that = this;
 switch (_that) {
 case _ListenerDashboardState() when $default != null:
-return $default(_that.setupStatus,_that.setupProgress,_that.isAcknowledgingTutorial,_that.setupErrorMessage);case _:
+return $default(_that.setupStatus,_that.setupProgress,_that.setupErrorMessage,_that.listenerDisplayName,_that.dailyReminder);case _:
   return null;
 
 }
@@ -503,13 +466,14 @@ return $default(_that.setupStatus,_that.setupProgress,_that.isAcknowledgingTutor
 
 
 class _ListenerDashboardState extends ListenerDashboardState {
-  const _ListenerDashboardState({this.setupStatus = ListenerDashboardSetupStatus.initial, this.setupProgress, this.isAcknowledgingTutorial = false, this.setupErrorMessage = ''}): super._();
+  const _ListenerDashboardState({this.setupStatus = ListenerDashboardSetupStatus.initial, this.setupProgress, this.setupErrorMessage = '', this.listenerDisplayName = '', this.dailyReminder}): super._();
   
 
 @override@JsonKey() final  ListenerDashboardSetupStatus setupStatus;
 @override final  ListenerDashboardSetupProgress? setupProgress;
-@override@JsonKey() final  bool isAcknowledgingTutorial;
 @override@JsonKey() final  String setupErrorMessage;
+@override@JsonKey() final  String listenerDisplayName;
+@override final  ListenerDashboardReminder? dailyReminder;
 
 /// Create a copy of ListenerDashboardState
 /// with the given fields replaced by the non-null parameter values.
@@ -521,16 +485,16 @@ _$ListenerDashboardStateCopyWith<_ListenerDashboardState> get copyWith => __$Lis
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ListenerDashboardState&&(identical(other.setupStatus, setupStatus) || other.setupStatus == setupStatus)&&(identical(other.setupProgress, setupProgress) || other.setupProgress == setupProgress)&&(identical(other.isAcknowledgingTutorial, isAcknowledgingTutorial) || other.isAcknowledgingTutorial == isAcknowledgingTutorial)&&(identical(other.setupErrorMessage, setupErrorMessage) || other.setupErrorMessage == setupErrorMessage));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ListenerDashboardState&&(identical(other.setupStatus, setupStatus) || other.setupStatus == setupStatus)&&(identical(other.setupProgress, setupProgress) || other.setupProgress == setupProgress)&&(identical(other.setupErrorMessage, setupErrorMessage) || other.setupErrorMessage == setupErrorMessage)&&(identical(other.listenerDisplayName, listenerDisplayName) || other.listenerDisplayName == listenerDisplayName)&&(identical(other.dailyReminder, dailyReminder) || other.dailyReminder == dailyReminder));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,setupStatus,setupProgress,isAcknowledgingTutorial,setupErrorMessage);
+int get hashCode => Object.hash(runtimeType,setupStatus,setupProgress,setupErrorMessage,listenerDisplayName,dailyReminder);
 
 @override
 String toString() {
-  return 'ListenerDashboardState(setupStatus: $setupStatus, setupProgress: $setupProgress, isAcknowledgingTutorial: $isAcknowledgingTutorial, setupErrorMessage: $setupErrorMessage)';
+  return 'ListenerDashboardState(setupStatus: $setupStatus, setupProgress: $setupProgress, setupErrorMessage: $setupErrorMessage, listenerDisplayName: $listenerDisplayName, dailyReminder: $dailyReminder)';
 }
 
 
@@ -541,7 +505,7 @@ abstract mixin class _$ListenerDashboardStateCopyWith<$Res> implements $Listener
   factory _$ListenerDashboardStateCopyWith(_ListenerDashboardState value, $Res Function(_ListenerDashboardState) _then) = __$ListenerDashboardStateCopyWithImpl;
 @override @useResult
 $Res call({
- ListenerDashboardSetupStatus setupStatus, ListenerDashboardSetupProgress? setupProgress, bool isAcknowledgingTutorial, String setupErrorMessage
+ ListenerDashboardSetupStatus setupStatus, ListenerDashboardSetupProgress? setupProgress, String setupErrorMessage, String listenerDisplayName, ListenerDashboardReminder? dailyReminder
 });
 
 
@@ -558,13 +522,14 @@ class __$ListenerDashboardStateCopyWithImpl<$Res>
 
 /// Create a copy of ListenerDashboardState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? setupStatus = null,Object? setupProgress = freezed,Object? isAcknowledgingTutorial = null,Object? setupErrorMessage = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? setupStatus = null,Object? setupProgress = freezed,Object? setupErrorMessage = null,Object? listenerDisplayName = null,Object? dailyReminder = freezed,}) {
   return _then(_ListenerDashboardState(
 setupStatus: null == setupStatus ? _self.setupStatus : setupStatus // ignore: cast_nullable_to_non_nullable
 as ListenerDashboardSetupStatus,setupProgress: freezed == setupProgress ? _self.setupProgress : setupProgress // ignore: cast_nullable_to_non_nullable
-as ListenerDashboardSetupProgress?,isAcknowledgingTutorial: null == isAcknowledgingTutorial ? _self.isAcknowledgingTutorial : isAcknowledgingTutorial // ignore: cast_nullable_to_non_nullable
-as bool,setupErrorMessage: null == setupErrorMessage ? _self.setupErrorMessage : setupErrorMessage // ignore: cast_nullable_to_non_nullable
-as String,
+as ListenerDashboardSetupProgress?,setupErrorMessage: null == setupErrorMessage ? _self.setupErrorMessage : setupErrorMessage // ignore: cast_nullable_to_non_nullable
+as String,listenerDisplayName: null == listenerDisplayName ? _self.listenerDisplayName : listenerDisplayName // ignore: cast_nullable_to_non_nullable
+as String,dailyReminder: freezed == dailyReminder ? _self.dailyReminder : dailyReminder // ignore: cast_nullable_to_non_nullable
+as ListenerDashboardReminder?,
   ));
 }
 

@@ -9,6 +9,8 @@ sealed class ListenerDashboardState with _$ListenerDashboardState {
     ListenerDashboardSetupStatus setupStatus,
     ListenerDashboardSetupProgress? setupProgress,
     @Default('') String setupErrorMessage,
+    @Default('') String listenerDisplayName,
+    ListenerDashboardReminder? dailyReminder,
   }) = _ListenerDashboardState;
 
   const ListenerDashboardState._();

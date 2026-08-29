@@ -45,18 +45,18 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
         false,
       );
 
-      if (!onboardingShown) {
+      final accessToken = _readAccessToken();
+      _logTokenStatus(accessToken);
+
+      if (!onboardingShown && accessToken.isEmpty) {
         await _ensureMinimumSplashDuration(stopwatch);
         _emitNeedOnboarding(emit);
         return;
       }
 
-      final accessToken = ventingPreferences.getValue(
-        SavedConstants.accessToken,
-        '',
-      );
-
-      _logTokenStatus(accessToken);
+      if (!onboardingShown && accessToken.isNotEmpty) {
+        await ventingPreferences.setValue(SavedConstants.onboardingShown, true);
+      }
 
       if (accessToken.isEmpty) {
         await _ensureMinimumSplashDuration(stopwatch);
@@ -73,10 +73,10 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
             message: 'SplashBloc: /v1/auth/me failed',
           );
 
-          final cached = _getCachedAuthMeUsecase();
-          if (cached != null) {
+          final persisted = _resolvePersistedAuthMe();
+          if (persisted != null) {
             await _ensureMinimumSplashDuration(stopwatch);
-            _emitRouteForAuthMe(emit, cached, fromCache: true);
+            _emitRouteForAuthMe(emit, persisted, fromCache: true);
             return;
           }
 
@@ -96,6 +96,15 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
         },
       );
     } catch (e) {
+      if (_hasAccessToken()) {
+        final persisted = _resolvePersistedAuthMe();
+        if (persisted != null) {
+          await _ensureMinimumSplashDuration(stopwatch);
+          _emitRouteForAuthMe(emit, persisted, fromCache: true);
+          return;
+        }
+      }
+
       await _ensureMinimumSplashDuration(stopwatch);
       _handleError(e, emit);
     }
@@ -159,8 +168,7 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
           emit(
             state.copyWith(
               userEmail: authMe.email,
-              processState:
-                  const SplashProcessState.needListenerRegistration(),
+              processState: const SplashProcessState.needListenerRegistration(),
             ),
           );
           return;
@@ -196,6 +204,47 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
     if (!remaining.isNegative) {
       await Future.delayed(remaining);
     }
+  }
+
+  String _readAccessToken() {
+    return ventingPreferences.getValue(SavedConstants.accessToken, '').trim();
+  }
+
+  bool _hasAccessToken() => _readAccessToken().isNotEmpty;
+
+  AuthMeData? _resolvePersistedAuthMe() {
+    return _getCachedAuthMeUsecase() ?? _authMeFromLocalPreferences();
+  }
+
+  AuthMeData? _authMeFromLocalPreferences() {
+    final email = ventingPreferences
+        .getValue(SavedConstants.alreadyUser, '')
+        .trim();
+    final userType = ventingPreferences
+        .getValue(SavedConstants.userType, '')
+        .trim()
+        .toLowerCase();
+    if (email.isEmpty || userType.isEmpty) {
+      return null;
+    }
+
+    final registrationComplete =
+        ventingPreferences
+            .getValue(SavedConstants.compleateRegistration, '')
+            .trim()
+            .toLowerCase() ==
+        'true';
+    final role = userType == 'lissener' ? 'listener' : 'ventor';
+
+    return AuthMeData(
+      id: '',
+      email: email,
+      role: role,
+      registration_complete: registrationComplete,
+      listener_profile_status: registrationComplete && role == 'listener'
+          ? 'approved'
+          : null,
+    );
   }
 
   void _logTokenStatus(String accessToken) {

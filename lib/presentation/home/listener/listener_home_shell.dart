@@ -31,31 +31,44 @@ class ListenerHomeShell extends StatefulWidget {
 
 class _ListenerHomeShellState extends State<ListenerHomeShell> {
   int _index = 0;
-  late final List<Widget> _tabs;
+  final List<Widget?> _tabs = List<Widget?>.filled(5, null);
 
   void goToTab(int index) {
-    if (index < 0 || index >= _tabs.length || index == _index) return;
+    if (index < 0 || index >= _tabs.length) return;
+    _ensureTabBuilt(index);
+    if (index == _index) return;
     setState(() => _index = index);
+  }
+
+  void _ensureTabBuilt(int index) {
+    if (_tabs[index] != null) return;
+
+    _tabs[index] = switch (index) {
+      ListenerHomeShell.dashboardTab => _buildDashboardTab(),
+      ListenerHomeShell.earningsTab => const ListenerEarningsTab(),
+      ListenerHomeShell.sessionsTab => const ListenerSessionsTab(),
+      ListenerHomeShell.availabilityTab => const ListenerAvailabilityTab(),
+      ListenerHomeShell.profileTab => const ListenerProfileTab(),
+      _ => const SizedBox.shrink(),
+    };
+  }
+
+  Widget _buildDashboardTab() {
+    return BlocProvider(
+      create: (_) =>
+          diContainer<ListenerDashboardBloc>()
+            ..add(const ListenerDashboardEvent.started()),
+      child: ListenerDashboardTab(
+        onOpenSessions: () => goToTab(ListenerHomeShell.sessionsTab),
+        onOpenAvailability: () => goToTab(ListenerHomeShell.availabilityTab),
+      ),
+    );
   }
 
   @override
   void initState() {
     super.initState();
-    _tabs = [
-      BlocProvider(
-        create: (_) =>
-            diContainer<ListenerDashboardBloc>()
-              ..add(const ListenerDashboardEvent.started()),
-        child: ListenerDashboardTab(
-          onOpenSessions: () => goToTab(ListenerHomeShell.sessionsTab),
-          onOpenAvailability: () => goToTab(ListenerHomeShell.availabilityTab),
-        ),
-      ),
-      const ListenerEarningsTab(),
-      const ListenerSessionsTab(),
-      const ListenerAvailabilityTab(),
-      const ListenerProfileTab(),
-    ];
+    _ensureTabBuilt(ListenerHomeShell.dashboardTab);
   }
 
   @override
@@ -64,7 +77,10 @@ class _ListenerHomeShellState extends State<ListenerHomeShell> {
 
     return Scaffold(
       backgroundColor: SplashColors.backgroundTop,
-      body: IndexedStack(index: _index, children: _tabs),
+      body: IndexedStack(
+        index: _index,
+        children: [for (final tab in _tabs) tab ?? const SizedBox.shrink()],
+      ),
       bottomNavigationBar: NavigationBarTheme(
         data: NavigationBarThemeData(
           labelTextStyle: WidgetStateProperty.resolveWith((states) {
@@ -89,7 +105,7 @@ class _ListenerHomeShellState extends State<ListenerHomeShell> {
         ),
         child: NavigationBar(
           selectedIndex: _index,
-          onDestinationSelected: (value) => setState(() => _index = value),
+          onDestinationSelected: goToTab,
           backgroundColor: const Color(0xFF140C22),
           indicatorColor: SplashColors.purpleMid.withValues(alpha: 0.18),
           surfaceTintColor: Colors.transparent,

@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logger_manager/logger_manager.dart';
+import 'package:preferences/preferences.dart';
 import 'package:venting_mobile_app/di/di_container.dart';
 import 'package:venting_mobile_app/presentation/homescreen.dart';
 import 'package:venting_mobile_app/presentation/listener_registration/listener_registration_screen.dart';
@@ -104,6 +105,14 @@ class _SplashScreenState extends State<SplashScreen>
               listenerProfileRejected: () =>
                   context.go(AppRoutes.listenerProfileRejected),
               error: () {
+                final accessToken = diContainer<VentingPreferences>()
+                    .getValue(SavedConstants.accessToken, '')
+                    .trim();
+                if (accessToken.isNotEmpty) {
+                  context.go(AppRoutes.initialRoute);
+                  return;
+                }
+
                 LoggerManagerBase.logInfo(
                   message:
                       'SplashBloc: Authentication check failed - navigating to welcome',

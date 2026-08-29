@@ -500,9 +500,24 @@ class ListenerDashboardUpcomingCard extends StatelessWidget {
     required this.avatarUrl,
     required this.ventorName,
     required this.onView,
-  });
+  }) : emptyMessage = null;
+
+  const ListenerDashboardUpcomingCard.empty({
+    super.key,
+    required this.title,
+    required this.emptyMessage,
+  }) : timeLabel = '',
+       durationLabel = '',
+       waitingLabel = '',
+       viewLabel = '',
+       avatarUrl = null,
+       ventorName = '',
+       onView = _noOp;
+
+  static void _noOp() {}
 
   final String title;
+  final String? emptyMessage;
   final String timeLabel;
   final String durationLabel;
   final String waitingLabel;
@@ -542,86 +557,112 @@ class ListenerDashboardUpcomingCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 14),
-          Row(
-            children: [
-              ClipOval(
-                child: SizedBox(
-                  width: 48,
-                  height: 48,
-                  child: avatarUrl != null && avatarUrl!.isNotEmpty
-                      ? Image.network(avatarUrl!, fit: BoxFit.cover)
-                      : ColoredBox(
-                          color: SplashColors.purpleMid.withValues(alpha: 0.35),
-                          child: Center(
-                            child: Text(
-                              ventorName.isNotEmpty
-                                  ? ventorName[0].toUpperCase()
-                                  : '?',
-                              style: GoogleFonts.inter(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w700,
+          if (emptyMessage != null)
+            Row(
+              children: [
+                const Icon(
+                  Icons.calendar_month_outlined,
+                  size: 20,
+                  color: ListenerProfileTheme.muted,
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Text(
+                    emptyMessage!,
+                    style: GoogleFonts.inter(
+                      color: ListenerProfileTheme.muted,
+                      fontSize: 13,
+                      height: 1.4,
+                    ),
+                  ),
+                ),
+              ],
+            )
+          else
+            Row(
+              children: [
+                ClipOval(
+                  child: SizedBox(
+                    width: 48,
+                    height: 48,
+                    child: avatarUrl != null && avatarUrl!.isNotEmpty
+                        ? Image.network(avatarUrl!, fit: BoxFit.cover)
+                        : ColoredBox(
+                            color: SplashColors.purpleMid.withValues(
+                              alpha: 0.35,
+                            ),
+                            child: Center(
+                              child: Text(
+                                ventorName.isNotEmpty
+                                    ? ventorName[0].toUpperCase()
+                                    : '?',
+                                style: GoogleFonts.inter(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w700,
+                                ),
                               ),
                             ),
                           ),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        timeLabel,
+                        style: GoogleFonts.inter(
+                          color: Colors.white,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w700,
                         ),
-                ),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      timeLabel,
-                      style: GoogleFonts.inter(
-                        color: Colors.white,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w700,
                       ),
-                    ),
-                    const SizedBox(height: 2),
-                    Text(
-                      durationLabel,
-                      style: GoogleFonts.inter(
-                        color: ListenerProfileTheme.muted,
-                        fontSize: 12,
+                      const SizedBox(height: 2),
+                      Text(
+                        durationLabel,
+                        style: GoogleFonts.inter(
+                          color: ListenerProfileTheme.muted,
+                          fontSize: 12,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 2),
-                    Text(
-                      waitingLabel,
-                      style: GoogleFonts.inter(
-                        color: SplashColors.purpleMid,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w600,
+                      const SizedBox(height: 2),
+                      Text(
+                        waitingLabel,
+                        style: GoogleFonts.inter(
+                          color: SplashColors.purpleMid,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              ),
-              OutlinedButton(
-                onPressed: onView,
-                style: OutlinedButton.styleFrom(
-                  foregroundColor: Colors.white,
-                  side: BorderSide(color: Colors.white.withValues(alpha: 0.35)),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 10,
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    ],
                   ),
                 ),
-                child: Text(
-                  viewLabel,
-                  style: GoogleFonts.inter(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w600,
+                OutlinedButton(
+                  onPressed: onView,
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: Colors.white,
+                    side: BorderSide(
+                      color: Colors.white.withValues(alpha: 0.35),
+                    ),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 10,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  child: Text(
+                    viewLabel,
+                    style: GoogleFonts.inter(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ),
-              ),
-            ],
-          ),
+              ],
+            ),
         ],
       ),
     );

@@ -3,13 +3,39 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:preferences/preferences.dart';
+import 'package:venting_mobile_app/di/di_container.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
 import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dart';
 import 'package:venting_mobile_app/shared_widgets/app_language_selector.dart';
 import 'package:venting_mobile_app/utils/router_config.dart';
 
-class WelcomeScreen extends StatelessWidget {
+class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
+
+  @override
+  State<WelcomeScreen> createState() => _WelcomeScreenState();
+}
+
+class _WelcomeScreenState extends State<WelcomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) => _redirectIfSessionActive(),
+    );
+  }
+
+  void _redirectIfSessionActive() {
+    if (!mounted) return;
+
+    final accessToken = diContainer<VentingPreferences>()
+        .getValue(SavedConstants.accessToken, '')
+        .trim();
+    if (accessToken.isEmpty) return;
+
+    context.go(AppRoutes.initialRoute);
+  }
 
   static const _overlayStyle = SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,

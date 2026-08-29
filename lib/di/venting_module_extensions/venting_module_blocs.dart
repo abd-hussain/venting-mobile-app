@@ -17,6 +17,7 @@ import 'package:venting_mobile_app/domain/usecase/delete_listener_notification_u
 import 'package:venting_mobile_app/domain/usecase/delete_ventor_notification_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_cached_auth_me_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_listener_availability_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/get_listener_dashboard_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_listener_notification_preferences_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_listener_notifications_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_listener_online_status_usecase.dart';
@@ -145,6 +146,9 @@ mixin VentingModuleBlocs on VentingModule {
     getIt.registerFactory<ListenerDashboardBloc>(
       () => ListenerDashboardBloc(
         getIt<GetListenerSetupProgressUsecase>(),
+        getIt<GetListenerDashboardUsecase>(),
+        getIt<GetListenerProfileUsecase>(),
+        getIt<GetCachedAuthMeUsecase>(),
       ),
     );
     getIt.registerFactory<ListenerTrainingBloc>(
