@@ -68,7 +68,7 @@ Book a session
 Join voice calls
 Manage payments
 Session history
-Rewards & achievements
+Rewards
 Notifications
 2. Listener
 

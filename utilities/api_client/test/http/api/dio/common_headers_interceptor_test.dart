@@ -16,7 +16,7 @@ void main() {
       osVersion: '14',
       appVersion: '1.0.0',
       installationId: 'install-1',
-      userAgent: 'ZainApp/1.0',
+      userAgent: 'VentingApp/1.0',
       networkType: 'wifi',
       phoneVersion: 'Pixel',
       getLanguageCode: () => 'en',
@@ -31,7 +31,7 @@ void main() {
     expect(options.headers['skel-platform'], 'android');
     expect(options.headers['skel-os-version'], '14');
     expect(options.headers['skel-fix-version'], '1.0.0');
-    expect(options.headers['user-agent'], 'ZainApp/1.0');
+    expect(options.headers['user-agent'], 'VentingApp/1.0');
     expect(options.headers['skel-accept-language'], 'en');
     expect(options.headers['accept-language'], 'en');
     expect(options.headers['content-type'], 'application/json; charset=UTF-8');
@@ -45,7 +45,7 @@ void main() {
       osVersion: '17',
       appVersion: '2.0.0',
       installationId: 'install-2',
-      userAgent: 'ZainApp/2.0',
+      userAgent: 'VentingApp/2.0',
       networkType: 'cellular',
       phoneVersion: 'iPhone',
       getLanguageCode: () => 'ckb',
@@ -79,13 +79,32 @@ void main() {
     expect(options.headers['accept-language'], 'ar');
   });
 
+  test('does not force JSON content-type for FormData', () {
+    final options = RequestOptions(
+      path: '/v1/listeners/register',
+      data: FormData.fromMap({
+        'document_front': MultipartFile.fromString(
+          'fake',
+          filename: 'document_front.jpg',
+        ),
+      }),
+    );
+
+    interceptor.onRequest(options, handler);
+
+    expect(options.headers.containsKey('content-type'), isFalse);
+    expect(options.headers.containsKey(Headers.contentTypeHeader), isFalse);
+    expect(options.contentType, isNull);
+    verify(() => handler.next(options)).called(1);
+  });
+
   test('skips language headers when getter returns empty', () {
     interceptor = CommonHeadersInterceptor(
       platform: 'android',
       osVersion: '14',
       appVersion: '1.0.0',
       installationId: 'install-1',
-      userAgent: 'ZainApp/1.0',
+      userAgent: 'VentingApp/1.0',
       networkType: 'wifi',
       phoneVersion: 'Pixel',
       getLanguageCode: () => '',

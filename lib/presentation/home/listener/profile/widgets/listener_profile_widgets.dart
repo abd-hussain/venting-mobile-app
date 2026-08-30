@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -5,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
 import 'package:venting_mobile_app/presentation/home/listener/profile/listener_profile_theme.dart';
 import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dart';
+import 'package:venting_mobile_app/utils/api_asset_url.dart';
 
 class ProfileSectionCard extends StatelessWidget {
   const ProfileSectionCard({
@@ -28,6 +30,22 @@ class ProfileSectionCard extends StatelessWidget {
         border: Border.all(color: ListenerProfileTheme.cardBorder),
       ),
       child: Padding(padding: padding, child: child),
+    );
+  }
+}
+
+class ProfileSavingIndicator extends StatelessWidget {
+  const ProfileSavingIndicator({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const SizedBox(
+      width: 18,
+      height: 18,
+      child: CircularProgressIndicator(
+        strokeWidth: 2,
+        color: ListenerProfileTheme.accent,
+      ),
     );
   }
 }
@@ -105,8 +123,13 @@ class ProfileHeaderCard extends StatelessWidget {
     required this.rating,
     required this.reviewCount,
     required this.statusLabel,
+    required this.isOnline,
     this.email,
     this.dateOfBirth,
+    this.avatarUrl,
+    this.avatarFilePath,
+    this.isUploadingAvatar = false,
+    this.avatarCacheToken,
     this.onEditPhoto,
   });
 
@@ -114,6 +137,7 @@ class ProfileHeaderCard extends StatelessWidget {
   final double rating;
   final int reviewCount;
   final String statusLabel;
+  final bool isOnline;
 
   /// Read-only account email — not editable from this card.
   final String? email;
@@ -121,12 +145,20 @@ class ProfileHeaderCard extends StatelessWidget {
   /// Read-only date of birth — not editable from this card.
   final String? dateOfBirth;
 
+  final String? avatarUrl;
+  final String? avatarFilePath;
+  final bool isUploadingAvatar;
+  final int? avatarCacheToken;
+
   final VoidCallback? onEditPhoto;
 
   @override
   Widget build(BuildContext context) {
     final l10n = VentingMobLocalizations.of(context);
     final hasReadOnlyInfo = email != null || dateOfBirth != null;
+    final statusColor = isOnline
+        ? ListenerProfileTheme.success
+        : ListenerProfileTheme.offline;
 
     return ProfileSectionCard(
       padding: EdgeInsets.zero,
@@ -140,8 +172,12 @@ class ProfileHeaderCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _Avatar(
-                  onEditPhoto: onEditPhoto,
-                  initials: name.characters.first,
+                  onEditPhoto: isUploadingAvatar ? null : onEditPhoto,
+                  initials: name.isNotEmpty ? name.characters.first : '?',
+                  avatarUrl: avatarUrl,
+                  avatarFilePath: avatarFilePath,
+                  isUploading: isUploadingAvatar,
+                  avatarCacheToken: avatarCacheToken,
                 ),
                 const SizedBox(width: 14),
                 Expanded(
@@ -175,8 +211,8 @@ class ProfileHeaderCard extends StatelessWidget {
                           Container(
                             width: 8,
                             height: 8,
-                            decoration: const BoxDecoration(
-                              color: ListenerProfileTheme.success,
+                            decoration: BoxDecoration(
+                              color: statusColor,
                               shape: BoxShape.circle,
                             ),
                           ),
@@ -184,7 +220,7 @@ class ProfileHeaderCard extends StatelessWidget {
                           Text(
                             statusLabel,
                             style: GoogleFonts.inter(
-                              color: ListenerProfileTheme.success,
+                              color: statusColor,
                               fontSize: 13,
                               fontWeight: FontWeight.w600,
                             ),
@@ -289,10 +325,93 @@ class _ReadOnlyInfoRow extends StatelessWidget {
 }
 
 class _Avatar extends StatelessWidget {
-  const _Avatar({required this.onEditPhoto, required this.initials});
+  const _Avatar({
+    required this.onEditPhoto,
+    required this.initials,
+    this.avatarUrl,
+    this.avatarFilePath,
+    this.isUploading = false,
+    this.avatarCacheToken,
+  });
 
   final VoidCallback? onEditPhoto;
   final String initials;
+  final String? avatarUrl;
+  final String? avatarFilePath;
+  final bool isUploading;
+  final int? avatarCacheToken;
+
+  Widget _buildAvatarContent() {
+    final path = avatarFilePath;
+    if (path != null && path.isNotEmpty && File(path).existsSync()) {
+      return Image.file(
+        File(path),
+        fit: BoxFit.cover,
+        width: 72,
+        height: 72,
+        gaplessPlayback: true,
+        errorBuilder: (_, _, _) => _initialsFallback(),
+      );
+    }
+
+    final url = avatarUrl?.trim();
+    if (url != null && url.isNotEmpty) {
+      final displayUrl = withApiAssetCacheBuster(
+        url,
+        cacheToken: avatarCacheToken,
+      );
+      return Image.network(
+        displayUrl,
+        key: ValueKey(displayUrl),
+        fit: BoxFit.cover,
+        width: 72,
+        height: 72,
+        loadingBuilder: (context, child, progress) {
+          if (progress == null) return child;
+          return Container(
+            width: 72,
+            height: 72,
+            alignment: Alignment.center,
+            color: const Color(0xFF2A1848),
+            child: const SizedBox(
+              width: 22,
+              height: 22,
+              child: CircularProgressIndicator(
+                strokeWidth: 2,
+                color: ListenerProfileTheme.accent,
+              ),
+            ),
+          );
+        },
+        errorBuilder: (_, _, _) => _initialsFallback(),
+      );
+    }
+
+    return _initialsFallback();
+  }
+
+  Widget _initialsFallback() {
+    return Container(
+      width: 72,
+      height: 72,
+      alignment: Alignment.center,
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [Color(0xFF8B74EF), Color(0xFF5A3DB8)],
+        ),
+      ),
+      child: Text(
+        initials.toUpperCase(),
+        style: GoogleFonts.inter(
+          color: Colors.white,
+          fontSize: 28,
+          fontWeight: FontWeight.w700,
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -304,43 +423,50 @@ class _Avatar extends StatelessWidget {
           height: 72,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            gradient: const LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [Color(0xFF8B74EF), Color(0xFF5A3DB8)],
-            ),
             border: Border.all(color: Colors.white.withValues(alpha: 0.12)),
           ),
-          alignment: Alignment.center,
-          child: Text(
-            initials.toUpperCase(),
-            style: GoogleFonts.inter(
-              color: Colors.white,
-              fontSize: 28,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
+          child: ClipOval(child: _buildAvatarContent()),
         ),
-        Positioned(
-          right: -2,
-          bottom: -2,
-          child: GestureDetector(
-            onTap: onEditPhoto,
-            child: Container(
-              width: 26,
-              height: 26,
+        if (isUploading)
+          Positioned.fill(
+            child: DecoratedBox(
               decoration: BoxDecoration(
-                color: ListenerProfileTheme.success,
+                color: Colors.black.withValues(alpha: 0.45),
                 shape: BoxShape.circle,
-                border: Border.all(
-                  color: ListenerProfileTheme.cardFill,
-                  width: 2,
+              ),
+              child: const Center(
+                child: SizedBox(
+                  width: 22,
+                  height: 22,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2.2,
+                    color: Colors.white,
+                  ),
                 ),
               ),
-              child: const Icon(Icons.edit, size: 13, color: Colors.white),
             ),
           ),
-        ),
+        if (!isUploading)
+          Positioned(
+            right: -2,
+            bottom: -2,
+            child: GestureDetector(
+              onTap: onEditPhoto,
+              child: Container(
+                width: 26,
+                height: 26,
+                decoration: BoxDecoration(
+                  color: ListenerProfileTheme.success,
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: ListenerProfileTheme.cardFill,
+                    width: 2,
+                  ),
+                ),
+                child: const Icon(Icons.edit, size: 13, color: Colors.white),
+              ),
+            ),
+          ),
       ],
     );
   }
@@ -353,16 +479,18 @@ class ProfileVoiceIntroSection extends StatelessWidget {
     required this.editLabel,
     required this.durationLabel,
     required this.isPlaying,
-    required this.onEdit,
-    required this.onPlayToggle,
+    this.isUploading = false,
+    this.onEdit,
+    this.onPlayToggle,
   });
 
   final String title;
   final String editLabel;
   final String durationLabel;
   final bool isPlaying;
-  final VoidCallback onEdit;
-  final VoidCallback onPlayToggle;
+  final bool isUploading;
+  final VoidCallback? onEdit;
+  final VoidCallback? onPlayToggle;
 
   @override
   Widget build(BuildContext context) {
@@ -373,18 +501,30 @@ class ProfileVoiceIntroSection extends StatelessWidget {
           ProfileSectionHeader(
             title: title,
             editLabel: editLabel,
-            onEdit: onEdit,
+            onEdit: isUploading ? null : onEdit,
+            trailing: isUploading
+                ? const SizedBox(
+                    width: 18,
+                    height: 18,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      color: ListenerProfileTheme.accent,
+                    ),
+                  )
+                : null,
           ),
           const SizedBox(height: 14),
           Row(
             children: [
               GestureDetector(
-                onTap: onPlayToggle,
+                onTap: isUploading ? null : onPlayToggle,
                 child: Container(
                   width: 44,
                   height: 44,
-                  decoration: const BoxDecoration(
-                    color: ListenerProfileTheme.accent,
+                  decoration: BoxDecoration(
+                    color: ListenerProfileTheme.accent.withValues(
+                      alpha: isUploading ? 0.45 : 1,
+                    ),
                     shape: BoxShape.circle,
                   ),
                   child: Icon(
@@ -429,8 +569,10 @@ class ProfileAboutMeSection extends StatelessWidget {
     required this.seeMoreLabel,
     required this.seeLessLabel,
     required this.expanded,
-    required this.onEdit,
     required this.onToggleExpanded,
+    this.onEdit,
+    this.emptyLabel,
+    this.isSaving = false,
   });
 
   final String title;
@@ -439,11 +581,18 @@ class ProfileAboutMeSection extends StatelessWidget {
   final String seeMoreLabel;
   final String seeLessLabel;
   final bool expanded;
-  final VoidCallback onEdit;
+  final VoidCallback? onEdit;
   final VoidCallback onToggleExpanded;
+  final String? emptyLabel;
+  final bool isSaving;
 
   @override
   Widget build(BuildContext context) {
+    final isEmpty = body.trim().isEmpty;
+    final resolvedEmpty =
+        emptyLabel ??
+        VentingMobLocalizations.of(context).listener_profile_about_me_empty;
+
     return ProfileSectionCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -451,32 +600,44 @@ class ProfileAboutMeSection extends StatelessWidget {
           ProfileSectionHeader(
             title: title,
             editLabel: editLabel,
-            onEdit: onEdit,
+            onEdit: isSaving ? null : onEdit,
+            trailing: isSaving ? const ProfileSavingIndicator() : null,
           ),
           const SizedBox(height: 12),
-          Text(
-            body,
-            maxLines: expanded ? null : 3,
-            overflow: expanded ? TextOverflow.visible : TextOverflow.ellipsis,
-            style: GoogleFonts.inter(
-              color: Colors.white.withValues(alpha: 0.82),
-              fontSize: 14,
-              height: 1.55,
-              fontWeight: FontWeight.w400,
-            ),
-          ),
-          const SizedBox(height: 8),
-          GestureDetector(
-            onTap: onToggleExpanded,
-            child: Text(
-              expanded ? seeLessLabel : seeMoreLabel,
+          if (isEmpty)
+            Text(
+              resolvedEmpty,
               style: GoogleFonts.inter(
-                color: ListenerProfileTheme.accent,
+                color: ListenerProfileTheme.muted,
                 fontSize: 13,
-                fontWeight: FontWeight.w600,
+                height: 1.4,
+              ),
+            )
+          else ...[
+            Text(
+              body,
+              maxLines: expanded ? null : 3,
+              overflow: expanded ? TextOverflow.visible : TextOverflow.ellipsis,
+              style: GoogleFonts.inter(
+                color: Colors.white.withValues(alpha: 0.82),
+                fontSize: 14,
+                height: 1.55,
+                fontWeight: FontWeight.w400,
               ),
             ),
-          ),
+            const SizedBox(height: 8),
+            GestureDetector(
+              onTap: onToggleExpanded,
+              child: Text(
+                expanded ? seeLessLabel : seeMoreLabel,
+                style: GoogleFonts.inter(
+                  color: ListenerProfileTheme.accent,
+                  fontSize: 13,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+          ],
         ],
       ),
     );
@@ -489,15 +650,17 @@ class ProfileGoodAtSection extends StatelessWidget {
     required this.title,
     required this.editLabel,
     required this.tags,
-    required this.onEdit,
+    this.onEdit,
     this.emptyLabel,
+    this.isSaving = false,
   });
 
   final String title;
   final String editLabel;
   final List<String> tags;
-  final VoidCallback onEdit;
+  final VoidCallback? onEdit;
   final String? emptyLabel;
+  final bool isSaving;
 
   @override
   Widget build(BuildContext context) {
@@ -512,7 +675,8 @@ class ProfileGoodAtSection extends StatelessWidget {
           ProfileSectionHeader(
             title: title,
             editLabel: editLabel,
-            onEdit: onEdit,
+            onEdit: isSaving ? null : onEdit,
+            trailing: isSaving ? const ProfileSavingIndicator() : null,
           ),
           const SizedBox(height: 14),
           if (tags.isEmpty)
@@ -571,16 +735,18 @@ class ProfileDetailRow extends StatelessWidget {
     required this.label,
     required this.value,
     required this.editLabel,
-    required this.onEdit,
+    this.onEdit,
     this.showDivider = true,
+    this.isSaving = false,
   });
 
   final IconData icon;
   final String label;
   final String value;
   final String editLabel;
-  final VoidCallback onEdit;
+  final VoidCallback? onEdit;
   final bool showDivider;
+  final bool isSaving;
 
   @override
   Widget build(BuildContext context) {
@@ -615,13 +781,41 @@ class ProfileDetailRow extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 10),
-              ProfileEditButton(label: editLabel, onTap: onEdit),
+              if (isSaving)
+                const ProfileSavingIndicator()
+              else if (onEdit != null)
+                ProfileEditButton(label: editLabel, onTap: onEdit!),
             ],
           ),
         ),
         if (showDivider)
           Divider(height: 1, color: Colors.white.withValues(alpha: 0.06)),
       ],
+    );
+  }
+}
+
+class _RatingStarsRow extends StatelessWidget {
+  const _RatingStarsRow({required this.rating});
+
+  final double rating;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: List.generate(5, (index) {
+        final starValue = rating - index;
+        final IconData icon;
+        if (starValue >= 0.75) {
+          icon = Icons.star_rounded;
+        } else if (starValue >= 0.25) {
+          icon = Icons.star_half_rounded;
+        } else {
+          icon = Icons.star_outline_rounded;
+        }
+
+        return Icon(icon, color: ListenerProfileTheme.gold, size: 16);
+      }),
     );
   }
 }
@@ -688,16 +882,7 @@ class ProfileReviewsSection extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 6),
-                  Row(
-                    children: List.generate(
-                      5,
-                      (_) => const Icon(
-                        Icons.star_rounded,
-                        color: ListenerProfileTheme.gold,
-                        size: 16,
-                      ),
-                    ),
-                  ),
+                  _RatingStarsRow(rating: rating),
                   const SizedBox(height: 4),
                   Text(
                     l10n.listener_profile_reviews_count(reviewCount),

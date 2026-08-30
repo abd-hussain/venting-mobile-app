@@ -26,16 +26,15 @@ A **Flutter Web CMS** used only by internal staff (ops, support, finance, conten
 
 | Module | What admins do | Mobile impact |
 |--------|----------------|---------------|
-| **Dashboard** | KPIs, charts, alerts queue | Read-only aggregates |
-| **Listener review** | Approve / reject profiles & identity docs | Sets `listener_profiles.profile_status` |
+| **Dashboard** | KPIs, charts, alerts queue — incl. **registrations vs account deletions** (all-time + this month) | Read-only aggregates from `users` |
+| **Listener review** | Approve / reject **whole listener profiles** (all registration data + identity + media) | Sets `listener_profiles.profile_status`; on reject, sets `steps_to_refill` |
 | **Users** | Search ventors/listeners, suspend, force logout, soft-delete | `users.is_active`, `deleted_at` |
 | **Sessions** | Inspect bookings, cancel/refund edge cases | `sessions`, `session_payments` |
 | **Reports & safety** | Triage `session_reports`, ban/warn | User flags + notifications |
 | **Earnings & payouts** | Approve/reject payouts, adjust wallet | `payouts`, ledger adjustments |
-| **Catalogs** | Languages, comfort areas, experiences, boundaries | Lookup tables used by registration |
+| **Catalogs** | Languages (**one** speaking-language table with `flag_emoji` / `flag_url`), comfort areas / interests (with `icon_emoji` / `icon_url`), experiences, boundaries | Lookup tables used by registration |
 | **Rewards & promo** | CRUD offers, promo codes | Rewards tab + checkout |
 | **Training** | Modules, content URLs, force complete | Listener training sheet |
-| **Achievements** | Catalog + optional grant | Ventor achievements |
 | **Notifications** | Broadcast system pushes | `notifications` + FCM |
 | **App config** | Feature flags, tier rates, support links | Remote config for mobile |
 | **CMS content** | Help articles, banners, legal version notes | WebViews / in-app links |
@@ -90,7 +89,7 @@ flowchart LR
 
 ### 4.1 Existing mobile schema (reuse — do not duplicate)
 
-From [`database-schema.md`](./database-schema.md): **43 tables**.
+From [`database-schema.md`](./database-schema.md): **44 tables**.
 
 Portal **reads/writes** these heavily:
 
@@ -101,8 +100,8 @@ Portal **reads/writes** these heavily:
 | Lookups | `languages`, `comfort_areas`, `life_experiences`, `boundaries` |
 | Sessions | `session_requests`, `sessions`, `session_payments`, ratings, feedback, `session_reports` |
 | Money | `listener_wallets`, `wallet_ledger_entries`, `payout_methods`, `payouts` |
-| Growth | `reward_offers`, `reward_trades`, `invite_*`, `promo_*` |
-| Ops | `notifications`, `training_modules`, `listener_training_progress`, `achievements` |
+| Growth | `reward_offers`, `reward_trades`, `point_packages`, `point_purchases`, `invite_*`, `promo_*` |
+| Ops | `notifications`, `training_modules`, `listener_training_progress` |
 
 ### 4.2 New tables for the CMS — **add 12**
 
@@ -116,8 +115,8 @@ Portal **reads/writes** these heavily:
 | 49 | `admin_audit_logs` | Immutable action history |
 | 50 | `admin_notes` | Internal notes on a user/session/report |
 | 51 | `app_feature_flags` | Remote flags for mobile |
-| 52 | `app_config_kv` | Key/value config (tier rates, fees, URLs) |
-| 53 | `cms_pages` | Help / legal / marketing HTML or markdown |
+| 52 | `app_config_kv` | Key/value config (tier rates, fees, etc.) |
+| 53 | `cms_pages` | Marketing / optional CMS HTML (not the 6 static legal/help pages) |
 | 54 | `cms_banners` | In-app or portal promo banners |
 | 55 | `moderation_actions` | Warn / suspend / ban history (normalized) |
 
@@ -242,10 +241,10 @@ Mobile fetches via a small public/config endpoint or remote-config SDK.
 | `updated_by` | UUID | ? |
 | `updated_at` | TIMESTAMPTZ | |
 
-Examples: `earnings_tiers`, `voice_change_fee`, `terms_url`, `privacy_url`, `min_payout_amount`, `support_email`.
+Examples: `earnings_tiers`, `voice_change_fee`, `min_payout_amount`, `support_email`.
 
----
 
+### 53. `cms_pages`
 ### 53. `cms_pages`
 
 | Column | Type | Notes |
@@ -330,7 +329,7 @@ These are **columns**, not new tables.
 | Payouts & wallet | 7 |
 | Catalogs (CRUD-ish) | 8 |
 | Rewards & promo | 8 |
-| Training & achievements | 6 |
+| Training | 4 |
 | Notifications (broadcast) | 3 |
 | Feature flags & config | 6 |
 | CMS pages & banners | 8 |
@@ -373,14 +372,75 @@ All admin routes: prefix `/v1/admin`, auth `Authorization: Bearer {adminAccessTo
 
 | # | Method | Path | Use |
 |--:|--------|------|-----|
-| A6 | `GET` | `/v1/admin/stats/overview` | KPI cards: users, sessions today, GMV, pending reviews, open reports |
-| A7 | `GET` | `/v1/admin/stats/users` | Signups by day/role; active vs suspended |
+| A6 | `GET` | `/v1/admin/stats/overview` | KPI cards: users, **registrations / deletions (all-time + this month)**, sessions today, GMV, pending reviews, open reports |
+| A7 | `GET` | `/v1/admin/stats/users` | Signups by day/role; active vs suspended; optional trend series for registrations & deletions |
 | A8 | `GET` | `/v1/admin/stats/sessions` | Booked / completed / cancelled / missed trends |
 | A9 | `GET` | `/v1/admin/stats/revenue` | Payments, tips, refunds, discounts |
 | A10 | `GET` | `/v1/admin/stats/listeners` | Online now, by tier, by country, approval funnel |
 | A11 | `GET` | `/v1/admin/stats/wellness` | Mood check-in distribution (aggregated, privacy-safe) |
 
 Query params: `from`, `to`, `granularity` (`day`\|`week`\|`month`).
+
+#### 7.2.1 Dashboard KPIs — user registrations vs account deletions
+
+**Goal:** On the portal **home dashboard** (`/`), staff see at a glance how many accounts were **created** vs **deleted**, both **all-time** and **this calendar month** (UTC), with optional breakdown by role.
+
+**Data source (Postgres — not GA4):**
+
+| Metric | SQL basis | Mobile trigger |
+|--------|-----------|----------------|
+| Registrations (all-time) | `COUNT(*)` from `users` | `#1 POST /v1/auth/register`, `#1b POST /v1/auth/social` (new account) |
+| Registrations (this month) | same, `WHERE created_at >= date_trunc('month', now() AT TIME ZONE 'UTC')` | same |
+| Account deletions (all-time) | `COUNT(*)` where `deleted_at IS NOT NULL` | `#5 DELETE /v1/auth/account` |
+| Account deletions (this month) | same, `WHERE deleted_at >= date_trunc('month', now() AT TIME ZONE 'UTC')` | same |
+
+**Rules:**
+
+- Count **every** `users` row for registrations (ventor + listener); include social and email sign-ups.
+- A deleted user remains one registration; deletions are a separate counter (do not subtract from registration total on the card — show both metrics side by side).
+- `deleted_at` is set by mobile `#5`; admin soft-delete on a user dossier uses the same column — include both in deletion stats.
+- Optional filters on A7: `role` (`ventor` \| `listener`), `from`, `to`.
+
+**`GET /v1/admin/stats/overview` (A6) — extend `data` with:**
+
+```json
+{
+  "user_lifecycle": {
+    "registrations": {
+      "all_time": 12450,
+      "this_month": 312,
+      "by_role": {
+        "ventor": { "all_time": 8200, "this_month": 198 },
+        "listener": { "all_time": 4250, "this_month": 114 }
+      }
+    },
+    "account_deletions": {
+      "all_time": 89,
+      "this_month": 7,
+      "by_role": {
+        "ventor": { "all_time": 52, "this_month": 4 },
+        "listener": { "all_time": 37, "this_month": 3 }
+      }
+    },
+    "net_this_month": 305
+  }
+}
+```
+
+`net_this_month` = `registrations.this_month - account_deletions.this_month` (server-computed).
+
+**Portal UI (dashboard `/`):**
+
+| Widget | Content |
+|--------|---------|
+| **Registrations** card | Large number: all-time; subtitle: “This month: {n}”; optional sparkline from A7 |
+| **Account deletions** card | Large number: all-time; subtitle: “This month: {n}” |
+| **Net growth (month)** card | `registrations_this_month − deletions_this_month` with ↑/↓ vs prior month (optional v1.1) |
+| Comparison row | Side-by-side bar or two KPI tiles so ops can compare “joined” vs “left” at a glance |
+
+**Permissions:** `analytics:read` (all roles with dashboard access per §10).
+
+**Audit:** Read-only — no `admin_audit_logs` entry for viewing stats.
 
 ---
 
@@ -401,18 +461,29 @@ Query params: `from`, `to`, `granularity` (`day`\|`week`\|`month`).
 
 ---
 
-### 7.4 Listener review & identity (6)
+### 7.4 Listener profile review (6)
+
+> Admin reviews the **entire listener dossier** (profile fields, comfort areas, boundaries, voice intro, availability, identity docs). Identity is one section of the profile — not a separate approval gate in the mobile setup checklist.
 
 | # | Method | Path | Use |
 |--:|--------|------|-----|
 | A22 | `GET` | `/v1/admin/listeners/queue` | `under_review` queue (sorted oldest first) |
-| A23 | `GET` | `/v1/admin/listeners/{listenerId}` | Full profile + tags + availability summary |
-| A24 | `GET` | `/v1/admin/listeners/{listenerId}/identity` | ID docs + selfie URLs (signed) |
-| A25 | `POST` | `/v1/admin/listeners/{listenerId}/approve` | Set `approved`, `is_verified` |
-| A26 | `POST` | `/v1/admin/listeners/{listenerId}/reject` | Body: `reason`, optional `needs_more_info` |
-| A27 | `POST` | `/v1/admin/identity/{verificationId}/decide` | Approve/reject a verification attempt |
+| A23 | `GET` | `/v1/admin/listeners/{listenerId}` | Full profile + tags + availability + latest identity attempt |
+| A24 | `GET` | `/v1/admin/listeners/{listenerId}/identity` | ID docs + selfie URLs (signed) — read-only section of dossier |
+| A25 | `POST` | `/v1/admin/listeners/{listenerId}/approve` | Set `profile_status = approved`, `is_verified = true`, `can_go_online = true` |
+| A26 | `POST` | `/v1/admin/listeners/{listenerId}/reject` | Set `profile_status = rejected`; body below |
+| A27 | `POST` | `/v1/admin/identity/{verificationId}/decide` | **Deprecated** — use A25/A26 whole-profile decision. Keep only for audit/history on a verification row |
 
-On approve: update `listener_profiles.profile_status`, push notification to listener, audit log.
+#### A26 reject body
+
+| Field | Required | Notes |
+|-------|----------|-------|
+| `reason` | yes | Shown to listener (`rejection_reason` in `#29`) |
+| `steps_to_refill` | yes | Array of setup step ids from `#29` (e.g. `identity_verification`, `voice_intro`, `about_you`). Server sets those steps to `pending` / `needs_refill` in setup progress |
+
+**On approve (A25):** `profile_status = approved`, notify listener, audit log, listener may go online (`can_go_online`).
+
+**On reject (A26):** `profile_status = rejected`, persist `steps_to_refill` + `rejection_reason`, notify listener, force offline. Listener fixes flagged steps via registration/edit flows, then profile returns to `under_review` on resubmit.
 
 ---
 
@@ -459,19 +530,51 @@ On approve: update `listener_profiles.profile_status`, push notification to list
 
 ### 7.8 Catalogs (8)
 
+> Portal owns the **same** lookup tables the mobile app reads via `#74` / `#75`.  
+> Do **not** create a separate “speaking languages” catalog — ventor + listener both use `languages`.
+
 | # | Method | Path | Use |
 |--:|--------|------|-----|
-| A48 | `GET` | `/v1/admin/catalog/languages` | List |
-| A49 | `PUT` | `/v1/admin/catalog/languages/{id}` | Upsert / deactivate |
-| A50 | `GET`/`PUT` | `/v1/admin/catalog/comfort-areas`… | Same pattern |
+| A48 | `GET` | `/v1/admin/catalog/languages` | List all languages (incl. inactive) |
+| A49 | `PUT` | `/v1/admin/catalog/languages/{id}` | Upsert / deactivate; body includes names + `sort_order` + `is_active` |
+| A49b | `POST` | `/v1/admin/catalog/languages/{id}/flag` | Multipart image upload → store CDN URL on `languages.flag_url` |
+| A50 | `GET`/`PUT` | `/v1/admin/catalog/comfort-areas`… | Same pattern for interests / comfort categories |
+| A50b | `POST` | `/v1/admin/catalog/comfort-areas/{id}/icon` | Multipart image upload → store CDN URL on `comfort_areas.icon_url` |
 | A51 | `GET`/`PUT` | `/v1/admin/catalog/life-experiences`… | Same |
 | A52 | `GET`/`PUT` | `/v1/admin/catalog/boundaries`… | Same |
 
-Count as **8** if each catalog has list + upsert (4×2). Collapse to fewer with a generic `/catalog/{type}` if preferred.
+Count as **8** if each catalog has list + upsert (4×2). Collapse to fewer with a generic `/catalog/{type}` if preferred. Flag/icon upload endpoints can share a generic `POST /v1/admin/media` that returns `{ url }` then attach via PUT.
+
+#### Portal UX — Languages
+
+| Field | Edit |
+|-------|------|
+| `id` | Create-only (immutable after seed) |
+| `name_en` / `name_native` / `name_ar` | Text |
+| `flag_url` | Image upload preview (required before activate) |
+| `sort_order` | Number |
+| `is_active` | Toggle |
+
+Used by: ventor registration language step, listener registration languages, discovery language filters.
+
+#### Portal UX — Comfort areas / interests
+
+| Field | Edit |
+|-------|------|
+| `id` | Create-only |
+| `name_en` / `name_ar` | Text |
+| `icon_emoji` | Text / emoji picker (required before activate) |
+| `icon_url` | Optional image upload preview |
+| `audience` | `ventor` / `listener` / `all` |
+| `allows_custom_text` | Toggle (e.g. `other`) |
+| `sort_order` | Number |
+| `is_active` | Toggle |
+
+Used by: ventor registration interests step and listener comfort areas step — both call `GET /v1/catalog/categories` (same list; mobile does not filter by `audience`).
 
 ---
 
-### 7.9 Rewards & promo (8)
+### 7.9 Rewards & promo (12)
 
 | # | Method | Path | Use |
 |--:|--------|------|-----|
@@ -483,19 +586,34 @@ Count as **8** if each catalog has list + upsert (4×2). Collapse to fewer with 
 | A58 | `POST` | `/v1/admin/promo-codes` | Create |
 | A59 | `PATCH` | `/v1/admin/promo-codes/{id}` | Update |
 | A60 | `GET` | `/v1/admin/promo-codes/{id}/redemptions` | Usage |
+| A65 | `GET` | `/v1/admin/point-packages` | List buy-points packages |
+| A66 | `POST` | `/v1/admin/point-packages` | Create package |
+| A67 | `PATCH` | `/v1/admin/point-packages/{id}` | Update price/points/bonus/sort/active |
+| A68 | `GET` | `/v1/admin/point-purchases` | Purchase audit (filter by ventor, date) |
+
+#### Portal UX — Point packages (`point_packages`)
+
+| Field | Edit |
+|-------|------|
+| `code` | Create-only stable id (e.g. `pkg_500`) — exposed to mobile **#67a** / **#67b** |
+| `points` | Number — points credited on purchase |
+| `price_usd` | Currency (USD v1) — shown in buy-points sheet |
+| `bonus_percent` | Optional — badge in app (“+20% bonus”) |
+| `sort_order` | Number — display order in mobile list |
+| `is_active` | Toggle — inactive packages hidden from **#67a** |
+
+Used by: ventor **Buy points** bottom sheet (`GET #67a` on sheet open; `POST #67b` on purchase).
 
 ---
 
-### 7.10 Training & achievements (6)
+### 7.10 Training (4)
 
 | # | Method | Path | Use |
 |--:|--------|------|-----|
 | A61 | `GET`/`PUT` | `/v1/admin/training-modules` | Manage curriculum |
 | A62 | `GET` | `/v1/admin/listeners/{id}/training` | Progress |
 | A63 | `POST` | `/v1/admin/listeners/{id}/training/{moduleId}/complete` | Force complete |
-| A64 | `GET`/`PUT` | `/v1/admin/achievements` | Catalog |
-| A65 | `POST` | `/v1/admin/ventors/{id}/achievements/{achievementId}` | Grant |
-| A66 | `GET` | `/v1/admin/invite-stats` | Invite program performance |
+| A64 | `GET` | `/v1/admin/invite-stats` | Invite program performance |
 
 ---
 
@@ -537,8 +655,9 @@ Count as **8** if each catalog has list + upsert (4×2). Collapse to fewer with 
 
 Mobile may expose public `GET /v1/cms/pages/{slug}` and `GET /v1/cms/banners` (2 extra public endpoints — optional).
 
----
+> **Static legal/help:** Terms, Privacy, and Help are **6 static HTML files** (EN/AR) hosted at `webContentBaseUrl` — see mobile [`docs/static-web/`](./static-web/README.md). Not portal CMS tables or mobile REST endpoints.
 
+### 7.14 Admins
 ### 7.14 Admins & RBAC (7)
 
 | # | Method | Path | Use |
@@ -579,22 +698,22 @@ Mobile may expose public `GET /v1/cms/pages/{slug}` and `GET /v1/cms/banners` (2
 | Route (suggested) | Screen | Primary APIs |
 |-------------------|--------|--------------|
 | `/login` | Admin login | A1 |
-| `/` | Dashboard | A6–A11, A95 |
+| `/` | Dashboard | A6–A11, A95 — **top row:** registrations & account deletions (all-time + this month) |
 | `/reviews` | Listener approval queue | A22–A27 |
 | `/users` | User directory | A12–A21 |
 | `/users/:id` | User dossier + notes | A13, A92–A93, A37–A38 |
 | `/sessions` | Sessions | A28–A33 |
 | `/reports` | Safety queue | A34–A36 |
 | `/payouts` | Finance | A41–A47 |
-| `/catalogs` | Lookups | A48–A52 |
-| `/rewards` | Offers | A53–A56 |
+| `/catalogs` | Lookups — languages (`flag_emoji` / `flag_url`), comfort areas (`icon_emoji` / `icon_url`), boundaries (`icon_emoji` / `icon_url`) | A48–A52 (+ media upload) |
+| `/rewards` | Offers + **point packages** | A53–A56, A65–A68 |
 | `/promos` | Promo codes | A57–A60 |
-| `/training` | Modules | A61–A63 |
-| `/achievements` | Achievements | A64–A65 |
+| `/training` | Modules | A61–A64 |
 | `/notifications` | Broadcast | A67–A69 |
 | `/config` | Flags + KV | A70–A75 |
-| `/cms/pages` | Help content | A76–A79 |
+| `/cms/pages` | Optional CMS content | A76–A79 |
 | `/cms/banners` | Banners | A80–A83 |
+| *(static host)* | Terms / Privacy / Help EN+AR | Deploy `docs/static-web/` — not admin APIs |
 | `/staff` | Admins | A84–A90 |
 | `/audit` | Audit log | A91 |
 | `/analytics` | GA + funnels | A95–A97 + GA4 |
@@ -648,7 +767,7 @@ Mobile may expose public `GET /v1/cms/pages/{slug}` and `GET /v1/cms/banners` (2
 
 Backend or mobile already should emit (to Firebase/GA4): `sign_up`, `listener_submit_review`, `session_booked`, `session_completed`, `reward_redeem`, `payout_requested`.
 
-Admin **dashboard stats (A6–A11)** come from **Postgres**, not from GA — GA is for behavior/funnels; SQL is for money and ops queues.
+Admin **dashboard stats (A6–A11)** come from **Postgres**, not from GA — GA is for behavior/funnels; SQL is for money and ops queues. User **registrations** (`users.created_at`) and **account deletions** (`users.deleted_at` from mobile `#5`) are core dashboard KPIs on A6 — see §7.2.1.
 
 ---
 
@@ -677,10 +796,10 @@ Admin **dashboard stats (A6–A11)** come from **Postgres**, not from GA — GA 
 ### 11.1 Approve a listener
 
 1. Open `/reviews` → `A22` queue  
-2. Open dossier `A23` + identity `A24`  
-3. `A25` approve **or** `A26` reject with reason  
-4. System: update `profile_status`, notify listener, write `admin_audit_logs`  
-5. Listener app: `#7 auth/me` shows `approved` → home
+2. Open full dossier `A23` (profile, tags, availability, media) + identity docs `A24`  
+3. **`A25` approve** whole profile **or** **`A26` reject** with `reason` + `steps_to_refill[]` (setup step ids the listener must fix)  
+4. System: update `profile_status`, `steps_to_refill`, notify listener, write `admin_audit_logs`  
+5. Listener app: `#29 setup-progress` shows profile banner + flagged steps; `#31` blocks go-online until `approved`
 
 ### 11.2 Triage a report
 
@@ -709,7 +828,7 @@ Admin **dashboard stats (A6–A11)** come from **Postgres**, not from GA — GA 
 |-------|--------|-------:|-----------:|
 | **P0 — MVP** | Auth, dashboard, listener queue approve/reject, user search, reports list, audit | +`admin_*` RBAC + audit (6 tables) | ~45 |
 | **P1** | Payouts, wallet adjust, sessions refund, moderation actions, notes | +`moderation_actions`, `admin_notes` | +20 |
-| **P2** | Catalogs, rewards, promo, training, achievements | (reuse mobile catalogs) | +20 |
+| **P2** | Catalogs, rewards, promo, training | (reuse mobile catalogs) | +18 |
 | **P3** | Feature flags, config, CMS pages/banners, GA embed | +flags, config, cms (4) | +15 |
 | **P4** | Polish: MFA, exports, BigQuery, advanced funnels | optional | +rest → ~100 |
 
@@ -780,7 +899,7 @@ Share DTOs / OpenAPI with the mobile backend; do **not** import mobile UI packag
 
 | Doc | Role |
 |-----|------|
-| [`database-schema.md`](./database-schema.md) | Mobile 43 tables |
+| [`database-schema.md`](./database-schema.md) | Mobile 44 tables |
 | [`api-endpoints.md`](./api-endpoints.md) | Mobile 73 APIs |
 | [`api-usage-guide.md`](./api-usage-guide.md) | Where mobile calls APIs |
 | **This doc** | CMS product, +12 tables, ~100 admin APIs, GA |

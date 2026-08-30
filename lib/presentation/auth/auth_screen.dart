@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:venting_mobile_app/di/di_container.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
+import 'package:venting_mobile_app/presentation/auth/auth_navigation.dart';
+import 'package:venting_mobile_app/presentation/auth/bloc/auth_bloc.dart';
 import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dart';
-import 'package:venting_mobile_app/shared_widgets/app_language_selector.dart';
+import 'package:venting_mobile_app/utils/legal_document_opener.dart';
 import 'package:venting_mobile_app/utils/router_config.dart';
+import 'package:venting_mobile_app/utils/static_web_content.dart';
 
 enum AuthUserType { ventor, lissener }
 
@@ -22,119 +28,320 @@ class AuthScreen extends StatelessWidget {
 
   static const _overlayStyle = SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
-    statusBarBrightness: Brightness.light,
-    statusBarIconBrightness: Brightness.dark,
-    systemNavigationBarColor: Colors.white,
-    systemNavigationBarIconBrightness: Brightness.dark,
+    statusBarBrightness: Brightness.dark,
+    statusBarIconBrightness: Brightness.light,
+    systemNavigationBarColor: SplashColors.backgroundBottom,
+    systemNavigationBarIconBrightness: Brightness.light,
   );
 
-  static const _titleColor = Color(0xFF1A1228);
-  static const _bodyColor = Color(0xFF6B6280);
-  static const _border = Color(0xFFE4DCEF);
+  static const _muted = Color(0xFF9B93AB);
+  static const _socialFill = Color(0xFF16121F);
+  static const _socialBorder = Color(0xFF2A2438);
+  static const _backFill = Color(0xFF1C1826);
+  static const _error = Color(0xFFF87171);
 
-  ({String title, String subtitle}) _copy(VentingMobLocalizations l10n) {
+  String _subtitle(VentingMobLocalizations l10n) {
     return switch (userType) {
-      AuthUserType.ventor => (
-        title: l10n.auth_ventor_title,
-        subtitle: l10n.auth_ventor_subtitle,
-      ),
-      AuthUserType.lissener => (
-        title: l10n.auth_listener_title,
-        subtitle: l10n.auth_listener_subtitle,
-      ),
+      AuthUserType.ventor => l10n.auth_ventor_subtitle,
+      AuthUserType.lissener => l10n.auth_listener_subtitle,
     };
   }
 
   @override
   Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) => diContainer<AuthBloc>(param1: userType),
+      child: _AuthView(userType: userType, subtitleBuilder: _subtitle),
+    );
+  }
+}
+
+class _AuthView extends StatelessWidget {
+  const _AuthView({required this.userType, required this.subtitleBuilder});
+
+  final AuthUserType userType;
+  final String Function(VentingMobLocalizations l10n) subtitleBuilder;
+
+  Future<void> _openTerms(BuildContext context) {
     final l10n = VentingMobLocalizations.of(context);
-    final copy = _copy(l10n);
+    return openLegalDocument(
+      context,
+      kind: LegalDocumentKind.terms,
+      title: l10n.listener_reg_terms,
+    );
+  }
+
+  Future<void> _openPrivacy(BuildContext context) {
+    final l10n = VentingMobLocalizations.of(context);
+    return openLegalDocument(
+      context,
+      kind: LegalDocumentKind.privacy,
+      title: l10n.listener_reg_privacy,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = VentingMobLocalizations.of(context);
+    final subtitle = subtitleBuilder(l10n);
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: _overlayStyle,
+      value: AuthScreen._overlayStyle,
       child: Scaffold(
-        backgroundColor: Colors.white,
-        body: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Row(
-                  children: [
-                    IconButton(
-                      onPressed: () => context.go(AppRoutes.welcome),
-                      icon: const Icon(
-                        Icons.arrow_back_ios_new_rounded,
-                        size: 20,
-                        color: _titleColor,
-                      ),
-                    ),
-                    const Spacer(),
-                    const AppLanguageSelector(),
-                  ],
-                ),
-                const SizedBox(height: 28),
-                Text(
-                  copy.title,
-                  textAlign: TextAlign.center,
-                  style: GoogleFonts.inter(
-                    color: _titleColor,
-                    fontSize: 28,
-                    fontWeight: FontWeight.w700,
-                    height: 1.2,
-                  ),
-                ),
-                const SizedBox(height: 10),
-                Text(
-                  copy.subtitle,
-                  textAlign: TextAlign.center,
-                  style: GoogleFonts.inter(
-                    color: _bodyColor,
-                    fontSize: 15,
-                    fontWeight: FontWeight.w400,
-                    height: 1.4,
-                  ),
-                ),
-                const SizedBox(height: 40),
-                _AuthButton(
-                  backgroundColor: Colors.black,
-                  foregroundColor: Colors.white,
-                  borderColor: Colors.black,
-                  icon: Icons.apple,
-                  label: l10n.auth_continue_with_apple,
-                  onPressed: () {
-                    // TODO: Apple Sign-In / Sign-Up
-                  },
-                ),
-                const SizedBox(height: 12),
-                _AuthButton(
-                  backgroundColor: Colors.white,
-                  foregroundColor: _titleColor,
-                  borderColor: _border,
-                  iconWidget: const _GoogleMark(),
-                  label: l10n.auth_continue_with_google,
-                  onPressed: () {
-                    // TODO: Google Sign-In / Sign-Up
-                  },
-                ),
-                const SizedBox(height: 12),
-                _AuthButton(
-                  backgroundColor: Colors.white,
-                  foregroundColor: SplashColors.purpleMid,
-                  borderColor: SplashColors.purpleMid.withValues(alpha: 0.55),
-                  icon: Icons.mail_outline_rounded,
-                  label: l10n.auth_continue_with_email,
-                  onPressed: () {
-                    context.push(
-                      AppRoutes.emailRegistration,
-                      extra: AuthRouteArgs(userType: userType),
-                    );
-                  },
-                ),
+        backgroundColor: SplashColors.backgroundTop,
+        body: DecoratedBox(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                SplashColors.backgroundTop,
+                SplashColors.backgroundBottom,
               ],
             ),
           ),
+          child: SafeArea(
+            child: BlocConsumer<AuthBloc, AuthState>(
+              listenWhen: (previous, current) =>
+                  current.destination != null &&
+                  previous.destination != current.destination,
+              listener: (context, state) {
+                final destination = state.destination;
+                if (destination != null) {
+                  navigateToAuthDestination(context, destination);
+                }
+              },
+              builder: (context, state) {
+                final isBusy = state.isLoadingGoogle || state.isLoadingApple;
+
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Align(
+                        alignment: AlignmentDirectional.centerStart,
+                        child: Material(
+                          color: AuthScreen._backFill,
+                          shape: const CircleBorder(),
+                          child: InkWell(
+                            customBorder: const CircleBorder(),
+                            onTap: isBusy
+                                ? null
+                                : () => context.go(AppRoutes.welcome),
+                            child: const SizedBox(
+                              width: 42,
+                              height: 42,
+                              child: Icon(
+                                Icons.arrow_back_rounded,
+                                size: 20,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const Spacer(flex: 2),
+                      const _VentingBrandHeader(),
+                      const SizedBox(height: 12),
+                      Text(
+                        subtitle,
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.inter(
+                          color: AuthScreen._muted,
+                          fontSize: 15,
+                          fontWeight: FontWeight.w400,
+                          height: 1.35,
+                        ),
+                      ),
+                      const SizedBox(height: 36),
+                      _AuthButton(
+                        backgroundColor: AuthScreen._socialFill,
+                        foregroundColor: Colors.white,
+                        borderColor: AuthScreen._socialBorder,
+                        iconAsset: 'assets/images/sign_apple_icon.svg',
+                        label: l10n.auth_continue_with_apple,
+                        isLoading: state.isLoadingApple,
+                        onPressed: isBusy
+                            ? null
+                            : () => context.read<AuthBloc>().add(
+                                const AuthEvent.signInWithApple(),
+                              ),
+                      ),
+                      const SizedBox(height: 12),
+                      _AuthButton(
+                        backgroundColor: AuthScreen._socialFill,
+                        foregroundColor: Colors.white,
+                        borderColor: AuthScreen._socialBorder,
+                        iconAsset: 'assets/images/sign_google_icon.svg',
+                        label: l10n.auth_continue_with_google,
+                        isLoading: state.isLoadingGoogle,
+                        onPressed: isBusy
+                            ? null
+                            : () => context.read<AuthBloc>().add(
+                                const AuthEvent.signInWithGoogle(),
+                              ),
+                      ),
+                      const SizedBox(height: 20),
+                      _OrDivider(label: l10n.auth_or_divider),
+                      const SizedBox(height: 20),
+                      _AuthButton(
+                        backgroundColor: SplashColors.purpleMid,
+                        foregroundColor: Colors.white,
+                        borderColor: SplashColors.purpleMid,
+                        iconAsset: 'assets/images/sign_email_icon.svg',
+                        label: l10n.auth_continue_with_email,
+                        filled: true,
+                        onPressed: isBusy
+                            ? null
+                            : () {
+                                context.push(
+                                  AppRoutes.emailRegistration,
+                                  extra: AuthRouteArgs(userType: userType),
+                                );
+                              },
+                      ),
+                      if (state.errorMessage.isNotEmpty) ...[
+                        const SizedBox(height: 16),
+                        Text(
+                          state.errorMessage,
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.inter(
+                            color: AuthScreen._error,
+                            fontSize: 13,
+                            fontWeight: FontWeight.w500,
+                            height: 1.4,
+                          ),
+                        ),
+                      ],
+                      const Spacer(flex: 3),
+                      Text(
+                        l10n.welcome_anonymous_footer,
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.inter(
+                          color: AuthScreen._muted.withValues(alpha: 0.9),
+                          fontSize: 13,
+                          fontWeight: FontWeight.w400,
+                          height: 1.35,
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      Wrap(
+                        alignment: WrapAlignment.center,
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        children: [
+                          _LegalLink(
+                            label: l10n.listener_reg_terms,
+                            onTap: isBusy ? null : () => _openTerms(context),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            child: Text(
+                              '·',
+                              style: GoogleFonts.inter(
+                                color: SplashColors.purpleMid,
+                                fontSize: 13,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                          _LegalLink(
+                            label: l10n.listener_reg_privacy,
+                            onTap: isBusy ? null : () => _openPrivacy(context),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 16),
+                    ],
+                  ),
+                );
+              },
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _VentingBrandHeader extends StatelessWidget {
+  const _VentingBrandHeader();
+
+  @override
+  Widget build(BuildContext context) {
+    final base = GoogleFonts.inter(
+      fontSize: 40,
+      fontWeight: FontWeight.w800,
+      height: 1,
+      letterSpacing: 1.2,
+    );
+
+    return Text.rich(
+      TextSpan(
+        children: [
+          TextSpan(
+            text: 'VENT',
+            style: base.copyWith(color: Colors.white),
+          ),
+          TextSpan(
+            text: 'ING',
+            style: base.copyWith(color: SplashColors.purpleMid),
+          ),
+        ],
+      ),
+      textAlign: TextAlign.center,
+    );
+  }
+}
+
+class _OrDivider extends StatelessWidget {
+  const _OrDivider({required this.label});
+
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    final line = Expanded(
+      child: Container(height: 1, color: Colors.white.withValues(alpha: 0.1)),
+    );
+
+    return Row(
+      children: [
+        line,
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 14),
+          child: Text(
+            label,
+            style: GoogleFonts.inter(
+              color: AuthScreen._muted,
+              fontSize: 13,
+              fontWeight: FontWeight.w500,
+              letterSpacing: 0.6,
+            ),
+          ),
+        ),
+        line,
+      ],
+    );
+  }
+}
+
+class _LegalLink extends StatelessWidget {
+  const _LegalLink({required this.label, required this.onTap});
+
+  final String label;
+  final VoidCallback? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Text(
+        label,
+        style: GoogleFonts.inter(
+          color: SplashColors.purpleMid,
+          fontSize: 13,
+          fontWeight: FontWeight.w600,
         ),
       ),
     );
@@ -146,96 +353,82 @@ class _AuthButton extends StatelessWidget {
     required this.backgroundColor,
     required this.foregroundColor,
     required this.borderColor,
+    required this.iconAsset,
     required this.label,
     required this.onPressed,
-    this.icon,
-    this.iconWidget,
+    this.isLoading = false,
+    this.filled = false,
   });
 
   final Color backgroundColor;
   final Color foregroundColor;
   final Color borderColor;
+  final String iconAsset;
   final String label;
-  final VoidCallback onPressed;
-  final IconData? icon;
-  final Widget? iconWidget;
+  final VoidCallback? onPressed;
+  final bool isLoading;
+  final bool filled;
 
   @override
   Widget build(BuildContext context) {
+    final shape = RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(16),
+    );
+    final textStyle = GoogleFonts.inter(
+      fontSize: 15,
+      fontWeight: FontWeight.w600,
+    );
+
+    final child = isLoading
+        ? SizedBox(
+            width: 22,
+            height: 22,
+            child: CircularProgressIndicator(
+              strokeWidth: 2.4,
+              color: foregroundColor,
+            ),
+          )
+        : Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SvgPicture.asset(iconAsset, width: 22, height: 22),
+              const SizedBox(width: 10),
+              Text(label),
+            ],
+          );
+
     return SizedBox(
       height: 54,
       width: double.infinity,
-      child: OutlinedButton(
-        onPressed: onPressed,
-        style: OutlinedButton.styleFrom(
-          backgroundColor: backgroundColor,
-          foregroundColor: foregroundColor,
-          side: BorderSide(color: borderColor, width: 1.2),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
-          textStyle: GoogleFonts.inter(
-            fontSize: 15,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            if (iconWidget != null)
-              iconWidget!
-            else if (icon != null)
-              Icon(icon, size: 22, color: foregroundColor),
-            const SizedBox(width: 10),
-            Text(label),
-          ],
-        ),
-      ),
+      child: filled
+          ? FilledButton(
+              onPressed: onPressed,
+              style: FilledButton.styleFrom(
+                backgroundColor: backgroundColor,
+                foregroundColor: foregroundColor,
+                disabledBackgroundColor: backgroundColor.withValues(
+                  alpha: 0.45,
+                ),
+                disabledForegroundColor: foregroundColor.withValues(alpha: 0.7),
+                elevation: 0,
+                shape: shape,
+                textStyle: textStyle,
+              ),
+              child: child,
+            )
+          : OutlinedButton(
+              onPressed: onPressed,
+              style: OutlinedButton.styleFrom(
+                backgroundColor: backgroundColor,
+                foregroundColor: foregroundColor,
+                disabledBackgroundColor: backgroundColor.withValues(alpha: 0.7),
+                disabledForegroundColor: foregroundColor.withValues(alpha: 0.7),
+                side: BorderSide(color: borderColor, width: 1.2),
+                shape: shape,
+                textStyle: textStyle,
+              ),
+              child: child,
+            ),
     );
   }
-}
-
-class _GoogleMark extends StatelessWidget {
-  const _GoogleMark();
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: 22,
-      height: 22,
-      child: CustomPaint(painter: _GoogleGPainter()),
-    );
-  }
-}
-
-class _GoogleGPainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    final stroke = Paint()
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 3
-      ..strokeCap = StrokeCap.round;
-
-    final rect = Rect.fromLTWH(2, 2, size.width - 4, size.height - 4);
-    stroke.color = const Color(0xFF4285F4);
-    canvas.drawArc(rect, -0.4, 1.6, false, stroke);
-    stroke.color = const Color(0xFF34A853);
-    canvas.drawArc(rect, 1.2, 1.2, false, stroke);
-    stroke.color = const Color(0xFFFBBC05);
-    canvas.drawArc(rect, 2.4, 0.9, false, stroke);
-    stroke.color = const Color(0xFFEA4335);
-    canvas.drawArc(rect, 3.3, 1.2, false, stroke);
-
-    canvas.drawLine(
-      Offset(size.width * 0.5, size.height * 0.5),
-      Offset(size.width - 2, size.height * 0.5),
-      Paint()
-        ..color = const Color(0xFF4285F4)
-        ..strokeWidth = 3
-        ..strokeCap = StrokeCap.round,
-    );
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:venting_mobile_app/di/di_container.dart';
+import 'package:venting_mobile_app/domain/data/app/listener_training.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
-import 'package:venting_mobile_app/presentation/home/listener/dashboard/listener_training_curriculum.dart';
+import 'package:venting_mobile_app/presentation/home/listener/dashboard/bloc/listener_training/listener_training_bloc.dart';
 import 'package:venting_mobile_app/presentation/home/listener/profile/listener_profile_theme.dart';
 import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dart';
 
@@ -12,7 +15,12 @@ Future<bool?> openListenerTrainingBottomSheet({required BuildContext context}) {
     context: context,
     isScrollControlled: true,
     backgroundColor: Colors.transparent,
-    builder: (context) => const ListenerTrainingBottomSheet(),
+    builder: (context) => BlocProvider(
+      create: (_) =>
+          diContainer<ListenerTrainingBloc>()
+            ..add(const ListenerTrainingEvent.started()),
+      child: const ListenerTrainingBottomSheet(),
+    ),
   );
 }
 
@@ -30,29 +38,7 @@ class _ListenerTrainingBottomSheetState
   static const _rowFill = Color(0xFF15101F);
   static const _lockedIconBg = Color(0xFF2A2436);
 
-  late List<ListenerTrainingModule> _modules;
-  var _initialized = false;
   var _opening = false;
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (_initialized) return;
-    _initialized = true;
-
-    final l10n = VentingMobLocalizations.of(context);
-    _modules = ListenerTrainingCurriculum.mockModules(
-      artOfListening: l10n.listener_training_module_art_of_listening,
-      empathy: l10n.listener_training_module_empathy,
-      boundaries: l10n.listener_training_module_boundaries,
-      difficultSituations: l10n.listener_training_module_difficult_situations,
-      crisisAwareness: l10n.listener_training_module_crisis_awareness,
-    );
-  }
-
-  bool get _allCompleted => _modules.every(
-    (module) => module.status == ListenerTrainingModuleStatus.completed,
-  );
 
   String _statusLabel(
     VentingMobLocalizations l10n,
@@ -68,16 +54,16 @@ class _ListenerTrainingBottomSheetState
     };
   }
 
-  Future<void> _openModule(int index) async {
+  Future<void> _openModule(ListenerTrainingModule module) async {
     if (_opening) return;
 
-    final module = _modules[index];
     final l10n = VentingMobLocalizations.of(context);
 
-    if (module.status == ListenerTrainingModuleStatus.notStarted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(l10n.listener_training_locked_hint)),
-      );
+    if (module.status == ListenerTrainingModuleStatus.completed) {
+      final uri = Uri.tryParse(module.contentUrl);
+      if (uri != null) {
+        await launchUrl(uri, mode: LaunchMode.externalApplication);
+      }
       return;
     }
 
@@ -101,30 +87,12 @@ class _ListenerTrainingBottomSheetState
       }
 
       if (!mounted) return;
-      // Opening the tutorial marks the module done and unlocks the next one.
-      // TODO: Persist module completion via training progress API.
-      setState(() {
-        if (module.status != ListenerTrainingModuleStatus.completed) {
-          _modules[index] = module.copyWith(
-            status: ListenerTrainingModuleStatus.completed,
-          );
-          if (index + 1 < _modules.length &&
-              _modules[index + 1].status ==
-                  ListenerTrainingModuleStatus.notStarted) {
-            _modules[index + 1] = _modules[index + 1].copyWith(
-              status: ListenerTrainingModuleStatus.inProgress,
-            );
-          }
-        }
-      });
+      context.read<ListenerTrainingBloc>().add(
+        ListenerTrainingEvent.moduleCompleted(moduleId: module.id),
+      );
     } finally {
       _opening = false;
     }
-  }
-
-  void _finishTraining() {
-    if (!_allCompleted) return;
-    Navigator.of(context).pop(true);
   }
 
   @override
@@ -132,133 +100,179 @@ class _ListenerTrainingBottomSheetState
     final l10n = VentingMobLocalizations.of(context);
     final bottomInset = MediaQuery.paddingOf(context).bottom;
 
-    return Padding(
-      padding: EdgeInsets.only(left: 16, right: 16, bottom: bottomInset + 12),
-      child: SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const SizedBox(height: 8),
-            Center(
-              child: Container(
-                width: 40,
-                height: 4,
-                decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: 0.2),
-                  borderRadius: BorderRadius.circular(999),
-                ),
-              ),
-            ),
-            const SizedBox(height: 16),
-            Row(
-              children: [
-                Container(
-                  width: 34,
-                  height: 34,
-                  alignment: Alignment.center,
-                  decoration: const BoxDecoration(
-                    color: SplashColors.purpleMid,
-                    shape: BoxShape.circle,
-                  ),
-                  child: Text(
-                    '9',
-                    style: GoogleFonts.inter(
-                      color: Colors.white,
-                      fontSize: 15,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Text(
-                  l10n.listener_dashboard_setup_training,
-                  style: GoogleFonts.inter(
-                    color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 14),
-            Container(
-              padding: const EdgeInsets.fromLTRB(18, 20, 18, 16),
+    return BlocConsumer<ListenerTrainingBloc, ListenerTrainingState>(
+      listenWhen: (previous, current) =>
+          previous.errorMessage != current.errorMessage &&
+          current.errorMessage.isNotEmpty,
+      listener: (context, state) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(state.errorMessage)));
+      },
+      builder: (context, state) {
+        return Padding(
+          padding: EdgeInsets.only(
+            left: 16,
+            right: 16,
+            bottom: bottomInset + 12,
+          ),
+          child: SingleChildScrollView(
+            child: Container(
+              padding: const EdgeInsets.fromLTRB(18, 12, 18, 16),
               decoration: BoxDecoration(
                 color: _sheetFill,
                 borderRadius: BorderRadius.circular(22),
                 border: Border.all(color: ListenerProfileTheme.cardBorder),
               ),
               child: Column(
+                mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Text(
-                    l10n.listener_training_title,
-                    style: GoogleFonts.inter(
-                      color: Colors.white,
-                      fontSize: 22,
-                      fontWeight: FontWeight.w700,
-                      height: 1.25,
+                  Center(
+                    child: Container(
+                      width: 40,
+                      height: 4,
+                      decoration: BoxDecoration(
+                        color: Colors.white.withValues(alpha: 0.2),
+                        borderRadius: BorderRadius.circular(999),
+                      ),
                     ),
                   ),
-                  const SizedBox(height: 8),
-                  Text(
-                    l10n.listener_training_subtitle,
-                    style: GoogleFonts.inter(
-                      color: ListenerProfileTheme.muted,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                      height: 1.4,
-                    ),
+                  const SizedBox(height: 16),
+                  Row(
+                    children: [
+                      Container(
+                        width: 34,
+                        height: 34,
+                        alignment: Alignment.center,
+                        decoration: const BoxDecoration(
+                          color: SplashColors.purpleMid,
+                          shape: BoxShape.circle,
+                        ),
+                        child: Text(
+                          '10',
+                          style: GoogleFonts.inter(
+                            color: Colors.white,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: Text(
+                          l10n.listener_dashboard_setup_training,
+                          style: GoogleFonts.inter(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 18),
-                  for (var i = 0; i < _modules.length; i++) ...[
-                    _TrainingModuleRow(
-                      index: i + 1,
-                      title: _modules[i].title,
-                      status: _modules[i].status,
-                      statusLabel: _statusLabel(l10n, _modules[i].status),
-                      rowFill: _rowFill,
-                      lockedIconBg: _lockedIconBg,
-                      onTap: () => _openModule(i),
+                  const SizedBox(height: 20),
+                  if (state.isLoading)
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 48),
+                      child: Center(child: CircularProgressIndicator()),
+                    )
+                  else if (state.isLoadFailure) ...[
+                    Text(
+                      state.errorMessage.isNotEmpty
+                          ? state.errorMessage
+                          : l10n.common_unknown_error,
+                      style: GoogleFonts.inter(
+                        color: ListenerProfileTheme.muted,
+                        fontSize: 14,
+                        height: 1.4,
+                      ),
                     ),
-                    if (i != _modules.length - 1) const SizedBox(height: 10),
+                    const SizedBox(height: 12),
+                    OutlinedButton(
+                      onPressed: () => context.read<ListenerTrainingBloc>().add(
+                        const ListenerTrainingEvent.retryLoad(),
+                      ),
+                      child: Text(l10n.common_retry),
+                    ),
+                  ] else ...[
+                    Text(
+                      l10n.listener_training_title,
+                      style: GoogleFonts.inter(
+                        color: Colors.white,
+                        fontSize: 22,
+                        fontWeight: FontWeight.w700,
+                        height: 1.25,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      l10n.listener_training_subtitle,
+                      style: GoogleFonts.inter(
+                        color: ListenerProfileTheme.muted,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                        height: 1.4,
+                      ),
+                    ),
+                    const SizedBox(height: 18),
+                    for (var i = 0; i < state.modules.length; i++) ...[
+                      _TrainingModuleRow(
+                        index: i + 1,
+                        title: state.modules[i].title,
+                        status: state.modules[i].status,
+                        statusLabel: _statusLabel(
+                          l10n,
+                          state.modules[i].status,
+                        ),
+                        rowFill: _rowFill,
+                        lockedIconBg: _lockedIconBg,
+                        isBusy:
+                            state.isCompletingModule &&
+                            state.completingModuleId == state.modules[i].id,
+                        onTap: () => _openModule(state.modules[i]),
+                      ),
+                      if (i != state.modules.length - 1)
+                        const SizedBox(height: 10),
+                    ],
+                    const SizedBox(height: 18),
+                    SizedBox(
+                      height: 54,
+                      child: FilledButton(
+                        onPressed: state.allCompleted
+                            ? () => Navigator.of(context).pop(true)
+                            : null,
+                        style: FilledButton.styleFrom(
+                          backgroundColor: SplashColors.purpleMid,
+                          disabledBackgroundColor: SplashColors.purpleMid
+                              .withValues(alpha: 0.35),
+                          foregroundColor: Colors.white,
+                          disabledForegroundColor: Colors.white.withValues(
+                            alpha: 0.7,
+                          ),
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          textStyle: GoogleFonts.inter(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        child: Text(
+                          state.allCompleted
+                              ? l10n.listener_training_finish
+                              : l10n.listener_training_finish_locked,
+                        ),
+                      ),
+                    ),
                   ],
-                  const SizedBox(height: 18),
-                  SizedBox(
-                    height: 54,
-                    child: FilledButton(
-                      onPressed: _allCompleted ? _finishTraining : null,
-                      style: FilledButton.styleFrom(
-                        backgroundColor: SplashColors.purpleMid,
-                        disabledBackgroundColor: SplashColors.purpleMid
-                            .withValues(alpha: 0.35),
-                        foregroundColor: Colors.white,
-                        disabledForegroundColor: Colors.white.withValues(
-                          alpha: 0.7,
-                        ),
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                        textStyle: GoogleFonts.inter(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                      child: Text(
-                        _allCompleted
-                            ? l10n.listener_training_finish
-                            : l10n.listener_training_finish_locked,
-                      ),
-                    ),
-                  ),
                 ],
               ),
             ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }
@@ -272,6 +286,7 @@ class _TrainingModuleRow extends StatelessWidget {
     required this.rowFill,
     required this.lockedIconBg,
     required this.onTap,
+    this.isBusy = false,
   });
 
   final int index;
@@ -281,6 +296,7 @@ class _TrainingModuleRow extends StatelessWidget {
   final Color rowFill;
   final Color lockedIconBg;
   final VoidCallback onTap;
+  final bool isBusy;
 
   bool get _isLocked => status == ListenerTrainingModuleStatus.notStarted;
 
@@ -296,7 +312,7 @@ class _TrainingModuleRow extends StatelessWidget {
       color: rowFill,
       borderRadius: BorderRadius.circular(16),
       child: InkWell(
-        onTap: onTap,
+        onTap: isBusy ? null : onTap,
         borderRadius: BorderRadius.circular(16),
         child: Container(
           padding: const EdgeInsets.fromLTRB(14, 12, 12, 12),
@@ -337,7 +353,20 @@ class _TrainingModuleRow extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 10),
-              _ModuleStatusIcon(status: status, lockedIconBg: lockedIconBg),
+              if (isBusy)
+                const SizedBox(
+                  width: 40,
+                  height: 40,
+                  child: Center(
+                    child: SizedBox(
+                      width: 22,
+                      height: 22,
+                      child: CircularProgressIndicator(strokeWidth: 2),
+                    ),
+                  ),
+                )
+              else
+                _ModuleStatusIcon(status: status, lockedIconBg: lockedIconBg),
             ],
           ),
         ),

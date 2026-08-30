@@ -7,14 +7,13 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:venting_mobile_app/domain/constants/language_constant.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
 import 'package:venting_mobile_app/l10n/venting_mob_localizations_holder.dart';
-import 'package:venting_mobile_app/presentation/home/listener/profile/widgets/listener_about_screen.dart';
-import 'package:venting_mobile_app/presentation/home/listener/profile/widgets/listener_change_password_screen.dart';
-import 'package:venting_mobile_app/presentation/home/listener/profile/widgets/listener_destructive_confirm_bottom_sheet.dart';
+import 'package:venting_mobile_app/presentation/change_password/change_password_screen.dart';
 import 'package:venting_mobile_app/presentation/home/listener/profile/widgets/listener_help_support_screen.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/profile/ventor_profile_theme.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/profile/widgets/ventor_notification_preferences_screen.dart';
-import 'package:venting_mobile_app/presentation/home/ventor/profile/widgets/ventor_privacy_settings_screen.dart';
 import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dart';
+import 'package:venting_mobile_app/shared_widgets/about/about_screen.dart';
+import 'package:venting_mobile_app/shared_widgets/bottom_sheets/logout_delete_account_confirm/logout_delete_account_confirm_sheet.dart';
 import 'package:venting_mobile_app/utils/app_language.dart';
 
 /// Opens the ventor Settings screen.
@@ -42,6 +41,8 @@ class _VentorProfileSettingsScreenState
     systemNavigationBarIconBrightness: Brightness.light,
   );
 
+  static const _logoutColor = Color(0xFFE86B7A);
+
   String? _appVersion;
 
   @override
@@ -59,11 +60,6 @@ class _VentorProfileSettingsScreenState
       if (!mounted) return;
       setState(() => _appVersion = '1.2.0');
     }
-  }
-
-  void _todoAction(String feature) {
-    // TODO: Wire navigation / API for $feature.
-    debugPrint('TODO: $feature');
   }
 
   String get _languageLabel {
@@ -90,23 +86,17 @@ class _VentorProfileSettingsScreenState
   }
 
   Future<void> _onLogout() async {
-    final confirmed = await showListenerDestructiveConfirmBottomSheet(
+    await showLogoutDeleteAccountConfirmBottomSheet(
       context: context,
-      kind: ListenerDestructiveConfirmKind.logout,
+      kind: LogoutDeleteAccountConfirmKind.logout,
     );
-    if (!mounted || confirmed != true) return;
-    // TODO: Call logout API / clear session and navigate to auth.
-    _todoAction('logout');
   }
 
   Future<void> _onDeleteAccount() async {
-    final confirmed = await showListenerDestructiveConfirmBottomSheet(
+    await showLogoutDeleteAccountConfirmBottomSheet(
       context: context,
-      kind: ListenerDestructiveConfirmKind.deleteAccount,
+      kind: LogoutDeleteAccountConfirmKind.deleteAccount,
     );
-    if (!mounted || confirmed != true) return;
-    // TODO: Call delete-account API / clear session and navigate to auth.
-    _todoAction('delete account');
   }
 
   @override
@@ -114,126 +104,164 @@ class _VentorProfileSettingsScreenState
     final l10n = VentingMobLocalizations.of(context);
     final versionLabel = _appVersion == null
         ? '—'
-        : l10n.listener_profile_settings_version(_appVersion!);
+        : l10n.ventor_profile_settings_version(_appVersion!);
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: _overlayStyle,
       child: Scaffold(
         backgroundColor: SplashColors.backgroundBottom,
-        appBar: AppBar(
-          backgroundColor: SplashColors.backgroundBottom,
-          elevation: 0,
-          scrolledUnderElevation: 0,
-          centerTitle: true,
-          leading: IconButton(
-            onPressed: () => Navigator.of(context).pop(),
-            icon: const Icon(Icons.arrow_back_ios_new_rounded, size: 18),
-            color: Colors.white,
-          ),
-          title: Text(
-            l10n.ventor_profile_settings_title,
-            style: GoogleFonts.inter(
-              color: Colors.white,
-              fontSize: 17,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-        ),
-        body: ListView(
-          padding: const EdgeInsets.fromLTRB(16, 8, 16, 32),
-          children: [
-            _SettingsSection(
-              children: [
-                _SettingsTile(
-                  icon: Icons.language_rounded,
-                  label: l10n.change_language,
-                  value: _languageLabel,
-                  onTap: _onChangeLanguage,
-                ),
-                _SettingsTile(
-                  icon: Icons.lock_outline_rounded,
-                  label: l10n.account_tab_change_password,
-                  onTap: () => openListenerChangePasswordScreen(context),
-                  showDivider: false,
-                ),
-              ],
-            ),
-            const SizedBox(height: 14),
-            _SettingsSection(
-              children: [
-                _SettingsTile(
-                  icon: Icons.visibility_outlined,
-                  label: l10n.ventor_profile_settings_privacy,
-                  subtitle: l10n.ventor_profile_settings_privacy_sub,
-                  onTap: () =>
-                      openVentorPrivacySettingsScreen(context: context),
-                ),
-                _SettingsTile(
-                  icon: Icons.notifications_none_rounded,
-                  label: l10n.ventor_profile_settings_notifications,
-                  subtitle: l10n.ventor_profile_settings_notifications_sub,
-                  onTap: () =>
-                      openVentorNotificationPreferencesScreen(context: context),
-                  showDivider: false,
-                ),
-              ],
-            ),
-            const SizedBox(height: 14),
-            _SettingsSection(
-              children: [
-                _SettingsTile(
-                  icon: Icons.help_outline_rounded,
-                  label: l10n.listener_profile_help_support,
-                  subtitle: l10n.ventor_profile_settings_help_sub,
-                  onTap: () => openListenerHelpSupportScreen(context: context),
-                ),
-                _SettingsTile(
-                  icon: Icons.info_outline_rounded,
-                  label: l10n.listener_profile_settings_about,
-                  value: versionLabel,
-                  onTap: () => openListenerAboutScreen(context: context),
-                  showDivider: false,
-                ),
-              ],
-            ),
-            const SizedBox(height: 18),
-            SizedBox(
-              width: double.infinity,
-              height: 54,
-              child: OutlinedButton.icon(
-                onPressed: _onLogout,
-                icon: const Icon(Icons.logout_rounded, size: 20),
-                label: Text(l10n.account_tab_logout),
-                style: OutlinedButton.styleFrom(
-                  foregroundColor: const Color(0xFFEF4444),
-                  side: BorderSide(
-                    color: const Color(0xFFEF4444).withValues(alpha: 0.45),
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(14),
-                  ),
-                  textStyle: GoogleFonts.inter(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w700,
-                  ),
+        body: SafeArea(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(8, 4, 16, 8),
+                child: Row(
+                  children: [
+                    IconButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      icon: const Icon(
+                        Icons.arrow_back_ios_new_rounded,
+                        size: 18,
+                        color: Colors.white,
+                      ),
+                    ),
+                    Text(
+                      l10n.ventor_profile_settings_title,
+                      style: GoogleFonts.inter(
+                        color: Colors.white,
+                        fontSize: 28,
+                        fontWeight: FontWeight.w700,
+                        height: 1.1,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ),
-            const SizedBox(height: 12),
-            Center(
-              child: TextButton(
-                onPressed: _onDeleteAccount,
-                child: Text(
-                  l10n.account_tab_delete_account,
-                  style: GoogleFonts.inter(
-                    color: VentorProfileTheme.muted,
-                    fontSize: 13,
-                    fontWeight: FontWeight.w600,
-                  ),
+              Expanded(
+                child: ListView(
+                  padding: const EdgeInsets.fromLTRB(16, 8, 16, 32),
+                  children: [
+                    _SettingsSection(
+                      title: l10n.ventor_profile_settings_section_preferences,
+                      children: [
+                        _SettingsTile(
+                          icon: Icons.language_rounded,
+                          label: l10n.change_language,
+                          value: _languageLabel,
+                          onTap: _onChangeLanguage,
+                          showDivider: false,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 22),
+                    _SettingsSection(
+                      title: l10n.ventor_profile_settings_section_security,
+                      children: [
+                        _SettingsTile(
+                          icon: Icons.lock_outline_rounded,
+                          label: l10n.account_tab_change_password,
+                          onTap: () => openChangePasswordScreen(context),
+                        ),
+                        _SettingsTile(
+                          icon: Icons.notifications_none_rounded,
+                          label: l10n.ventor_profile_settings_notifications,
+                          value: l10n.ventor_profile_settings_notifications_sub,
+                          onTap: () => openVentorNotificationPreferencesScreen(
+                            context: context,
+                          ),
+                          showDivider: false,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 22),
+                    _SettingsSection(
+                      title: l10n.ventor_profile_settings_section_support,
+                      children: [
+                        _SettingsTile(
+                          icon: Icons.help_outline_rounded,
+                          label: l10n.listener_profile_help_support,
+                          value: l10n.ventor_profile_settings_help_sub,
+                          onTap: () =>
+                              openListenerHelpSupportScreen(context: context),
+                        ),
+                        _SettingsTile(
+                          icon: Icons.info_outline_rounded,
+                          label: l10n.listener_profile_settings_about,
+                          value: versionLabel,
+                          onTap: () => openAboutScreen(context: context),
+                          showDivider: false,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 28),
+                    Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        onTap: _onLogout,
+                        borderRadius: BorderRadius.circular(16),
+                        child: Container(
+                          height: 56,
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16),
+                            border: Border.all(
+                              color: _logoutColor.withValues(alpha: 0.7),
+                            ),
+                          ),
+                          child: Row(
+                            children: [
+                              const Icon(
+                                Icons.logout_rounded,
+                                size: 22,
+                                color: _logoutColor,
+                              ),
+                              const SizedBox(width: 12),
+                              Expanded(
+                                child: Text(
+                                  l10n.account_tab_logout,
+                                  style: GoogleFonts.inter(
+                                    color: _logoutColor,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              ),
+                              Icon(
+                                Icons.chevron_right_rounded,
+                                color: _logoutColor.withValues(alpha: 0.7),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 18),
+                    Center(
+                      child: TextButton(
+                        onPressed: _onDeleteAccount,
+                        style: TextButton.styleFrom(
+                          foregroundColor: VentorProfileTheme.muted,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 8,
+                          ),
+                        ),
+                        child: Text(
+                          l10n.account_tab_delete_account,
+                          style: GoogleFonts.inter(
+                            color: VentorProfileTheme.muted,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -241,19 +269,37 @@ class _VentorProfileSettingsScreenState
 }
 
 class _SettingsSection extends StatelessWidget {
-  const _SettingsSection({required this.children});
+  const _SettingsSection({required this.title, required this.children});
 
+  final String title;
   final List<Widget> children;
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: VentorProfileTheme.cardFill,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: VentorProfileTheme.cardBorder),
-      ),
-      child: Column(children: children),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 4, bottom: 10),
+          child: Text(
+            title,
+            style: GoogleFonts.inter(
+              color: VentorProfileTheme.muted,
+              fontSize: 12,
+              fontWeight: FontWeight.w600,
+              letterSpacing: 1.1,
+            ),
+          ),
+        ),
+        DecoratedBox(
+          decoration: BoxDecoration(
+            color: VentorProfileTheme.cardFill,
+            borderRadius: BorderRadius.circular(18),
+            border: Border.all(color: VentorProfileTheme.cardBorder),
+          ),
+          child: Column(children: children),
+        ),
+      ],
     );
   }
 }
@@ -263,14 +309,12 @@ class _SettingsTile extends StatelessWidget {
     required this.icon,
     required this.label,
     required this.onTap,
-    this.subtitle,
     this.value,
     this.showDivider = true,
   });
 
   final IconData icon;
   final String label;
-  final String? subtitle;
   final String? value;
   final VoidCallback onTap;
   final bool showDivider;
@@ -279,67 +323,59 @@ class _SettingsTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        ListTile(
+        InkWell(
           onTap: onTap,
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: 14,
-            vertical: 2,
-          ),
-          leading: Icon(
-            icon,
-            color: Colors.white.withValues(alpha: 0.9),
-            size: 22,
-          ),
-          title: Text(
-            label,
-            style: GoogleFonts.inter(
-              color: Colors.white,
-              fontSize: 14,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          subtitle: subtitle == null
-              ? null
-              : Text(
-                  subtitle!,
-                  style: GoogleFonts.inter(
-                    color: VentorProfileTheme.muted,
-                    fontSize: 12,
-                    fontWeight: FontWeight.w400,
-                  ),
+          borderRadius: BorderRadius.circular(18),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+            child: Row(
+              children: [
+                Icon(
+                  icon,
+                  color: Colors.white.withValues(alpha: 0.92),
+                  size: 22,
                 ),
-          trailing: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              if (value != null) ...[
-                ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 120),
+                const SizedBox(width: 14),
+                Expanded(
                   child: Text(
-                    value!,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.end,
+                    label,
                     style: GoogleFonts.inter(
-                      color: VentorProfileTheme.muted,
-                      fontSize: 13,
-                      fontWeight: FontWeight.w500,
+                      color: Colors.white,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
                 ),
-                const SizedBox(width: 4),
+                if (value != null) ...[
+                  ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 130),
+                    child: Text(
+                      value!,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.end,
+                      style: GoogleFonts.inter(
+                        color: VentorProfileTheme.muted,
+                        fontSize: 13,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 6),
+                ],
+                Icon(
+                  Icons.chevron_right_rounded,
+                  color: Colors.white.withValues(alpha: 0.45),
+                ),
               ],
-              Icon(
-                Icons.chevron_right_rounded,
-                color: Colors.white.withValues(alpha: 0.35),
-              ),
-            ],
+            ),
           ),
         ),
         if (showDivider)
           Divider(
             height: 1,
             indent: 52,
-            endIndent: 14,
+            endIndent: 16,
             color: Colors.white.withValues(alpha: 0.06),
           ),
       ],

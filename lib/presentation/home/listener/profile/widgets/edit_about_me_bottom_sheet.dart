@@ -8,7 +8,8 @@ import 'package:venting_mobile_app/shared_widgets/custom_buttomsheet.dart';
 
 /// Shows a dark edit sheet for the listener "About Me" bio.
 ///
-/// Returns the saved text, or `null` if cancelled.
+/// Returns the saved text, or `null` if cancelled. Persistence is handled by
+/// the caller (`ListenerProfileTab` → `ListenerProfileBloc` → API).
 Future<String?> showEditAboutMeBottomSheet({
   required BuildContext context,
   required String initialText,
@@ -64,7 +65,6 @@ class _EditAboutMeBottomSheetState extends State<EditAboutMeBottomSheet> {
 
   void _onSave() {
     if (!_canSave) return;
-    // TODO: Persist about-me text via listener profile API / repository.
     Navigator.of(context).pop(_trimmed);
   }
 

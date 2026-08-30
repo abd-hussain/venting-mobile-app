@@ -26,20 +26,23 @@
 
 ---
 
-## Quick index (all 43 tables)
+## Quick index (all 44 tables)
 
 | # | Table | Domain |
 |--:|-------|--------|
 | 1 | `users` | Auth |
 | 2 | `refresh_tokens` | Auth |
+| 2b | `auth_identities` | Auth — social *(proposed)* |
+| 2c | `password_reset_tokens` | Auth — forgot-password one-time links |
 | 3 | `ventor_profiles` | Ventor |
 | 4 | `listener_profiles` | Listener |
 | 5 | `listener_identity_verifications` | Listener onboarding |
-| 6 | `languages` | Lookups |
-| 7 | `comfort_areas` | Lookups |
+| 6 | `languages` | Lookups — **one** speaking-language catalog (ventor + listener) |
+| 7 | `comfort_areas` | Lookups — interests/comfort (`icon_emoji` + optional `icon_url`) |
 | 8 | `life_experiences` | Lookups |
 | 9 | `boundaries` | Lookups |
-| 10 | `ventor_interests` | Ventor tags |
+| 10 | `ventor_languages` | Ventor tags → `languages` |
+| 10b | `ventor_interests` | Ventor tags → `comfort_areas` |
 | 11 | `listener_languages` | Listener tags |
 | 12 | `listener_comfort_areas` | Listener tags |
 | 13 | `listener_life_experiences` | Listener tags |
@@ -48,37 +51,35 @@
 | 16 | `listener_availability_slots` | Availability |
 | 17 | `ventor_favorites` | Ventor |
 | 18 | `mood_checkins` | Wellness |
-| 19 | `achievements` | Catalog |
-| 20 | `ventor_achievements` | Ventor |
-| 21 | `ventor_privacy_settings` | Settings |
-| 22 | `listener_privacy_settings` | Settings |
-| 23 | `ventor_notification_preferences` | Settings |
-| 24 | `listener_notification_preferences` | Settings |
-| 25 | `session_requests` | Sessions |
-| 26 | `sessions` | Sessions |
-| 27 | `session_payments` | Money |
-| 28 | `session_ratings` | Feedback |
-| 29 | `session_listener_feedback` | Feedback |
-| 30 | `session_reports` | Safety |
-| 31 | `listener_wallets` | Earnings |
-| 32 | `wallet_ledger_entries` | Earnings |
-| 33 | `payout_methods` | Payouts |
-| 34 | `payouts` | Payouts |
-| 35 | `reward_offers` | Rewards |
-| 36 | `reward_trades` | Rewards |
-| 37 | `invite_codes` | Invites |
-| 38 | `invite_events` | Invites |
-| 39 | `notifications` | Notifications |
-| 40 | `training_modules` | Training |
-| 41 | `listener_training_progress` | Training |
-| 42 | `promo_codes` | Promo |
+| 19 | `ventor_privacy_settings` | Settings |
+| 20 | `listener_privacy_settings` | Settings |
+| 21 | `ventor_notification_preferences` | Settings |
+| 22 | `listener_notification_preferences` | Settings |
+| 23 | `session_requests` | Sessions |
+| 24 | `sessions` | Sessions |
+| 25 | `session_payments` | Money |
+| 26 | `session_ratings` | Feedback |
+| 27 | `session_listener_feedback` | Feedback |
+| 28 | `session_reports` | Safety |
+| 29 | `listener_wallets` | Earnings |
+| 30 | `wallet_ledger_entries` | Earnings |
+| 31 | `payout_methods` | Payouts |
+| 32 | `payouts` | Payouts |
+| 33 | `reward_offers` | Rewards |
+| 34 | `reward_trades` | Rewards |
+| 35 | `invite_codes` | Invites |
+| 36 | `invite_events` | Invites |
+| 37 | `notifications` | Notifications |
+| 38 | `training_modules` | Training |
+| 39 | `listener_training_progress` | Training |
+| 40 | `promo_codes` | Promo |
 | 43 | `promo_redemptions` | Promo |
 
 | Band | Count |
 |------|------:|
 | Auth | 2 |
 | Profiles + identity | 3 |
-| Lookups + tag links | 9 |
+| Lookups + tag links | 10 |
 | Availability | 2 |
 | Ventor social / wellness | 4 |
 | Settings | 4 |
@@ -103,10 +104,14 @@ erDiagram
 
   ventor_profiles ||--o{ mood_checkins : logs
   ventor_profiles ||--o{ ventor_favorites : saves
+  ventor_profiles ||--o{ ventor_languages : speaks
   ventor_profiles ||--o{ ventor_interests : picks
   ventor_profiles ||--o| ventor_privacy_settings : has
+  languages ||--o{ ventor_languages : tagged
+  languages ||--o{ listener_languages : tagged
+  comfort_areas ||--o{ ventor_interests : tagged
+  comfort_areas ||--o{ listener_comfort_areas : tagged
   ventor_profiles ||--o| ventor_notification_preferences : has
-  ventor_profiles ||--o{ ventor_achievements : unlocks
   ventor_profiles ||--o| invite_codes : owns
   ventor_profiles ||--o{ reward_trades : redeems
 
@@ -155,7 +160,7 @@ erDiagram
 | `reward_offer_kind` | `percent_off`, `free_minutes`, `priority_match` |
 | `earnings_tier` | `starter`, `rising`, `trusted`, `expert`, `elite` |
 | `invite_status` | `pending`, `joined`, `first_session`, `booked_call` |
-| `notification_type` | `session_request`, `session_reminder`, `review`, `payout`, `system`, `rewards` |
+| `notification_type` | `welcome`, `complete_registration`, `book_first_session`, `session_request`, `session_reminder`, `review`, `payout`, `system`, `rewards` |
 | `training_status` | `not_started`, `in_progress`, `completed` |
 | `mood_kind` | `great`, `okay`, `anxious`, `sad`, `angry` |
 
@@ -171,10 +176,12 @@ Core login identity. One row per account.
 |--------|------|-------|
 | `id` | UUID | **PK** |
 | `email` | VARCHAR(255) | **UQ**, lowercased |
-| `password_hash` | VARCHAR(255) | |
+| `password_hash` | VARCHAR(255) | Nullable for social-only accounts — see [`social-auth-backend-requirements.md`](./social-auth-backend-requirements.md) |
 | `role` | `user_role` | ventor \| listener |
 | `is_active` | BOOLEAN | default true |
 | `registration_complete` | BOOLEAN | default false |
+| `registration_completed_steps` | JSONB | Array of saved step slugs, e.g. `["profile","identity"]` — ventor + listener onboarding |
+| `registration_next_step` | VARCHAR(64) | Next wizard step slug for resume (`profile`, `languages`, …) |
 | `last_login_at` | TIMESTAMPTZ | ? |
 | `created_at` | TIMESTAMPTZ | |
 | `updated_at` | TIMESTAMPTZ | |
@@ -197,6 +204,58 @@ Core login identity. One row per account.
 | `created_at` | TIMESTAMPTZ | |
 
 **Indexes:** `IDX(user_id)`, `UQ(token_hash)`
+
+---
+
+### 2b. `auth_identities` *(proposed — social auth)*
+
+> Full requirements: [`social-auth-backend-requirements.md`](./social-auth-backend-requirements.md)
+
+Links a Venting user to a Google or Apple identity (`sub`).
+
+| Column | Type | Notes |
+|--------|------|-------|
+| `id` | UUID | **PK** |
+| `user_id` | UUID | **FK → users** |
+| `provider` | VARCHAR(16) | `google` \| `apple` |
+| `provider_user_id` | VARCHAR(255) | Provider `sub` |
+| `email` | VARCHAR(255) | ? last known email from provider |
+| `raw_profile` | JSONB | ? non-secret claims |
+| `created_at` | TIMESTAMPTZ | |
+| `updated_at` | TIMESTAMPTZ | |
+
+**Indexes:** `UQ(provider, provider_user_id)`, `UQ(user_id, provider)`
+
+### 2c. `password_reset_tokens`
+
+Used by `#2b forgot-password` / `#2c reset-password`. Store **hash only**, never the raw email token.
+
+| Column | Type | Notes |
+|--------|------|-------|
+| `id` | UUID | **PK** |
+| `user_id` | UUID | **FK → users** |
+| `token_hash` | VARCHAR(128) | **UQ** — SHA-256 (or stronger) of raw token |
+| `expires_at` | TIMESTAMPTZ | typically now + 60 minutes |
+| `used_at` | TIMESTAMPTZ | ? set on successful reset |
+| `requested_ip` | VARCHAR(64) | ? |
+| `locale` | VARCHAR(8) | `en` \| `ar` — for email + link |
+| `created_at` | TIMESTAMPTZ | |
+
+**Indexes:** `UQ(token_hash)`, `IDX(user_id)`, `IDX(expires_at)`
+
+### 2d. `user_push_tokens`
+
+Optional FCM device tokens from ventor `#8e` / listener `#22j` registration complete (`fcm_token`). Registration succeeds without a token.
+
+| Column | Type | Notes |
+|--------|------|-------|
+| `id` | UUID | **PK** |
+| `user_id` | UUID | **FK → users** |
+| `token` | VARCHAR(512) | **UQ** — raw FCM token |
+| `created_at` | TIMESTAMPTZ | |
+| `updated_at` | TIMESTAMPTZ | |
+
+**Indexes:** `UQ(token)`, `IDX(user_id)`
 
 ---
 
@@ -242,7 +301,9 @@ Core login identity. One row per account.
 | `voice_intro_seconds` | INT | ? |
 | `is_online` | BOOLEAN | default false **IDX** |
 | `is_verified` | BOOLEAN | default false |
-| `profile_status` | `profile_status` | **IDX** |
+| `profile_status` | `profile_status` | **IDX** — whole-profile review state |
+| `profile_rejection_reason` | TEXT | ? Last admin reject note (mirrors `#29` `rejection_reason`) |
+| `steps_to_refill` | JSONB | string[] of setup step ids flagged on reject (mirrors `#29`) |
 | `accept_instant_calls` | BOOLEAN | default true |
 | `session_length_minutes` | INT | default 30 |
 | `break_length_minutes` | INT | default 15 |
@@ -269,17 +330,20 @@ Core login identity. One row per account.
 
 ### 5. `listener_identity_verifications`
 
+Used for listener KYC documents. **First upload** is created from listener registration step `identity` (`PATCH /v1/listeners/register/steps/identity`). **Resubmit** after admin rejection uses `#23 identity-verification`.
+
 | Column | Type | Notes |
 |--------|------|-------|
 | `id` | UUID | **PK** |
 | `listener_id` | UUID | **FK → listener_profiles** |
-| `document_front_url` | TEXT | |
-| `document_back_url` | TEXT | ? |
+| `identity_document_url` | TEXT | Single government-ID photo (not front/back). Replaces deprecated `document_front_url` |
 | `selfie_url` | TEXT | |
 | `status` | `profile_status` | pending/approved/rejected via under_review |
 | `reviewed_at` | TIMESTAMPTZ | ? |
 | `reviewer_note` | TEXT | ? |
 | `created_at` | TIMESTAMPTZ | |
+
+> **Deprecated (do not use in new code):** `document_front_url`, `document_back_url` — mobile captures **one** ID image + selfie only.
 
 **Indexes:** `IDX(listener_id, created_at DESC)`
 
@@ -291,20 +355,42 @@ Stable catalogs (seed once). App uses string ids like `anxiety_stress`, `en`, `p
 
 ### 6. `languages`
 
+> **Single catalog** for all speaking-language UIs (ventor registration language step, listener registration languages, discovery filters, availability).  
+> Do **not** create a separate “speaking_languages” table — use this one. Managed from the admin portal (`/catalogs` → Languages).
+
 | Column | Type | Notes |
 |--------|------|-------|
-| `id` | VARCHAR(16) | **PK** e. and `en`, `ar` |
-| `name_en` | VARCHAR(64) | |
-| `name_ar` | VARCHAR(64) | |
+| `id` | VARCHAR(16) | **PK** e.g. `en`, `ar`, `hi` |
+| `name_en` | VARCHAR(64) | English name (`English`) |
+| `name_native` | VARCHAR(64) | Native script label (`العربية`, `हिन्दी`) |
+| `name_ar` | VARCHAR(64) | Arabic label of the language name |
+| `flag_url` | TEXT | **Required for active rows** — absolute HTTPS URL of flag image (CDN / object storage uploaded via portal) |
+| `flag_emoji` | VARCHAR(16) | ? optional fallback only (e.g. `🇺🇸`); mobile prefers `flag_url` |
+| `sort_order` | INT | default 0 |
 | `is_active` | BOOLEAN | default true |
 
+**Consumers of the same rows:**
+
+| Consumer | Link |
+|----------|------|
+| Ventor registration `#75` | `GET /v1/catalog/languages` → `#8` `language_ids` → `ventor_languages` |
+| Listener registration / profile | same catalog ids → `listener_languages` |
+| Discovery `#40` filters | `languages` query csv of these ids |
+
 ### 7. `comfort_areas`
+
+> Interest / comfort categories for ventor registration and listener comfort tags. Managed from the admin portal (`/catalogs` → Comfort areas / Interests).
 
 | Column | Type | Notes |
 |--------|------|-------|
 | `id` | VARCHAR(64) | **PK** |
 | `name_en` | VARCHAR(120) | |
 | `name_ar` | VARCHAR(120) | |
+| `icon_emoji` | VARCHAR(16) | Unicode emoji for the row icon (e.g. `❤️`, `💼`) — same idea as `languages.flag_emoji` |
+| `icon_url` | TEXT | ? optional CDN image URL; mobile prefers `icon_url` when set, else `icon_emoji` |
+| `sort_order` | INT | default 0 — ascending display order |
+| `allows_custom_text` | BOOLEAN | default false — e.g. `other` shows free-text field |
+| `audience` | VARCHAR(32) | `ventor` \| `listener` \| `all` — optional admin metadata; **mobile `#74` does not filter by this** — both ventor and listener see the same active list |
 | `topic_group` | VARCHAR(64) | ? e.g. anxiety, relationships |
 | `is_active` | BOOLEAN | |
 
@@ -315,7 +401,10 @@ Stable catalogs (seed once). App uses string ids like `anxiety_stress`, `en`, `p
 | `id` | VARCHAR(64) | **PK** |
 | `name_en` | VARCHAR(120) | |
 | `name_ar` | VARCHAR(120) | |
+| `sort_order` | INT | Ascending — portal-managed |
 | `is_active` | BOOLEAN | |
+
+Exposed publicly via `#76 GET /v1/catalog/life-experiences` (active rows only).
 
 ### 9. `boundaries`
 
@@ -324,14 +413,31 @@ Stable catalogs (seed once). App uses string ids like `anxiety_stress`, `en`, `p
 | `id` | VARCHAR(64) | **PK** |
 | `name_en` | VARCHAR(120) | |
 | `name_ar` | VARCHAR(120) | |
+| `icon_emoji` | VARCHAR(16) | Unicode emoji — same pattern as `comfort_areas.icon_emoji` |
+| `icon_url` | TEXT | ? optional CDN image URL |
+| `sort_order` | INT | Ascending — portal-managed |
+| `allows_custom_text` | BOOLEAN | default false — e.g. optional “Other” |
 | `is_active` | BOOLEAN | |
 
-### 10. `ventor_interests`
+Exposed publicly via `#77 GET /v1/catalog/boundaries` (active rows only).
+
+### 10. `ventor_languages`
+
+| Column | Type | Notes |
+|--------|------|-------|
+| `ventor_id` | UUID | **FK → ventor_profiles** |
+| `language_id` | VARCHAR(16) | **FK → languages** |
+| | | **PK (`ventor_id`, `language_id`)** |
+
+Written from ventor registration step `languages` (`PATCH /v1/ventors/register/steps/languages`). Same `languages` catalog as listeners.
+
+### 10b. `ventor_interests`
 
 | Column | Type | Notes |
 |--------|------|-------|
 | `ventor_id` | UUID | **FK → ventor_profiles** |
 | `comfort_area_id` | VARCHAR(64) | **FK → comfort_areas** |
+| `custom_text` | TEXT | ? free text when category `allows_custom_text` — from `#8` `other_interest_text` |
 | | | **PK (`ventor_id`, `comfort_area_id`)** |
 
 ### 11. `listener_languages`
@@ -348,6 +454,7 @@ Stable catalogs (seed once). App uses string ids like `anxiety_stress`, `en`, `p
 |--------|------|-------|
 | `listener_id` | UUID | **FK** |
 | `comfort_area_id` | VARCHAR(64) | **FK** |
+| `custom_text` | TEXT | ? when category `allows_custom_text` — from `#22` `custom_comfort_area_text` |
 | | | **PK (listener_id, comfort_area_id)** |
 
 **Extra:** store custom free-text experiences on listener if needed:
@@ -367,6 +474,7 @@ Stable catalogs (seed once). App uses string ids like `anxiety_stress`, `en`, `p
 |--------|------|-------|
 | `listener_id` | UUID | **FK** |
 | `boundary_id` | VARCHAR(64) | **FK** |
+| `custom_text` | TEXT | ? when boundary `allows_custom_text` — from `#22` `custom_boundary_text` |
 | | | **PK (listener_id, boundary_id)** |
 
 ---
@@ -425,39 +533,16 @@ Stable catalogs (seed once). App uses string ids like `anxiety_stress`, `en`, `p
 | `checked_in_at` | TIMESTAMPTZ | |
 | `checkin_date` | DATE | UTC date for streak **UQ(ventor_id, checkin_date)** |
 
-### 19. `achievements`
-
-Catalog.
-
-| Column | Type | Notes |
-|--------|------|-------|
-| `id` | VARCHAR(64) | **PK** |
-| `title_key` | VARCHAR(128) | l10n key |
-| `subtitle_key` | VARCHAR(128) | |
-| `description_key` | VARCHAR(128) | |
-| `sort_order` | INT | |
-| `is_active` | BOOLEAN | |
-
-### 20. `ventor_achievements`
-
-| Column | Type | Notes |
-|--------|------|-------|
-| `ventor_id` | UUID | **FK** |
-| `achievement_id` | VARCHAR(64) | **FK** |
-| `unlocked_at` | TIMESTAMPTZ | |
-| | | **PK (ventor_id, achievement_id)** |
-
 ---
 
 ## 6. Settings
 
-### 21. `ventor_privacy_settings`
+### 19. `ventor_privacy_settings`
 
 | Column | Type | Notes |
 |--------|------|-------|
 | `ventor_id` | UUID | **PK, FK** |
 | `show_mood_journey` | BOOLEAN | default true |
-| `show_achievements` | BOOLEAN | |
 | `show_stats` | BOOLEAN | |
 | `show_favorite_listeners` | BOOLEAN | |
 | `allow_listener_discovery` | BOOLEAN | |
@@ -468,29 +553,30 @@ Catalog.
 | Column | Type | Notes |
 |--------|------|-------|
 | `listener_id` | UUID | **PK, FK** |
-| `show_online_status` | BOOLEAN | |
-| `show_languages` | BOOLEAN | |
-| `show_comfort_areas` | BOOLEAN | |
-| `show_experience_and_ratings` | BOOLEAN | |
-| `show_boundaries` | BOOLEAN | |
+| `profile_visible` | BOOLEAN | default true — when false, hide listener from in-app discovery |
+| `show_online_status` | BOOLEAN | default true |
 | `visible_in_all_countries` | BOOLEAN | default true |
 | `visible_countries` | CHAR(2)[] | ISO list when not all |
-| `allow_search_indexing` | BOOLEAN | default false |
+| `allow_search_indexing` | BOOLEAN | default true |
 | `updated_at` | TIMESTAMPTZ | |
+
+**Removed columns** (v2): `show_languages`, `show_comfort_areas`, `show_experience_and_ratings`, `show_boundaries` — profile information is always visible when the listener profile is shown in the app.
+
+**Migration:** `ALTER TABLE listener_privacy_settings ADD COLUMN profile_visible BOOLEAN NOT NULL DEFAULT true;` then drop the four `show_*` columns; `ALTER COLUMN allow_search_indexing SET DEFAULT true`.
 
 ### 23. `ventor_notification_preferences`
 
 | Column | Type | Notes |
 |--------|------|-------|
 | `ventor_id` | UUID | **PK, FK** |
-| `push_enabled` | BOOLEAN | |
-| `session_reminder_30_min` | BOOLEAN | |
-| `session_reminder_15_min` | BOOLEAN | |
-| `session_reminder_10_min` | BOOLEAN | |
-| `session_reminder_5_min` | BOOLEAN | |
-| `rewards_updates` | BOOLEAN | |
-| `promotions_updates` | BOOLEAN | |
-| `email_enabled` | BOOLEAN | |
+| `push_enabled` | BOOLEAN | default true |
+| `session_reminder_30_min` | BOOLEAN | default true |
+| `session_reminder_15_min` | BOOLEAN | default true |
+| `session_reminder_10_min` | BOOLEAN | default true |
+| `session_reminder_5_min` | BOOLEAN | default true |
+| `rewards_updates` | BOOLEAN | default true |
+| `promotions_updates` | BOOLEAN | default true |
+| `email_enabled` | BOOLEAN | default true |
 | `updated_at` | TIMESTAMPTZ | |
 
 ### 24. `listener_notification_preferences`
@@ -773,11 +859,45 @@ Append-only money movement (earnings chart + audit).
 
 **Indexes:** `IDX(inviter_ventor_id, status)`
 
+### 39. `point_packages`
+
+| Column | Type | Notes |
+|--------|------|-------|
+| `id` | UUID | **PK** |
+| `code` | VARCHAR(64) | **UQ** stable id exposed to mobile, e.g. `pkg_500` |
+| `points` | INT | Points credited on purchase |
+| `price_usd` | NUMERIC(10,2) | Display + charge amount (USD for v1) |
+| `bonus_percent` | INT | ? optional badge, e.g. `20` for +20% |
+| `sort_order` | INT | default 0 — portal list order |
+| `is_active` | BOOLEAN | default true |
+| `created_at` | TIMESTAMPTZ | |
+| `updated_at` | TIMESTAMPTZ | |
+
+**Indexes:** `IDX(is_active, sort_order)`
+
+### 40. `point_purchases`
+
+| Column | Type | Notes |
+|--------|------|-------|
+| `id` | UUID | **PK** |
+| `ventor_id` | UUID | **FK** **IDX** |
+| `package_id` | UUID | **FK → point_packages** |
+| `package_code` | VARCHAR(64) | snapshot of `code` at purchase time |
+| `points_added` | INT | |
+| `price_usd` | NUMERIC(10,2) | snapshot |
+| `payment_provider` | VARCHAR(32) | ? `stripe`, `apple`, `google`, `sandbox` |
+| `payment_reference` | VARCHAR(128) | ? provider txn id — **UQ** when set |
+| `status` | `point_purchase_status` | `completed` \| `pending` \| `failed` |
+| `purchased_at` | TIMESTAMPTZ | |
+| `created_at` | TIMESTAMPTZ | |
+
+**Indexes:** `IDX(ventor_id, purchased_at DESC)`, `UQ(payment_reference)` where not null
+
 ---
 
 ## 10. Notifications
 
-### 39. `notifications`
+### 41. `notifications`
 
 | Column | Type | Notes |
 |--------|------|-------|
@@ -797,7 +917,7 @@ Append-only money movement (earnings chart + audit).
 
 ## 11. Training
 
-### 40. `training_modules`
+### 42. `training_modules`
 
 | Column | Type | Notes |
 |--------|------|-------|
@@ -807,7 +927,7 @@ Append-only money movement (earnings chart + audit).
 | `sort_order` | INT | |
 | `is_active` | BOOLEAN | |
 
-### 41. `listener_training_progress`
+### 43. `listener_training_progress`
 
 | Column | Type | Notes |
 |--------|------|-------|
@@ -821,7 +941,7 @@ Append-only money movement (earnings chart + audit).
 
 ## 12. Promo codes
 
-### 42. `promo_codes`
+### 44. `promo_codes`
 
 | Column | Type | Notes |
 |--------|------|-------|
@@ -836,7 +956,7 @@ Append-only money movement (earnings chart + audit).
 | `is_active` | BOOLEAN | |
 | `created_at` | TIMESTAMPTZ | |
 
-### 43. `promo_redemptions`
+### 45. `promo_redemptions`
 
 | Column | Type | Notes |
 |--------|------|-------|
@@ -848,7 +968,6 @@ Append-only money movement (earnings chart + audit).
 | `created_at` | TIMESTAMPTZ | |
 | | | **UQ (promo_code_id, ventor_id, session_id)** optional |
 
----
 
 ## Design choices (performance & efficiency)
 
@@ -868,7 +987,7 @@ Append-only money movement (earnings chart + audit).
 | Store privacy + notification prefs as JSONB on profiles | 4 | Harder to enforce bool columns / migrate |
 | Skip `promo_redemptions` (log only on `session_payments`) | 1 | Weaker promo abuse control |
 
-**Recommended production set: keep all 43.**
+**Recommended production set: keep all 43.** Legal/help pages are static HTML (see `docs/static-web/`), not DB tables.
 
 ---
 
@@ -890,7 +1009,8 @@ Append-only money movement (earnings chart + audit).
 
 | API area | Primary tables |
 |----------|----------------|
-| Auth 1–7 | `users`, `refresh_tokens` |
+| Auth 0–7, 1b, 2b–2c | `users`, `refresh_tokens`, `auth_identities` *(proposed)*, `password_reset_tokens` |
+| Catalog 74–75 | `comfort_areas` (`icon_emoji` / `icon_url`), `languages` (`flag_emoji` / `flag_url`) — portal-managed; one languages table for all speaking-language UIs |
 | Ventor profile / home | `ventor_profiles`, `mood_checkins`, `ventor_favorites`, `sessions` |
 | Listener profile / setup | `listener_profiles`, identity, tag junctions, training |
 | Availability | settings + `listener_availability_slots` |
@@ -901,6 +1021,7 @@ Append-only money movement (earnings chart + audit).
 | Rewards / invites | `reward_offers`, `reward_trades`, `invite_codes`, `invite_events` |
 | Notifications | `notifications` |
 | Promo | `promo_codes`, `promo_redemptions` |
+| Static legal/help | Hosted HTML under `webContentBaseUrl` — not database tables |
 
 ---
 
@@ -908,8 +1029,8 @@ Append-only money movement (earnings chart + audit).
 
 | Metric | Value |
 |--------|------:|
-| **Total tables** | **43** |
-| Lookup / catalog tables | 6 (`languages`, `comfort_areas`, `life_experiences`, `boundaries`, `achievements`, `training_modules`, `reward_offers`, `promo_codes` → **8** catalogs if counted) |
+| **Total tables** | **41** |
+| Lookup / catalog tables | 5 (`languages`, `comfort_areas`, `life_experiences`, `boundaries`, `training_modules`, `reward_offers`, `promo_codes` → **7** catalogs if counted) |
 | Core transactional tables | `session_requests`, `sessions`, `session_payments`, `wallet_ledger_entries`, `payouts`, `reward_trades` |
 | 1:1 settings / wallet | 7 |
 

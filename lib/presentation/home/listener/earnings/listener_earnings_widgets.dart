@@ -468,18 +468,29 @@ class ListenerPayoutMethodsCard extends StatelessWidget {
     required this.methodSubtitle,
     required this.defaultLabel,
     required this.onTap,
+    this.hasPaymentMethod = true,
+    this.emptyActionLabel,
   });
 
   final String title;
   final String methodTitle;
   final String methodSubtitle;
   final String defaultLabel;
+  final String? emptyActionLabel;
+  final bool hasPaymentMethod;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
+    final borderColor = hasPaymentMethod
+        ? ListenerProfileTheme.cardBorder
+        : SplashColors.purpleMid.withValues(alpha: 0.45);
+    final backgroundColor = hasPaymentMethod
+        ? ListenerProfileTheme.cardFill
+        : SplashColors.purpleMid.withValues(alpha: 0.08);
+
     return Material(
-      color: ListenerProfileTheme.cardFill,
+      color: backgroundColor,
       borderRadius: BorderRadius.circular(18),
       child: InkWell(
         onTap: onTap,
@@ -488,7 +499,10 @@ class ListenerPayoutMethodsCard extends StatelessWidget {
           padding: const EdgeInsets.fromLTRB(16, 14, 12, 14),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(18),
-            border: Border.all(color: ListenerProfileTheme.cardBorder),
+            border: Border.all(
+              color: borderColor,
+              width: hasPaymentMethod ? 1 : 1.5,
+            ),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -504,27 +518,7 @@ class ListenerPayoutMethodsCard extends StatelessWidget {
               const SizedBox(height: 14),
               Row(
                 children: [
-                  Container(
-                    width: 42,
-                    height: 42,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF003087).withValues(alpha: 0.35),
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(
-                        color: const Color(0xFF009CDE).withValues(alpha: 0.45),
-                      ),
-                    ),
-                    child: const Center(
-                      child: Text(
-                        'P',
-                        style: TextStyle(
-                          color: Color(0xFF009CDE),
-                          fontSize: 20,
-                          fontWeight: FontWeight.w800,
-                        ),
-                      ),
-                    ),
-                  ),
+                  _MethodIcon(hasPaymentMethod: hasPaymentMethod),
                   const SizedBox(width: 12),
                   Expanded(
                     child: Column(
@@ -538,28 +532,57 @@ class ListenerPayoutMethodsCard extends StatelessWidget {
                             fontWeight: FontWeight.w600,
                           ),
                         ),
-                        const SizedBox(height: 2),
-                        Text(
-                          methodSubtitle,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: GoogleFonts.inter(
-                            color: ListenerProfileTheme.muted,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500,
+                        if (methodSubtitle.isNotEmpty) ...[
+                          const SizedBox(height: 4),
+                          Text(
+                            methodSubtitle,
+                            maxLines: 3,
+                            overflow: TextOverflow.ellipsis,
+                            style: GoogleFonts.inter(
+                              color: hasPaymentMethod
+                                  ? ListenerProfileTheme.muted
+                                  : Colors.white.withValues(alpha: 0.72),
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500,
+                              height: 1.35,
+                            ),
                           ),
-                        ),
+                        ],
                       ],
                     ),
                   ),
-                  Text(
-                    defaultLabel,
-                    style: GoogleFonts.inter(
-                      color: ListenerProfileTheme.success,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w700,
+                  const SizedBox(width: 8),
+                  if (hasPaymentMethod)
+                    Text(
+                      defaultLabel,
+                      style: GoogleFonts.inter(
+                        color: ListenerProfileTheme.success,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    )
+                  else
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 6,
+                      ),
+                      decoration: BoxDecoration(
+                        color: SplashColors.purpleMid.withValues(alpha: 0.22),
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(
+                          color: SplashColors.purpleMid.withValues(alpha: 0.5),
+                        ),
+                      ),
+                      child: Text(
+                        emptyActionLabel ?? defaultLabel,
+                        style: GoogleFonts.inter(
+                          color: SplashColors.purpleMid,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
                     ),
-                  ),
                   Icon(
                     Icons.chevron_right_rounded,
                     color: Colors.white.withValues(alpha: 0.35),
@@ -567,6 +590,56 @@ class ListenerPayoutMethodsCard extends StatelessWidget {
                 ],
               ),
             ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _MethodIcon extends StatelessWidget {
+  const _MethodIcon({required this.hasPaymentMethod});
+
+  final bool hasPaymentMethod;
+
+  @override
+  Widget build(BuildContext context) {
+    if (!hasPaymentMethod) {
+      return Container(
+        width: 42,
+        height: 42,
+        decoration: BoxDecoration(
+          color: SplashColors.purpleMid.withValues(alpha: 0.18),
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(
+            color: SplashColors.purpleMid.withValues(alpha: 0.45),
+          ),
+        ),
+        child: const Icon(
+          Icons.add_rounded,
+          color: SplashColors.purpleMid,
+          size: 24,
+        ),
+      );
+    }
+
+    return Container(
+      width: 42,
+      height: 42,
+      decoration: BoxDecoration(
+        color: const Color(0xFF003087).withValues(alpha: 0.35),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: const Color(0xFF009CDE).withValues(alpha: 0.45),
+        ),
+      ),
+      child: const Center(
+        child: Text(
+          'P',
+          style: TextStyle(
+            color: Color(0xFF009CDE),
+            fontSize: 20,
+            fontWeight: FontWeight.w800,
           ),
         ),
       ),

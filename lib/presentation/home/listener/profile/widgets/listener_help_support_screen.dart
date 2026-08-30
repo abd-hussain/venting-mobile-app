@@ -7,7 +7,8 @@ import 'package:venting_mobile_app/di/di_container.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
 import 'package:venting_mobile_app/presentation/home/listener/profile/listener_profile_theme.dart';
 import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dart';
-import 'package:venting_mobile_app/shared_widgets/app_webview_screen.dart';
+import 'package:venting_mobile_app/utils/help_topic_opener.dart';
+import 'package:venting_mobile_app/utils/static_web_content.dart';
 
 /// Opens the Help & Support screen.
 Future<void> openListenerHelpSupportScreen({required BuildContext context}) {
@@ -27,27 +28,23 @@ class ListenerHelpSupportScreen extends StatelessWidget {
     systemNavigationBarIconBrightness: Brightness.light,
   );
 
-  static const _supportEmail = 'support@venting.app';
-
-  // TODO: Replace with the real Venting support WhatsApp number.
-  static const _whatsAppNumber = '962700000000';
+  AppConfig get _config => diContainer<AppConfig>();
 
   Future<void> _openHelpTopic(
     BuildContext context, {
+    required HelpTopicKind topic,
     required String title,
-    required String path,
   }) {
-    final base = diContainer<AppConfig>().helpCenterBaseUrl;
-    final url = '$base$path';
-    return Navigator.of(context).push<void>(
-      MaterialPageRoute(
-        builder: (_) => AppWebViewScreen(title: title, url: url),
-      ),
+    return openHelpTopic(
+      context,
+      topic: topic,
+      title: title,
+      useGoRouter: false,
     );
   }
 
   Future<void> _onWhatsApp(BuildContext context) async {
-    final uri = Uri.parse('https://wa.me/$_whatsAppNumber');
+    final uri = Uri.parse('https://wa.me/${_config.supportWhatsAppNumber}');
     final opened = await launchUrl(uri, mode: LaunchMode.externalApplication);
     if (!context.mounted || opened) return;
     ScaffoldMessenger.of(context).showSnackBar(
@@ -60,7 +57,7 @@ class ListenerHelpSupportScreen extends StatelessWidget {
   }
 
   Future<void> _onEmailSupport(BuildContext context) async {
-    final uri = Uri(scheme: 'mailto', path: _supportEmail);
+    final uri = Uri(scheme: 'mailto', path: _config.supportEmail);
     final opened = await launchUrl(uri);
     if (!context.mounted || opened) return;
     ScaffoldMessenger.of(context).showSnackBar(
@@ -110,8 +107,8 @@ class ListenerHelpSupportScreen extends StatelessWidget {
                   label: l10n.listener_help_getting_started,
                   onTap: () => _openHelpTopic(
                     context,
+                    topic: HelpTopicKind.gettingStarted,
                     title: l10n.listener_help_getting_started,
-                    path: '/getting-started',
                   ),
                 ),
                 _HelpTile(
@@ -119,8 +116,8 @@ class ListenerHelpSupportScreen extends StatelessWidget {
                   label: l10n.listener_help_managing_sessions,
                   onTap: () => _openHelpTopic(
                     context,
+                    topic: HelpTopicKind.managingSessions,
                     title: l10n.listener_help_managing_sessions,
-                    path: '/managing-sessions',
                   ),
                 ),
                 _HelpTile(
@@ -128,8 +125,8 @@ class ListenerHelpSupportScreen extends StatelessWidget {
                   label: l10n.listener_help_earnings_payouts,
                   onTap: () => _openHelpTopic(
                     context,
+                    topic: HelpTopicKind.earningsPayouts,
                     title: l10n.listener_help_earnings_payouts,
-                    path: '/earnings-payouts',
                   ),
                 ),
                 _HelpTile(
@@ -137,8 +134,8 @@ class ListenerHelpSupportScreen extends StatelessWidget {
                   label: l10n.listener_help_account_profile,
                   onTap: () => _openHelpTopic(
                     context,
+                    topic: HelpTopicKind.accountProfile,
                     title: l10n.listener_help_account_profile,
-                    path: '/account-profile',
                   ),
                 ),
                 _HelpTile(
@@ -146,8 +143,8 @@ class ListenerHelpSupportScreen extends StatelessWidget {
                   label: l10n.listener_help_safety_boundaries,
                   onTap: () => _openHelpTopic(
                     context,
+                    topic: HelpTopicKind.safetyBoundaries,
                     title: l10n.listener_help_safety_boundaries,
-                    path: '/safety-boundaries',
                   ),
                 ),
                 _HelpTile(
@@ -155,8 +152,8 @@ class ListenerHelpSupportScreen extends StatelessWidget {
                   label: l10n.listener_help_community_guidelines,
                   onTap: () => _openHelpTopic(
                     context,
+                    topic: HelpTopicKind.communityGuidelines,
                     title: l10n.listener_help_community_guidelines,
-                    path: '/community-guidelines',
                   ),
                 ),
                 _HelpTile(
@@ -164,8 +161,8 @@ class ListenerHelpSupportScreen extends StatelessWidget {
                   label: l10n.listener_help_faqs,
                   onTap: () => _openHelpTopic(
                     context,
+                    topic: HelpTopicKind.faqs,
                     title: l10n.listener_help_faqs,
-                    path: '/faqs',
                   ),
                 ),
                 _HelpTile(
@@ -173,8 +170,8 @@ class ListenerHelpSupportScreen extends StatelessWidget {
                   label: l10n.listener_help_app_technical,
                   onTap: () => _openHelpTopic(
                     context,
+                    topic: HelpTopicKind.appTechnical,
                     title: l10n.listener_help_app_technical,
-                    path: '/app-technical',
                   ),
                   showDivider: false,
                 ),
@@ -193,7 +190,7 @@ class ListenerHelpSupportScreen extends StatelessWidget {
                 _HelpTile(
                   icon: Icons.mail_outline_rounded,
                   label: l10n.listener_help_email_support,
-                  subtitle: _supportEmail,
+                  subtitle: _config.supportEmail,
                   onTap: () => _onEmailSupport(context),
                   showDivider: false,
                 ),

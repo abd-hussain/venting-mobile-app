@@ -4,11 +4,11 @@ void main() {
   runApp(const MyApp());
 }
 
-//TODO: feature for ventor to give some tops for the listener
-//TODO: we need another state for the listener to show his state as in call now
 //TODO: verify payrolls for the listener can happen here in bank account or we need to find defrent way
 
 //TODO: Add Firebase / FCM
+
+//TODO: handle the skip in registrations (ventor and listener) , what will happen
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

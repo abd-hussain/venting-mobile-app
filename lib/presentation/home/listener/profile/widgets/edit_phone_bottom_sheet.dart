@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:phone_numbers_parser/phone_numbers_parser.dart';
+import 'package:venting_mobile_app/di/di_container.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
+import 'package:venting_mobile_app/presentation/home/listener/profile/bloc/edit_phone/edit_phone_bloc.dart';
 import 'package:venting_mobile_app/presentation/home/listener/profile/listener_profile_theme.dart';
 import 'package:venting_mobile_app/presentation/listener_registration/widgets/phone_country_picker.dart';
 import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dart';
@@ -14,18 +17,6 @@ class EditPhoneResult {
   final String nationalNumber;
 
   String get displayLabel => '+${countryDialCode(country)} $nationalNumber';
-
-  String get e164 {
-    try {
-      return PhoneNumber.parse(
-        nationalNumber,
-        callerCountry: country,
-        destinationCountry: country,
-      ).international;
-    } catch (_) {
-      return '+${countryDialCode(country)}$nationalNumber';
-    }
-  }
 }
 
 /// Shows a dark sheet to edit the listener phone number.
@@ -44,10 +35,13 @@ Future<EditPhoneResult?> showEditPhoneBottomSheet({
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
     ),
-    builder: (context) => EditPhoneBottomSheet(
-      initialCountry: initialCountry,
-      initialNationalNumber: initialNationalNumber,
-      initialPhoneDisplay: initialPhoneDisplay,
+    builder: (context) => BlocProvider(
+      create: (_) => diContainer<EditPhoneBloc>(),
+      child: EditPhoneBottomSheet(
+        initialCountry: initialCountry,
+        initialNationalNumber: initialNationalNumber,
+        initialPhoneDisplay: initialPhoneDisplay,
+      ),
     ),
   );
 }
@@ -156,7 +150,7 @@ class _EditPhoneBottomSheetState extends State<EditPhoneBottomSheet> {
   bool get _hasChanges =>
       _country != _initialCountry || _nationalNumber != _initialNational;
 
-  bool get _canSave => _isPhoneValid && _hasChanges;
+  bool _canSave(bool isSaving) => !isSaving && _isPhoneValid && _hasChanges;
 
   Future<void> _pickCountry() async {
     final selected = await showPhoneCountryPicker(
@@ -174,13 +168,15 @@ class _EditPhoneBottomSheetState extends State<EditPhoneBottomSheet> {
 
   void _onCancel() => Navigator.of(context).pop();
 
-  void _onSave() {
+  void _onSave({required bool isSaving}) {
     setState(() => _submitted = true);
-    if (!_canSave) return;
-    // TODO: Persist phone via listener profile API / repository.
-    Navigator.of(
-      context,
-    ).pop(EditPhoneResult(country: _country, nationalNumber: _nationalNumber));
+    if (!_canSave(isSaving)) return;
+    context.read<EditPhoneBloc>().add(
+      EditPhoneEvent.saveRequested(
+        country: _country,
+        nationalNumber: _nationalNumber,
+      ),
+    );
   }
 
   @override
@@ -190,199 +186,249 @@ class _EditPhoneBottomSheetState extends State<EditPhoneBottomSheet> {
     final showPhoneError = _submitted && !_isPhoneValid;
     final bottomInset = MediaQuery.viewInsetsOf(context).bottom;
 
-    return Padding(
-      padding: EdgeInsets.only(bottom: bottomInset),
-      child: SafeArea(
-        top: false,
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(20, 12, 20, 20),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Center(
-                child: Container(
-                  width: 40,
-                  height: 4,
-                  decoration: BoxDecoration(
-                    color: Colors.white.withValues(alpha: 0.18),
-                    borderRadius: BorderRadius.circular(2),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 18),
-              Text(
-                l10n.listener_edit_phone_title,
-                textAlign: TextAlign.center,
-                style: GoogleFonts.inter(
-                  color: Colors.white,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                l10n.listener_edit_phone_subtitle,
-                textAlign: TextAlign.center,
-                style: GoogleFonts.inter(
-                  color: ListenerProfileTheme.muted,
-                  fontSize: 13,
-                  height: 1.4,
-                ),
-              ),
-              const SizedBox(height: 18),
-              TextField(
-                key: ValueKey('phone_${_country.name}'),
-                controller: _phoneController,
-                focusNode: _phoneFocus,
-                keyboardType: TextInputType.phone,
-                textInputAction: TextInputAction.done,
-                onSubmitted: (_) => _onSave(),
-                inputFormatters: [
-                  FilteringTextInputFormatter.digitsOnly,
-                  LengthLimitingTextInputFormatter(_phoneLimits.max),
-                ],
-                style: GoogleFonts.inter(
-                  color: Colors.white,
-                  fontSize: 15,
-                  fontWeight: FontWeight.w500,
-                ),
-                cursorColor: SplashColors.purpleMid,
-                decoration: InputDecoration(
-                  hintText: l10n.listener_reg_phone,
-                  hintStyle: GoogleFonts.inter(
-                    color: ListenerProfileTheme.muted.withValues(alpha: 0.75),
-                    fontSize: 15,
-                  ),
-                  filled: true,
-                  fillColor: const Color(0xFF14101C),
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 14,
-                    vertical: 16,
-                  ),
-                  prefixIcon: InkWell(
-                    onTap: _pickCountry,
-                    borderRadius: BorderRadius.circular(8),
-                    child: Padding(
-                      padding: const EdgeInsetsDirectional.only(
-                        start: 12,
-                        end: 8,
+    return BlocListener<EditPhoneBloc, EditPhoneState>(
+      listenWhen: (previous, current) => previous.status != current.status,
+      listener: (context, state) {
+        if (state.isSuccess && state.savedPhone != null) {
+          final phone = state.savedPhone!;
+          Navigator.of(context).pop(
+            EditPhoneResult(
+              country: phone.country,
+              nationalNumber: phone.nationalNumber,
+            ),
+          );
+        }
+      },
+      child: BlocBuilder<EditPhoneBloc, EditPhoneState>(
+        builder: (context, state) {
+          final isSaving = state.isSaving;
+
+          return Padding(
+            padding: EdgeInsets.only(bottom: bottomInset),
+            child: SafeArea(
+              top: false,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(20, 12, 20, 20),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Center(
+                      child: Container(
+                        width: 40,
+                        height: 4,
+                        decoration: BoxDecoration(
+                          color: Colors.white.withValues(alpha: 0.18),
+                          borderRadius: BorderRadius.circular(2),
+                        ),
                       ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            countryFlagEmoji(_country),
-                            style: const TextStyle(fontSize: 16),
+                    ),
+                    const SizedBox(height: 18),
+                    Text(
+                      l10n.listener_edit_phone_title,
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.inter(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      l10n.listener_edit_phone_subtitle,
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.inter(
+                        color: ListenerProfileTheme.muted,
+                        fontSize: 13,
+                        height: 1.4,
+                      ),
+                    ),
+                    const SizedBox(height: 18),
+                    TextField(
+                      key: ValueKey('phone_${_country.name}'),
+                      controller: _phoneController,
+                      focusNode: _phoneFocus,
+                      enabled: !isSaving,
+                      keyboardType: TextInputType.phone,
+                      textInputAction: TextInputAction.done,
+                      onSubmitted: (_) => _onSave(isSaving: isSaving),
+                      inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly,
+                        LengthLimitingTextInputFormatter(_phoneLimits.max),
+                      ],
+                      style: GoogleFonts.inter(
+                        color: Colors.white,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      cursorColor: SplashColors.purpleMid,
+                      decoration: InputDecoration(
+                        hintText: l10n.listener_reg_phone,
+                        hintStyle: GoogleFonts.inter(
+                          color: ListenerProfileTheme.muted.withValues(
+                            alpha: 0.75,
                           ),
-                          const SizedBox(width: 4),
-                          Text(
-                            '+$dialCode',
-                            style: GoogleFonts.inter(
-                              color: Colors.white,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
+                          fontSize: 15,
+                        ),
+                        filled: true,
+                        fillColor: const Color(0xFF14101C),
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 14,
+                          vertical: 16,
+                        ),
+                        prefixIcon: InkWell(
+                          onTap: isSaving ? null : _pickCountry,
+                          borderRadius: BorderRadius.circular(8),
+                          child: Padding(
+                            padding: const EdgeInsetsDirectional.only(
+                              start: 12,
+                              end: 8,
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  countryFlagEmoji(_country),
+                                  style: const TextStyle(fontSize: 16),
+                                ),
+                                const SizedBox(width: 4),
+                                Text(
+                                  '+$dialCode',
+                                  style: GoogleFonts.inter(
+                                    color: Colors.white,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                const Icon(
+                                  Icons.keyboard_arrow_down_rounded,
+                                  size: 18,
+                                  color: ListenerProfileTheme.muted,
+                                ),
+                                Container(
+                                  width: 1,
+                                  height: 18,
+                                  margin: const EdgeInsets.symmetric(
+                                    horizontal: 8,
+                                  ),
+                                  color: ListenerProfileTheme.cardBorder,
+                                ),
+                              ],
                             ),
                           ),
-                          const Icon(
-                            Icons.keyboard_arrow_down_rounded,
-                            size: 18,
-                            color: ListenerProfileTheme.muted,
+                        ),
+                        prefixIconConstraints: const BoxConstraints(),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(
+                            color: showPhoneError
+                                ? const Color(0xFFEF4444).withValues(alpha: 0.7)
+                                : ListenerProfileTheme.cardBorder,
                           ),
-                          Container(
-                            width: 1,
-                            height: 18,
-                            margin: const EdgeInsets.symmetric(horizontal: 8),
-                            color: ListenerProfileTheme.cardBorder,
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(
+                            color: showPhoneError
+                                ? const Color(0xFFEF4444)
+                                : SplashColors.purpleMid.withValues(
+                                    alpha: 0.85,
+                                  ),
+                            width: 1.4,
                           ),
-                        ],
+                        ),
                       ),
                     ),
-                  ),
-                  prefixIconConstraints: const BoxConstraints(),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(
-                      color: showPhoneError
-                          ? const Color(0xFFEF4444).withValues(alpha: 0.7)
-                          : ListenerProfileTheme.cardBorder,
+                    if (showPhoneError) ...[
+                      const SizedBox(height: 8),
+                      Text(
+                        l10n.listener_reg_invalid_phone,
+                        style: GoogleFonts.inter(
+                          color: const Color(0xFFEF4444),
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                    if (state.isFailure && state.errorMessage.isNotEmpty) ...[
+                      const SizedBox(height: 12),
+                      Text(
+                        state.errorMessage,
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.inter(
+                          color: const Color(0xFFEF4444),
+                          fontSize: 13,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                    const SizedBox(height: 20),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: OutlinedButton(
+                            onPressed: isSaving ? null : _onCancel,
+                            style: OutlinedButton.styleFrom(
+                              foregroundColor: Colors.white,
+                              side: BorderSide(
+                                color: Colors.white.withValues(alpha: 0.2),
+                              ),
+                              minimumSize: const Size.fromHeight(52),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(14),
+                              ),
+                              textStyle: GoogleFonts.inter(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            child: Text(l10n.common_cancel),
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: FilledButton(
+                            onPressed: _canSave(isSaving)
+                                ? () => _onSave(isSaving: isSaving)
+                                : null,
+                            style: FilledButton.styleFrom(
+                              backgroundColor: SplashColors.purpleMid,
+                              disabledBackgroundColor: SplashColors.purpleMid
+                                  .withValues(alpha: 0.35),
+                              foregroundColor: Colors.white,
+                              disabledForegroundColor: Colors.white.withValues(
+                                alpha: 0.7,
+                              ),
+                              elevation: 0,
+                              minimumSize: const Size.fromHeight(52),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(14),
+                              ),
+                              textStyle: GoogleFonts.inter(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                            child: isSaving
+                                ? const SizedBox(
+                                    width: 22,
+                                    height: 22,
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 2.2,
+                                      color: Colors.white,
+                                    ),
+                                  )
+                                : Text(l10n.common_save),
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(
-                      color: showPhoneError
-                          ? const Color(0xFFEF4444)
-                          : SplashColors.purpleMid.withValues(alpha: 0.85),
-                      width: 1.4,
-                    ),
-                  ),
+                  ],
                 ),
               ),
-              if (showPhoneError) ...[
-                const SizedBox(height: 8),
-                Text(
-                  l10n.listener_reg_invalid_phone,
-                  style: GoogleFonts.inter(
-                    color: const Color(0xFFEF4444),
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ],
-              const SizedBox(height: 20),
-              Row(
-                children: [
-                  Expanded(
-                    child: OutlinedButton(
-                      onPressed: _onCancel,
-                      style: OutlinedButton.styleFrom(
-                        foregroundColor: Colors.white,
-                        side: BorderSide(
-                          color: Colors.white.withValues(alpha: 0.2),
-                        ),
-                        minimumSize: const Size.fromHeight(52),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(14),
-                        ),
-                        textStyle: GoogleFonts.inter(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      child: Text(l10n.common_cancel),
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: FilledButton(
-                      onPressed: _canSave ? _onSave : null,
-                      style: FilledButton.styleFrom(
-                        backgroundColor: SplashColors.purpleMid,
-                        disabledBackgroundColor: SplashColors.purpleMid
-                            .withValues(alpha: 0.35),
-                        foregroundColor: Colors.white,
-                        disabledForegroundColor: Colors.white.withValues(
-                          alpha: 0.7,
-                        ),
-                        elevation: 0,
-                        minimumSize: const Size.fromHeight(52),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(14),
-                        ),
-                        textStyle: GoogleFonts.inter(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                      child: Text(l10n.common_save),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
     );
   }

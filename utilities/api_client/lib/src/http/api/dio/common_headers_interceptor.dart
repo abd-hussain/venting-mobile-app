@@ -61,9 +61,17 @@ class CommonHeadersInterceptor extends Interceptor {
       }
     }
 
-    // Set default content type if not already set
-    if (!options.headers.containsKey('content-type')) {
-      options.headers['content-type'] = 'application/json; charset=UTF-8';
+    // Default JSON content-type — but never for FormData.
+    // Forcing application/json on multipart makes servers ignore UploadFile
+    // fields (e.g. FastAPI returns "document_front is required").
+    if (options.data is FormData) {
+      options.headers.remove(Headers.contentTypeHeader);
+      options.headers.remove('content-type');
+      options.contentType = null;
+    } else if (!options.headers.containsKey(Headers.contentTypeHeader) &&
+        !options.headers.containsKey('content-type')) {
+      options.headers[Headers.contentTypeHeader] =
+          'application/json; charset=UTF-8';
     }
 
     // Set default accept header if not already set

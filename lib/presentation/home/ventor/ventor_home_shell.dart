@@ -27,6 +27,13 @@ class VentorHomeShell extends StatefulWidget {
     goToTab(context, dashboardTab);
   }
 
+  /// Opens the Sessions tab on the Find listeners section.
+  static void goToFindListeners(BuildContext context) {
+    context
+        .findAncestorStateOfType<_VentorHomeShellState>()
+        ?.goToFindListenersTab();
+  }
+
   @override
   State<VentorHomeShell> createState() => _VentorHomeShellState();
 }
@@ -34,18 +41,31 @@ class VentorHomeShell extends StatefulWidget {
 class _VentorHomeShellState extends State<VentorHomeShell> {
   int _index = 0;
   var _points = VentorRewardsCatalog.mockPoints;
+  final _sessionsTabKey = GlobalKey<VentorSessionsTabState>();
+  final _rewardsTabKey = GlobalKey<VentorRewardsTabState>();
+
+  late final List<Widget> _tabs = <Widget>[
+    const VentorDashboardTab(),
+    VentorSessionsTab(key: _sessionsTabKey),
+    VentorRewardsTab(key: _rewardsTabKey),
+    const VentorProfileTab(),
+  ];
 
   void goToTab(int index) {
-    if (index < 0 || index >= _tabs.length || index == _index) return;
+    if (index < 0 || index >= _tabs.length) return;
+    if (index == VentorHomeShell.rewardsTab) {
+      _rewardsTabKey.currentState?.onTabOpened();
+    }
+    if (index == _index) return;
     setState(() => _index = index);
   }
 
-  static const _tabs = <Widget>[
-    VentorDashboardTab(),
-    VentorSessionsTab(),
-    VentorRewardsTab(),
-    VentorProfileTab(),
-  ];
+  void goToFindListenersTab() {
+    _sessionsTabKey.currentState?.showFindSection();
+    if (_index != VentorHomeShell.sessionsTab) {
+      setState(() => _index = VentorHomeShell.sessionsTab);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +101,7 @@ class _VentorHomeShellState extends State<VentorHomeShell> {
           ),
           child: NavigationBar(
             selectedIndex: _index,
-            onDestinationSelected: (value) => setState(() => _index = value),
+            onDestinationSelected: goToTab,
             backgroundColor: const Color(0xFF140C22),
             indicatorColor: SplashColors.purpleMid.withValues(alpha: 0.18),
             surfaceTintColor: Colors.transparent,

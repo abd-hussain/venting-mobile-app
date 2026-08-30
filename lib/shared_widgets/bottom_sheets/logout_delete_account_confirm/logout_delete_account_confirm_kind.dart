@@ -1,0 +1,1 @@
+enum LogoutDeleteAccountConfirmKind { logout, deleteAccount }

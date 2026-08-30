@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:venting_mobile_app/di/di_container.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
+import 'package:venting_mobile_app/presentation/home/listener/dashboard/bloc/listener_dashboard/listener_dashboard_bloc.dart';
 import 'package:venting_mobile_app/presentation/home/listener/tabs/listener_availability_tab.dart';
 import 'package:venting_mobile_app/presentation/home/listener/tabs/listener_dashboard_tab.dart';
 import 'package:venting_mobile_app/presentation/home/listener/tabs/listener_earnings_tab.dart';
@@ -8,9 +11,19 @@ import 'package:venting_mobile_app/presentation/home/listener/tabs/listener_prof
 import 'package:venting_mobile_app/presentation/home/listener/tabs/listener_sessions_tab.dart';
 import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dart';
 
-/// Listener main shell: Dashboard, Sessions, Availability, Earnings, Profile.
+/// Listener main shell: Dashboard, Earnings, Sessions, Availability, Profile.
 class ListenerHomeShell extends StatefulWidget {
   const ListenerHomeShell({super.key});
+
+  static const dashboardTab = 0;
+  static const earningsTab = 1;
+  static const sessionsTab = 2;
+  static const availabilityTab = 3;
+  static const profileTab = 4;
+
+  static void goToTab(BuildContext context, int index) {
+    context.findAncestorStateOfType<_ListenerHomeShellState>()?.goToTab(index);
+  }
 
   @override
   State<ListenerHomeShell> createState() => _ListenerHomeShellState();
@@ -18,18 +31,44 @@ class ListenerHomeShell extends StatefulWidget {
 
 class _ListenerHomeShellState extends State<ListenerHomeShell> {
   int _index = 0;
-  late final List<Widget> _tabs;
+  final List<Widget?> _tabs = List<Widget?>.filled(5, null);
+
+  void goToTab(int index) {
+    if (index < 0 || index >= _tabs.length) return;
+    _ensureTabBuilt(index);
+    if (index == _index) return;
+    setState(() => _index = index);
+  }
+
+  void _ensureTabBuilt(int index) {
+    if (_tabs[index] != null) return;
+
+    _tabs[index] = switch (index) {
+      ListenerHomeShell.dashboardTab => _buildDashboardTab(),
+      ListenerHomeShell.earningsTab => const ListenerEarningsTab(),
+      ListenerHomeShell.sessionsTab => const ListenerSessionsTab(),
+      ListenerHomeShell.availabilityTab => const ListenerAvailabilityTab(),
+      ListenerHomeShell.profileTab => const ListenerProfileTab(),
+      _ => const SizedBox.shrink(),
+    };
+  }
+
+  Widget _buildDashboardTab() {
+    return BlocProvider(
+      create: (_) =>
+          diContainer<ListenerDashboardBloc>()
+            ..add(const ListenerDashboardEvent.started()),
+      child: ListenerDashboardTab(
+        onOpenSessions: () => goToTab(ListenerHomeShell.sessionsTab),
+        onOpenAvailability: () => goToTab(ListenerHomeShell.availabilityTab),
+      ),
+    );
+  }
 
   @override
   void initState() {
     super.initState();
-    _tabs = [
-      ListenerDashboardTab(onOpenSessions: () => setState(() => _index = 1)),
-      const ListenerSessionsTab(),
-      const ListenerAvailabilityTab(),
-      const ListenerEarningsTab(),
-      const ListenerProfileTab(),
-    ];
+    _ensureTabBuilt(ListenerHomeShell.dashboardTab);
   }
 
   @override
@@ -38,7 +77,10 @@ class _ListenerHomeShellState extends State<ListenerHomeShell> {
 
     return Scaffold(
       backgroundColor: SplashColors.backgroundTop,
-      body: IndexedStack(index: _index, children: _tabs),
+      body: IndexedStack(
+        index: _index,
+        children: [for (final tab in _tabs) tab ?? const SizedBox.shrink()],
+      ),
       bottomNavigationBar: NavigationBarTheme(
         data: NavigationBarThemeData(
           labelTextStyle: WidgetStateProperty.resolveWith((states) {
@@ -63,7 +105,7 @@ class _ListenerHomeShellState extends State<ListenerHomeShell> {
         ),
         child: NavigationBar(
           selectedIndex: _index,
-          onDestinationSelected: (value) => setState(() => _index = value),
+          onDestinationSelected: goToTab,
           backgroundColor: const Color(0xFF140C22),
           indicatorColor: SplashColors.purpleMid.withValues(alpha: 0.18),
           surfaceTintColor: Colors.transparent,
@@ -77,6 +119,11 @@ class _ListenerHomeShellState extends State<ListenerHomeShell> {
               label: l10n.home_tab_dashboard,
             ),
             NavigationDestination(
+              icon: const Icon(Icons.payments_outlined),
+              selectedIcon: const Icon(Icons.payments_rounded),
+              label: l10n.home_tab_earnings,
+            ),
+            NavigationDestination(
               icon: const Icon(Icons.headphones_outlined),
               selectedIcon: const Icon(Icons.headphones_rounded),
               label: l10n.home_tab_sessions,
@@ -85,11 +132,6 @@ class _ListenerHomeShellState extends State<ListenerHomeShell> {
               icon: const Icon(Icons.calendar_month_outlined),
               selectedIcon: const Icon(Icons.calendar_month_rounded),
               label: l10n.home_tab_availability,
-            ),
-            NavigationDestination(
-              icon: const Icon(Icons.payments_outlined),
-              selectedIcon: const Icon(Icons.payments_rounded),
-              label: l10n.home_tab_earnings,
             ),
             NavigationDestination(
               icon: const Icon(Icons.person_outline_rounded),

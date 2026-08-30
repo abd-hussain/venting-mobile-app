@@ -1,1663 +1,36 @@
 {
   "@@locale": "ar",
   "@@last_modified": "2026-05-17T00:00:00+03:00",
-  "app_currency": "د.ع",
-  "@app_currency": {},
-  "common_yes": "نعم",
-  "@common_yes": {},
-  "common_submit": "ارسال",
-  "@common_submit": {},
-  "common_alert": "تنبيه",
-  "@common_alert": {},
-  "common_skip": "تخطي",
-  "@common_skip": {},
-  "common_copied": "تم النسخ!",
-  "@common_copied": {},
   "common_cancel": "إلغاء",
   "@common_cancel": {},
-  "common_clear": "مسح",
-  "@common_clear": {},
-  "common_retry": "إعادة المحاولة",
-  "@common_retry": {},
-  "common_ok": "نعم",
-  "@common_ok": {},
-  "common_okay": "تمام",
-  "@common_okay": {},
-  "common_next": "التالي",
-  "@common_next": {},
-  "common_back": "رجوع",
-  "@common_back": {},
-  "common_pay": "دفع",
-  "@common_pay": {},
-  "common_confirm": "تأكيد",
-  "@common_confirm": {},
-  "common_done": "تم",
-  "@common_done": {},
   "common_save": "حفظ",
-  "@common_delete": {},
-  "common_delete": "حذف",
   "@common_save": {},
-  "common_maybe_later": "ربما لاحقا",
-  "@common_maybe_later": {},
-  "common_noDataFound": "لم يتم العثور على بيانات",
-  "@common_noDataFound": {},
-  "common_generalErrorMsg": "حدث خطأ",
-  "@common_generalErrorMsg": {},
   "common_connectionLost": "لا يوجد اتصال بالإنترنت",
   "@common_connectionLost": {},
   "common_connectionLostMessage": "يبدو أنك غير متصل. يرجى التحقق من اتصالك والمحاولة مرة أخرى.",
   "@common_connectionLostMessage": {},
-  "common_rechargeRequired": "إعادة الشحن مطلوبة",
-  "@common_rechargeRequired": {},
-  "common_lowBalanceMessage": "لديك رصيد منخفض لهذه الخدمة، يرجى إعادة الشحن والمحاولة مرة أخرى",
-  "@common_lowBalanceMessage": {},
-  "splash_welcome_to": "مرحباً بكم في",
-  "@splash_welcome_to": {},
-  "splash_zain_iraq": "زين العراق",
-  "@splash_zain_iraq": {},
-  "auth_enter_mobile_number_getVerificationCode": "احصل على رمز التحقق",
-  "@auth_enter_mobile_number_getVerificationCode": {},
-  "auth_enter_mobile_number_phoneNumber": "رقم الهاتف",
-  "@auth_enter_mobile_number_phoneNumber": {},
-  "auth_enter_mobile_number_mobileNumberLength": "طول رقم الهاتف المحمول أقل من التوقعات",
-  "@auth_enter_mobile_number_mobileNumberLength": {},
-  "auth_enter_mobile_number_mobileNumberNotUsed": "الرجاء إدخال رقم صالح",
-  "@auth_enter_mobile_number_mobileNumberNotUsed": {},
-  "auth_enter_mobile_number_mobileNumberNotZain": "رقم الهاتف المحمول ليس رقم زين",
-  "@auth_enter_mobile_number_mobileNumberNotZain": {},
-  "auth_enter_mobile_number_pleaseEnterYourZainPhoneNumberToContinue": "الرجاء إدخال رقم هاتفك زين للمواصلة",
-  "@auth_enter_mobile_number_pleaseEnterYourZainPhoneNumberToContinue": {},
-  "auth_enter_mobile_number_alreadyRegistered": "هذا الرقم مستخدم لحساب اخر على التطبيق",
-  "@auth_enter_mobile_number_alreadyRegistered": {},
-  "auth_enter_mobile_number_loginButton": "تسجيل الدخول",
-  "@auth_enter_mobile_number_loginButton": {},
-  "auth_enter_mobile_number_forgotPasswordButton": "نسيت كلمة السر",
-  "@auth_enter_mobile_number_forgotPasswordButton": {},
-  "auth_enter_mobile_number_or": "او",
-  "@auth_enter_mobile_number_or": {},
-  "auth_enter_mobile_number_simBlocked": "هذه الخدمة غير متاحة لخطك",
-  "@auth_enter_mobile_number_simBlocked": {},
-  "auth_enter_mobile_number_simBlockedIneligible": "ستتاح الخدمة لخطك قريبا",
-  "@auth_enter_mobile_number_simBlockedIneligible": {},
-  "auth_enter_mobile_number_simBlockedDisconnected": "بطاقة SIM الخاصة بك غير فعالة أو معلقة. يرجى الاتصال بالدعم لمزيد من المعلومات.",
-  "@auth_enter_mobile_number_simBlockedDisconnected": {},
-  "auth_enter_mobile_number_simBlockedActivate": "للتفعيل ، يرجى التأكد من وجود الشريحة الخاصة بك داخل جهازك والاتصال باستخدام الزر أدناه.",
-  "@auth_enter_mobile_number_simBlockedActivate": {},
-  "auth_enter_mobile_number_simBlockedCritical": "يرجى زيارة مركز خدمة زين للحصول على شريحة جديدة",
-  "@auth_enter_mobile_number_simBlockedCritical": {},
-  "auth_enter_mobile_number_mobileNumberRequired": "الرجاء إدخال رقم هاتفك المحمول",
-  "@auth_enter_mobile_number_mobileNumberRequired": {},
-  "auth_enter_mobile_number_enterPhoneNumberHint": "أدخل رقم الهاتف",
-  "@auth_enter_mobile_number_enterPhoneNumberHint": {},
-  "auth_enter_mobile_number_otpRequestFailureTitle": "خطأ في رمز التحقق",
-  "@auth_enter_mobile_number_otpRequestFailureTitle": {},
-  "auth_enter_mobile_number_otpRequestFailureResend": "إعادة الإرسال",
-  "@auth_enter_mobile_number_otpRequestFailureResend": {},
-  "auth_otp_authentication_enterOTP_lead": "تم إرسال رمز المرور لمرة واحدة إلى ",
-  "@auth_otp_authentication_enterOTP_lead": {},
-  "auth_otp_authentication_enterOTP_tail": ". \nسيكون الرمز صالحًا لمدة ",
-  "@auth_otp_authentication_enterOTP_tail": {},
-  "auth_otp_authentication_enterOTP_validityDuration": "180 ثانية",
-  "@auth_otp_authentication_enterOTP_validityDuration": {},
-  "auth_otp_authentication_enterOTP_tailSuffix": ".",
-  "@auth_otp_authentication_enterOTP_tailSuffix": {},
-  "auth_otp_authentication_didntReceiveCode": "لم تستلم الرمز؟",
-  "@auth_otp_authentication_didntReceiveCode": {},
-  "auth_otp_authentication_resendCode": "إعادة إرسال الرمز",
-  "@auth_otp_authentication_resendCode": {},
-  "auth_otp_authentication_resendCodeIn": "إعادة إرسال الرمز في",
-  "@auth_otp_authentication_resendCodeIn": {},
-  "auth_otp_authentication_triesLeft": "محاولات",
-  "@auth_otp_authentication_triesLeft": {},
-  "auth_otp_authentication_otpverificationtext": "التحقق من OTP",
-  "@auth_otp_authentication_otpverificationtext": {},
-  "auth_otp_authentication_title": "المصادقة بـ OTP",
-  "@auth_otp_authentication_title": {},
-  "auth_otp_authentication_verifyWithOtp": "التحقق بكلمة مرور لمرة واحدة",
-  "@auth_otp_authentication_verifyWithOtp": {},
-  "auth_otp_authentication_blockTitle": "لقد تجاوزت الحد المسموح",
-  "@auth_otp_authentication_blockTitle": {},
-  "auth_otp_authentication_blockDescription": "لأمانك، تم إيقاف الوصول مؤقتاً بسبب عدة محاولات خاطئة",
-  "@auth_otp_authentication_blockDescription": {},
-  "auth_otp_authentication_blockTimeRemaining": "الوقت المتبقي",
-  "@auth_otp_authentication_blockTimeRemaining": {},
-  "auth_otp_authentication_blockTryAgainIn": "يرجى المحاولة مرة أخرى خلال {time}",
-  "@auth_otp_authentication_blockTryAgainIn": {
-    "placeholders": {
-      "time": {
-        "type": "String",
-        "example": "14:32"
-      }
-    }
-  },
-  "auth_biometric_activation_enableFaceId": "تمكين معرف الوجه",
-  "@auth_biometric_activation_enableFaceId": {},
-  "auth_biometric_activation_enableTouchId": "تمكين معرف اللمس",
-  "@auth_biometric_activation_enableTouchId": {},
-  "auth_biometric_activation_enablePinCode": "تمكين رمز PIN",
-  "@auth_biometric_activation_enablePinCode": {},
-  "auth_biometric_activation_faceId_message": "اجعل تسجيل الدخول سهلاً باستخدام معرف الوجه",
-  "@auth_biometric_activation_faceId_message": {},
-  "auth_biometric_activation_touchId_message": "اجعل تسجيل الدخول سهلاً باستخدام Touch ID",
-  "@auth_biometric_activation_touchId_message": {},
-  "auth_biometric_activation_pincode_message": "اجعل تسجيل الدخول سهلاً باستخدام رمز Pin Code",
-  "@auth_biometric_activation_pincode_message": {},
-  "auth_biometric_activation_successRegistrationFaceId": "تم تفعيل Face ID وتم إنشاء رقم التعريف الشخصي (PIN) بنجاح!",
-  "@auth_biometric_activation_successRegistrationFaceId": {},
-  "auth_biometric_activation_successRegistrationMessageFaceId": "يمكنك الآن تسجيل الدخول فورًا باستخدام Face ID.",
-  "@auth_biometric_activation_successRegistrationMessageFaceId": {},
-  "auth_biometric_activation_successRegistrationTocuhId": "تم تفعيل Touch ID وتم إنشاء رقم التعريف الشخصي (PIN) بنجاح!",
-  "@auth_biometric_activation_successRegistrationTocuhId": {},
-  "auth_biometric_activation_successRegistrationMessageTocuhId": "يمكنك الآن تسجيل الدخول على الفور باستخدام Touch ID.",
-  "@auth_biometric_activation_successRegistrationMessageTocuhId": {},
-  "auth_biometric_activation_successRegistrationPinId": "تم إنشاء رقم التعريف الشخصي (PIN) بنجاح!",
-  "@auth_biometric_activation_successRegistrationPinId": {},
-  "auth_biometric_activation_successRegistrationMessagePinId": "يمكنك الآن تسجيل الدخول فورًا باستخدام الرمز البريدي.",
-  "@auth_biometric_activation_successRegistrationMessagePinId": {},
-  "auth_biometric_activation_addLater": "أضف لاحقًا",
-  "@auth_biometric_activation_addLater": {},
-  "auth_enable_quick_login_title": "أنت على بعد نقرة واحدة 🔓",
-  "@auth_enable_quick_login_title": {},
-  "auth_enable_quick_login_subtitle": "فعّل تسجيل الدخول بالمقاييس الحيوية للوصول الفوري والآمن — دون الحاجة للكتابة.",
-  "@auth_enable_quick_login_subtitle": {},
-  "auth_enable_quick_login_proceed_biometric": "تمكين تسجيل الدخول بالمقاييس الحيوية",
-  "@auth_enable_quick_login_proceed_biometric": {},
-  "auth_set_password_title": "تعيين كلمة المرور",
-  "@auth_set_password_title": {},
-  "auth_set_password_description": "قم بتعيين كلمة مرور آمنة لحسابك.",
-  "@auth_set_password_description": {},
-  "auth_set_password_continue": "متابعة",
-  "@auth_set_password_continue": {},
-  "auth_set_password_must_contain": "يجب أن تحتوي على الأقل;",
-  "@auth_set_password_must_contain": {},
-  "auth_setup_pin_code_setAppCode": "تعيين رمز أمان التطبيق الخاص بك",
-  "@auth_setup_pin_code_setAppCode": {},
-  "auth_setup_pin_code_setAppCodeDesc": "لضمان أمنك، يرجى إنشاء رمز تطبيق مكون من 6 أرقام لاستخدامه عندما لا يكون Face ID متاحًا.",
-  "@auth_setup_pin_code_setAppCodeDesc": {},
-  "auth_setup_pin_code_confirmAppCode": "تأكيد رمز التطبيق الخاص بك",
-  "@auth_setup_pin_code_confirmAppCode": {},
-  "auth_setup_pin_code_confirmAppCodeDesc": "للتحقق، يُرجى إعادة إدخال رمز التطبيق المكون من 6 أرقام. هذا يؤكد استخدام رمزك عند عدم توفر ميزة Face ID.",
-  "@auth_setup_pin_code_confirmAppCodeDesc": {},
-  "auth_setup_pin_code_createPinBtn": "إنشاء الرمز",
-  "@auth_setup_pin_code_createPinBtn": {},
-  "auth_setup_pin_code_createCodeBtn": "إنشاء الكود",
-  "@auth_setup_pin_code_createCodeBtn": {},
-  "auth_setup_pin_code_confirmPinErrorMessage": "الرموز غير متطابقة. يُرجى المحاولة مرة أخرى.",
-  "@auth_setup_pin_code_confirmPinErrorMessage": {},
-  "auth_setup_pin_code_continueButton": "استمر",
-  "@auth_setup_pin_code_continueButton": {},
-  "auth_captcha_title": "التحقق الأمني",
-  "@auth_captcha_title": {},
-  "auth_captcha_subtitle": "أدخل الأحرف الظاهرة أدناه للتأكد أنك لست روبوتًا.",
-  "@auth_captcha_subtitle": {},
-  "auth_captcha_inputLabel": "الأحرف",
-  "@auth_captcha_inputLabel": {},
-  "auth_captcha_inputHint": "اكتب الأحرف",
-  "@auth_captcha_inputHint": {},
-  "auth_captcha_refreshSemantics": "عرض رمز جديد",
-  "@auth_captcha_refreshSemantics": {},
-  "auth_captcha_error": "غير متطابق. حاول مرة أخرى.",
-  "@auth_captcha_error": {},
-  "auth_captcha_success": "تم التحقق",
-  "@auth_captcha_success": {},
-  "auth_captcha_verifyButton": "تحقق",
-  "@auth_captcha_verifyButton": {},
-  "auth_enter_full_name_enterYourName": "أدخل اسمك",
-  "@auth_enter_full_name_enterYourName": {},
-  "auth_enter_full_name_fullNameHint": "على سبيل المثال، عبدالرحمن حسين",
-  "@auth_enter_full_name_fullNameHint": {},
-  "auth_returning_user_welcomeBack": "مرحبًا بعودتك،",
-  "@auth_returning_user_welcomeBack": {},
-  "auth_returning_user_chooseLoginMethod": "اختر طريقة تسجيل الدخول المفضلة لديك",
-  "@auth_returning_user_chooseLoginMethod": {},
-  "auth_returning_user_mobileNumberLabel": "رقم الجوال:",
-  "@auth_returning_user_mobileNumberLabel": {},
-  "auth_returning_user_loginWithOTP": "تسجيل الدخول باستخدام OTP",
-  "@auth_returning_user_loginWithOTP": {},
-  "auth_returning_user_switch_to_otp_title": "التبديل إلى تسجيل الدخول بـ OTP",
-  "@auth_returning_user_switch_to_otp_title": {},
-  "auth_returning_user_switch_to_otp_message": "بالمتابعة، ستُزال كلمة المرور الخاصة بك. ستستخدم رمز OTP لتسجيل الدخول مستقبلاً.",
-  "@auth_returning_user_switch_to_otp_message": {},
-  "auth_returning_user_loginWithPassword": "تسجيل الدخول باستخدام كلمة المرور",
-  "@auth_returning_user_loginWithPassword": {},
-  "auth_session_expired_title": "انتهت صلاحية الجلسة",
-  "@auth_session_expired_title": {},
-  "auth_session_expired_message": "انتهت صلاحية جلستك. يرجى تسجيل الدخول مرة أخرى لمتابعة استخدام التطبيق برقم {phoneNumber}.",
-  "@auth_session_expired_message": {
-    "placeholders": {
-      "phoneNumber": {
-        "type": "String"
-      }
-    }
-  },
-  "auth_login_with_password_title": "أدخل كلمة المرور",
-  "@auth_login_with_password_title": {},
-  "auth_login_with_password_description": "يرجى إدخال كلمة المرور الخاصة بك لـ",
-  "@auth_login_with_password_description": {},
-  "auth_returning_user_loginWithAnotherNumber": "هل تحتاج إلى تسجيل الدخول برقم آخر؟",
-  "@auth_returning_user_loginWithAnotherNumber": {},
-  "auth_returning_user_loginWithAnotherAccount": "تسجيل الدخول باستخدام حساب آخر",
-  "@auth_returning_user_loginWithAnotherAccount": {},
-  "auth_returning_user_faceIDLogin": "تسجيل الدخول باستخدام Face ID",
-  "@auth_returning_user_faceIDLogin": {},
-  "auth_returning_user_touchIDLogin": "تسجيل الدخول باستخدام Touch ID",
-  "@auth_returning_user_touchIDLogin": {},
-  "auth_returning_user_orWord": "أو",
-  "@auth_returning_user_orWord": {},
-  "auth_returning_user_confirm_logout_switch_title": "تسجيل الخروج للتبديل",
-  "@auth_returning_user_confirm_logout_switch_title": {},
-  "auth_returning_user_confirm_logout_switch_description": "سيتم تسجيل خروجك من حسابك الحالي قبل تسجيل الدخول باستخدام حساب آخر.",
-  "@auth_returning_user_confirm_logout_switch_description": {},
-  "auth_returning_user_confirm_logout_switch_confirm_button_title": "تسجيل الخروج",
-  "@auth_returning_user_confirm_logout_switch_confirm_button_title": {},
-  "auth_returning_user_confirm_logout_switch_cancel_button_title": "إلغاء",
-  "@auth_returning_user_confirm_logout_switch_cancel_button_title": {},
-  "home_tab_home_tab": "الرئيسية",
-  "@home_tab_home_tab": {},
-  "home_tab_welcoming_message_morning": "صباح الخير",
-  "@home_tab_welcoming_message_morning": {},
-  "home_tab_welcoming_message_afternoon": "مساء الخير",
-  "@home_tab_welcoming_message_afternoon": {},
-  "home_tab_welcoming_message_evening": "مساء الخير",
-  "@home_tab_welcoming_message_evening": {},
-  "home_tab_prepaid_validityTill": "صلاحية حتى",
-  "@home_tab_prepaid_validityTill": {},
-  "home_tab_prepaid_myresources": "مواردي",
-  "@home_tab_prepaid_myresources": {},
-  "home_tab_prepaid_gold": "ذهب",
-  "@home_tab_prepaid_gold": {},
-  "home_tab_prepaid_mamnoon": "ممنون",
-  "@home_tab_prepaid_mamnoon": {},
-  "home_tab_postpaid_totalBill": "إجمالي الفاتورة",
-  "@home_tab_postpaid_totalBill": {},
-  "home_tab_postpaid_paybill": "دفع الفاتورة",
-  "@home_tab_postpaid_paybill": {},
-  "home_tab_postpaid_unbilledAmount": "المبلغ غير المفوتر",
-  "@home_tab_postpaid_unbilledAmount": {},
-  "home_tab_postpaid_pastDue": "متأخر",
-  "@home_tab_postpaid_pastDue": {},
-  "home_tab_postpaid_advancePayment": "الدفع المسبق",
-  "@home_tab_postpaid_advancePayment": {},
-  "home_sim_restricted_banner_title": "خطك عليه قيود",
-  "@home_sim_restricted_banner_title": {},
-  "home_sim_restricted_banner_subtitle": "يرجى التواصل مع الدعم للمساعدة.",
-  "@home_sim_restricted_banner_subtitle": {},
-  "sim_support_warn_recharge_title": "قم بإعادة شحن خطك",
-  "@sim_support_warn_recharge_title": {},
-  "sim_support_warn_recharge_subtitle": "خطك يحتاج إلى رصيد. أعد الشحن لاستعادة الخدمة الكاملة وميزات التطبيق.",
-  "@sim_support_warn_recharge_subtitle": {},
-  "sim_support_dunning_title": "مطلوب السداد أو إعادة الشحن",
-  "@sim_support_dunning_title": {},
-  "sim_support_dunning_subtitle": "توجد فاتورة غير مسددة أو مشكلة في الرصيد. سدّد أو أعد الشحن لفتح جميع الخدمات.",
-  "@sim_support_dunning_subtitle": {},
-  "sim_support_postpaid_title": "خطك مفوتر مقيد",
-  "@sim_support_postpaid_title": {},
-  "sim_support_postpaid_subtitle": "يحتاج حسابك المفوتر إلى إجراء. تواصل مع خدمة العملاء للمساعدة.",
-  "@sim_support_postpaid_subtitle": {},
-  "sim_support_prepaid_ineligible_title": "الخدمة غير متاحة لهذا الخط",
-  "@sim_support_prepaid_ineligible_title": {},
-  "sim_support_prepaid_ineligible_subtitle": "هذا العرض أو الخدمة غير متاح على خطك المسبق الدفع. يرجى التواصل مع الدعم.",
-  "@sim_support_prepaid_ineligible_subtitle": {},
-  "sim_support_prepaid_line_issue_title": "مشكلة في الخط المسبق الدفع",
-  "@sim_support_prepaid_line_issue_title": {},
-  "sim_support_prepaid_line_issue_subtitle": "خطك المسبق الدفع موقوف أو مقيد. تواصل مع الدعم لحل المشكلة.",
-  "@sim_support_prepaid_line_issue_subtitle": {},
-  "sim_support_activate_title": "فعّل شريحتك",
-  "@sim_support_activate_title": {},
-  "sim_support_activate_subtitle": "أدخل شريحة زين في جهازك، ثم اتصل بـ *١٠٠# للتفعيل.",
-  "@sim_support_activate_subtitle": {},
-  "auth_enter_mobile_number_dial_activate_sim": "اتصل *١٠٠#",
-  "@auth_enter_mobile_number_dial_activate_sim": {},
-  "home_tab_loyalty_welcome_to_the_zain_loyalty_program": "مرحباً بكم في برنامج ولاء زين",
-  "@home_tab_loyalty_welcome_to_the_zain_loyalty_program": {},
-  "loyalty_tutorial_discover_mamnoon": "اكتشف برنامج \"ممنون\" !",
-  "@loyalty_tutorial_discover_mamnoon": {},
-  "loyalty_tutorial_watch_video_description": "شاهد الفيديو لتتعلم كيفية كسب النقاط واستبدالها بمكافآت وهدايا",
-  "@loyalty_tutorial_watch_video_description": {},
-  "home_tab_loyalty_free_gift": "مكافأة بطاقة الحك",
-  "@home_tab_loyalty_free_gift": {},
-  "home_tab_loyalty_gift_text": "كل يوم تستخدم فيه تطبيق زين، ستحصل على مكافأة مجانية! ما عليك سوى النقر على الزر أدناه.",
-  "@home_tab_loyalty_gift_text": {},
-  "home_tab_loyalty_congratulations": "مبروك",
-  "@home_tab_loyalty_congratulations": {},
-  "home_tab_loyalty_already_clamed_git_title": "لقد حصلت بالفعل على هديتك اليومية",
-  "@home_tab_loyalty_already_clamed_git_title": {},
-  "home_tab_loyalty_already_clamed_git_desc": "لقد حصلت بالفعل على مكافأتك.. عد لاحقًا حيث نقدم هدايا كل 24 ساعة!",
-  "@home_tab_loyalty_already_clamed_git_desc": {},
-  "home_tab_loyalty_you_got_100_mb_free": "لقد حصلت على 100 ميجابايت مجانًا!",
-  "@home_tab_loyalty_you_got_100_mb_free": {},
-  "home_tab_loyalty_next_gift_text": "عُد بعد 24 ساعة للمطالبة بهديتك المجانية التالية!",
-  "@home_tab_loyalty_next_gift_text": {},
-  "home_tab_loyalty_gift_disclaimer_text": "استخدم إصبعك لحك البطاقة بالكامل.",
-  "@home_tab_loyalty_gift_disclaimer_text": {},
-  "loyalty_not_eligible_title": "Dear {name},",
-  "@loyalty_not_eligible_title": {
-    "placeholders": {
-      "name": {
-        "type": "String",
-        "example": "Tharwat"
-      }
-    }
-  },
-  "loyalty_not_eligible_subtitle": "",
-  "@loyalty_not_eligible_subtitle": {},
-  "loyalty_not_eligible_body_blacklisted": "For more information please contact call center.",
-  "@loyalty_not_eligible_body_blacklisted": {},
-  "home_tab_recent_activities_recentactivities": "الأنشطة الأخيرة",
-  "@home_tab_recent_activities_recentactivities": {},
-  "home_tab_recent_activities_recentlyused": "المستخدمة مؤخراً",
-  "@home_tab_recent_activities_recentlyused": {},
-  "home_tab_banner_view_details": "تفاصيل",
-  "@home_tab_banner_view_details": {},
-  "home_tab_games_zain_games": "العاب زين",
-  "@home_tab_games_zain_games": {},
-  "home_tab_games_games_title": "ألعاب",
-  "@home_tab_games_games_title": {},
-  "home_tab_games_play_and_win": "العب ألعاباً كل يوم واربح ميغابايت",
-  "@home_tab_games_play_and_win": {},
-  "home_tab_new_releases": "الإصدارات الجديدة",
-  "@home_tab_new_releases": {},
-  "home_tab_most_popular": "أكثر الباقات شعبية",
-  "@home_tab_most_popular": {},
-  "home_tab_view_details": "عرض التفاصيل",
-  "@home_tab_view_details": {},
-  "home_tab_feature_card_kafoo_line": "خط كفوو",
-  "@home_tab_feature_card_kafoo_line": {},
-  "home_tab_feature_zain_fi_title": "أجهزة زين فاي",
-  "@home_tab_feature_zain_fi_title": {},
-  "home_tab_feature_zain_fi_description": "ابقَ متصلاً واستمتع|بسرعات فائقة أثناء التنقل|مع أجهزة زين فاي.",
-  "@home_tab_feature_zain_fi_description": {},
-  "home_tab_feature_esim_title": "شريحة eSIM",
-  "@home_tab_feature_esim_title": {},
-  "home_tab_feature_esim_description": "التبديل إلى شريحة eSIM سريع وسهل، وهو صديق للبيئة.",
-  "@home_tab_feature_esim_description": {},
-  "home_tab_bundle_fastest_45g_internet": "أسرع إنترنت 4.5G+",
-  "@home_tab_bundle_fastest_45g_internet": {},
-  "home_tab_bundle_high_speed_data": "بيانات عالية السرعة",
-  "@home_tab_bundle_high_speed_data": {},
-  "home_tab_bundle_new_release_1": "أحدث حزمة بيانات",
-  "@home_tab_bundle_new_release_1": {},
-  "home_tab_bundle_new_release_2": "حزمة إنترنت متميزة",
-  "@home_tab_bundle_new_release_2": {},
-  "home_tab_fill_name_welcome_to_zain": "مرحباً بك في زين",
-  "@home_tab_fill_name_welcome_to_zain": {},
-  "home_tab_fill_name_what_should_we_call_you": "ماذا يجب أن نناديك؟",
-  "@home_tab_fill_name_what_should_we_call_you": {},
-  "home_tab_fill_name_enter_your_name": "أدخل اسمك",
-  "@home_tab_fill_name_enter_your_name": {},
-  "home_tab_fill_name_maybe_later": "ربما لاحقاً",
-  "@home_tab_fill_name_maybe_later": {},
-  "user_resources_kafoo_credit": "رصيد كافو",
-  "@user_resources_kafoo_credit": {},
-  "user_resources_free_credit": "رصيد مجاني",
-  "@user_resources_free_credit": {},
-  "user_resources_calls": "المكالمات",
-  "@user_resources_calls": {},
-  "user_resources_data": "البيانات",
-  "@user_resources_data": {},
-  "user_resources_sms": "الرسائل",
-  "@user_resources_sms": {},
-  "user_resources_roaming": "التجوّل",
-  "@user_resources_roaming": {},
-  "user_resources_international": "الدولي",
-  "@user_resources_international": {},
-  "user_resources_unit_min": "دقيقة",
-  "@user_resources_unit_min": {},
-  "user_resources_unit_sms": "رسالة",
-  "@user_resources_unit_sms": {},
-  "user_resources_unlimited_internet": "∞ إنترنت غير محدود",
-  "@user_resources_unlimited_internet": {},
-  "user_resources_unit_gb_internet": "جيجابايت إنترنت",
-  "@user_resources_unit_gb_internet": {},
-  "user_resources_unit_mb_internet": "ميجابايت إنترنت",
-  "@user_resources_unit_mb_internet": {},
-  "user_resources_unit_gb": "جيجابايت",
-  "@user_resources_unit_gb": {},
-  "user_resources_unit_mb": "ميجابايت",
-  "@user_resources_unit_mb": {},
-  "user_resources_out_of": "من",
-  "@user_resources_out_of": {},
-  "user_resources_days_remaining": "{days} أيام متبقية",
-  "@user_resources_days_remaining": {
-    "placeholders": {
-      "days": {
-        "type": "int"
-      }
-    }
-  },
-  "resource_details": "تفاصيل الموارد",
-  "@resource_details": {},
-  "resource_details_empty_category": "عذرا، لا توجد عروض متوفرة لخطك",
-  "@resource_details_empty_category": {},
-  "offers_tab_offers_tab": "العروض",
-  "@offers_tab_offers_tab": {},
-  "offers_tab_offer_internet": "إنترنت",
-  "@offers_tab_offer_internet": {},
-  "offers_tab_offer_sms": "رسالة قصيرة",
-  "@offers_tab_offer_sms": {},
-  "offers_tab_offer_minutes": "دقائق",
-  "@offers_tab_offer_minutes": {},
-  "offers_tab_offer_free_credits": "رصيد مجاني",
-  "@offers_tab_offer_free_credits": {},
-  "offers_tab_offer_free_socials": "مواقع التواصل المجانية",
-  "@offers_tab_offer_free_socials": {},
-  "offers_tab_offer_details": "تفاصيل",
-  "@offers_tab_offer_details": {},
-  "offers_tab_offer_subscribe": "اشتراك",
-  "@offers_tab_offer_subscribe": {},
-  "offers_tab_offer_insufficient_error": "رصيد غير كافٍ. اشحن حسابك للاشتراك في هذا العرض.",
-  "@offers_tab_offer_insufficient_error": {},
-  "offers_tab_offer_call": "مكالمة",
-  "@offers_tab_offer_call": {},
-  "offers_tab_offer_earn_mamnoon_points": "نقاط ممنون",
-  "@offers_tab_offer_earn_mamnoon_points": {},
-  "offers_tab_offer_bonus_credit": "رصيد إضافي",
-  "@offers_tab_offer_bonus_credit": {},
-  "offers_tab_credit": "الرصيد",
-  "@offers_tab_credit": {},
-  "offers_tab_kaffoo_variant_standard": "كافو",
-  "@offers_tab_kaffoo_variant_standard": {},
-  "offers_tab_kaffoo_variant_two_plus_one": "كافو 2+1",
-  "@offers_tab_kaffoo_variant_two_plus_one": {},
-  "offers_tab_variant_bikaifi": "بكيفي",
-  "@offers_tab_variant_bikaifi": {},
-  "offers_tab_variant_super_card": "سوبر كارد",
-  "@offers_tab_variant_super_card": {},
-  "offers_tab_variant_unlimited": "غير محدود",
-  "@offers_tab_variant_unlimited": {},
-  "offers_tab_variant_free_social": "مواقع التواصل المجانية",
-  "@offers_tab_variant_free_social": {},
-  "kaffoo_free_social_customise_title": "خصص تطبيقاتك",
-  "@kaffoo_free_social_customise_title": {},
-  "kaffoo_free_social_customise_subtitle": "استبدل أي تطبيق مُضمّن بآخر من نفس الفئة",
-  "@kaffoo_free_social_customise_subtitle": {},
-  "kaffoo_free_social_swap_confirm_title": "استبدل. خصّص. استمتع.",
-  "@kaffoo_free_social_swap_confirm_title": {},
-  "kaffoo_free_social_your_free_apps_title": "تطبيقاتك المجانية",
-  "@kaffoo_free_social_your_free_apps_title": {},
-  "kaffoo_free_social_customise_button": "تخصيص",
-  "@kaffoo_free_social_customise_button": {},
-  "kaffoo_free_social_app_replacement_title": "استبدال التطبيق",
-  "@kaffoo_free_social_app_replacement_title": {},
-  "kaffoo_free_social_first_replacement_prefix": "الاستبدال الأول ",
-  "@kaffoo_free_social_first_replacement_prefix": {},
-  "kaffoo_free_social_replacement_free": "مجاني",
-  "@kaffoo_free_social_replacement_free": {},
-  "kaffoo_free_social_replacements_per_cycle": "حتى {maxCount} استبدالات في كل دورة",
-  "@kaffoo_free_social_replacements_per_cycle": {
-    "placeholders": {
-      "maxCount": {
-        "type": "int"
-      }
-    }
-  },
-  "kaffoo_free_social_replacement_changes_label": "التغييرات",
-  "@kaffoo_free_social_replacement_changes_label": {},
-  "kaffoo_free_social_replacement_no_changes": "لا تغييرات",
-  "@kaffoo_free_social_replacement_no_changes": {},
-  "kaffoo_free_social_replacement_free_change": "تغيير مجاني",
-  "@kaffoo_free_social_replacement_free_change": {},
-  "kaffoo_free_social_replacement_pricing_note": "1 مجاني، ثم {price} {currency} لكل تغيير",
-  "@kaffoo_free_social_replacement_pricing_note": {
-    "placeholders": {
-      "price": {
-        "type": "String"
-      },
-      "currency": {
-        "type": "String"
-      }
-    }
-  },
-  "kaffoo_free_social_replacement_limit_reached": "تم استخدام جميع {maxCount} استبدالات. لقد وصلت إلى الحد الأقصى.",
-  "@kaffoo_free_social_replacement_limit_reached": {
-    "placeholders": {
-      "maxCount": {
-        "type": "int"
-      }
-    }
-  },
-  "kaffoo_free_social_replacement_confirm_free_title": "تغيير تطبيق مجاني",
-  "@kaffoo_free_social_replacement_confirm_free_title": {},
-  "kaffoo_free_social_replacement_confirm_free_desc": "لن يتم خصم أي رسوم من رصيدك إذا تابعت.",
-  "@kaffoo_free_social_replacement_confirm_free_desc": {},
-  "kaffoo_free_social_replacement_confirm_paid_title": "تأكيد تغييرات التطبيق",
-  "@kaffoo_free_social_replacement_confirm_paid_title": {},
-  "kaffoo_free_social_replacement_confirm_paid_desc": "سيتم خصم {price} {currency} من رصيدك إذا تابعت.",
-  "@kaffoo_free_social_replacement_confirm_paid_desc": {
-    "placeholders": {
-      "price": {
-        "type": "String"
-      },
-      "currency": {
-        "type": "String"
-      }
-    }
-  },
-  "kaffoo_free_social_apps_new_tag": "جديد",
-  "@kaffoo_free_social_apps_new_tag": {},
-  "kaffoo_free_social_select_apps_title": "اختر تطبيقاتك المجانية",
-  "@kaffoo_free_social_select_apps_title": {},
-  "kaffoo_free_social_select_apps_hint": "اختر 5 تطبيقات من المجموعات أدناه",
-  "@kaffoo_free_social_select_apps_hint": {},
-  "kaffoo_free_social_light_apps_title": "تطبيقات خفيفة",
-  "@kaffoo_free_social_light_apps_title": {},
-  "kaffoo_free_social_heavy_apps_title": "تطبيقات ثقيلة",
-  "@kaffoo_free_social_heavy_apps_title": {},
-  "kaffoo_free_social_choose_up_to": "(اختر حتى {count})",
-  "@kaffoo_free_social_choose_up_to": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "kaffoo_free_social_selected_label": "مُختار",
-  "@kaffoo_free_social_selected_label": {},
-  "kaffoo_free_social_total_selected": "مُختار",
-  "@kaffoo_free_social_total_selected": {},
-  "kaffoo_free_social_reset": "إعادة تعيين",
-  "@kaffoo_free_social_reset": {},
-  "kaffoo_free_social_continue": "متابعة",
-  "@kaffoo_free_social_continue": {},
-  "kaffoo_free_social_more": "المزيد",
-  "@kaffoo_free_social_more": {},
-  "kaffoo_free_social_max_selection_reached": "يمكنك اختيار {count} تطبيقات كحد أقصى من هذه المجموعة. ألغِ تحديد أحدها لاختيار تطبيق آخر.",
-  "@kaffoo_free_social_max_selection_reached": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "kaffoo_free_social_review_selection_title": "راجع اختيارك",
-  "@kaffoo_free_social_review_selection_title": {},
-  "kaffoo_free_social_review_selected_prefix": "لقد اخترت ",
-  "@kaffoo_free_social_review_selected_prefix": {},
-  "kaffoo_free_social_review_selected_suffix": " تطبيقات مجانية",
-  "@kaffoo_free_social_review_selected_suffix": {},
-  "kaffoo_free_social_good_choice": "اختيار جيد",
-  "@kaffoo_free_social_good_choice": {},
-  "kaffoo_free_social_bundle_price_note": "لن يؤثر ذلك على سعر باقتك.",
-  "@kaffoo_free_social_bundle_price_note": {},
-  "offers_tab_variant_tiktok": "تيك توك",
-  "@offers_tab_variant_tiktok": {},
-  "offers_tab_select_package": "حدد الحزمة",
-  "@offers_tab_select_package": {},
-  "offers_tab_already_subscribed_warning": "أنت مشترك بالفعل في هذا العرض.",
-  "@offers_tab_already_subscribed_warning": {},
-  "offers_tab_offer_minutes_with_family": "دقائق مع العائلة",
-  "@offers_tab_offer_minutes_with_family": {},
-  "offers_tab_offer_free_sms": "رسائل مجانية",
-  "@offers_tab_offer_free_sms": {},
-  "offers_tab_kaffoo_offer_free_sms": "رسائل مجانية",
-  "@offers_tab_kaffoo_offer_free_sms": {},
-  "offers_tab_offer_3rd_month_free": "الشهر الثالث مجاناً",
-  "@offers_tab_offer_3rd_month_free": {},
-  "offers_tab_appExclusiveBadge": "تطبيق حصري",
-  "@offers_tab_appExclusiveBadge": {},
-  "offers_tab_hotOfferBadge": "عرض ساخن",
-  "@offers_tab_hotOfferBadge": {},
-  "offers_tab_hot": "ساخن",
-  "@offers_tab_hot": {},
-  "offers_tab_search": "بحث",
-  "@offers_tab_search": {},
-  "account_tab_restricted": "مقيد",
-  "@account_tab_restricted": {},
-  "offers_tab_subscription_successful": "تم الاشتراك بنجاح!",
-  "@offers_tab_subscription_successful": {},
-  "offers_tab_subscription_success_description": "تم تفعيل الباقة التي اخترتها بنجاح. يمكنك الآن الاستمتاع بـ",
-  "@offers_tab_subscription_success_description": {},
-  "offers_tab_subscription_success_body": "تم تفعيل الباقة التي اخترتها بنجاح.\nيمكنك الآن الاستمتاع بمزاياك فورًا",
-  "@offers_tab_subscription_success_body": {},
-  "offers_tab_subscription_activated_bundle": "الباقة المفعّلة",
-  "@offers_tab_subscription_activated_bundle": {},
-  "offers_tab_subscription_balance_updated": "شكرًا لك! تم تحديث رصيدك",
-  "@offers_tab_subscription_balance_updated": {},
-  "offers_tab_subscription_conflict_title": "تم اكتشاف تعارض في الاشتراك",
-  "@offers_tab_subscription_conflict_title": {},
-  "offers_tab_subscription_conflict_description": "لديك اشتراك نشط حاليًا يتعارض مع هذا العرض. لا يمكن تفعيل سوى باقة واحدة من هذا النوع في وقت واحد.",
-  "@offers_tab_subscription_conflict_description": {},
-  "offers_tab_confirm_subscription": "تأكيد الاشتراك",
-  "@offers_tab_confirm_subscription": {},
-  "offers_tab_confirm_subscription_details1": "أنت على وشك الاشتراك في الباقة المختارة. سيتم تطبيق الرسوم وفقًا لباقتك.",
-  "@offers_tab_confirm_subscription_details1": {},
-  "offers_tab_confirm_subscription_details2": "هل ترغب بالاستمرار؟",
-  "@offers_tab_confirm_subscription_details2": {},
-  "offers_tab_confirm_subscription_yes_please": "نعم من فضلك",
-  "@offers_tab_confirm_subscription_yes_please": {},
-  "offers_tab_confirm_subscription_no_cancel": "لا إلغاء",
-  "@offers_tab_confirm_subscription_no_cancel": {},
-  "offers_tab_confirm_subscription_button_confirm": "تأكيد",
-  "@offers_tab_confirm_subscription_button_confirm": {},
-  "offers_tab_confirm_subscription_maybe_later": "ربما لاحقاً",
-  "@offers_tab_confirm_subscription_maybe_later": {},
-  "offers_tab_restricted": "مقيد",
-  "@offers_tab_restricted": {},
-  "offers_tab_offer_subscribed_successfully": "تم الاشتراك في العرض بنجاح",
-  "@offers_tab_offer_subscribed_successfully": {},
-  "offers_tab_error_subscribing_offer": "خطأ في الاشتراك بالعرض",
-  "@offers_tab_error_subscribing_offer": {},
-  "offers_tab_subscription_not_eligible_title": "غير مؤهل",
-  "@offers_tab_subscription_not_eligible_title": {},
-  "offers_tab_subscription_not_eligible_description": "أنت غير مؤهل لهذا العرض.",
-  "@offers_tab_subscription_not_eligible_description": {},
-  "offers_tab_subscription_unable_title": "عذراً!",
-  "@offers_tab_subscription_unable_title": {},
-  "offers_tab_subscription_unable_description": "لم نتمكن من معالجة اشتراكك. يرجى المحاولة مرة أخرى لاحقاً.",
-  "@offers_tab_subscription_unable_description": {},
-  "offers_tab_gift_sent_successfully": "تم إرسال الهدية بنجاح",
-  "@offers_tab_gift_sent_successfully": {},
-  "offers_tab_error_sending_gift": "خطأ في إرسال الهدية",
-  "@offers_tab_error_sending_gift": {},
-  "offers_tab_no_offers_found": "لا توجد عروض",
-  "@offers_tab_no_offers_found": {},
-  "offers_tab_confirm_gift": "تأكيد الهدية",
-  "@offers_tab_confirm_gift": {},
-  "offers_tab_you_are_about_to_gift": "أنت على وشك إهداء",
-  "@offers_tab_you_are_about_to_gift": {},
-  "offers_tab_priced_at": "بسعر",
-  "@offers_tab_priced_at": {},
-  "offers_tab_to_the_number": "إلى الرقم",
-  "@offers_tab_to_the_number": {},
-  "offers_tab_would_you_like_to_continue": "هل ترغب في المتابعة ؟",
-  "@offers_tab_would_you_like_to_continue": {},
-  "offers_tab_send_gift": "إرسال الهدية",
-  "@offers_tab_send_gift": {},
-  "offers_tab_enter_gift_number_prompt": "الرجاء إدخال رقم زين الذي تريد إرسال الهدية إليه",
-  "@offers_tab_enter_gift_number_prompt": {},
-  "offers_tab_filter_offers": "تصفية العروض",
-  "@offers_tab_filter_offers": {},
-  "offers_tab_offer_type": "نوع العرض",
-  "@offers_tab_offer_type": {},
-  "offers_tab_offer_duration": "مدة العرض",
-  "@offers_tab_offer_duration": {},
-  "offers_tab_apply_filters": "تطبيق الفلاتر",
-  "@offers_tab_apply_filters": {},
-  "offers_tab_clear_filters": "مسح الفلاتر",
-  "@offers_tab_clear_filters": {},
-  "offers_tab_sort_direction": "اتجاه الفرز",
-  "@offers_tab_sort_direction": {},
-  "offers_tab_sort_by": "فرز حسب",
-  "@offers_tab_sort_by": {},
-  "offers_tab_sort_ascending": "تصاعدي",
-  "@offers_tab_sort_ascending": {},
-  "offers_tab_sort_descending": "تنازلي",
-  "@offers_tab_sort_descending": {},
-  "offers_tab_sort_by_price": "السعر",
-  "@offers_tab_sort_by_price": {},
-  "offers_tab_sort_by_validity": "الصلاحية",
-  "@offers_tab_sort_by_validity": {},
-  "offers_tab_sort_by_mbs": "ميغابايت",
-  "@offers_tab_sort_by_mbs": {},
-  "offers_tab_sort_by_alphabetical": "أبجدي",
-  "@offers_tab_sort_by_alphabetical": {},
-  "offers_tab_offer_roaming": "التجوال",
-  "@offers_tab_offer_roaming": {},
-  "offers_tab_roaming_search_hint": "ابحث عن الدولة",
-  "@offers_tab_roaming_search_hint": {},
-  "offers_tab_offer_roam_internet": "إنترنت تجوال",
-  "@offers_tab_offer_roam_internet": {},
-  "offers_tab_offer_roam_mins": "دقائق تجوال",
-  "@offers_tab_offer_roam_mins": {},
-  "offers_tab_offer_roam_sms": "رسائل تجوال",
-  "@offers_tab_offer_roam_sms": {},
-  "offers_tab_offer_int_internet": "إنترنت دولي",
-  "@offers_tab_offer_int_internet": {},
-  "offers_tab_offer_int_mins": "دقائق دولية",
-  "@offers_tab_offer_int_mins": {},
-  "offers_tab_offer_int_sms": "رسائل دولية",
-  "@offers_tab_offer_int_sms": {},
-  "offers_tab_filter_type_bundle_to_gift": "باقة للإهداء",
-  "@offers_tab_filter_type_bundle_to_gift": {},
-  "offers_tab_filter_type_hot_bundle": "باقة ساخنة",
-  "@offers_tab_filter_type_hot_bundle": {},
-  "offers_tab_filter_duration_daily": "يومي",
-  "@offers_tab_filter_duration_daily": {},
-  "offers_tab_filter_duration_2_days": "يومان",
-  "@offers_tab_filter_duration_2_days": {},
-  "offers_tab_filter_duration_3_days": "3 أيام",
-  "@offers_tab_filter_duration_3_days": {},
-  "offers_tab_filter_duration_weekly": "أسبوعي",
-  "@offers_tab_filter_duration_weekly": {},
-  "offers_tab_filter_duration_10_days": "10 أيام",
-  "@offers_tab_filter_duration_10_days": {},
-  "offers_tab_filter_duration_14_days": "14 يوماً",
-  "@offers_tab_filter_duration_14_days": {},
-  "offers_tab_filter_duration_20_days": "20 يوماً",
-  "@offers_tab_filter_duration_20_days": {},
-  "offers_tab_filter_duration_monthly": "شهري",
-  "@offers_tab_filter_duration_monthly": {},
-  "offers_tab_filter_duration_yearly": "سنوي",
-  "@offers_tab_filter_duration_yearly": {},
-  "offers_tab_validity_days_count": "{days} أيام",
-  "@offers_tab_validity_days_count": {
-    "placeholders": {
-      "days": {
-        "type": "int"
-      }
-    }
-  },
-  "offers_tab_validity_weeks_count": "{weeks} أسبوع",
-  "@offers_tab_validity_weeks_count": {
-    "placeholders": {
-      "weeks": {
-        "type": "int"
-      }
-    }
-  },
-  "offers_tab_gift_this_offer": "أهدِ هذا العرض",
-  "@offers_tab_gift_this_offer": {},
-  "offers_tile_header_validity_prefix": "الصلاحية: ",
-  "@offers_tile_header_validity_prefix": {},
-  "offers_tab_offer_validity": "الصلاحية: {days} أيام",
-  "@offers_tab_offer_validity": {
-    "placeholders": {
-      "days": {
-        "type": "int"
-      }
-    }
-  },
-  "offers_tab_view_details": "عرض التفاصيل",
-  "@offers_tab_view_details": {},
-  "offers_tab_offer_more_details": "المزيد من التفاصيل",
-  "@offers_tab_offer_more_details": {},
-  "account_tab_profile_tab": "حساب",
-  "@account_tab_profile_tab": {},
-  "account_tab_settings": "إعدادات",
-  "@account_tab_settings": {},
-  "account_tab_settings_subtitle": "إدارة حسابك",
-  "@account_tab_settings_subtitle": {},
-  "account_tab_sim_status": "حالة الشريحة",
-  "@account_tab_sim_status": {},
-  "account_tab_active": "نشيط",
-  "@account_tab_active": {},
   "account_tab_change_password": "تغيير كلمة المرور",
   "@account_tab_change_password": {},
-  "change_password_screen_title": "تغيير كلمة المرور",
-  "@change_password_screen_title": {},
-  "forgot_password_screen_title": "نسيت كلمة المرور",
-  "@forgot_password_screen_title": {},
-  "forgot_password_set_password": "تعيين كلمة المرور",
-  "@forgot_password_set_password": {},
-  "change_password_password_hint": "كلمة المرور",
-  "@change_password_password_hint": {},
-  "change_password_confirm_password_hint": "تأكيد كلمة المرور",
-  "@change_password_confirm_password_hint": {},
-  "change_password_rules_title": "يجب أن تحتوي كلمة المرور على:",
-  "@change_password_rules_title": {},
-  "change_password_rule_min_length": "8 أحرف على الأقل",
-  "@change_password_rule_min_length": {},
-  "change_password_rule_number": "رقم واحد على الأقل",
-  "@change_password_rule_number": {},
-  "change_password_rule_upper_lower": "حرف كبير وحرف صغير على الأقل",
-  "@change_password_rule_upper_lower": {},
-  "change_password_rule_matched": "كلمات المرور متطابقة",
-  "@change_password_rule_matched": {},
-  "change_password_validate_with_otp": "التحقق برمز OTP",
-  "@change_password_validate_with_otp": {},
-  "change_password_success_title": "تم تغيير كلمة المرور",
-  "@change_password_success_title": {},
   "change_password_success_message": "لقد قمت بتغيير كلمة المرور بنجاح",
   "@change_password_success_message": {},
-  "forgot_password_success_title": "إعادة تعيين كلمة المرور",
-  "@forgot_password_success_title": {},
-  "forgot_password_success_message": "تم إعادة تعيين كلمة المرور بنجاح. يمكنك تسجيل الدخول باستخدام كلمة المرور الجديدة.",
-  "@forgot_password_success_message": {},
-  "account_tab_manage_payment_card": "إدارة بطاقة الدفع",
-  "@account_tab_manage_payment_card": {},
-  "account_tab_manage_subsecription": "إدارة الاشتراكات",
-  "@account_tab_manage_subsecription": {},
-  "manage_subscription_active_subscription": "اشتراكات فعّالة",
-  "@manage_subscription_active_subscription": {},
-  "manage_subscription_browse_more_offers": "تصفح المزيد من العروض",
-  "@manage_subscription_browse_more_offers": {},
-  "manage_subscription_no_subscriptions": "ليس لديك أي اشتراكات",
-  "@manage_subscription_no_subscriptions": {},
-  "manage_subscription_expiring_in": "تاريخ الانتهاء",
-  "@manage_subscription_expiring_in": {},
-  "manage_subscription_day": "يوم",
-  "@manage_subscription_day": {},
-  "manage_subscription_days": "أيام",
-  "@manage_subscription_days": {},
-  "manage_subscription_unsubscribe": "إلغاء الاشتراك",
-  "@manage_subscription_unsubscribe": {},
-  "manage_subscription_recharge": "إعادة شحن",
-  "@manage_subscription_recharge": {},
-  "manage_subscription_resubscribe": "إعادة الاشتراك",
-  "@manage_subscription_resubscribe": {},
-  "manage_subscription_pending_recharge": "في انتظار إعادة الشحن",
-  "@manage_subscription_pending_recharge": {},
-  "manage_subscription_renew_cancelled": "تم إلغاء التجديد",
-  "@manage_subscription_renew_cancelled": {},
-  "manage_subscription_confirm_unsubscribe": "تأكيد إلغاء الاشتراك",
-  "@manage_subscription_confirm_unsubscribe": {},
-  "manage_subscription_confirm_unsubscribe_description": "سيؤدي إلغاء الاشتراك إلى إيقاف هذا العرض وجميع مزاياه",
-  "@manage_subscription_confirm_unsubscribe_description": {},
-  "manage_subscription_keep_offer": "احتفظ بالعرض",
-  "@manage_subscription_keep_offer": {},
-  "manage_subscription_unsubscribe_success": "تم إلغاء الاشتراك بنجاح.",
-  "@manage_subscription_unsubscribe_success": {},
-  "manage_subscription_renews_on": "يتجدد في",
-  "@manage_subscription_renews_on": {},
-  "manage_subscription_expires_on": "ينتهي في",
-  "@manage_subscription_expires_on": {},
-  "manage_subscription_renew_with_balance": "جدد برصيد",
-  "@manage_subscription_renew_with_balance": {},
-  "manage_subscription_renew_success": "تم تجديد الاشتراك بنجاح.",
-  "@manage_subscription_renew_success": {},
-  "manage_subscription_confirm_renew_title": "تأكيد التجديد",
-  "@manage_subscription_confirm_renew_title": {},
-  "manage_subscription_confirm_renew_body": "إعادة الاشتراك ستجدد هذا العرض وتستعيد مزاياه.",
-  "@manage_subscription_confirm_renew_body": {},
-  "manage_subscription_status_active": "نشيط",
-  "@manage_subscription_status_active": {},
-  "manage_subscription_view_details": "عرض التفاصيل",
-  "@manage_subscription_view_details": {},
-  "manage_subscription_cannot_unsubscribe": "لا يمكنك إلغاء هذا الاشتراك.",
-  "@manage_subscription_cannot_unsubscribe": {},
-  "account_tab_biometric_login": "تسجيل الدخول البيومتري",
-  "@account_tab_biometric_login": {},
-  "account_tab_biometric_enable_dialog_title": "تمكين تسجيل الدخول البيومتري",
-  "@account_tab_biometric_enable_dialog_title": {},
-  "account_tab_biometric_enable_dialog_description": "ستحتاج إلى إدخال كلمة المرور وإكمال المصادقة البيومترية لتمكين تسجيل الدخول البيومتري.",
-  "@account_tab_biometric_enable_dialog_description": {},
-  "account_tab_biometric_disable_dialog_title": "تعطيل تسجيل الدخول البيومتري",
-  "@account_tab_biometric_disable_dialog_title": {},
-  "account_tab_biometric_disable_dialog_description": "سيتم إيقاف تسجيل الدخول البيومتري. يمكنك تمكينه مرة أخرى في أي وقت من الإعدادات.",
-  "@account_tab_biometric_disable_dialog_description": {},
-  "account_tab_biometric_enable_button": "تمكين",
-  "@account_tab_biometric_enable_button": {},
-  "account_tab_biometric_disable_button": "تعطيل",
-  "@account_tab_biometric_disable_button": {},
-  "account_tab_biometric_confirm_password_title": "تأكيد كلمة المرور",
-  "@account_tab_biometric_confirm_password_title": {},
-  "account_tab_biometric_confirm_password_description": "أدخل كلمة المرور الحالية لتمكين تسجيل الدخول البيومتري.",
-  "@account_tab_biometric_confirm_password_description": {},
-  "account_tab_biometric_password_required": "يرجى إدخال كلمة المرور.",
-  "@account_tab_biometric_password_required": {},
-  "account_tab_biometric_wrong_password": "كلمة المرور التي أدخلتها غير صحيحة.",
-  "@account_tab_biometric_wrong_password": {},
   "account_tab_change_language": "تغيير اللغة",
   "@account_tab_change_language": {},
-  "account_tab_select_language": "اختر اللغة",
-  "@account_tab_select_language": {},
-  "account_tab_select_language_subtitle": "اختر لغتك المفضلة للمتابعة",
-  "@account_tab_select_language_subtitle": {},
-  "account_tab_delete_my_account": "حذف حسابي",
-  "@account_tab_delete_my_account": {},
   "account_tab_delete_account": "حذف الحساب",
   "@account_tab_delete_account": {},
-  "account_tab_delete_your_account": "احذف حسابك",
-  "@account_tab_delete_your_account": {},
-  "account_tab_delete_account_description_paragraph1": "أنت على وشك حذف حسابك، مما سيؤدي إلى إزالة بياناتك من التطبيق وتسجيل خروجك. سيتعين عليك التسجيل مرة أخرى للوصول إلى التطبيق.",
-  "@account_tab_delete_account_description_paragraph1": {},
-  "account_tab_delete_account_description_paragraph2": "هذا لا يؤثر على خط هاتفك المحمول أو مزاياك، لذا ستظل قادرًا على الوصول إلى اشتراكاتك وبدلاتك وميزات زين الأخرى.",
-  "@account_tab_delete_account_description_paragraph2": {},
-  "account_tab_confirm_delete_account_title": "تأكيد حذف الحساب",
-  "@account_tab_confirm_delete_account_title": {},
-  "account_tab_confirm_delete_account_description": "هل أنت متأكد أنك تريد حذف حسابك؟",
-  "@account_tab_confirm_delete_account_description": {},
-  "account_tab_delete_account_confirm_button_title": "مسح",
-  "@account_tab_delete_account_confirm_button_title": {},
-  "account_tab_delete_account_cancel_button_title": "إلغاء",
-  "@account_tab_delete_account_cancel_button_title": {},
-  "account_tab_confirm_logout_title": "تأكيد تسجيل الخروج",
-  "@account_tab_confirm_logout_title": {},
-  "account_tab_confirm_logout_description": "هل أنت متأكد من رغبتك في تسجيل الخروج؟",
-  "@account_tab_confirm_logout_description": {},
-  "account_tab_confirm_logout_confirm_button_title": "تسجيل الخروج",
-  "@account_tab_confirm_logout_confirm_button_title": {},
-  "account_tab_confirm_logout_cancel_button_title": "إلغاء",
-  "@account_tab_confirm_logout_cancel_button_title": {},
-  "main_container_exit_app_title": "الخروج من التطبيق",
-  "@main_container_exit_app_title": {},
-  "main_container_exit_app_description": "هل أنت متأكد من رغبتك في الخروج من التطبيق؟",
-  "@main_container_exit_app_description": {},
-  "main_container_exit_app_confirm": "خروج",
-  "@main_container_exit_app_confirm": {},
-  "account_tab_support": "دعم",
-  "@account_tab_support": {},
-  "account_tab_support_subtitle": "نحن هنا للمساعدة",
-  "@account_tab_support_subtitle": {},
-  "account_tab_whatsapp_care": "واتساب زين كير",
-  "@account_tab_whatsapp_care": {},
-  "account_tab_help_and_support": "المساعدة والدعم",
-  "@account_tab_help_and_support": {},
-  "help_and_support_tutorials": "الدروس",
-  "@help_and_support_tutorials": {},
-  "help_and_support_tutorial_registration": "التسجيل",
-  "@help_and_support_tutorial_registration": {},
-  "help_and_support_tutorial_forget_password": "نسيت كلمة المرور",
-  "@help_and_support_tutorial_forget_password": {},
-  "help_and_support_tutorial_recharge_by_voucher": "الشحن بواسطة قسيمة",
-  "@help_and_support_tutorial_recharge_by_voucher": {},
-  "help_and_support_tutorial_recharge_by_credit_card": "الشحن بواسطة بطاقة ائتمان",
-  "@help_and_support_tutorial_recharge_by_credit_card": {},
-  "help_and_support_tutorial_offers_subscription": "اشتراك العروض",
-  "@help_and_support_tutorial_offers_subscription": {},
-  "help_and_support_support_live_chat": "الدردشة المباشرة",
-  "@help_and_support_support_live_chat": {},
-  "help_and_support_support_live_chat_failed": "فشل في فتح الدردشة المباشرة. يرجى المحاولة مرة أخرى.",
-  "@help_and_support_support_live_chat_failed": {},
-  "help_and_support_support_ticket_management": "إدارة التذاكر",
-  "@help_and_support_support_ticket_management": {},
-  "help_and_support_ticket_select_complaint_type": "اختر نوع الشكوى",
-  "@help_and_support_ticket_select_complaint_type": {},
-  "help_and_support_ticket_sort_by_date": "ترتيب حسب التاريخ",
-  "@help_and_support_ticket_sort_by_date": {},
-  "help_and_support_ticket_sort_by_latest": "ترتيب حسب الأحدث",
-  "@help_and_support_ticket_sort_by_latest": {},
-  "help_and_support_ticket_sort_by_oldest": "ترتيب حسب الأقدم",
-  "@help_and_support_ticket_sort_by_oldest": {},
-  "account_tab_find_zain_near_me": "ابحث عن زين بالقرب منك",
-  "@account_tab_find_zain_near_me": {},
-  "account_tab_edit_profile": "تعديل",
-  "@account_tab_edit_profile": {},
-  "account_tab_enter_full_name_fullNameHint": "أدخل اسمك الكامل",
-  "@account_tab_enter_full_name_fullNameHint": {},
   "account_tab_logout": "تسجيل الخروج",
   "@account_tab_logout": {},
-  "account_tab_could_not_launch_whatsapp": "لم أتمكن من تشغيل WhatsApp",
-  "@account_tab_could_not_launch_whatsapp": {},
-  "menu_tab_menu": "الخدمات",
-  "@menu_tab_menu": {},
-  "menu_tab_digital_services": "الخدمات الرقمية",
-  "@menu_tab_digital_services": {},
-  "menu_tab_manage_data_usage": "استخدام البيانات",
-  "@menu_tab_manage_data_usage": {},
-  "manage_data_usage_subtitle": "حدّد استخدامك للإنترنت من رصيد كافو",
-  "@manage_data_usage_subtitle": {},
-  "manage_data_usage_limit_description": "اختر الحد الذي يمكن إنفاقه على الإنترنت عند امتلاكك رصيد كافٍ من باقة كافو",
-  "@manage_data_usage_limit_description": {},
-  "manage_data_usage_header_assigned_credit": "لقد خصصت {amount} {currency} من رصيدك لاستخدام الإنترنت!",
-  "@manage_data_usage_header_assigned_credit": {
-    "placeholders": {
-      "amount": {
-        "type": "String"
-      },
-      "currency": {
-        "type": "String"
-      }
-    }
-  },
-  "manage_data_usage_header_amount_reset": "سيتم إعادة تعيين هذا المبلغ مع كل تجديد ناجح للباقة",
-  "@manage_data_usage_header_amount_reset": {},
-  "manage_data_blocking_message": "لا يمكنك تنفيذ العملية الآن، يرجى المحاولة مرة أخرى بعد {date}",
-  "@manage_data_blocking_message": {
-    "placeholders": {
-      "date": {
-        "type": "String"
-      }
-    }
-  },
-  "menu_tab_manage_subscriptions": "الاشتراكات",
-  "@menu_tab_manage_subscriptions": {},
-  "menu_tab_view_free_units": "عرض الوحدات المجانية",
-  "@menu_tab_view_free_units": {},
-  "menu_tab_recharge": "إعادة الشحن",
-  "@menu_tab_recharge": {},
-  "menu_tab_give_feedback": "تقديم ملاحظات",
-  "@menu_tab_give_feedback": {},
-  "give_feedback_title": "نقدر ملاحظاتك",
-  "@give_feedback_title": {},
-  "give_feedback_description": "تعليقاتك تساعدنا على تحسين خدماتنا. يرجى تقييم تجربتك ومشاركة أي مشاكل أو اقتراحات.",
-  "@give_feedback_description": {},
-  "give_feedback_hint": "اكتب ملاحظاتك هنا....",
-  "@give_feedback_hint": {},
-  "give_feedback_hint_negative": "آه! من فضلك ساعدنا على التحسين",
-  "@give_feedback_hint_negative": {},
-  "give_feedback_hint_positive": "إذن نحن نقدم أداءً رائعاً؟",
-  "@give_feedback_hint_positive": {},
-  "give_feedback_send_button": "إرسال الملاحظات",
-  "@give_feedback_send_button": {},
-  "give_feedback_success_message": "شكراً لك على ملاحظاتك!",
-  "@give_feedback_success_message": {},
-  "menu_tab_get_your_credit_info": "معلوماتك الائتمانية",
-  "@menu_tab_get_your_credit_info": {},
-  "get_credit_info_no_activity_found": "لم يتم العثور على أي نشاط",
-  "@get_credit_info_no_activity_found": {},
-  "get_credit_info_last_3_days": "(آخر ٣ أيام)",
-  "@get_credit_info_last_3_days": {},
-  "get_credit_info_service_type": "نوع الخدمة",
-  "@get_credit_info_service_type": {},
-  "get_credit_info_time": "الوقت",
-  "@get_credit_info_time": {},
-  "get_credit_info_b_number": "رقم الطرف الآخر",
-  "@get_credit_info_b_number": {},
-  "get_credit_info_service_type_received_amount": "المبلغ المستلم",
-  "@get_credit_info_service_type_received_amount": {},
-  "get_credit_info_service_type_transferred_amount": "المبلغ المحول",
-  "@get_credit_info_service_type_transferred_amount": {},
-  "get_credit_info_service_type_adjustment": "تعديل",
-  "@get_credit_info_service_type_adjustment": {},
-  "get_credit_info_service_type_service_fee": "رسوم الخدمة",
-  "@get_credit_info_service_type_service_fee": {},
-  "get_credit_info_service_type_balance_recharge": "شحن الرصيد",
-  "@get_credit_info_service_type_balance_recharge": {},
-  "get_credit_info_service_type_call": "مكالمة",
-  "@get_credit_info_service_type_call": {},
-  "get_credit_info_service_type_video_call": "مكالمة فيديو",
-  "@get_credit_info_service_type_video_call": {},
-  "get_credit_info_service_type_call_roaming": "مكالمة تجوال",
-  "@get_credit_info_service_type_call_roaming": {},
-  "get_credit_info_service_type_sms_roaming": "رسالة تجوال",
-  "@get_credit_info_service_type_sms_roaming": {},
-  "get_credit_info_service_type_sms": "رسالة نصية",
-  "@get_credit_info_service_type_sms": {},
-  "get_credit_info_service_type_mms": "رسالة وسائط",
-  "@get_credit_info_service_type_mms": {},
-  "get_credit_info_service_type_data": "البيانات",
-  "@get_credit_info_service_type_data": {},
-  "get_credit_info_service_type_data_roaming": "بيانات تجوال",
-  "@get_credit_info_service_type_data_roaming": {},
-  "get_credit_info_service_type_bundle_fee": "رسوم الباقة",
-  "@get_credit_info_service_type_bundle_fee": {},
-  "get_credit_info_service_type_installment": "القسط",
-  "@get_credit_info_service_type_installment": {},
-  "get_credit_info_service_type_unknown": "غير محدد",
-  "@get_credit_info_service_type_unknown": {},
-  "recharge_choose_recharge_method": "اختر طريقة إعادة الشحن الخاصة بك",
-  "@recharge_choose_recharge_method": {},
-  "recharge_recharge_method_voucher_pin": "رقم التعريف للقسيمة",
-  "@recharge_recharge_method_voucher_pin": {},
-  "recharge_recharge_method_credit_debit": "بطاقة الائتمان/الخصم",
-  "@recharge_recharge_method_credit_debit": {},
-  "recharge_recharge_method_zain_cash": "زين كاش",
-  "@recharge_recharge_method_zain_cash": {},
-  "recharge_voucher_pin_enter_or_scan_voucher": "أدخل أو امسح القسيمة",
-  "@recharge_voucher_pin_enter_or_scan_voucher": {},
-  "recharge_voucher_pin_enter_the_16_digit_voucher_pin": "أدخل رمز القسيمة المكون من 16 رقمًا",
-  "@recharge_voucher_pin_enter_the_16_digit_voucher_pin": {},
-  "recharge_voucher_pin_recharge": "إعادة الشحن",
-  "@recharge_voucher_pin_recharge": {},
-  "recharge_voucher_pin_please_enter_zain_number_you_want_to_recharge": "الرجاء إدخال رقم زين الذي ترغب في إعادة شحنه.",
-  "@recharge_voucher_pin_please_enter_zain_number_you_want_to_recharge": {},
-  "recharge_voucher_pin_recharge_to_others": "إعادة الشحن للآخرين",
-  "@recharge_voucher_pin_recharge_to_others": {},
-  "recharge_voucher_pin_recharge_failed": "فشل إعادة الشحن",
-  "@recharge_voucher_pin_recharge_failed": {},
-  "recharge_voucher_pin_recharge_failed_message": "تم إدخال رمز غير صالح، يرجى التحقق وإعادة إدخال رمز القسيمة المكوّن من 16 رقماً.",
-  "@recharge_voucher_pin_recharge_failed_message": {},
-  "recharge_voucher_pin_voucher_already_used_message": "تم استخدام هذه القسيمة مسبقاً.",
-  "@recharge_voucher_pin_voucher_already_used_message": {},
-  "recharge_voucher_pin_success_message": "لقد تم شحن رصيدك بنجاح",
-  "@recharge_voucher_pin_success_message": {},
-  "recharge_success_via": "عبر",
-  "@recharge_success_via": {},
-  "recharge_success_method_voucher": "القسيمة",
-  "@recharge_success_method_voucher": {},
-  "recharge_success_via_credit_card_to": "عبر بطاقة الائتمان إلى",
-  "@recharge_success_via_credit_card_to": {},
-  "recharge_success_recharge_another_number": "اشحن رقماً آخر",
-  "@recharge_success_recharge_another_number": {},
-  "common_back_to_home": "العودة إلى الرئيسية",
-  "@common_back_to_home": {},
-  "recharge_credit_debit_card_credit_debit_card": "بطاقة الائتمان/الخصم",
-  "@recharge_credit_debit_card_credit_debit_card": {},
-  "recharge_credit_debit_card_enter_the_amount_you_want_to_recharge": "أدخل المبلغ الذي تريد إعادة شحنه",
-  "@recharge_credit_debit_card_enter_the_amount_you_want_to_recharge": {},
-  "recharge_credit_debit_card_enter_the_amount_you_want_to_pay": "أدخل المبلغ الذي تريد دفع فاتورتك به",
-  "@recharge_credit_debit_card_enter_the_amount_you_want_to_pay": {},
-  "recharge_credit_debit_card_select_amount": "حدد المبلغ",
-  "@recharge_credit_debit_card_select_amount": {},
-  "recharge_credit_debit_card_select_amount_you_want_to_recharge": "حدد المبلغ الذي تريد إعادة شحنه",
-  "@recharge_credit_debit_card_select_amount_you_want_to_recharge": {},
-  "recharge_credit_debit_card_payment_unsuccessful": "فشل الدفع",
-  "@recharge_credit_debit_card_payment_unsuccessful": {},
-  "recharge_credit_debit_card_payment_unsuccessful_message": "فشلت عملية الدفع ببطاقة الائتمان. يرجى التأكد من صحة تفاصيل البطاقة والمحاولة مرة أخرى.",
-  "@recharge_credit_debit_card_payment_unsuccessful_message": {},
-  "recharge_credit_debit_card_3ds_cancelled": "تم إلغاء مصادقة الدفع.",
-  "@recharge_credit_debit_card_3ds_cancelled": {},
-  "recharge_credit_debit_card_3ds_webview_title": "التحقق الآمن",
-  "@recharge_credit_debit_card_3ds_webview_title": {},
-  "recharge_credit_debit_card_payment_successful": "تم الدفع بنجاح",
-  "@recharge_credit_debit_card_payment_successful": {},
-  "recharge_credit_debit_card_payment_successful_message": "تمت معالجة دفعتك بنجاح.",
-  "@recharge_credit_debit_card_payment_successful_message": {},
-  "recharge_credit_debit_card_additional_fees": "قد يتم تطبيق رسوم إضافية من قبل البنك أو جهة إصدار بطاقة الائتمان",
-  "@recharge_credit_debit_card_additional_fees": {},
-  "recharge_credit_debit_card_your_card_number": "رقم بطاقتك",
-  "@recharge_credit_debit_card_your_card_number": {},
-  "recharge_credit_debit_card_your_name_on_card": "اسمك على البطاقة",
-  "@recharge_credit_debit_card_your_name_on_card": {},
-  "recharge_credit_debit_card_powered_by": "مدعوم من",
-  "@recharge_credit_debit_card_powered_by": {},
-  "recharge_credit_debit_card_recharge_with_zain_cash": "شحن مع زين كاش",
-  "@recharge_credit_debit_card_recharge_with_zain_cash": {},
-  "recharge_credit_debit_card_totalAmount": "المبلغ الإجمالي",
-  "@recharge_credit_debit_card_totalAmount": {},
-  "recharge_credit_debit_card_current_balance": "الرصيد الحالي",
-  "@recharge_credit_debit_card_current_balance": {},
-  "recharge_credit_debit_card_expiry_hint": "MM/YY",
-  "@recharge_credit_debit_card_expiry_hint": {},
-  "recharge_credit_debit_card_cvv_hint": "CVV",
-  "@recharge_credit_debit_card_cvv_hint": {},
-  "recharge_credit_debit_card_expiry_error_month": "يجب أن يكون الشهر بين 01 و 12",
-  "@recharge_credit_debit_card_expiry_error_month": {},
-  "recharge_credit_debit_card_expiry_error_past": "لا يمكن أن يكون تاريخ الانتهاء في الماضي",
-  "@recharge_credit_debit_card_expiry_error_past": {},
-  "recharge_credit_debit_card_expiry_error_future": "لا يمكن أن يكون تاريخ الانتهاء أكثر من {maxYears} سنوات في المستقبل",
-  "@recharge_credit_debit_card_expiry_error_future": {
-    "placeholders": {
-      "maxYears": {
-        "type": "int"
-      }
-    }
-  },
-  "recharge_zain_cash_pay_bill_with_zain_cash": "ادفع الفاتورة باستخدام زين كاش",
-  "@recharge_zain_cash_pay_bill_with_zain_cash": {},
-  "recharge_zain_cash_webview_pay_with_zain_cash": "ادفع باستخدام زين كاش",
-  "@recharge_zain_cash_webview_pay_with_zain_cash": {},
-  "recharge_zain_cash_webview_error_loading": "خطأ في تحميل زين كاش",
-  "@recharge_zain_cash_webview_error_loading": {},
-  "recharge_zain_cash_enter_recharge_amount": "الرجاء إدخال مبلغ إعادة الشحن",
-  "@recharge_zain_cash_enter_recharge_amount": {},
-  "recharge_zain_cash_confirm_amount_title": "تأكيد المبلغ",
-  "@recharge_zain_cash_confirm_amount_title": {},
-  "recharge_zain_cash_confirm_amount_message": "أنت على وشك دفع {amount}. هل ترغب بالاستمرار؟",
-  "@recharge_zain_cash_confirm_amount_message": {
-    "placeholders": {
-      "amount": {
-        "type": "String"
-      }
-    }
-  },
-  "recharge_transfer_credit_transferCredit": "تحويل الرصيد",
-  "@recharge_transfer_credit_transferCredit": {},
-  "recharge_transfer_credit_please_enter_zain_number_you_want_to_send_credit_to": "الرجاء إدخال رقم زين الذي ترغب في تحويل الرصيد إليه",
-  "@recharge_transfer_credit_please_enter_zain_number_you_want_to_send_credit_to": {},
-  "recharge_transfer_credit_please_enter_amount_of_money": "الرجاء إدخال مبلغ المال الذي ترغب في إرساله.",
-  "@recharge_transfer_credit_please_enter_amount_of_money": {},
-  "recharge_transfer_credit_noContactsPermissionButton": "تفعيل من الإعدادات",
-  "@recharge_transfer_credit_noContactsPermissionButton": {},
-  "recharge_transfer_credit_no_permission_for_contact": "لا يوجد إذن لقراءة قائمة جهات الاتصال الخاصة بك",
-  "@recharge_transfer_credit_no_permission_for_contact": {},
-  "recharge_transfer_credit_no_contacts_to_show": "لا توجد جهات اتصال لعرضها",
-  "@recharge_transfer_credit_no_contacts_to_show": {},
-  "recharge_transfer_credit_select_contact": "قائمة جهات الاتصال",
-  "@recharge_transfer_credit_select_contact": {},
-  "recharge_transfer_credit_transferAmount": "تحويل المبلغ",
-  "@recharge_transfer_credit_transferAmount": {},
-  "recharge_transfer_credit_confirmTransfer": "تأكيد التحويل",
-  "@recharge_transfer_credit_confirmTransfer": {},
-  "recharge_transfer_credit_confirmTransferMessage": "هل أنت متأكد أنك تريد تحويل رصيد بقيمة {amount} إلى {phoneNumber}",
-  "@recharge_transfer_credit_confirmTransferMessage": {
-    "placeholders": {
-      "phoneNumber": {
-        "type": "String"
-      },
-      "amount": {
-        "type": "String"
-      }
-    }
-  },
-  "recharge_transfer_credit_transfer": "تحويل",
-  "@recharge_transfer_credit_transfer": {},
-  "contact_list_no_contacts_to_show": "لا توجد جهات اتصال لعرضها",
-  "@contact_list_no_contacts_to_show": {},
-  "contact_list_no_permission_for_contact": "لا يوجد إذن لقراءة قائمة جهات الاتصال الخاصة بك",
-  "@contact_list_no_permission_for_contact": {},
-  "contact_list_no_permission_button": "تفعيل من الإعدادات",
-  "@contact_list_no_permission_button": {},
-  "recharge_transfer_credit_search": "بحث",
-  "@recharge_transfer_credit_search": {},
-  "contact_list_select_contact": "اختر جهة اتصال",
-  "@contact_list_select_contact": {},
-  "loyalty_dashboard_how_to_earn_points": "كيفية كسب النقاط",
-  "@loyalty_dashboard_how_to_earn_points": {},
-  "loyalty_dashboard_redeem_points": "استرداد النقاط",
-  "@loyalty_dashboard_redeem_points": {},
-  "loyalty_dashboard_hot_bundles": "الحزم الساخنة",
-  "@loyalty_dashboard_hot_bundles": {},
-  "loyalty_dashboard_points_history": "سجل النقاط",
-  "@loyalty_dashboard_points_history": {},
-  "loyalty_dashboard_help": "المساعدة",
-  "@loyalty_dashboard_help": {},
-  "loyalty_dashboard_platinum": "البلاتين",
-  "@loyalty_dashboard_platinum": {},
-  "loyalty_dashboard_silver": "فضي",
-  "@loyalty_dashboard_silver": {},
-  "loyalty_redeem_points_bundles": "حزم",
-  "@loyalty_redeem_points_bundles": {},
-  "loyalty_redeem_points_credits": "الاعتمادات",
-  "@loyalty_redeem_points_credits": {},
-  "loyalty_redeem_points_stores": "المتاجر",
-  "@loyalty_redeem_points_stores": {},
-  "loyalty_redeem_points_stores_location_services_disabled_message": "يرجى تفعيل خدمات الموقع للعثور على المتاجر القريبة.",
-  "@loyalty_redeem_points_stores_location_services_disabled_message": {},
-  "loyalty_redeem_points_stores_permission_denied_message": "يرجى تفعيل إذن الموقع للعثور على المتاجر القريبة.",
-  "@loyalty_redeem_points_stores_permission_denied_message": {},
-  "loyalty_redeem_points_stores_permission_denied_forever_message": "تم رفض إذن الموقع بشكل دائم. يرجى فتح إعدادات التطبيق لتفعيله.",
-  "@loyalty_redeem_points_stores_permission_denied_forever_message": {},
-  "loyalty_redeem_points_stores_enable_location_services": "تفعيل خدمات الموقع",
-  "@loyalty_redeem_points_stores_enable_location_services": {},
-  "loyalty_redeem_points_stores_request_permission_again": "طلب الإذن مرة أخرى",
-  "@loyalty_redeem_points_stores_request_permission_again": {},
-  "loyalty_redeem_points_stores_open_app_settings": "فتح الإعدادات",
-  "@loyalty_redeem_points_stores_open_app_settings": {},
-  "loyalty_redeem_points_points": "نقاط",
-  "@loyalty_redeem_points_points": {},
-  "loyalty_hot_bundles_loyalty_points_label": "نقاط ممنون",
-  "@loyalty_hot_bundles_loyalty_points_label": {},
-  "loyalty_redeem_points_no_bundles_available": "لا توجد باقات متاحة",
-  "@loyalty_redeem_points_no_bundles_available": {},
-  "loyalty_bundles_redeem_success_message": "تم تفعيل باقتك بنجاح.",
-  "@loyalty_bundles_redeem_success_message": {},
-  "loyalty_redeem_points_please_enter_amount_of_points_you_want_to_redeem_to_credit": "الرجاء إدخال عدد النقاط التي ترغب في استبدالها في حسابك",
-  "@loyalty_redeem_points_please_enter_amount_of_points_you_want_to_redeem_to_credit": {},
-  "loyalty_redeem_points_redeem_mamnoon_points_to_credit_to_be_used_for_all_networks": "استبدل نقاط ممنون برصيد يُستخدم في جميع الشبكات",
-  "@loyalty_redeem_points_redeem_mamnoon_points_to_credit_to_be_used_for_all_networks": {},
-  "loyalty_extend_validity_select_length_of_extension": "حدد فترة التمديد",
-  "@loyalty_extend_validity_select_length_of_extension": {},
-  "loyalty_extend_validity_select_extension_subtitle": "اختر المدة التي تريد تمديد صلاحية خطك لها",
-  "@loyalty_extend_validity_select_extension_subtitle": {},
-  "loyalty_extend_validity_option_subtitle": "تمديد الصلاحية لمدة {duration}",
-  "@loyalty_extend_validity_option_subtitle": {
-    "placeholders": {
-      "duration": {
-        "type": "String"
-      }
-    }
-  },
-  "loyalty_extend_validity_service_active_info": "ستكون الخدمة نشطة للفترة المحددة",
-  "@loyalty_extend_validity_service_active_info": {},
-  "loyalty_extend_validity_extension_label": "التمديد",
-  "@loyalty_extend_validity_extension_label": {},
-  "loyalty_extend_validity_total_price_label": "السعر الإجمالي",
-  "@loyalty_extend_validity_total_price_label": {},
-  "loyalty_extend_validity_day": "يوم",
-  "@loyalty_extend_validity_day": {},
-  "loyalty_extend_validity_days": "أيام",
-  "@loyalty_extend_validity_days": {},
-  "loyalty_extend_validity_week": "أسبوع",
-  "@loyalty_extend_validity_week": {},
-  "loyalty_extend_validity_weeks": "أسابيع",
-  "@loyalty_extend_validity_weeks": {},
-  "loyalty_extend_validity_month": "شهر",
-  "@loyalty_extend_validity_month": {},
-  "loyalty_extend_validity_months": "شهور",
-  "@loyalty_extend_validity_months": {},
-  "loyalty_extend_validity_year": "سنة",
-  "@loyalty_extend_validity_year": {},
-  "loyalty_extend_validity_extendValidity": "تمديد الصلاحية",
-  "@loyalty_extend_validity_extendValidity": {},
-  "loyalty_extend_validity_extendValidityAlertTitle": "تأكيد تمديد الصلاحية",
-  "@loyalty_extend_validity_extendValidityAlertTitle": {},
-  "loyalty_extend_validity_extendValidityAlertBody1": "سيتم تمديد صلاحية الائتمان الخاص بك",
-  "@loyalty_extend_validity_extendValidityAlertBody1": {},
-  "loyalty_extend_validity_extendValidityAlertBody2": "مع رسوم قدرها",
-  "@loyalty_extend_validity_extendValidityAlertBody2": {},
-  "loyalty_extend_validity_extension_successful": "تم تمديد الصلاحية بنجاح",
-  "@loyalty_extend_validity_extension_successful": {},
-  "loyalty_extend_validity_success_message": "تم تمديد الصلاحية بنجاح.",
-  "@loyalty_extend_validity_success_message": {},
-  "loyalty_extend_validity_noThanks": "لا، شكراً",
-  "@loyalty_extend_validity_noThanks": {},
-  "digital_services_explore": "يستكشف",
-  "@digital_services_explore": {},
-  "digital_services_all": "الكل",
-  "@digital_services_all": {},
-  "digital_services_games": "ألعاب",
-  "@digital_services_games": {},
-  "digital_services_ehealth_insurance": "الصحة الإلكترونية والتأمين",
-  "@digital_services_ehealth_insurance": {},
-  "digital_services_elearning": "التعلم الإلكتروني",
-  "@digital_services_elearning": {},
-  "digital_services_entertainment": "ترفيه",
-  "@digital_services_entertainment": {},
-  "digital_services_zain_world_kids": "زين وورلد كيدز",
-  "@digital_services_zain_world_kids": {},
-  "digital_services_esports_service": "خدمة الرياضات الإلكترونية",
-  "@digital_services_esports_service": {},
-  "digital_services_appstore": "متجر التطبيقات",
-  "@digital_services_appstore": {},
-  "digital_services_voucher_and_estores": "قسائم ومتاجر إلكترونية",
-  "@digital_services_voucher_and_estores": {},
-  "digital_services_no_services_available": "لا توجد خدمة متاحة",
-  "@digital_services_no_services_available": {},
-  "digital_services_details": "تفاصيل",
-  "@digital_services_details": {},
-  "update_version_update_version_cancel": "إلغاء",
-  "@update_version_update_version_cancel": {},
-  "update_version_update_required_skip": "تخطي",
-  "@update_version_update_required_skip": {},
-  "update_version_update_version_update_badge": "تحديث جديد",
-  "@update_version_update_version_update_badge": {},
-  "update_version_update_version_update_now": "حدّث التطبيق الآن!",
-  "@update_version_update_version_update_now": {},
-  "update_version_update_required_now": "حدّث التطبيق الآن!",
-  "@update_version_update_required_now": {},
-  "update_version_update_version_update_title": "التحديث مطلوب",
-  "@update_version_update_version_update_title": {},
-  "update_version_update_required_title": "التحديث مطلوب",
-  "@update_version_update_required_title": {},
-  "update_version_update_version_update_desc": "يتوفر إصدار جديد من التطبيق.\nاحصل على أحدث إصدار للاستمتاع بأحدث خدماتنا،\nوميزاتنا المحسّنة وأفضل تجربة ممكنة.",
-  "@update_version_update_version_update_desc": {},
-  "update_version_update_required_desc": "يتوفر إصدار جديد من التطبيق.\nاحصل على أحدث إصدار للاستمتاع بأحدث خدماتنا،\nوميزاتنا المحسّنة وأفضل تجربة ممكنة.",
-  "@update_version_update_required_desc": {},
-  "update_version_update_highlight_better_performance_title": "أداء أفضل",
-  "@update_version_update_highlight_better_performance_title": {},
-  "update_version_update_highlight_bug_fixes_title": "إصلاح الأخطاء",
-  "@update_version_update_highlight_bug_fixes_title": {},
-  "update_version_update_highlight_security_improvements_title": "تحسينات الأمان",
-  "@update_version_update_highlight_security_improvements_title": {},
-  "edit_profile_screen_title": "تعديل الملف الشخصي",
-  "@edit_profile_screen_title": {},
-  "edit_profile_photo_sheet_title": "تعديل صورة الملف الشخصي",
-  "@edit_profile_photo_sheet_title": {},
-  "edit_profile_remove_current_photo": "إزالة الصورة الحالية",
-  "@edit_profile_remove_current_photo": {},
-  "edit_profile_select_new_photo": "اختر صورة جديدة",
-  "@edit_profile_select_new_photo": {},
-  "edit_profile_capture_new_photo": "التقاط صورة جديدة",
-  "@edit_profile_capture_new_photo": {},
-  "edit_profile_full_name": "الاسم الكامل",
-  "@edit_profile_full_name": {},
-  "edit_profile_save_changes": "حفظ التغييرات",
-  "@edit_profile_save_changes": {},
-  "edit_profile_confirm_changes_title": "تأكيد التغييرات",
-  "@edit_profile_confirm_changes_title": {},
-  "edit_profile_confirm_changes_message": "هل أنت متأكد من رغبتك في حفظ هذه التغييرات؟",
-  "@edit_profile_confirm_changes_message": {},
-  "edit_profile_yes_please": "نعم، من فضلك",
-  "@edit_profile_yes_please": {},
-  "edit_profile_back": "خلف",
-  "@edit_profile_back": {},
-  "edit_profile_remove_photo_title": "إزالة الصورة",
-  "@edit_profile_remove_photo_title": {},
-  "edit_profile_remove_photo_message": "هل أنت متأكد من رغبتك في حذف الصورة الحالية؟",
-  "@edit_profile_remove_photo_message": {},
   "common_something_went_wrong": "حدث خطأ ما",
   "@common_something_went_wrong": {},
   "common_something_went_wrong_message": "لم نتوقع حدوث ذلك. يرجى المحاولة مرة أخرى بعد لحظات.",
   "@common_something_went_wrong_message": {},
   "common_contact_support": "تواصل مع الدعم",
   "@common_contact_support": {},
-  "zain_near_me_list_of_stores": "قائمة المتاجر",
-  "@zain_near_me_list_of_stores": {},
-  "zain_near_me_map_view": "عرض الخريطة",
-  "@zain_near_me_map_view": {},
-  "zain_near_me_no_stores_found": "لم يتم العثور على متاجر",
-  "@zain_near_me_no_stores_found": {},
-  "zain_near_me_enable_location_message": "يرجى تفعيل إذن الموقع لاستخدام هذه الميزة",
-  "@zain_near_me_enable_location_message": {},
-  "zain_near_me_enable_location_button": "تفعيل إذن الموقع",
-  "@zain_near_me_enable_location_button": {},
-  "zain_near_me_request_permission_again": "طلب الإذن مرة أخرى",
-  "@zain_near_me_request_permission_again": {},
-  "zain_near_me_open_settings": "فتح الإعدادات",
-  "@zain_near_me_open_settings": {},
-  "zain_near_me_map_view_coming_soon": "عرض الخريطة قريباً",
-  "@zain_near_me_map_view_coming_soon": {},
-  "zain_near_me_permission_permanently_denied": "تم رفض إذن الموقع بشكل دائم. يرجى فتح إعدادات التطبيق لتفعيله.",
-  "@zain_near_me_permission_permanently_denied": {},
-  "zain_near_me_get_directions": "الحصول على الاتجاهات",
-  "@zain_near_me_get_directions": {},
-  "zain_near_me_close": "إغلاق",
-  "@zain_near_me_close": {},
-  "zain_near_me_store_location_not_available": "موقع المتجر غير متاح",
-  "@zain_near_me_store_location_not_available": {},
-  "zain_near_me_distance_km_away": "{distance} كم",
-  "@zain_near_me_distance_km_away": {
-    "placeholders": {
-      "distance": {
-        "type": "String"
-      }
-    }
-  },
-  "zain_near_me_opening_hours_day": "اليوم",
-  "@zain_near_me_opening_hours_day": {},
-  "zain_near_me_opening_hours_work_hours": "ساعات العمل",
-  "@zain_near_me_opening_hours_work_hours": {},
-  "zain_near_me_opening_hours_rest_hours": "ساعات الراحة",
-  "@zain_near_me_opening_hours_rest_hours": {},
-  "zain_near_me_opening_hours_closed": "مغلق",
-  "@zain_near_me_opening_hours_closed": {},
-  "zain_near_me_store_status_opens_closes": "يفتح {startTime} • يغلق {endTime}",
-  "@zain_near_me_store_status_opens_closes": {
-    "placeholders": {
-      "startTime": {
-        "type": "String"
-      },
-      "endTime": {
-        "type": "String"
-      }
-    }
-  },
-  "zain_near_me_store_status_closed": "مغلق",
-  "@zain_near_me_store_status_closed": {},
-  "zain_near_me_day_sunday": "الأحد",
-  "@zain_near_me_day_sunday": {},
-  "zain_near_me_day_monday": "الاثنين",
-  "@zain_near_me_day_monday": {},
-  "zain_near_me_day_tuesday": "الثلاثاء",
-  "@zain_near_me_day_tuesday": {},
-  "zain_near_me_day_wednesday": "الأربعاء",
-  "@zain_near_me_day_wednesday": {},
-  "zain_near_me_day_thursday": "الخميس",
-  "@zain_near_me_day_thursday": {},
-  "zain_near_me_day_friday": "الجمعة",
-  "@zain_near_me_day_friday": {},
-  "zain_near_me_day_saturday": "السبت",
-  "@zain_near_me_day_saturday": {},
-  "zain_near_me_time_am": "ص",
-  "@zain_near_me_time_am": {},
-  "zain_near_me_time_pm": "م",
-  "@zain_near_me_time_pm": {},
-  "kafoo_intro_slide1_title": "ما هو كفوو؟",
-  "@kafoo_intro_slide1_title": {},
-  "kafoo_intro_slide1_description": "باقات كفوو تمنحك رصيداً مضاعفاً ومرونة غير محدودة للمكالمات والرسائل عبر جميع الشبكات المحلية واستخدام إنترنت 4.5G+.",
-  "@kafoo_intro_slide1_description": {},
-  "kafoo_intro_slide2_title": "ما هو كفوو فاميلي؟",
-  "@kafoo_intro_slide2_title": {},
-  "kafoo_intro_slide2_description": "مع باقات كفوو فاميلي الجديدة، يمكنك الاستمتاع بجميع مزايا كفوو ومشاركتها مع عائلتك وأصدقائك.",
-  "@kafoo_intro_slide2_description": {},
-  "kafoo_intro_slide3_title": "وسائل التواصل مجاناً مع كفوو!",
-  "@kafoo_intro_slide3_title": {},
-  "kafoo_intro_slide3_description": "استمتع بوسائل التواصل الاجتماعي مجاناً دون حدود مع تطبيقاتك المفضلة. احصل على 20% رصيد إضافي عند الاشتراك عبر التطبيق في كفوو 20 و25 و30.",
-  "@kafoo_intro_slide3_description": {},
-  "kafoo_intro_explore_bundles": "استكشف باقات كفوو!",
-  "@kafoo_intro_explore_bundles": {},
   "notifications_screen_title": "الإشعارات",
   "@notifications_screen_title": {},
   "notifications_mark_all_as_read": "تعيين الكل كمقروء",
   "@notifications_mark_all_as_read": {},
   "notifications_show_unread_only": "إظهار غير المقروء فقط",
   "@notifications_show_unread_only": {},
-  "notifications_error_fetching": "خطأ في جلب الإشعارات",
-  "@notifications_error_fetching": {},
-  "auth_native_biometric_title": "تمكين تسجيل الدخول البيومتري",
-  "@auth_native_biometric_title": {},
-  "auth_native_biometric_subtitle": "ستتمكن من تسجيل الدخول بشكل أسرع",
-  "@auth_native_biometric_subtitle": {},
-  "auth_native_biometric_enable_button": "تمكين البيومتري",
-  "@auth_native_biometric_enable_button": {},
-  "auth_native_biometric_skip_button": "تخطي",
-  "@auth_native_biometric_skip_button": {},
-  "loyalty_dashboard_mamnoon_rewards": "مكافآت ممون",
-  "@loyalty_dashboard_mamnoon_rewards": {},
-  "loyalty_dashboard_mamnoon_gifts_discounts": "دیاری و داشکاندن",
-  "@loyalty_dashboard_mamnoon_gifts_discount": {},
-  "loyalty_dashboard_mamnoon_redeem": "يسترد",
-  "@loyalty_dashboard_mamnoon_redeem": {},
-  "loyalty_dashboard_mamnoon_enter_points": "أدخل النقاط",
-  "@loyalty_dashboard_mamnoon_enter_points": {},
-  "loyalty_dashboard_mamnoon_cancel": "إلغاء",
-  "@loyalty_dashboard_mamnoon_cancel": {},
-  "loyalty_dashboard_mamnoon_please_confirm": "يرجى التأكيد",
-  "@loyalty_dashboard_mamnoon_please_confirm": {},
-  "loyalty_dashboard_mamnoon_points_redeem_for_gifts": "سيتم استبدال {points} نقطة بهذه الهدية.",
-  "@loyalty_dashboard_mamnoon_points_redeem_for_gifts": {
-    "placeholders": {
-      "points": {
-        "type": "int"
-      }
-    }
-  },
-  "loyalty_dashboard_points_range_error": "يجب أن تكون النقاط بين {minPoints} و {maxPoints}.",
-  "@loyalty_dashboard_points_range_error": {
-    "placeholders": {
-      "minPoints": {
-        "type": "int"
-      },
-      "maxPoints": {
-        "type": "int"
-      }
-    }
-  },
-  "loyalty_dashboard_redemption_history": "سجل المكافآت",
-  "@loyalty_dashboard_redemption_history": {},
-  "loyalty_dashboard_no_redemption_history": "لا يوجد سجل استبدال",
-  "@loyalty_dashboard_no_redemption_history": {},
-  "loyalty_dashboard_you_currently_have": "لديك حالياً:",
-  "@loyalty_dashboard_you_currently_have": {},
-  "loyalty_dashboard_total_spendable_points": "{totalSpendablePoints} نقطة",
-  "@loyalty_dashboard_total_spendable_points": {
-    "placeholders": {
-      "totalSpendablePoints": {
-        "type": "int"
-      }
-    }
-  },
-  "loyalty_dashboard_congratulations": "تهانينا!",
-  "@loyalty_dashboard_congratulations": {},
-  "loyalty_dashboard_points_redeemed_successfully": "تم استبدال نقاطك بنجاح!",
-  "@loyalty_dashboard_points_redeemed_successfully": {},
-  "loyalty_dashboard_redemption_failed": "فشل استبدال النقاط",
-  "@loyalty_dashboard_redemption_failed": {},
-  "loyalty_dashboard_see_details": "عرض التفاصيل",
-  "@loyalty_dashboard_see_details": {},
-  "loyalty_statement_points_earned": "تم كسب النقاط",
-  "@loyalty_statement_points_earned": {},
-  "loyalty_statement_points_redeemed": "تم استبدال النقاط",
-  "@loyalty_statement_points_redeemed": {},
-  "loyalty_statement_your_point_history": "سجل النقاط",
-  "@loyalty_statement_your_point_history": {},
-  "loyalty_statement_no_history_available": "لا يوجد سجل متاح",
-  "@loyalty_statement_no_history_available": {},
-  "loyalty_statement_type": "النوع",
-  "@loyalty_statement_type": {},
-  "loyalty_statement_partner": "شريك",
-  "@loyalty_statement_partner": {},
-  "loyalty_statement_mamnoon_points": "نقاط ممنون",
-  "@loyalty_statement_mamnoon_points": {},
-  "loyalty_statement_points_redemption": "استبدال النقاط",
-  "@loyalty_statement_points_redemption": {},
-  "loyalty_statement_close": "إغلاق",
-  "@loyalty_statement_close": {},
-  "loyalty_statement_redeem_again": "استرداد مرة أخرى",
-  "@loyalty_statement_redeem_again": {},
-  "loyalty_dashboard_valid_until": "صالح حتى {validUntil}",
-  "@loyalty_dashboard_valid_until": {
-    "placeholders": {
-      "validUntil": {
-        "type": "String"
-      }
-    }
-  },
-  "loyalty_dashboard_faq": "الأسئلة الشائعة",
-  "@loyalty_dashboard_faq": {},
-  "loyalty_help_no_faq_items_available": "لا توجد أسئلة شائعة متاحة",
-  "@loyalty_help_no_faq_items_available": {},
-  "loyalty_help_and_faq": "المساعدة والأسئلة الشائعة",
-  "@loyalty_help_and_faq": {},
-  "loyalty_help_contact_us": "اتصل بنا",
-  "@loyalty_help_contact_us": {},
-  "loyalty_dashboard_zain_network": "شبكة زين: {zainNetworkNumber}",
-  "@loyalty_dashboard_zain_network": {
-    "placeholders": {
-      "zainNetworkNumber": {
-        "type": "String"
-      }
-    }
-  },
-  "loyalty_dashboard_other_networks": "الشبكات الأخرى: {otherNetworksNumber}",
-  "@loyalty_dashboard_other_networks": {
-    "placeholders": {
-      "otherNetworksNumber": {
-        "type": "String"
-      }
-    }
-  },
-  "loyalty_help_whatsapp_zain_care": "واتساب زين كير",
-  "@loyalty_help_whatsapp_zain_care": {},
-  "loyalty_help_could_not_open_email_client": "تعذر فتح تطبيق البريد الإلكتروني",
-  "@loyalty_help_could_not_open_email_client": {},
-  "loyalty_dashboard_gifts_and_discounts": "الهدايا والخصومات",
-  "@loyalty_dashboard_gifts_and_discounts": {},
-  "loyalty_store_details": "تفاصيل المتجر",
-  "@loyalty_store_details": {},
-  "loyalty_store_promo_code_copied": "تم نسخ رمز العرض!",
-  "@loyalty_store_promo_code_copied": {},
-  "loyalty_store_could_not_open_google_maps": "تعذر فتح خرائط Google",
-  "@loyalty_store_could_not_open_google_maps": {},
-  "loyalty_store_view_on_map": "عرض على الخريطة",
-  "@loyalty_store_view_on_map": {},
-  "loyalty_store_redeem_offer": "استبدال",
-  "@loyalty_store_redeem_offer": {},
-  "loyalty_store_normal_redemption_visit_message": "للحصول على هذا العرض، يرجى زيارة {storeName}",
-  "@loyalty_store_normal_redemption_visit_message": {
-    "placeholders": {
-      "storeName": {
-        "type": "String"
-      }
-    }
-  },
-  "loyalty_store_report_merchant": "الإبلاغ عن التاجر",
-  "@loyalty_store_report_merchant": {},
-  "loyalty_store_report_merchant_confirm": "الإبلاغ عن التاجر؟",
-  "@loyalty_store_report_merchant_confirm": {},
-  "loyalty_store_report_merchant_guideline": "يرجى الإبلاغ فقط عن التجار الذين لا يلتزمون بالعروض المدرجة في تطبيقنا",
-  "@loyalty_store_report_merchant_guideline": {},
-  "loyalty_store_got_it": "فهمت",
-  "@loyalty_store_got_it": {},
-  "loyalty_store_enter_valid_points": "أدخل نقاطًا صالحة",
-  "@loyalty_store_enter_valid_points": {},
-  "loyalty_store_minimum_points_required": "الحد الأدنى {minPoints} نقطة مطلوب",
-  "@loyalty_store_minimum_points_required": {
-    "placeholders": {
-      "minPoints": {
-        "type": "String"
-      }
-    }
-  },
-  "loyalty_store_not_enough_points": "ليس لديك نقاط كافية",
-  "@loyalty_store_not_enough_points": {},
-  "loyalty_store_maximum_allowed_points": "الحد الأقصى المسموح به هو {maxPoints} نقطة",
-  "@loyalty_store_maximum_allowed_points": {
-    "placeholders": {
-      "maxPoints": {
-        "type": "String"
-      }
-    }
-  },
-  "loyalty_store_earn_more_points_to_upgrade": "اكسب {points} نقطة إضافية للترقية إلى {nextTier}",
-  "@loyalty_store_earn_more_points_to_upgrade": {
-    "placeholders": {
-      "points": {
-        "type": "String"
-      },
-      "nextTier": {
-        "type": "String"
-      }
-    }
-  },
-  "loyalty_dashboard_mamnoon_earn_points_to_redeem": "اكسب {missing_points} نقطة إضافية لاسترداد هذا العرض",
-  "@loyalty_dashboard_mamnoon_earn_points_to_redeem": {
-    "placeholders": {
-      "missing_points": {
-        "type": "int"
-      }
-    }
-  },
-  "start_date_end_date": "تاريخ البداية - تاريخ النهاية",
-  "@start_date_end_date": {},
-  "select_date": "تحديد التاريخ",
-  "@select_date": {},
-  "clear_filter": "مسح الفلتر",
-  "@clear_filter": {},
-  "end_date": "تاريخ الانتهاء",
-  "@end_date": {},
   "mon": "الإثنين",
   "@mon": {},
   "tue": "الثلاثاء",
@@ -1672,315 +45,11 @@
   "@sat": {},
   "sun": "الأحد",
   "@sun": {},
-  "loyalty_info_details_title": "نقاط مكافآت مامنون",
-  "@loyalty_info_details_title": {},
-  "loyalty_how_to_earn_points": "كيفية كسب النقاط",
-  "@loyalty_how_to_earn_points": {},
-  "loyalty_expiring_on": "تنتهي في",
-  "@loyalty_expiring_on": {},
-  "onboarding_welcome_to_zain": "مرحبًا بك في زين",
-  "@onboarding_welcome_to_zain": {},
-  "onboarding_experience_best_services": "تغطية سريعة ومستقرة وموثوقة مصممة للتواصل اليومي والبث والألعاب والعمل.",
-  "@onboarding_experience_best_services": {},
-  "onboarding_manage_your_account": "إدارة حسابك",
-  "@onboarding_manage_your_account": {},
-  "onboarding_account_description": "تحقق من رصيدك، اشحن، وأدر الاشتراكات بسهولة",
-  "@onboarding_account_description": {},
-  "onboarding_explore_offers": "استكشف العروض",
-  "@onboarding_explore_offers": {},
-  "onboarding_offers_description": "اكتشف عروض وباقات مذهلة مصممة خصيصًا لك",
-  "@onboarding_offers_description": {},
   "onboarding_get_started": "ابدأ الآن",
-  "error_could_not_open_link": "تعذر فتح الرابط",
-  "@error_could_not_open_link": {},
-  "digital_services_more_details": "المزيد من التفاصيل",
-  "@digital_services_more_details": {},
-  "common_see_more": "عرض المزيد",
-  "@common_see_more": {},
-  "common_show_qr_code": "عرض رمز QR",
-  "@common_show_qr_code": {},
-  "common_show_barcode": "عرض الباركود",
-  "@common_show_barcode": {},
-  "common_promo_code": "رمز العرض",
-  "@common_promo_code": {},
-  "common_promo_code_copied": "تم نسخ رمز العرض!",
-  "@common_promo_code_copied": {},
-  "common_all": "الكل",
-  "@common_all": {},
-  "service_data": "البيانات",
-  "@service_data": {},
-  "service_minutes": "الدقائق",
-  "@service_minutes": {},
-  "service_sms": "الرسائل النصية",
-  "@service_sms": {},
-  "common_redeem_offer": "استبدال العرض",
-  "@common_redeem_offer": {},
-  "redeem_offer_confirmation_message": "نقطة سيتم استبدالها لهذه الهدية",
-  "@redeem_offer_confirmation_message": {},
-  "redeem_offer_button": "استبدال العرض",
-  "@redeem_offer_button": {},
-  "common_congratulations": "تهانينا!",
-  "@common_congratulations": {},
-  "redeem_barcode_success_message": "تم استبدال الرمز الشريطي بنجاح",
-  "@redeem_barcode_success_message": {},
-  "common_close": "إغلاق",
-  "@common_close": {},
-  "barcode_error_unable_to_generate": "تعذر إنشاء الباركود",
-  "@barcode_error_unable_to_generate": {},
-  "redeem_offer_success_discount_received": "لقد حصلت على الخصم",
-  "@redeem_offer_success_discount_received": {},
-  "redeem_offer_show_to_merchant": "اعرض هذه الرسالة على التاجر {merchantName} للحصول على:",
-  "@redeem_offer_show_to_merchant": {
-    "placeholders": {
-      "merchantName": {
-        "type": "String"
-      }
-    }
-  },
-  "qr_scan_get_discount": "امسح رمز QR للحصول على الخصم",
-  "@qr_scan_get_discount": {},
-  "redeem_offer_copy_code": "نسخ الرمز",
-  "@redeem_offer_copy_code": {},
-  "report_merchant_success_title": "تم الإبلاغ عن التاجر",
-  "@report_merchant_success_title": {},
-  "report_merchant_success_message": "سنتحقق من ذلك ونتأكد من عدم حدوثه مرة أخرى",
-  "@report_merchant_success_message": {},
-  "redeem_offer_success_discount_text_1": "لقد حصلت على الخصم. اعرضه على التاجر",
-  "@redeem_offer_success_discount_text_1": {},
-  "common_unable_to_generate_barcode": "تعذر إنشاء الباركود",
-  "@common_unable_to_generate_barcode": {},
-  "redeem_offer_success_to_get": "للحصول على:",
-  "@redeem_offer_success_to_get": {},
-  "common_code": "الرمز:",
-  "@common_code": {},
-  "common_details": "التفاصيل",
-  "@common_details": {},
-  "common_redeem_on": "الاستبدال في",
-  "@common_redeem_on": {},
-  "common_choose_governorate": "اختر المحافظة",
-  "@common_choose_governorate": {},
-  "common_select": "اختيار",
-  "@common_select": {},
-  "common_clear_filter": "مسح التصفية",
-  "@common_clear_filter": {},
-  "common_selected": "محدد",
-  "@common_selected": {},
-  "scan_card": "مسح البطاقة",
-  "@scan_card": {},
-  "initializing_camera": "جاري تشغيل الكاميرا...",
-  "@initializing_camera": {},
-  "camera_no_available": "لا توجد كاميرات متاحة",
-  "@camera_no_available": {},
-  "camera_permission_required": "إذن الكاميرا مطلوب",
-  "@camera_permission_required": {},
-  "camera_permission_settings": "إذن الكاميرا مطلوب. يرجى تفعيله من الإعدادات.",
-  "@camera_permission_settings": {},
-  "camera_init_failed": "فشل في تشغيل الكاميرا",
-  "@camera_init_failed": {},
   "camera_init_failed_generic": "فشل في تشغيل الكاميرا",
   "@camera_init_failed_generic": {},
-  "position_card": "ضع البطاقة داخل الإطار",
-  "@position_card": {},
-  "card_not_detected": "لم يتم العثور على البطاقة",
-  "@card_not_detected": {},
-  "card_not_detected_desc": "تعذر اكتشاف رقم البطاقة. يرجى المحاولة مرة أخرى.",
-  "@card_not_detected_desc": {},
   "try_again": "إعادة المحاولة",
   "@try_again": {},
-  "error_processing_image": "خطأ أثناء معالجة الصورة",
-  "@error_processing_image": {},
-  "open_settings": "فتح الإعدادات",
-  "@open_settings": {},
-  "use_scanned_code": "استخدم الرمز الممسوح ضوئياً",
-  "@use_scanned_code": {},
-  "enter_manually": "أدخل يدويًا",
-  "@enter_manually": {},
-  "instruction_digits": "لبدء المسح، ضع الرقم المكون من 16 رقمًا داخل المربع الأصفر.",
-  "@instruction_digits": {},
-  "instruction_qr": "لبدء المسح، ضع رمز QR داخل المربع الأصفر.",
-  "@instruction_qr": {},
-  "scanner_mode_digits": "الأرقام",
-  "@scanner_mode_digits": {},
-  "scanner_mode_qr": "رمز QR",
-  "@scanner_mode_qr": {},
-  "voucher_pin_scanner": "ماسح رمز القسيمة",
-  "@voucher_pin_scanner": {},
-  "zain_cash_recharge_failed": "فشل شحن Zain Cash",
-  "@zain_cash_recharge_failed": {},
-  "transaction_failed": "فشلت المعاملة",
-  "@transaction_failed": {},
-  "submit_new_ticket": "إرسال تذكرة جديدة",
-  "@submit_new_ticket": {},
-  "submit_ticket_attachments": "المرفقات",
-  "@submit_ticket_attachments": {},
-  "submit_ticket_upload_attachment": "رفع مرفق",
-  "@submit_ticket_upload_attachment": {},
-  "submit_ticket_upload_files_hint": "يمكنك رفع حتى {maxFiles} ملفات (PDF, JPG, JPEG, PNG)",
-  "@submit_ticket_upload_files_hint": {
-    "placeholders": {
-      "maxFiles": {}
-    }
-  },
-  "submit_ticket_attachment_invalid_file_type": "نوع الملف غير مدعوم. يرجى رفع ملف بصيغة PDF أو JPG أو JPEG أو PNG.",
-  "@submit_ticket_attachment_invalid_file_type": {},
-  "submit_ticket_attachment_duplicate_file": "تم رفع هذا الملف مسبقًا.",
-  "@submit_ticket_attachment_duplicate_file": {},
-  "submit_ticket_attachment_unreadable_file": "تعذر قراءة الملف.",
-  "@submit_ticket_attachment_unreadable_file": {},
-  "submit_ticket_attachment_size_limit_exceeded": "يجب أن يكون الحجم الإجمالي للمرفقات أقل من {maxSizeMb} ميجابايت.",
-  "@submit_ticket_attachment_size_limit_exceeded": {
-    "placeholders": {
-      "maxSizeMb": {}
-    }
-  },
-  "submit_ticket_hint_upload_images": "يمكنك رفع حتى 3 صور (اختياري)",
-  "@submit_ticket_hint_upload_images": {},
-  "submit_ticket_description": "الوصف",
-  "@submit_ticket_description": {},
-  "submit_ticket_describe_your_issue": "صف مشكلتك…",
-  "@submit_ticket_describe_your_issue": {},
-  "submit_ticket_complaint_type": "نوع الشكوى",
-  "@submit_ticket_complaint_type": {},
-  "submit_ticket_location": "الموقع",
-  "@submit_ticket_location": {},
-  "submit_ticket_governorate": "المحافظة",
-  "@submit_ticket_governorate": {},
-  "submit_ticket_city": "المدينة",
-  "@submit_ticket_city": {},
-  "submit_ticket_enter_your_answer": "أدخل إجابتك",
-  "@submit_ticket_enter_your_answer": {},
-  "submit_ticket_date_future_error": "لا يمكن أن يكون التاريخ في المستقبل",
-  "@submit_ticket_date_future_error": {},
-  "submit_ticket_time_future_error": "وقت غير صالح",
-  "@submit_ticket_time_future_error": {},
-  "submit_ticket_additional_questions": "أسئلة إضافية",
-  "@submit_ticket_additional_questions": {},
-  "submit_ticket_success_message": "تم إرسال التذكرة بنجاح. سنعاود الاتصال بك قريبًا.",
-  "@submit_ticket_success_message": {},
-  "submit_ticket_select_summary": "اختر الملخص",
-  "@submit_ticket_select_summary": {},
-  "submit_ticket_select_option": "اختر خيارًا",
-  "@submit_ticket_select_option": {},
-  "submit_ticket_summary": "الملخص",
-  "@submit_ticket_summary": {},
-  "submit_ticket_ticket_files_count": "التذكرة #{ticketId} • {count, plural, one{ملف واحد} two{ملفان} few{# ملفات} many{# ملفًا} other{# ملف}}",
-  "@submit_ticket_ticket_files_count": {
-    "description": "رقم التذكرة مع عدد الملفات",
-    "placeholders": {
-      "ticketId": {},
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "ticket_count_label": "{count, plural, zero{لا تذاكر} one{# تذكرة} two{تذكرتان} few{# تذاكر} many{# تذكرة} other{# تذكرة}}",
-  "@ticket_count_label": {
-    "description": "عدد التذاكر",
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "submit_ticket_attachment_count": "{count} مرفق",
-  "@submit_ticket_attachment_count": {
-    "description": "عدد المرفقات",
-    "placeholders": {
-      "count": {}
-    }
-  },
-  "submit_ticket_no_attachments": "لا توجد مرفقات",
-  "@submit_ticket_no_attachments": {},
-  "submit_ticket_answers": "الإجابات",
-  "@submit_ticket_answers": {},
-  "submit_ticket_details": "تفاصيل التذكرة",
-  "@submit_ticket_details": {},
-  "submit_ticket_no_tickets": "لا توجد تذاكر بعد",
-  "@submit_ticket_no_tickets": {},
-  "submit_ticket_create_hint": "أرسل تذكرة جديدة باستخدام الزر أدناه.",
-  "@submit_ticket_create_hint": {},
-  "submit_ticket_retry": "إعادة المحاولة",
-  "@submit_ticket_retry": {},
-  "submit_ticket_submit_ticket": "إرسال التذكرة",
-  "@submit_ticket_submit_ticket": {},
-  "submit_ticket_my_tickets": "تذاكري",
-  "@submit_ticket_my_tickets": {},
-  "submit_ticket_search": "البحث في التذاكر…",
-  "@submit_ticket_search": {},
-  "submit_ticket_summary_label": "الملخص:",
-  "@submit_ticket_summary_label": {},
-  "submit_ticket_created": "تاريخ الإنشاء:",
-  "@submit_ticket_created": {},
-  "submit_ticket_view_details": "عرض التفاصيل",
-  "@submit_ticket_view_details": {},
-  "submit_ticket_reopen": "إعادة فتح التذكرة",
-  "@submit_ticket_reopen": {},
-  "submit_ticket_reopen_instruction": "اختر سببًا وأضف تفاصيل إضافية.",
-  "@submit_ticket_reopen_instruction": {},
-  "submit_ticket_reopen_success": "تم فتح التذكرة بنجاح",
-  "@submit_ticket_reopen_success": {},
-  "submit_ticket_additional_details": "تفاصيل إضافية (اختياري)",
-  "@submit_ticket_additional_details": {},
-  "submit_ticket_no_matches": "لم يتم العثور على نتائج",
-  "@submit_ticket_no_matches": {},
-  "submit_ticket_no_results_hint": "لم نتمكن من العثور على أي تذاكر تطابق بحثك.",
-  "@submit_ticket_no_results_hint": {},
-  "submit_ticket_description_hint": "اشرح مشكلتك…",
-  "@submit_ticket_description_hint": {},
-  "submit_ticket_scan_card": "مسح البطاقة",
-  "@submit_ticket_scan_card": {},
-  "submit_ticket_initializing_camera": "جاري تشغيل الكاميرا...",
-  "@submit_ticket_initializing_camera": {},
-  "submit_ticket_camera_no_available": "لا توجد كاميرات",
-  "@submit_ticket_camera_no_available": {},
-  "submit_ticket_camera_permission_required": "إذن الكاميرا مطلوب",
-  "@submit_ticket_camera_permission_required": {},
-  "submit_ticket_camera_permission_settings": "إذن الكاميرا مطلوب. يرجى تفعيله من الإعدادات.",
-  "@submit_ticket_camera_permission_settings": {},
-  "submit_ticket_camera_init_failed": "فشل تشغيل الكاميرا",
-  "@submit_ticket_camera_init_failed": {},
-  "submit_ticket_camera_init_failed_generic": "فشل تشغيل الكاميرا",
-  "@submit_ticket_camera_init_failed_generic": {},
-  "submit_ticket_position_card": "ضع البطاقة داخل الإطار",
-  "@submit_ticket_position_card": {},
-  "submit_ticket_card_not_detected": "لم يتم اكتشاف البطاقة",
-  "@submit_ticket_card_not_detected": {},
-  "submit_ticket_card_not_detected_desc": "تعذر اكتشاف رقم البطاقة. يرجى المحاولة مرة أخرى.",
-  "@submit_ticket_card_not_detected_desc": {},
-  "submit_ticket_try_again": "حاول مرة أخرى",
-  "@submit_ticket_try_again": {},
-  "submit_ticket_error_processing_image": "خطأ أثناء معالجة الصورة",
-  "@submit_ticket_error_processing_image": {},
-  "submit_ticket_open_settings": "فتح الإعدادات",
-  "@submit_ticket_open_settings": {},
-  "submit_ticket_use_scanned_code": "استخدام الرمز الممسوح",
-  "@submit_ticket_use_scanned_code": {},
-  "submit_ticket_enter_manually": "إدخال يدوي",
-  "@submit_ticket_enter_manually": {},
-  "submit_ticket_voucher_pin_scanner": "ماسح رمز القسيمة",
-  "@submit_ticket_voucher_pin_scanner": {},
-  "submit_ticket_submit_new_ticket": "إرسال تذكرة جديدة",
-  "@submit_ticket_submit_new_ticket": {},
-  "submit_ticket_ticket_submitted": "تم إرسال التذكرة!",
-  "@submit_ticket_ticket_submitted": {},
-  "submit_ticket_ticket_number": "التذكرة #{ticketNumber}",
-  "@submit_ticket_ticket_number": {
-    "placeholders": {
-      "ticketNumber": {}
-    }
-  },
-  "submit_ticket_usim_required": "مطلوب شريحة USIM",
-  "@submit_ticket_usim_required": {},
-  "submit_ticket_usim_required_desc": "تحتاج إلى شريحة USIM لإنشاء تذكرة في \"{summary}\".",
-  "@submit_ticket_usim_required_desc": {
-    "placeholders": {
-      "summary": {}
-    }
-  },
-  "common_item": "عنصر",
-  "@common_item": {},
-  "enter_card_number": "أدخل رقم البطاقة",
-  "@enter_card_number": {},
   "@onboarding_get_started": {},
   "today": "اليوم",
   "@today": {},
@@ -1992,66 +61,10 @@
   "@older": {},
   "confirm_delete_title": "هل تريد حذف الإشعار؟",
   "confirm_delete_description": "لا يمكن التراجع عن هذا الإجراء. سيتم حذف الإشعار بشكل نهائي.",
-  "time_just_now": "الآن",
-  "@time_just_now": {},
-  "time_minutes_ago": "منذ {count} دقيقة",
-  "@time_minutes_ago": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "time_hours_ago": "منذ {count} ساعة",
-  "@time_hours_ago": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "time_days_ago": "منذ {count} يوم",
-  "@time_days_ago": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "time_weeks_ago": "منذ {count} أسبوع",
-  "@time_weeks_ago": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "time_months_ago": "منذ {count} شهر",
-  "@time_months_ago": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "time_years_ago": "منذ {count} سنة",
-  "@time_years_ago": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
   "notifications_no_unread": "لا توجد إشعارات غير مقروءة",
   "@notifications_no_unread": {},
   "notifications_show_all": "عرض الكل",
   "@notifications_show_all": {},
-  "general_error": "خطأ عام",
-  "@general_error": {},
-  "common_error": "خطأ",
-  "@common_error": {},
-  "authentication_failed": "فشل المصادقة. يرجى المحاولة مرة أخرى.",
-  "@authentication_failed": {},
   "failed_to_check_authentication_status": "فشل التحقق من حالة المصادقة",
   "@failed_to_check_authentication_status": {},
   "common_page_not_found_title": "الصفحة غير موجودة",
@@ -2060,218 +73,26 @@
   "@common_page_not_found_description": {},
   "common_go_home": "الرئيسية",
   "@common_go_home": {},
-  "loyalty_statement_date": "التاريخ",
-  "@loyalty_statement_date": {},
-  "common_not_applicable": "غير متوفر",
-  "@common_not_applicable": {},
-  "offers_tab_service_types_joiner": "، و ",
-  "@offers_tab_service_types_joiner": {},
   "common_no_internet_connection_short": "لا يوجد اتصال بالإنترنت",
   "@common_no_internet_connection_short": {},
-  "recharge_hyper_pay_no_bridge_response": "لا استجابة من خدمة الدفع",
-  "@recharge_hyper_pay_no_bridge_response": {},
-  "recharge_hyper_pay_payment_failed": "فشل الدفع",
-  "@recharge_hyper_pay_payment_failed": {},
-  "recharge_hyper_pay_unknown_response_type": "استجابة دفع غير معروفة: {responseType}",
-  "@recharge_hyper_pay_unknown_response_type": {
-    "placeholders": {
-      "responseType": {
-        "type": "String"
-      }
-    }
-  },
-  "recharge_hyper_pay_platform_error": "خطأ في المنصة",
-  "@recharge_hyper_pay_platform_error": {},
   "common_unknown_error": "حدث خطأ ما. يرجى المحاولة مرة أخرى.",
   "@common_unknown_error": {},
-  "onboarding_stay_connected_across_iraq": "ابقَ متصلاً في جميع أنحاء العراق",
-  "@onboarding_stay_connected_across_iraq": {},
-  "onboarding_connectivity": "الاتصال",
-  "@onboarding_connectivity": {},
-  "onboarding_account_dashboard": "لوحة الحساب",
-  "@onboarding_account_dashboard": {},
-  "onboarding_everything_in_one_place": "كل شيء في مكان واحد",
-  "@onboarding_everything_in_one_place": {},
-  "onboarding_manage_services_description": "إدارة الرصيد، التعبئة، الاشتراكات، باقات الإنترنت والاستخدام فوراً.",
-  "@onboarding_manage_services_description": {},
-  "onboarding_loyalty_program": "برنامج الولاء",
-  "@onboarding_loyalty_program": {},
-  "onboarding_rewards_more": "المكافآت والمزيد",
-  "@onboarding_rewards_more": {},
-  "onboarding_loyalty_description": "افتح العروض الحصرية، اجمع المكافآت، اكتشف الترفيه، واستمتع بعروض مخصصة.",
-  "@onboarding_loyalty_description": {},
-  "onboarding_join_zain": "انضم إلى زين",
-  "@onboarding_join_zain": {},
-  "onboarding_join_customers": "انضم إلى 20 مليون عميل راضٍ",
-  "@onboarding_join_customers": {},
-  "onboarding_create_account_description": "أنشئ حسابك في ثوانٍ وابدأ إدارة خدماتك فوراً.",
-  "@onboarding_create_account_description": {},
-  "imtiyaz_merchant_details_confirm_redeption_popup_title": "يرجى التأكيد",
-  "@imtiyaz_merchant_details_confirm_redeption_popup_title": {},
-  "zain_loyalty_promo_codes_redemption_popup_title": "تأكيد",
-  "@zain_loyalty_promo_codes_redemption_popup_title": {},
-  "redeem_offer_confirmation_no_points_message": "هل أنت متأكد أنك تريد إظهار العرض الخاص بـ {merchantName}؟",
-  "@redeem_offer_confirmation_no_points_message": {
-    "placeholders": {
-      "merchantName": {
-        "type": "String"
-      }
-    }
-  },
-  "common_success": "نجاح",
-  "@common_success": {},
-  "ticket_location_picker_selectLocation": "اختر الموقع",
-  "@ticket_location_picker_selectLocation": {},
-  "ticket_location_picker_readingAddress": "جارٍ قراءة العنوان…",
-  "@ticket_location_picker_readingAddress": {},
-  "ticket_location_picker_addressUnavailable": "العنوان غير متوفر لهذه النقطة",
-  "@ticket_location_picker_addressUnavailable": {},
-  "submit_ticket_location_pick_prompt": "نحتاج منك تحديد موقع المشكلة على الخريطة.",
-  "@submit_ticket_location_pick_prompt": {},
-  "submit_ticket_tap_to_pick_on_map": "انقر للتحديد على الخريطة",
-  "@submit_ticket_tap_to_pick_on_map": {},
-  "bundle_sharing_view_users": "إدارة الأرقام",
-  "@bundle_sharing_view_users": {},
-  "bundle_sharing_offer_management": "إدارة العرض",
-  "@bundle_sharing_offer_management": {},
-  "bundle_sharing_add_user": "إضافة عضو",
-  "@bundle_sharing_add_user": {},
-  "bundle_sharing_remaining_out_of_iqd": "المتبقي من {amount} د.ع",
-  "@bundle_sharing_remaining_out_of_iqd": {
-    "placeholders": {
-      "amount": {
-        "type": "String",
-        "example": "50,000"
-      }
-    }
-  },
-  "bundle_sharing_remaining_users": "يمكنك إضافة ما مجموعه {count} أعضاء",
-  "@bundle_sharing_remaining_users": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "bundle_sharing_member_label": "العضو {index}",
-  "@bundle_sharing_member_label": {
-    "placeholders": {
-      "index": {
-        "type": "int"
-      }
-    }
-  },
-  "bundle_sharing_valid_till": "صالح حتى {date}",
-  "@bundle_sharing_valid_till": {
-    "placeholders": {
-      "date": {
-        "type": "String",
-        "example": "31/12/2026"
-      }
-    }
-  },
-  "bundle_sharing_enter_number": "أدخل رقم زين",
-  "@bundle_sharing_enter_number": {},
-  "bundle_sharing_confirm": "تأكيد",
-  "@bundle_sharing_confirm": {},
-  "bundle_sharing_confirm_add_and_assign": "إضافة {number} وتخصيص {amount} له؟",
-  "@bundle_sharing_confirm_add_and_assign": {
-    "placeholders": {
-      "number": {
-        "type": "String"
-      },
-      "amount": {
-        "type": "String"
-      }
-    }
-  },
-  "bundle_sharing_parent_member": "لا يمكنك إضافة رقمك الخاص",
-  "@bundle_sharing_parent_member": {},
-  "bundle_sharing_already_member": "هذا الرقم عضو بالفعل",
-  "@bundle_sharing_already_member": {},
-  "bundle_sharing_user_not_on_kafoo": "المستخدم غير مشترك في كفو",
-  "@bundle_sharing_user_not_on_kafoo": {},
-  "bundle_sharing_user_not_on_kafoo_message": "{number} ليس عضواً في كفو بعد. ادعُه للانتقال.",
-  "@bundle_sharing_user_not_on_kafoo_message": {
-    "placeholders": {
-      "number": {
-        "type": "String"
-      }
-    }
-  },
-  "bundle_sharing_invite_to_kafoo": "دعوة إلى كفو",
-  "@bundle_sharing_invite_to_kafoo": {},
-  "bundle_sharing_invite_success": "تم إرسال الدعوة",
-  "@bundle_sharing_invite_success": {},
-  "bundle_sharing_invite_success_message": "لقد قمنا بدعوة {number}. يمكنك إضافته بعد انتقاله إلى كفو.",
-  "@bundle_sharing_invite_success_message": {
-    "placeholders": {
-      "number": {
-        "type": "String"
-      }
-    }
-  },
-  "bundle_sharing_ineligible_number_title": "رقم غير مؤهل",
-  "@bundle_sharing_ineligible_number_title": {},
-  "bundle_sharing_ineligible_number_message": "لا يمكن إضافة هذا الرقم إلى باقة العائلة.",
-  "@bundle_sharing_ineligible_number_message": {},
-  "bundle_sharing_add_success": "تمت مشاركة {amount} مع العضو",
-  "@bundle_sharing_add_success": {
-    "placeholders": {
-      "amount": {
-        "type": "String"
-      }
-    }
-  },
-  "bundle_sharing_quota": "رصيدك ولعائلتك",
-  "@bundle_sharing_quota": {},
-  "bundle_sharing_back": "رجوع",
-  "@bundle_sharing_back": {},
-  "bundle_sharing_confirm_remove_member": "إزالة {number} من باقة العائلة؟",
-  "@bundle_sharing_confirm_remove_member": {
-    "placeholders": {
-      "number": {
-        "type": "String"
-      }
-    }
-  },
-  "bundle_sharing_remove_success": "تمت إزالة العضو",
-  "@bundle_sharing_remove_success": {},
-  "bundle_sharing_change_quota": "إدارة الرصيد المشترك",
-  "@bundle_sharing_change_quota": {},
-  "bundle_sharing_save_changes": "حفظ التغييرات",
-  "@bundle_sharing_save_changes": {},
-  "bundle_sharing_confirm_quota_changes_message": "هل أنت متأكد أنك تريد إضافة رصيد مشترك إضافي مع {number} بقيمة {amount}؟",
-  "@bundle_sharing_confirm_quota_changes_message": {
-    "placeholders": {
-      "number": {
-        "type": "String"
-      },
-      "amount": {
-        "type": "String"
-      }
-    }
-  },
-  "send_a_gift": "إرسال هدية",
-  "@send_a_gift": {},
+  "common_retry": "حاول مرة أخرى",
+  "@common_retry": {},
   "choose_preferred_language": "اختر لغتك المفضلة للمتابعة.",
   "@choose_preferred_language": {},
-  "language_save_changes": "حفظ التغييرات",
-  "@language_save_changes": {},
-  "bundle_validity_days": "{days, plural, =1 {يوم واحد} =2 {يومان} few {{days} أيام} many {{days} يوماً} other {{days} يوم}}",
-  "@bundle_validity_days": {
-    "placeholders": {
-      "days": {
-        "type": "int"
-      }
-    }
-  },
-  "welcome_tagline": "مساحة آمنة لتشعر بخفة أكثر",
+  "welcome_tagline": "مكان آمن لتُسمَع",
   "@welcome_tagline": {},
-  "welcome_i_am_ventor": "أنا فينتور",
+  "welcome_i_am_ventor": "أريد أن أفرّغ",
   "@welcome_i_am_ventor": {},
-  "welcome_i_am_listener": "أنا مستمع",
+  "welcome_vent_subtitle": "اعثر على من يستمع إليك",
+  "@welcome_vent_subtitle": {},
+  "welcome_i_am_listener": "أريد أن أستمع",
   "@welcome_i_am_listener": {},
+  "welcome_listen_subtitle": "اربح من خلال الإصغاء",
+  "@welcome_listen_subtitle": {},
+  "welcome_anonymous_footer": "تحدث بحرية. ابقَ خاصاً.",
+  "@welcome_anonymous_footer": {},
   "onboarding_skip": "تخطي",
   "@onboarding_skip": {},
   "onboarding_next": "التالي",
@@ -2300,49 +121,13 @@
   "@onboarding_page5_description": {},
   "change_language": "تغيير اللغة",
   "@change_language": {},
-  "ventor_onboarding_page1_title": "مكان آمن لتُسمَع",
-  "@ventor_onboarding_page1_title": {},
-  "ventor_onboarding_page1_description": "أحيانًا كل ما تحتاجه هو شخص يستمع إليك.",
-  "@ventor_onboarding_page1_description": {},
-  "ventor_onboarding_page2_title": "عبّر عن نفسك",
-  "@ventor_onboarding_page2_title": {},
-  "ventor_onboarding_page2_description": "تحدث بحرية مع مستمعين موثّقين في بيئة خاصة وخالية من الأحكام.",
-  "@ventor_onboarding_page2_description": {},
-  "ventor_onboarding_page3_title": "اعثر على المستمع المناسب",
-  "@ventor_onboarding_page3_title": {},
-  "ventor_onboarding_page3_description": "اختر مستمعًا حسب اللغة والخبرة والشخصية والتقييمات والمقدمة الصوتية.",
-  "@ventor_onboarding_page3_description": {},
-  "ventor_onboarding_page4_title": "خصوصيتك تأتي أولًا",
-  "@ventor_onboarding_page4_title": {},
-  "ventor_onboarding_page4_description": "ابقَ مجهول الهوية. أنت تقرر ماذا تشارك. كل محادثة خاصة.",
-  "@ventor_onboarding_page4_description": {},
-  "listener_onboarding_page1_title": "كُن المستمع الذي يحتاجه أحدهم",
-  "@listener_onboarding_page1_title": {},
-  "listener_onboarding_page1_description": "تعاطفك يمكن أن يساعد شخصًا ليشعر بخفة أكبر، وأن يُسمَع، وألا يكون وحيدًا.",
-  "@listener_onboarding_page1_description": {},
-  "listener_onboarding_page2_title": "استمع بتعاطف",
-  "@listener_onboarding_page2_title": {},
-  "listener_onboarding_page2_description": "ادعم الآخرين في اللحظات الصعبة ضمن مساحة خاصة وخالية من الأحكام.",
-  "@listener_onboarding_page2_description": {},
-  "listener_onboarding_page3_title": "ابنِ ملفك كمستمع",
-  "@listener_onboarding_page3_title": {},
-  "listener_onboarding_page3_description": "شارك لغاتك وخبرتك وشخصيتك ومقدمة صوتية تعريفية.",
-  "@listener_onboarding_page3_description": {},
-  "listener_onboarding_page4_title": "ادعم وفق جدولك",
-  "@listener_onboarding_page4_title": {},
-  "listener_onboarding_page4_description": "اختر أوقات تواجدك واصنع فرقًا متى ما ناسبك ذلك.",
-  "@listener_onboarding_page4_description": {},
-  "sign_up_lets_get_started": "لنبدأ",
-  "@sign_up_lets_get_started": {},
-  "sign_up_create_account_subtitle": "أنشئ حسابًا لتبدأ رحلتك.",
-  "@sign_up_create_account_subtitle": {},
   "auth_ventor_title": "مرحبًا، فينتور",
   "@auth_ventor_title": {},
-  "auth_ventor_subtitle": "سجّل الدخول أو أنشئ حسابًا للتحدث والشعور بأنك مسموع.",
+  "auth_ventor_subtitle": "سجّل الدخول لمتابعة التفريغ",
   "@auth_ventor_subtitle": {},
   "auth_listener_title": "مرحبًا، مستمع",
   "@auth_listener_title": {},
-  "auth_listener_subtitle": "سجّل الدخول أو أنشئ حسابًا للاستماع ودعم الآخرين.",
+  "auth_listener_subtitle": "سجّل الدخول لمتابعة الاستماع",
   "@auth_listener_subtitle": {},
   "auth_continue_with_apple": "المتابعة مع Apple",
   "@auth_continue_with_apple": {},
@@ -2350,40 +135,14 @@
   "@auth_continue_with_google": {},
   "auth_continue_with_email": "المتابعة بالبريد الإلكتروني",
   "@auth_continue_with_email": {},
-  "sign_in_welcome_back": "مرحبًا بعودتك",
-  "@sign_in_welcome_back": {},
-  "sign_in_subtitle": "سجّل الدخول لمتابعة رحلتك.",
-  "@sign_in_subtitle": {},
-  "sign_in_dont_have_account": "ليس لديك حساب؟",
-  "@sign_in_dont_have_account": {},
-  "sign_in_sign_up": "إنشاء حساب",
-  "@sign_in_sign_up": {},
-  "sign_up_continue_with_apple": "المتابعة مع Apple",
-  "@sign_up_continue_with_apple": {},
-  "sign_up_continue_with_google": "المتابعة مع Google",
-  "@sign_up_continue_with_google": {},
-  "sign_up_continue_with_email": "المتابعة بالبريد الإلكتروني",
-  "@sign_up_continue_with_email": {},
-  "sign_in_continue_with_apple": "تسجيل الدخول مع Apple",
-  "@sign_in_continue_with_apple": {},
-  "sign_in_continue_with_google": "تسجيل الدخول مع Google",
-  "@sign_in_continue_with_google": {},
-  "sign_in_continue_with_email": "تسجيل الدخول بالبريد الإلكتروني",
-  "@sign_in_continue_with_email": {},
-  "sign_up_or": "أو",
-  "@sign_up_or": {},
+  "auth_or_divider": "أو",
+  "@auth_or_divider": {},
   "email_registration_title": "المتابعة بالبريد الإلكتروني",
   "@email_registration_title": {},
-  "email_registration_subtitle": "أدخل بريدك الإلكتروني وكلمة المرور للمتابعة.",
-  "@email_registration_subtitle": {},
   "email_registration_ventor_subtitle": "سجّل الدخول أو أنشئ حساب فينتور بالبريد الإلكتروني.",
   "@email_registration_ventor_subtitle": {},
   "email_registration_listener_subtitle": "سجّل الدخول أو أنشئ حساب مستمع بالبريد الإلكتروني.",
   "@email_registration_listener_subtitle": {},
-  "email_sign_in_title": "تسجيل الدخول بالبريد الإلكتروني",
-  "@email_sign_in_title": {},
-  "email_sign_in_subtitle": "أدخل بريدك الإلكتروني وكلمة المرور للمتابعة.",
-  "@email_sign_in_subtitle": {},
   "email_registration_email_label": "البريد الإلكتروني",
   "@email_registration_email_label": {},
   "email_registration_email_hint": "أدخل بريدك الإلكتروني",
@@ -2392,8 +151,6 @@
   "@email_registration_password_label": {},
   "email_registration_password_hint": "أدخل كلمة المرور",
   "@email_registration_password_hint": {},
-  "email_sign_in_password_hint": "أدخل كلمة المرور",
-  "@email_sign_in_password_hint": {},
   "email_registration_password_must_contain": "يجب أن تحتوي كلمة المرور على:",
   "@email_registration_password_must_contain": {},
   "email_registration_rule_min_length": "8 أحرف على الأقل",
@@ -2404,29 +161,43 @@
   "@email_registration_rule_number": {},
   "email_registration_create_account": "متابعة",
   "@email_registration_create_account": {},
-  "email_sign_in_button": "تسجيل الدخول",
-  "@email_sign_in_button": {},
-  "email_registration_invalid_email": "يرجى إدخال بريد إلكتروني صالح",
-  "@email_registration_invalid_email": {},
-  "account_created_title": "تم إنشاء الحساب!",
-  "@account_created_title": {},
-  "account_created_subtitle": "لقد أرسلنا رابط تحقق إلى بريدك الإلكتروني.",
-  "@account_created_subtitle": {},
-  "account_created_check_email": "تحقق من بريدك",
-  "@account_created_check_email": {},
-  "account_created_resend_email": "إعادة إرسال البريد",
-  "@account_created_resend_email": {},
-  "account_created_resend_email_countdown": "إعادة إرسال البريد ({time})",
-  "@account_created_resend_email_countdown": {
+  "email_registration_sign_in": "تسجيل الدخول",
+  "@email_registration_sign_in": {},
+  "email_registration_forgot_password": "نسيت كلمة المرور؟",
+  "@email_registration_forgot_password": {},
+  "forgot_password_title": "نسيت كلمة المرور؟",
+  "@forgot_password_title": {},
+  "forgot_password_subtitle": "أكّد بريدك وسنرسل رابطاً آمناً لإعادة تعيين كلمة المرور.",
+  "@forgot_password_subtitle": {},
+  "forgot_password_continue": "متابعة",
+  "@forgot_password_continue": {},
+  "forgot_password_sent_title": "تحقق من بريدك",
+  "@forgot_password_sent_title": {},
+  "forgot_password_sent_body": "إذا وُجد حساب لـ {email}، ستصلك رسالة لإعادة التعيين قريباً. افتح الرابط لاختيار كلمة مرور جديدة.",
+  "@forgot_password_sent_body": {
     "placeholders": {
-      "time": {
+      "email": {
         "type": "String"
       }
     }
   },
+  "forgot_password_back_to_sign_in": "العودة لتسجيل الدخول",
+  "@forgot_password_back_to_sign_in": {},
+  "email_registration_invalid_email": "يرجى إدخال بريد إلكتروني صالح",
+  "@email_registration_invalid_email": {},
+  "email_registration_role_mismatch": "هذا البريد مرتبط بحساب {role}. ارجع واختر الدور المطابق، أو استخدم بريداً آخر.",
+  "@email_registration_role_mismatch": {
+    "placeholders": {
+      "role": {
+        "type": "String"
+      }
+    }
+  },
+  "email_registration_checking_email": "جارٍ التحقق من البريد…",
+  "@email_registration_checking_email": {},
   "listener_reg_continue": "متابعة",
   "@listener_reg_continue": {},
-  "listener_reg_skip_for_now": "تخطِّ الآن",
+  "listener_reg_skip_for_now": "تخطي",
   "@listener_reg_skip_for_now": {},
   "listener_reg_step_of": "الخطوة {current} من {total}",
   "@listener_reg_step_of": {
@@ -2449,9 +220,9 @@
   },
   "listener_reg_last_step": "الخطوة الأخيرة",
   "@listener_reg_last_step": {},
-  "listener_reg_step1_title": "مرحبًا! لنبدأ معًا",
+  "listener_reg_step1_title": "لنُعدّ حسابك",
   "@listener_reg_step1_title": {},
-  "listener_reg_step1_subtitle": "أنشئ حسابك لتبدأ رحلتك كمستمع.",
+  "listener_reg_step1_subtitle": "أنت تنضم كمستمع",
   "@listener_reg_step1_subtitle": {},
   "listener_reg_add_profile_photo": "أضف صورة",
   "@listener_reg_add_profile_photo": {},
@@ -2461,44 +232,42 @@
   "@listener_reg_profile_photo_required": {},
   "listener_reg_full_name": "الاسم الكامل",
   "@listener_reg_full_name": {},
+  "listener_reg_full_name_hint": "مثال: أحمد محمد",
+  "@listener_reg_full_name_hint": {},
   "listener_reg_email": "البريد الإلكتروني",
   "@listener_reg_email": {},
+  "listener_reg_email_hint": "مثال: name@gmail.com",
+  "@listener_reg_email_hint": {},
   "listener_reg_phone": "رقم الهاتف",
   "@listener_reg_phone": {},
+  "listener_reg_phone_hint": "مثال: 791234567",
+  "@listener_reg_phone_hint": {},
   "listener_reg_invalid_phone": "يرجى إدخال رقم هاتف صالح للدولة المحددة",
   "@listener_reg_invalid_phone": {},
   "listener_reg_select_country": "اختر الدولة",
   "@listener_reg_select_country": {},
   "listener_reg_search_country": "ابحث بالدولة أو الرمز",
   "@listener_reg_search_country": {},
-  "listener_reg_password": "كلمة المرور",
-  "@listener_reg_password": {},
   "listener_reg_agree_prefix": "أوافق على ",
   "@listener_reg_agree_prefix": {},
   "listener_reg_terms": "شروط الخدمة",
   "@listener_reg_terms": {},
+  "listener_reg_terms_link": "الشروط",
+  "@listener_reg_terms_link": {},
   "listener_reg_agree_and": " و",
   "@listener_reg_agree_and": {},
   "listener_reg_privacy": "سياسة الخصوصية",
   "@listener_reg_privacy": {},
-  "listener_reg_already_have": "لديك حساب بالفعل؟",
-  "@listener_reg_already_have": {},
-  "listener_reg_sign_in": "تسجيل الدخول",
-  "@listener_reg_sign_in": {},
-  "listener_reg_step_coming_soon": "هذه الخطوة قادمة قريبًا. تابع لمعاينة المسار.",
-  "@listener_reg_step_coming_soon": {},
-  "listener_reg_step_create_account": "إنشاء الحساب",
-  "@listener_reg_step_create_account": {},
-  "listener_reg_step_verify_email": "تأكيد البريد",
-  "@listener_reg_step_verify_email": {},
-  "listener_reg_step_profile_photo": "صورة الملف",
-  "@listener_reg_step_profile_photo": {},
-  "listener_reg_step_boundaries": "أشياء لا تريدها",
-  "@listener_reg_step_boundaries": {},
+  "listener_reg_privacy_link": "الخصوصية",
+  "@listener_reg_privacy_link": {},
+  "listener_reg_step1_footer": "بياناتك مشفّرة · لا تُشارك مع أطراف ثالثة.\nأنت تتحكم بما يظهر في ملفك.",
+  "@listener_reg_step1_footer": {},
   "listener_reg_boundaries_title": "حدد حدودك",
   "@listener_reg_boundaries_title": {},
-  "listener_reg_boundaries_subtitle": "مواضيع لا تريد مناقشتها. سنحترم اختيارك.",
+  "listener_reg_boundaries_subtitle": "مواضيع تفضّل عدم مناقشتها. سنحترم اختيارك.",
   "@listener_reg_boundaries_subtitle": {},
+  "catalog_boundaries_load_error": "تعذّر تحميل الحدود.",
+  "@catalog_boundaries_load_error": {},
   "listener_reg_boundary_suicide": "الانتحار أو إيذاء النفس",
   "@listener_reg_boundary_suicide": {},
   "listener_reg_boundary_domestic_violence": "العنف الأسري",
@@ -2517,8 +286,6 @@
   "@listener_reg_boundary_other": {},
   "listener_reg_boundary_other_hint": "يرجى التوضيح",
   "@listener_reg_boundary_other_hint": {},
-  "listener_reg_step_about_you": "عنك",
-  "@listener_reg_step_about_you": {},
   "listener_reg_about_title": "أخبرنا عن نفسك",
   "@listener_reg_about_title": {},
   "listener_reg_about_subtitle": "هذا يساعدنا على مطابقتك مع المحادثات المناسبة.",
@@ -2533,36 +300,30 @@
   "@listener_reg_city": {},
   "listener_reg_enter_city": "أدخل مدينتك",
   "@listener_reg_enter_city": {},
-  "listener_reg_select_city": "اختر المدينة",
-  "@listener_reg_select_city": {},
-  "listener_reg_search_city": "ابحث أو اكتب اسم المدينة",
-  "@listener_reg_search_city": {},
-  "listener_reg_type_city": "اكتب اسم مدينتك أعلاه للمتابعة.",
-  "@listener_reg_type_city": {},
-  "listener_reg_use_city": "استخدم \"{city}\"",
-  "@listener_reg_use_city": {
-    "placeholders": {
-      "city": {
-        "type": "String"
-      }
-    }
-  },
   "listener_reg_languages_you_speak": "اللغات التي تتحدثها",
   "@listener_reg_languages_you_speak": {},
   "listener_reg_select_languages": "اختر اللغات",
   "@listener_reg_select_languages": {},
   "listener_reg_search_language": "ابحث عن لغة",
   "@listener_reg_search_language": {},
+  "listener_reg_must_be_18": "يجب أن يكون عمرك 18 عامًا على الأقل",
+  "@listener_reg_must_be_18": {},
   "listener_reg_done": "تم",
   "@listener_reg_done": {},
-  "listener_reg_step_languages": "اللغات",
-  "@listener_reg_step_languages": {},
-  "listener_reg_step_expertise": "المجالات التي ترتاح لها",
-  "@listener_reg_step_expertise": {},
   "listener_reg_areas_title": "بماذا تود الاستماع؟",
   "@listener_reg_areas_title": {},
-  "listener_reg_areas_subtitle": "اختر المواضيع التي تشعر بالراحة في دعم الآخرين فيها.",
+  "listener_reg_areas_subtitle": "المواضيع التي تشعر بالراحة في دعم الآخرين فيها.",
   "@listener_reg_areas_subtitle": {},
+  "listener_reg_areas_topics_selected": "{count, plural, =0{لم يتم اختيار أي موضوع} =1{موضوع واحد محدد} other{{count} مواضيع محددة}}",
+  "@listener_reg_areas_topics_selected": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "catalog_categories_load_error": "تعذّر تحميل المواضيع.",
+  "@catalog_categories_load_error": {},
   "listener_reg_area_relationships": "العلاقات",
   "@listener_reg_area_relationships": {},
   "listener_reg_area_marriage": "الزواج",
@@ -2585,11 +346,9 @@
   "@listener_reg_area_other": {},
   "listener_reg_area_other_hint": "يرجى التوضيح",
   "@listener_reg_area_other_hint": {},
-  "listener_reg_step_voice_intro": "مقدمة صوتية",
-  "@listener_reg_step_voice_intro": {},
-  "listener_reg_voice_title": "سجّل مقدمة قصيرة",
+  "listener_reg_voice_title": "سجّل مقدمتك",
   "@listener_reg_voice_title": {},
-  "listener_reg_voice_subtitle": "قدّم نفسك حتى يتمكن المستخدمون من التعرف عليك.",
+  "listener_reg_voice_subtitle": "يسمعها المستخدمون قبل الحجز. اجعلها دافئة.",
   "@listener_reg_voice_subtitle": {},
   "listener_reg_voice_speak_hint": "تحدث لمدة حوالي 60 ثانية",
   "@listener_reg_voice_speak_hint": {},
@@ -2599,8 +358,6 @@
   "@listener_reg_voice_stop": {},
   "listener_reg_voice_play": "تشغيل",
   "@listener_reg_voice_play": {},
-  "listener_reg_voice_tip": "نصيحة: كن طبيعيًا ولطيفًا وأصيلًا.",
-  "@listener_reg_voice_tip": {},
   "listener_reg_voice_tips_title": "نصائح التسجيل",
   "@listener_reg_voice_tips_title": {},
   "listener_reg_voice_tip_1": "تحدث بشكل طبيعي.",
@@ -2679,13 +436,13 @@
   "@listener_reg_step_experience": {},
   "listener_reg_experience_title": "شارك تجاربك في الحياة",
   "@listener_reg_experience_title": {},
-  "listener_reg_experience_subtitle": "اختر ما ينطبق عليك. هذا يساعد الآخرين في العثور على من يفهمهم.",
+  "listener_reg_experience_subtitle": "يساعد الآخرين في العثور على من يفهمهم حقًا.",
   "@listener_reg_experience_subtitle": {},
-  "listener_reg_exp_section_relationship": "العلاقة",
+  "listener_reg_exp_section_relationship": "الحالة الاجتماعية",
   "@listener_reg_exp_section_relationship": {},
-  "listener_reg_exp_section_family": "العائلة",
+  "listener_reg_exp_section_family": "الدور العائلي",
   "@listener_reg_exp_section_family": {},
-  "listener_reg_exp_section_experiences": "التجارب (اختر كل ما ينطبق)",
+  "listener_reg_exp_section_experiences": "تجارب الحياة",
   "@listener_reg_exp_section_experiences": {},
   "listener_reg_exp_single": "أعزب/عزباء",
   "@listener_reg_exp_single": {},
@@ -2723,6 +480,8 @@
   "@listener_reg_exp_addiction_recovery": {},
   "listener_reg_exp_add_more": "أضف المزيد",
   "@listener_reg_exp_add_more": {},
+  "listener_reg_exp_load_error": "تعذّر تحميل تجارب الحياة.",
+  "@listener_reg_exp_load_error": {},
   "listener_reg_add_experience_title": "إضافة تجربة",
   "@listener_reg_add_experience_title": {},
   "listener_reg_add_experience_hint": "أدخل تجربة",
@@ -2731,41 +490,47 @@
   "@listener_reg_add": {},
   "listener_reg_cancel": "إلغاء",
   "@listener_reg_cancel": {},
-  "listener_reg_step_guidelines": "إرشادات المجتمع",
-  "@listener_reg_step_guidelines": {},
-  "listener_reg_step_identity": "التحقق من الهوية",
-  "@listener_reg_step_identity": {},
   "listener_reg_identity_title": "تحقق من هويتك",
   "@listener_reg_identity_title": {},
-  "listener_reg_identity_subtitle": "هذا يساعدنا على إبقاء مجتمعنا آمنًا وموثوقًا.",
+  "listener_reg_identity_subtitle": "يحافظ على مجتمعنا آمنًا وموثوقًا",
   "@listener_reg_identity_subtitle": {},
   "listener_reg_identity_upload_id_title": "ارفع هوية حكومية",
   "@listener_reg_identity_upload_id_title": {},
-  "listener_reg_identity_upload_id_subtitle": "جواز السفر أو رخصة القيادة أو الهوية الوطنية.",
+  "listener_reg_identity_upload_id_subtitle": "جواز سفر. رخصة قيادة",
   "@listener_reg_identity_upload_id_subtitle": {},
   "listener_reg_identity_selfie_title": "التقط صورة شخصية",
   "@listener_reg_identity_selfie_title": {},
-  "listener_reg_identity_selfie_subtitle": "تأكد من أن وجهك واضح تمامًا",
+  "listener_reg_identity_selfie_subtitle": "الوجه واضح بالكامل",
   "@listener_reg_identity_selfie_subtitle": {},
-  "listener_reg_identity_liveness_title": "فحص الحيوية",
-  "@listener_reg_identity_liveness_title": {},
-  "listener_reg_identity_liveness_subtitle": "سنطلب منك تحريك رأسك قليلاً",
-  "@listener_reg_identity_liveness_subtitle": {},
-  "listener_reg_identity_start": "ابدأ التحقق",
-  "@listener_reg_identity_start": {},
-  "listener_reg_identity_secure_note": "بياناتك مشفّرة وآمنة",
+  "listener_reg_identity_how_title": "كيف يعمل التحقق",
+  "@listener_reg_identity_how_title": {},
+  "listener_reg_identity_how_step1": "ارفع وثيقة هويتك",
+  "@listener_reg_identity_how_step1": {},
+  "listener_reg_identity_how_step2": "التقط صورة شخصية مطابقة",
+  "@listener_reg_identity_how_step2": {},
+  "listener_reg_identity_how_step3": "نتحقق خلال 24 ساعة",
+  "@listener_reg_identity_how_step3": {},
+  "listener_reg_identity_secure_note": "ارفع الاثنين للمتابعة",
   "@listener_reg_identity_secure_note": {},
-  "listener_reg_step_review_submit": "مراجعة وإرسال",
-  "@listener_reg_step_review_submit": {},
   "listener_profile_under_review_title": "ملفك قيد المراجعة",
   "@listener_profile_under_review_title": {},
   "listener_profile_under_review_subtitle": "يقوم فريقنا بمراجعة معلوماتك لضمان مجتمع آمن وموثوق.",
   "@listener_profile_under_review_subtitle": {},
   "listener_profile_review_time_title": "مدة المراجعة",
   "@listener_profile_review_time_title": {},
-  "listener_profile_review_time_body": "عادةً ما تستغرق من 2–3 أيام عمل. سنُعلمك فور وجود أي تحديث.",
+  "listener_profile_review_time_body": "عادةً ما يستغرق 24–48 ساعة. سنُعلمك فورًا.",
   "@listener_profile_review_time_body": {},
-  "listener_profile_got_it": "حسنًا",
+  "listener_profile_what_happens_next_title": "ما الذي يلي",
+  "@listener_profile_what_happens_next_title": {},
+  "listener_profile_what_happens_next_1": "يراجع الفريق طلبك",
+  "@listener_profile_what_happens_next_1": {},
+  "listener_profile_what_happens_next_2": "ستتلقى إشعارًا عند الموافقة",
+  "@listener_profile_what_happens_next_2": {},
+  "listener_profile_what_happens_next_3": "يصبح ملفك متاحًا للمستخدمين",
+  "@listener_profile_what_happens_next_3": {},
+  "listener_profile_what_happens_next_4": "تبدأ طلبات الجلسات الأولى",
+  "@listener_profile_what_happens_next_4": {},
+  "listener_profile_got_it": "حسنًا!",
   "@listener_profile_got_it": {},
   "listener_profile_go_to_dashboard": "الذهاب إلى لوحة التحكم",
   "@listener_profile_go_to_dashboard": {},
@@ -2805,31 +570,73 @@
   "@listener_reg_step_notifications": {},
   "listener_reg_notif_title": "ابقَ على اطلاع",
   "@listener_reg_notif_title": {},
-  "listener_reg_notif_subtitle": "احصل على إشعار عند اكتمال مراجعة ملفك، وكذلك حول الجلسات والمكافآت والتحديثات المهمة.",
+  "listener_reg_notif_subtitle": "احصل على إشعار عند اعتماد ملفك، وحجز الجلسات، وجاهزية المكافآت.",
   "@listener_reg_notif_subtitle": {},
+  "listener_reg_notif_about_title": "سيتم إشعارك بـ",
+  "@listener_reg_notif_about_title": {},
+  "listener_reg_notif_about_1": "حالة اعتماد الملف",
+  "@listener_reg_notif_about_1": {},
+  "listener_reg_notif_about_2": "طلبات الجلسات الواردة",
+  "@listener_reg_notif_about_2": {},
+  "listener_reg_notif_about_3": "تحديثات الأرباح والمدفوعات",
+  "@listener_reg_notif_about_3": {},
+  "listener_reg_notif_about_4": "إنجازات المكافآت",
+  "@listener_reg_notif_about_4": {},
   "listener_reg_notif_enable": "تفعيل الإشعارات",
   "@listener_reg_notif_enable": {},
   "listener_reg_notif_skip": "تخطي",
   "@listener_reg_notif_skip": {},
-  "ventor_reg_title": "اختر اسمًا مستعارًا",
+  "listener_reg_submit_title": "جاري إرسال ملفك",
+  "@listener_reg_submit_title": {},
+  "listener_reg_submit_subtitle": "نقوم برفع بياناتك بشكل آمن. قد يستغرق ذلك بعض الوقت — يرجى إبقاء التطبيق مفتوحًا.",
+  "@listener_reg_submit_subtitle": {},
+  "listener_reg_submit_progress_title": "ما الذي نرسله",
+  "@listener_reg_submit_progress_title": {},
+  "listener_reg_submit_progress_profile": "صورة الملف، معلومات التواصل، ونبذة عنك",
+  "@listener_reg_submit_progress_profile": {},
+  "listener_reg_submit_progress_identity": "مستندات التحقق من الهوية",
+  "@listener_reg_submit_progress_identity": {},
+  "listener_reg_submit_progress_voice": "المقدمة الصوتية والخبرات",
+  "@listener_reg_submit_progress_voice": {},
+  "listener_reg_submit_progress_preferences": "التوفر وتفضيلات الإشعارات",
+  "@listener_reg_submit_progress_preferences": {},
+  "listener_reg_submit_error_title": "تعذّر إرسال ملفك",
+  "@listener_reg_submit_error_title": {},
+  "listener_reg_submit_error_generic": "حدث خطأ أثناء إرسال ملفك. يرجى المحاولة مرة أخرى.",
+  "@listener_reg_submit_error_generic": {},
+  "listener_reg_submit_error_hint": "تحقق من اتصالك وحاول مرة أخرى. إجاباتك محفوظة — لن تحتاج لإعادة إدخالها.",
+  "@listener_reg_submit_error_hint": {},
+  "listener_reg_submit_back_to_notifications": "العودة إلى الإشعارات",
+  "@listener_reg_submit_back_to_notifications": {},
+  "listener_reg_submit_retrying": "محاولة {attempt}",
+  "@listener_reg_submit_retrying": {
+    "placeholders": {
+      "attempt": {
+        "type": "int"
+      }
+    }
+  },
+  "ventor_reg_title": "بما نناديك؟",
   "@ventor_reg_title": {},
-  "ventor_reg_subtitle": "هكذا سيراك المستمعون.",
+  "ventor_reg_subtitle": "سيراك المستمعون بهذا الاسم. ابقَ مجهولًا — اسمك الحقيقي غير مطلوب أبدًا.",
   "@ventor_reg_subtitle": {},
-  "ventor_reg_nickname_hint": "مثال: QuietSoul",
+  "ventor_reg_nickname_label": "اسمك المستعار",
+  "@ventor_reg_nickname_label": {},
+  "ventor_reg_nickname_hint": "مثال: johndoe",
   "@ventor_reg_nickname_hint": {},
   "ventor_reg_nickname_required": "يرجى إدخال اسم مستعار",
   "@ventor_reg_nickname_required": {},
   "ventor_reg_suggestions_label": "جرّب أحد هذه الأسماء",
   "@ventor_reg_suggestions_label": {},
-  "ventor_reg_suggestion_1": "QuietSoul",
+  "ventor_reg_suggestion_1": "روح هادئة",
   "@ventor_reg_suggestion_1": {},
-  "ventor_reg_suggestion_2": "SoftRain",
+  "ventor_reg_suggestion_2": "مطر ناعم",
   "@ventor_reg_suggestion_2": {},
-  "ventor_reg_suggestion_3": "NightOwl",
+  "ventor_reg_suggestion_3": "بومة الليل",
   "@ventor_reg_suggestion_3": {},
-  "ventor_reg_suggestion_4": "CalmWave",
+  "ventor_reg_suggestion_4": "موج هادئ",
   "@ventor_reg_suggestion_4": {},
-  "ventor_reg_suggestion_5": "GentleSky",
+  "ventor_reg_suggestion_5": "سماء لطيفة",
   "@ventor_reg_suggestion_5": {},
   "ventor_reg_gender_label": "الجنس",
   "@ventor_reg_gender_label": {},
@@ -2841,15 +648,15 @@
   "@ventor_reg_gender_prefer_not": {},
   "ventor_reg_gender_required": "يرجى اختيار خيار الجنس",
   "@ventor_reg_gender_required": {},
-  "ventor_reg_avatar_label": "أضف صورة رمزية للملف (اختياري)",
+  "ventor_reg_avatar_label": "اختر صورة رمزية",
   "@ventor_reg_avatar_label": {},
   "ventor_reg_avatar_gallery": "المعرض",
   "@ventor_reg_avatar_gallery": {},
-  "ventor_reg_change_anytime": "يمكنك تغييره في أي وقت من إعدادات ملفك",
+  "ventor_reg_change_anytime": "يمكنك تغيير ذلك في أي وقت من الإعدادات",
   "@ventor_reg_change_anytime": {},
-  "ventor_reg_interests_title": "عن ماذا تريد أن تتحدث؟",
+  "ventor_reg_interests_title": "ما الذي يشغل بالك؟",
   "@ventor_reg_interests_title": {},
-  "ventor_reg_interests_subtitle": "اختر موضوعًا واحدًا أو أكثر. هذا يساعدنا في ربطك بالمستمعين المناسبين.",
+  "ventor_reg_interests_subtitle": "اختر المواضيع. سنطابقك فورًا مع المستمعين المناسبين.",
   "@ventor_reg_interests_subtitle": {},
   "ventor_reg_interest_relationships": "العلاقات",
   "@ventor_reg_interest_relationships": {},
@@ -2873,8 +680,42 @@
   "@ventor_reg_interest_other": {},
   "ventor_reg_interest_other_hint": "يرجى التوضيح",
   "@ventor_reg_interest_other_hint": {},
-  "ventor_reg_finish": "الذهاب إلى لوحة التحكم",
+  "ventor_reg_finish": "اعثر على مستمعِيّ",
   "@ventor_reg_finish": {},
+  "ventor_reg_notif_title": "ابقَ على اطلاع",
+  "@ventor_reg_notif_title": {},
+  "ventor_reg_notif_subtitle": "احصل على إشعار عند قبول جلستك، وتذكيرات المواعيد، وجاهزية المكافآت.",
+  "@ventor_reg_notif_subtitle": {},
+  "ventor_reg_notif_about_title": "سيتم إشعارك بـ",
+  "@ventor_reg_notif_about_title": {},
+  "ventor_reg_notif_about_1": "قبول الجلسات والتذكيرات",
+  "@ventor_reg_notif_about_1": {},
+  "ventor_reg_notif_about_2": "الجلسات المحجوزة القادمة",
+  "@ventor_reg_notif_about_2": {},
+  "ventor_reg_notif_about_3": "تحديثات المكافآت والعروض",
+  "@ventor_reg_notif_about_3": {},
+  "ventor_reg_notif_about_4": "تحديثات مهمة للحساب",
+  "@ventor_reg_notif_about_4": {},
+  "ventor_reg_notif_enable": "تفعيل الإشعارات",
+  "@ventor_reg_notif_enable": {},
+  "ventor_reg_interests_selected_footer": "{count} محدد، يمكنك تغيير ذلك لاحقًا",
+  "@ventor_reg_interests_selected_footer": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "ventor_reg_language_title": "اختر لغتك",
+  "@ventor_reg_language_title": {},
+  "ventor_reg_language_subtitle": "يمكنك تغيير لغة التطبيق في أي وقت من الإعدادات.",
+  "@ventor_reg_language_subtitle": {},
+  "ventor_reg_language_search_hint": "ابحث عن لغة",
+  "@ventor_reg_language_search_hint": {},
+  "ventor_reg_language_continue": "حفظ ومتابعة",
+  "@ventor_reg_language_continue": {},
+  "ventor_reg_language_empty": "لم يتم العثور على لغات",
+  "@ventor_reg_language_empty": {},
   "home_tab_dashboard": "لوحة التحكم",
   "@home_tab_dashboard": {},
   "home_tab_sessions": "الجلسات",
@@ -2887,14 +728,6 @@
   "@home_tab_rewards": {},
   "home_tab_profile": "الملف",
   "@home_tab_profile": {},
-  "listener_home_dashboard_placeholder": "ستظهر نظرة عامة على حساب المستمع هنا.",
-  "@listener_home_dashboard_placeholder": {},
-  "listener_home_sessions_placeholder": "ستظهر جلسات الاستماع القادمة والسابقة هنا.",
-  "@listener_home_sessions_placeholder": {},
-  "listener_home_availability_placeholder": "أدِر أوقات توفرك لاستقبال المكالمات.",
-  "@listener_home_availability_placeholder": {},
-  "listener_home_earnings_placeholder": "تتبّع أرباحك ومدفوعاتك كمستمع هنا.",
-  "@listener_home_earnings_placeholder": {},
   "listener_earnings_total": "إجمالي الأرباح",
   "@listener_earnings_total": {},
   "listener_earnings_trend_up": "+{percent}% عن الشهر الماضي",
@@ -2921,12 +754,14 @@
   "@listener_earnings_rate": {},
   "listener_earnings_overview": "نظرة عامة على الأرباح",
   "@listener_earnings_overview": {},
-  "listener_earnings_recent_payout": "آخر تحويل",
-  "@listener_earnings_recent_payout": {},
-  "listener_earnings_status_paid": "مدفوع",
-  "@listener_earnings_status_paid": {},
   "listener_earnings_payout_methods": "طرق السحب",
   "@listener_earnings_payout_methods": {},
+  "listener_earnings_payout_empty_title": "أضف طريقة سحب",
+  "@listener_earnings_payout_empty_title": {},
+  "listener_earnings_payout_empty_subtitle": "اربط حسابك البنكي أو باي بال لتكون جاهزاً لاستلام أرباحك.",
+  "@listener_earnings_payout_empty_subtitle": {},
+  "listener_earnings_payout_empty_action": "إعداد",
+  "@listener_earnings_payout_empty_action": {},
   "listener_earnings_default": "افتراضي",
   "@listener_earnings_default": {},
   "listener_earnings_tiers_title": "مستويات الأجر بالساعة",
@@ -2936,8 +771,12 @@
   "listener_earnings_tiers_stats": "إحصاءاتك: {sessions} جلسة · تقييم {rating}",
   "@listener_earnings_tiers_stats": {
     "placeholders": {
-      "sessions": { "type": "int" },
-      "rating": { "type": "String" }
+      "sessions": {
+        "type": "int"
+      },
+      "rating": {
+        "type": "String"
+      }
     }
   },
   "listener_earnings_your_tier": "مستواك الحالي",
@@ -2945,8 +784,12 @@
   "listener_earnings_tier_requirement": "{sessions}+ جلسة · تقييم {rating}+",
   "@listener_earnings_tier_requirement": {
     "placeholders": {
-      "sessions": { "type": "int" },
-      "rating": { "type": "String" }
+      "sessions": {
+        "type": "int"
+      },
+      "rating": {
+        "type": "String"
+      }
     }
   },
   "listener_earnings_tier_requirement_starter": "متاح لجميع المستمعين",
@@ -2954,7 +797,9 @@
   "listener_earnings_hourly_value": "{amount}/ساعة",
   "@listener_earnings_hourly_value": {
     "placeholders": {
-      "amount": { "type": "String" }
+      "amount": {
+        "type": "String"
+      }
     }
   },
   "listener_earnings_tier_starter": "مبتدئ",
@@ -2967,16 +812,12 @@
   "@listener_earnings_tier_expert": {},
   "listener_earnings_tier_elite": "نخبة",
   "@listener_earnings_tier_elite": {},
-  "listener_home_profile_placeholder": "سيظهر ملف المستمع والإعدادات هنا.",
-  "@listener_home_profile_placeholder": {},
   "listener_profile_title": "ملفي الشخصي",
   "@listener_profile_title": {},
   "listener_profile_email": "البريد الإلكتروني",
   "@listener_profile_email": {},
   "listener_profile_date_of_birth": "تاريخ الميلاد",
   "@listener_profile_date_of_birth": {},
-  "listener_profile_view_profile": "عرض الملف",
-  "@listener_profile_view_profile": {},
   "listener_profile_active_now": "متاح الآن",
   "@listener_profile_active_now": {},
   "listener_profile_reviews_count": "{count} تقييم",
@@ -2997,6 +838,8 @@
   "@listener_profile_edit_voice_re_record": {},
   "listener_profile_about_me": "نبذة عني",
   "@listener_profile_about_me": {},
+  "listener_profile_about_me_empty": "أضف نبذة عنك. اضغط تعديل لكتابة مقدمة قصيرة.",
+  "@listener_profile_about_me_empty": {},
   "listener_profile_edit_about_me_title": "تعديل نبذة عني",
   "@listener_profile_edit_about_me_title": {},
   "listener_profile_edit_about_me_subtitle": "اكتب مقدمة قصيرة ليتعرّف المتنفّسون على ما يمكن توقعه منك.",
@@ -3018,8 +861,6 @@
   "@listener_profile_see_more": {},
   "listener_profile_see_less": "عرض أقل",
   "@listener_profile_see_less": {},
-  "listener_profile_good_at": "ما أجيد الاستماع فيه",
-  "@listener_profile_good_at": {},
   "listener_profile_experiences": "الخبرات",
   "@listener_profile_experiences": {},
   "listener_profile_edit_experiences_title": "تعديل الخبرات",
@@ -3044,8 +885,6 @@
   "@listener_profile_edit_boundaries_subtitle": {},
   "listener_profile_boundaries_empty": "لا توجد حدود بعد. اضغط تعديل لاختيار المواضيع التي تفضّل تجنبها.",
   "@listener_profile_boundaries_empty": {},
-  "listener_profile_add_more": "+ إضافة المزيد",
-  "@listener_profile_add_more": {},
   "listener_profile_languages": "اللغات",
   "@listener_profile_languages": {},
   "listener_profile_country": "الدولة",
@@ -3056,12 +895,6 @@
   "@listener_profile_edit_city_title": {},
   "listener_profile_edit_city_subtitle": "حدّث المدينة الظاهرة في ملف المستمع الخاص بك.",
   "@listener_profile_edit_city_subtitle": {},
-  "listener_profile_experience": "الخبرة",
-  "@listener_profile_experience": {},
-  "listener_profile_availability_label": "التوفر",
-  "@listener_profile_availability_label": {},
-  "listener_profile_response_time": "وقت الاستجابة",
-  "@listener_profile_response_time": {},
   "listener_profile_reviews": "التقييمات",
   "@listener_profile_reviews": {},
   "listener_profile_view_all_reviews": "عرض الكل ({count})",
@@ -3123,20 +956,6 @@
       }
     }
   },
-  "listener_profile_next_availability": "التوفر القادم",
-  "@listener_profile_next_availability": {},
-  "listener_profile_available_now": "متاح الآن",
-  "@listener_profile_available_now": {},
-  "listener_profile_until_time": "حتى {time}",
-  "@listener_profile_until_time": {
-    "placeholders": {
-      "time": {
-        "type": "String"
-      }
-    }
-  },
-  "listener_profile_tomorrow": "غداً",
-  "@listener_profile_tomorrow": {},
   "listener_profile_account_settings": "الحساب والإعدادات",
   "@listener_profile_account_settings": {},
   "listener_profile_notification_preferences": "تفضيلات الإشعارات",
@@ -3185,16 +1004,10 @@
   "@listener_profile_settings_section_earnings": {},
   "listener_profile_settings_section_support": "الدعم",
   "@listener_profile_settings_section_support": {},
-  "listener_profile_settings_email": "البريد الإلكتروني",
-  "@listener_profile_settings_email": {},
   "listener_profile_settings_phone": "رقم الهاتف",
   "@listener_profile_settings_phone": {},
-  "listener_profile_settings_two_factor": "المصادقة الثنائية",
-  "@listener_profile_settings_two_factor": {},
   "listener_profile_settings_payout_methods": "طرق السحب",
   "@listener_profile_settings_payout_methods": {},
-  "listener_profile_settings_feedback": "أرسل لنا ملاحظاتك",
-  "@listener_profile_settings_feedback": {},
   "listener_profile_settings_about": "حول Venting",
   "@listener_profile_settings_about": {},
   "listener_confirm_logout_title": "تسجيل الخروج",
@@ -3228,8 +1041,6 @@
       }
     }
   },
-  "listener_about_whats_new": "ما الجديد",
-  "@listener_about_whats_new": {},
   "listener_about_terms": "شروط الخدمة",
   "@listener_about_terms": {},
   "listener_about_privacy": "سياسة الخصوصية",
@@ -3238,30 +1049,6 @@
   "@listener_about_community_guidelines": {},
   "listener_about_licenses": "التراخيص",
   "@listener_about_licenses": {},
-  "listener_whats_new_subtitle": "أبرز التحديثات في أحدث إصدارات Venting.",
-  "@listener_whats_new_subtitle": {},
-  "listener_whats_new_date_aug_2026": "أغسطس 2026",
-  "@listener_whats_new_date_aug_2026": {},
-  "listener_whats_new_date_jul_2026": "يوليو 2026",
-  "@listener_whats_new_date_jul_2026": {},
-  "listener_whats_new_1_2_0_item_1": "تجربة جديدة لحساب وإعدادات المستمع.",
-  "@listener_whats_new_1_2_0_item_1": {},
-  "listener_whats_new_1_2_0_item_2": "المدفوعات والتحويلات مع بيانات البنك والسجل.",
-  "@listener_whats_new_1_2_0_item_2": {},
-  "listener_whats_new_1_2_0_item_3": "إعدادات خصوصية للدول وظهور الملف الشخصي.",
-  "@listener_whats_new_1_2_0_item_3": {},
-  "listener_whats_new_1_2_0_item_4": "المساعدة والدعم مع واتساب ومواضيع المساعدة.",
-  "@listener_whats_new_1_2_0_item_4": {},
-  "listener_whats_new_1_1_0_item_1": "تحسين تذكيرات الجلسات وتفضيلات الإشعارات.",
-  "@listener_whats_new_1_1_0_item_1": {},
-  "listener_whats_new_1_1_0_item_2": "تعديل أسرع للغات والمدينة والنبذة الشخصية.",
-  "@listener_whats_new_1_1_0_item_2": {},
-  "listener_whats_new_1_1_0_item_3": "تحسينات في الاستقرار والأداء.",
-  "@listener_whats_new_1_1_0_item_3": {},
-  "listener_profile_settings_on": "مفعل",
-  "@listener_profile_settings_on": {},
-  "listener_profile_settings_off": "إيقاف",
-  "@listener_profile_settings_off": {},
   "listener_profile_settings_version": "الإصدار {version}",
   "@listener_profile_settings_version": {
     "placeholders": {
@@ -3312,8 +1099,6 @@
   "@listener_notif_session_reminder_10": {},
   "listener_notif_session_reminder_5": "تذكير بالجلسة قبل 5 دقائق",
   "@listener_notif_session_reminder_5": {},
-  "listener_notif_messages": "الرسائل",
-  "@listener_notif_messages": {},
   "listener_notif_reviews_feedback": "التقييمات والملاحظات",
   "@listener_notif_reviews_feedback": {},
   "listener_notif_tips_earnings": "الإكراميات والأرباح",
@@ -3328,6 +1113,10 @@
   "@listener_notif_save": {},
   "listener_privacy_section_visibility": "ظهور الملف",
   "@listener_privacy_section_visibility": {},
+  "listener_privacy_profile_visible": "إظهار ملفي في التطبيق",
+  "@listener_privacy_profile_visible": {},
+  "listener_privacy_profile_visible_sub": "أوقف هذا الخيار لإخفاء ملفك عن فينتور",
+  "@listener_privacy_profile_visible_sub": {},
   "listener_privacy_online_status": "حالة الاتصال",
   "@listener_privacy_online_status": {},
   "listener_privacy_show_when_online": "إظهار عندما أكون متصلاً",
@@ -3378,6 +1167,8 @@
   "@listener_payout_total_earnings": {},
   "listener_payout_this_month": "هذا الشهر",
   "@listener_payout_this_month": {},
+  "listener_payout_pending_balance": "قيد الانتظار",
+  "@listener_payout_pending_balance": {},
   "listener_payout_add_method": "إضافة طريقة",
   "@listener_payout_add_method": {},
   "listener_payout_history": "سجل السحب",
@@ -3402,6 +1193,8 @@
   "@listener_payout_need_method": {},
   "listener_payout_request_submitted": "تم إرسال طلب السحب.",
   "@listener_payout_request_submitted": {},
+  "listener_payout_method_saved": "تم حفظ طريقة السحب.",
+  "@listener_payout_method_saved": {},
   "listener_payout_bank_subtitle": "أدخل بيانات حسابك البنكي لاستلام المدفوعات.",
   "@listener_payout_bank_subtitle": {},
   "listener_payout_bank_holder": "اسم صاحب الحساب",
@@ -3432,40 +1225,6 @@
   "@listener_profile_edit": {},
   "listener_profile_about_me_body": "أنا هنا للاستماع ودعمك في مساحة آمنة وخالية من الأحكام. أؤمن حقاً أننا أحياناً نحتاج فقط إلى شخص يستمع بقلب مفتوح.",
   "@listener_profile_about_me_body": {},
-  "listener_profile_experience_value": "{years}+ سنوات",
-  "@listener_profile_experience_value": {
-    "placeholders": {
-      "years": {
-        "type": "int"
-      }
-    }
-  },
-  "listener_profile_usually_available": "متاح عادةً",
-  "@listener_profile_usually_available": {},
-  "listener_profile_response_within": "عادةً خلال {minutes} د",
-  "@listener_profile_response_within": {
-    "placeholders": {
-      "minutes": {
-        "type": "int"
-      }
-    }
-  },
-  "listener_profile_tag_stress_anxiety": "التوتر والقلق",
-  "@listener_profile_tag_stress_anxiety": {},
-  "listener_profile_tag_relationships": "العلاقات",
-  "@listener_profile_tag_relationships": {},
-  "listener_profile_tag_overthinking": "كثرة التفكير",
-  "@listener_profile_tag_overthinking": {},
-  "listener_profile_tag_life_transitions": "تحولات الحياة",
-  "@listener_profile_tag_life_transitions": {},
-  "listener_profile_tag_parenting": "التربية",
-  "@listener_profile_tag_parenting": {},
-  "ventor_home_dashboard_placeholder": "ابحث عن المستمعين وابدأ محادثة من هنا.",
-  "@ventor_home_dashboard_placeholder": {},
-  "ventor_home_sessions_placeholder": "ستظهر جلسات التفريغ وسجلك هنا.",
-  "@ventor_home_sessions_placeholder": {},
-  "ventor_home_rewards_placeholder": "ستظهر مكافآت وإنجازات المتحدث هنا.",
-  "@ventor_home_rewards_placeholder": {},
   "ventor_rewards_title": "المكافآت والخصومات",
   "@ventor_rewards_title": {},
   "ventor_rewards_subtitle": "استخدم نقاطك للحصول على مزايا رائعة.",
@@ -3473,26 +1232,36 @@
   "ventor_rewards_pts": "{points} نقطة",
   "@ventor_rewards_pts": {
     "placeholders": {
-      "points": { "type": "String" }
+      "points": {
+        "type": "String"
+      }
     }
   },
   "ventor_rewards_active_saving": "أنت توفّر {percent}% على جلستك القادمة.",
   "@ventor_rewards_active_saving": {
     "placeholders": {
-      "percent": { "type": "int" }
+      "percent": {
+        "type": "int"
+      }
     }
   },
   "ventor_rewards_active_saving_tier": "أنت توفّر {percent}% مع {audience} على جلستك القادمة.",
   "@ventor_rewards_active_saving_tier": {
     "placeholders": {
-      "percent": { "type": "int" },
-      "audience": { "type": "String" }
+      "percent": {
+        "type": "int"
+      },
+      "audience": {
+        "type": "String"
+      }
     }
   },
   "ventor_rewards_active_free_session": "جلستك القادمة لمدة {minutes} دقيقة مجانية.",
   "@ventor_rewards_active_free_session": {
     "placeholders": {
-      "minutes": { "type": "int" }
+      "minutes": {
+        "type": "int"
+      }
     }
   },
   "ventor_rewards_active_priority": "المطابقة ذات الأولوية مفعّلة لجلستك القادمة.",
@@ -3532,13 +1301,17 @@
   "ventor_rewards_offer_percent": "خصم {percent}%",
   "@ventor_rewards_offer_percent": {
     "placeholders": {
-      "percent": { "type": "int" }
+      "percent": {
+        "type": "int"
+      }
     }
   },
   "ventor_rewards_offer_free_minutes": "جلسة مجانية {minutes} دقيقة",
   "@ventor_rewards_offer_free_minutes": {
     "placeholders": {
-      "minutes": { "type": "int" }
+      "minutes": {
+        "type": "int"
+      }
     }
   },
   "ventor_rewards_offer_priority": "مطابقة ذات أولوية",
@@ -3556,7 +1329,9 @@
   "ventor_rewards_audience_min_tier": "مستمعو {tier} فأعلى",
   "@ventor_rewards_audience_min_tier": {
     "placeholders": {
-      "tier": { "type": "String" }
+      "tier": {
+        "type": "String"
+      }
     }
   },
   "ventor_rewards_earn_title": "كيف تكسب النقاط",
@@ -3568,7 +1343,9 @@
   "ventor_rewards_earn_sessions_body": "اكسب {points} نقطة في كل مرة تُكمل فيها جلسة.",
   "@ventor_rewards_earn_sessions_body": {
     "placeholders": {
-      "points": { "type": "int" }
+      "points": {
+        "type": "int"
+      }
     }
   },
   "ventor_rewards_earn_invite_title": "ادعُ أصدقاءك",
@@ -3576,8 +1353,12 @@
   "ventor_rewards_earn_invite_body": "شارك رمزك. تحصل على {registerPoints} نقطة عندما يسجّل صديقك، وتحصلان معاً على {firstCallPoints} نقطة بعد أول مكالمة له.",
   "@ventor_rewards_earn_invite_body": {
     "placeholders": {
-      "registerPoints": { "type": "int" },
-      "firstCallPoints": { "type": "int" }
+      "registerPoints": {
+        "type": "int"
+      },
+      "firstCallPoints": {
+        "type": "int"
+      }
     }
   },
   "ventor_rewards_earn_booking_title": "صديقك يحجز مكالمة",
@@ -3585,7 +1366,9 @@
   "ventor_rewards_earn_booking_body": "احصل على {points} نقطة إضافية عندما يحجز صديق دعوته جلسة.",
   "@ventor_rewards_earn_booking_body": {
     "placeholders": {
-      "points": { "type": "int" }
+      "points": {
+        "type": "int"
+      }
     }
   },
   "ventor_rewards_earn_buy_title": "شراء النقاط",
@@ -3605,19 +1388,25 @@
   "ventor_points_package_price": "${price}",
   "@ventor_points_package_price": {
     "placeholders": {
-      "price": { "type": "String" }
+      "price": {
+        "type": "String"
+      }
     }
   },
   "ventor_points_package_bonus": "مكافأة +{percent}%",
   "@ventor_points_package_bonus": {
     "placeholders": {
-      "percent": { "type": "int" }
+      "percent": {
+        "type": "int"
+      }
     }
   },
   "ventor_points_purchase_success": "تمت إضافة {points} نقطة إلى رصيدك.",
   "@ventor_points_purchase_success": {
     "placeholders": {
-      "points": { "type": "String" }
+      "points": {
+        "type": "String"
+      }
     }
   },
   "ventor_points_purchase_redeem_cta": "استبدال",
@@ -3637,8 +1426,12 @@
   "ventor_invite_promo": "قدّم الدعم. واحصل على المكافأة. ادعُ صديقاً — تحصل على {registerPoints} نقطة عندما يسجّل، وتحصلان معاً على {firstCallPoints} نقطة بعد أول مكالمة له.",
   "@ventor_invite_promo": {
     "placeholders": {
-      "registerPoints": { "type": "int" },
-      "firstCallPoints": { "type": "int" }
+      "registerPoints": {
+        "type": "int"
+      },
+      "firstCallPoints": {
+        "type": "int"
+      }
     }
   },
   "ventor_invite_your_code": "رمزك",
@@ -3662,13 +1455,17 @@
   "ventor_invite_how_2": "يسجّل صديقك في التطبيق — وتحصل على {points} نقطة.",
   "@ventor_invite_how_2": {
     "placeholders": {
-      "points": { "type": "int" }
+      "points": {
+        "type": "int"
+      }
     }
   },
   "ventor_invite_how_3": "عندما يجري صديقك أول مكالمة، تحصلان معاً على {points} نقطة.",
   "@ventor_invite_how_3": {
     "placeholders": {
-      "points": { "type": "int" }
+      "points": {
+        "type": "int"
+      }
     }
   },
   "ventor_invite_summary_title": "دعواتك",
@@ -3676,20 +1473,28 @@
   "ventor_invite_total": "إجمالي المدعوين: {count} أصدقاء",
   "@ventor_invite_total": {
     "placeholders": {
-      "count": { "type": "int" }
+      "count": {
+        "type": "int"
+      }
     }
   },
   "ventor_invite_points_earned": "النقاط المكتسبة: {points} نقطة",
   "@ventor_invite_points_earned": {
     "placeholders": {
-      "points": { "type": "String" }
+      "points": {
+        "type": "String"
+      }
     }
   },
   "ventor_invite_share_message": "انضم إليّ على فنتينغ. استخدم رمزي {code} للبدء: {link}",
   "@ventor_invite_share_message": {
     "placeholders": {
-      "code": { "type": "String" },
-      "link": { "type": "String" }
+      "code": {
+        "type": "String"
+      },
+      "link": {
+        "type": "String"
+      }
     }
   },
   "ventor_invite_history_title": "سجل الدعوات",
@@ -3704,16 +1509,14 @@
   "@ventor_invite_status_first_session": {},
   "ventor_invite_status_booked": "حجز مكالمة",
   "@ventor_invite_status_booked": {},
-  "ventor_home_profile_placeholder": "سيظهر ملف المتحدث والإعدادات هنا.",
-  "@ventor_home_profile_placeholder": {},
   "ventor_profile_anonymous": "مجهول",
   "@ventor_profile_anonymous": {},
   "ventor_profile_sessions": "الجلسات",
   "@ventor_profile_sessions": {},
-  "ventor_profile_avg_rating": "متوسط التقييم",
-  "@ventor_profile_avg_rating": {},
   "ventor_profile_day_streak": "سلسلة الأيام",
   "@ventor_profile_day_streak": {},
+  "ventor_profile_progress_summary": "ملخص التقدم",
+  "@ventor_profile_progress_summary": {},
   "ventor_profile_mood_journey": "رحلة المزاج",
   "@ventor_profile_mood_journey": {},
   "ventor_profile_today": "اليوم",
@@ -3732,63 +1535,20 @@
   "@ventor_profile_day_sat": {},
   "ventor_profile_day_sun": "الأحد",
   "@ventor_profile_day_sun": {},
-  "ventor_profile_achievements": "الإنجازات",
-  "@ventor_profile_achievements": {},
   "ventor_profile_see_all": "عرض الكل",
   "@ventor_profile_see_all": {},
-  "ventor_profile_achievement_first_step": "الخطوة الأولى",
-  "@ventor_profile_achievement_first_step": {},
-  "ventor_profile_achievement_first_step_desc": "جلسة واحدة",
-  "@ventor_profile_achievement_first_step_desc": {},
-  "ventor_profile_achievement_be_heard": "أن تُسمَع",
-  "@ventor_profile_achievement_be_heard": {},
-  "ventor_profile_achievement_be_heard_desc": "5 جلسات",
-  "@ventor_profile_achievement_be_heard_desc": {},
-  "ventor_profile_achievement_week_warrior": "محارب الأسبوع",
-  "@ventor_profile_achievement_week_warrior": {},
-  "ventor_profile_achievement_week_warrior_desc": "سلسلة 7 أيام",
-  "@ventor_profile_achievement_week_warrior_desc": {},
-  "ventor_profile_achievement_active_mind": "عقل نشط",
-  "@ventor_profile_achievement_active_mind": {},
-  "ventor_profile_achievement_active_mind_desc": "20 جلسة",
-  "@ventor_profile_achievement_active_mind_desc": {},
-  "ventor_profile_achievement_first_step_detail": "أكمل أول جلسة تنفيس. اتخاذ هذه الخطوة الأولى يدل على شجاعة، وهو بداية رحلتك في Venting.",
-  "@ventor_profile_achievement_first_step_detail": {},
-  "ventor_profile_achievement_be_heard_detail": "أنهِ 5 جلسات شاركت فيها مشاعرك. الاستماع المتكرر يبني الثقة والوضوح العاطفي.",
-  "@ventor_profile_achievement_be_heard_detail": {},
-  "ventor_profile_achievement_week_warrior_detail": "حافظ على سلسلة 7 أيام عبر تسجيل الدخول أو إكمال الجلسات. العادات اليومية الصغيرة تصنع فرقًا كبيرًا.",
-  "@ventor_profile_achievement_week_warrior_detail": {},
-  "ventor_profile_achievement_active_mind_detail": "اوصل إلى 20 جلسة إجمالاً. هذه الشارة تحتفي باستمرارك في الاهتمام بنفسك.",
-  "@ventor_profile_achievement_active_mind_detail": {},
-  "ventor_profile_achievements_subtitle": "{unlocked} من {total} مفتوحة",
-  "@ventor_profile_achievements_subtitle": {
-    "placeholders": {
-      "unlocked": {
-        "type": "int"
-      },
-      "total": {
-        "type": "int"
-      }
-    }
-  },
-  "ventor_profile_achievement_unlocked": "مفتوحة",
-  "@ventor_profile_achievement_unlocked": {},
-  "ventor_profile_achievement_locked": "مقفلة",
-  "@ventor_profile_achievement_locked": {},
-  "ventor_profile_total_points": "{points} نقطة إجمالية",
-  "@ventor_profile_total_points": {
-    "placeholders": {
-      "points": {
-        "type": "String"
-      }
-    }
-  },
-  "ventor_profile_view_rewards": "عرض المكافآت",
-  "@ventor_profile_view_rewards": {},
   "ventor_profile_my_listeners": "مستمعوّي",
   "@ventor_profile_my_listeners": {},
   "ventor_profile_add_favorite": "إضافة مفضل",
   "@ventor_profile_add_favorite": {},
+  "ventor_profile_add_favorite_total": "الإجمالي ({count})",
+  "@ventor_profile_add_favorite_total": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "ventor_profile_quote": "من الطبيعي ألا تكون بخير. لست مضطرًا لمواجهة ذلك وحدك.",
   "@ventor_profile_quote": {},
   "ventor_profile_edit_title": "تعديل الملف الشخصي",
@@ -3807,16 +1567,26 @@
   "@ventor_profile_edit_photo_camera": {},
   "ventor_profile_settings_title": "الإعدادات",
   "@ventor_profile_settings_title": {},
-  "ventor_profile_settings_privacy": "الخصوصية",
-  "@ventor_profile_settings_privacy": {},
-  "ventor_profile_settings_privacy_sub": "تحكم بخصوصيتك",
-  "@ventor_profile_settings_privacy_sub": {},
+  "ventor_profile_settings_section_preferences": "التفضيلات",
+  "@ventor_profile_settings_section_preferences": {},
+  "ventor_profile_settings_section_security": "الأمان والحساب",
+  "@ventor_profile_settings_section_security": {},
+  "ventor_profile_settings_section_support": "الدعم وحول التطبيق",
+  "@ventor_profile_settings_section_support": {},
   "ventor_profile_settings_notifications": "الإشعارات",
   "@ventor_profile_settings_notifications": {},
-  "ventor_profile_settings_notifications_sub": "إدارة ما يصلك",
+  "ventor_profile_settings_notifications_sub": "مفعّلة",
   "@ventor_profile_settings_notifications_sub": {},
-  "ventor_profile_settings_help_sub": "نحن هنا لمساعدتك",
+  "ventor_profile_settings_help_sub": "الأسئلة والدردشة",
   "@ventor_profile_settings_help_sub": {},
+  "ventor_profile_settings_version": "v{version}",
+  "@ventor_profile_settings_version": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
   "ventor_notif_section_push": "إشعارات الدفع",
   "@ventor_notif_section_push": {},
   "ventor_notif_receive_push": "استلام إشعارات الدفع",
@@ -3843,25 +1613,6 @@
   "@ventor_notif_receive_email": {},
   "ventor_notif_save": "حفظ",
   "@ventor_notif_save": {},
-  "ventor_privacy_section_profile": "ظهور الملف الشخصي",
-  "@ventor_privacy_section_profile": {},
-  "ventor_privacy_show_mood_journey": "إظهار رحلة المزاج",
-  "@ventor_privacy_show_mood_journey": {},
-  "ventor_privacy_show_achievements": "إظهار الإنجازات",
-  "@ventor_privacy_show_achievements": {},
-  "ventor_privacy_show_stats": "إظهار الجلسات والسلسلة",
-  "@ventor_privacy_show_stats": {},
-  "ventor_privacy_show_favorite_listeners": "إظهار مستمعيّ",
-  "@ventor_privacy_show_favorite_listeners": {},
-  "ventor_privacy_section_discovery": "الاكتشاف",
-  "@ventor_privacy_section_discovery": {},
-  "ventor_privacy_allow_discovery": "السماح للمستمعين بإيجادي",
-  "@ventor_privacy_allow_discovery": {},
-  "ventor_privacy_allow_discovery_sub": "اسمح للمستمعين المطابقين باكتشاف ملفك عند البحث عن شخص للتحدث معه.",
-  "@ventor_privacy_allow_discovery_sub": {},
-  "ventor_privacy_save": "حفظ",
-  "@ventor_privacy_save": {},
-
   "listener_avail_title": "التوفر",
   "@listener_avail_title": {},
   "listener_avail_weekly_schedule": "تعيين الجدول الأسبوعي",
@@ -3874,49 +1625,76 @@
   "@listener_avail_session_settings": {},
   "listener_avail_session_length": "مدة الجلسة المفضلة",
   "@listener_avail_session_length": {},
+  "listener_avail_session_length_any": "أي مدة",
+  "@listener_avail_session_length_any": {},
+  "listener_avail_session_length_subtitle": "اختر أي مدة أو حتى خيارين للجلسة.",
+  "@listener_avail_session_length_subtitle": {},
   "listener_avail_break_between": "استراحة بين الجلسات",
   "@listener_avail_break_between": {},
+  "listener_avail_break_none": "بدون استراحة",
+  "@listener_avail_break_none": {},
+  "listener_avail_break_minutes": "{minutes} دقيقة",
+  "@listener_avail_break_minutes": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
   "listener_avail_languages": "اللغات",
   "@listener_avail_languages": {},
   "listener_avail_min_value": "{minutes} دقيقة",
   "@listener_avail_min_value": {
     "placeholders": {
-      "minutes": { "type": "int" }
+      "minutes": {
+        "type": "int"
+      }
     }
   },
   "listener_avail_instant_calls": "قبول المكالمات الفورية",
   "@listener_avail_instant_calls": {},
   "listener_avail_instant_calls_hint": "اسمح للمتحدثين بالوصول إليك لجلسات فورية بدون حجز مسبق.",
   "@listener_avail_instant_calls_hint": {},
+  "listener_avail_instant_calls_earnings_highlight": "المكالمات الفورية تساعدك على كسب دخل إضافي.",
+  "@listener_avail_instant_calls_earnings_highlight": {},
+  "listener_avail_online_status": "الظهور كمتصل",
+  "@listener_avail_online_status": {},
+  "listener_avail_online_status_hint": "عندما تكون متصلاً، يمكن للمتحدثين رؤية أنك متاح للجلسات.",
+  "@listener_avail_online_status_hint": {},
+  "listener_avail_online_status_offline_hint": "أنت غير متصل. فعّل هذا عندما تكون مستعداً لاستقبال الجلسات.",
+  "@listener_avail_online_status_offline_hint": {},
+  "listener_avail_status_online": "متصل",
+  "@listener_avail_status_online": {},
+  "listener_avail_status_offline": "غير متصل",
+  "@listener_avail_status_offline": {},
   "listener_avail_day_available": "متاح في هذا اليوم",
   "@listener_avail_day_available": {},
   "listener_avail_add_slot": "إضافة فترة زمنية",
   "@listener_avail_add_slot": {},
   "listener_avail_remove_slot": "إزالة",
   "@listener_avail_remove_slot": {},
-
+  "listener_avail_slot_overlap_error": "لا يمكن أن تتداخل الفترات الزمنية. يجب أن تبدأ كل فترة جديدة عند انتهاء الفترة السابقة.",
+  "@listener_avail_slot_overlap_error": {},
   "listener_sessions_filter_upcoming": "القادمة ({count})",
   "@listener_sessions_filter_upcoming": {
     "placeholders": {
-      "count": { "type": "int" }
+      "count": {
+        "type": "int"
+      }
     }
   },
   "listener_sessions_filter_missed": "الفائتة ({count})",
   "@listener_sessions_filter_missed": {
     "placeholders": {
-      "count": { "type": "int" }
+      "count": {
+        "type": "int"
+      }
     }
   },
   "listener_sessions_filter_history": "السجل",
   "@listener_sessions_filter_history": {},
-  "listener_sessions_upcoming_title": "الجلسات القادمة",
-  "@listener_sessions_upcoming_title": {},
-  "listener_sessions_active_title": "الجلسات النشطة",
-  "@listener_sessions_active_title": {},
   "listener_sessions_history_title": "الجلسات الماضية",
   "@listener_sessions_history_title": {},
-  "listener_sessions_requests_title": "طلبات الجلسات",
-  "@listener_sessions_requests_title": {},
   "listener_sessions_instant_section_title": "المكالمات الفورية",
   "@listener_sessions_instant_section_title": {},
   "listener_sessions_scheduled_section_title": "الجلسات المجدولة",
@@ -3927,14 +1705,8 @@
   "@listener_sessions_no_instant": {},
   "listener_sessions_no_scheduled": "لا توجد جلسات مجدولة بعد.",
   "@listener_sessions_no_scheduled": {},
-  "listener_sessions_new_request": "طلب جديد",
-  "@listener_sessions_new_request": {},
   "listener_sessions_instant_incoming": "مكالمة فورية واردة",
   "@listener_sessions_instant_incoming": {},
-  "listener_sessions_instant_badge": "فورية",
-  "@listener_sessions_instant_badge": {},
-  "listener_sessions_scheduled_badge": "مجدولة",
-  "@listener_sessions_scheduled_badge": {},
   "listener_sessions_voice_call": "مكالمة صوتية",
   "@listener_sessions_voice_call": {},
   "listener_sessions_video_call": "مكالمة فيديو",
@@ -3953,6 +1725,8 @@
   "@listener_sessions_accept_instant": {},
   "listener_sessions_assigned_snackbar": "تم تعيين المكالمة لك — انضم عندما تكون جاهزاً.",
   "@listener_sessions_assigned_snackbar": {},
+  "listener_sessions_already_taken": "قبل مستمع آخر هذه المكالمة أولاً.",
+  "@listener_sessions_already_taken": {},
   "listener_sessions_waiting": "ينتظرونك",
   "@listener_sessions_waiting": {},
   "listener_sessions_join_now": "انضم للمكالمة الآن",
@@ -3966,19 +1740,25 @@
   "listener_sessions_minutes_ago": "منذ {minutes} د",
   "@listener_sessions_minutes_ago": {
     "placeholders": {
-      "minutes": { "type": "int" }
+      "minutes": {
+        "type": "int"
+      }
     }
   },
   "listener_sessions_hours_ago": "منذ {hours} س",
   "@listener_sessions_hours_ago": {
     "placeholders": {
-      "hours": { "type": "int" }
+      "hours": {
+        "type": "int"
+      }
     }
   },
   "listener_sessions_days_ago": "منذ {days} ي",
   "@listener_sessions_days_ago": {
     "placeholders": {
-      "days": { "type": "int" }
+      "days": {
+        "type": "int"
+      }
     }
   },
   "listener_sessions_stats_title": "نتائج الطلبات",
@@ -3993,8 +1773,6 @@
   "@listener_sessions_status_accepted": {},
   "listener_sessions_status_declined": "طلب مرفوض",
   "@listener_sessions_status_declined": {},
-  "listener_sessions_status_completed": "مكتملة",
-  "@listener_sessions_status_completed": {},
   "listener_sessions_no_missed": "لا توجد جلسات فائتة.",
   "@listener_sessions_no_missed": {},
   "listener_sessions_no_history": "لا توجد جلسات ماضية بعد.",
@@ -4005,14 +1783,14 @@
   "@listener_sessions_speech_language": {},
   "listener_sessions_penalty_note": "لكل جلسة لا تدخلها، سيتم خصم 20% من تكلفة الجلسة من رصيدك.",
   "@listener_sessions_penalty_note": {},
-  "listener_sessions_missed_title": "الجلسات الفائتة",
-  "@listener_sessions_missed_title": {},
   "listener_sessions_status_missed": "فائتة — لم يتم الدخول",
   "@listener_sessions_status_missed": {},
   "listener_sessions_penalty_deducted": "تم خصم {amount} (20%)",
   "@listener_sessions_penalty_deducted": {
     "placeholders": {
-      "amount": { "type": "String" }
+      "amount": {
+        "type": "String"
+      }
     }
   },
   "listener_call_instructions_title": "قبل الانضمام",
@@ -4032,7 +1810,9 @@
   "listener_call_instruction_time": "ابقَ طوال الجلسة ({minutes} دقيقة) ما لم ينهِها مبكراً.",
   "@listener_call_instruction_time": {
     "placeholders": {
-      "minutes": { "type": "int" }
+      "minutes": {
+        "type": "int"
+      }
     }
   },
   "listener_call_instruction_boundaries": "احترم الحدود. إذا شعرت أن الموضوع خارج نطاق راحتك، وجّهه بلطف.",
@@ -4061,8 +1841,6 @@
   "@listener_call_speaker": {},
   "listener_call_flip": "قلب",
   "@listener_call_flip": {},
-  "listener_call_chat": "محادثة",
-  "@listener_call_chat": {},
   "listener_call_rating_title": "كيف كانت محادثتك؟",
   "@listener_call_rating_title": {},
   "listener_call_rating_subtitle": "ملاحظاتك تساعدنا على التحسين",
@@ -4104,19 +1882,25 @@
   "listener_dashboard_greeting_morning": "صباح الخير، {name} 👋",
   "@listener_dashboard_greeting_morning": {
     "placeholders": {
-      "name": { "type": "String" }
+      "name": {
+        "type": "String"
+      }
     }
   },
   "listener_dashboard_greeting_afternoon": "طاب يومك، {name} 👋",
   "@listener_dashboard_greeting_afternoon": {
     "placeholders": {
-      "name": { "type": "String" }
+      "name": {
+        "type": "String"
+      }
     }
   },
   "listener_dashboard_greeting_evening": "مساء الخير، {name} 👋",
   "@listener_dashboard_greeting_evening": {
     "placeholders": {
-      "name": { "type": "String" }
+      "name": {
+        "type": "String"
+      }
     }
   },
   "listener_dashboard_subtitle": "أنت تحدث فرقاً حقيقياً.",
@@ -4154,13 +1938,17 @@
   "listener_dashboard_at_time": "في {time}",
   "@listener_dashboard_at_time": {
     "placeholders": {
-      "time": { "type": "String" }
+      "time": {
+        "type": "String"
+      }
     }
   },
   "listener_dashboard_session_minutes": "جلسة {minutes} دقيقة",
   "@listener_dashboard_session_minutes": {
     "placeholders": {
-      "minutes": { "type": "int" }
+      "minutes": {
+        "type": "int"
+      }
     }
   },
   "listener_dashboard_waiting": "في انتظارك.",
@@ -4179,22 +1967,44 @@
   "@listener_dashboard_setup_identity": {},
   "listener_dashboard_setup_profile": "معلومات الملف الشخصي",
   "@listener_dashboard_setup_profile": {},
+  "listener_dashboard_setup_account": "إعداد الحساب",
+  "@listener_dashboard_setup_account": {},
+  "listener_dashboard_setup_about": "نبذة عنك",
+  "@listener_dashboard_setup_about": {},
+  "listener_dashboard_setup_experience": "تجارب الحياة",
+  "@listener_dashboard_setup_experience": {},
+  "listener_dashboard_setup_comfort_areas": "مجالات الراحة",
+  "@listener_dashboard_setup_comfort_areas": {},
+  "listener_dashboard_setup_boundaries": "الحدود",
+  "@listener_dashboard_setup_boundaries": {},
+  "listener_dashboard_setup_voice_intro": "المقدمة الصوتية",
+  "@listener_dashboard_setup_voice_intro": {},
+  "listener_dashboard_setup_notifications": "الإشعارات",
+  "@listener_dashboard_setup_notifications": {},
+  "listener_dashboard_setup_pending": "معلق",
+  "@listener_dashboard_setup_pending": {},
   "listener_dashboard_setup_availability": "التوفر",
   "@listener_dashboard_setup_availability": {},
   "listener_dashboard_setup_training": "التدريب",
   "@listener_dashboard_setup_training": {},
   "listener_dashboard_setup_tutorial": "دليل الجلسة الأولى",
   "@listener_dashboard_setup_tutorial": {},
+  "listener_dashboard_setup_book_first_session": "جلستك الأولى معنا",
+  "@listener_dashboard_setup_book_first_session": {},
+  "listener_dashboard_setup_book_first_session_cta": "حسناً — أنا مستعد",
+  "@listener_dashboard_setup_book_first_session_cta": {},
+  "listener_dashboard_setup_book_first_session_availability": "تحديث توفري",
+  "@listener_dashboard_setup_book_first_session_availability": {},
   "listener_dashboard_setup_done": "مكتمل",
   "@listener_dashboard_setup_done": {},
   "listener_dashboard_setup_in_progress": "قيد التقدم",
   "@listener_dashboard_setup_in_progress": {},
+  "listener_dashboard_setup_under_review": "قيد المراجعة",
+  "@listener_dashboard_setup_under_review": {},
   "listener_dashboard_setup_locked": "مقفل",
   "@listener_dashboard_setup_locked": {},
   "listener_dashboard_setup_continue": "متابعة الإعداد",
   "@listener_dashboard_setup_continue": {},
-  "listener_dashboard_setup_coming_soon": "التدريب والدروس قادمة قريباً.",
-  "@listener_dashboard_setup_coming_soon": {},
   "listener_training_title": "تدريب الاستماع الفعّال",
   "@listener_training_title": {},
   "listener_training_subtitle": "افتح فيديو أو رابط كل وحدة لإكمالها. أنهِ جميع الوحدات لاجتياز التدريب.",
@@ -4207,10 +2017,6 @@
   "@listener_training_finish_locked": {},
   "listener_training_status_completed": "مكتمل",
   "@listener_training_status_completed": {},
-  "listener_training_status_in_progress": "قيد التقدم",
-  "@listener_training_status_in_progress": {},
-  "listener_training_status_not_started": "لم يبدأ",
-  "@listener_training_status_not_started": {},
   "listener_training_status_tap_to_open": "اضغط لفتح الدرس",
   "@listener_training_status_tap_to_open": {},
   "listener_training_status_locked": "مقفل",
@@ -4233,14 +2039,26 @@
   "@listener_dashboard_profile_approved_title": {},
   "listener_dashboard_profile_approved_message": "قبل استقبال الجلسات، أكمل رحلة الإعداد والدروس.",
   "@listener_dashboard_profile_approved_message": {},
+  "listener_dashboard_profile_under_review_title": "الملف قيد المراجعة",
+  "@listener_dashboard_profile_under_review_title": {},
+  "listener_dashboard_profile_under_review_message": "أكمل التدريب واحجز جلستك الأولى بينما نراجع ملفك. لن تظهر متاحاً للمستخدمين حتى تتم الموافقة.",
+  "@listener_dashboard_profile_under_review_message": {},
+  "listener_dashboard_profile_rejected_title": "الملف يحتاج تحديثات",
+  "@listener_dashboard_profile_rejected_title": {},
+  "listener_dashboard_profile_rejected_message": "حدد المسؤول خطوة أو أكثر أدناه للتحديث. بعد التعديل سنعيد مراجعة ملفك.",
+  "@listener_dashboard_profile_rejected_message": {},
+  "listener_dashboard_setup_needs_refill": "يحتاج تحديث",
+  "@listener_dashboard_setup_needs_refill": {},
+  "listener_dashboard_go_online_requires_approval": "يجب الموافقة على ملفك قبل أن تتمكن من الظهور متاحاً.",
+  "@listener_dashboard_go_online_requires_approval": {},
+  "listener_dashboard_availability_hidden_until_approved": "مخفي عن المستخدمين حتى تتم الموافقة على ملفك",
+  "@listener_dashboard_availability_hidden_until_approved": {},
   "listener_dashboard_locked_accept_title": "قبول الجلسات",
   "@listener_dashboard_locked_accept_title": {},
   "listener_dashboard_locked_accept_subtitle": "يُفتح بعد إكمال الخطوات المطلوبة.",
   "@listener_dashboard_locked_accept_subtitle": {},
   "listener_dashboard_locked_earnings_title": "الأرباح (هذا الشهر)",
   "@listener_dashboard_locked_earnings_title": {},
-  "listener_dashboard_locked_earnings_subtitle": "أكمل الدروس لعرض أرباحك.",
-  "@listener_dashboard_locked_earnings_subtitle": {},
   "listener_dashboard_locked_earnings_footnote": "أكمل الدروس لعرض أرباحك.",
   "@listener_dashboard_locked_earnings_footnote": {},
   "listener_dashboard_no_requests": "لا توجد طلبات قادمة بعد. ستظهر الطلبات هنا عند بدء العمل.",
@@ -4256,34 +2074,40 @@
   "listener_dashboard_notifications_minutes_ago": "منذ {count} د",
   "@listener_dashboard_notifications_minutes_ago": {
     "placeholders": {
-      "count": { "type": "int" }
+      "count": {
+        "type": "int"
+      }
     }
   },
   "listener_dashboard_notifications_hours_ago": "منذ {count} س",
   "@listener_dashboard_notifications_hours_ago": {
     "placeholders": {
-      "count": { "type": "int" }
+      "count": {
+        "type": "int"
+      }
     }
   },
   "listener_dashboard_notifications_days_ago": "منذ {count} ي",
   "@listener_dashboard_notifications_days_ago": {
     "placeholders": {
-      "count": { "type": "int" }
+      "count": {
+        "type": "int"
+      }
     }
   },
   "listener_dashboard_notifications_delete": "حذف",
   "@listener_dashboard_notifications_delete": {},
-  "listener_first_session_continue": "افتح الخطوة الأخيرة",
+  "listener_first_session_continue": "عرض معلومات الجلسة الأولى",
   "@listener_first_session_continue": {},
-  "listener_first_session_title": "تهانينا — أنت على وشك الانتهاء!",
+  "listener_first_session_title": "جلستك الأولى معنا",
   "@listener_first_session_title": {},
-  "listener_first_session_body": "تبقى خطوة أخيرة. سنرسل لك قريباً مكالمة جلسة لمدة 30 دقيقة — ستكون هذه أول جلسة تدريبية. نتطلع لرؤيتك هناك.",
+  "listener_first_session_body": "أنت على وشك الانتهاء. بناءً على التوفر الذي حددته، سيتواصل معك فريقنا في جلسة مباشرة قصيرة قبل الموافقة على ملفك.",
   "@listener_first_session_body": {},
-  "listener_first_session_bullet_call": "توقّع مكالمة تدريبية مدتها 30 دقيقة قريباً. انضم عند وصولها لنمرّ معاً على أول جلسة مباشرة.",
+  "listener_first_session_bullet_call": "سنتواصل معك خلال الأوقات التي شاركتها — أبقِ هاتفك قريباً والإشعارات مفعّلة.",
   "@listener_first_session_bullet_call": {},
-  "listener_first_session_bullet_guidelines": "لا تنسَ الإرشادات من تدريب الاستماع الفعّال — احتفظ بها في بالك أثناء هذه المكالمة.",
+  "listener_first_session_bullet_guidelines": "خلال المكالمة سنمرّ على سيناريوهات حقيقية ونختبر مهارات الاستماع لديك.",
   "@listener_first_session_bullet_guidelines": {},
-  "listener_first_session_bullet_available": "بعد هذه الجلسة التدريبية ستكون متاحاً بالكامل لأي مكالمة واردة.",
+  "listener_first_session_bullet_available": "إذا نجحت في الاختبار، سنوافق على ملفك ويمكنك البدء باستقبال الجلسات.",
   "@listener_first_session_bullet_available": {},
   "listener_first_session_cta": "حسناً — أنا مستعد",
   "@listener_first_session_cta": {},
@@ -4305,8 +2129,6 @@
   "@ventor_sessions_topic_stress": {},
   "ventor_sessions_top_listeners": "أفضل المستمعين لك",
   "@ventor_sessions_top_listeners": {},
-  "ventor_sessions_see_all": "عرض الكل",
-  "@ventor_sessions_see_all": {},
   "ventor_sessions_empty": "لا يوجد مستمعون يطابقون بحثك أو عوامل التصفية. جرّب تعديلها.",
   "@ventor_sessions_empty": {},
   "ventor_sessions_experience_empty": "لا توجد تجارب حياتية مدرجة",
@@ -4314,13 +2136,17 @@
   "ventor_sessions_reviews": "{count} تقييمات",
   "@ventor_sessions_reviews": {
     "placeholders": {
-      "count": { "type": "int" }
+      "count": {
+        "type": "int"
+      }
     }
   },
   "ventor_sessions_sessions_count": "{count} جلسات",
   "@ventor_sessions_sessions_count": {
     "placeholders": {
-      "count": { "type": "String" }
+      "count": {
+        "type": "String"
+      }
     }
   },
   "ventor_sessions_surprise_title": "غير متأكد من اختيارك؟",
@@ -4338,8 +2164,12 @@
   "ventor_sessions_filter_price_range": "{min} – {max}",
   "@ventor_sessions_filter_price_range": {
     "placeholders": {
-      "min": { "type": "String" },
-      "max": { "type": "String" }
+      "min": {
+        "type": "String"
+      },
+      "max": {
+        "type": "String"
+      }
     }
   },
   "ventor_sessions_filter_language": "اللغة",
@@ -4359,7 +2189,9 @@
   "ventor_sessions_filter_rating_min": "{rating}+",
   "@ventor_sessions_filter_rating_min": {
     "placeholders": {
-      "rating": { "type": "String" }
+      "rating": {
+        "type": "String"
+      }
     }
   },
   "ventor_sessions_filter_favorites": "المفضلة",
@@ -4383,7 +2215,9 @@
   "ventor_sessions_rate_per_min": "{rate} / دقيقة",
   "@ventor_sessions_rate_per_min": {
     "placeholders": {
-      "rate": { "type": "String" }
+      "rate": {
+        "type": "String"
+      }
     }
   },
   "ventor_sessions_choose_duration": "اختر المدة",
@@ -4391,34 +2225,13 @@
   "ventor_sessions_duration_minutes": "{minutes} دقيقة",
   "@ventor_sessions_duration_minutes": {
     "placeholders": {
-      "minutes": { "type": "int" }
+      "minutes": {
+        "type": "int"
+      }
     }
   },
   "ventor_sessions_duration_popular": "الأكثر شيوعاً",
   "@ventor_sessions_duration_popular": {},
-  "ventor_sessions_continue_payment": "المتابعة إلى الدفع",
-  "@ventor_sessions_continue_payment": {},
-  "ventor_sessions_before_title": "قبل الاتصال",
-  "@ventor_sessions_before_title": {},
-  "ventor_sessions_before_heading": "أمور بسيطة قبل البدء",
-  "@ventor_sessions_before_heading": {},
-  "ventor_sessions_before_body": "سيتم توصيلك قريباً. خذ نفساً عميقاً، وتذكّر أن هذه مساحة آمنة لمشاركة ما تحتاجه.",
-  "@ventor_sessions_before_body": {},
-  "ventor_sessions_before_bullet_connect": "عادةً يستغرق الاتصال أقل من دقيقة.",
-  "@ventor_sessions_before_bullet_connect": {},
-  "ventor_sessions_before_bullet_leave": "يمكنك مغادرة الجلسة في أي وقت.",
-  "@ventor_sessions_before_bullet_leave": {},
-  "ventor_sessions_before_bullet_respect": "كن محترماً — التحرش ينهي الجلسة.",
-  "@ventor_sessions_before_bullet_respect": {},
-  "ventor_sessions_start_session": "بدء الجلسة",
-  "@ventor_sessions_start_session": {},
-  "ventor_sessions_start_mock": "بدء جلسة لمدة {minutes} دقيقة مع {name} (تجريبي).",
-  "@ventor_sessions_start_mock": {
-    "placeholders": {
-      "name": { "type": "String" },
-      "minutes": { "type": "int" }
-    }
-  },
   "ventor_sessions_details_title": "التفاصيل",
   "@ventor_sessions_details_title": {},
   "ventor_sessions_gender_label": "الجنس",
@@ -4472,15 +2285,23 @@
   "ventor_sessions_choose_time_subtitle": "اختر وقت الحديث مع {name} لمدة {duration}.",
   "@ventor_sessions_choose_time_subtitle": {
     "placeholders": {
-      "name": { "type": "String" },
-      "duration": { "type": "String" }
+      "name": {
+        "type": "String"
+      },
+      "duration": {
+        "type": "String"
+      }
     }
   },
   "ventor_sessions_choose_time_window": "توفر المستمع: {hours} ({timezone})",
   "@ventor_sessions_choose_time_window": {
     "placeholders": {
-      "hours": { "type": "String" },
-      "timezone": { "type": "String" }
+      "hours": {
+        "type": "String"
+      },
+      "timezone": {
+        "type": "String"
+      }
     }
   },
   "ventor_sessions_time_instant_title": "مكالمة فورية",
@@ -4492,7 +2313,9 @@
   "ventor_sessions_time_nearest_subtitle": "المقترح: {slot}",
   "@ventor_sessions_time_nearest_subtitle": {
     "placeholders": {
-      "slot": { "type": "String" }
+      "slot": {
+        "type": "String"
+      }
     }
   },
   "ventor_sessions_time_schedule_title": "اختر من أوقات التوفر",
@@ -4506,17 +2329,19 @@
   "ventor_sessions_time_summary_nearest": "أقرب وقت · {slot}",
   "@ventor_sessions_time_summary_nearest": {
     "placeholders": {
-      "slot": { "type": "String" }
+      "slot": {
+        "type": "String"
+      }
     }
   },
   "ventor_sessions_time_summary_scheduled": "مجدول · {slot}",
   "@ventor_sessions_time_summary_scheduled": {
     "placeholders": {
-      "slot": { "type": "String" }
+      "slot": {
+        "type": "String"
+      }
     }
   },
-  "ventor_sessions_confirm_booking": "تأكيد الحجز",
-  "@ventor_sessions_confirm_booking": {},
   "ventor_sessions_confirm_title": "تأكيد الجلسة",
   "@ventor_sessions_confirm_title": {},
   "ventor_sessions_confirm_heading": "راجع جلستك",
@@ -4554,16 +2379,26 @@
   "ventor_sessions_pay_now": "ادفع {amount}",
   "@ventor_sessions_pay_now": {
     "placeholders": {
-      "amount": { "type": "String" }
+      "amount": {
+        "type": "String"
+      }
     }
   },
   "ventor_sessions_pay_mock": "تجربة دفع: {amount} لجلسة {minutes} دقيقة ({mode}) مع {name}.",
   "@ventor_sessions_pay_mock": {
     "placeholders": {
-      "name": { "type": "String" },
-      "minutes": { "type": "int" },
-      "mode": { "type": "String" },
-      "amount": { "type": "String" }
+      "name": {
+        "type": "String"
+      },
+      "minutes": {
+        "type": "int"
+      },
+      "mode": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
     }
   },
   "ventor_sessions_permission_title": "أذونات التطبيق",
@@ -4589,7 +2424,9 @@
   "ventor_sessions_speech_language_subtitle": "اختر اللغة التي ستتحدث بها حتى يكون {name} مستعداً لهذه الجلسة.",
   "@ventor_sessions_speech_language_subtitle": {
     "placeholders": {
-      "name": { "type": "String" }
+      "name": {
+        "type": "String"
+      }
     }
   },
   "ventor_sessions_speech_language_required": "اختر لغة الحديث للمتابعة.",
@@ -4605,7 +2442,9 @@
   "ventor_sessions_voice_change_price": "+{amount}",
   "@ventor_sessions_voice_change_price": {
     "placeholders": {
-      "amount": { "type": "String" }
+      "amount": {
+        "type": "String"
+      }
     }
   },
   "ventor_sessions_voice_change_fee_label": "تغيير الصوت",
@@ -4627,13 +2466,17 @@
   "ventor_sessions_promo_percent_label": "عرض · خصم {percent}%",
   "@ventor_sessions_promo_percent_label": {
     "placeholders": {
-      "percent": { "type": "int" }
+      "percent": {
+        "type": "int"
+      }
     }
   },
   "ventor_sessions_promo_fixed_label": "عرض · خصم {amount}",
   "@ventor_sessions_promo_fixed_label": {
     "placeholders": {
-      "amount": { "type": "String" }
+      "amount": {
+        "type": "String"
+      }
     }
   },
   "ventor_sessions_rewards_discount_label": "مكافآتك",
@@ -4643,7 +2486,9 @@
   "ventor_sessions_discount_applied": "توفير {amount}",
   "@ventor_sessions_discount_applied": {
     "placeholders": {
-      "amount": { "type": "String" }
+      "amount": {
+        "type": "String"
+      }
     }
   },
   "ventor_sessions_discount_remove": "إزالة",
@@ -4671,7 +2516,9 @@
   "ventor_sessions_booked_speech_language": "يتحدث بـ {language}",
   "@ventor_sessions_booked_speech_language": {
     "placeholders": {
-      "language": { "type": "String" }
+      "language": {
+        "type": "String"
+      }
     }
   },
   "ventor_sessions_booked_voice_change_on": "تغيير الصوت مفعّل",
@@ -4679,7 +2526,9 @@
   "ventor_sessions_booked_paid": "مدفوع {amount}",
   "@ventor_sessions_booked_paid": {
     "placeholders": {
-      "amount": { "type": "String" }
+      "amount": {
+        "type": "String"
+      }
     }
   },
   "ventor_sessions_booked_join": "انضم الآن",
@@ -4705,7 +2554,9 @@
   "ventor_sessions_cancel_balance_note": "سيتم تخزين {amount} في رصيد الفينتور.",
   "@ventor_sessions_cancel_balance_note": {
     "placeholders": {
-      "amount": { "type": "String" }
+      "amount": {
+        "type": "String"
+      }
     }
   },
   "ventor_sessions_cancel_keep": "الإبقاء على الجلسة",
@@ -4715,7 +2566,9 @@
   "ventor_sessions_cancel_success": "تم إلغاء الجلسة. أُرجع {amount} إلى رصيدك — احجز جلسة أخرى متى شئت.",
   "@ventor_sessions_cancel_success": {
     "placeholders": {
-      "amount": { "type": "String" }
+      "amount": {
+        "type": "String"
+      }
     }
   },
   "ventor_sessions_cancel_policy_title": "سياسة الإلغاء",
@@ -4723,19 +2576,25 @@
   "ventor_sessions_cancel_policy_body": "إذا ألغيت، يُسترد المبلغ كاملاً ({amount}) إلى رصيد الفينتور حتى تحجز جلسة أخرى.",
   "@ventor_sessions_cancel_policy_body": {
     "placeholders": {
-      "amount": { "type": "String" }
+      "amount": {
+        "type": "String"
+      }
     }
   },
   "ventor_sessions_booked_was_paid": "كان {amount}",
   "@ventor_sessions_booked_was_paid": {
     "placeholders": {
-      "amount": { "type": "String" }
+      "amount": {
+        "type": "String"
+      }
     }
   },
   "ventor_sessions_cancelled_refund_title": "استرداد كامل · {amount}",
   "@ventor_sessions_cancelled_refund_title": {
     "placeholders": {
-      "amount": { "type": "String" }
+      "amount": {
+        "type": "String"
+      }
     }
   },
   "ventor_sessions_cancelled_refund_subtitle": "أُرجع هذا المبلغ إلى رصيد الفينتور. احجز جلسة أخرى متى كنت مستعدًا.",
@@ -4745,7 +2604,9 @@
   "ventor_sessions_booked_tap_mock": "فتح الجلسة مع {name} (تجريبي).",
   "@ventor_sessions_booked_tap_mock": {
     "placeholders": {
-      "name": { "type": "String" }
+      "name": {
+        "type": "String"
+      }
     }
   },
   "ventor_call_tips_title": "قبل الانضمام",
@@ -4781,7 +2642,9 @@
   "ventor_call_rating_title": "كيف كانت جلستك مع {name}؟",
   "@ventor_call_rating_title": {
     "placeholders": {
-      "name": { "type": "String" }
+      "name": {
+        "type": "String"
+      }
     }
   },
   "ventor_call_rating_subtitle": "تقييمك يساعد الفينتورين الآخرين على إيجاد مستمعين رائعين.",
@@ -4789,7 +2652,9 @@
   "ventor_call_rating_stars_hint": "تقييم {count} نجوم",
   "@ventor_call_rating_stars_hint": {
     "placeholders": {
-      "count": { "type": "int" }
+      "count": {
+        "type": "int"
+      }
     }
   },
   "ventor_call_rating_review_hint": "ملاحظة اختيارية عن تجربتك…",
@@ -4799,7 +2664,9 @@
   "ventor_call_tip_subtitle": "اختياري — أرسل إكرامية لـ {name} تقديرًا لوجوده معك.",
   "@ventor_call_tip_subtitle": {
     "placeholders": {
-      "name": { "type": "String" }
+      "name": {
+        "type": "String"
+      }
     }
   },
   "ventor_call_tip_none": "بدون إكرامية",
@@ -4809,7 +2676,9 @@
   "ventor_call_rating_submit_with_tip": "إرسال مع إكرامية {amount}",
   "@ventor_call_rating_submit_with_tip": {
     "placeholders": {
-      "amount": { "type": "String" }
+      "amount": {
+        "type": "String"
+      }
     }
   },
   "ventor_call_rating_thanks": "شكرًا لملاحظاتك!",
@@ -4817,7 +2686,9 @@
   "ventor_call_rating_thanks_with_tip": "شكرًا! تم إرسال إكراميتك بقيمة {amount}.",
   "@ventor_call_rating_thanks_with_tip": {
     "placeholders": {
-      "amount": { "type": "String" }
+      "amount": {
+        "type": "String"
+      }
     }
   },
   "ventor_call_report_listener": "الإبلاغ عن المستمع",
@@ -4829,7 +2700,9 @@
   "ventor_call_report_subtitle": "أخبرنا بما حدث مع {name}. سيراجع فريقنا بلاغك.",
   "@ventor_call_report_subtitle": {
     "placeholders": {
-      "name": { "type": "String" }
+      "name": {
+        "type": "String"
+      }
     }
   },
   "ventor_call_report_reason_inappropriate": "سلوك غير لائق",
@@ -4852,8 +2725,6 @@
   "@ventor_call_report_submit": {},
   "ventor_call_report_cancel": "إلغاء",
   "@ventor_call_report_cancel": {},
-  "ventor_call_report_success": "تم إرسال البلاغ. سيراجعه فريقنا قريبًا.",
-  "@ventor_call_report_success": {},
   "ventor_call_report_received_title": "استلمنا بلاغك",
   "@ventor_call_report_received_title": {},
   "ventor_call_report_received_body": "سنراجع بلاغك بعناية. وإن لزم الأمر، سنعيد لك المبلغ ونقدّم أي تعويض مناسب.",
@@ -4883,7 +2754,9 @@
   "ventor_home_mood_write_title": "تشعر بـ {mood}",
   "@ventor_home_mood_write_title": {
     "placeholders": {
-      "mood": { "type": "String" }
+      "mood": {
+        "type": "String"
+      }
     }
   },
   "ventor_home_mood_write_subtitle": "اكتب قليلًا عن مشاعرك. التسجيل اليومي يبني سلسلتك.",
@@ -4899,7 +2772,9 @@
   "ventor_home_mood_streak_complete": "اكتملت سلسلة 7 أيام! استلم خصم {percent}% على الجلسات.",
   "@ventor_home_mood_streak_complete": {
     "placeholders": {
-      "percent": { "type": "int" }
+      "percent": {
+        "type": "int"
+      }
     }
   },
   "ventor_home_reco_default": "قد تستفيد من التحدث مع مستمعين صبورين ويجيدون الإنصات.",
@@ -4919,7 +2794,9 @@
   "ventor_home_streak_title": "🔥 سلسلة {count} أيام",
   "@ventor_home_streak_title": {
     "placeholders": {
-      "count": { "type": "int" }
+      "count": {
+        "type": "int"
+      }
     }
   },
   "ventor_home_streak_subtitle": "واصل، أنت تقوم بعمل رائع!",
@@ -4931,7 +2808,9 @@
   "ventor_home_streak_claimed": "رائع! فتحت خصم {percent}% على الجلسات في المكافآت.",
   "@ventor_home_streak_claimed": {
     "placeholders": {
-      "percent": { "type": "int" }
+      "percent": {
+        "type": "int"
+      }
     }
   },
   "ventor_home_day_mon": "ن",
@@ -4966,20 +2845,6 @@
   "@ventor_home_upcoming_title": {},
   "ventor_home_upcoming_live_now": "مباشرة الآن",
   "@ventor_home_upcoming_live_now": {},
-  "ventor_home_quick_title": "طرق سريعة للتنفيس",
-  "@ventor_home_quick_title": {},
-  "ventor_home_quick_talk": "تحدث الآن",
-  "@ventor_home_quick_talk": {},
-  "ventor_home_quick_talk_sub": "مكالمة فورية",
-  "@ventor_home_quick_talk_sub": {},
-  "ventor_home_quick_chat": "محادثة نصية",
-  "@ventor_home_quick_chat": {},
-  "ventor_home_quick_chat_sub": "اكتب ما تشعر",
-  "@ventor_home_quick_chat_sub": {},
-  "ventor_home_quick_write": "اكتب",
-  "@ventor_home_quick_write": {},
-  "ventor_home_quick_write_sub": "يومياتك",
-  "@ventor_home_quick_write_sub": {},
   "ventor_home_recent_title": "أكمل من حيث توقفت",
   "@ventor_home_recent_title": {},
   "ventor_home_see_all": "عرض الكل",
@@ -4987,7 +2852,9 @@
   "ventor_home_recent_with": "أنت و{name}",
   "@ventor_home_recent_with": {
     "placeholders": {
-      "name": { "type": "String" }
+      "name": {
+        "type": "String"
+      }
     }
   },
   "ventor_home_yesterday": "أمس",
@@ -4995,16 +2862,16 @@
   "ventor_home_recent_meta": "{when} · {minutes} د",
   "@ventor_home_recent_meta": {
     "placeholders": {
-      "when": { "type": "String" },
-      "minutes": { "type": "int" }
+      "when": {
+        "type": "String"
+      },
+      "minutes": {
+        "type": "int"
+      }
     }
   },
   "ventor_home_motivation": "خطوات صغيرة كل يوم تصنع تغييرات كبيرة.",
   "@ventor_home_motivation": {},
   "ventor_home_notifications_soon": "الإشعارات قادمة قريبًا.",
-  "@ventor_home_notifications_soon": {},
-  "ventor_home_feature_soon_chat": "المحادثة النصية قادمة قريبًا.",
-  "@ventor_home_feature_soon_chat": {},
-  "ventor_home_feature_soon_journal": "اليوميات قادمة قريبًا.",
-  "@ventor_home_feature_soon_journal": {}
+  "@ventor_home_notifications_soon": {}
 }

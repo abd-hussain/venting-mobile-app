@@ -23,6 +23,7 @@ class ListenerBankAccountInfo {
 Future<ListenerBankAccountInfo?> showPayoutMethodsBottomSheet({
   required BuildContext context,
   ListenerBankAccountInfo? initial,
+  Future<void> Function(ListenerBankAccountInfo info)? onSave,
 }) {
   return showModalBottomSheet<ListenerBankAccountInfo>(
     context: context,
@@ -31,14 +32,16 @@ Future<ListenerBankAccountInfo?> showPayoutMethodsBottomSheet({
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
     ),
-    builder: (context) => PayoutMethodsBottomSheet(initial: initial),
+    builder: (context) =>
+        PayoutMethodsBottomSheet(initial: initial, onSave: onSave),
   );
 }
 
 class PayoutMethodsBottomSheet extends StatefulWidget {
-  const PayoutMethodsBottomSheet({super.key, this.initial});
+  const PayoutMethodsBottomSheet({super.key, this.initial, this.onSave});
 
   final ListenerBankAccountInfo? initial;
+  final Future<void> Function(ListenerBankAccountInfo info)? onSave;
 
   @override
   State<PayoutMethodsBottomSheet> createState() =>
@@ -51,6 +54,7 @@ class _PayoutMethodsBottomSheetState extends State<PayoutMethodsBottomSheet> {
   late final TextEditingController _ibanController;
   late final TextEditingController _swiftController;
   var _submitted = false;
+  var _saving = false;
 
   @override
   void initState() {
@@ -90,20 +94,34 @@ class _PayoutMethodsBottomSheetState extends State<PayoutMethodsBottomSheet> {
 
   void _onCancel() => Navigator.of(context).pop();
 
-  void _onSave() {
+  Future<void> _onSave() async {
     setState(() => _submitted = true);
-    if (!_isValid) return;
-    // TODO: Persist bank account via payout methods API / repository.
-    Navigator.of(context).pop(
-      ListenerBankAccountInfo(
-        accountHolderName: _holderController.text.trim(),
-        bankName: _bankController.text.trim(),
-        ibanOrAccountNumber: _ibanController.text.trim(),
-        swiftCode: _swiftController.text.trim().isEmpty
-            ? null
-            : _swiftController.text.trim(),
-      ),
+    if (!_isValid || _saving) return;
+
+    final info = ListenerBankAccountInfo(
+      accountHolderName: _holderController.text.trim(),
+      bankName: _bankController.text.trim(),
+      ibanOrAccountNumber: _ibanController.text.trim(),
+      swiftCode: _swiftController.text.trim().isEmpty
+          ? null
+          : _swiftController.text.trim(),
     );
+
+    final onSave = widget.onSave;
+    if (onSave != null) {
+      setState(() => _saving = true);
+      try {
+        await onSave(info);
+        if (!mounted) return;
+        Navigator.of(context).pop(info);
+      } catch (_) {
+        if (mounted) setState(() => _saving = false);
+      }
+      return;
+    }
+
+    if (!mounted) return;
+    Navigator.of(context).pop(info);
   }
 
   @override
@@ -215,7 +233,7 @@ class _PayoutMethodsBottomSheetState extends State<PayoutMethodsBottomSheet> {
                   const SizedBox(width: 12),
                   Expanded(
                     child: FilledButton(
-                      onPressed: _onSave,
+                      onPressed: _saving ? null : _onSave,
                       style: FilledButton.styleFrom(
                         backgroundColor: SplashColors.purpleMid,
                         foregroundColor: Colors.white,
@@ -229,7 +247,16 @@ class _PayoutMethodsBottomSheetState extends State<PayoutMethodsBottomSheet> {
                           fontWeight: FontWeight.w700,
                         ),
                       ),
-                      child: Text(l10n.common_save),
+                      child: _saving
+                          ? const SizedBox(
+                              width: 20,
+                              height: 20,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                color: Colors.white,
+                              ),
+                            )
+                          : Text(l10n.common_save),
                     ),
                   ),
                 ],

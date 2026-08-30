@@ -26,11 +26,13 @@ class TimeSlot {
 
 class DaySchedule {
   const DaySchedule({
+    required this.dayId,
     required this.label,
     required this.slots,
     this.enabled = true,
   });
 
+  final String dayId;
   final String label;
   final List<TimeSlot> slots;
   final bool enabled;
@@ -47,14 +49,16 @@ class WeeklyScheduleCard extends StatelessWidget {
     required this.subtitle,
     required this.days,
     required this.dayOffLabel,
-    required this.onDayTap,
+    this.savingDayId,
+    this.onDayTap,
   });
 
   final String title;
   final String subtitle;
   final List<DaySchedule> days;
   final String dayOffLabel;
-  final void Function(int dayIndex) onDayTap;
+  final String? savingDayId;
+  final void Function(int dayIndex)? onDayTap;
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +93,8 @@ class WeeklyScheduleCard extends StatelessWidget {
             return _DayRow(
               day: day,
               dayOffLabel: dayOffLabel,
-              onTap: () => onDayTap(i),
+              isSaving: savingDayId == day.dayId,
+              onTap: onDayTap == null ? null : () => onDayTap!(i),
             );
           }),
         ],
@@ -102,12 +107,14 @@ class _DayRow extends StatelessWidget {
   const _DayRow({
     required this.day,
     required this.dayOffLabel,
-    required this.onTap,
+    this.isSaving = false,
+    this.onTap,
   });
 
   final DaySchedule day;
   final String dayOffLabel;
-  final VoidCallback onTap;
+  final bool isSaving;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -166,11 +173,18 @@ class _DayRow extends StatelessWidget {
                             .toList(),
                       ),
               ),
-              const Icon(
-                Icons.chevron_right_rounded,
-                color: ListenerProfileTheme.muted,
-                size: 20,
-              ),
+              if (isSaving)
+                const SizedBox(
+                  width: 20,
+                  height: 20,
+                  child: CircularProgressIndicator(strokeWidth: 2),
+                )
+              else
+                const Icon(
+                  Icons.chevron_right_rounded,
+                  color: ListenerProfileTheme.muted,
+                  size: 20,
+                ),
             ],
           ),
         ),
@@ -237,13 +251,15 @@ class SessionSettingItem {
     required this.icon,
     required this.label,
     required this.value,
-    required this.onTap,
+    this.isSaving = false,
+    this.onTap,
   });
 
   final IconData icon;
   final String label;
   final String value;
-  final VoidCallback onTap;
+  final bool isSaving;
+  final VoidCallback? onTap;
 }
 
 class _SessionSettingRow extends StatelessWidget {
@@ -275,13 +291,436 @@ class _SessionSettingRow extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 4),
-            const Icon(
-              Icons.chevron_right_rounded,
-              color: ListenerProfileTheme.muted,
-              size: 20,
-            ),
+            if (item.isSaving)
+              const SizedBox(
+                width: 20,
+                height: 20,
+                child: CircularProgressIndicator(strokeWidth: 2),
+              )
+            else
+              const Icon(
+                Icons.chevron_right_rounded,
+                color: ListenerProfileTheme.muted,
+                size: 20,
+              ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Online + Instant Call Section
+// ---------------------------------------------------------------------------
+
+class OnlineAvailabilitySectionCard extends StatelessWidget {
+  const OnlineAvailabilitySectionCard({
+    super.key,
+    required this.onlineTitle,
+    required this.onlineSubtitle,
+    required this.onlineLabel,
+    required this.offlineLabel,
+    required this.isOnline,
+    required this.isOnlineLoading,
+    required this.isOnlineSaving,
+    this.onOnlineChanged,
+    required this.instantTitle,
+    required this.instantSubtitle,
+    required this.earningsHighlight,
+    required this.acceptInstantCalls,
+    this.isInstantCallsSaving = false,
+    this.onInstantCallsChanged,
+  });
+
+  final String onlineTitle;
+  final String onlineSubtitle;
+  final String onlineLabel;
+  final String offlineLabel;
+  final bool isOnline;
+  final bool isOnlineLoading;
+  final bool isOnlineSaving;
+  final ValueChanged<bool>? onOnlineChanged;
+  final String instantTitle;
+  final String instantSubtitle;
+  final String earningsHighlight;
+  final bool acceptInstantCalls;
+  final bool isInstantCallsSaving;
+  final ValueChanged<bool>? onInstantCallsChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: ListenerProfileTheme.cardFill,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: ListenerProfileTheme.cardBorder),
+      ),
+      child: Column(
+        children: [
+          _OnlineStatusContent(
+            title: onlineTitle,
+            subtitle: onlineSubtitle,
+            onlineLabel: onlineLabel,
+            offlineLabel: offlineLabel,
+            value: isOnline,
+            isLoading: isOnlineLoading,
+            isSaving: isOnlineSaving,
+            onChanged: onOnlineChanged,
+          ),
+          const Divider(
+            height: 1,
+            thickness: 1,
+            color: ListenerProfileTheme.cardBorder,
+            indent: 16,
+            endIndent: 16,
+          ),
+          _InstantCallContent(
+            title: instantTitle,
+            subtitle: instantSubtitle,
+            earningsHighlight: earningsHighlight,
+            value: acceptInstantCalls,
+            isSaving: isInstantCallsSaving,
+            onChanged: onInstantCallsChanged,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _OnlineStatusContent extends StatelessWidget {
+  const _OnlineStatusContent({
+    required this.title,
+    required this.subtitle,
+    required this.onlineLabel,
+    required this.offlineLabel,
+    required this.value,
+    required this.isLoading,
+    required this.isSaving,
+    this.onChanged,
+  });
+
+  final String title;
+  final String subtitle;
+  final String onlineLabel;
+  final String offlineLabel;
+  final bool value;
+  final bool isLoading;
+  final bool isSaving;
+  final ValueChanged<bool>? onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    final statusColor = value
+        ? ListenerProfileTheme.success
+        : ListenerProfileTheme.offline;
+
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 14, 12, 14),
+      child: Row(
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: GoogleFonts.inter(
+                    color: Colors.white,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  subtitle,
+                  style: GoogleFonts.inter(
+                    color: ListenerProfileTheme.muted,
+                    fontSize: 12,
+                  ),
+                ),
+                if (!isLoading) ...[
+                  const SizedBox(height: 10),
+                  Row(
+                    children: [
+                      Container(
+                        width: 8,
+                        height: 8,
+                        decoration: BoxDecoration(
+                          color: statusColor,
+                          shape: BoxShape.circle,
+                          boxShadow: value
+                              ? [
+                                  BoxShadow(
+                                    color: statusColor.withValues(alpha: 0.55),
+                                    blurRadius: 6,
+                                  ),
+                                ]
+                              : null,
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        value ? onlineLabel : offlineLabel,
+                        style: GoogleFonts.inter(
+                          color: statusColor,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ],
+            ),
+          ),
+          if (isLoading)
+            const SizedBox(
+              width: 24,
+              height: 24,
+              child: CircularProgressIndicator(strokeWidth: 2),
+            )
+          else if (isSaving)
+            const SizedBox(
+              width: 24,
+              height: 24,
+              child: Padding(
+                padding: EdgeInsets.all(2),
+                child: CircularProgressIndicator(strokeWidth: 2),
+              ),
+            )
+          else
+            Switch(
+              value: value,
+              onChanged: onChanged,
+              activeThumbColor: ListenerProfileTheme.success,
+            ),
+        ],
+      ),
+    );
+  }
+}
+
+class _InstantCallContent extends StatelessWidget {
+  const _InstantCallContent({
+    required this.title,
+    required this.subtitle,
+    required this.earningsHighlight,
+    required this.value,
+    this.isSaving = false,
+    this.onChanged,
+  });
+
+  final String title;
+  final String subtitle;
+  final String earningsHighlight;
+  final bool value;
+  final bool isSaving;
+  final ValueChanged<bool>? onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 14, 12, 14),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  title,
+                  style: GoogleFonts.inter(
+                    color: Colors.white,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+              if (isSaving)
+                const SizedBox(
+                  width: 24,
+                  height: 24,
+                  child: Padding(
+                    padding: EdgeInsets.all(2),
+                    child: CircularProgressIndicator(strokeWidth: 2),
+                  ),
+                )
+              else
+                Switch(
+                  value: value,
+                  onChanged: onChanged,
+                  activeThumbColor: ListenerProfileTheme.success,
+                ),
+            ],
+          ),
+          const SizedBox(height: 4),
+          Text(
+            subtitle,
+            style: GoogleFonts.inter(
+              color: ListenerProfileTheme.muted,
+              fontSize: 12,
+            ),
+          ),
+          const SizedBox(height: 10),
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: ListenerProfileTheme.gold.withValues(alpha: 0.08),
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(
+                color: ListenerProfileTheme.gold.withValues(alpha: 0.35),
+              ),
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Icon(
+                  Icons.payments_outlined,
+                  size: 18,
+                  color: ListenerProfileTheme.gold,
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Text(
+                    earningsHighlight,
+                    style: GoogleFonts.inter(
+                      color: ListenerProfileTheme.gold,
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600,
+                      height: 1.35,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Online Status Toggle
+// ---------------------------------------------------------------------------
+
+class OnlineStatusToggleCard extends StatelessWidget {
+  const OnlineStatusToggleCard({
+    super.key,
+    required this.title,
+    required this.subtitle,
+    required this.onlineLabel,
+    required this.offlineLabel,
+    required this.value,
+    required this.isLoading,
+    required this.isSaving,
+    required this.onChanged,
+  });
+
+  final String title;
+  final String subtitle;
+  final String onlineLabel;
+  final String offlineLabel;
+  final bool value;
+  final bool isLoading;
+  final bool isSaving;
+  final ValueChanged<bool> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    final statusColor = value
+        ? ListenerProfileTheme.success
+        : ListenerProfileTheme.offline;
+
+    return Container(
+      decoration: BoxDecoration(
+        color: ListenerProfileTheme.cardFill,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: ListenerProfileTheme.cardBorder),
+      ),
+      padding: const EdgeInsets.fromLTRB(16, 14, 12, 14),
+      child: Row(
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: GoogleFonts.inter(
+                    color: Colors.white,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  subtitle,
+                  style: GoogleFonts.inter(
+                    color: ListenerProfileTheme.muted,
+                    fontSize: 12,
+                  ),
+                ),
+                if (!isLoading) ...[
+                  const SizedBox(height: 10),
+                  Row(
+                    children: [
+                      Container(
+                        width: 8,
+                        height: 8,
+                        decoration: BoxDecoration(
+                          color: statusColor,
+                          shape: BoxShape.circle,
+                          boxShadow: value
+                              ? [
+                                  BoxShadow(
+                                    color: statusColor.withValues(alpha: 0.55),
+                                    blurRadius: 6,
+                                  ),
+                                ]
+                              : null,
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        value ? onlineLabel : offlineLabel,
+                        style: GoogleFonts.inter(
+                          color: statusColor,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ],
+            ),
+          ),
+          if (isLoading)
+            const SizedBox(
+              width: 24,
+              height: 24,
+              child: CircularProgressIndicator(strokeWidth: 2),
+            )
+          else if (isSaving)
+            const SizedBox(
+              width: 24,
+              height: 24,
+              child: Padding(
+                padding: EdgeInsets.all(2),
+                child: CircularProgressIndicator(strokeWidth: 2),
+              ),
+            )
+          else
+            Switch(
+              value: value,
+              onChanged: onChanged,
+              activeThumbColor: ListenerProfileTheme.success,
+            ),
+        ],
       ),
     );
   }

@@ -5,6 +5,7 @@ import 'package:venting_mobile_app/di/di_container.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
 import 'package:venting_mobile_app/presentation/auth/auth_screen.dart';
 import 'package:venting_mobile_app/presentation/auth/email_registration_screen.dart';
+import 'package:venting_mobile_app/presentation/auth/forgot_password_screen.dart';
 import 'package:venting_mobile_app/presentation/homescreen.dart';
 import 'package:venting_mobile_app/presentation/listener_registration/listener_registration_screen.dart';
 import 'package:venting_mobile_app/presentation/listener_registration/status/listener_profile_status.dart';
@@ -29,6 +30,7 @@ class AppRoutes {
   static const String autVentorRegister = '/auth-ventor-register';
   static const String authListenerRegister = '/auth-listener-register';
   static const String emailRegistration = '/email-registration';
+  static const String forgotPassword = '/forgot-password';
   static const String ventorRegistration = '/ventor-registration';
   static const String webView = '/web-view';
 }
@@ -71,7 +73,7 @@ class VentingNavigationObserver extends NavigatorObserver {
   }
 }
 
-/// Router configuration for the MyZain app
+/// Router configuration for the Venting app
 class VentingRouterConfig {
   static final router = GoRouter(
     navigatorKey: diContainer<GlobalKey<NavigatorState>>(),
@@ -171,6 +173,24 @@ class VentingRouterConfig {
               : const AuthRouteArgs(userType: AuthUserType.ventor);
 
           return EmailRegistrationScreen(userType: args.userType);
+        },
+      ),
+      GoRoute(
+        path: AppRoutes.forgotPassword,
+        name: 'forgot-password',
+        builder: (context, state) {
+          final extra = state.extra;
+          final args = extra is ForgotPasswordRouteArgs
+              ? extra
+              : const ForgotPasswordRouteArgs(
+                  email: '',
+                  userType: AuthUserType.ventor,
+                );
+
+          return ForgotPasswordScreen(
+            email: args.email,
+            userType: args.userType,
+          );
         },
       ),
       GoRoute(

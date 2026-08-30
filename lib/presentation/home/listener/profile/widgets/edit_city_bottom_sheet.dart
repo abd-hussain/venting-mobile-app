@@ -8,7 +8,8 @@ import 'package:venting_mobile_app/shared_widgets/custom_buttomsheet.dart';
 
 /// Shows a dark sheet to edit the listener city.
 ///
-/// Returns the saved city text, or `null` if cancelled.
+/// Returns the saved city text, or `null` if cancelled. Persistence is handled by
+/// the caller (`ListenerProfileTab` → `ListenerProfileBloc` → API).
 Future<String?> showEditCityBottomSheet({
   required BuildContext context,
   required String initialCity,
@@ -64,7 +65,6 @@ class _EditCityBottomSheetState extends State<EditCityBottomSheet> {
 
   void _onSave() {
     if (!_canSave) return;
-    // TODO: Persist city via listener profile API / repository.
     Navigator.of(context).pop(_trimmed);
   }
 

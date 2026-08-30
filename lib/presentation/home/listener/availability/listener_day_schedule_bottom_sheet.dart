@@ -39,6 +39,9 @@ const _hourOptions = <String>[
   '11:00 PM',
 ];
 
+const _minSlotDurationMinutes = 60;
+const _endOfDayMinutes = 23 * 60;
+
 String timeOfDayToHourLabel(TimeOfDay time) {
   final hour = time.hourOfPeriod == 0 ? 12 : time.hourOfPeriod;
   final minute = time.minute.toString().padLeft(2, '0');
@@ -57,11 +60,96 @@ TimeOfDay hourLabelToTimeOfDay(String label) {
   return TimeOfDay(hour: hour, minute: minute);
 }
 
+int minutesOfDay(TimeOfDay time) => time.hour * 60 + time.minute;
+
+TimeOfDay minutesToTimeOfDay(int minutes) {
+  final clamped = minutes.clamp(0, _endOfDayMinutes);
+  return TimeOfDay(hour: clamped ~/ 60, minute: clamped % 60);
+}
+
+List<TimeSlot> sortSlots(List<TimeSlot> slots) {
+  final sorted = List<TimeSlot>.from(slots);
+  sorted.sort((a, b) => minutesOfDay(a.start).compareTo(minutesOfDay(b.start)));
+  return sorted;
+}
+
+bool slotsAreValid(List<TimeSlot> slots) {
+  if (slots.isEmpty) return true;
+
+  final sorted = sortSlots(slots);
+  for (var i = 0; i < sorted.length; i++) {
+    final slot = sorted[i];
+    final start = minutesOfDay(slot.start);
+    final end = minutesOfDay(slot.end);
+    if (end <= start) return false;
+    if (i > 0) {
+      final previousEnd = minutesOfDay(sorted[i - 1].end);
+      if (start < previousEnd) return false;
+    }
+  }
+  return true;
+}
+
+bool intervalsOverlap(int startA, int endA, int startB, int endB) {
+  return startA < endB && endA > startB;
+}
+
+/// Returns hour labels that can be selected without overlapping other slots.
+List<String> availableHourLabelsForPick({
+  required List<TimeSlot> slots,
+  required int slotIndex,
+  required bool isStart,
+}) {
+  final current = slots[slotIndex];
+  final currentStart = minutesOfDay(current.start);
+  final currentEnd = minutesOfDay(current.end);
+
+  return _hourOptions
+      .where((label) {
+        final minutes = minutesOfDay(hourLabelToTimeOfDay(label));
+
+        if (isStart) {
+          if (minutes >= currentEnd) return false;
+          if (minutes + _minSlotDurationMinutes > currentEnd) return false;
+
+          for (var i = 0; i < slots.length; i++) {
+            if (i == slotIndex) continue;
+            final otherStart = minutesOfDay(slots[i].start);
+            final otherEnd = minutesOfDay(slots[i].end);
+            if (intervalsOverlap(minutes, currentEnd, otherStart, otherEnd)) {
+              return false;
+            }
+          }
+          return true;
+        }
+
+        if (minutes <= currentStart) return false;
+        if (minutes - currentStart < _minSlotDurationMinutes) return false;
+
+        for (var i = 0; i < slots.length; i++) {
+          if (i == slotIndex) continue;
+          final otherStart = minutesOfDay(slots[i].start);
+          final otherEnd = minutesOfDay(slots[i].end);
+          if (intervalsOverlap(currentStart, minutes, otherStart, otherEnd)) {
+            return false;
+          }
+        }
+        return true;
+      })
+      .toList(growable: false);
+}
+
 Future<String?> showAvailabilityHourBottomSheet({
   required BuildContext context,
   required String title,
   required String selected,
+  List<String>? options,
 }) {
+  final hourOptions = options ?? _hourOptions;
+  final effectiveSelected = hourOptions.contains(selected)
+      ? selected
+      : (hourOptions.isNotEmpty ? hourOptions.first : selected);
+
   return showModalBottomSheet<String>(
     context: context,
     isScrollControlled: true,
@@ -99,31 +187,47 @@ Future<String?> showAvailabilityHourBottomSheet({
                 ),
               ),
               Expanded(
-                child: ListView.builder(
-                  itemCount: _hourOptions.length,
-                  itemBuilder: (context, index) {
-                    final option = _hourOptions[index];
-                    final isSelected = option == selected;
-                    return ListTile(
-                      title: Text(
-                        option,
-                        style: GoogleFonts.inter(
-                          color: Colors.white,
-                          fontWeight: isSelected
-                              ? FontWeight.w700
-                              : FontWeight.w500,
+                child: hourOptions.isEmpty
+                    ? Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(20),
+                          child: Text(
+                            VentingMobLocalizations.of(
+                              context,
+                            ).listener_avail_slot_overlap_error,
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.inter(
+                              color: ListenerProfileTheme.muted,
+                              fontSize: 14,
+                            ),
+                          ),
                         ),
+                      )
+                    : ListView.builder(
+                        itemCount: hourOptions.length,
+                        itemBuilder: (context, index) {
+                          final option = hourOptions[index];
+                          final isSelected = option == effectiveSelected;
+                          return ListTile(
+                            title: Text(
+                              option,
+                              style: GoogleFonts.inter(
+                                color: Colors.white,
+                                fontWeight: isSelected
+                                    ? FontWeight.w700
+                                    : FontWeight.w500,
+                              ),
+                            ),
+                            trailing: isSelected
+                                ? const Icon(
+                                    Icons.check_rounded,
+                                    color: SplashColors.purpleMid,
+                                  )
+                                : null,
+                            onTap: () => Navigator.of(context).pop(option),
+                          );
+                        },
                       ),
-                      trailing: isSelected
-                          ? const Icon(
-                              Icons.check_rounded,
-                              color: SplashColors.purpleMid,
-                            )
-                          : null,
-                      onTap: () => Navigator.of(context).pop(option),
-                    );
-                  },
-                ),
               ),
             ],
           ),
@@ -172,7 +276,43 @@ class _DayScheduleBottomSheetState extends State<_DayScheduleBottomSheet> {
   void initState() {
     super.initState();
     _enabled = widget.initial.enabled;
-    _slots = List<TimeSlot>.from(widget.initial.slots);
+    _slots = sortSlots(widget.initial.slots);
+  }
+
+  int _minStartMinutes(int slotIndex) {
+    if (slotIndex <= 0) return 0;
+    return minutesOfDay(_slots[slotIndex - 1].end);
+  }
+
+  int _maxEndMinutes(int slotIndex) {
+    if (slotIndex >= _slots.length - 1) return _endOfDayMinutes;
+    return minutesOfDay(_slots[slotIndex + 1].start);
+  }
+
+  TimeSlot _normalizeSlot(TimeSlot slot, {required int slotIndex}) {
+    var start = minutesOfDay(slot.start);
+    var end = minutesOfDay(slot.end);
+
+    if (slotIndex > 0) {
+      final minStart = _minStartMinutes(slotIndex);
+      if (start < minStart) start = minStart;
+    }
+    if (slotIndex < _slots.length - 1) {
+      final maxEnd = _maxEndMinutes(slotIndex);
+      if (end > maxEnd) end = maxEnd;
+    }
+
+    if (end <= start) {
+      final maxEnd = slotIndex < _slots.length - 1
+          ? _maxEndMinutes(slotIndex)
+          : _endOfDayMinutes;
+      end = (start + _minSlotDurationMinutes).clamp(0, maxEnd);
+    }
+
+    return TimeSlot(
+      start: minutesToTimeOfDay(start),
+      end: minutesToTimeOfDay(end),
+    );
   }
 
   Future<void> _pickHour({
@@ -182,32 +322,101 @@ class _DayScheduleBottomSheetState extends State<_DayScheduleBottomSheet> {
     final l10n = VentingMobLocalizations.of(context);
     final slot = _slots[slotIndex];
     final current = isStart ? slot.start : slot.end;
+
+    final options = availableHourLabelsForPick(
+      slots: _slots,
+      slotIndex: slotIndex,
+      isStart: isStart,
+    );
+
+    if (options.isEmpty) {
+      ScaffoldMessenger.of(context)
+        ..hideCurrentSnackBar()
+        ..showSnackBar(
+          SnackBar(content: Text(l10n.listener_avail_slot_overlap_error)),
+        );
+      return;
+    }
+
     final selected = await showAvailabilityHourBottomSheet(
       context: context,
       title: isStart
           ? l10n.listener_reg_avail_from
           : l10n.listener_reg_avail_to,
       selected: timeOfDayToHourLabel(current),
+      options: options,
     );
     if (!mounted || selected == null) return;
 
     setState(() {
+      final picked = hourLabelToTimeOfDay(selected);
       final updated = TimeSlot(
-        start: isStart ? hourLabelToTimeOfDay(selected) : slot.start,
-        end: isStart ? slot.end : hourLabelToTimeOfDay(selected),
+        start: isStart ? picked : slot.start,
+        end: isStart ? slot.end : picked,
       );
       _slots[slotIndex] = updated;
+      _slots = sortSlots(_slots);
+      final newIndex = _slots.indexWhere(
+        (candidate) =>
+            minutesOfDay(candidate.start) == minutesOfDay(updated.start) &&
+            minutesOfDay(candidate.end) == minutesOfDay(updated.end),
+      );
+      if (newIndex != -1) {
+        _slots[newIndex] = _normalizeSlot(
+          _slots[newIndex],
+          slotIndex: newIndex,
+        );
+      }
+      _slots = sortSlots(_slots);
     });
   }
 
   void _addSlot() {
     setState(() {
-      _slots.add(
-        const TimeSlot(
-          start: TimeOfDay(hour: 9, minute: 0),
-          end: TimeOfDay(hour: 17, minute: 0),
+      if (_slots.isEmpty) {
+        _slots = const [
+          TimeSlot(
+            start: TimeOfDay(hour: 9, minute: 0),
+            end: TimeOfDay(hour: 17, minute: 0),
+          ),
+        ];
+        return;
+      }
+
+      final sorted = sortSlots(_slots);
+      final lastSlot = sorted.last;
+      final newStartMinutes = minutesOfDay(lastSlot.end);
+      final preferredEndMinutes =
+          newStartMinutes + (_minSlotDurationMinutes * 4);
+      final newEndMinutes = preferredEndMinutes <= _endOfDayMinutes
+          ? preferredEndMinutes
+          : (newStartMinutes + _minSlotDurationMinutes).clamp(
+              0,
+              _endOfDayMinutes,
+            );
+
+      if (newEndMinutes <= newStartMinutes) {
+        ScaffoldMessenger.of(context)
+          ..hideCurrentSnackBar()
+          ..showSnackBar(
+            SnackBar(
+              content: Text(
+                VentingMobLocalizations.of(
+                  context,
+                ).listener_avail_slot_overlap_error,
+              ),
+            ),
+          );
+        return;
+      }
+
+      _slots = [
+        ...sorted,
+        TimeSlot(
+          start: minutesToTimeOfDay(newStartMinutes),
+          end: minutesToTimeOfDay(newEndMinutes),
         ),
-      );
+      ];
     });
   }
 
@@ -216,8 +425,23 @@ class _DayScheduleBottomSheetState extends State<_DayScheduleBottomSheet> {
   }
 
   void _onDone() {
+    final l10n = VentingMobLocalizations.of(context);
+    final normalized = sortSlots(_slots);
+
+    if (_enabled && !slotsAreValid(normalized)) {
+      ScaffoldMessenger.of(context)
+        ..hideCurrentSnackBar()
+        ..showSnackBar(
+          SnackBar(content: Text(l10n.listener_avail_slot_overlap_error)),
+        );
+      return;
+    }
+
     Navigator.of(context).pop(
-      DayScheduleResult(enabled: _enabled, slots: List<TimeSlot>.from(_slots)),
+      DayScheduleResult(
+        enabled: _enabled,
+        slots: _enabled ? normalized : const [],
+      ),
     );
   }
 
@@ -294,12 +518,12 @@ class _DayScheduleBottomSheetState extends State<_DayScheduleBottomSheet> {
                         setState(() {
                           _enabled = value;
                           if (value && _slots.isEmpty) {
-                            _slots.add(
-                              const TimeSlot(
+                            _slots = const [
+                              TimeSlot(
                                 start: TimeOfDay(hour: 9, minute: 0),
                                 end: TimeOfDay(hour: 17, minute: 0),
                               ),
-                            );
+                            ];
                           }
                         });
                       },
@@ -383,7 +607,7 @@ class _DayScheduleBottomSheetState extends State<_DayScheduleBottomSheet> {
                       }),
                       const SizedBox(height: 4),
                       OutlinedButton.icon(
-                        onPressed: _addSlot,
+                        onPressed: _canAddAnotherSlot ? _addSlot : null,
                         style: OutlinedButton.styleFrom(
                           foregroundColor: SplashColors.purpleMid,
                           side: BorderSide(
@@ -421,6 +645,13 @@ class _DayScheduleBottomSheetState extends State<_DayScheduleBottomSheet> {
         ),
       ),
     );
+  }
+
+  bool get _canAddAnotherSlot {
+    if (_slots.isEmpty) return true;
+    final sorted = sortSlots(_slots);
+    final lastEnd = minutesOfDay(sorted.last.end);
+    return lastEnd + _minSlotDurationMinutes <= _endOfDayMinutes;
   }
 }
 
