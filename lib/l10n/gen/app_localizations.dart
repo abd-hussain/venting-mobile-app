@@ -3926,18 +3926,6 @@ abstract class VentingMobLocalizations {
   /// **'SUPPORT & ABOUT'**
   String get ventor_profile_settings_section_support;
 
-  /// No description provided for @ventor_profile_settings_privacy.
-  ///
-  /// In en, this message translates to:
-  /// **'Privacy Controls'**
-  String get ventor_profile_settings_privacy;
-
-  /// No description provided for @ventor_profile_settings_privacy_sub.
-  ///
-  /// In en, this message translates to:
-  /// **'Managed'**
-  String get ventor_profile_settings_privacy_sub;
-
   /// No description provided for @ventor_profile_settings_notifications.
   ///
   /// In en, this message translates to:
@@ -4039,54 +4027,6 @@ abstract class VentingMobLocalizations {
   /// In en, this message translates to:
   /// **'Save'**
   String get ventor_notif_save;
-
-  /// No description provided for @ventor_privacy_section_profile.
-  ///
-  /// In en, this message translates to:
-  /// **'Profile visibility'**
-  String get ventor_privacy_section_profile;
-
-  /// No description provided for @ventor_privacy_show_mood_journey.
-  ///
-  /// In en, this message translates to:
-  /// **'Show Mood Journey'**
-  String get ventor_privacy_show_mood_journey;
-
-  /// No description provided for @ventor_privacy_show_stats.
-  ///
-  /// In en, this message translates to:
-  /// **'Show Sessions & Streak'**
-  String get ventor_privacy_show_stats;
-
-  /// No description provided for @ventor_privacy_show_favorite_listeners.
-  ///
-  /// In en, this message translates to:
-  /// **'Show My Listeners'**
-  String get ventor_privacy_show_favorite_listeners;
-
-  /// No description provided for @ventor_privacy_section_discovery.
-  ///
-  /// In en, this message translates to:
-  /// **'Discovery'**
-  String get ventor_privacy_section_discovery;
-
-  /// No description provided for @ventor_privacy_allow_discovery.
-  ///
-  /// In en, this message translates to:
-  /// **'Allow listeners to find me'**
-  String get ventor_privacy_allow_discovery;
-
-  /// No description provided for @ventor_privacy_allow_discovery_sub.
-  ///
-  /// In en, this message translates to:
-  /// **'Let matching listeners discover your profile when looking for someone to talk to.'**
-  String get ventor_privacy_allow_discovery_sub;
-
-  /// No description provided for @ventor_privacy_save.
-  ///
-  /// In en, this message translates to:
-  /// **'Save'**
-  String get ventor_privacy_save;
 
   /// No description provided for @listener_avail_title.
   ///

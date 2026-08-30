@@ -24,4 +24,10 @@ class ProdConfig implements AppConfig {
   @override
   String get googleAndroidClientId =>
       const String.fromEnvironment('GOOGLE_ANDROID_CLIENT_ID');
+
+  @override
+  String get supportEmail => 'support@venting.app';
+
+  @override
+  String get supportWhatsAppNumber => '962700000000';
 }

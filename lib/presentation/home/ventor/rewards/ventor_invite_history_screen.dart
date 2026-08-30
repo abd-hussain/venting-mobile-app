@@ -7,14 +7,19 @@ import 'package:venting_mobile_app/presentation/home/ventor/rewards/ventor_rewar
 import 'package:venting_mobile_app/presentation/home/ventor/rewards/ventor_rewards_widgets.dart';
 import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dart';
 
-Future<void> openVentorInviteHistoryScreen({required BuildContext context}) {
+Future<void> openVentorInviteHistoryScreen({
+  required BuildContext context,
+  required List<VentorInviteHistoryItem> items,
+}) {
   return Navigator.of(context).push<void>(
-    MaterialPageRoute(builder: (_) => const VentorInviteHistoryScreen()),
+    MaterialPageRoute(builder: (_) => VentorInviteHistoryScreen(items: items)),
   );
 }
 
 class VentorInviteHistoryScreen extends StatelessWidget {
-  const VentorInviteHistoryScreen({super.key});
+  const VentorInviteHistoryScreen({super.key, required this.items});
+
+  final List<VentorInviteHistoryItem> items;
 
   static const _overlayStyle = SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
@@ -37,7 +42,6 @@ class VentorInviteHistoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = VentingMobLocalizations.of(context);
-    final items = VentorRewardsCatalog.mockInvites;
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: _overlayStyle,

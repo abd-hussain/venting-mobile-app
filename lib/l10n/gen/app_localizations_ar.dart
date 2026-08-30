@@ -2131,12 +2131,6 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
   String get ventor_profile_settings_section_support => 'الدعم وحول التطبيق';
 
   @override
-  String get ventor_profile_settings_privacy => 'إعدادات الخصوصية';
-
-  @override
-  String get ventor_profile_settings_privacy_sub => 'مُدار';
-
-  @override
   String get ventor_profile_settings_notifications => 'الإشعارات';
 
   @override
@@ -2188,31 +2182,6 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
 
   @override
   String get ventor_notif_save => 'حفظ';
-
-  @override
-  String get ventor_privacy_section_profile => 'ظهور الملف الشخصي';
-
-  @override
-  String get ventor_privacy_show_mood_journey => 'إظهار رحلة المزاج';
-
-  @override
-  String get ventor_privacy_show_stats => 'إظهار الجلسات والسلسلة';
-
-  @override
-  String get ventor_privacy_show_favorite_listeners => 'إظهار مستمعيّ';
-
-  @override
-  String get ventor_privacy_section_discovery => 'الاكتشاف';
-
-  @override
-  String get ventor_privacy_allow_discovery => 'السماح للمستمعين بإيجادي';
-
-  @override
-  String get ventor_privacy_allow_discovery_sub =>
-      'اسمح للمستمعين المطابقين باكتشاف ملفك عند البحث عن شخص للتحدث معه.';
-
-  @override
-  String get ventor_privacy_save => 'حفظ';
 
   @override
   String get listener_avail_title => 'التوفر';

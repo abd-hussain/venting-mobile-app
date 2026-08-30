@@ -100,7 +100,7 @@ Portal **reads/writes** these heavily:
 | Lookups | `languages`, `comfort_areas`, `life_experiences`, `boundaries` |
 | Sessions | `session_requests`, `sessions`, `session_payments`, ratings, feedback, `session_reports` |
 | Money | `listener_wallets`, `wallet_ledger_entries`, `payout_methods`, `payouts` |
-| Growth | `reward_offers`, `reward_trades`, `invite_*`, `promo_*` |
+| Growth | `reward_offers`, `reward_trades`, `point_packages`, `point_purchases`, `invite_*`, `promo_*` |
 | Ops | `notifications`, `training_modules`, `listener_training_progress` |
 
 ### 4.2 New tables for the CMS — **add 12**
@@ -574,7 +574,7 @@ Used by: ventor registration interests step and listener comfort areas step — 
 
 ---
 
-### 7.9 Rewards & promo (8)
+### 7.9 Rewards & promo (12)
 
 | # | Method | Path | Use |
 |--:|--------|------|-----|
@@ -586,6 +586,23 @@ Used by: ventor registration interests step and listener comfort areas step — 
 | A58 | `POST` | `/v1/admin/promo-codes` | Create |
 | A59 | `PATCH` | `/v1/admin/promo-codes/{id}` | Update |
 | A60 | `GET` | `/v1/admin/promo-codes/{id}/redemptions` | Usage |
+| A65 | `GET` | `/v1/admin/point-packages` | List buy-points packages |
+| A66 | `POST` | `/v1/admin/point-packages` | Create package |
+| A67 | `PATCH` | `/v1/admin/point-packages/{id}` | Update price/points/bonus/sort/active |
+| A68 | `GET` | `/v1/admin/point-purchases` | Purchase audit (filter by ventor, date) |
+
+#### Portal UX — Point packages (`point_packages`)
+
+| Field | Edit |
+|-------|------|
+| `code` | Create-only stable id (e.g. `pkg_500`) — exposed to mobile **#67a** / **#67b** |
+| `points` | Number — points credited on purchase |
+| `price_usd` | Currency (USD v1) — shown in buy-points sheet |
+| `bonus_percent` | Optional — badge in app (“+20% bonus”) |
+| `sort_order` | Number — display order in mobile list |
+| `is_active` | Toggle — inactive packages hidden from **#67a** |
+
+Used by: ventor **Buy points** bottom sheet (`GET #67a` on sheet open; `POST #67b` on purchase).
 
 ---
 
@@ -689,7 +706,7 @@ Mobile may expose public `GET /v1/cms/pages/{slug}` and `GET /v1/cms/banners` (2
 | `/reports` | Safety queue | A34–A36 |
 | `/payouts` | Finance | A41–A47 |
 | `/catalogs` | Lookups — languages (`flag_emoji` / `flag_url`), comfort areas (`icon_emoji` / `icon_url`), boundaries (`icon_emoji` / `icon_url`) | A48–A52 (+ media upload) |
-| `/rewards` | Offers | A53–A56 |
+| `/rewards` | Offers + **point packages** | A53–A56, A65–A68 |
 | `/promos` | Promo codes | A57–A60 |
 | `/training` | Modules | A61–A64 |
 | `/notifications` | Broadcast | A67–A69 |

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:venting_mobile_app/domain/data/app/ventor_rewards.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/profile/ventor_profile_theme.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/rewards/ventor_buy_points_bottom_sheet.dart';
@@ -7,19 +8,29 @@ import 'package:venting_mobile_app/presentation/home/ventor/rewards/ventor_invit
 import 'package:venting_mobile_app/presentation/home/ventor/rewards/ventor_rewards_models.dart';
 import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dart';
 
-Future<void> showVentorEarnPointsBottomSheet({required BuildContext context}) {
+Future<void> showVentorEarnPointsBottomSheet({
+  required BuildContext context,
+  VentorRewardEarnRulesData? earnRules,
+}) {
   return showModalBottomSheet<void>(
     context: context,
     isScrollControlled: true,
     backgroundColor: Colors.transparent,
-    builder: (_) => _VentorEarnPointsBottomSheet(hostContext: context),
+    builder: (_) => _VentorEarnPointsBottomSheet(
+      hostContext: context,
+      earnRules: earnRules,
+    ),
   );
 }
 
 class _VentorEarnPointsBottomSheet extends StatelessWidget {
-  const _VentorEarnPointsBottomSheet({required this.hostContext});
+  const _VentorEarnPointsBottomSheet({
+    required this.hostContext,
+    this.earnRules,
+  });
 
   final BuildContext hostContext;
+  final VentorRewardEarnRulesData? earnRules;
 
   static const _sheetFill = Color(0xFF1C1826);
 
@@ -27,6 +38,18 @@ class _VentorEarnPointsBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = VentingMobLocalizations.of(context);
     final bottomInset = MediaQuery.paddingOf(context).bottom;
+    final rules = earnRules;
+    final pointsPerSession =
+        rules?.pointsPerSession ?? VentorRewardsCatalog.pointsPerSession;
+    final pointsPerFriendBooking =
+        rules?.pointsPerFriendBooking ??
+        VentorRewardsCatalog.pointsPerFriendBooking;
+    final pointsPerFriendRegister =
+        rules?.pointsPerFriendRegister ??
+        VentorRewardsCatalog.pointsPerFriendRegister;
+    final pointsPerInviteFirstSession =
+        rules?.pointsPerInviteFirstSession ??
+        VentorRewardsCatalog.pointsPerInviteFirstSession;
 
     return Padding(
       padding: EdgeInsets.only(left: 16, right: 16, bottom: bottomInset + 12),
@@ -73,9 +96,7 @@ class _VentorEarnPointsBottomSheet extends StatelessWidget {
             _EarnWayRow(
               number: '1',
               title: l10n.ventor_rewards_earn_sessions_title,
-              body: l10n.ventor_rewards_earn_sessions_body(
-                VentorRewardsCatalog.pointsPerSession,
-              ),
+              body: l10n.ventor_rewards_earn_sessions_body(pointsPerSession),
               icon: Icons.forum_rounded,
             ),
             const SizedBox(height: 10),
@@ -83,7 +104,7 @@ class _VentorEarnPointsBottomSheet extends StatelessWidget {
               number: '2',
               title: l10n.ventor_rewards_earn_booking_title,
               body: l10n.ventor_rewards_earn_booking_body(
-                VentorRewardsCatalog.pointsPerFriendBooking,
+                pointsPerFriendBooking,
               ),
               icon: Icons.phone_in_talk_rounded,
             ),
@@ -92,8 +113,8 @@ class _VentorEarnPointsBottomSheet extends StatelessWidget {
               number: '3',
               title: l10n.ventor_rewards_earn_invite_title,
               body: l10n.ventor_rewards_earn_invite_body(
-                VentorRewardsCatalog.pointsPerFriendRegister,
-                VentorRewardsCatalog.pointsPerInviteFirstSession,
+                pointsPerFriendRegister,
+                pointsPerInviteFirstSession,
               ),
               icon: Icons.group_add_rounded,
             ),

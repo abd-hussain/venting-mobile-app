@@ -181,8 +181,6 @@ Listener (`POST /v1/listeners/register/complete`):
 
 | # | Endpoint | Screen / place | When |
 |---|----------|----------------|------|
-| 17 | `GET /v1/ventors/me/privacy` | Ventor privacy settings | Screen open |
-| 18 | `PUT /v1/ventors/me/privacy` | Same | User toggles privacy flags and saves |
 | 19 | `GET /v1/ventors/me/notification-preferences` | Ventor notification preferences | Screen open |
 | 20 | `PUT /v1/ventors/me/notification-preferences` | Same | User changes reminder / push / email prefs |
 
@@ -222,6 +220,8 @@ Listener (`POST /v1/listeners/register/complete`):
 | 65 | `GET /v1/ventors/me/rewards/trades` | Trade history | Open history list |
 | 66 | `GET /v1/ventors/me/invites` | Invite friends / invite history | Load code, link, invitees, points |
 | 67 | `POST /v1/ventors/me/invites/refresh-code` | Invite friends (optional) | User regenerates invite code |
+| 67a | `GET /v1/ventors/me/rewards/point-packages` | Buy points bottom sheet | On sheet open — load packages + prices from portal |
+| 67b | `POST /v1/ventors/me/rewards/purchase-points` | Buy points bottom sheet | User completes purchase; sync balance from `points` in response |
 
 **Pass `reward_offer_id` on `#42`** when booking with an active redeemed offer from #63/#64.
 
@@ -471,6 +471,6 @@ Terms, Privacy, and Help are **static HTML** (6 pages: 3 × EN/AR) under one sha
 
 ## Endpoint count
 
-**79** unique REST endpoints — full contracts in [`api-endpoints.md`](./api-endpoints.md).
+**81** unique REST endpoints — full contracts in [`api-endpoints.md`](./api-endpoints.md).
 
 *Usage mapping derived from the proposed screen audit and presentation-layer TODO markers.*

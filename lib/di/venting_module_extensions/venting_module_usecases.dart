@@ -28,9 +28,11 @@ import 'package:venting_mobile_app/domain/repository/api/listener/listener_regis
 import 'package:venting_mobile_app/domain/repository/api/listener/listener_sessions_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/listener/listener_setup_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/listener/listener_training_repository.dart';
+import 'package:venting_mobile_app/domain/repository/api/ventor/ventor_notification_preferences_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/ventor/ventor_notifications_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/ventor/ventor_profile_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/ventor/ventor_register_repository.dart';
+import 'package:venting_mobile_app/domain/repository/api/ventor/ventor_rewards_repository.dart';
 import 'package:venting_mobile_app/domain/repository/app/auth_me_cache_repository.dart';
 import 'package:venting_mobile_app/domain/repository/app/social_sign_in_repository.dart';
 import 'package:venting_mobile_app/domain/usecase/accept_listener_session_request_usecase.dart';
@@ -72,11 +74,18 @@ import 'package:venting_mobile_app/domain/usecase/get_listener_reviews_usecase.d
 import 'package:venting_mobile_app/domain/usecase/get_listener_sessions_overview_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_listener_setup_progress_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_listener_training_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/get_ventor_invites_overview_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/get_ventor_notification_preferences_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_ventor_notifications_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/get_ventor_point_packages_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_ventor_profile_overview_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_ventor_registration_progress_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/get_ventor_reward_trades_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/get_ventor_rewards_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/mark_all_listener_notifications_read_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/mark_all_ventor_notifications_read_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/purchase_ventor_points_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/redeem_ventor_reward_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/request_listener_payout_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/save_listener_registration_step_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/save_ventor_registration_step_usecase.dart';
@@ -93,6 +102,7 @@ import 'package:venting_mobile_app/domain/usecase/update_listener_phone_usecase.
 import 'package:venting_mobile_app/domain/usecase/update_listener_privacy_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/update_listener_profile_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/update_listener_voice_intro_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/update_ventor_notification_preferences_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/update_ventor_profile_usecase.dart';
 
 /// Usecases mixin for VentingModule
@@ -492,6 +502,63 @@ mixin VentingModuleUsecases on VentingModule {
     appConfig,
   );
 
+  GetVentorRewardsUsecase getVentorRewardsUsecase(
+    VentorRewardsRepository ventorRewardsRepository,
+    VentingPreferences ventingPreferences,
+  ) => GetVentorRewardsUsecase(ventorRewardsRepository, ventingPreferences);
+
+  GetVentorRewardTradesUsecase getVentorRewardTradesUsecase(
+    VentorRewardsRepository ventorRewardsRepository,
+    VentingPreferences ventingPreferences,
+  ) =>
+      GetVentorRewardTradesUsecase(ventorRewardsRepository, ventingPreferences);
+
+  RedeemVentorRewardUsecase redeemVentorRewardUsecase(
+    VentorRewardsRepository ventorRewardsRepository,
+    VentingPreferences ventingPreferences,
+  ) => RedeemVentorRewardUsecase(ventorRewardsRepository, ventingPreferences);
+
+  GetVentorInvitesOverviewUsecase getVentorInvitesOverviewUsecase(
+    VentorRewardsRepository ventorRewardsRepository,
+    VentingPreferences ventingPreferences,
+  ) => GetVentorInvitesOverviewUsecase(
+    ventorRewardsRepository,
+    ventingPreferences,
+  );
+
+  GetVentorPointPackagesUsecase getVentorPointPackagesUsecase(
+    VentorRewardsRepository ventorRewardsRepository,
+    VentingPreferences ventingPreferences,
+  ) => GetVentorPointPackagesUsecase(
+    ventorRewardsRepository,
+    ventingPreferences,
+  );
+
+  PurchaseVentorPointsUsecase purchaseVentorPointsUsecase(
+    VentorRewardsRepository ventorRewardsRepository,
+    VentingPreferences ventingPreferences,
+  ) => PurchaseVentorPointsUsecase(ventorRewardsRepository, ventingPreferences);
+
+  GetVentorNotificationPreferencesUsecase
+  getVentorNotificationPreferencesUsecase(
+    VentorNotificationPreferencesRepository
+    ventorNotificationPreferencesRepository,
+    VentingPreferences ventingPreferences,
+  ) => GetVentorNotificationPreferencesUsecase(
+    ventorNotificationPreferencesRepository,
+    ventingPreferences,
+  );
+
+  UpdateVentorNotificationPreferencesUsecase
+  updateVentorNotificationPreferencesUsecase(
+    VentorNotificationPreferencesRepository
+    ventorNotificationPreferencesRepository,
+    VentingPreferences ventingPreferences,
+  ) => UpdateVentorNotificationPreferencesUsecase(
+    ventorNotificationPreferencesRepository,
+    ventingPreferences,
+  );
+
   /// Registers all usecase dependencies
   void registerUsecases(GetIt getIt, AppConfig appConfig) {
     getIt.registerFactory<AuthCheckEmailUsecase>(
@@ -813,6 +880,54 @@ mixin VentingModuleUsecases on VentingModule {
         getIt<VentorProfileRepository>(),
         getIt<VentingPreferences>(),
         appConfig,
+      ),
+    );
+    getIt.registerFactory<GetVentorRewardsUsecase>(
+      () => getVentorRewardsUsecase(
+        getIt<VentorRewardsRepository>(),
+        getIt<VentingPreferences>(),
+      ),
+    );
+    getIt.registerFactory<GetVentorRewardTradesUsecase>(
+      () => getVentorRewardTradesUsecase(
+        getIt<VentorRewardsRepository>(),
+        getIt<VentingPreferences>(),
+      ),
+    );
+    getIt.registerFactory<RedeemVentorRewardUsecase>(
+      () => redeemVentorRewardUsecase(
+        getIt<VentorRewardsRepository>(),
+        getIt<VentingPreferences>(),
+      ),
+    );
+    getIt.registerFactory<GetVentorInvitesOverviewUsecase>(
+      () => getVentorInvitesOverviewUsecase(
+        getIt<VentorRewardsRepository>(),
+        getIt<VentingPreferences>(),
+      ),
+    );
+    getIt.registerFactory<GetVentorPointPackagesUsecase>(
+      () => getVentorPointPackagesUsecase(
+        getIt<VentorRewardsRepository>(),
+        getIt<VentingPreferences>(),
+      ),
+    );
+    getIt.registerFactory<PurchaseVentorPointsUsecase>(
+      () => purchaseVentorPointsUsecase(
+        getIt<VentorRewardsRepository>(),
+        getIt<VentingPreferences>(),
+      ),
+    );
+    getIt.registerFactory<GetVentorNotificationPreferencesUsecase>(
+      () => getVentorNotificationPreferencesUsecase(
+        getIt<VentorNotificationPreferencesRepository>(),
+        getIt<VentingPreferences>(),
+      ),
+    );
+    getIt.registerFactory<UpdateVentorNotificationPreferencesUsecase>(
+      () => updateVentorNotificationPreferencesUsecase(
+        getIt<VentorNotificationPreferencesRepository>(),
+        getIt<VentingPreferences>(),
       ),
     );
   }

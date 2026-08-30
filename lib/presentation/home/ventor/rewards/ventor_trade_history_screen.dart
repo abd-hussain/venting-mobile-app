@@ -89,8 +89,11 @@ class VentorTradeHistoryScreen extends StatelessWidget {
 Widget ventorTradeHistoryTileFor({
   required VentingMobLocalizations l10n,
   required VentorRewardTrade trade,
+  VentorRewardOffer? Function(String offerId)? offerForId,
 }) {
-  final offer = VentorRewardsCatalog.offerById(trade.offerId);
+  final offer =
+      offerForId?.call(trade.offerId) ??
+      VentorRewardsCatalog.offerById(trade.offerId);
   final title = offer == null
       ? l10n.ventor_rewards_trade_unknown
       : ventorRewardTitle(l10n, offer);

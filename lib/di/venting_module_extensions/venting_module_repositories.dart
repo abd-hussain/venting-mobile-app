@@ -29,9 +29,11 @@ import 'package:venting_mobile_app/domain/repository/api/listener/listener_regis
 import 'package:venting_mobile_app/domain/repository/api/listener/listener_sessions_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/listener/listener_setup_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/listener/listener_training_repository.dart';
+import 'package:venting_mobile_app/domain/repository/api/ventor/ventor_notification_preferences_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/ventor/ventor_notifications_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/ventor/ventor_profile_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/ventor/ventor_register_repository.dart';
+import 'package:venting_mobile_app/domain/repository/api/ventor/ventor_rewards_repository.dart';
 import 'package:venting_mobile_app/domain/repository/app/auth_me_cache_repository.dart';
 import 'package:venting_mobile_app/domain/repository/app/social_sign_in_repository.dart';
 
@@ -142,6 +144,10 @@ mixin VentingModuleRepositories on VentingModule {
     ApiClientBase apiClient,
   ) => ListenerTrainingRepository(apiClient);
 
+  VentorNotificationPreferencesRepository
+  ventorNotificationPreferencesRepository(ApiClientBase apiClient) =>
+      VentorNotificationPreferencesRepository(apiClient);
+
   VentorNotificationsRepository ventorNotificationsRepository(
     ApiClientBase apiClient,
   ) => VentorNotificationsRepository(apiClient);
@@ -151,6 +157,9 @@ mixin VentingModuleRepositories on VentingModule {
 
   VentorProfileRepository ventorProfileRepository(ApiClientBase apiClient) =>
       VentorProfileRepository(apiClient);
+
+  VentorRewardsRepository ventorRewardsRepository(ApiClientBase apiClient) =>
+      VentorRewardsRepository(apiClient);
 
   /// Registers all repository dependencies
   void registerRepositories(GetIt getIt) {
@@ -243,6 +252,12 @@ mixin VentingModuleRepositories on VentingModule {
     );
     getIt.registerFactory<VentorProfileRepository>(
       () => ventorProfileRepository(getIt<ApiClientBase>()),
+    );
+    getIt.registerFactory<VentorRewardsRepository>(
+      () => ventorRewardsRepository(getIt<ApiClientBase>()),
+    );
+    getIt.registerFactory<VentorNotificationPreferencesRepository>(
+      () => ventorNotificationPreferencesRepository(getIt<ApiClientBase>()),
     );
     getIt.registerFactory<VentorNotificationsRepository>(
       () => ventorNotificationsRepository(getIt<ApiClientBase>()),

@@ -15,4 +15,10 @@ abstract interface class AppConfig {
 
   /// Android OAuth client ID for this flavor (SHA-1 + package).
   String get googleAndroidClientId;
+
+  /// Support inbox shown in Help & Support and `mailto:` links.
+  String get supportEmail;
+
+  /// Digits-only WhatsApp number for `wa.me` links (no `+`).
+  String get supportWhatsAppNumber;
 }

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
 /// Shared ventor points balance across home, rewards, and checkout flows.
-///
-/// TODO: Replace with rewards API (#63) + purchase API once backend is ready.
 class VentorPointsScope extends InheritedWidget {
   const VentorPointsScope({
     super.key,

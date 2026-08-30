@@ -2144,12 +2144,6 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
   String get ventor_profile_settings_section_support => 'SUPPORT & ABOUT';
 
   @override
-  String get ventor_profile_settings_privacy => 'Privacy Controls';
-
-  @override
-  String get ventor_profile_settings_privacy_sub => 'Managed';
-
-  @override
   String get ventor_profile_settings_notifications => 'Notifications';
 
   @override
@@ -2201,31 +2195,6 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
 
   @override
   String get ventor_notif_save => 'Save';
-
-  @override
-  String get ventor_privacy_section_profile => 'Profile visibility';
-
-  @override
-  String get ventor_privacy_show_mood_journey => 'Show Mood Journey';
-
-  @override
-  String get ventor_privacy_show_stats => 'Show Sessions & Streak';
-
-  @override
-  String get ventor_privacy_show_favorite_listeners => 'Show My Listeners';
-
-  @override
-  String get ventor_privacy_section_discovery => 'Discovery';
-
-  @override
-  String get ventor_privacy_allow_discovery => 'Allow listeners to find me';
-
-  @override
-  String get ventor_privacy_allow_discovery_sub =>
-      'Let matching listeners discover your profile when looking for someone to talk to.';
-
-  @override
-  String get ventor_privacy_save => 'Save';
 
   @override
   String get listener_avail_title => 'Availability';

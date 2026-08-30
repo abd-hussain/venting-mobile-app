@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:venting_mobile_app/config/app_config.dart';
+import 'package:venting_mobile_app/di/di_container.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
 import 'package:venting_mobile_app/presentation/home/listener/profile/listener_profile_theme.dart';
 import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dart';
@@ -26,10 +28,7 @@ class ListenerHelpSupportScreen extends StatelessWidget {
     systemNavigationBarIconBrightness: Brightness.light,
   );
 
-  static const _supportEmail = 'support@venting.app';
-
-  // TODO: Replace with the real Venting support WhatsApp number.
-  static const _whatsAppNumber = '962700000000';
+  AppConfig get _config => diContainer<AppConfig>();
 
   Future<void> _openHelpTopic(
     BuildContext context, {
@@ -45,7 +44,7 @@ class ListenerHelpSupportScreen extends StatelessWidget {
   }
 
   Future<void> _onWhatsApp(BuildContext context) async {
-    final uri = Uri.parse('https://wa.me/$_whatsAppNumber');
+    final uri = Uri.parse('https://wa.me/${_config.supportWhatsAppNumber}');
     final opened = await launchUrl(uri, mode: LaunchMode.externalApplication);
     if (!context.mounted || opened) return;
     ScaffoldMessenger.of(context).showSnackBar(
@@ -58,7 +57,7 @@ class ListenerHelpSupportScreen extends StatelessWidget {
   }
 
   Future<void> _onEmailSupport(BuildContext context) async {
-    final uri = Uri(scheme: 'mailto', path: _supportEmail);
+    final uri = Uri(scheme: 'mailto', path: _config.supportEmail);
     final opened = await launchUrl(uri);
     if (!context.mounted || opened) return;
     ScaffoldMessenger.of(context).showSnackBar(
@@ -191,7 +190,7 @@ class ListenerHelpSupportScreen extends StatelessWidget {
                 _HelpTile(
                   icon: Icons.mail_outline_rounded,
                   label: l10n.listener_help_email_support,
-                  subtitle: _supportEmail,
+                  subtitle: _config.supportEmail,
                   onTap: () => _onEmailSupport(context),
                   showDivider: false,
                 ),

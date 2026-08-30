@@ -11,7 +11,6 @@ import 'package:venting_mobile_app/presentation/change_password/change_password_
 import 'package:venting_mobile_app/presentation/home/listener/profile/widgets/listener_help_support_screen.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/profile/ventor_profile_theme.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/profile/widgets/ventor_notification_preferences_screen.dart';
-import 'package:venting_mobile_app/presentation/home/ventor/profile/widgets/ventor_privacy_settings_screen.dart';
 import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dart';
 import 'package:venting_mobile_app/shared_widgets/about/about_screen.dart';
 import 'package:venting_mobile_app/shared_widgets/bottom_sheets/logout_delete_account_confirm/logout_delete_account_confirm_sheet.dart';
@@ -163,13 +162,6 @@ class _VentorProfileSettingsScreenState
                           icon: Icons.lock_outline_rounded,
                           label: l10n.account_tab_change_password,
                           onTap: () => openChangePasswordScreen(context),
-                        ),
-                        _SettingsTile(
-                          icon: Icons.visibility_outlined,
-                          label: l10n.ventor_profile_settings_privacy,
-                          value: l10n.ventor_profile_settings_privacy_sub,
-                          onTap: () =>
-                              openVentorPrivacySettingsScreen(context: context),
                         ),
                         _SettingsTile(
                           icon: Icons.notifications_none_rounded,

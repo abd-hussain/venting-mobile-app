@@ -42,16 +42,21 @@ class _VentorHomeShellState extends State<VentorHomeShell> {
   int _index = 0;
   var _points = VentorRewardsCatalog.mockPoints;
   final _sessionsTabKey = GlobalKey<VentorSessionsTabState>();
+  final _rewardsTabKey = GlobalKey<VentorRewardsTabState>();
 
   late final List<Widget> _tabs = <Widget>[
     const VentorDashboardTab(),
     VentorSessionsTab(key: _sessionsTabKey),
-    const VentorRewardsTab(),
+    VentorRewardsTab(key: _rewardsTabKey),
     const VentorProfileTab(),
   ];
 
   void goToTab(int index) {
-    if (index < 0 || index >= _tabs.length || index == _index) return;
+    if (index < 0 || index >= _tabs.length) return;
+    if (index == VentorHomeShell.rewardsTab) {
+      _rewardsTabKey.currentState?.onTabOpened();
+    }
+    if (index == _index) return;
     setState(() => _index = index);
   }
 
@@ -96,7 +101,7 @@ class _VentorHomeShellState extends State<VentorHomeShell> {
           ),
           child: NavigationBar(
             selectedIndex: _index,
-            onDestinationSelected: (value) => setState(() => _index = value),
+            onDestinationSelected: goToTab,
             backgroundColor: const Color(0xFF140C22),
             indicatorColor: SplashColors.purpleMid.withValues(alpha: 0.18),
             surfaceTintColor: Colors.transparent,
