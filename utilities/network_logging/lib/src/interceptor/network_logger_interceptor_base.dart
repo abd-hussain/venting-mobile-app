@@ -163,6 +163,15 @@ abstract class NetworkLoggerInterceptorBase extends Interceptor {
   }
 
   @protected
+  String? _requestBodyForLog(Object? data) {
+    if (data is FormData) {
+      final fileNames = data.files.map((entry) => entry.key).join(', ');
+      return 'FormData(fields: ${data.fields.length}, files: $fileNames)';
+    }
+    return data?.toString();
+  }
+
+  @protected
   Future<NetworkLogEntry> createLogEntry(RequestOptions options) async {
     final sanitizedHeaders = sanitizer.sanitizeHeaders(
       Map<String, dynamic>.from(options.headers),
@@ -170,7 +179,7 @@ abstract class NetworkLoggerInterceptorBase extends Interceptor {
 
     final requestBody = config.logRequestBodies
         ? sanitizer.sanitizeBody(
-            options.data?.toString(),
+            _requestBodyForLog(options.data),
             options.uri.toString(),
           )
         : null;

@@ -5,6 +5,7 @@ export 'src/http/api/dio/cache_interceptor.dart';
 export 'src/http/api/dio/common_headers_interceptor.dart';
 export 'src/http/api/dio/dio_api_client.dart';
 export 'src/http/api/dio/dio_builder.dart';
+export 'src/http/api/dio/multipart_form_data_interceptor.dart';
 export 'src/http/api/dio/vpn_hint_interceptor.dart';
 export 'src/http/api/model/http_api_exception.dart';
 export 'src/http/api/model/http_api_response.dart';

@@ -56,7 +56,7 @@ class DioApiClient extends ApiClientBase {
   @override
   TaskEither<Exception, HttpApiResponse<T>> patch<T>(
     String path, {
-    required Map<String, Object?> data,
+    required Object? data,
     Map<String, Object?>? headers,
     Map<String, Object?>? queryParams,
   }) => TaskEither.tryCatch(() async {
@@ -64,7 +64,9 @@ class DioApiClient extends ApiClientBase {
       path,
       data: data,
       queryParameters: queryParams,
-      options: Options(headers: headers),
+      options: data is FormData
+          ? Options(headers: headers)
+          : Options(headers: headers),
     );
 
     return HttpApiResponse<T>(
@@ -86,7 +88,9 @@ class DioApiClient extends ApiClientBase {
       path,
       data: data,
       queryParameters: queryParams,
-      options: Options(headers: headers, contentType: contentType),
+      options: data is FormData
+          ? Options(headers: headers)
+          : Options(headers: headers, contentType: contentType),
     );
 
     return HttpApiResponse<T>(

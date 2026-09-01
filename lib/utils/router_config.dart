@@ -5,14 +5,13 @@ import 'package:venting_mobile_app/di/di_container.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
 import 'package:venting_mobile_app/presentation/auth/auth_screen.dart';
 import 'package:venting_mobile_app/presentation/auth/email_registration_screen.dart';
+import 'package:venting_mobile_app/presentation/auth/forgot_password_screen.dart';
 import 'package:venting_mobile_app/presentation/homescreen.dart';
-import 'package:venting_mobile_app/presentation/listener_onboarding/listener_onboarding_screen.dart';
 import 'package:venting_mobile_app/presentation/listener_registration/listener_registration_screen.dart';
 import 'package:venting_mobile_app/presentation/listener_registration/status/listener_profile_status.dart';
 import 'package:venting_mobile_app/presentation/listener_registration/status/listener_profile_status_screen.dart';
 import 'package:venting_mobile_app/presentation/main_onboarding/main_onboarding_screen.dart';
 import 'package:venting_mobile_app/presentation/splash/splash_screen.dart';
-import 'package:venting_mobile_app/presentation/ventor_onboarding/ventor_onboarding_screen.dart';
 import 'package:venting_mobile_app/presentation/ventor_registration/ventor_registration_screen.dart';
 import 'package:venting_mobile_app/presentation/welcome/welcome_screen.dart';
 import 'package:venting_mobile_app/shared_widgets/app_webview_screen.dart';
@@ -23,8 +22,6 @@ class AppRoutes {
   static const String welcome = '/welcome';
   static const String tabHome = '/tab-home';
   static const String mainOnboarding = '/main-onboarding';
-  static const String ventorOnboarding = '/ventor-onboarding';
-  static const String listenerOnboarding = '/listener-onboarding';
   static const String listenerRegistration = '/listener-registration';
   static const String listenerProfileUnderReview =
       '/listener-profile-under-review';
@@ -32,8 +29,8 @@ class AppRoutes {
   static const String listenerProfileRejected = '/listener-profile-rejected';
   static const String autVentorRegister = '/auth-ventor-register';
   static const String authListenerRegister = '/auth-listener-register';
-  static const String authUserUnknown = '/auth-user-unknown';
   static const String emailRegistration = '/email-registration';
+  static const String forgotPassword = '/forgot-password';
   static const String ventorRegistration = '/ventor-registration';
   static const String webView = '/web-view';
 }
@@ -76,7 +73,7 @@ class VentingNavigationObserver extends NavigatorObserver {
   }
 }
 
-/// Router configuration for the MyZain app
+/// Router configuration for the Venting app
 class VentingRouterConfig {
   static final router = GoRouter(
     navigatorKey: diContainer<GlobalKey<NavigatorState>>(),
@@ -108,16 +105,6 @@ class VentingRouterConfig {
         builder: (context, state) => const MainOnboardingScreen(),
       ),
       GoRoute(
-        path: AppRoutes.ventorOnboarding,
-        name: 'ventor-onboarding',
-        builder: (context, state) => const VentorOnboardingScreen(),
-      ),
-      GoRoute(
-        path: AppRoutes.listenerOnboarding,
-        name: 'listener-onboarding',
-        builder: (context, state) => const ListenerOnboardingScreen(),
-      ),
-      GoRoute(
         path: AppRoutes.listenerRegistration,
         name: 'listener-registration',
         builder: (context, state) {
@@ -126,7 +113,10 @@ class VentingRouterConfig {
               ? extra
               : const ListenerRegistrationArgs(email: '');
 
-          return ListenerRegistrationScreen(email: args.email);
+          return ListenerRegistrationScreen(
+            email: args.email,
+            initialStep: args.initialStep,
+          );
         },
       ),
       GoRoute(
@@ -164,26 +154,14 @@ class VentingRouterConfig {
       GoRoute(
         path: AppRoutes.autVentorRegister,
         name: 'auth-ventor-register',
-        builder: (context, state) => const AuthScreen(
-          userType: AuthUserType.ventor,
-          authType: AuthType.register,
-        ),
+        builder: (context, state) =>
+            const AuthScreen(userType: AuthUserType.ventor),
       ),
       GoRoute(
         path: AppRoutes.authListenerRegister,
         name: 'auth-listener-register',
-        builder: (context, state) => const AuthScreen(
-          userType: AuthUserType.lissener,
-          authType: AuthType.register,
-        ),
-      ),
-      GoRoute(
-        path: AppRoutes.authUserUnknown,
-        name: 'auth-user-unknown',
-        builder: (context, state) => const AuthScreen(
-          userType: AuthUserType.unknown,
-          authType: AuthType.login,
-        ),
+        builder: (context, state) =>
+            const AuthScreen(userType: AuthUserType.lissener),
       ),
       GoRoute(
         path: AppRoutes.emailRegistration,
@@ -192,14 +170,26 @@ class VentingRouterConfig {
           final extra = state.extra;
           final args = extra is AuthRouteArgs
               ? extra
-              : const AuthRouteArgs(
-                  userType: AuthUserType.unknown,
-                  authType: AuthType.login,
+              : const AuthRouteArgs(userType: AuthUserType.ventor);
+
+          return EmailRegistrationScreen(userType: args.userType);
+        },
+      ),
+      GoRoute(
+        path: AppRoutes.forgotPassword,
+        name: 'forgot-password',
+        builder: (context, state) {
+          final extra = state.extra;
+          final args = extra is ForgotPasswordRouteArgs
+              ? extra
+              : const ForgotPasswordRouteArgs(
+                  email: '',
+                  userType: AuthUserType.ventor,
                 );
 
-          return EmailRegistrationScreen(
+          return ForgotPasswordScreen(
+            email: args.email,
             userType: args.userType,
-            authType: args.authType,
           );
         },
       ),

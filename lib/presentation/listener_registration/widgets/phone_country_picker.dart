@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:phone_numbers_parser/metadata.dart';
 import 'package:phone_numbers_parser/phone_numbers_parser.dart';
+import 'package:shimmer_manager/shimmer_manager.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
 import 'package:venting_mobile_app/presentation/listener_registration/widgets/country_display_names.dart';
 import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dart';
@@ -52,6 +53,7 @@ String countryDialCode(IsoCode isoCode) =>
 Future<IsoCode?> showPhoneCountryPicker({
   required BuildContext context,
   required IsoCode selected,
+  bool showDialCode = true,
 }) {
   return showModalBottomSheet<IsoCode>(
     context: context,
@@ -60,14 +62,21 @@ Future<IsoCode?> showPhoneCountryPicker({
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
     ),
-    builder: (context) => _PhoneCountryPickerSheet(selected: selected),
+    builder: (context) => _PhoneCountryPickerSheet(
+      selected: selected,
+      showDialCode: showDialCode,
+    ),
   );
 }
 
 class _PhoneCountryPickerSheet extends StatefulWidget {
-  const _PhoneCountryPickerSheet({required this.selected});
+  const _PhoneCountryPickerSheet({
+    required this.selected,
+    required this.showDialCode,
+  });
 
   final IsoCode selected;
+  final bool showDialCode;
 
   @override
   State<_PhoneCountryPickerSheet> createState() =>
@@ -81,26 +90,39 @@ class _PhoneCountryPickerSheetState extends State<_PhoneCountryPickerSheet> {
   final _searchController = TextEditingController();
   List<IsoCode> _allCountries = const [];
   String _languageCode = 'en';
+  var _isLoading = true;
 
   @override
   void initState() {
     super.initState();
     _searchController.addListener(() => setState(() {}));
+    WidgetsBinding.instance.addPostFrameCallback((_) => _loadCountries());
+  }
+
+  Future<void> _loadCountries() async {
+    final languageCode = Localizations.localeOf(context).languageCode;
+    final countries = await Future<List<IsoCode>>(() {
+      return [...IsoCode.values]..sort((a, b) {
+        if (a == IsoCode.JO) return -1;
+        if (b == IsoCode.JO) return 1;
+        return countryDisplayName(
+          a,
+          languageCode: languageCode,
+        ).compareTo(countryDisplayName(b, languageCode: languageCode));
+      });
+    });
+    if (!mounted) return;
+    setState(() {
+      _languageCode = languageCode;
+      _allCountries = countries;
+      _isLoading = false;
+    });
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     _languageCode = Localizations.localeOf(context).languageCode;
-    _allCountries = [...IsoCode.values]
-      ..sort((a, b) {
-        if (a == IsoCode.JO) return -1;
-        if (b == IsoCode.JO) return 1;
-        return countryDisplayName(
-          a,
-          languageCode: _languageCode,
-        ).compareTo(countryDisplayName(b, languageCode: _languageCode));
-      });
   }
 
   @override
@@ -113,15 +135,15 @@ class _PhoneCountryPickerSheetState extends State<_PhoneCountryPickerSheet> {
     final query = _searchController.text.trim().toLowerCase();
     if (query.isEmpty) return _allCountries;
     return _allCountries.where((iso) {
-      final dial = countryDialCode(iso);
       final name = countryDisplayName(
         iso,
         languageCode: _languageCode,
       ).toLowerCase();
-      return name.contains(query) ||
-          iso.name.toLowerCase().contains(query) ||
-          dial.contains(query) ||
-          '+$dial'.contains(query);
+      final matchesName =
+          name.contains(query) || iso.name.toLowerCase().contains(query);
+      if (!widget.showDialCode) return matchesName;
+      final dial = countryDialCode(iso);
+      return matchesName || dial.contains(query) || '+$dial'.contains(query);
     }).toList();
   }
 
@@ -165,6 +187,7 @@ class _PhoneCountryPickerSheetState extends State<_PhoneCountryPickerSheet> {
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: TextField(
                   controller: _searchController,
+                  enabled: !_isLoading,
                   style: GoogleFonts.inter(color: Colors.white, fontSize: 15),
                   cursorColor: SplashColors.purpleMid,
                   decoration: InputDecoration(
@@ -183,52 +206,108 @@ class _PhoneCountryPickerSheetState extends State<_PhoneCountryPickerSheet> {
               ),
               const SizedBox(height: 8),
               Expanded(
-                child: ListView.builder(
-                  itemCount: countries.length,
-                  itemBuilder: (context, index) {
-                    final iso = countries[index];
-                    final dial = countryDialCode(iso);
-                    final selected = iso == widget.selected;
-                    final name = countryDisplayName(
-                      iso,
-                      languageCode: _languageCode,
-                    );
+                child: _isLoading
+                    ? const _CountryPickerShimmer()
+                    : ListView.builder(
+                        itemCount: countries.length,
+                        itemBuilder: (context, index) {
+                          final iso = countries[index];
+                          final selected = iso == widget.selected;
+                          final name = countryDisplayName(
+                            iso,
+                            languageCode: _languageCode,
+                          );
 
-                    return ListTile(
-                      onTap: () => Navigator.of(context).pop(iso),
-                      leading: Text(
-                        countryFlagEmoji(iso),
-                        style: const TextStyle(fontSize: 22),
+                          return ListTile(
+                            onTap: () => Navigator.of(context).pop(iso),
+                            leading: Text(
+                              countryFlagEmoji(iso),
+                              style: const TextStyle(fontSize: 22),
+                            ),
+                            title: Text(
+                              name,
+                              style: GoogleFonts.inter(
+                                color: Colors.white,
+                                fontSize: 15,
+                                fontWeight: selected
+                                    ? FontWeight.w700
+                                    : FontWeight.w500,
+                              ),
+                            ),
+                            trailing: widget.showDialCode
+                                ? Text(
+                                    '+${countryDialCode(iso)}',
+                                    style: GoogleFonts.inter(
+                                      color: selected
+                                          ? SplashColors.purpleMid
+                                          : _muted,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  )
+                                : (selected
+                                      ? const Icon(
+                                          Icons.check_rounded,
+                                          color: SplashColors.purpleMid,
+                                        )
+                                      : null),
+                            selected: selected,
+                            selectedTileColor: SplashColors.purpleMid
+                                .withValues(alpha: 0.12),
+                          );
+                        },
                       ),
-                      title: Text(
-                        name,
-                        style: GoogleFonts.inter(
-                          color: Colors.white,
-                          fontSize: 15,
-                          fontWeight: selected
-                              ? FontWeight.w700
-                              : FontWeight.w500,
-                        ),
-                      ),
-                      trailing: Text(
-                        '+$dial',
-                        style: GoogleFonts.inter(
-                          color: selected ? SplashColors.purpleMid : _muted,
-                          fontSize: 15,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      selected: selected,
-                      selectedTileColor: SplashColors.purpleMid.withValues(
-                        alpha: 0.12,
-                      ),
-                    );
-                  },
-                ),
               ),
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _CountryPickerShimmer extends StatelessWidget {
+  const _CountryPickerShimmer();
+
+  static const _titleWidths = <double>[132, 108, 156, 120, 144, 96, 128, 112];
+
+  @override
+  Widget build(BuildContext context) {
+    return Shimmer.fromColors(
+      baseColor: const Color(0xFF2A2140),
+      highlightColor: const Color(0xFF3A2F52),
+      child: ListView.separated(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+        itemCount: _titleWidths.length,
+        separatorBuilder: (_, _) => const SizedBox(height: 4),
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            child: Row(
+              children: [
+                Container(
+                  width: 28,
+                  height: 28,
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    shape: BoxShape.circle,
+                  ),
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: Container(
+                    height: 14,
+                    width: _titleWidths[index],
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
       ),
     );
   }

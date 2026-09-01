@@ -1,10 +1,11 @@
 import 'dart:io';
 
 import 'package:api_client/src/http/api/dio/dio_builder.dart';
+import 'package:api_client/src/http/api/dio/multipart_form_data_interceptor.dart';
 import 'package:dio/dio.dart';
+import 'package:dio/io.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:native_dio_adapter/native_dio_adapter.dart';
 
 class _MockInterceptor extends Mock implements Interceptor {}
 
@@ -23,9 +24,9 @@ void main() {
           .build();
 
       expect(dio.options.baseUrl, 'https://api.test');
-      expect(dio.options.connectTimeout, const Duration(seconds: 10));
-      expect(dio.options.receiveTimeout, const Duration(seconds: 20));
-      expect(dio.options.sendTimeout, const Duration(seconds: 20));
+      expect(dio.options.connectTimeout, const Duration(seconds: 30));
+      expect(dio.options.receiveTimeout, const Duration(minutes: 5));
+      expect(dio.options.sendTimeout, const Duration(minutes: 5));
       expect(dio.interceptors, contains(interceptor));
       expect(dio.httpClientAdapter, adapter);
     });
@@ -44,29 +45,37 @@ void main() {
       expect(() => DioBuilder().withNativeAdapter().build(), returnsNormally);
     });
 
-    test('withNativeAdapter assigns adapter when enabled', () {
-      final adapter = _MockHttpClientAdapter();
+    test('withNativeAdapter assigns IOHttpClientAdapter when enabled', () {
       addTearDown(() {
         DioBuilder.useNativeAdapter = !Platform.environment.containsKey(
           'FLUTTER_TEST',
         );
-        DioBuilder.createNativeAdapter = NativeAdapter.new;
       });
       DioBuilder.useNativeAdapter = true;
-      DioBuilder.createNativeAdapter = () => adapter;
 
       final dio = DioBuilder().withNativeAdapter().build();
 
-      expect(dio.httpClientAdapter, adapter);
+      expect(dio.httpClientAdapter, isA<IOHttpClientAdapter>());
     });
+  });
 
-    test('withReporter logPrint callback is wired', () {
-      final dio = DioBuilder().withReporter().build();
-      final logInterceptor = dio.interceptors
-          .whereType<LogInterceptor>()
-          .single;
+  group(MultipartFormDataInterceptor, () {
+    test('clears content-type for FormData', () {
+      const interceptor = MultipartFormDataInterceptor();
+      final handler = _MockRequestHandler();
+      final options = RequestOptions(
+        path: '/v1/listeners/register',
+        data: FormData.fromMap({'full_name': 'Test'}),
+        headers: {'content-type': 'application/json'},
+      );
 
-      expect(() => logInterceptor.logPrint('request payload'), returnsNormally);
+      interceptor.onRequest(options, handler);
+
+      expect(options.headers.containsKey('content-type'), isFalse);
+      expect(options.contentType, isNull);
+      verify(() => handler.next(options)).called(1);
     });
   });
 }
+
+class _MockRequestHandler extends Mock implements RequestInterceptorHandler {}

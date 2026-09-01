@@ -1,15 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:preferences/preferences.dart';
+import 'package:venting_mobile_app/di/di_container.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
 import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dart';
-import 'package:venting_mobile_app/presentation/welcome/widgets/welcome_illustration_painter.dart';
 import 'package:venting_mobile_app/shared_widgets/app_language_selector.dart';
 import 'package:venting_mobile_app/utils/router_config.dart';
 
-class WelcomeScreen extends StatelessWidget {
+class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
+
+  @override
+  State<WelcomeScreen> createState() => _WelcomeScreenState();
+}
+
+class _WelcomeScreenState extends State<WelcomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) => _redirectIfSessionActive(),
+    );
+  }
+
+  void _redirectIfSessionActive() {
+    if (!mounted) return;
+
+    final accessToken = diContainer<VentingPreferences>()
+        .getValue(SavedConstants.accessToken, '')
+        .trim();
+    if (accessToken.isEmpty) return;
+
+    context.go(AppRoutes.initialRoute);
+  }
 
   static const _overlayStyle = SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
@@ -19,6 +45,10 @@ class WelcomeScreen extends StatelessWidget {
     systemNavigationBarIconBrightness: Brightness.light,
     systemNavigationBarContrastEnforced: false,
   );
+
+  static const _muted = Color(0xFF9B93AB);
+  static const _ventIconBg = Color(0xFF2A1F3D);
+  static const _listenIconBg = Color(0xFF1A2A24);
 
   @override
   Widget build(BuildContext context) {
@@ -41,59 +71,56 @@ class WelcomeScreen extends StatelessWidget {
           ),
           child: SafeArea(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 28),
+              padding: const EdgeInsets.symmetric(horizontal: 24),
               child: Column(
                 children: [
                   const Align(
-                    alignment: AlignmentDirectional.centerStart,
-                    child: AppLanguageSelector(),
+                    alignment: AlignmentDirectional.centerEnd,
+                    child: AppLanguageSelector(showFullName: true),
                   ),
-                  const SizedBox(height: 12),
+                  const Spacer(flex: 2),
                   const _VentingBrandHeader(),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 12),
                   Text(
                     l10n.welcome_tagline,
                     textAlign: TextAlign.center,
                     style: GoogleFonts.inter(
-                      color: Colors.white.withValues(alpha: 0.88),
-                      fontSize: 14,
+                      color: _muted,
+                      fontSize: 15,
                       fontWeight: FontWeight.w400,
-                      letterSpacing: 0.2,
-                      height: 1.3,
+                      height: 1.35,
                     ),
                   ),
-                  Expanded(
-                    child: Center(
-                      child: AspectRatio(
-                        aspectRatio: 0.92,
-                        child: CustomPaint(
-                          painter: WelcomeIllustrationPainter(),
-                        ),
-                      ),
+                  const SizedBox(height: 40),
+                  _WelcomeRoleCard(
+                    title: l10n.welcome_i_am_ventor,
+                    subtitle: l10n.welcome_vent_subtitle,
+                    iconAsset: 'assets/images/ventor_welcome_icon.svg',
+                    iconBackground: _ventIconBg,
+                    highlighted: true,
+                    onTap: () => context.push(AppRoutes.autVentorRegister),
+                  ),
+                  const SizedBox(height: 14),
+                  _WelcomeRoleCard(
+                    title: l10n.welcome_i_am_listener,
+                    subtitle: l10n.welcome_listen_subtitle,
+                    iconAsset: 'assets/images/listener_welcom_icon.svg',
+                    iconBackground: _listenIconBg,
+                    highlighted: false,
+                    onTap: () => context.push(AppRoutes.authListenerRegister),
+                  ),
+                  const Spacer(flex: 3),
+                  Text(
+                    l10n.welcome_anonymous_footer,
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.inter(
+                      color: _muted.withValues(alpha: 0.85),
+                      fontSize: 13,
+                      fontWeight: FontWeight.w400,
+                      height: 1.35,
                     ),
-                  ),
-                  _WelcomePrimaryButton(
-                    label: l10n.welcome_need_someone_to_talk_to,
-                    onPressed: () {
-                      context.push(AppRoutes.ventorOnboarding);
-                    },
-                  ),
-                  const SizedBox(height: 12),
-                  _WelcomeSecondaryButton(
-                    label: l10n.welcome_want_to_be_listener,
-                    onPressed: () {
-                      context.push(AppRoutes.listenerOnboarding);
-                    },
                   ),
                   const SizedBox(height: 20),
-                  _SignInPrompt(
-                    prompt: l10n.welcome_already_have_account,
-                    action: l10n.welcome_sign_in,
-                    onSignIn: () {
-                      context.push(AppRoutes.authUserUnknown);
-                    },
-                  ),
-                  const SizedBox(height: 12),
                 ],
               ),
             ),
@@ -109,143 +136,119 @@ class _VentingBrandHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textStyle = GoogleFonts.greatVibes(
-      fontSize: 56,
-      fontWeight: FontWeight.w400,
+    final base = GoogleFonts.inter(
+      fontSize: 42,
+      fontWeight: FontWeight.w800,
       height: 1,
-      letterSpacing: 0.5,
+      letterSpacing: 1.2,
     );
 
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        Text(
-          'Venting',
-          style: textStyle.copyWith(
-            color: SplashColors.purpleGlow.withValues(alpha: 0.35),
-            shadows: [
-              Shadow(
-                color: SplashColors.purpleGlow.withValues(alpha: 0.7),
-                blurRadius: 22,
+    return Text.rich(
+      TextSpan(
+        children: [
+          TextSpan(
+            text: 'VENT',
+            style: base.copyWith(color: Colors.white),
+          ),
+          TextSpan(
+            text: 'ING',
+            style: base.copyWith(color: SplashColors.purpleMid),
+          ),
+        ],
+      ),
+      textAlign: TextAlign.center,
+    );
+  }
+}
+
+class _WelcomeRoleCard extends StatelessWidget {
+  const _WelcomeRoleCard({
+    required this.title,
+    required this.subtitle,
+    required this.iconAsset,
+    required this.iconBackground,
+    required this.highlighted,
+    required this.onTap,
+  });
+
+  final String title;
+  final String subtitle;
+  final String iconAsset;
+  final Color iconBackground;
+  final bool highlighted;
+  final VoidCallback onTap;
+
+  static const _cardFill = Color(0xFF16121F);
+  static const _muted = Color(0xFF9B93AB);
+
+  @override
+  Widget build(BuildContext context) {
+    final borderColor = highlighted
+        ? SplashColors.purpleMid
+        : Colors.white.withValues(alpha: 0.08);
+    final arrowColor = highlighted
+        ? SplashColors.purpleMid
+        : _muted.withValues(alpha: 0.75);
+
+    return Material(
+      color: _cardFill,
+      borderRadius: BorderRadius.circular(20),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(20),
+        child: Container(
+          padding: const EdgeInsets.fromLTRB(14, 16, 14, 16),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(
+              color: borderColor,
+              width: highlighted ? 1.6 : 1,
+            ),
+          ),
+          child: Row(
+            children: [
+              Container(
+                width: 56,
+                height: 56,
+                decoration: BoxDecoration(
+                  color: iconBackground,
+                  borderRadius: BorderRadius.circular(14),
+                ),
+                alignment: Alignment.center,
+                child: SvgPicture.asset(iconAsset, width: 34, height: 34),
               ),
+              const SizedBox(width: 14),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: GoogleFonts.inter(
+                        color: Colors.white,
+                        fontSize: 17,
+                        fontWeight: FontWeight.w700,
+                        height: 1.2,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      subtitle,
+                      style: GoogleFonts.inter(
+                        color: _muted,
+                        fontSize: 13,
+                        fontWeight: FontWeight.w400,
+                        height: 1.3,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Icon(Icons.arrow_forward_rounded, size: 22, color: arrowColor),
             ],
           ),
         ),
-        ShaderMask(
-          blendMode: BlendMode.srcIn,
-          shaderCallback: (bounds) =>
-              SplashColors.brandGradient.createShader(bounds),
-          child: Text('Venting', style: textStyle),
-        ),
-      ],
-    );
-  }
-}
-
-class _WelcomePrimaryButton extends StatelessWidget {
-  const _WelcomePrimaryButton({required this.label, required this.onPressed});
-
-  final String label;
-  final VoidCallback onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      height: 54,
-      child: FilledButton(
-        onPressed: onPressed,
-        style: FilledButton.styleFrom(
-          backgroundColor: SplashColors.purpleMid,
-          foregroundColor: Colors.white,
-          elevation: 0,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
-          textStyle: GoogleFonts.inter(
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-            letterSpacing: 0.1,
-          ),
-        ),
-        child: Text(label),
       ),
-    );
-  }
-}
-
-class _WelcomeSecondaryButton extends StatelessWidget {
-  const _WelcomeSecondaryButton({required this.label, required this.onPressed});
-
-  final String label;
-  final VoidCallback onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      height: 54,
-      child: OutlinedButton(
-        onPressed: onPressed,
-        style: OutlinedButton.styleFrom(
-          foregroundColor: Colors.white,
-          backgroundColor: const Color(0xFF14101C),
-          side: BorderSide(
-            color: SplashColors.purpleMid.withValues(alpha: 0.55),
-            width: 1.2,
-          ),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
-          textStyle: GoogleFonts.inter(
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-            letterSpacing: 0.1,
-          ),
-        ),
-        child: Text(label),
-      ),
-    );
-  }
-}
-
-class _SignInPrompt extends StatelessWidget {
-  const _SignInPrompt({
-    required this.prompt,
-    required this.action,
-    required this.onSignIn,
-  });
-
-  final String prompt;
-  final String action;
-  final VoidCallback onSignIn;
-
-  @override
-  Widget build(BuildContext context) {
-    return Wrap(
-      alignment: WrapAlignment.center,
-      crossAxisAlignment: WrapCrossAlignment.center,
-      children: [
-        Text(
-          '$prompt ',
-          style: GoogleFonts.inter(
-            color: Colors.white.withValues(alpha: 0.78),
-            fontSize: 14,
-            fontWeight: FontWeight.w400,
-          ),
-        ),
-        GestureDetector(
-          onTap: onSignIn,
-          child: Text(
-            action,
-            style: GoogleFonts.inter(
-              color: Colors.white,
-              fontSize: 14,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-        ),
-      ],
     );
   }
 }

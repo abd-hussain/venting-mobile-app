@@ -216,3 +216,262 @@ jobs:
           FLAVOR_NAME="${{ steps.build.outputs.flavor }}"
           COMMIT_MSG="🚀 Deploy $FLAVOR_NAME build $BUILD_NUMBER - $(date '+%Y-%m-%d %H:%M:%S')"
           echo "Updated commit message: $COMMIT_MSG"
+
+  ios:
+    runs-on: macos-26
+
+    steps:
+      - name: 📚 Git Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 🧭 Resolve iOS flavor from branch
+        run: |
+          set -euo pipefail
+          BRANCH="${{ github.ref_name }}"
+          if [ "$BRANCH" = "main" ]; then
+            FLAVOR="prod"
+            ENTRYPOINT="lib/main_prod.dart"
+            DART_DEFINE_FILE=".env/config.prod.json"
+            BUNDLE_ID="com.vent.ventingMobileApp"
+            IOS_SCHEME="prod"
+          elif [ "$BRANCH" = "dev" ]; then
+            FLAVOR="dev"
+            ENTRYPOINT="lib/main_dev.dart"
+            DART_DEFINE_FILE=".env/config.dev.json"
+            BUNDLE_ID="com.vent.ventingMobileApp.dev"
+            IOS_SCHEME="dev"
+          else
+            echo "❌ Unsupported branch for iOS deploy: $BRANCH"
+            exit 1
+          fi
+
+          {
+            echo "FLAVOR=$FLAVOR"
+            echo "ENTRYPOINT=$ENTRYPOINT"
+            echo "DART_DEFINE_FILE=$DART_DEFINE_FILE"
+            echo "BUNDLE_ID=$BUNDLE_ID"
+            echo "IOS_SCHEME=$IOS_SCHEME"
+          } >> "$GITHUB_ENV"
+
+          echo "🌿 Branch=$BRANCH → flavor=$FLAVOR scheme=$IOS_SCHEME bundle=$BUNDLE_ID"
+
+      - name: 📊 Display iOS Build Information
+        run: |
+          echo "🍎 Starting iOS CI/CD Deploy #${{ github.run_number }}"
+          echo "📅 Build Date: $(date '+%Y-%m-%d %H:%M UTC')"
+          echo "🔢 Run Number: ${{ github.run_number }}"
+          echo "📝 Commit: ${{ github.sha }}"
+          echo "👤 Author: ${{ github.actor }}"
+          echo "🌿 Branch: ${{ github.ref_name }}"
+          echo "📦 Flavor: $FLAVOR"
+          echo "🎯 Entrypoint: $ENTRYPOINT"
+          echo "📱 Bundle: $BUNDLE_ID"
+          echo "📐 Scheme: $IOS_SCHEME"
+
+      - name: 🔀 Select Xcode 26+ (iOS 26 SDK required by App Store Connect)
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          choose_xcode() {
+            for X in "$@"; do
+              [[ -d "$X" ]] || continue
+              SDK="$X/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iphoneos.sdk"
+              [[ -d "$SDK" ]] || continue
+
+              VER="$(/usr/libexec/PlistBuddy -c 'Print :DTPlatformVersion' "$SDK/SDKSettings.plist" 2>/dev/null || true)"
+              >&2 echo "Checking $X (iPhoneOS SDK $VER)"
+              # Prefer iOS 26+ SDK (ASC rejects older SDKs for upload)
+              if [[ "$VER" == 26* ]] || [[ "$VER" == 27* ]]; then
+                echo "$X"; return 0
+              fi
+            done
+            # Fallback: first installed candidate that has any iPhoneOS SDK
+            for X in "$@"; do
+              SDK="$X/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iphoneos.sdk"
+              [[ -d "$SDK" ]] || continue
+              echo "$X"; return 0
+            done
+            return 1
+          }
+
+          PICK="$(choose_xcode \
+            /Applications/Xcode_26.6.app \
+            /Applications/Xcode_26.5.app \
+            /Applications/Xcode_26.4.1.app \
+            /Applications/Xcode_26.4.app \
+            /Applications/Xcode_26.3.app \
+            /Applications/Xcode_26.2.app \
+            /Applications/Xcode_26.1.1.app \
+            /Applications/Xcode_26.0.1.app \
+            /Applications/Xcode_26.app \
+            /Applications/Xcode.app)"
+
+          if [[ -z "$PICK" ]]; then
+            echo "❌ No suitable Xcode 26.x with iPhoneOS 26+ SDK found" >&2
+            ls /Applications/Xcode*.app 2>/dev/null || true
+            exit 1
+          fi
+
+          echo "Using Xcode: $PICK" >&2
+          echo "DEVELOPER_DIR=$PICK/Contents/Developer" >> "$GITHUB_ENV"
+          sudo xcode-select -s "$PICK"
+          sudo xcodebuild -runFirstLaunch || true
+          xcodebuild -version
+          xcodebuild -showsdks || true
+          SDK_VER="$(xcodebuild -version -sdk iphoneos ProductVersion 2>/dev/null || true)"
+          echo "iPhoneOS SDK: $SDK_VER"
+          case "$SDK_VER" in
+            26*|27*) echo "✅ SDK meets App Store Connect requirement" ;;
+            *)
+              echo "❌ App Store Connect requires iOS 26+ SDK; got: $SDK_VER"
+              exit 1
+              ;;
+          esac
+
+      - name: 🐦 Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          # Keep in sync with .fvmrc (Flutter 3.41.7)
+          flutter-version-file: .fvmrc
+          channel: 'stable'
+          cache: true
+
+      - name: 🗳️ Flutter gen-l10n
+        run: flutter gen-l10n
+
+      - name: 🗳️ Flutter Pub Get
+        run: flutter pub get
+
+      - name: 🗃️ Generate code (build_runner)
+        run: flutter pub run build_runner build --delete-conflicting-outputs
+
+      - name: 🧰 Set up App Store Connect API key
+        env:
+          APPSTORE_CONNECT: ${{ secrets.APPSTORE_CONNECT }}
+        run: |
+          if [ -z "$APPSTORE_CONNECT" ]; then
+            echo "❌ Missing secret APPSTORE_CONNECT (base64 of App Store Connect API key JSON)."
+            exit 1
+          fi
+          echo "$APPSTORE_CONNECT" | base64 --decode > ios/app_store_connect.json
+          ls -la ios/app_store_connect.json
+
+      - name: 🎯 Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2'
+          bundler-cache: true
+          working-directory: ios
+        env:
+          RUNNER_TOOL_CACHE: /Users/runner/hostedtoolcache
+          RUNNER_TEMP: /Users/runner/work/_temp
+
+      - name: 📦 Ensure Fastlane available
+        run: |
+          gem install fastlane --no-document
+          ruby -v
+          which ruby
+          fastlane -v
+
+      - name: 🧩 Ensure Flutter xcconfigs include Pods
+        run: |
+          ensure_line () { FILE="$1"; LINE="$2"; grep -qF "$LINE" "$FILE" || echo "$LINE" >> "$FILE"; }
+          ensure_line ios/Flutter/Debug.xcconfig   '#include? "Pods/Target Support Files/Pods-Runner/Pods-Runner.debug.xcconfig"'
+          ensure_line ios/Flutter/Release.xcconfig '#include? "Pods/Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"'
+          ensure_line ios/Flutter/Profile.xcconfig '#include? "Pods/Target Support Files/Pods-Runner/Pods-Runner.profile.xcconfig"'
+
+      - name: 🧹 Pods clean install
+        run: |
+          pushd ios
+          pod deintegrate
+          rm -f Podfile.lock
+          pod install
+          popd
+
+      - name: 🧪 Pre-warm xcodebuild & validate scheme
+        run: |
+          xcodebuild -version
+          xcodebuild -list -workspace ios/Runner.xcworkspace
+          xcodebuild -resolvePackageDependencies \
+            -workspace ios/Runner.xcworkspace \
+            -scheme "$IOS_SCHEME" \
+            -destination 'generic/platform=iOS'
+
+      - name: 🔐 Configure git auth for Match (Venting-Certificates)
+        env:
+          MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.GIT_BASIC_AUTHORIZATION }}
+        run: |
+          set -euo pipefail
+          if [ -z "${MATCH_GIT_BASIC_AUTHORIZATION:-}" ]; then
+            echo "❌ Missing secret GIT_BASIC_AUTHORIZATION"
+            echo "   Create it as: echo -n 'abd-hussain:ghp_xxx' | base64 | pbcopy"
+            echo "   PAT needs read access to abd-hussain/Venting-Certificates"
+            exit 1
+          fi
+
+          AUTH="$(printf '%s' "$MATCH_GIT_BASIC_AUTHORIZATION" | tr -d '\n\r ')"
+          DECODED="$(printf '%s' "$AUTH" | base64 --decode 2>/dev/null || true)"
+          if [[ "$DECODED" != *:* ]]; then
+            echo "❌ GIT_BASIC_AUTHORIZATION does not decode to 'username:token'"
+            echo "   Use: echo -n 'abd-hussain:ghp_YOUR_PAT' | base64 | pbcopy"
+            exit 1
+          fi
+
+          USER="${DECODED%%:*}"
+          TOKEN="${DECODED#*:}"
+          if [ -z "$USER" ] || [ -z "$TOKEN" ]; then
+            echo "❌ Decoded GIT_BASIC_AUTHORIZATION has empty username or token"
+            exit 1
+          fi
+
+          # Prefer git rewrite over Match's http.extraheader (unreliable on some runners).
+          # URL-encode user/token so special characters in PATs are safe.
+          AUTH_URL="$(
+            USER="$USER" TOKEN="$TOKEN" python3 - <<'PY'
+          import os, urllib.parse
+          u = urllib.parse.quote(os.environ["USER"], safe="")
+          t = urllib.parse.quote(os.environ["TOKEN"], safe="")
+          print(f"https://{u}:{t}@github.com/")
+          PY
+          )"
+          git config --global url."${AUTH_URL}".insteadOf "https://github.com/"
+
+          echo "✅ git url.insteadOf configured for github.com"
+          echo "🔍 Testing plain HTTPS access to Venting-Certificates..."
+          if ! git ls-remote "https://github.com/abd-hussain/Venting-Certificates.git" HEAD >/dev/null; then
+            echo "❌ Cannot read Venting-Certificates after configuring git credentials"
+            echo "   Check: PAT still valid, has 'repo' (classic) or Contents:Read on that private repo,"
+            echo "   and username matches the account that owns the token."
+            exit 1
+          fi
+          echo "✅ Match certificates repo is reachable"
+          # Keep env for Match fallback / debugging (trimmed base64)
+          echo "MATCH_GIT_BASIC_AUTHORIZATION=$AUTH" >> "$GITHUB_ENV"
+
+      - name: 🛠️ Build and Deploy to TestFlight
+        id: build-ios
+        env:
+          MATCH_PASSWORD: ${{ secrets.IOS_MATCH_PASSWORD }}
+          FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT: "120"
+          FASTLANE_XCODEBUILD_SETTINGS_RETRIES: "6"
+        run: |
+          if [ -z "${MATCH_PASSWORD:-}" ]; then
+            echo "❌ Missing secret IOS_MATCH_PASSWORD (Match encryption passphrase)."
+            exit 1
+          fi
+          make deploy-ios
+          BUILD_NUMBER=$(grep "^version:" pubspec.yaml | sed 's/version: .*+//')
+          echo "build_number=$BUILD_NUMBER" >> "$GITHUB_OUTPUT"
+          echo "flavor=$FLAVOR" >> "$GITHUB_OUTPUT"
+          echo "iOS build completed with flavor=$FLAVOR build number=$BUILD_NUMBER"
+
+      - name: 📝 Capture iOS build number
+        if: success()
+        run: |
+          BUILD_NUMBER="${{ steps.build-ios.outputs.build_number }}"
+          FLAVOR_NAME="${{ steps.build-ios.outputs.flavor }}"
+          COMMIT_MSG="🍎 iOS Deploy $FLAVOR_NAME build $BUILD_NUMBER - $(date '+%Y-%m-%d %H:%M')"
+          echo "Updated commit message: $COMMIT_MSG"

@@ -4,8 +4,11 @@ void main() {
   runApp(const MyApp());
 }
 
-//TODO: Build Pipline for this project Dev + Prod
+//TODO: verify payrolls for the listener can happen here in bank account or we need to find defrent way
+
 //TODO: Add Firebase / FCM
+
+//TODO: handle the skip in registrations (ventor and listener) , what will happen
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

@@ -7,6 +7,9 @@ ENTRYPOINT ?= lib/main_prod.dart
 DART_DEFINE_FILE ?= .env/config.prod.json
 PACKAGE_NAME ?= com.vent.ventingMobileApp
 AAB_PATH ?= build/app/outputs/bundle/prodRelease/app-prod-release.aab
+# iOS mirrors Android package naming; scheme matches Flutter flavor.
+BUNDLE_ID ?= com.vent.ventingMobileApp
+IOS_SCHEME ?= prod
 
 BUILD_ARGS := --flavor $(FLAVOR) -t $(ENTRYPOINT) --dart-define-from-file=$(DART_DEFINE_FILE)
 
@@ -28,14 +31,22 @@ deploy-android:
 	@echo "╠ FINISHED ╠"
 
 deploy-ios:
+	@echo "╠ Flavor=$(FLAVOR) entrypoint=$(ENTRYPOINT)"
+	@echo "╠ Scheme=$(IOS_SCHEME) bundle=$(BUNDLE_ID)"
 	@echo "╠ Updating build number with current date (unified format)..."
 	./scripts/update_build_date.sh
 	@echo "╠ Sending iOS Build to TestFlight..."
-	cd ios/fastlane && bundle update cocoapods
+	cd ios && bundle update cocoapods
 	@echo "╠ cocoapods updated"
-	cd ios/fastlane && bundle install
+	cd ios && bundle install
 	@echo "╠ bundle installed"
-	cd ios/fastlane && bundle exec fastlane deploy
+	cd ios && \
+		FLAVOR="$(FLAVOR)" \
+		ENTRYPOINT="$(ENTRYPOINT)" \
+		DART_DEFINE_FILE="$(DART_DEFINE_FILE)" \
+		BUNDLE_ID="$(BUNDLE_ID)" \
+		IOS_SCHEME="$(IOS_SCHEME)" \
+		bundle exec fastlane deploy
 	@echo "╠ FINISHED ╠"
 
 update-build-date:

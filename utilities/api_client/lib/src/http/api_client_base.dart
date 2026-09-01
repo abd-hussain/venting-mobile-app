@@ -33,7 +33,7 @@ abstract class ApiClientBase {
 
   TaskEither<Exception, HttpApiResponse<T>> patch<T>(
     String path, {
-    required Map<String, Object?> data,
+    required Object? data,
     Map<String, Object?>? headers,
     Map<String, Object?>? queryParams,
   });

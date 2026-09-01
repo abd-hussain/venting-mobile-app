@@ -206,7 +206,7 @@ String toString() {
 /// @nodoc
 mixin _$SplashState {
 
- SplashProcessState get processState; String get errorMessage;
+ SplashProcessState get processState; String get errorMessage; String get userEmail;
 /// Create a copy of SplashState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -217,16 +217,16 @@ $SplashStateCopyWith<SplashState> get copyWith => _$SplashStateCopyWithImpl<Spla
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SplashState&&(identical(other.processState, processState) || other.processState == processState)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SplashState&&(identical(other.processState, processState) || other.processState == processState)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage)&&(identical(other.userEmail, userEmail) || other.userEmail == userEmail));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,processState,errorMessage);
+int get hashCode => Object.hash(runtimeType,processState,errorMessage,userEmail);
 
 @override
 String toString() {
-  return 'SplashState(processState: $processState, errorMessage: $errorMessage)';
+  return 'SplashState(processState: $processState, errorMessage: $errorMessage, userEmail: $userEmail)';
 }
 
 
@@ -237,7 +237,7 @@ abstract mixin class $SplashStateCopyWith<$Res>  {
   factory $SplashStateCopyWith(SplashState value, $Res Function(SplashState) _then) = _$SplashStateCopyWithImpl;
 @useResult
 $Res call({
- SplashProcessState processState, String errorMessage
+ SplashProcessState processState, String errorMessage, String userEmail
 });
 
 
@@ -254,10 +254,11 @@ class _$SplashStateCopyWithImpl<$Res>
 
 /// Create a copy of SplashState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? processState = null,Object? errorMessage = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? processState = null,Object? errorMessage = null,Object? userEmail = null,}) {
   return _then(_self.copyWith(
 processState: null == processState ? _self.processState : processState // ignore: cast_nullable_to_non_nullable
 as SplashProcessState,errorMessage: null == errorMessage ? _self.errorMessage : errorMessage // ignore: cast_nullable_to_non_nullable
+as String,userEmail: null == userEmail ? _self.userEmail : userEmail // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }
@@ -349,10 +350,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( SplashProcessState processState,  String errorMessage)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( SplashProcessState processState,  String errorMessage,  String userEmail)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _SplashState() when $default != null:
-return $default(_that.processState,_that.errorMessage);case _:
+return $default(_that.processState,_that.errorMessage,_that.userEmail);case _:
   return orElse();
 
 }
@@ -370,10 +371,10 @@ return $default(_that.processState,_that.errorMessage);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( SplashProcessState processState,  String errorMessage)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( SplashProcessState processState,  String errorMessage,  String userEmail)  $default,) {final _that = this;
 switch (_that) {
 case _SplashState():
-return $default(_that.processState,_that.errorMessage);}
+return $default(_that.processState,_that.errorMessage,_that.userEmail);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -387,10 +388,10 @@ return $default(_that.processState,_that.errorMessage);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( SplashProcessState processState,  String errorMessage)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( SplashProcessState processState,  String errorMessage,  String userEmail)?  $default,) {final _that = this;
 switch (_that) {
 case _SplashState() when $default != null:
-return $default(_that.processState,_that.errorMessage);case _:
+return $default(_that.processState,_that.errorMessage,_that.userEmail);case _:
   return null;
 
 }
@@ -402,11 +403,12 @@ return $default(_that.processState,_that.errorMessage);case _:
 
 
 class _SplashState implements SplashState {
-  const _SplashState({this.processState = const SplashProcessState.idle(), this.errorMessage = ""});
+  const _SplashState({this.processState = const SplashProcessState.idle(), this.errorMessage = '', this.userEmail = ''});
   
 
 @override@JsonKey() final  SplashProcessState processState;
 @override@JsonKey() final  String errorMessage;
+@override@JsonKey() final  String userEmail;
 
 /// Create a copy of SplashState
 /// with the given fields replaced by the non-null parameter values.
@@ -418,16 +420,16 @@ _$SplashStateCopyWith<_SplashState> get copyWith => __$SplashStateCopyWithImpl<_
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SplashState&&(identical(other.processState, processState) || other.processState == processState)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SplashState&&(identical(other.processState, processState) || other.processState == processState)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage)&&(identical(other.userEmail, userEmail) || other.userEmail == userEmail));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,processState,errorMessage);
+int get hashCode => Object.hash(runtimeType,processState,errorMessage,userEmail);
 
 @override
 String toString() {
-  return 'SplashState(processState: $processState, errorMessage: $errorMessage)';
+  return 'SplashState(processState: $processState, errorMessage: $errorMessage, userEmail: $userEmail)';
 }
 
 
@@ -438,7 +440,7 @@ abstract mixin class _$SplashStateCopyWith<$Res> implements $SplashStateCopyWith
   factory _$SplashStateCopyWith(_SplashState value, $Res Function(_SplashState) _then) = __$SplashStateCopyWithImpl;
 @override @useResult
 $Res call({
- SplashProcessState processState, String errorMessage
+ SplashProcessState processState, String errorMessage, String userEmail
 });
 
 
@@ -455,10 +457,11 @@ class __$SplashStateCopyWithImpl<$Res>
 
 /// Create a copy of SplashState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? processState = null,Object? errorMessage = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? processState = null,Object? errorMessage = null,Object? userEmail = null,}) {
   return _then(_SplashState(
 processState: null == processState ? _self.processState : processState // ignore: cast_nullable_to_non_nullable
 as SplashProcessState,errorMessage: null == errorMessage ? _self.errorMessage : errorMessage // ignore: cast_nullable_to_non_nullable
+as String,userEmail: null == userEmail ? _self.userEmail : userEmail // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }
@@ -519,14 +522,18 @@ extension SplashProcessStatePatterns on SplashProcessState {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( SplashProcessIdle value)?  idle,TResult Function( SplashProcessNeedOnboarding value)?  needOnboarding,TResult Function( SplashProcessAutherizedForApp value)?  autherizedForApp,TResult Function( SplashProcessNeedAuthenticate value)?  needAuthenticate,TResult Function( SplashProcessError value)?  error,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( SplashProcessIdle value)?  idle,TResult Function( SplashProcessNeedOnboarding value)?  needOnboarding,TResult Function( SplashProcessAutherizedForApp value)?  autherizedForApp,TResult Function( SplashProcessNeedAuthenticate value)?  needAuthenticate,TResult Function( SplashProcessNeedVentorRegistration value)?  needVentorRegistration,TResult Function( SplashProcessNeedListenerRegistration value)?  needListenerRegistration,TResult Function( SplashProcessListenerProfileUnderReview value)?  listenerProfileUnderReview,TResult Function( SplashProcessListenerProfileRejected value)?  listenerProfileRejected,TResult Function( SplashProcessError value)?  error,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case SplashProcessIdle() when idle != null:
 return idle(_that);case SplashProcessNeedOnboarding() when needOnboarding != null:
 return needOnboarding(_that);case SplashProcessAutherizedForApp() when autherizedForApp != null:
 return autherizedForApp(_that);case SplashProcessNeedAuthenticate() when needAuthenticate != null:
-return needAuthenticate(_that);case SplashProcessError() when error != null:
+return needAuthenticate(_that);case SplashProcessNeedVentorRegistration() when needVentorRegistration != null:
+return needVentorRegistration(_that);case SplashProcessNeedListenerRegistration() when needListenerRegistration != null:
+return needListenerRegistration(_that);case SplashProcessListenerProfileUnderReview() when listenerProfileUnderReview != null:
+return listenerProfileUnderReview(_that);case SplashProcessListenerProfileRejected() when listenerProfileRejected != null:
+return listenerProfileRejected(_that);case SplashProcessError() when error != null:
 return error(_that);case _:
   return orElse();
 
@@ -545,14 +552,18 @@ return error(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( SplashProcessIdle value)  idle,required TResult Function( SplashProcessNeedOnboarding value)  needOnboarding,required TResult Function( SplashProcessAutherizedForApp value)  autherizedForApp,required TResult Function( SplashProcessNeedAuthenticate value)  needAuthenticate,required TResult Function( SplashProcessError value)  error,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( SplashProcessIdle value)  idle,required TResult Function( SplashProcessNeedOnboarding value)  needOnboarding,required TResult Function( SplashProcessAutherizedForApp value)  autherizedForApp,required TResult Function( SplashProcessNeedAuthenticate value)  needAuthenticate,required TResult Function( SplashProcessNeedVentorRegistration value)  needVentorRegistration,required TResult Function( SplashProcessNeedListenerRegistration value)  needListenerRegistration,required TResult Function( SplashProcessListenerProfileUnderReview value)  listenerProfileUnderReview,required TResult Function( SplashProcessListenerProfileRejected value)  listenerProfileRejected,required TResult Function( SplashProcessError value)  error,}){
 final _that = this;
 switch (_that) {
 case SplashProcessIdle():
 return idle(_that);case SplashProcessNeedOnboarding():
 return needOnboarding(_that);case SplashProcessAutherizedForApp():
 return autherizedForApp(_that);case SplashProcessNeedAuthenticate():
-return needAuthenticate(_that);case SplashProcessError():
+return needAuthenticate(_that);case SplashProcessNeedVentorRegistration():
+return needVentorRegistration(_that);case SplashProcessNeedListenerRegistration():
+return needListenerRegistration(_that);case SplashProcessListenerProfileUnderReview():
+return listenerProfileUnderReview(_that);case SplashProcessListenerProfileRejected():
+return listenerProfileRejected(_that);case SplashProcessError():
 return error(_that);}
 }
 /// A variant of `map` that fallback to returning `null`.
@@ -567,14 +578,18 @@ return error(_that);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( SplashProcessIdle value)?  idle,TResult? Function( SplashProcessNeedOnboarding value)?  needOnboarding,TResult? Function( SplashProcessAutherizedForApp value)?  autherizedForApp,TResult? Function( SplashProcessNeedAuthenticate value)?  needAuthenticate,TResult? Function( SplashProcessError value)?  error,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( SplashProcessIdle value)?  idle,TResult? Function( SplashProcessNeedOnboarding value)?  needOnboarding,TResult? Function( SplashProcessAutherizedForApp value)?  autherizedForApp,TResult? Function( SplashProcessNeedAuthenticate value)?  needAuthenticate,TResult? Function( SplashProcessNeedVentorRegistration value)?  needVentorRegistration,TResult? Function( SplashProcessNeedListenerRegistration value)?  needListenerRegistration,TResult? Function( SplashProcessListenerProfileUnderReview value)?  listenerProfileUnderReview,TResult? Function( SplashProcessListenerProfileRejected value)?  listenerProfileRejected,TResult? Function( SplashProcessError value)?  error,}){
 final _that = this;
 switch (_that) {
 case SplashProcessIdle() when idle != null:
 return idle(_that);case SplashProcessNeedOnboarding() when needOnboarding != null:
 return needOnboarding(_that);case SplashProcessAutherizedForApp() when autherizedForApp != null:
 return autherizedForApp(_that);case SplashProcessNeedAuthenticate() when needAuthenticate != null:
-return needAuthenticate(_that);case SplashProcessError() when error != null:
+return needAuthenticate(_that);case SplashProcessNeedVentorRegistration() when needVentorRegistration != null:
+return needVentorRegistration(_that);case SplashProcessNeedListenerRegistration() when needListenerRegistration != null:
+return needListenerRegistration(_that);case SplashProcessListenerProfileUnderReview() when listenerProfileUnderReview != null:
+return listenerProfileUnderReview(_that);case SplashProcessListenerProfileRejected() when listenerProfileRejected != null:
+return listenerProfileRejected(_that);case SplashProcessError() when error != null:
 return error(_that);case _:
   return null;
 
@@ -592,13 +607,17 @@ return error(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  idle,TResult Function()?  needOnboarding,TResult Function()?  autherizedForApp,TResult Function()?  needAuthenticate,TResult Function()?  error,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  idle,TResult Function()?  needOnboarding,TResult Function( AuthUserType userType)?  autherizedForApp,TResult Function()?  needAuthenticate,TResult Function()?  needVentorRegistration,TResult Function()?  needListenerRegistration,TResult Function()?  listenerProfileUnderReview,TResult Function()?  listenerProfileRejected,TResult Function()?  error,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case SplashProcessIdle() when idle != null:
 return idle();case SplashProcessNeedOnboarding() when needOnboarding != null:
 return needOnboarding();case SplashProcessAutherizedForApp() when autherizedForApp != null:
-return autherizedForApp();case SplashProcessNeedAuthenticate() when needAuthenticate != null:
-return needAuthenticate();case SplashProcessError() when error != null:
+return autherizedForApp(_that.userType);case SplashProcessNeedAuthenticate() when needAuthenticate != null:
+return needAuthenticate();case SplashProcessNeedVentorRegistration() when needVentorRegistration != null:
+return needVentorRegistration();case SplashProcessNeedListenerRegistration() when needListenerRegistration != null:
+return needListenerRegistration();case SplashProcessListenerProfileUnderReview() when listenerProfileUnderReview != null:
+return listenerProfileUnderReview();case SplashProcessListenerProfileRejected() when listenerProfileRejected != null:
+return listenerProfileRejected();case SplashProcessError() when error != null:
 return error();case _:
   return orElse();
 
@@ -617,13 +636,17 @@ return error();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  idle,required TResult Function()  needOnboarding,required TResult Function()  autherizedForApp,required TResult Function()  needAuthenticate,required TResult Function()  error,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  idle,required TResult Function()  needOnboarding,required TResult Function( AuthUserType userType)  autherizedForApp,required TResult Function()  needAuthenticate,required TResult Function()  needVentorRegistration,required TResult Function()  needListenerRegistration,required TResult Function()  listenerProfileUnderReview,required TResult Function()  listenerProfileRejected,required TResult Function()  error,}) {final _that = this;
 switch (_that) {
 case SplashProcessIdle():
 return idle();case SplashProcessNeedOnboarding():
 return needOnboarding();case SplashProcessAutherizedForApp():
-return autherizedForApp();case SplashProcessNeedAuthenticate():
-return needAuthenticate();case SplashProcessError():
+return autherizedForApp(_that.userType);case SplashProcessNeedAuthenticate():
+return needAuthenticate();case SplashProcessNeedVentorRegistration():
+return needVentorRegistration();case SplashProcessNeedListenerRegistration():
+return needListenerRegistration();case SplashProcessListenerProfileUnderReview():
+return listenerProfileUnderReview();case SplashProcessListenerProfileRejected():
+return listenerProfileRejected();case SplashProcessError():
 return error();}
 }
 /// A variant of `when` that fallback to returning `null`
@@ -638,13 +661,17 @@ return error();}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  idle,TResult? Function()?  needOnboarding,TResult? Function()?  autherizedForApp,TResult? Function()?  needAuthenticate,TResult? Function()?  error,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  idle,TResult? Function()?  needOnboarding,TResult? Function( AuthUserType userType)?  autherizedForApp,TResult? Function()?  needAuthenticate,TResult? Function()?  needVentorRegistration,TResult? Function()?  needListenerRegistration,TResult? Function()?  listenerProfileUnderReview,TResult? Function()?  listenerProfileRejected,TResult? Function()?  error,}) {final _that = this;
 switch (_that) {
 case SplashProcessIdle() when idle != null:
 return idle();case SplashProcessNeedOnboarding() when needOnboarding != null:
 return needOnboarding();case SplashProcessAutherizedForApp() when autherizedForApp != null:
-return autherizedForApp();case SplashProcessNeedAuthenticate() when needAuthenticate != null:
-return needAuthenticate();case SplashProcessError() when error != null:
+return autherizedForApp(_that.userType);case SplashProcessNeedAuthenticate() when needAuthenticate != null:
+return needAuthenticate();case SplashProcessNeedVentorRegistration() when needVentorRegistration != null:
+return needVentorRegistration();case SplashProcessNeedListenerRegistration() when needListenerRegistration != null:
+return needListenerRegistration();case SplashProcessListenerProfileUnderReview() when listenerProfileUnderReview != null:
+return listenerProfileUnderReview();case SplashProcessListenerProfileRejected() when listenerProfileRejected != null:
+return listenerProfileRejected();case SplashProcessError() when error != null:
 return error();case _:
   return null;
 
@@ -721,33 +748,67 @@ String toString() {
 
 
 class SplashProcessAutherizedForApp implements SplashProcessState {
-  const SplashProcessAutherizedForApp();
+  const SplashProcessAutherizedForApp({required this.userType});
   
 
+ final  AuthUserType userType;
 
-
+/// Create a copy of SplashProcessState
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$SplashProcessAutherizedForAppCopyWith<SplashProcessAutherizedForApp> get copyWith => _$SplashProcessAutherizedForAppCopyWithImpl<SplashProcessAutherizedForApp>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SplashProcessAutherizedForApp);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SplashProcessAutherizedForApp&&(identical(other.userType, userType) || other.userType == userType));
 }
 
 
 @override
-int get hashCode => runtimeType.hashCode;
+int get hashCode => Object.hash(runtimeType,userType);
 
 @override
 String toString() {
-  return 'SplashProcessState.autherizedForApp()';
+  return 'SplashProcessState.autherizedForApp(userType: $userType)';
 }
 
 
 }
 
+/// @nodoc
+abstract mixin class $SplashProcessAutherizedForAppCopyWith<$Res> implements $SplashProcessStateCopyWith<$Res> {
+  factory $SplashProcessAutherizedForAppCopyWith(SplashProcessAutherizedForApp value, $Res Function(SplashProcessAutherizedForApp) _then) = _$SplashProcessAutherizedForAppCopyWithImpl;
+@useResult
+$Res call({
+ AuthUserType userType
+});
 
 
+
+
+}
+/// @nodoc
+class _$SplashProcessAutherizedForAppCopyWithImpl<$Res>
+    implements $SplashProcessAutherizedForAppCopyWith<$Res> {
+  _$SplashProcessAutherizedForAppCopyWithImpl(this._self, this._then);
+
+  final SplashProcessAutherizedForApp _self;
+  final $Res Function(SplashProcessAutherizedForApp) _then;
+
+/// Create a copy of SplashProcessState
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? userType = null,}) {
+  return _then(SplashProcessAutherizedForApp(
+userType: null == userType ? _self.userType : userType // ignore: cast_nullable_to_non_nullable
+as AuthUserType,
+  ));
+}
+
+
+}
 
 /// @nodoc
 
@@ -773,6 +834,134 @@ int get hashCode => runtimeType.hashCode;
 @override
 String toString() {
   return 'SplashProcessState.needAuthenticate()';
+}
+
+
+}
+
+
+
+
+/// @nodoc
+
+
+class SplashProcessNeedVentorRegistration implements SplashProcessState {
+  const SplashProcessNeedVentorRegistration();
+  
+
+
+
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SplashProcessNeedVentorRegistration);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'SplashProcessState.needVentorRegistration()';
+}
+
+
+}
+
+
+
+
+/// @nodoc
+
+
+class SplashProcessNeedListenerRegistration implements SplashProcessState {
+  const SplashProcessNeedListenerRegistration();
+  
+
+
+
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SplashProcessNeedListenerRegistration);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'SplashProcessState.needListenerRegistration()';
+}
+
+
+}
+
+
+
+
+/// @nodoc
+
+
+class SplashProcessListenerProfileUnderReview implements SplashProcessState {
+  const SplashProcessListenerProfileUnderReview();
+  
+
+
+
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SplashProcessListenerProfileUnderReview);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'SplashProcessState.listenerProfileUnderReview()';
+}
+
+
+}
+
+
+
+
+/// @nodoc
+
+
+class SplashProcessListenerProfileRejected implements SplashProcessState {
+  const SplashProcessListenerProfileRejected();
+  
+
+
+
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SplashProcessListenerProfileRejected);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'SplashProcessState.listenerProfileRejected()';
 }
 
 

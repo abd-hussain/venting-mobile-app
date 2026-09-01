@@ -57,15 +57,33 @@ class NetworkInfoRepository {
         result.contains(ConnectivityResult.other);
   }
 
+  /// Hosts used to verify that DNS + internet actually work.
+  ///
+  /// Android emulators often inherit broken corporate DNS from the host; a
+  /// single-host lookup then falsely reports offline. Trying a few public
+  /// hosts (with a short timeout) is more reliable.
+  static const _lookupHosts = <String>[
+    'dns.google',
+    'one.one.one.one',
+    'google.com',
+  ];
+
   /// Performs an Internet lookup check to confirm connectivity.
   Future<bool> _internetLookupCheck() async {
-    try {
-      final lookupResult = await InternetAddress.lookup('google.com');
-      return lookupResult.isNotEmpty &&
-          lookupResult.first.rawAddress.isNotEmpty;
-    } catch (_) {
-      return false;
+    for (final host in _lookupHosts) {
+      try {
+        final lookupResult = await InternetAddress.lookup(
+          host,
+        ).timeout(const Duration(seconds: 2));
+        if (lookupResult.isNotEmpty &&
+            lookupResult.first.rawAddress.isNotEmpty) {
+          return true;
+        }
+      } catch (_) {
+        // Try the next host.
+      }
     }
+    return false;
   }
 
   /// Gets the current network type asynchronously.

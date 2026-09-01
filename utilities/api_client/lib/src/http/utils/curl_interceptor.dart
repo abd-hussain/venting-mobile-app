@@ -47,12 +47,19 @@ class CurlInterceptor extends Interceptor {
     });
 
     if (options.data != null) {
-      // FormData can't be JSON-serialized, so keep only their fields attributes
-      if (options.data is FormData && convertFormData == true) {
-        options.data = Map.fromEntries((options.data as FormData).fields);
+      // Never mutate the live request — FormData may be retried.
+      Object? payload = options.data;
+      if (payload is FormData && convertFormData == true) {
+        final files = payload.files
+            .map((e) => MapEntry(e.key, 'FILE(${e.value.filename})'))
+            .toList(growable: false);
+        payload = Map<String, Object?>.fromEntries([
+          ...payload.fields,
+          ...files,
+        ]);
       }
 
-      final data = json.encode(options.data).replaceAll('"', '\\"');
+      final data = json.encode(payload).replaceAll('"', '\\"');
       components.add('-d "$data"');
     }
 

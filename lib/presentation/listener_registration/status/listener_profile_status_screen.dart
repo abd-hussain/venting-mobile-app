@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
@@ -30,8 +31,11 @@ class ListenerProfileStatusScreen extends StatelessWidget {
     systemNavigationBarIconBrightness: Brightness.light,
   );
 
+  static const _accent = Color(0xFF8A3CFE);
+  static const _backFill = Color(0xFF1C1826);
   static const _cardFill = Color(0xFF1C1826);
   static const _muted = Color(0xFF9B93AB);
+  static const _subtitleLink = Color(0xFF6BA3FF);
   static const _success = Color(0xFF22C55E);
   static const _danger = Color(0xFFE11D48);
   static const _dangerSoft = Color(0xFFFF6B6B);
@@ -87,6 +91,13 @@ class ListenerProfileStatusScreen extends StatelessWidget {
       ListenerProfileStatus.rejected => l10n.listener_profile_review_edit,
     };
 
+    final whatHappensNextItems = [
+      l10n.listener_profile_what_happens_next_1,
+      l10n.listener_profile_what_happens_next_2,
+      l10n.listener_profile_what_happens_next_3,
+      l10n.listener_profile_what_happens_next_4,
+    ];
+
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: _overlayStyle,
       child: Scaffold(
@@ -106,20 +117,38 @@ class ListenerProfileStatusScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Align(
-                  alignment: AlignmentDirectional.centerStart,
-                  child: IconButton(
-                    onPressed: () {
-                      if (context.canPop()) {
-                        context.pop();
-                      } else {
-                        _goDashboard(context);
-                      }
-                    },
-                    icon: const Icon(
-                      Icons.arrow_back_ios_new_rounded,
-                      size: 20,
-                      color: Colors.white,
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+                  child: Align(
+                    alignment: AlignmentDirectional.centerStart,
+                    child: Material(
+                      color: _backFill,
+                      shape: const CircleBorder(),
+                      child: InkWell(
+                        customBorder: const CircleBorder(),
+                        onTap: () {
+                          if (context.canPop()) {
+                            context.pop();
+                          } else {
+                            _goDashboard(context);
+                          }
+                        },
+                        child: Container(
+                          width: 42,
+                          height: 42,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              color: _accent.withValues(alpha: 0.45),
+                            ),
+                          ),
+                          child: const Icon(
+                            Icons.arrow_back_rounded,
+                            size: 20,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -146,17 +175,33 @@ class ListenerProfileStatusScreen extends StatelessWidget {
                           subtitle,
                           textAlign: TextAlign.center,
                           style: GoogleFonts.inter(
-                            color: Colors.white.withValues(alpha: 0.65),
+                            color: status == ListenerProfileStatus.underReview
+                                ? _subtitleLink
+                                : _muted,
                             fontSize: 15,
                             fontWeight: FontWeight.w400,
                             height: 1.45,
+                            decoration:
+                                status == ListenerProfileStatus.underReview
+                                ? TextDecoration.underline
+                                : TextDecoration.none,
+                            decorationColor:
+                                status == ListenerProfileStatus.underReview
+                                ? _subtitleLink
+                                : null,
                           ),
                         ),
                         if (status == ListenerProfileStatus.underReview) ...[
-                          const SizedBox(height: 28),
+                          const SizedBox(height: 24),
                           _ReviewTimeCard(
                             title: l10n.listener_profile_review_time_title,
                             body: l10n.listener_profile_review_time_body,
+                          ),
+                          const SizedBox(height: 12),
+                          _WhatHappensNextCard(
+                            title:
+                                l10n.listener_profile_what_happens_next_title,
+                            items: whatHappensNextItems,
                           ),
                         ],
                         if (status == ListenerProfileStatus.rejected) ...[
@@ -194,15 +239,15 @@ class ListenerProfileStatusScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(24, 8, 24, 8),
                   child: SizedBox(
-                    height: 54,
+                    height: 56,
                     child: FilledButton(
                       onPressed: () => _onPrimary(context),
                       style: FilledButton.styleFrom(
-                        backgroundColor: SplashColors.purpleMid,
+                        backgroundColor: _accent,
                         foregroundColor: Colors.white,
                         elevation: 0,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16),
+                          borderRadius: BorderRadius.circular(999),
                         ),
                         textStyle: GoogleFonts.inter(
                           fontSize: 16,
@@ -213,17 +258,18 @@ class ListenerProfileStatusScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                TextButton(
-                  onPressed: () => _goDashboard(context),
-                  child: Text(
-                    l10n.listener_profile_go_to_dashboard,
-                    style: GoogleFonts.inter(
-                      color: SplashColors.purpleMid,
-                      fontSize: 15,
-                      fontWeight: FontWeight.w600,
+                if (status != ListenerProfileStatus.underReview)
+                  TextButton(
+                    onPressed: () => _goDashboard(context),
+                    child: Text(
+                      l10n.listener_profile_go_to_dashboard,
+                      style: GoogleFonts.inter(
+                        color: _accent,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
-                ),
                 if (status == ListenerProfileStatus.rejected) ...[
                   const SizedBox(height: 8),
                   _RejectedStepHint(
@@ -256,7 +302,7 @@ class _ReviewTimeCard extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: ListenerProfileStatusScreen._cardFill,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(20),
         border: Border.all(color: Colors.white.withValues(alpha: 0.06)),
       ),
       child: Row(
@@ -266,12 +312,14 @@ class _ReviewTimeCard extends StatelessWidget {
             width: 40,
             height: 40,
             decoration: BoxDecoration(
-              color: SplashColors.purpleMid.withValues(alpha: 0.18),
+              color: ListenerProfileStatusScreen._accent.withValues(
+                alpha: 0.18,
+              ),
               borderRadius: BorderRadius.circular(12),
             ),
             child: const Icon(
-              Icons.calendar_today_rounded,
-              color: SplashColors.purpleMid,
+              Icons.access_time_rounded,
+              color: ListenerProfileStatusScreen._accent,
               size: 20,
             ),
           ),
@@ -292,15 +340,95 @@ class _ReviewTimeCard extends StatelessWidget {
                 Text(
                   body,
                   style: GoogleFonts.inter(
-                    color: SplashColors.purpleMid,
+                    color: ListenerProfileStatusScreen._muted,
                     fontSize: 13,
-                    fontWeight: FontWeight.w500,
+                    fontWeight: FontWeight.w400,
                     height: 1.4,
                   ),
                 ),
               ],
             ),
           ),
+        ],
+      ),
+    );
+  }
+}
+
+class _WhatHappensNextCard extends StatelessWidget {
+  const _WhatHappensNextCard({required this.title, required this.items});
+
+  final String title;
+  final List<String> items;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.fromLTRB(16, 16, 16, 14),
+      decoration: BoxDecoration(
+        color: ListenerProfileStatusScreen._cardFill,
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: Colors.white.withValues(alpha: 0.06)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: GoogleFonts.inter(
+              color: ListenerProfileStatusScreen._accent,
+              fontSize: 15,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          const SizedBox(height: 14),
+          for (var i = 0; i < items.length; i++) ...[
+            Padding(
+              padding: EdgeInsets.only(bottom: i == items.length - 1 ? 0 : 10),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: 24,
+                    height: 24,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: Colors.white.withValues(alpha: 0.85),
+                        width: 1.5,
+                      ),
+                    ),
+                    child: Text(
+                      '${i + 1}',
+                      style: GoogleFonts.inter(
+                        color: Colors.white,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w700,
+                        height: 1,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 2),
+                      child: Text(
+                        items[i],
+                        style: GoogleFonts.inter(
+                          color: Colors.white.withValues(alpha: 0.88),
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          height: 1.4,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ],
       ),
     );
@@ -320,7 +448,7 @@ class _ReasonsCard extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(16, 14, 16, 14),
       decoration: BoxDecoration(
         color: ListenerProfileStatusScreen._cardFill,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(20),
         border: Border.all(
           color: ListenerProfileStatusScreen._danger.withValues(alpha: 0.45),
         ),
@@ -492,125 +620,11 @@ class _StatusIllustration extends StatelessWidget {
 class _UnderReviewArt extends StatelessWidget {
   const _UnderReviewArt();
 
+  static const _imagePath = 'assets/images/listener_profile_under_review.svg';
+
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 180,
-      width: 220,
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          Container(
-            width: 160,
-            height: 160,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: SplashColors.purpleMid.withValues(alpha: 0.12),
-            ),
-          ),
-          Positioned(
-            left: 28,
-            child: Container(
-              width: 110,
-              height: 130,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16),
-                gradient: const LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [Color(0xFF8B5CF6), SplashColors.purpleMid],
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: SplashColors.purpleMid.withValues(alpha: 0.35),
-                    blurRadius: 24,
-                    offset: const Offset(0, 10),
-                  ),
-                ],
-              ),
-              child: Column(
-                children: [
-                  const SizedBox(height: 18),
-                  Container(
-                    width: 46,
-                    height: 46,
-                    decoration: const BoxDecoration(
-                      color: Colors.white24,
-                      shape: BoxShape.circle,
-                    ),
-                    child: const Icon(
-                      Icons.person_rounded,
-                      color: Colors.white,
-                      size: 28,
-                    ),
-                  ),
-                  const SizedBox(height: 14),
-                  Container(
-                    width: 58,
-                    height: 8,
-                    decoration: BoxDecoration(
-                      color: Colors.white24,
-                      borderRadius: BorderRadius.circular(999),
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Container(
-                    width: 42,
-                    height: 8,
-                    decoration: BoxDecoration(
-                      color: Colors.white24,
-                      borderRadius: BorderRadius.circular(999),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Positioned(
-            right: 18,
-            bottom: 34,
-            child: Container(
-              width: 72,
-              height: 72,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: const Color(0xFF1A1228),
-                border: Border.all(color: SplashColors.purpleMid, width: 3),
-                boxShadow: [
-                  BoxShadow(
-                    color: SplashColors.purpleMid.withValues(alpha: 0.4),
-                    blurRadius: 16,
-                  ),
-                ],
-              ),
-              child: const Icon(
-                Icons.search_rounded,
-                color: SplashColors.purpleMid,
-                size: 36,
-              ),
-            ),
-          ),
-          Positioned(
-            right: 36,
-            top: 28,
-            child: Container(
-              width: 28,
-              height: 28,
-              decoration: BoxDecoration(
-                color: SplashColors.purpleDeep,
-                shape: BoxShape.circle,
-                border: Border.all(color: Colors.white24),
-              ),
-              child: const Icon(
-                Icons.schedule_rounded,
-                color: Colors.white,
-                size: 16,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
+    return SvgPicture.asset(_imagePath, width: 140, height: 143);
   }
 }
 

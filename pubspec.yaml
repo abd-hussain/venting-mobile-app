@@ -60,6 +60,9 @@ dependencies:
   audioplayers: ^6.7.1
   path_provider: ^2.1.6
   timezone: ^0.11.1
+  google_sign_in: ^7.2.0
+  sign_in_with_apple: ^8.1.0
+  crypto: ^3.0.7
 
 dependency_overrides:
   # Workaround for iOS simulator crash: DOBJC_initializeApi / objective_c.framework

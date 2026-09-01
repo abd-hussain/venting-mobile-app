@@ -3,10 +3,14 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logger_manager/logger_manager.dart';
+import 'package:preferences/preferences.dart';
 import 'package:venting_mobile_app/di/di_container.dart';
+import 'package:venting_mobile_app/presentation/homescreen.dart';
+import 'package:venting_mobile_app/presentation/listener_registration/listener_registration_screen.dart';
 import 'package:venting_mobile_app/presentation/splash/bloc/splash_bloc.dart';
 import 'package:venting_mobile_app/presentation/splash/widgets/splash_animated_content.dart';
 import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dart';
+import 'package:venting_mobile_app/presentation/ventor_registration/ventor_registration_screen.dart';
 import 'package:venting_mobile_app/utils/edge_to_edge_handler.dart';
 import 'package:venting_mobile_app/utils/router_config.dart';
 
@@ -77,16 +81,44 @@ class _SplashScreenState extends State<SplashScreen>
               idle: () =>
                   LoggerManagerBase.logInfo(message: 'SplashScreen: Idle'),
               needOnboarding: () => context.go(AppRoutes.mainOnboarding),
-              autherizedForApp: () {
-                context.go(AppRoutes.tabHome);
+              autherizedForApp: (userType) {
+                context.go(
+                  AppRoutes.tabHome,
+                  extra: HomeScreenArgs(userType: userType),
+                );
               },
-              needAuthenticate: () {
+              needAuthenticate: () => context.go(AppRoutes.welcome),
+              needVentorRegistration: () {
+                context.go(
+                  AppRoutes.ventorRegistration,
+                  extra: VentorRegistrationArgs(email: state.userEmail),
+                );
+              },
+              needListenerRegistration: () {
+                context.go(
+                  AppRoutes.listenerRegistration,
+                  extra: ListenerRegistrationArgs(email: state.userEmail),
+                );
+              },
+              listenerProfileUnderReview: () =>
+                  context.go(AppRoutes.listenerProfileUnderReview),
+              listenerProfileRejected: () =>
+                  context.go(AppRoutes.listenerProfileRejected),
+              error: () {
+                final accessToken = diContainer<VentingPreferences>()
+                    .getValue(SavedConstants.accessToken, '')
+                    .trim();
+                if (accessToken.isNotEmpty) {
+                  context.go(AppRoutes.initialRoute);
+                  return;
+                }
+
+                LoggerManagerBase.logInfo(
+                  message:
+                      'SplashBloc: Authentication check failed - navigating to welcome',
+                );
                 context.go(AppRoutes.welcome);
               },
-              error: () => LoggerManagerBase.logInfo(
-                message:
-                    'SplashBloc: Authentication check failed - navigating to returning user',
-              ),
             );
           },
           child: const Scaffold(

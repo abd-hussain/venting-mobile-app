@@ -1,28 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:venting_mobile_app/di/di_container.dart';
+import 'package:venting_mobile_app/domain/data/api/catalog_category_model.dart';
+import 'package:venting_mobile_app/domain/data/app/listener_registration_draft.dart';
+import 'package:venting_mobile_app/domain/data/exceptions/main_api_exception.dart';
+import 'package:venting_mobile_app/domain/usecase/get_catalog_categories_usecase.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
-import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dart';
-
-class _ComfortArea {
-  const _ComfortArea({
-    required this.id,
-    required this.label,
-    required this.icon,
-  });
-
-  final String id;
-  final String label;
-  final IconData icon;
-}
+import 'package:venting_mobile_app/shared_widgets/catalog_category_widgets.dart';
 
 /// Step 5 — Areas you're comfortable listening to.
+///
+/// Categories come from `#74 GET /v1/catalog/categories`.
 class ListenerRegistrationStep5ComfortAreas extends StatefulWidget {
   const ListenerRegistrationStep5ComfortAreas({
     super.key,
     required this.onContinue,
+    this.initialSelectedIds = const [],
+    this.initialOtherText,
   });
 
-  final VoidCallback onContinue;
+  final ValueChanged<ListenerRegistrationStep5Data> onContinue;
+  final List<String> initialSelectedIds;
+  final String? initialOtherText;
 
   @override
   State<ListenerRegistrationStep5ComfortAreas> createState() =>
@@ -31,254 +30,302 @@ class ListenerRegistrationStep5ComfortAreas extends StatefulWidget {
 
 class _ListenerRegistrationStep5ComfortAreasState
     extends State<ListenerRegistrationStep5ComfortAreas> {
-  static const _cardFill = Color(0xFF1C1826);
-  static const _rowSelected = Color(0xFF2A1F3D);
-  static const _muted = Color(0xFF9B93AB);
-  static const _checkboxBorder = Color(0xFF4A425C);
+  static const _fieldFill = Color(0xFF14101C);
 
   final Set<String> _selectedIds = {};
+  final _otherController = TextEditingController();
 
-  bool get _canContinue => _selectedIds.isNotEmpty;
+  bool _isLoading = true;
+  String? _errorMessage;
+  List<CatalogCategoryModel> _categories = const [];
+
+  CatalogCategoryModel? get _customTextCategory {
+    for (final category in _categories) {
+      if (category.allows_custom_text && _selectedIds.contains(category.id)) {
+        return category;
+      }
+    }
+    return null;
+  }
+
+  bool get _canContinue {
+    if (_isLoading || _errorMessage != null || _categories.isEmpty) {
+      return false;
+    }
+    if (_selectedIds.isEmpty) return false;
+    final custom = _customTextCategory;
+    if (custom != null && _otherController.text.trim().isEmpty) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedIds.addAll(widget.initialSelectedIds);
+    if (widget.initialOtherText != null &&
+        widget.initialOtherText!.isNotEmpty) {
+      _otherController.text = widget.initialOtherText!;
+    }
+    _otherController.addListener(() => setState(() {}));
+    WidgetsBinding.instance.addPostFrameCallback((_) => _loadCategories());
+  }
+
+  @override
+  void dispose() {
+    _otherController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _loadCategories() async {
+    setState(() {
+      _isLoading = true;
+      _errorMessage = null;
+    });
+
+    final result = await diContainer<GetCatalogCategoriesUsecase>()().run();
+
+    if (!mounted) return;
+
+    result.match(
+      (error) {
+        setState(() {
+          _isLoading = false;
+          _errorMessage = _mapError(error);
+          _categories = const [];
+        });
+      },
+      (response) {
+        final items = [...response.data.items]
+          ..sort((a, b) => a.sort_order.compareTo(b.sort_order));
+        setState(() {
+          _isLoading = false;
+          _errorMessage = null;
+          _categories = items;
+          _selectedIds.removeWhere(
+            (id) => items.every((item) => item.id != id),
+          );
+        });
+      },
+    );
+  }
+
+  String _mapError(Object error) {
+    if (error is MainAPIException) {
+      final localized = error.getLocalizedMessage();
+      if (localized.isNotEmpty) return localized;
+      if (error.message.isNotEmpty) return error.message;
+    }
+    return VentingMobLocalizations.of(context).catalog_categories_load_error;
+  }
 
   void _toggle(String id) {
     setState(() {
       if (_selectedIds.contains(id)) {
         _selectedIds.remove(id);
+        final wasCustom = _categories.any(
+          (c) => c.id == id && c.allows_custom_text,
+        );
+        if (wasCustom) {
+          _otherController.clear();
+        }
       } else {
         _selectedIds.add(id);
       }
     });
   }
 
-  @override
-  Widget build(BuildContext context) {
-    final l10n = VentingMobLocalizations.of(context);
-
-    final areas = [
-      _ComfortArea(
-        id: 'relationships',
-        label: l10n.listener_reg_area_relationships,
-        icon: Icons.favorite_rounded,
-      ),
-      _ComfortArea(
-        id: 'marriage',
-        label: l10n.listener_reg_area_marriage,
-        icon: Icons.favorite_border_rounded,
-      ),
-      _ComfortArea(
-        id: 'parenting',
-        label: l10n.listener_reg_area_parenting,
-        icon: Icons.family_restroom_rounded,
-      ),
-      _ComfortArea(
-        id: 'career_work',
-        label: l10n.listener_reg_area_career_work,
-        icon: Icons.work_outline_rounded,
-      ),
-      _ComfortArea(
-        id: 'stress_anxiety',
-        label: l10n.listener_reg_area_stress_anxiety,
-        icon: Icons.psychology_alt_outlined,
-      ),
-      _ComfortArea(
-        id: 'loneliness',
-        label: l10n.listener_reg_area_loneliness,
-        icon: Icons.person_outline_rounded,
-      ),
-      _ComfortArea(
-        id: 'student_life',
-        label: l10n.listener_reg_area_student_life,
-        icon: Icons.school_outlined,
-      ),
-      _ComfortArea(
-        id: 'financial_stress',
-        label: l10n.listener_reg_area_financial_stress,
-        icon: Icons.attach_money_rounded,
-      ),
-      _ComfortArea(
-        id: 'health_wellness',
-        label: l10n.listener_reg_area_health_wellness,
-        icon: Icons.health_and_safety_outlined,
-      ),
-      _ComfortArea(
-        id: 'other',
-        label: l10n.listener_reg_area_other,
-        icon: Icons.add_circle_outline_rounded,
-      ),
-    ];
-
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(24, 8, 24, 24),
-      child: Container(
-        decoration: BoxDecoration(
-          color: _cardFill,
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: Colors.white.withValues(alpha: 0.06)),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20, 20, 20, 8),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    l10n.listener_reg_areas_title,
-                    style: GoogleFonts.inter(
-                      color: Colors.white,
-                      fontSize: 22,
-                      fontWeight: FontWeight.w700,
-                      height: 1.25,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    l10n.listener_reg_areas_subtitle,
-                    style: GoogleFonts.inter(
-                      color: Colors.white.withValues(alpha: 0.65),
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                      height: 1.4,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Expanded(
-              child: ListView.separated(
-                padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
-                itemCount: areas.length,
-                separatorBuilder: (_, _) => const SizedBox(height: 6),
-                itemBuilder: (context, index) {
-                  final area = areas[index];
-                  final selected = _selectedIds.contains(area.id);
-                  return _ComfortAreaRow(
-                    label: area.label,
-                    icon: area.icon,
-                    selected: selected,
-                    selectedFill: _rowSelected,
-                    muted: _muted,
-                    checkboxBorder: _checkboxBorder,
-                    onTap: () => _toggle(area.id),
-                  );
-                },
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
-              child: SizedBox(
-                height: 54,
-                child: FilledButton(
-                  onPressed: _canContinue ? widget.onContinue : null,
-                  style: FilledButton.styleFrom(
-                    backgroundColor: SplashColors.purpleMid,
-                    disabledBackgroundColor: SplashColors.purpleMid.withValues(
-                      alpha: 0.35,
-                    ),
-                    foregroundColor: Colors.white,
-                    disabledForegroundColor: Colors.white,
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    textStyle: GoogleFonts.inter(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  child: Text(l10n.listener_reg_continue),
-                ),
-              ),
-            ),
-          ],
-        ),
+  void _submit() {
+    if (!_canContinue) return;
+    final other = _otherController.text.trim();
+    widget.onContinue(
+      ListenerRegistrationStep5Data(
+        comfortAreaIds: _selectedIds.toList(growable: false),
+        comfortAreaOtherText: other.isEmpty ? null : other,
       ),
     );
   }
-}
-
-class _ComfortAreaRow extends StatelessWidget {
-  const _ComfortAreaRow({
-    required this.label,
-    required this.icon,
-    required this.selected,
-    required this.selectedFill,
-    required this.muted,
-    required this.checkboxBorder,
-    required this.onTap,
-  });
-
-  final String label;
-  final IconData icon;
-  final bool selected;
-  final Color selectedFill;
-  final Color muted;
-  final Color checkboxBorder;
-  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: selected ? selectedFill : Colors.transparent,
-      borderRadius: BorderRadius.circular(14),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(14),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-          child: Row(
-            children: [
-              Container(
-                width: 40,
-                height: 40,
-                decoration: BoxDecoration(
-                  color: selected
-                      ? SplashColors.purpleMid.withValues(alpha: 0.22)
-                      : Colors.white.withValues(alpha: 0.05),
-                  borderRadius: BorderRadius.circular(12),
+    final l10n = VentingMobLocalizations.of(context);
+    final locale = Localizations.localeOf(context);
+    final customCategory = _customTextCategory;
+
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(24, 8, 24, 20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(
+            l10n.listener_reg_areas_title,
+            style: GoogleFonts.inter(
+              color: Colors.white,
+              fontSize: 28,
+              fontWeight: FontWeight.w700,
+              height: 1.2,
+            ),
+          ),
+          const SizedBox(height: 10),
+          Text(
+            l10n.listener_reg_areas_subtitle,
+            style: GoogleFonts.inter(
+              color: CatalogCategoryTheme.muted,
+              fontSize: 15,
+              fontWeight: FontWeight.w400,
+              height: 1.45,
+            ),
+          ),
+          const SizedBox(height: 24),
+          Expanded(child: _buildBody(l10n, locale)),
+          if (customCategory != null)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8),
+              child: TextField(
+                controller: _otherController,
+                autofocus: true,
+                style: GoogleFonts.inter(
+                  color: Colors.white,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w500,
                 ),
-                child: Icon(
-                  icon,
-                  size: 22,
-                  color: selected ? SplashColors.purpleMid : muted,
-                ),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Text(
-                  label,
-                  style: GoogleFonts.inter(
-                    color: selected ? Colors.white : muted,
+                cursorColor: CatalogCategoryTheme.accent,
+                textCapitalization: TextCapitalization.sentences,
+                textInputAction: TextInputAction.done,
+                decoration: InputDecoration(
+                  hintText: l10n.listener_reg_area_other_hint,
+                  hintStyle: GoogleFonts.inter(
+                    color: CatalogCategoryTheme.muted,
                     fontSize: 15,
-                    fontWeight: selected ? FontWeight.w600 : FontWeight.w500,
+                    fontWeight: FontWeight.w400,
+                  ),
+                  filled: true,
+                  fillColor: _fieldFill,
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 14,
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(14),
+                    borderSide: BorderSide(
+                      color: CatalogCategoryTheme.accent.withValues(
+                        alpha: 0.55,
+                      ),
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(14),
+                    borderSide: const BorderSide(
+                      color: CatalogCategoryTheme.accent,
+                      width: 1.4,
+                    ),
                   ),
                 ),
               ),
-              AnimatedContainer(
-                duration: const Duration(milliseconds: 160),
-                width: 24,
-                height: 24,
-                decoration: BoxDecoration(
-                  color: selected ? SplashColors.purpleMid : Colors.transparent,
-                  borderRadius: BorderRadius.circular(6),
-                  border: Border.all(
-                    color: selected ? SplashColors.purpleMid : checkboxBorder,
-                    width: 1.6,
-                  ),
+            ),
+          Text(
+            l10n.listener_reg_areas_topics_selected(_selectedIds.length),
+            textAlign: TextAlign.center,
+            style: GoogleFonts.inter(
+              color: CatalogCategoryTheme.muted,
+              fontSize: 13,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          const SizedBox(height: 12),
+          SizedBox(
+            height: 56,
+            child: FilledButton(
+              onPressed: _canContinue ? _submit : null,
+              style: FilledButton.styleFrom(
+                backgroundColor: CatalogCategoryTheme.accent,
+                disabledBackgroundColor: CatalogCategoryTheme.accent.withValues(
+                  alpha: 0.42,
                 ),
-                child: selected
-                    ? const Icon(
-                        Icons.check_rounded,
-                        size: 16,
-                        color: Colors.white,
-                      )
-                    : null,
+                foregroundColor: Colors.white,
+                disabledForegroundColor: Colors.white,
+                elevation: 0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(999),
+                ),
+                textStyle: GoogleFonts.inter(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                ),
               ),
-            ],
+              child: Text(l10n.listener_reg_continue),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildBody(VentingMobLocalizations l10n, Locale locale) {
+    if (_isLoading) {
+      return const SingleChildScrollView(
+        child: CatalogCategoriesShimmer(padding: EdgeInsets.zero),
+      );
+    }
+
+    if (_errorMessage != null) {
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            _errorMessage!,
+            textAlign: TextAlign.center,
+            style: GoogleFonts.inter(
+              color: CatalogCategoryTheme.muted,
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+              height: 1.4,
+            ),
+          ),
+          const SizedBox(height: 16),
+          TextButton(
+            onPressed: _loadCategories,
+            child: Text(
+              l10n.common_retry,
+              style: GoogleFonts.inter(
+                color: CatalogCategoryTheme.accent,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+        ],
+      );
+    }
+
+    if (_categories.isEmpty) {
+      return Center(
+        child: Text(
+          l10n.catalog_categories_load_error,
+          textAlign: TextAlign.center,
+          style: GoogleFonts.inter(
+            color: CatalogCategoryTheme.muted,
+            fontSize: 14,
           ),
         ),
-      ),
+      );
+    }
+
+    return ListView.separated(
+      padding: EdgeInsets.zero,
+      itemCount: _categories.length,
+      separatorBuilder: (_, _) => const SizedBox(height: 10),
+      itemBuilder: (context, index) {
+        final category = _categories[index];
+        final selected = _selectedIds.contains(category.id);
+        return CatalogCategoryRow(
+          label: catalogCategoryLabel(category, locale),
+          iconUrl: category.icon_url,
+          iconEmoji: category.icon_emoji,
+          selected: selected,
+          onTap: () => _toggle(category.id),
+        );
+      },
     );
   }
 }

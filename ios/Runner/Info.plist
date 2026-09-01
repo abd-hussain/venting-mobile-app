@@ -28,7 +28,7 @@
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>This app requires location access for compliance and security verification purposes.</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>This app requires microphone access for audio recording during verification processes.</string>
+	<string>Microphone access is needed to record your voice introduction and for voice calls.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>This app requires access to the photo library to upload profile pictures and documents for verification purposes.</string>
 	<key>CFBundleDisplayName</key>
@@ -58,6 +58,18 @@
 	<array>
 		<string>sms</string>
 		<string>tel</string>
+	</array>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.350575468077-cu7cveqh910k7qer48nr9fh0nfof4g8k</string>
+				<string>com.googleusercontent.apps.350575468077-jun41872rsqitu65ak18n5r257ridq8d</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
