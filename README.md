@@ -12,24 +12,6 @@ Unlike traditional chat or social media applications, Venting focuses on emotion
 
 The mobile application will serve both user types using a single Flutter application. After authentication, the application will determine the user's role and present the appropriate experience.
 
-One Flutter App
-
-        │
-        ▼
-
-Authentication
-
-        │
-        ▼
-
-───────────────
-
-Venter
-
-or
-
-Listener
-
 ───────────────
 
 This approach reduces maintenance effort, keeps the codebase unified, and allows users to switch roles in the future if desired.
@@ -70,6 +52,8 @@ Manage payments
 Session history
 Rewards
 Notifications
+
+
 2. Listener
 
 A verified user available to listen.
