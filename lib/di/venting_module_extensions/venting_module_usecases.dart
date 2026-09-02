@@ -36,6 +36,7 @@ import 'package:venting_mobile_app/domain/repository/api/ventor/ventor_notificat
 import 'package:venting_mobile_app/domain/repository/api/ventor/ventor_profile_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/ventor/ventor_register_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/ventor/ventor_rewards_repository.dart';
+import 'package:venting_mobile_app/domain/repository/api/ventor/ventor_sessions_repository.dart';
 import 'package:venting_mobile_app/domain/repository/app/auth_me_cache_repository.dart';
 import 'package:venting_mobile_app/domain/repository/app/social_sign_in_repository.dart';
 import 'package:venting_mobile_app/domain/usecase/accept_listener_session_request_usecase.dart';
@@ -51,6 +52,7 @@ import 'package:venting_mobile_app/domain/usecase/auth_me_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/auth_refresh_token_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/auth_register_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/auth_social_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/cancel_ventor_session_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/clear_auth_session_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/complete_listener_registration_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/complete_listener_training_module_usecase.dart';
@@ -78,6 +80,8 @@ import 'package:venting_mobile_app/domain/usecase/get_listener_reviews_usecase.d
 import 'package:venting_mobile_app/domain/usecase/get_listener_sessions_overview_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_listener_setup_progress_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_listener_training_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/get_ventor_booked_session_detail_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/get_ventor_booked_sessions_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_ventor_find_listeners_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_ventor_home_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_ventor_invites_overview_usecase.dart';
@@ -291,6 +295,36 @@ mixin VentingModuleUsecases on VentingModule {
     AppConfig appConfig,
   ) => GetVentorListenerProfileUsecase(
     ventorFindListenersRepository,
+    ventingPreferences,
+    appConfig,
+  );
+
+  GetVentorBookedSessionsUsecase getVentorBookedSessionsUsecase(
+    VentorSessionsRepository ventorSessionsRepository,
+    VentingPreferences ventingPreferences,
+    AppConfig appConfig,
+  ) => GetVentorBookedSessionsUsecase(
+    ventorSessionsRepository,
+    ventingPreferences,
+    appConfig,
+  );
+
+  GetVentorBookedSessionDetailUsecase getVentorBookedSessionDetailUsecase(
+    VentorSessionsRepository ventorSessionsRepository,
+    VentingPreferences ventingPreferences,
+    AppConfig appConfig,
+  ) => GetVentorBookedSessionDetailUsecase(
+    ventorSessionsRepository,
+    ventingPreferences,
+    appConfig,
+  );
+
+  CancelVentorSessionUsecase cancelVentorSessionUsecase(
+    VentorSessionsRepository ventorSessionsRepository,
+    VentingPreferences ventingPreferences,
+    AppConfig appConfig,
+  ) => CancelVentorSessionUsecase(
+    ventorSessionsRepository,
     ventingPreferences,
     appConfig,
   );
@@ -764,6 +798,27 @@ mixin VentingModuleUsecases on VentingModule {
     getIt.registerFactory<GetVentorListenerProfileUsecase>(
       () => getVentorListenerProfileUsecase(
         getIt<VentorFindListenersRepository>(),
+        getIt<VentingPreferences>(),
+        getIt<AppConfig>(),
+      ),
+    );
+    getIt.registerFactory<GetVentorBookedSessionsUsecase>(
+      () => getVentorBookedSessionsUsecase(
+        getIt<VentorSessionsRepository>(),
+        getIt<VentingPreferences>(),
+        getIt<AppConfig>(),
+      ),
+    );
+    getIt.registerFactory<GetVentorBookedSessionDetailUsecase>(
+      () => getVentorBookedSessionDetailUsecase(
+        getIt<VentorSessionsRepository>(),
+        getIt<VentingPreferences>(),
+        getIt<AppConfig>(),
+      ),
+    );
+    getIt.registerFactory<CancelVentorSessionUsecase>(
+      () => cancelVentorSessionUsecase(
+        getIt<VentorSessionsRepository>(),
         getIt<VentingPreferences>(),
         getIt<AppConfig>(),
       ),

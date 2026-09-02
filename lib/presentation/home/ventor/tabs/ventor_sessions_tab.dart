@@ -12,6 +12,7 @@ import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/call/ventor_call_args.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/call/ventor_call_flow.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/profile/ventor_profile_theme.dart';
+import 'package:venting_mobile_app/presentation/home/ventor/sessions/bloc/ventor_booked_sessions/ventor_booked_sessions_bloc.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/sessions/bloc/ventor_find_listeners/ventor_find_listeners_bloc.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/sessions/ventor_booked_session_details_screen.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/sessions/ventor_listener_profile_screen.dart';
@@ -43,30 +44,41 @@ class VentorSessionsTabState extends State<VentorSessionsTab> {
   final _searchController = TextEditingController();
   final _rng = Random();
   late final VentorFindListenersBloc _findBloc;
-
-  // TODO: Load booked sessions from APIs.
-  late List<VentorBookedSession> _bookedSessions;
+  late final VentorBookedSessionsBloc _bookedBloc;
   var _section = _SessionsSection.find;
+  var _bookedStarted = false;
 
   @override
   void initState() {
     super.initState();
     _findBloc = diContainer<VentorFindListenersBloc>()
       ..add(const VentorFindListenersEvent.started());
-    _bookedSessions = VentorSessionsCatalog.mockBookedSessions();
+    _bookedBloc = diContainer<VentorBookedSessionsBloc>();
   }
 
   @override
   void dispose() {
     _searchController.dispose();
     _findBloc.close();
+    _bookedBloc.close();
     super.dispose();
+  }
+
+  void _ensureBookedStarted() {
+    if (_bookedStarted) return;
+    _bookedStarted = true;
+    _bookedBloc.add(const VentorBookedSessionsEvent.started());
   }
 
   /// Switches to the Find listeners section (e.g. from profile favorites).
   void showFindSection() {
     if (_section == _SessionsSection.find) return;
     setState(() => _section = _SessionsSection.find);
+  }
+
+  void _showBookedSection() {
+    _ensureBookedStarted();
+    setState(() => _section = _SessionsSection.booked);
   }
 
   String _topicLabel(VentingMobLocalizations l10n, String id) {
@@ -122,8 +134,8 @@ class VentorSessionsTabState extends State<VentorSessionsTab> {
     }
   }
 
-  List<VentorBookedSession> get _sortedBooked {
-    final list = List.of(_bookedSessions);
+  List<VentorBookedSession> _sortedBooked(List<VentorBookedSession> sessions) {
+    final list = List.of(sessions);
     int rank(VentorBookedSessionStatus status) => switch (status) {
       VentorBookedSessionStatus.live => 0,
       VentorBookedSessionStatus.upcoming => 1,
@@ -228,12 +240,7 @@ class VentorSessionsTabState extends State<VentorSessionsTab> {
         session: session,
       );
       if (!mounted || updated == null) return;
-      setState(() {
-        _bookedSessions = [
-          for (final item in _bookedSessions)
-            if (item.id == updated.id) updated else item,
-        ];
-      });
+      _bookedBloc.add(VentorBookedSessionsEvent.sessionUpdated(updated));
       return;
     }
 
@@ -252,29 +259,24 @@ class VentorSessionsTabState extends State<VentorSessionsTab> {
   }
 
   Future<void> _onJoinLive(VentorBookedSession session) async {
-    final listener = VentorSessionsCatalog.listenerById(session.listenerId);
     final completed = await openVentorCallFlow(
       context: context,
       args: VentorCallArgs(
         sessionId: session.id,
         listenerName: session.listenerName,
         listenerAvatarUrl: session.listenerAvatarUrl,
-        listenerRating: listener?.rating ?? 4.9,
+        listenerRating: 0,
         durationMinutes: session.durationMinutes,
         isVideoCall: session.callMode == VentorBookedCallMode.video,
         speechLanguage: session.speechLanguage,
       ),
     );
     if (!mounted || completed != true) return;
-    setState(() {
-      _bookedSessions = [
-        for (final item in _bookedSessions)
-          if (item.id == session.id)
-            item.copyWith(status: VentorBookedSessionStatus.completed)
-          else
-            item,
-      ];
-    });
+    _bookedBloc.add(
+      VentorBookedSessionsEvent.sessionUpdated(
+        session.copyWith(status: VentorBookedSessionStatus.completed),
+      ),
+    );
     VentorHomeShell.goToDashboard(context);
   }
 
@@ -425,8 +427,11 @@ class VentorSessionsTabState extends State<VentorSessionsTab> {
     ];
   }
 
-  List<Widget> _bookedChildren(VentingMobLocalizations l10n) {
-    final booked = _sortedBooked;
+  List<Widget> _bookedChildren(
+    VentingMobLocalizations l10n,
+    VentorBookedSessionsState bookedState,
+  ) {
+    final booked = _sortedBooked(bookedState.sessions);
     return [
       Text(
         l10n.ventor_sessions_booked_subtitle,
@@ -437,7 +442,44 @@ class VentorSessionsTabState extends State<VentorSessionsTab> {
         ),
       ),
       const SizedBox(height: 16),
-      if (booked.isEmpty)
+      if (bookedState.isLoadingOrInitial)
+        const Padding(
+          padding: EdgeInsets.symmetric(vertical: 12),
+          child: _BookedSessionsShimmer(),
+        )
+      else if (bookedState.isLoadFailure)
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 28),
+          child: Column(
+            children: [
+              Text(
+                bookedState.errorMessage.isNotEmpty
+                    ? bookedState.errorMessage
+                    : l10n.common_unknown_error,
+                textAlign: TextAlign.center,
+                style: GoogleFonts.inter(
+                  color: VentorProfileTheme.muted,
+                  fontSize: 14,
+                  height: 1.4,
+                ),
+              ),
+              const SizedBox(height: 12),
+              TextButton(
+                onPressed: () => _bookedBloc.add(
+                  const VentorBookedSessionsEvent.retryLoad(),
+                ),
+                child: Text(
+                  l10n.common_retry,
+                  style: GoogleFonts.inter(
+                    color: SplashColors.purpleMid,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        )
+      else if (booked.isEmpty)
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 36),
           child: Column(
@@ -525,74 +567,95 @@ class VentorSessionsTabState extends State<VentorSessionsTab> {
   Widget build(BuildContext context) {
     final l10n = VentingMobLocalizations.of(context);
 
-    return BlocProvider.value(
-      value: _findBloc,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider.value(value: _findBloc),
+        BlocProvider.value(value: _bookedBloc),
+      ],
       child: AnnotatedRegion<SystemUiOverlayStyle>(
         value: _overlayStyle,
         child: SafeArea(
-          child:
-              BlocConsumer<VentorFindListenersBloc, VentorFindListenersState>(
-                listenWhen: (previous, current) =>
-                    previous.favoriteErrorMessage !=
-                        current.favoriteErrorMessage &&
-                    current.favoriteErrorMessage.isNotEmpty,
-                listener: (context, state) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(state.favoriteErrorMessage),
-                      behavior: SnackBarBehavior.floating,
-                    ),
-                  );
-                },
-                builder: (context, findState) {
+          child: BlocBuilder<VentorFindListenersBloc, VentorFindListenersState>(
+            builder: (context, findState) {
+              return BlocBuilder<
+                VentorBookedSessionsBloc,
+                VentorBookedSessionsState
+              >(
+                builder: (context, bookedState) {
                   final children = _section == _SessionsSection.find
                       ? _findChildren(l10n, findState)
-                      : _bookedChildren(l10n);
+                      : _bookedChildren(l10n, bookedState);
 
-                  return RefreshIndicator(
-                    onRefresh: _section == _SessionsSection.find
-                        ? () async {
-                            _findBloc.add(
-                              const VentorFindListenersEvent.refreshRequested(),
-                            );
-                            await _findBloc.stream.firstWhere(
-                              (s) => !s.isRefreshing,
-                            );
-                          }
-                        : () async {},
-                    color: SplashColors.purpleMid,
-                    backgroundColor: const Color(0xFF1C1826),
-                    child: ListView(
-                      physics: const AlwaysScrollableScrollPhysics(),
-                      padding: const EdgeInsets.fromLTRB(16, 12, 16, 28),
-                      children: [
-                        Text(
-                          l10n.ventor_sessions_title,
-                          style: GoogleFonts.inter(
-                            color: Colors.white,
-                            fontSize: 28,
-                            fontWeight: FontWeight.w700,
-                            height: 1.15,
-                          ),
+                  return BlocListener<
+                    VentorFindListenersBloc,
+                    VentorFindListenersState
+                  >(
+                    listenWhen: (previous, current) =>
+                        previous.favoriteErrorMessage !=
+                            current.favoriteErrorMessage &&
+                        current.favoriteErrorMessage.isNotEmpty,
+                    listener: (context, state) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(state.favoriteErrorMessage),
+                          behavior: SnackBarBehavior.floating,
                         ),
-                        const SizedBox(height: 14),
-                        VentorSessionsSectionTabs(
-                          findSelected: _section == _SessionsSection.find,
-                          findLabel: l10n.ventor_sessions_tab_find,
-                          bookedLabel: l10n.ventor_sessions_tab_booked,
-                          onFind: () =>
-                              setState(() => _section = _SessionsSection.find),
-                          onBooked: () => setState(
-                            () => _section = _SessionsSection.booked,
+                      );
+                    },
+                    child: RefreshIndicator(
+                      onRefresh: _section == _SessionsSection.find
+                          ? () async {
+                              _findBloc.add(
+                                const VentorFindListenersEvent.refreshRequested(),
+                              );
+                              await _findBloc.stream.firstWhere(
+                                (s) => !s.isRefreshing,
+                              );
+                            }
+                          : () async {
+                              _ensureBookedStarted();
+                              _bookedBloc.add(
+                                const VentorBookedSessionsEvent.refreshRequested(),
+                              );
+                              await _bookedBloc.stream.firstWhere(
+                                (s) => !s.isRefreshing,
+                              );
+                            },
+                      color: SplashColors.purpleMid,
+                      backgroundColor: const Color(0xFF1C1826),
+                      child: ListView(
+                        physics: const AlwaysScrollableScrollPhysics(),
+                        padding: const EdgeInsets.fromLTRB(16, 12, 16, 28),
+                        children: [
+                          Text(
+                            l10n.ventor_sessions_title,
+                            style: GoogleFonts.inter(
+                              color: Colors.white,
+                              fontSize: 28,
+                              fontWeight: FontWeight.w700,
+                              height: 1.15,
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 16),
-                        ...children,
-                      ],
+                          const SizedBox(height: 14),
+                          VentorSessionsSectionTabs(
+                            findSelected: _section == _SessionsSection.find,
+                            findLabel: l10n.ventor_sessions_tab_find,
+                            bookedLabel: l10n.ventor_sessions_tab_booked,
+                            onFind: () => setState(
+                              () => _section = _SessionsSection.find,
+                            ),
+                            onBooked: _showBookedSection,
+                          ),
+                          const SizedBox(height: 16),
+                          ...children,
+                        ],
+                      ),
                     ),
                   );
                 },
-              ),
+              );
+            },
+          ),
         ),
       ),
     );
@@ -614,6 +677,33 @@ class _FindListenersShimmer extends StatelessWidget {
             padding: const EdgeInsets.only(bottom: 12),
             child: Container(
               height: 120,
+              decoration: BoxDecoration(
+                color: VentorProfileTheme.cardFill,
+                borderRadius: BorderRadius.circular(18),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _BookedSessionsShimmer extends StatelessWidget {
+  const _BookedSessionsShimmer();
+
+  @override
+  Widget build(BuildContext context) {
+    return Shimmer.fromColors(
+      baseColor: Colors.white.withValues(alpha: 0.08),
+      highlightColor: Colors.white.withValues(alpha: 0.16),
+      child: Column(
+        children: List.generate(
+          3,
+          (_) => Padding(
+            padding: const EdgeInsets.only(bottom: 12),
+            child: Container(
+              height: 132,
               decoration: BoxDecoration(
                 color: VentorProfileTheme.cardFill,
                 borderRadius: BorderRadius.circular(18),
