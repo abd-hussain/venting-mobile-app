@@ -55,6 +55,7 @@ abstract class VentorFindListenerModel with _$VentorFindListenerModel {
     @Default('') String bio,
     @Default(<String>[]) List<String> help_with,
     @Default(0) int voice_preview_seconds,
+    @Default('') String voice_intro_url,
     @Default(false) bool is_online,
     @Default(false) bool is_verified,
     Map<String, dynamic>? rating_breakdown,
@@ -102,6 +103,11 @@ Map<String, dynamic> _normalizeFindListenerJson(Map<String, dynamic> json) {
     'gender': _asString(json['gender']),
     'bio': _asString(json['bio'] ?? json['about_me']),
     'help_with': _asStringList(json['help_with'] ?? json['comfort_areas']),
+    'voice_preview_seconds':
+        json['voice_preview_seconds'] ?? json['voice_intro_seconds'] ?? 0,
+    'voice_intro_url': _asString(
+      json['voice_intro_url'] ?? json['voice_preview_url'],
+    ),
     'country': _asString(json['country']),
     'city': _asString(json['city']),
     'country_iso': _asString(json['country_iso']),

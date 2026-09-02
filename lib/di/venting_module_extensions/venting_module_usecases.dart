@@ -81,6 +81,7 @@ import 'package:venting_mobile_app/domain/usecase/get_listener_training_usecase.
 import 'package:venting_mobile_app/domain/usecase/get_ventor_find_listeners_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_ventor_home_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_ventor_invites_overview_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/get_ventor_listener_profile_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_ventor_mood_journey_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_ventor_notification_preferences_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_ventor_notifications_usecase.dart';
@@ -279,6 +280,16 @@ mixin VentingModuleUsecases on VentingModule {
     VentingPreferences ventingPreferences,
     AppConfig appConfig,
   ) => GetVentorFindListenersUsecase(
+    ventorFindListenersRepository,
+    ventingPreferences,
+    appConfig,
+  );
+
+  GetVentorListenerProfileUsecase getVentorListenerProfileUsecase(
+    VentorFindListenersRepository ventorFindListenersRepository,
+    VentingPreferences ventingPreferences,
+    AppConfig appConfig,
+  ) => GetVentorListenerProfileUsecase(
     ventorFindListenersRepository,
     ventingPreferences,
     appConfig,
@@ -745,6 +756,13 @@ mixin VentingModuleUsecases on VentingModule {
     );
     getIt.registerFactory<GetVentorFindListenersUsecase>(
       () => getVentorFindListenersUsecase(
+        getIt<VentorFindListenersRepository>(),
+        getIt<VentingPreferences>(),
+        getIt<AppConfig>(),
+      ),
+    );
+    getIt.registerFactory<GetVentorListenerProfileUsecase>(
+      () => getVentorListenerProfileUsecase(
         getIt<VentorFindListenersRepository>(),
         getIt<VentingPreferences>(),
         getIt<AppConfig>(),

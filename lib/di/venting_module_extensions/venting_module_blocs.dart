@@ -36,6 +36,7 @@ import 'package:venting_mobile_app/domain/usecase/get_listener_training_usecase.
 import 'package:venting_mobile_app/domain/usecase/get_ventor_find_listeners_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_ventor_home_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_ventor_invites_overview_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/get_ventor_listener_profile_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_ventor_mood_journey_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_ventor_notification_preferences_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_ventor_notifications_usecase.dart';
@@ -92,6 +93,8 @@ import 'package:venting_mobile_app/presentation/home/ventor/rewards/bloc/ventor_
 import 'package:venting_mobile_app/presentation/home/ventor/rewards/bloc/ventor_invites/ventor_invites_bloc.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/rewards/bloc/ventor_rewards/ventor_rewards_bloc.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/sessions/bloc/ventor_find_listeners/ventor_find_listeners_bloc.dart';
+import 'package:venting_mobile_app/presentation/home/ventor/sessions/bloc/ventor_listener_profile/ventor_listener_profile_bloc.dart';
+import 'package:venting_mobile_app/presentation/home/ventor/sessions/ventor_sessions_models.dart';
 import 'package:venting_mobile_app/presentation/splash/bloc/splash_bloc.dart';
 import 'package:venting_mobile_app/shared_widgets/bottom_sheets/logout_delete_account_confirm/bloc/logout_delete_account_confirm_bloc.dart';
 
@@ -231,6 +234,18 @@ mixin VentingModuleBlocs on VentingModule {
         getIt<GetVentorFindListenersUsecase>(),
         getIt<AddVentorFavoriteListenerUsecase>(),
         getIt<RemoveVentorFavoriteListenerUsecase>(),
+      ),
+    );
+    getIt.registerFactoryParam<
+      VentorListenerProfileBloc,
+      VentorFindListener,
+      void
+    >(
+      (listener, _) => VentorListenerProfileBloc(
+        getIt<GetVentorListenerProfileUsecase>(),
+        getIt<AddVentorFavoriteListenerUsecase>(),
+        getIt<RemoveVentorFavoriteListenerUsecase>(),
+        initialListener: listener,
       ),
     );
     getIt.registerFactory<VentorProfileBloc>(

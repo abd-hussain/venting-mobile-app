@@ -67,6 +67,7 @@ _VentorFindListenerModel _$VentorFindListenerModelFromJson(
       (json['help_with'] as List<dynamic>?)?.map((e) => e as String).toList() ??
       const <String>[],
   voice_preview_seconds: (json['voice_preview_seconds'] as num?)?.toInt() ?? 0,
+  voice_intro_url: json['voice_intro_url'] as String? ?? '',
   is_online: json['is_online'] as bool? ?? false,
   is_verified: json['is_verified'] as bool? ?? false,
   rating_breakdown: json['rating_breakdown'] as Map<String, dynamic>?,
@@ -99,6 +100,7 @@ Map<String, dynamic> _$VentorFindListenerModelToJson(
   'bio': instance.bio,
   'help_with': instance.help_with,
   'voice_preview_seconds': instance.voice_preview_seconds,
+  'voice_intro_url': instance.voice_intro_url,
   'is_online': instance.is_online,
   'is_verified': instance.is_verified,
   'rating_breakdown': instance.rating_breakdown,

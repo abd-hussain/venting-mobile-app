@@ -279,22 +279,7 @@ class VentorSessionsTabState extends State<VentorSessionsTab> {
   }
 
   void _onFavoriteChangedFromProfile(VentorFindListener updated) {
-    VentorFindListener? current;
-    for (final listener in _findBloc.state.listeners) {
-      if (listener.id == updated.id) {
-        current = listener;
-        break;
-      }
-    }
-    if (current == null || current.isFavorite == updated.isFavorite) {
-      _findBloc.add(
-        VentorFindListenersEvent.listenerFavoriteUpdated(updated),
-      );
-      return;
-    }
-    _findBloc.add(
-      VentorFindListenersEvent.favoriteToggled(listenerId: updated.id),
-    );
+    _findBloc.add(VentorFindListenersEvent.listenerFavoriteUpdated(updated));
   }
 
   List<Widget> _findChildren(
@@ -319,9 +304,8 @@ class VentorSessionsTabState extends State<VentorSessionsTab> {
       VentorSessionsSearchBar(
         controller: _searchController,
         hint: l10n.ventor_sessions_search_hint,
-        onChanged: (value) => _findBloc.add(
-          VentorFindListenersEvent.queryChanged(value),
-        ),
+        onChanged: (value) =>
+            _findBloc.add(VentorFindListenersEvent.queryChanged(value)),
         onFilterTap: () => _openFilters(findState.filters),
         filterActive: !findState.filters.isDefault,
       ),
@@ -329,9 +313,8 @@ class VentorSessionsTabState extends State<VentorSessionsTab> {
       VentorTopicChips(
         labels: topicLabels,
         selectedIndex: findState.topicIndex,
-        onSelected: (index) => _findBloc.add(
-          VentorFindListenersEvent.topicChanged(index),
-        ),
+        onSelected: (index) =>
+            _findBloc.add(VentorFindListenersEvent.topicChanged(index)),
       ),
       const SizedBox(height: 20),
       Text(
@@ -366,9 +349,8 @@ class VentorSessionsTabState extends State<VentorSessionsTab> {
               ),
               const SizedBox(height: 12),
               TextButton(
-                onPressed: () => _findBloc.add(
-                  const VentorFindListenersEvent.retryLoad(),
-                ),
+                onPressed: () =>
+                    _findBloc.add(const VentorFindListenersEvent.retryLoad()),
                 child: Text(
                   l10n.common_retry,
                   style: GoogleFonts.inter(
@@ -548,66 +530,69 @@ class VentorSessionsTabState extends State<VentorSessionsTab> {
       child: AnnotatedRegion<SystemUiOverlayStyle>(
         value: _overlayStyle,
         child: SafeArea(
-          child: BlocConsumer<VentorFindListenersBloc, VentorFindListenersState>(
-            listenWhen: (previous, current) =>
-                previous.favoriteErrorMessage != current.favoriteErrorMessage &&
-                current.favoriteErrorMessage.isNotEmpty,
-            listener: (context, state) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(state.favoriteErrorMessage),
-                  behavior: SnackBarBehavior.floating,
-                ),
-              );
-            },
-            builder: (context, findState) {
-              final children = _section == _SessionsSection.find
-                  ? _findChildren(l10n, findState)
-                  : _bookedChildren(l10n);
+          child:
+              BlocConsumer<VentorFindListenersBloc, VentorFindListenersState>(
+                listenWhen: (previous, current) =>
+                    previous.favoriteErrorMessage !=
+                        current.favoriteErrorMessage &&
+                    current.favoriteErrorMessage.isNotEmpty,
+                listener: (context, state) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(state.favoriteErrorMessage),
+                      behavior: SnackBarBehavior.floating,
+                    ),
+                  );
+                },
+                builder: (context, findState) {
+                  final children = _section == _SessionsSection.find
+                      ? _findChildren(l10n, findState)
+                      : _bookedChildren(l10n);
 
-              return RefreshIndicator(
-                onRefresh: _section == _SessionsSection.find
-                    ? () async {
-                        _findBloc.add(
-                          const VentorFindListenersEvent.refreshRequested(),
-                        );
-                        await _findBloc.stream.firstWhere(
-                          (s) => !s.isRefreshing,
-                        );
-                      }
-                    : () async {},
-                color: SplashColors.purpleMid,
-                backgroundColor: const Color(0xFF1C1826),
-                child: ListView(
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  padding: const EdgeInsets.fromLTRB(16, 12, 16, 28),
-                  children: [
-                    Text(
-                      l10n.ventor_sessions_title,
-                      style: GoogleFonts.inter(
-                        color: Colors.white,
-                        fontSize: 28,
-                        fontWeight: FontWeight.w700,
-                        height: 1.15,
-                      ),
+                  return RefreshIndicator(
+                    onRefresh: _section == _SessionsSection.find
+                        ? () async {
+                            _findBloc.add(
+                              const VentorFindListenersEvent.refreshRequested(),
+                            );
+                            await _findBloc.stream.firstWhere(
+                              (s) => !s.isRefreshing,
+                            );
+                          }
+                        : () async {},
+                    color: SplashColors.purpleMid,
+                    backgroundColor: const Color(0xFF1C1826),
+                    child: ListView(
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      padding: const EdgeInsets.fromLTRB(16, 12, 16, 28),
+                      children: [
+                        Text(
+                          l10n.ventor_sessions_title,
+                          style: GoogleFonts.inter(
+                            color: Colors.white,
+                            fontSize: 28,
+                            fontWeight: FontWeight.w700,
+                            height: 1.15,
+                          ),
+                        ),
+                        const SizedBox(height: 14),
+                        VentorSessionsSectionTabs(
+                          findSelected: _section == _SessionsSection.find,
+                          findLabel: l10n.ventor_sessions_tab_find,
+                          bookedLabel: l10n.ventor_sessions_tab_booked,
+                          onFind: () =>
+                              setState(() => _section = _SessionsSection.find),
+                          onBooked: () => setState(
+                            () => _section = _SessionsSection.booked,
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+                        ...children,
+                      ],
                     ),
-                    const SizedBox(height: 14),
-                    VentorSessionsSectionTabs(
-                      findSelected: _section == _SessionsSection.find,
-                      findLabel: l10n.ventor_sessions_tab_find,
-                      bookedLabel: l10n.ventor_sessions_tab_booked,
-                      onFind: () =>
-                          setState(() => _section = _SessionsSection.find),
-                      onBooked: () =>
-                          setState(() => _section = _SessionsSection.booked),
-                    ),
-                    const SizedBox(height: 16),
-                    ...children,
-                  ],
-                ),
-              );
-            },
-          ),
+                  );
+                },
+              ),
         ),
       ),
     );

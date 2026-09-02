@@ -21,6 +21,7 @@ VentorFindListener ventorFindListenerFromDomain(VentorFindListenerData data) {
     bio: data.bio,
     helpWith: List<String>.from(data.helpWith),
     voicePreviewSeconds: data.voicePreviewSeconds,
+    voiceIntroUrl: data.voiceIntroUrl,
     isOnline: data.isOnline,
     isVerified: data.isVerified,
     ratingBreakdown: Map<int, int>.from(data.ratingBreakdown),

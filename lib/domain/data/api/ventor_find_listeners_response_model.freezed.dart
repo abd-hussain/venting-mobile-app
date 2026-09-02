@@ -855,7 +855,7 @@ $VentorFindListenerModelCopyWith<$Res> get data {
 /// @nodoc
 mixin _$VentorFindListenerModel {
 
- String get id; String get name; String get avatar_url; double get rating; int get review_count; int get session_count; List<String> get topics; List<String> get languages; String get gender; double get rate_per_minute; String get bio; List<String> get help_with; int get voice_preview_seconds; bool get is_online; bool get is_verified; Map<String, dynamic>? get rating_breakdown; String get country; String get city; String get country_iso; Object? get life_experiences; Object? get boundaries; VentorFindListenerAvailabilityModel? get availability; bool get is_favorite;
+ String get id; String get name; String get avatar_url; double get rating; int get review_count; int get session_count; List<String> get topics; List<String> get languages; String get gender; double get rate_per_minute; String get bio; List<String> get help_with; int get voice_preview_seconds; String get voice_intro_url; bool get is_online; bool get is_verified; Map<String, dynamic>? get rating_breakdown; String get country; String get city; String get country_iso; Object? get life_experiences; Object? get boundaries; VentorFindListenerAvailabilityModel? get availability; bool get is_favorite;
 /// Create a copy of VentorFindListenerModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -868,16 +868,16 @@ $VentorFindListenerModelCopyWith<VentorFindListenerModel> get copyWith => _$Vent
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is VentorFindListenerModel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.avatar_url, avatar_url) || other.avatar_url == avatar_url)&&(identical(other.rating, rating) || other.rating == rating)&&(identical(other.review_count, review_count) || other.review_count == review_count)&&(identical(other.session_count, session_count) || other.session_count == session_count)&&const DeepCollectionEquality().equals(other.topics, topics)&&const DeepCollectionEquality().equals(other.languages, languages)&&(identical(other.gender, gender) || other.gender == gender)&&(identical(other.rate_per_minute, rate_per_minute) || other.rate_per_minute == rate_per_minute)&&(identical(other.bio, bio) || other.bio == bio)&&const DeepCollectionEquality().equals(other.help_with, help_with)&&(identical(other.voice_preview_seconds, voice_preview_seconds) || other.voice_preview_seconds == voice_preview_seconds)&&(identical(other.is_online, is_online) || other.is_online == is_online)&&(identical(other.is_verified, is_verified) || other.is_verified == is_verified)&&const DeepCollectionEquality().equals(other.rating_breakdown, rating_breakdown)&&(identical(other.country, country) || other.country == country)&&(identical(other.city, city) || other.city == city)&&(identical(other.country_iso, country_iso) || other.country_iso == country_iso)&&const DeepCollectionEquality().equals(other.life_experiences, life_experiences)&&const DeepCollectionEquality().equals(other.boundaries, boundaries)&&(identical(other.availability, availability) || other.availability == availability)&&(identical(other.is_favorite, is_favorite) || other.is_favorite == is_favorite));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is VentorFindListenerModel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.avatar_url, avatar_url) || other.avatar_url == avatar_url)&&(identical(other.rating, rating) || other.rating == rating)&&(identical(other.review_count, review_count) || other.review_count == review_count)&&(identical(other.session_count, session_count) || other.session_count == session_count)&&const DeepCollectionEquality().equals(other.topics, topics)&&const DeepCollectionEquality().equals(other.languages, languages)&&(identical(other.gender, gender) || other.gender == gender)&&(identical(other.rate_per_minute, rate_per_minute) || other.rate_per_minute == rate_per_minute)&&(identical(other.bio, bio) || other.bio == bio)&&const DeepCollectionEquality().equals(other.help_with, help_with)&&(identical(other.voice_preview_seconds, voice_preview_seconds) || other.voice_preview_seconds == voice_preview_seconds)&&(identical(other.voice_intro_url, voice_intro_url) || other.voice_intro_url == voice_intro_url)&&(identical(other.is_online, is_online) || other.is_online == is_online)&&(identical(other.is_verified, is_verified) || other.is_verified == is_verified)&&const DeepCollectionEquality().equals(other.rating_breakdown, rating_breakdown)&&(identical(other.country, country) || other.country == country)&&(identical(other.city, city) || other.city == city)&&(identical(other.country_iso, country_iso) || other.country_iso == country_iso)&&const DeepCollectionEquality().equals(other.life_experiences, life_experiences)&&const DeepCollectionEquality().equals(other.boundaries, boundaries)&&(identical(other.availability, availability) || other.availability == availability)&&(identical(other.is_favorite, is_favorite) || other.is_favorite == is_favorite));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hashAll([runtimeType,id,name,avatar_url,rating,review_count,session_count,const DeepCollectionEquality().hash(topics),const DeepCollectionEquality().hash(languages),gender,rate_per_minute,bio,const DeepCollectionEquality().hash(help_with),voice_preview_seconds,is_online,is_verified,const DeepCollectionEquality().hash(rating_breakdown),country,city,country_iso,const DeepCollectionEquality().hash(life_experiences),const DeepCollectionEquality().hash(boundaries),availability,is_favorite]);
+int get hashCode => Object.hashAll([runtimeType,id,name,avatar_url,rating,review_count,session_count,const DeepCollectionEquality().hash(topics),const DeepCollectionEquality().hash(languages),gender,rate_per_minute,bio,const DeepCollectionEquality().hash(help_with),voice_preview_seconds,voice_intro_url,is_online,is_verified,const DeepCollectionEquality().hash(rating_breakdown),country,city,country_iso,const DeepCollectionEquality().hash(life_experiences),const DeepCollectionEquality().hash(boundaries),availability,is_favorite]);
 
 @override
 String toString() {
-  return 'VentorFindListenerModel(id: $id, name: $name, avatar_url: $avatar_url, rating: $rating, review_count: $review_count, session_count: $session_count, topics: $topics, languages: $languages, gender: $gender, rate_per_minute: $rate_per_minute, bio: $bio, help_with: $help_with, voice_preview_seconds: $voice_preview_seconds, is_online: $is_online, is_verified: $is_verified, rating_breakdown: $rating_breakdown, country: $country, city: $city, country_iso: $country_iso, life_experiences: $life_experiences, boundaries: $boundaries, availability: $availability, is_favorite: $is_favorite)';
+  return 'VentorFindListenerModel(id: $id, name: $name, avatar_url: $avatar_url, rating: $rating, review_count: $review_count, session_count: $session_count, topics: $topics, languages: $languages, gender: $gender, rate_per_minute: $rate_per_minute, bio: $bio, help_with: $help_with, voice_preview_seconds: $voice_preview_seconds, voice_intro_url: $voice_intro_url, is_online: $is_online, is_verified: $is_verified, rating_breakdown: $rating_breakdown, country: $country, city: $city, country_iso: $country_iso, life_experiences: $life_experiences, boundaries: $boundaries, availability: $availability, is_favorite: $is_favorite)';
 }
 
 
@@ -888,7 +888,7 @@ abstract mixin class $VentorFindListenerModelCopyWith<$Res>  {
   factory $VentorFindListenerModelCopyWith(VentorFindListenerModel value, $Res Function(VentorFindListenerModel) _then) = _$VentorFindListenerModelCopyWithImpl;
 @useResult
 $Res call({
- String id, String name, String avatar_url, double rating, int review_count, int session_count, List<String> topics, List<String> languages, String gender, double rate_per_minute, String bio, List<String> help_with, int voice_preview_seconds, bool is_online, bool is_verified, Map<String, dynamic>? rating_breakdown, String country, String city, String country_iso, Object? life_experiences, Object? boundaries, VentorFindListenerAvailabilityModel? availability, bool is_favorite
+ String id, String name, String avatar_url, double rating, int review_count, int session_count, List<String> topics, List<String> languages, String gender, double rate_per_minute, String bio, List<String> help_with, int voice_preview_seconds, String voice_intro_url, bool is_online, bool is_verified, Map<String, dynamic>? rating_breakdown, String country, String city, String country_iso, Object? life_experiences, Object? boundaries, VentorFindListenerAvailabilityModel? availability, bool is_favorite
 });
 
 
@@ -905,7 +905,7 @@ class _$VentorFindListenerModelCopyWithImpl<$Res>
 
 /// Create a copy of VentorFindListenerModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? avatar_url = null,Object? rating = null,Object? review_count = null,Object? session_count = null,Object? topics = null,Object? languages = null,Object? gender = null,Object? rate_per_minute = null,Object? bio = null,Object? help_with = null,Object? voice_preview_seconds = null,Object? is_online = null,Object? is_verified = null,Object? rating_breakdown = freezed,Object? country = null,Object? city = null,Object? country_iso = null,Object? life_experiences = freezed,Object? boundaries = freezed,Object? availability = freezed,Object? is_favorite = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? avatar_url = null,Object? rating = null,Object? review_count = null,Object? session_count = null,Object? topics = null,Object? languages = null,Object? gender = null,Object? rate_per_minute = null,Object? bio = null,Object? help_with = null,Object? voice_preview_seconds = null,Object? voice_intro_url = null,Object? is_online = null,Object? is_verified = null,Object? rating_breakdown = freezed,Object? country = null,Object? city = null,Object? country_iso = null,Object? life_experiences = freezed,Object? boundaries = freezed,Object? availability = freezed,Object? is_favorite = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
@@ -920,7 +920,8 @@ as String,rate_per_minute: null == rate_per_minute ? _self.rate_per_minute : rat
 as double,bio: null == bio ? _self.bio : bio // ignore: cast_nullable_to_non_nullable
 as String,help_with: null == help_with ? _self.help_with : help_with // ignore: cast_nullable_to_non_nullable
 as List<String>,voice_preview_seconds: null == voice_preview_seconds ? _self.voice_preview_seconds : voice_preview_seconds // ignore: cast_nullable_to_non_nullable
-as int,is_online: null == is_online ? _self.is_online : is_online // ignore: cast_nullable_to_non_nullable
+as int,voice_intro_url: null == voice_intro_url ? _self.voice_intro_url : voice_intro_url // ignore: cast_nullable_to_non_nullable
+as String,is_online: null == is_online ? _self.is_online : is_online // ignore: cast_nullable_to_non_nullable
 as bool,is_verified: null == is_verified ? _self.is_verified : is_verified // ignore: cast_nullable_to_non_nullable
 as bool,rating_breakdown: freezed == rating_breakdown ? _self.rating_breakdown : rating_breakdown // ignore: cast_nullable_to_non_nullable
 as Map<String, dynamic>?,country: null == country ? _self.country : country // ignore: cast_nullable_to_non_nullable
@@ -1025,10 +1026,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String avatar_url,  double rating,  int review_count,  int session_count,  List<String> topics,  List<String> languages,  String gender,  double rate_per_minute,  String bio,  List<String> help_with,  int voice_preview_seconds,  bool is_online,  bool is_verified,  Map<String, dynamic>? rating_breakdown,  String country,  String city,  String country_iso,  Object? life_experiences,  Object? boundaries,  VentorFindListenerAvailabilityModel? availability,  bool is_favorite)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String avatar_url,  double rating,  int review_count,  int session_count,  List<String> topics,  List<String> languages,  String gender,  double rate_per_minute,  String bio,  List<String> help_with,  int voice_preview_seconds,  String voice_intro_url,  bool is_online,  bool is_verified,  Map<String, dynamic>? rating_breakdown,  String country,  String city,  String country_iso,  Object? life_experiences,  Object? boundaries,  VentorFindListenerAvailabilityModel? availability,  bool is_favorite)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _VentorFindListenerModel() when $default != null:
-return $default(_that.id,_that.name,_that.avatar_url,_that.rating,_that.review_count,_that.session_count,_that.topics,_that.languages,_that.gender,_that.rate_per_minute,_that.bio,_that.help_with,_that.voice_preview_seconds,_that.is_online,_that.is_verified,_that.rating_breakdown,_that.country,_that.city,_that.country_iso,_that.life_experiences,_that.boundaries,_that.availability,_that.is_favorite);case _:
+return $default(_that.id,_that.name,_that.avatar_url,_that.rating,_that.review_count,_that.session_count,_that.topics,_that.languages,_that.gender,_that.rate_per_minute,_that.bio,_that.help_with,_that.voice_preview_seconds,_that.voice_intro_url,_that.is_online,_that.is_verified,_that.rating_breakdown,_that.country,_that.city,_that.country_iso,_that.life_experiences,_that.boundaries,_that.availability,_that.is_favorite);case _:
   return orElse();
 
 }
@@ -1046,10 +1047,10 @@ return $default(_that.id,_that.name,_that.avatar_url,_that.rating,_that.review_c
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String avatar_url,  double rating,  int review_count,  int session_count,  List<String> topics,  List<String> languages,  String gender,  double rate_per_minute,  String bio,  List<String> help_with,  int voice_preview_seconds,  bool is_online,  bool is_verified,  Map<String, dynamic>? rating_breakdown,  String country,  String city,  String country_iso,  Object? life_experiences,  Object? boundaries,  VentorFindListenerAvailabilityModel? availability,  bool is_favorite)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String avatar_url,  double rating,  int review_count,  int session_count,  List<String> topics,  List<String> languages,  String gender,  double rate_per_minute,  String bio,  List<String> help_with,  int voice_preview_seconds,  String voice_intro_url,  bool is_online,  bool is_verified,  Map<String, dynamic>? rating_breakdown,  String country,  String city,  String country_iso,  Object? life_experiences,  Object? boundaries,  VentorFindListenerAvailabilityModel? availability,  bool is_favorite)  $default,) {final _that = this;
 switch (_that) {
 case _VentorFindListenerModel():
-return $default(_that.id,_that.name,_that.avatar_url,_that.rating,_that.review_count,_that.session_count,_that.topics,_that.languages,_that.gender,_that.rate_per_minute,_that.bio,_that.help_with,_that.voice_preview_seconds,_that.is_online,_that.is_verified,_that.rating_breakdown,_that.country,_that.city,_that.country_iso,_that.life_experiences,_that.boundaries,_that.availability,_that.is_favorite);case _:
+return $default(_that.id,_that.name,_that.avatar_url,_that.rating,_that.review_count,_that.session_count,_that.topics,_that.languages,_that.gender,_that.rate_per_minute,_that.bio,_that.help_with,_that.voice_preview_seconds,_that.voice_intro_url,_that.is_online,_that.is_verified,_that.rating_breakdown,_that.country,_that.city,_that.country_iso,_that.life_experiences,_that.boundaries,_that.availability,_that.is_favorite);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -1066,10 +1067,10 @@ return $default(_that.id,_that.name,_that.avatar_url,_that.rating,_that.review_c
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String avatar_url,  double rating,  int review_count,  int session_count,  List<String> topics,  List<String> languages,  String gender,  double rate_per_minute,  String bio,  List<String> help_with,  int voice_preview_seconds,  bool is_online,  bool is_verified,  Map<String, dynamic>? rating_breakdown,  String country,  String city,  String country_iso,  Object? life_experiences,  Object? boundaries,  VentorFindListenerAvailabilityModel? availability,  bool is_favorite)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String avatar_url,  double rating,  int review_count,  int session_count,  List<String> topics,  List<String> languages,  String gender,  double rate_per_minute,  String bio,  List<String> help_with,  int voice_preview_seconds,  String voice_intro_url,  bool is_online,  bool is_verified,  Map<String, dynamic>? rating_breakdown,  String country,  String city,  String country_iso,  Object? life_experiences,  Object? boundaries,  VentorFindListenerAvailabilityModel? availability,  bool is_favorite)?  $default,) {final _that = this;
 switch (_that) {
 case _VentorFindListenerModel() when $default != null:
-return $default(_that.id,_that.name,_that.avatar_url,_that.rating,_that.review_count,_that.session_count,_that.topics,_that.languages,_that.gender,_that.rate_per_minute,_that.bio,_that.help_with,_that.voice_preview_seconds,_that.is_online,_that.is_verified,_that.rating_breakdown,_that.country,_that.city,_that.country_iso,_that.life_experiences,_that.boundaries,_that.availability,_that.is_favorite);case _:
+return $default(_that.id,_that.name,_that.avatar_url,_that.rating,_that.review_count,_that.session_count,_that.topics,_that.languages,_that.gender,_that.rate_per_minute,_that.bio,_that.help_with,_that.voice_preview_seconds,_that.voice_intro_url,_that.is_online,_that.is_verified,_that.rating_breakdown,_that.country,_that.city,_that.country_iso,_that.life_experiences,_that.boundaries,_that.availability,_that.is_favorite);case _:
   return null;
 
 }
@@ -1081,7 +1082,7 @@ return $default(_that.id,_that.name,_that.avatar_url,_that.rating,_that.review_c
 @JsonSerializable()
 
 class _VentorFindListenerModel implements VentorFindListenerModel {
-  const _VentorFindListenerModel({this.id = '', this.name = '', this.avatar_url = '', this.rating = 0, this.review_count = 0, this.session_count = 0, final  List<String> topics = const <String>[], final  List<String> languages = const <String>[], this.gender = '', this.rate_per_minute = 0, this.bio = '', final  List<String> help_with = const <String>[], this.voice_preview_seconds = 0, this.is_online = false, this.is_verified = false, final  Map<String, dynamic>? rating_breakdown, this.country = '', this.city = '', this.country_iso = '', this.life_experiences, this.boundaries, this.availability, this.is_favorite = false}): _topics = topics,_languages = languages,_help_with = help_with,_rating_breakdown = rating_breakdown;
+  const _VentorFindListenerModel({this.id = '', this.name = '', this.avatar_url = '', this.rating = 0, this.review_count = 0, this.session_count = 0, final  List<String> topics = const <String>[], final  List<String> languages = const <String>[], this.gender = '', this.rate_per_minute = 0, this.bio = '', final  List<String> help_with = const <String>[], this.voice_preview_seconds = 0, this.voice_intro_url = '', this.is_online = false, this.is_verified = false, final  Map<String, dynamic>? rating_breakdown, this.country = '', this.city = '', this.country_iso = '', this.life_experiences, this.boundaries, this.availability, this.is_favorite = false}): _topics = topics,_languages = languages,_help_with = help_with,_rating_breakdown = rating_breakdown;
   factory _VentorFindListenerModel.fromJson(Map<String, dynamic> json) => _$VentorFindListenerModelFromJson(json);
 
 @override@JsonKey() final  String id;
@@ -1115,6 +1116,7 @@ class _VentorFindListenerModel implements VentorFindListenerModel {
 }
 
 @override@JsonKey() final  int voice_preview_seconds;
+@override@JsonKey() final  String voice_intro_url;
 @override@JsonKey() final  bool is_online;
 @override@JsonKey() final  bool is_verified;
  final  Map<String, dynamic>? _rating_breakdown;
@@ -1147,16 +1149,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _VentorFindListenerModel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.avatar_url, avatar_url) || other.avatar_url == avatar_url)&&(identical(other.rating, rating) || other.rating == rating)&&(identical(other.review_count, review_count) || other.review_count == review_count)&&(identical(other.session_count, session_count) || other.session_count == session_count)&&const DeepCollectionEquality().equals(other._topics, _topics)&&const DeepCollectionEquality().equals(other._languages, _languages)&&(identical(other.gender, gender) || other.gender == gender)&&(identical(other.rate_per_minute, rate_per_minute) || other.rate_per_minute == rate_per_minute)&&(identical(other.bio, bio) || other.bio == bio)&&const DeepCollectionEquality().equals(other._help_with, _help_with)&&(identical(other.voice_preview_seconds, voice_preview_seconds) || other.voice_preview_seconds == voice_preview_seconds)&&(identical(other.is_online, is_online) || other.is_online == is_online)&&(identical(other.is_verified, is_verified) || other.is_verified == is_verified)&&const DeepCollectionEquality().equals(other._rating_breakdown, _rating_breakdown)&&(identical(other.country, country) || other.country == country)&&(identical(other.city, city) || other.city == city)&&(identical(other.country_iso, country_iso) || other.country_iso == country_iso)&&const DeepCollectionEquality().equals(other.life_experiences, life_experiences)&&const DeepCollectionEquality().equals(other.boundaries, boundaries)&&(identical(other.availability, availability) || other.availability == availability)&&(identical(other.is_favorite, is_favorite) || other.is_favorite == is_favorite));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _VentorFindListenerModel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.avatar_url, avatar_url) || other.avatar_url == avatar_url)&&(identical(other.rating, rating) || other.rating == rating)&&(identical(other.review_count, review_count) || other.review_count == review_count)&&(identical(other.session_count, session_count) || other.session_count == session_count)&&const DeepCollectionEquality().equals(other._topics, _topics)&&const DeepCollectionEquality().equals(other._languages, _languages)&&(identical(other.gender, gender) || other.gender == gender)&&(identical(other.rate_per_minute, rate_per_minute) || other.rate_per_minute == rate_per_minute)&&(identical(other.bio, bio) || other.bio == bio)&&const DeepCollectionEquality().equals(other._help_with, _help_with)&&(identical(other.voice_preview_seconds, voice_preview_seconds) || other.voice_preview_seconds == voice_preview_seconds)&&(identical(other.voice_intro_url, voice_intro_url) || other.voice_intro_url == voice_intro_url)&&(identical(other.is_online, is_online) || other.is_online == is_online)&&(identical(other.is_verified, is_verified) || other.is_verified == is_verified)&&const DeepCollectionEquality().equals(other._rating_breakdown, _rating_breakdown)&&(identical(other.country, country) || other.country == country)&&(identical(other.city, city) || other.city == city)&&(identical(other.country_iso, country_iso) || other.country_iso == country_iso)&&const DeepCollectionEquality().equals(other.life_experiences, life_experiences)&&const DeepCollectionEquality().equals(other.boundaries, boundaries)&&(identical(other.availability, availability) || other.availability == availability)&&(identical(other.is_favorite, is_favorite) || other.is_favorite == is_favorite));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hashAll([runtimeType,id,name,avatar_url,rating,review_count,session_count,const DeepCollectionEquality().hash(_topics),const DeepCollectionEquality().hash(_languages),gender,rate_per_minute,bio,const DeepCollectionEquality().hash(_help_with),voice_preview_seconds,is_online,is_verified,const DeepCollectionEquality().hash(_rating_breakdown),country,city,country_iso,const DeepCollectionEquality().hash(life_experiences),const DeepCollectionEquality().hash(boundaries),availability,is_favorite]);
+int get hashCode => Object.hashAll([runtimeType,id,name,avatar_url,rating,review_count,session_count,const DeepCollectionEquality().hash(_topics),const DeepCollectionEquality().hash(_languages),gender,rate_per_minute,bio,const DeepCollectionEquality().hash(_help_with),voice_preview_seconds,voice_intro_url,is_online,is_verified,const DeepCollectionEquality().hash(_rating_breakdown),country,city,country_iso,const DeepCollectionEquality().hash(life_experiences),const DeepCollectionEquality().hash(boundaries),availability,is_favorite]);
 
 @override
 String toString() {
-  return 'VentorFindListenerModel(id: $id, name: $name, avatar_url: $avatar_url, rating: $rating, review_count: $review_count, session_count: $session_count, topics: $topics, languages: $languages, gender: $gender, rate_per_minute: $rate_per_minute, bio: $bio, help_with: $help_with, voice_preview_seconds: $voice_preview_seconds, is_online: $is_online, is_verified: $is_verified, rating_breakdown: $rating_breakdown, country: $country, city: $city, country_iso: $country_iso, life_experiences: $life_experiences, boundaries: $boundaries, availability: $availability, is_favorite: $is_favorite)';
+  return 'VentorFindListenerModel(id: $id, name: $name, avatar_url: $avatar_url, rating: $rating, review_count: $review_count, session_count: $session_count, topics: $topics, languages: $languages, gender: $gender, rate_per_minute: $rate_per_minute, bio: $bio, help_with: $help_with, voice_preview_seconds: $voice_preview_seconds, voice_intro_url: $voice_intro_url, is_online: $is_online, is_verified: $is_verified, rating_breakdown: $rating_breakdown, country: $country, city: $city, country_iso: $country_iso, life_experiences: $life_experiences, boundaries: $boundaries, availability: $availability, is_favorite: $is_favorite)';
 }
 
 
@@ -1167,7 +1169,7 @@ abstract mixin class _$VentorFindListenerModelCopyWith<$Res> implements $VentorF
   factory _$VentorFindListenerModelCopyWith(_VentorFindListenerModel value, $Res Function(_VentorFindListenerModel) _then) = __$VentorFindListenerModelCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String name, String avatar_url, double rating, int review_count, int session_count, List<String> topics, List<String> languages, String gender, double rate_per_minute, String bio, List<String> help_with, int voice_preview_seconds, bool is_online, bool is_verified, Map<String, dynamic>? rating_breakdown, String country, String city, String country_iso, Object? life_experiences, Object? boundaries, VentorFindListenerAvailabilityModel? availability, bool is_favorite
+ String id, String name, String avatar_url, double rating, int review_count, int session_count, List<String> topics, List<String> languages, String gender, double rate_per_minute, String bio, List<String> help_with, int voice_preview_seconds, String voice_intro_url, bool is_online, bool is_verified, Map<String, dynamic>? rating_breakdown, String country, String city, String country_iso, Object? life_experiences, Object? boundaries, VentorFindListenerAvailabilityModel? availability, bool is_favorite
 });
 
 
@@ -1184,7 +1186,7 @@ class __$VentorFindListenerModelCopyWithImpl<$Res>
 
 /// Create a copy of VentorFindListenerModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? avatar_url = null,Object? rating = null,Object? review_count = null,Object? session_count = null,Object? topics = null,Object? languages = null,Object? gender = null,Object? rate_per_minute = null,Object? bio = null,Object? help_with = null,Object? voice_preview_seconds = null,Object? is_online = null,Object? is_verified = null,Object? rating_breakdown = freezed,Object? country = null,Object? city = null,Object? country_iso = null,Object? life_experiences = freezed,Object? boundaries = freezed,Object? availability = freezed,Object? is_favorite = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? avatar_url = null,Object? rating = null,Object? review_count = null,Object? session_count = null,Object? topics = null,Object? languages = null,Object? gender = null,Object? rate_per_minute = null,Object? bio = null,Object? help_with = null,Object? voice_preview_seconds = null,Object? voice_intro_url = null,Object? is_online = null,Object? is_verified = null,Object? rating_breakdown = freezed,Object? country = null,Object? city = null,Object? country_iso = null,Object? life_experiences = freezed,Object? boundaries = freezed,Object? availability = freezed,Object? is_favorite = null,}) {
   return _then(_VentorFindListenerModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
@@ -1199,7 +1201,8 @@ as String,rate_per_minute: null == rate_per_minute ? _self.rate_per_minute : rat
 as double,bio: null == bio ? _self.bio : bio // ignore: cast_nullable_to_non_nullable
 as String,help_with: null == help_with ? _self._help_with : help_with // ignore: cast_nullable_to_non_nullable
 as List<String>,voice_preview_seconds: null == voice_preview_seconds ? _self.voice_preview_seconds : voice_preview_seconds // ignore: cast_nullable_to_non_nullable
-as int,is_online: null == is_online ? _self.is_online : is_online // ignore: cast_nullable_to_non_nullable
+as int,voice_intro_url: null == voice_intro_url ? _self.voice_intro_url : voice_intro_url // ignore: cast_nullable_to_non_nullable
+as String,is_online: null == is_online ? _self.is_online : is_online // ignore: cast_nullable_to_non_nullable
 as bool,is_verified: null == is_verified ? _self.is_verified : is_verified // ignore: cast_nullable_to_non_nullable
 as bool,rating_breakdown: freezed == rating_breakdown ? _self._rating_breakdown : rating_breakdown // ignore: cast_nullable_to_non_nullable
 as Map<String, dynamic>?,country: null == country ? _self.country : country // ignore: cast_nullable_to_non_nullable

@@ -41,6 +41,7 @@ class VentorFindListener {
     required this.bio,
     required this.helpWith,
     required this.voicePreviewSeconds,
+    this.voiceIntroUrl = '',
     required this.isOnline,
     required this.isVerified,
     required this.ratingBreakdown,
@@ -66,6 +67,7 @@ class VentorFindListener {
   final String bio;
   final List<String> helpWith;
   final int voicePreviewSeconds;
+  final String voiceIntroUrl;
   final bool isOnline;
   final bool isVerified;
   final Map<int, int> ratingBreakdown;
@@ -100,6 +102,7 @@ class VentorFindListener {
       bio: bio,
       helpWith: helpWith,
       voicePreviewSeconds: voicePreviewSeconds,
+      voiceIntroUrl: voiceIntroUrl,
       isOnline: isOnline,
       isVerified: isVerified,
       ratingBreakdown: ratingBreakdown,

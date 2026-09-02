@@ -38,6 +38,7 @@ class VentorFindListenerData {
     required this.bio,
     required this.helpWith,
     required this.voicePreviewSeconds,
+    this.voiceIntroUrl = '',
     required this.isOnline,
     required this.isVerified,
     required this.ratingBreakdown,
@@ -63,6 +64,7 @@ class VentorFindListenerData {
   final String bio;
   final List<String> helpWith;
   final int voicePreviewSeconds;
+  final String voiceIntroUrl;
   final bool isOnline;
   final bool isVerified;
   final Map<int, int> ratingBreakdown;
@@ -89,6 +91,7 @@ class VentorFindListenerData {
       bio: bio,
       helpWith: helpWith,
       voicePreviewSeconds: voicePreviewSeconds,
+      voiceIntroUrl: voiceIntroUrl,
       isOnline: isOnline,
       isVerified: isVerified,
       ratingBreakdown: ratingBreakdown,
@@ -167,6 +170,10 @@ VentorFindListenerData ventorFindListenerFromApi(
     bio: model.bio.trim(),
     helpWith: List<String>.from(model.help_with),
     voicePreviewSeconds: model.voice_preview_seconds,
+    voiceIntroUrl: resolveApiAssetUrl(
+      model.voice_intro_url,
+      baseUrl: apiBaseUrl,
+    ),
     isOnline: model.is_online,
     isVerified: model.is_verified,
     ratingBreakdown: _ratingBreakdownFromApi(model.rating_breakdown),
@@ -277,28 +284,20 @@ VentorFindListenerAvailabilityData _availabilityFromApi(
   if (model == null) {
     return const VentorFindListenerAvailabilityData(
       days: <String>[],
-      fromHour: '09:00 AM',
-      toHour: '09:00 PM',
-      timeZoneId: 'UTC',
+      fromHour: '',
+      toHour: '',
+      timeZoneId: '',
       acceptInstantCall: false,
-      sessionMinutes: <int>[30, 45, 60],
+      sessionMinutes: <int>[],
     );
   }
 
-  final sessionMinutes = model.session_minutes.isEmpty
-      ? const <int>[30, 45, 60]
-      : List<int>.from(model.session_minutes);
-
   return VentorFindListenerAvailabilityData(
     days: List<String>.from(model.days),
-    fromHour: model.from_hour.trim().isEmpty
-        ? '09:00 AM'
-        : model.from_hour.trim(),
-    toHour: model.to_hour.trim().isEmpty ? '09:00 PM' : model.to_hour.trim(),
-    timeZoneId: model.time_zone_id.trim().isEmpty
-        ? 'UTC'
-        : model.time_zone_id.trim(),
+    fromHour: model.from_hour.trim(),
+    toHour: model.to_hour.trim(),
+    timeZoneId: model.time_zone_id.trim(),
     acceptInstantCall: model.accept_instant_call,
-    sessionMinutes: sessionMinutes,
+    sessionMinutes: List<int>.from(model.session_minutes),
   );
 }
