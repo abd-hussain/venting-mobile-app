@@ -47,4 +47,33 @@ class ListenerSessionsRepository extends BaseRepository {
       },
     ),
   );
+
+  TaskEither<Exception, void> submitSessionFeedback({
+    required String sessionId,
+    required int stars,
+    required bool feltHeard,
+    required bool talkAgain,
+  }) => executeVoidRequest(
+    request: apiClient.post<Object?>(
+      'v1/sessions/$sessionId/feedback',
+      data: {'stars': stars, 'felt_heard': feltHeard, 'talk_again': talkAgain},
+    ),
+  );
+
+  TaskEither<Exception, void> submitSessionReport({
+    required String sessionId,
+    required String reason,
+    required String reportedRole,
+    String? details,
+  }) => executeVoidRequest(
+    request: apiClient.post<Object?>(
+      'v1/sessions/$sessionId/reports',
+      data: {
+        'reason': reason,
+        'reported_role': reportedRole,
+        if (details != null && details.trim().isNotEmpty)
+          'details': details.trim(),
+      },
+    ),
+  );
 }

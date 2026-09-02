@@ -55,6 +55,8 @@ import 'package:venting_mobile_app/domain/usecase/remove_ventor_favorite_listene
 import 'package:venting_mobile_app/domain/usecase/request_listener_payout_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/sign_in_with_apple_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/sign_in_with_google_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/submit_listener_session_feedback_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/submit_listener_session_report_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/submit_ventor_mood_checkin_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/update_listener_about_me_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/update_listener_availability_day_usecase.dart';
@@ -76,6 +78,8 @@ import 'package:venting_mobile_app/presentation/auth/bloc/forgot_password_bloc.d
 import 'package:venting_mobile_app/presentation/auth/forgot_password_screen.dart';
 import 'package:venting_mobile_app/presentation/change_password/bloc/change_password_bloc.dart';
 import 'package:venting_mobile_app/presentation/home/listener/availability/bloc/listener_availability_bloc.dart';
+import 'package:venting_mobile_app/presentation/home/listener/call/bloc/listener_call_rating/listener_call_rating_bloc.dart';
+import 'package:venting_mobile_app/presentation/home/listener/call/bloc/listener_call_report/listener_call_report_bloc.dart';
 import 'package:venting_mobile_app/presentation/home/listener/dashboard/bloc/listener_dashboard/listener_dashboard_bloc.dart';
 import 'package:venting_mobile_app/presentation/home/listener/dashboard/bloc/listener_first_session_tutorial/listener_first_session_tutorial_bloc.dart';
 import 'package:venting_mobile_app/presentation/home/listener/dashboard/bloc/listener_notifications/listener_notifications_bloc.dart';
@@ -206,6 +210,13 @@ mixin VentingModuleBlocs on VentingModule {
         getIt<AcceptListenerSessionRequestUsecase>(),
         getIt<DeclineListenerSessionRequestUsecase>(),
       ),
+    );
+    getIt.registerFactory<ListenerCallRatingBloc>(
+      () =>
+          ListenerCallRatingBloc(getIt<SubmitListenerSessionFeedbackUsecase>()),
+    );
+    getIt.registerFactory<ListenerCallReportBloc>(
+      () => ListenerCallReportBloc(getIt<SubmitListenerSessionReportUsecase>()),
     );
     getIt.registerFactory<ListenerTrainingBloc>(
       () => ListenerTrainingBloc(

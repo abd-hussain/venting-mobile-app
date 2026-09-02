@@ -75,7 +75,10 @@ class _ListenerCallScreenState extends State<ListenerCallScreen>
   }
 
   Future<void> _onReportSession() async {
-    final reason = await showListenerCallReportBottomSheet(context: context);
+    final reason = await showListenerCallReportBottomSheet(
+      context: context,
+      sessionId: widget.args.sessionId,
+    );
     if (!mounted || reason == null) return;
 
     ScaffoldMessenger.of(context).showSnackBar(

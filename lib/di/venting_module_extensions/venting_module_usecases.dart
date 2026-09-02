@@ -104,6 +104,8 @@ import 'package:venting_mobile_app/domain/usecase/save_listener_registration_ste
 import 'package:venting_mobile_app/domain/usecase/save_ventor_registration_step_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/sign_in_with_apple_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/sign_in_with_google_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/submit_listener_session_feedback_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/submit_listener_session_report_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/submit_ventor_mood_checkin_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/update_listener_about_me_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/update_listener_availability_day_usecase.dart';
@@ -526,6 +528,22 @@ mixin VentingModuleUsecases on VentingModule {
   DeclineListenerSessionRequestUsecase declineListenerSessionRequestUsecase(
     ListenerSessionsRepository listenerSessionsRepository,
   ) => DeclineListenerSessionRequestUsecase(listenerSessionsRepository);
+
+  SubmitListenerSessionFeedbackUsecase submitListenerSessionFeedbackUsecase(
+    ListenerSessionsRepository listenerSessionsRepository,
+    VentingPreferences ventingPreferences,
+  ) => SubmitListenerSessionFeedbackUsecase(
+    listenerSessionsRepository,
+    ventingPreferences,
+  );
+
+  SubmitListenerSessionReportUsecase submitListenerSessionReportUsecase(
+    ListenerSessionsRepository listenerSessionsRepository,
+    VentingPreferences ventingPreferences,
+  ) => SubmitListenerSessionReportUsecase(
+    listenerSessionsRepository,
+    ventingPreferences,
+  );
 
   AcknowledgeListenerFirstSessionTutorialUsecase
   acknowledgeListenerFirstSessionTutorialUsecase(
@@ -985,6 +1003,18 @@ mixin VentingModuleUsecases on VentingModule {
     getIt.registerFactory<DeclineListenerSessionRequestUsecase>(
       () => declineListenerSessionRequestUsecase(
         getIt<ListenerSessionsRepository>(),
+      ),
+    );
+    getIt.registerFactory<SubmitListenerSessionFeedbackUsecase>(
+      () => submitListenerSessionFeedbackUsecase(
+        getIt<ListenerSessionsRepository>(),
+        getIt<VentingPreferences>(),
+      ),
+    );
+    getIt.registerFactory<SubmitListenerSessionReportUsecase>(
+      () => submitListenerSessionReportUsecase(
+        getIt<ListenerSessionsRepository>(),
+        getIt<VentingPreferences>(),
       ),
     );
     getIt.registerFactory<AcknowledgeListenerFirstSessionTutorialUsecase>(
