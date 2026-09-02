@@ -3,6 +3,7 @@ import 'package:preferences/preferences.dart';
 import 'package:venting_mobile_app/di/venting_module.dart';
 import 'package:venting_mobile_app/domain/usecase/accept_listener_session_request_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/acknowledge_listener_first_session_tutorial_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/add_ventor_favorite_listener_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/auth_change_password_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/auth_check_email_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/auth_delete_account_usecase.dart';
@@ -32,8 +33,10 @@ import 'package:venting_mobile_app/domain/usecase/get_listener_reviews_usecase.d
 import 'package:venting_mobile_app/domain/usecase/get_listener_sessions_overview_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_listener_setup_progress_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_listener_training_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/get_ventor_find_listeners_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_ventor_home_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_ventor_invites_overview_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/get_ventor_mood_journey_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_ventor_notification_preferences_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_ventor_notifications_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_ventor_point_packages_usecase.dart';
@@ -44,9 +47,11 @@ import 'package:venting_mobile_app/domain/usecase/mark_all_listener_notification
 import 'package:venting_mobile_app/domain/usecase/mark_all_ventor_notifications_read_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/purchase_ventor_points_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/redeem_ventor_reward_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/remove_ventor_favorite_listener_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/request_listener_payout_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/sign_in_with_apple_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/sign_in_with_google_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/submit_ventor_mood_checkin_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/update_listener_about_me_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/update_listener_availability_day_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/update_listener_availability_usecase.dart';
@@ -86,6 +91,7 @@ import 'package:venting_mobile_app/presentation/home/ventor/profile/bloc/ventor_
 import 'package:venting_mobile_app/presentation/home/ventor/rewards/bloc/ventor_buy_points/ventor_buy_points_bloc.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/rewards/bloc/ventor_invites/ventor_invites_bloc.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/rewards/bloc/ventor_rewards/ventor_rewards_bloc.dart';
+import 'package:venting_mobile_app/presentation/home/ventor/sessions/bloc/ventor_find_listeners/ventor_find_listeners_bloc.dart';
 import 'package:venting_mobile_app/presentation/splash/bloc/splash_bloc.dart';
 import 'package:venting_mobile_app/shared_widgets/bottom_sheets/logout_delete_account_confirm/bloc/logout_delete_account_confirm_bloc.dart';
 
@@ -215,6 +221,16 @@ mixin VentingModuleBlocs on VentingModule {
       () => VentorDashboardBloc(
         getIt<GetVentorHomeUsecase>(),
         getIt<GetVentorRewardsUsecase>(),
+        getIt<GetVentorMoodJourneyUsecase>(),
+        getIt<SubmitVentorMoodCheckinUsecase>(),
+        getIt<RedeemVentorRewardUsecase>(),
+      ),
+    );
+    getIt.registerFactory<VentorFindListenersBloc>(
+      () => VentorFindListenersBloc(
+        getIt<GetVentorFindListenersUsecase>(),
+        getIt<AddVentorFavoriteListenerUsecase>(),
+        getIt<RemoveVentorFavoriteListenerUsecase>(),
       ),
     );
     getIt.registerFactory<VentorProfileBloc>(

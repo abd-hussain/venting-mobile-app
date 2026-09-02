@@ -32,6 +32,21 @@ class VentorProfileRepository extends BaseRepository {
         fromJson: VentorFavoritesResponseModel.fromJson,
       );
 
+  TaskEither<Exception, void> addFavorite({required String listenerId}) =>
+      executeVoidRequest(
+        request: apiClient.post<Object?>(
+          'v1/ventors/me/favorites/$listenerId',
+          data: const <String, dynamic>{},
+        ),
+      );
+
+  TaskEither<Exception, void> removeFavorite({required String listenerId}) =>
+      executeVoidRequest(
+        request: apiClient.delete<Object?>(
+          'v1/ventors/me/favorites/$listenerId',
+        ),
+      );
+
   TaskEither<Exception, VentorProfileResponseModel> updateProfile({
     String? nickname,
     String? avatarFilePath,

@@ -7,4 +7,11 @@ sealed class VentorDashboardEvent with _$VentorDashboardEvent {
   const factory VentorDashboardEvent.upcomingSessionUpdated({
     VentorBookedSessionData? session,
   }) = _UpcomingSessionUpdated;
+  const factory VentorDashboardEvent.moodCheckInSubmitted({
+    required VentorMoodKindData mood,
+    String? note,
+  }) = _MoodCheckInSubmitted;
+  const factory VentorDashboardEvent.streakClaimRequested() =
+      _StreakClaimRequested;
+  const factory VentorDashboardEvent.moodFeedbackCleared() = _MoodFeedbackCleared;
 }

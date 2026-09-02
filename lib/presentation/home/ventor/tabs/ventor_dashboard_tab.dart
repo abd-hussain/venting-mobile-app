@@ -58,19 +58,7 @@ class VentorDashboardTabState extends State<VentorDashboardTab> {
     systemNavigationBarIconBrightness: Brightness.light,
   );
 
-  // TODO: Load check-in / streak from ventor wellness API.
-  /// Mon–Sat already checked; Sunday open until today's submit.
-  final List<bool> _streakChecked = [true, true, true, true, true, true, false];
-  VentorMoodKind? _todayMood;
-  String? _todayNote;
-  var _streakClaimed = false;
   var _matchingInstant = false;
-
-  int get _streakCount => _streakChecked.where((d) => d).length;
-
-  bool get _checkedInToday => _todayMood != null;
-
-  bool get _canClaim => _streakChecked.every((d) => d) && !_streakClaimed;
 
   String _greeting(VentingMobLocalizations l10n) {
     final hour = DateTime.now().hour;
@@ -100,8 +88,11 @@ class VentorDashboardTabState extends State<VentorDashboardTab> {
     };
   }
 
-  Future<void> _onMoodTap(VentorMoodOption option) async {
-    if (_checkedInToday) {
+  Future<void> _onMoodTap(
+    VentorDashboardState dashboardState,
+    VentorMoodOption option,
+  ) async {
+    if (dashboardState.hasCheckedInToday || dashboardState.isSubmittingMood) {
       final l10n = VentingMobLocalizations.of(context);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -118,44 +109,17 @@ class VentorDashboardTabState extends State<VentorDashboardTab> {
     );
     if (!mounted || result == null) return;
 
-    setState(() {
-      _todayMood = result.mood;
-      _todayNote = result.note;
-      // Mark today's slot (last day in the weekly mock) as complete.
-      _streakChecked[6] = true;
-    });
-
-    final l10n = VentingMobLocalizations.of(context);
-    final completed = _streakChecked.every((d) => d);
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          completed
-              ? l10n.ventor_home_mood_streak_complete(
-                  VentorHomeCatalog.streakDiscountPercent,
-                )
-              : l10n.ventor_home_mood_saved,
-        ),
-        behavior: SnackBarBehavior.floating,
+    _bloc.add(
+      VentorDashboardEvent.moodCheckInSubmitted(
+        mood: ventorMoodKindToData(result.mood),
+        note: result.note,
       ),
     );
   }
 
-  void _onClaimStreak() {
-    if (!_canClaim) return;
-    setState(() => _streakClaimed = true);
-    final l10n = VentingMobLocalizations.of(context);
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          l10n.ventor_home_streak_claimed(
-            VentorHomeCatalog.streakDiscountPercent,
-          ),
-        ),
-        behavior: SnackBarBehavior.floating,
-      ),
-    );
-    VentorHomeShell.goToTab(context, VentorHomeShell.rewardsTab);
+  void _onClaimStreak(VentorDashboardState dashboardState) {
+    if (!dashboardState.canClaimStreak) return;
+    _bloc.add(const VentorDashboardEvent.streakClaimRequested());
   }
 
   void _goSessions() {
@@ -267,216 +231,267 @@ class VentorDashboardTabState extends State<VentorDashboardTab> {
         listener: (context, state) {
           VentorPointsScope.of(context).onPointsChanged(state.points);
         },
-        child: BlocBuilder<VentorDashboardBloc, VentorDashboardState>(
-          builder: (context, dashboardState) {
-            final name = dashboardState.displayName.isNotEmpty
-                ? dashboardState.displayName
-                : VentorHomeCatalog.mockUserName;
-            final upcoming = dashboardState.hasUpcomingSession
-                ? ventorBookedSessionFromData(dashboardState.upcomingSession!)
-                : null;
-
-            return AnnotatedRegion<SystemUiOverlayStyle>(
-              value: _overlayStyle,
-              child: SafeArea(
-                child: ListView(
-                  padding: const EdgeInsets.fromLTRB(16, 12, 16, 28),
-                  children: [
-                    _HomeHeader(
-                      greeting: '${_greeting(l10n)}, $name 👋',
-                      subtitle: l10n.ventor_home_safe_place,
-                      onNotifications: () =>
-                          openVentorNotificationsScreen(context: context),
-                    ),
-                    const SizedBox(height: 10),
-                    _MoodAndStreakCard(
-                      moodPrompt: l10n.ventor_home_mood_prompt,
-                      selectedMood: _todayMood,
-                      onMoodTap: _onMoodTap,
-                      moodLabelFor: (kind) => _moodLabel(l10n, kind),
-                      todayNote: _checkedInToday ? _todayNote : null,
-                      streakTitle: l10n.ventor_home_streak_title(_streakCount),
-                      streakSubtitle: l10n.ventor_home_streak_subtitle,
-                      streakChecked: _streakChecked,
-                      streakDayLabels: [
-                        l10n.ventor_home_day_mon,
-                        l10n.ventor_home_day_tue,
-                        l10n.ventor_home_day_wed,
-                        l10n.ventor_home_day_thu,
-                        l10n.ventor_home_day_fri,
-                        l10n.ventor_home_day_sat,
-                        l10n.ventor_home_day_sun,
-                      ],
-                      streakClaimLabel: _streakClaimed
-                          ? l10n.ventor_home_streak_claimed_badge
-                          : l10n.ventor_home_streak_claim,
-                      canClaimStreak: _canClaim,
-                      onClaimStreak: _onClaimStreak,
-                    ),
-                    const SizedBox(height: 18),
-                    if (upcoming != null) ...[
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Text(
-                              l10n.ventor_home_upcoming_title,
-                              style: GoogleFonts.inter(
-                                color: Colors.white,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                          ),
-                          TextButton(
-                            onPressed: _goSessions,
-                            style: TextButton.styleFrom(
-                              foregroundColor: SplashColors.purpleMid,
-                              padding: EdgeInsets.zero,
-                              minimumSize: Size.zero,
-                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                            ),
-                            child: Text(
-                              l10n.ventor_home_see_all,
-                              style: GoogleFonts.inter(
-                                fontWeight: FontWeight.w700,
-                                fontSize: 13,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 10),
-                      _UpcomingSessionCard(
-                        session: upcoming,
-                        whenLabel: _upcomingWhenLabel(l10n, upcoming),
-                        statusLabel:
-                            upcoming.status == VentorBookedSessionStatus.live
-                            ? l10n.ventor_sessions_booked_status_live
-                            : l10n.ventor_sessions_booked_status_upcoming,
-                        statusColor:
-                            upcoming.status == VentorBookedSessionStatus.live
-                            ? VentorProfileTheme.success
-                            : SplashColors.purpleMid,
-                        metaLabel: [
-                          l10n.ventor_sessions_duration_minutes(
-                            upcoming.durationMinutes,
-                          ),
-                          if (upcoming.callMode == VentorBookedCallMode.video)
-                            l10n.ventor_sessions_call_video
-                          else
-                            l10n.ventor_sessions_call_voice,
-                          l10n.ventor_sessions_booked_speech_language(
-                            upcoming.speechLanguage,
-                          ),
-                        ].join(' · '),
-                        actionLabel:
-                            upcoming.status == VentorBookedSessionStatus.live
-                            ? l10n.ventor_sessions_booked_join
-                            : l10n.ventor_sessions_booked_details,
-                        onAction: () => _onUpcomingTap(upcoming),
-                      ),
-                      const SizedBox(height: 22),
-                    ],
-
-                    // P5 — Mood-based listener recommendation.
-                    _RecommendationCard(
-                      message: _recommendation(l10n, _todayMood),
-                      cta: l10n.ventor_home_find_listener,
-                      onTap: _goSessions,
-                    ),
-                    const SizedBox(height: 14),
-
-                    // P6 — Points balance and purchase/redemption entry.
-                    VentorPointsHomeCard(
-                      isLoading: dashboardState.isPointsLoading,
-                    ),
-                    const SizedBox(height: 22),
-                    // TODO: Book instant match — wire to instant-match + book session APIs.
-                    Text(
-                      l10n.ventor_home_instant_section_title,
-                      style: GoogleFonts.inter(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    const SizedBox(height: 6),
-                    Text(
-                      l10n.ventor_home_instant_section_subtitle,
-                      style: GoogleFonts.inter(
-                        color: VentorProfileTheme.muted,
-                        fontSize: 13,
-                        height: 1.35,
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-                    _InstantCallCard(
-                      matching: _matchingInstant,
-                      title: l10n.ventor_home_instant_title,
-                      subtitle: l10n.ventor_home_instant_subtitle,
-                      matchingLabel: l10n.ventor_home_instant_matching,
-                      ctaLabel: l10n.ventor_home_instant_cta,
-                      onTap: _bookInstantCall,
-                    ),
-                    const SizedBox(height: 22),
-                    if (dashboardState.hasRecentSessions) ...[
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Text(
-                              l10n.ventor_home_recent_title,
-                              style: GoogleFonts.inter(
-                                color: Colors.white,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                          ),
-                          TextButton(
-                            onPressed: _goSessions,
-                            style: TextButton.styleFrom(
-                              foregroundColor: SplashColors.purpleMid,
-                              padding: EdgeInsets.zero,
-                              minimumSize: Size.zero,
-                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                            ),
-                            child: Text(
-                              l10n.ventor_home_see_all,
-                              style: GoogleFonts.inter(
-                                fontWeight: FontWeight.w700,
-                                fontSize: 13,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 10),
-                      for (final session in dashboardState.recentSessions) ...[
-                        _RecentSessionCard(
-                          listenerName: session.listenerName,
-                          avatarUrl: session.listenerAvatarUrl,
-                          meta: l10n.ventor_home_recent_meta(
-                            session.whenLabel.isNotEmpty
-                                ? session.whenLabel
-                                : l10n.ventor_home_yesterday,
-                            session.durationMinutes,
-                          ),
-                          isFavorite: session.isFavorite,
-                          onTap: _goSessions,
-                        ),
-                        const SizedBox(height: 10),
-                      ],
-                      const SizedBox(height: 8),
-                    ],
-
-                    // P8 — Inspirational footer.
-                    if (dashboardState.hasMotivation)
-                      _MotivationCard(quote: dashboardState.motivation!),
-                  ],
+        child: BlocListener<VentorDashboardBloc, VentorDashboardState>(
+          listenWhen: (previous, current) =>
+              previous.moodFeedback != current.moodFeedback ||
+              (previous.moodErrorMessage != current.moodErrorMessage &&
+                  current.moodErrorMessage.isNotEmpty),
+          listener: (context, state) {
+            final l10n = VentingMobLocalizations.of(context);
+            if (state.moodErrorMessage.isNotEmpty) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(state.moodErrorMessage),
+                  behavior: SnackBarBehavior.floating,
                 ),
+              );
+              return;
+            }
+
+            final message = switch (state.moodFeedback) {
+              VentorDashboardMoodFeedback.saved => l10n.ventor_home_mood_saved,
+              VentorDashboardMoodFeedback.streakComplete =>
+                l10n.ventor_home_mood_streak_complete(
+                  state.streakDiscountPercent,
+                ),
+              VentorDashboardMoodFeedback.streakClaimed =>
+                l10n.ventor_home_streak_claimed(state.streakDiscountPercent),
+              VentorDashboardMoodFeedback.none => null,
+            };
+            if (message == null) return;
+
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(message),
+                behavior: SnackBarBehavior.floating,
               ),
             );
+            _bloc.add(const VentorDashboardEvent.moodFeedbackCleared());
+
+            if (state.moodFeedback ==
+                VentorDashboardMoodFeedback.streakClaimed) {
+              VentorHomeShell.goToTab(context, VentorHomeShell.rewardsTab);
+            }
           },
+          child: BlocBuilder<VentorDashboardBloc, VentorDashboardState>(
+            builder: (context, dashboardState) {
+              final todayMood = ventorMoodKindFromData(
+                dashboardState.todayMood,
+              );
+              final name = dashboardState.displayName.isNotEmpty
+                  ? dashboardState.displayName
+                  : VentorHomeCatalog.mockUserName;
+              final upcoming = dashboardState.hasUpcomingSession
+                  ? ventorBookedSessionFromData(dashboardState.upcomingSession!)
+                  : null;
+
+              return AnnotatedRegion<SystemUiOverlayStyle>(
+                value: _overlayStyle,
+                child: SafeArea(
+                  child: ListView(
+                    padding: const EdgeInsets.fromLTRB(16, 12, 16, 28),
+                    children: [
+                      _HomeHeader(
+                        greeting: '${_greeting(l10n)}, $name 👋',
+                        subtitle: l10n.ventor_home_safe_place,
+                        onNotifications: () =>
+                            openVentorNotificationsScreen(context: context),
+                      ),
+                      const SizedBox(height: 10),
+                      _MoodAndStreakCard(
+                        moodPrompt: l10n.ventor_home_mood_prompt,
+                        selectedMood: todayMood,
+                        isSubmittingMood: dashboardState.isSubmittingMood,
+                        onMoodTap: (option) =>
+                            _onMoodTap(dashboardState, option),
+                        moodLabelFor: (kind) => _moodLabel(l10n, kind),
+                        todayNote: dashboardState.todayNote,
+                        streakTitle: l10n.ventor_home_streak_title(
+                          dashboardState.streakCount,
+                        ),
+                        streakSubtitle: l10n.ventor_home_streak_subtitle,
+                        streakChecked: dashboardState.streakWeekChecked,
+                        streakDayLabels: [
+                          l10n.ventor_home_day_mon,
+                          l10n.ventor_home_day_tue,
+                          l10n.ventor_home_day_wed,
+                          l10n.ventor_home_day_thu,
+                          l10n.ventor_home_day_fri,
+                          l10n.ventor_home_day_sat,
+                          l10n.ventor_home_day_sun,
+                        ],
+                        streakClaimLabel: dashboardState.streakClaimed
+                            ? l10n.ventor_home_streak_claimed_badge
+                            : l10n.ventor_home_streak_claim,
+                        canClaimStreak: dashboardState.canClaimStreak,
+                        isClaimingStreak: dashboardState.isClaimingStreak,
+                        onClaimStreak: () => _onClaimStreak(dashboardState),
+                      ),
+                      const SizedBox(height: 18),
+                      if (upcoming != null) ...[
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                l10n.ventor_home_upcoming_title,
+                                style: GoogleFonts.inter(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ),
+                            TextButton(
+                              onPressed: _goSessions,
+                              style: TextButton.styleFrom(
+                                foregroundColor: SplashColors.purpleMid,
+                                padding: EdgeInsets.zero,
+                                minimumSize: Size.zero,
+                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                              ),
+                              child: Text(
+                                l10n.ventor_home_see_all,
+                                style: GoogleFonts.inter(
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 13,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+                        _UpcomingSessionCard(
+                          session: upcoming,
+                          whenLabel: _upcomingWhenLabel(l10n, upcoming),
+                          statusLabel:
+                              upcoming.status == VentorBookedSessionStatus.live
+                              ? l10n.ventor_sessions_booked_status_live
+                              : l10n.ventor_sessions_booked_status_upcoming,
+                          statusColor:
+                              upcoming.status == VentorBookedSessionStatus.live
+                              ? VentorProfileTheme.success
+                              : SplashColors.purpleMid,
+                          metaLabel: [
+                            l10n.ventor_sessions_duration_minutes(
+                              upcoming.durationMinutes,
+                            ),
+                            if (upcoming.callMode == VentorBookedCallMode.video)
+                              l10n.ventor_sessions_call_video
+                            else
+                              l10n.ventor_sessions_call_voice,
+                            l10n.ventor_sessions_booked_speech_language(
+                              upcoming.speechLanguage,
+                            ),
+                          ].join(' · '),
+                          actionLabel:
+                              upcoming.status == VentorBookedSessionStatus.live
+                              ? l10n.ventor_sessions_booked_join
+                              : l10n.ventor_sessions_booked_details,
+                          onAction: () => _onUpcomingTap(upcoming),
+                        ),
+                        const SizedBox(height: 22),
+                      ],
+
+                      // P5 — Mood-based listener recommendation.
+                      _RecommendationCard(
+                        message: _recommendation(l10n, todayMood),
+                        cta: l10n.ventor_home_find_listener,
+                        onTap: _goSessions,
+                      ),
+                      const SizedBox(height: 14),
+
+                      // P6 — Points balance and purchase/redemption entry.
+                      VentorPointsHomeCard(
+                        isLoading: dashboardState.isPointsLoading,
+                      ),
+                      const SizedBox(height: 22),
+                      Text(
+                        l10n.ventor_home_instant_section_title,
+                        style: GoogleFonts.inter(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      const SizedBox(height: 6),
+                      Text(
+                        l10n.ventor_home_instant_section_subtitle,
+                        style: GoogleFonts.inter(
+                          color: VentorProfileTheme.muted,
+                          fontSize: 13,
+                          height: 1.35,
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      _InstantCallCard(
+                        matching: _matchingInstant,
+                        title: l10n.ventor_home_instant_title,
+                        subtitle: l10n.ventor_home_instant_subtitle,
+                        matchingLabel: l10n.ventor_home_instant_matching,
+                        ctaLabel: l10n.ventor_home_instant_cta,
+                        onTap: _bookInstantCall,
+                      ),
+                      const SizedBox(height: 22),
+                      if (dashboardState.hasRecentSessions) ...[
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                l10n.ventor_home_recent_title,
+                                style: GoogleFonts.inter(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ),
+                            TextButton(
+                              onPressed: _goSessions,
+                              style: TextButton.styleFrom(
+                                foregroundColor: SplashColors.purpleMid,
+                                padding: EdgeInsets.zero,
+                                minimumSize: Size.zero,
+                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                              ),
+                              child: Text(
+                                l10n.ventor_home_see_all,
+                                style: GoogleFonts.inter(
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 13,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+                        for (final session
+                            in dashboardState.recentSessions) ...[
+                          _RecentSessionCard(
+                            listenerName: session.listenerName,
+                            avatarUrl: session.listenerAvatarUrl,
+                            meta: l10n.ventor_home_recent_meta(
+                              session.whenLabel.isNotEmpty
+                                  ? session.whenLabel
+                                  : l10n.ventor_home_yesterday,
+                              session.durationMinutes,
+                            ),
+                            isFavorite: session.isFavorite,
+                            onTap: _goSessions,
+                          ),
+                          const SizedBox(height: 10),
+                        ],
+                        const SizedBox(height: 8),
+                      ],
+
+                      // P8 — Inspirational footer.
+                      if (dashboardState.hasMotivation)
+                        _MotivationCard(quote: dashboardState.motivation!),
+                    ],
+                  ),
+                ),
+              );
+            },
+          ),
         ),
       ),
     );
@@ -553,6 +568,8 @@ class _MoodAndStreakCard extends StatelessWidget {
     required this.canClaimStreak,
     required this.onClaimStreak,
     this.todayNote,
+    this.isSubmittingMood = false,
+    this.isClaimingStreak = false,
   });
 
   final String moodPrompt;
@@ -566,6 +583,8 @@ class _MoodAndStreakCard extends StatelessWidget {
   final List<String> streakDayLabels;
   final String streakClaimLabel;
   final bool canClaimStreak;
+  final bool isSubmittingMood;
+  final bool isClaimingStreak;
   final VoidCallback onClaimStreak;
 
   @override
@@ -589,10 +608,16 @@ class _MoodAndStreakCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 8),
-          _MoodRow(
-            selected: selectedMood,
-            onTap: onMoodTap,
-            labelFor: moodLabelFor,
+          IgnorePointer(
+            ignoring: isSubmittingMood,
+            child: Opacity(
+              opacity: isSubmittingMood ? 0.55 : 1,
+              child: _MoodRow(
+                selected: selectedMood,
+                onTap: onMoodTap,
+                labelFor: moodLabelFor,
+              ),
+            ),
           ),
           if (todayNote != null && todayNote!.trim().isNotEmpty) ...[
             const SizedBox(height: 12),
@@ -645,7 +670,9 @@ class _MoodAndStreakCard extends StatelessWidget {
               SizedBox(
                 height: 36,
                 child: FilledButton.icon(
-                  onPressed: canClaimStreak ? onClaimStreak : null,
+                  onPressed: canClaimStreak && !isClaimingStreak
+                      ? onClaimStreak
+                      : null,
                   style: FilledButton.styleFrom(
                     backgroundColor: canClaimStreak
                         ? SplashColors.purpleMid
@@ -660,12 +687,21 @@ class _MoodAndStreakCard extends StatelessWidget {
                       borderRadius: BorderRadius.circular(999),
                     ),
                   ),
-                  icon: Icon(
-                    canClaimStreak
-                        ? Icons.card_giftcard_rounded
-                        : Icons.check_rounded,
-                    size: 16,
-                  ),
+                  icon: isClaimingStreak
+                      ? const SizedBox(
+                          width: 16,
+                          height: 16,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            color: Colors.white,
+                          ),
+                        )
+                      : Icon(
+                          canClaimStreak
+                              ? Icons.card_giftcard_rounded
+                              : Icons.check_rounded,
+                          size: 16,
+                        ),
                   label: Text(
                     streakClaimLabel,
                     style: GoogleFonts.inter(

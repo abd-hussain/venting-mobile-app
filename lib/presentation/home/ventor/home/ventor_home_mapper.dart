@@ -1,5 +1,27 @@
 import 'package:venting_mobile_app/domain/data/app/ventor_home.dart';
+import 'package:venting_mobile_app/presentation/home/ventor/home/ventor_home_models.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/sessions/ventor_sessions_models.dart';
+
+VentorMoodKind? ventorMoodKindFromData(VentorMoodKindData? mood) {
+  if (mood == null) return null;
+  return switch (mood) {
+    VentorMoodKindData.great => VentorMoodKind.great,
+    VentorMoodKindData.okay => VentorMoodKind.okay,
+    VentorMoodKindData.anxious => VentorMoodKind.anxious,
+    VentorMoodKindData.sad => VentorMoodKind.sad,
+    VentorMoodKindData.angry => VentorMoodKind.angry,
+  };
+}
+
+VentorMoodKindData ventorMoodKindToData(VentorMoodKind mood) {
+  return switch (mood) {
+    VentorMoodKind.great => VentorMoodKindData.great,
+    VentorMoodKind.okay => VentorMoodKindData.okay,
+    VentorMoodKind.anxious => VentorMoodKindData.anxious,
+    VentorMoodKind.sad => VentorMoodKindData.sad,
+    VentorMoodKind.angry => VentorMoodKindData.angry,
+  };
+}
 
 VentorBookedSession ventorBookedSessionFromData(VentorBookedSessionData data) {
   return VentorBookedSession(
