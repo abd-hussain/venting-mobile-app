@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shimmer_manager/shimmer_manager.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/profile/ventor_profile_theme.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/rewards/ventor_buy_points_bottom_sheet.dart';
@@ -8,7 +9,9 @@ import 'package:venting_mobile_app/presentation/home/ventor/rewards/ventor_rewar
 import 'package:venting_mobile_app/presentation/home/ventor/ventor_home_shell.dart';
 
 class VentorPointsHomeCard extends StatelessWidget {
-  const VentorPointsHomeCard({super.key});
+  const VentorPointsHomeCard({super.key, this.isLoading = false});
+
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -63,14 +66,28 @@ class VentorPointsHomeCard extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 4),
-                    Text(
-                      l10n.ventor_rewards_pts(formatVentorPoints(points)),
-                      style: GoogleFonts.inter(
-                        color: VentorProfileTheme.gold,
-                        fontSize: 13,
-                        fontWeight: FontWeight.w700,
+                    if (isLoading)
+                      Shimmer.fromColors(
+                        baseColor: Colors.white.withValues(alpha: 0.08),
+                        highlightColor: Colors.white.withValues(alpha: 0.18),
+                        child: Container(
+                          width: 72,
+                          height: 14,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(6),
+                          ),
+                        ),
+                      )
+                    else
+                      Text(
+                        l10n.ventor_rewards_pts(formatVentorPoints(points)),
+                        style: GoogleFonts.inter(
+                          color: VentorProfileTheme.gold,
+                          fontSize: 13,
+                          fontWeight: FontWeight.w700,
+                        ),
                       ),
-                    ),
                   ],
                 ),
               ),

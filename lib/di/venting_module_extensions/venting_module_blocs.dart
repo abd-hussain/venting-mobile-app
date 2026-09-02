@@ -32,6 +32,7 @@ import 'package:venting_mobile_app/domain/usecase/get_listener_reviews_usecase.d
 import 'package:venting_mobile_app/domain/usecase/get_listener_sessions_overview_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_listener_setup_progress_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_listener_training_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/get_ventor_home_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_ventor_invites_overview_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_ventor_notification_preferences_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_ventor_notifications_usecase.dart';
@@ -78,6 +79,7 @@ import 'package:venting_mobile_app/presentation/home/listener/profile/bloc/payme
 import 'package:venting_mobile_app/presentation/home/listener/profile/bloc/payout_history/listener_payout_history_bloc.dart';
 import 'package:venting_mobile_app/presentation/home/listener/profile/bloc/privacy_visibility/listener_privacy_visibility_bloc.dart';
 import 'package:venting_mobile_app/presentation/home/listener/sessions/bloc/listener_sessions/listener_sessions_bloc.dart';
+import 'package:venting_mobile_app/presentation/home/ventor/dashboard/bloc/ventor_dashboard/ventor_dashboard_bloc.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/dashboard/bloc/ventor_notifications_bloc.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/profile/bloc/notification_preferences/ventor_notification_preferences_bloc.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/profile/bloc/ventor_profile/ventor_profile_bloc.dart';
@@ -207,6 +209,12 @@ mixin VentingModuleBlocs on VentingModule {
         getIt<GetVentorNotificationsUsecase>(),
         getIt<MarkAllVentorNotificationsReadUsecase>(),
         getIt<DeleteVentorNotificationUsecase>(),
+      ),
+    );
+    getIt.registerFactory<VentorDashboardBloc>(
+      () => VentorDashboardBloc(
+        getIt<GetVentorHomeUsecase>(),
+        getIt<GetVentorRewardsUsecase>(),
       ),
     );
     getIt.registerFactory<VentorProfileBloc>(

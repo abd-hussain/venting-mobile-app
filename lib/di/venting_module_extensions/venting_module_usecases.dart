@@ -28,6 +28,7 @@ import 'package:venting_mobile_app/domain/repository/api/listener/listener_regis
 import 'package:venting_mobile_app/domain/repository/api/listener/listener_sessions_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/listener/listener_setup_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/listener/listener_training_repository.dart';
+import 'package:venting_mobile_app/domain/repository/api/ventor/ventor_home_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/ventor/ventor_notification_preferences_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/ventor/ventor_notifications_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/ventor/ventor_profile_repository.dart';
@@ -74,6 +75,7 @@ import 'package:venting_mobile_app/domain/usecase/get_listener_reviews_usecase.d
 import 'package:venting_mobile_app/domain/usecase/get_listener_sessions_overview_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_listener_setup_progress_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_listener_training_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/get_ventor_home_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_ventor_invites_overview_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_ventor_notification_preferences_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_ventor_notifications_usecase.dart';
@@ -246,6 +248,11 @@ mixin VentingModuleUsecases on VentingModule {
     ventorNotificationsRepository,
     ventingPreferences,
   );
+
+  GetVentorHomeUsecase getVentorHomeUsecase(
+    VentorHomeRepository ventorHomeRepository,
+    VentingPreferences ventingPreferences,
+  ) => GetVentorHomeUsecase(ventorHomeRepository, ventingPreferences);
 
   MarkAllVentorNotificationsReadUsecase markAllVentorNotificationsReadUsecase(
     VentorNotificationsRepository ventorNotificationsRepository,
@@ -669,6 +676,12 @@ mixin VentingModuleUsecases on VentingModule {
     getIt.registerFactory<GetVentorNotificationsUsecase>(
       () => getVentorNotificationsUsecase(
         getIt<VentorNotificationsRepository>(),
+        getIt<VentingPreferences>(),
+      ),
+    );
+    getIt.registerFactory<GetVentorHomeUsecase>(
+      () => getVentorHomeUsecase(
+        getIt<VentorHomeRepository>(),
         getIt<VentingPreferences>(),
       ),
     );

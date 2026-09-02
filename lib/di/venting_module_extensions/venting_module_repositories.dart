@@ -29,6 +29,7 @@ import 'package:venting_mobile_app/domain/repository/api/listener/listener_regis
 import 'package:venting_mobile_app/domain/repository/api/listener/listener_sessions_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/listener/listener_setup_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/listener/listener_training_repository.dart';
+import 'package:venting_mobile_app/domain/repository/api/ventor/ventor_home_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/ventor/ventor_notification_preferences_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/ventor/ventor_notifications_repository.dart';
 import 'package:venting_mobile_app/domain/repository/api/ventor/ventor_profile_repository.dart';
@@ -161,6 +162,9 @@ mixin VentingModuleRepositories on VentingModule {
   VentorRewardsRepository ventorRewardsRepository(ApiClientBase apiClient) =>
       VentorRewardsRepository(apiClient);
 
+  VentorHomeRepository ventorHomeRepository(ApiClientBase apiClient) =>
+      VentorHomeRepository(apiClient);
+
   /// Registers all repository dependencies
   void registerRepositories(GetIt getIt) {
     getIt.registerFactory<AuthCheckEmailRepository>(
@@ -255,6 +259,9 @@ mixin VentingModuleRepositories on VentingModule {
     );
     getIt.registerFactory<VentorRewardsRepository>(
       () => ventorRewardsRepository(getIt<ApiClientBase>()),
+    );
+    getIt.registerFactory<VentorHomeRepository>(
+      () => ventorHomeRepository(getIt<ApiClientBase>()),
     );
     getIt.registerFactory<VentorNotificationPreferencesRepository>(
       () => ventorNotificationPreferencesRepository(getIt<ApiClientBase>()),

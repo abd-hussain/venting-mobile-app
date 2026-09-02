@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/rewards/ventor_points_scope.dart';
-import 'package:venting_mobile_app/presentation/home/ventor/rewards/ventor_rewards_models.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/tabs/ventor_dashboard_tab.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/tabs/ventor_profile_tab.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/tabs/ventor_rewards_tab.dart';
@@ -40,12 +39,13 @@ class VentorHomeShell extends StatefulWidget {
 
 class _VentorHomeShellState extends State<VentorHomeShell> {
   int _index = 0;
-  var _points = VentorRewardsCatalog.mockPoints;
+  var _points = 0;
+  final _dashboardTabKey = GlobalKey<VentorDashboardTabState>();
   final _sessionsTabKey = GlobalKey<VentorSessionsTabState>();
   final _rewardsTabKey = GlobalKey<VentorRewardsTabState>();
 
   late final List<Widget> _tabs = <Widget>[
-    const VentorDashboardTab(),
+    VentorDashboardTab(key: _dashboardTabKey),
     VentorSessionsTab(key: _sessionsTabKey),
     VentorRewardsTab(key: _rewardsTabKey),
     const VentorProfileTab(),
@@ -53,6 +53,9 @@ class _VentorHomeShellState extends State<VentorHomeShell> {
 
   void goToTab(int index) {
     if (index < 0 || index >= _tabs.length) return;
+    if (index == VentorHomeShell.dashboardTab) {
+      _dashboardTabKey.currentState?.onTabOpened();
+    }
     if (index == VentorHomeShell.rewardsTab) {
       _rewardsTabKey.currentState?.onTabOpened();
     }
