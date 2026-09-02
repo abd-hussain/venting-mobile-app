@@ -159,7 +159,7 @@ class VentorNotificationsScreen extends StatelessWidget {
           body: BlocBuilder<VentorNotificationsBloc, VentorNotificationsState>(
             builder: (context, state) {
               if (state.isLoading) {
-                return const Center(child: CircularProgressIndicator());
+                return const InboxNotificationsShimmer();
               }
 
               if (state.isLoadFailure) {

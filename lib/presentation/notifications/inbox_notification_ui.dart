@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shimmer_manager/shimmer_manager.dart';
 import 'package:venting_mobile_app/domain/data/app/listener_notification.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
 import 'package:venting_mobile_app/presentation/home/listener/profile/listener_profile_theme.dart';
@@ -138,6 +139,125 @@ class InboxNotificationCard extends StatelessWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class InboxNotificationsShimmer extends StatelessWidget {
+  const InboxNotificationsShimmer({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Shimmer.fromColors(
+      baseColor: Colors.white.withValues(alpha: 0.08),
+      highlightColor: Colors.white.withValues(alpha: 0.16),
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20, 4, 20, 12),
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: Container(
+                width: 132,
+                height: 32,
+                decoration: BoxDecoration(
+                  color: ListenerProfileTheme.cardFill,
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(color: ListenerProfileTheme.cardBorder),
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            child: ListView.separated(
+              padding: const EdgeInsets.fromLTRB(20, 0, 20, 28),
+              itemCount: 6,
+              separatorBuilder: (_, __) => const SizedBox(height: 10),
+              itemBuilder: (_, __) => const _InboxNotificationCardShimmer(),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _InboxNotificationCardShimmer extends StatelessWidget {
+  const _InboxNotificationCardShimmer();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: ListenerProfileTheme.cardFill,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: ListenerProfileTheme.cardBorder),
+      ),
+      child: const Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _InboxShimmerBox(width: 40, height: 40, radius: 12),
+          SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _InboxShimmerLine(width: double.infinity, height: 14),
+                SizedBox(height: 8),
+                _InboxShimmerLine(width: double.infinity, height: 12),
+                SizedBox(height: 6),
+                _InboxShimmerLine(width: 168, height: 12),
+                SizedBox(height: 10),
+                _InboxShimmerLine(width: 64, height: 11),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _InboxShimmerLine extends StatelessWidget {
+  const _InboxShimmerLine({required this.width, required this.height});
+
+  final double width;
+  final double height;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: width,
+      height: height,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(6),
+      ),
+    );
+  }
+}
+
+class _InboxShimmerBox extends StatelessWidget {
+  const _InboxShimmerBox({
+    required this.width,
+    required this.height,
+    required this.radius,
+  });
+
+  final double width;
+  final double height;
+  final double radius;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: width,
+      height: height,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(radius),
       ),
     );
   }

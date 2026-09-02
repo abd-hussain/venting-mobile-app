@@ -163,7 +163,7 @@ class ListenerNotificationsScreen extends StatelessWidget {
           body: BlocBuilder<ListenerNotificationsBloc, ListenerNotificationsState>(
             builder: (context, state) {
               if (state.isLoading) {
-                return const Center(child: CircularProgressIndicator());
+                return const InboxNotificationsShimmer();
               }
 
               if (state.isLoadFailure) {
