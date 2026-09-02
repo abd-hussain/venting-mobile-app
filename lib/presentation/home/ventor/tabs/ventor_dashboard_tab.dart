@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:venting_mobile_app/di/di_container.dart';
+import 'package:venting_mobile_app/domain/data/app/ventor_home.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/call/ventor_call_args.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/call/ventor_call_flow.dart';
+import 'package:venting_mobile_app/presentation/home/ventor/dashboard/bloc/ventor_dashboard/ventor_dashboard_bloc.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/dashboard/ventor_notifications_screen.dart';
+import 'package:venting_mobile_app/presentation/home/ventor/home/ventor_home_mapper.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/home/ventor_home_models.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/home/ventor_mood_checkin_sheet.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/home/ventor_points_home_card.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/profile/ventor_profile_theme.dart';
+import 'package:venting_mobile_app/presentation/home/ventor/rewards/ventor_points_scope.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/sessions/ventor_before_connecting_screen.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/sessions/ventor_booked_session_details_screen.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/sessions/ventor_session_duration_sheet.dart';
@@ -21,10 +27,29 @@ class VentorDashboardTab extends StatefulWidget {
   const VentorDashboardTab({super.key});
 
   @override
-  State<VentorDashboardTab> createState() => _VentorDashboardTabState();
+  State<VentorDashboardTab> createState() => VentorDashboardTabState();
 }
 
-class _VentorDashboardTabState extends State<VentorDashboardTab> {
+class VentorDashboardTabState extends State<VentorDashboardTab> {
+  late final VentorDashboardBloc _bloc;
+
+  @override
+  void initState() {
+    super.initState();
+    _bloc = diContainer<VentorDashboardBloc>()
+      ..add(const VentorDashboardEvent.started());
+  }
+
+  @override
+  void dispose() {
+    _bloc.close();
+    super.dispose();
+  }
+
+  void onTabOpened() {
+    _bloc.add(const VentorDashboardEvent.refreshRequested());
+  }
+
   static const _overlayStyle = SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
     statusBarBrightness: Brightness.dark,
@@ -33,49 +58,7 @@ class _VentorDashboardTabState extends State<VentorDashboardTab> {
     systemNavigationBarIconBrightness: Brightness.light,
   );
 
-  // TODO: Load check-in / streak from ventor wellness API.
-  /// Mon–Sat already checked; Sunday open until today's submit.
-  final List<bool> _streakChecked = [true, true, true, true, true, true, false];
-  VentorMoodKind? _todayMood;
-  String? _todayNote;
-  var _streakClaimed = false;
   var _matchingInstant = false;
-  late List<VentorBookedSession> _bookedSessions;
-
-  @override
-  void initState() {
-    super.initState();
-    // TODO: Load booked sessions from API for home upcoming card.
-    _bookedSessions = VentorSessionsCatalog.mockBookedSessions();
-  }
-
-  VentorBookedSession? get _nearestUpcoming {
-    final now = DateTime.now();
-    final candidates = _bookedSessions.where((s) {
-      return s.status == VentorBookedSessionStatus.live ||
-          s.status == VentorBookedSessionStatus.upcoming;
-    }).toList();
-    if (candidates.isEmpty) return null;
-    candidates.sort((a, b) {
-      int rank(VentorBookedSessionStatus status) => switch (status) {
-        VentorBookedSessionStatus.live => 0,
-        VentorBookedSessionStatus.upcoming => 1,
-        _ => 2,
-      };
-      final byStatus = rank(a.status).compareTo(rank(b.status));
-      if (byStatus != 0) return byStatus;
-      final aTime = a.scheduledAt ?? now;
-      final bTime = b.scheduledAt ?? now;
-      return aTime.compareTo(bTime);
-    });
-    return candidates.first;
-  }
-
-  int get _streakCount => _streakChecked.where((d) => d).length;
-
-  bool get _checkedInToday => _todayMood != null;
-
-  bool get _canClaim => _streakChecked.every((d) => d) && !_streakClaimed;
 
   String _greeting(VentingMobLocalizations l10n) {
     final hour = DateTime.now().hour;
@@ -105,8 +88,11 @@ class _VentorDashboardTabState extends State<VentorDashboardTab> {
     };
   }
 
-  Future<void> _onMoodTap(VentorMoodOption option) async {
-    if (_checkedInToday) {
+  Future<void> _onMoodTap(
+    VentorDashboardState dashboardState,
+    VentorMoodOption option,
+  ) async {
+    if (dashboardState.hasCheckedInToday || dashboardState.isSubmittingMood) {
       final l10n = VentingMobLocalizations.of(context);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -123,44 +109,17 @@ class _VentorDashboardTabState extends State<VentorDashboardTab> {
     );
     if (!mounted || result == null) return;
 
-    setState(() {
-      _todayMood = result.mood;
-      _todayNote = result.note;
-      // Mark today's slot (last day in the weekly mock) as complete.
-      _streakChecked[6] = true;
-    });
-
-    final l10n = VentingMobLocalizations.of(context);
-    final completed = _streakChecked.every((d) => d);
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          completed
-              ? l10n.ventor_home_mood_streak_complete(
-                  VentorHomeCatalog.streakDiscountPercent,
-                )
-              : l10n.ventor_home_mood_saved,
-        ),
-        behavior: SnackBarBehavior.floating,
+    _bloc.add(
+      VentorDashboardEvent.moodCheckInSubmitted(
+        mood: ventorMoodKindToData(result.mood),
+        note: result.note,
       ),
     );
   }
 
-  void _onClaimStreak() {
-    if (!_canClaim) return;
-    setState(() => _streakClaimed = true);
-    final l10n = VentingMobLocalizations.of(context);
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          l10n.ventor_home_streak_claimed(
-            VentorHomeCatalog.streakDiscountPercent,
-          ),
-        ),
-        behavior: SnackBarBehavior.floating,
-      ),
-    );
-    VentorHomeShell.goToTab(context, VentorHomeShell.rewardsTab);
+  void _onClaimStreak(VentorDashboardState dashboardState) {
+    if (!dashboardState.canClaimStreak) return;
+    _bloc.add(const VentorDashboardEvent.streakClaimRequested());
   }
 
   void _goSessions() {
@@ -199,15 +158,7 @@ class _VentorDashboardTabState extends State<VentorDashboardTab> {
         ),
       );
       if (!mounted || completed != true) return;
-      setState(() {
-        _bookedSessions = [
-          for (final item in _bookedSessions)
-            if (item.id == session.id)
-              item.copyWith(status: VentorBookedSessionStatus.completed)
-            else
-              item,
-        ];
-      });
+      _bloc.add(const VentorDashboardEvent.upcomingSessionUpdated());
       VentorHomeShell.goToDashboard(context);
       return;
     }
@@ -218,15 +169,20 @@ class _VentorDashboardTabState extends State<VentorDashboardTab> {
         session: session,
       );
       if (!mounted || updated == null) return;
-      setState(() {
-        _bookedSessions = [
-          for (final item in _bookedSessions)
-            if (item.id == updated.id) updated else item,
-        ];
-      });
+      final updatedData = ventorBookedSessionToData(updated);
+      final shouldHide =
+          updatedData.status != VentorBookedSessionStatusData.live &&
+          updatedData.status != VentorBookedSessionStatusData.upcoming;
+      _bloc.add(
+        VentorDashboardEvent.upcomingSessionUpdated(
+          session: shouldHide ? null : updatedData,
+        ),
+      );
     }
   }
 
+  // TODO: Wire book instant match — POST /v1/sessions/instant-match, then book
+  // session flow (#42). Replace mock listener lookup below.
   Future<void> _bookInstantCall() async {
     if (_matchingInstant) return;
     final l10n = VentingMobLocalizations.of(context);
@@ -266,222 +222,276 @@ class _VentorDashboardTabState extends State<VentorDashboardTab> {
   @override
   Widget build(BuildContext context) {
     final l10n = VentingMobLocalizations.of(context);
-    final name = VentorHomeCatalog.mockUserName;
+    return BlocProvider.value(
+      value: _bloc,
+      child: BlocListener<VentorDashboardBloc, VentorDashboardState>(
+        listenWhen: (previous, current) =>
+            previous.points != current.points &&
+            current.pointsStatus == VentorDashboardPointsStatus.ready,
+        listener: (context, state) {
+          VentorPointsScope.of(context).onPointsChanged(state.points);
+        },
+        child: BlocListener<VentorDashboardBloc, VentorDashboardState>(
+          listenWhen: (previous, current) =>
+              previous.moodFeedback != current.moodFeedback ||
+              (previous.moodErrorMessage != current.moodErrorMessage &&
+                  current.moodErrorMessage.isNotEmpty),
+          listener: (context, state) {
+            final l10n = VentingMobLocalizations.of(context);
+            if (state.moodErrorMessage.isNotEmpty) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(state.moodErrorMessage),
+                  behavior: SnackBarBehavior.floating,
+                ),
+              );
+              return;
+            }
 
-    return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: _overlayStyle,
-      child: SafeArea(
-        child: ListView(
-          padding: const EdgeInsets.fromLTRB(16, 12, 16, 28),
-          children: [
-            // Dashboard sections are ordered by user priority (highest first).
-            _HomeHeader(
-              greeting: '${_greeting(l10n)}, $name 👋',
-              subtitle: l10n.ventor_home_safe_place,
-              onNotifications: () =>
-                  openVentorNotificationsScreen(context: context),
-            ),
-            const SizedBox(height: 22),
+            final message = switch (state.moodFeedback) {
+              VentorDashboardMoodFeedback.saved => l10n.ventor_home_mood_saved,
+              VentorDashboardMoodFeedback.streakComplete =>
+                l10n.ventor_home_mood_streak_complete(
+                  state.streakDiscountPercent,
+                ),
+              VentorDashboardMoodFeedback.streakClaimed =>
+                l10n.ventor_home_streak_claimed(state.streakDiscountPercent),
+              VentorDashboardMoodFeedback.none => null,
+            };
+            if (message == null) return;
 
-            // P1 — Time-sensitive: join live or review upcoming booking.
-            if (_nearestUpcoming != null) ...[
-              Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      l10n.ventor_home_upcoming_title,
-                      style: GoogleFonts.inter(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(message),
+                behavior: SnackBarBehavior.floating,
+              ),
+            );
+            _bloc.add(const VentorDashboardEvent.moodFeedbackCleared());
+
+            if (state.moodFeedback ==
+                VentorDashboardMoodFeedback.streakClaimed) {
+              VentorHomeShell.goToTab(context, VentorHomeShell.rewardsTab);
+            }
+          },
+          child: BlocBuilder<VentorDashboardBloc, VentorDashboardState>(
+            builder: (context, dashboardState) {
+              final todayMood = ventorMoodKindFromData(
+                dashboardState.todayMood,
+              );
+              final name = dashboardState.displayName.isNotEmpty
+                  ? dashboardState.displayName
+                  : VentorHomeCatalog.mockUserName;
+              final upcoming = dashboardState.hasUpcomingSession
+                  ? ventorBookedSessionFromData(dashboardState.upcomingSession!)
+                  : null;
+
+              return AnnotatedRegion<SystemUiOverlayStyle>(
+                value: _overlayStyle,
+                child: SafeArea(
+                  child: ListView(
+                    padding: const EdgeInsets.fromLTRB(16, 12, 16, 28),
+                    children: [
+                      _HomeHeader(
+                        greeting: '${_greeting(l10n)}, $name 👋',
+                        subtitle: l10n.ventor_home_safe_place,
+                        onNotifications: () =>
+                            openVentorNotificationsScreen(context: context),
                       ),
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: _goSessions,
-                    style: TextButton.styleFrom(
-                      foregroundColor: SplashColors.purpleMid,
-                      padding: EdgeInsets.zero,
-                      minimumSize: Size.zero,
-                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    ),
-                    child: Text(
-                      l10n.ventor_home_see_all,
-                      style: GoogleFonts.inter(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 13,
+                      const SizedBox(height: 10),
+                      _MoodAndStreakCard(
+                        moodPrompt: l10n.ventor_home_mood_prompt,
+                        selectedMood: todayMood,
+                        isSubmittingMood: dashboardState.isSubmittingMood,
+                        onMoodTap: (option) =>
+                            _onMoodTap(dashboardState, option),
+                        moodLabelFor: (kind) => _moodLabel(l10n, kind),
+                        todayNote: dashboardState.todayNote,
+                        streakTitle: l10n.ventor_home_streak_title(
+                          dashboardState.streakCount,
+                        ),
+                        streakSubtitle: l10n.ventor_home_streak_subtitle,
+                        streakChecked: dashboardState.streakWeekChecked,
+                        streakDayLabels: [
+                          l10n.ventor_home_day_mon,
+                          l10n.ventor_home_day_tue,
+                          l10n.ventor_home_day_wed,
+                          l10n.ventor_home_day_thu,
+                          l10n.ventor_home_day_fri,
+                          l10n.ventor_home_day_sat,
+                          l10n.ventor_home_day_sun,
+                        ],
+                        streakClaimLabel: dashboardState.streakClaimed
+                            ? l10n.ventor_home_streak_claimed_badge
+                            : l10n.ventor_home_streak_claim,
+                        canClaimStreak: dashboardState.canClaimStreak,
+                        isClaimingStreak: dashboardState.isClaimingStreak,
+                        onClaimStreak: () => _onClaimStreak(dashboardState),
                       ),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 10),
-              _UpcomingSessionCard(
-                session: _nearestUpcoming!,
-                whenLabel: _upcomingWhenLabel(l10n, _nearestUpcoming!),
-                statusLabel:
-                    _nearestUpcoming!.status == VentorBookedSessionStatus.live
-                    ? l10n.ventor_sessions_booked_status_live
-                    : l10n.ventor_sessions_booked_status_upcoming,
-                statusColor:
-                    _nearestUpcoming!.status == VentorBookedSessionStatus.live
-                    ? VentorProfileTheme.success
-                    : SplashColors.purpleMid,
-                metaLabel: [
-                  l10n.ventor_sessions_duration_minutes(
-                    _nearestUpcoming!.durationMinutes,
-                  ),
-                  if (_nearestUpcoming!.callMode == VentorBookedCallMode.video)
-                    l10n.ventor_sessions_call_video
-                  else
-                    l10n.ventor_sessions_call_voice,
-                  l10n.ventor_sessions_booked_speech_language(
-                    _nearestUpcoming!.speechLanguage,
-                  ),
-                ].join(' · '),
-                actionLabel:
-                    _nearestUpcoming!.status == VentorBookedSessionStatus.live
-                    ? l10n.ventor_sessions_booked_join
-                    : l10n.ventor_sessions_booked_details,
-                onAction: () => _onUpcomingTap(_nearestUpcoming!),
-              ),
-              const SizedBox(height: 22),
-            ],
+                      const SizedBox(height: 18),
+                      if (upcoming != null) ...[
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                l10n.ventor_home_upcoming_title,
+                                style: GoogleFonts.inter(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ),
+                            TextButton(
+                              onPressed: _goSessions,
+                              style: TextButton.styleFrom(
+                                foregroundColor: SplashColors.purpleMid,
+                                padding: EdgeInsets.zero,
+                                minimumSize: Size.zero,
+                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                              ),
+                              child: Text(
+                                l10n.ventor_home_see_all,
+                                style: GoogleFonts.inter(
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 13,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+                        _UpcomingSessionCard(
+                          session: upcoming,
+                          whenLabel: _upcomingWhenLabel(l10n, upcoming),
+                          statusLabel:
+                              upcoming.status == VentorBookedSessionStatus.live
+                              ? l10n.ventor_sessions_booked_status_live
+                              : l10n.ventor_sessions_booked_status_upcoming,
+                          statusColor:
+                              upcoming.status == VentorBookedSessionStatus.live
+                              ? VentorProfileTheme.success
+                              : SplashColors.purpleMid,
+                          metaLabel: [
+                            l10n.ventor_sessions_duration_minutes(
+                              upcoming.durationMinutes,
+                            ),
+                            if (upcoming.callMode == VentorBookedCallMode.video)
+                              l10n.ventor_sessions_call_video
+                            else
+                              l10n.ventor_sessions_call_voice,
+                            l10n.ventor_sessions_booked_speech_language(
+                              upcoming.speechLanguage,
+                            ),
+                          ].join(' · '),
+                          actionLabel:
+                              upcoming.status == VentorBookedSessionStatus.live
+                              ? l10n.ventor_sessions_booked_join
+                              : l10n.ventor_sessions_booked_details,
+                          onAction: () => _onUpcomingTap(upcoming),
+                        ),
+                        const SizedBox(height: 22),
+                      ],
 
-            // P2 — Primary action: connect with a listener now.
-            Text(
-              l10n.ventor_home_instant_section_title,
-              style: GoogleFonts.inter(
-                color: Colors.white,
-                fontSize: 16,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-            const SizedBox(height: 6),
-            Text(
-              l10n.ventor_home_instant_section_subtitle,
-              style: GoogleFonts.inter(
-                color: VentorProfileTheme.muted,
-                fontSize: 13,
-                height: 1.35,
-              ),
-            ),
-            const SizedBox(height: 12),
-            _InstantCallCard(
-              matching: _matchingInstant,
-              title: l10n.ventor_home_instant_title,
-              subtitle: l10n.ventor_home_instant_subtitle,
-              matchingLabel: l10n.ventor_home_instant_matching,
-              ctaLabel: l10n.ventor_home_instant_cta,
-              onTap: _bookInstantCall,
-            ),
-            const SizedBox(height: 22),
+                      // P5 — Mood-based listener recommendation.
+                      _RecommendationCard(
+                        message: _recommendation(l10n, todayMood),
+                        cta: l10n.ventor_home_find_listener,
+                        onTap: _goSessions,
+                      ),
+                      const SizedBox(height: 14),
 
-            // P3 — Daily mood check-in.
-            Text(
-              l10n.ventor_home_mood_prompt,
-              style: GoogleFonts.inter(
-                color: Colors.white,
-                fontSize: 16,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-            const SizedBox(height: 14),
-            _MoodRow(
-              selected: _todayMood,
-              onTap: _onMoodTap,
-              labelFor: (kind) => _moodLabel(l10n, kind),
-            ),
-            if (_checkedInToday && _todayNote != null) ...[
-              const SizedBox(height: 12),
-              _TodayNoteCard(note: _todayNote!),
-            ],
-            const SizedBox(height: 14),
+                      // P6 — Points balance and purchase/redemption entry.
+                      VentorPointsHomeCard(
+                        isLoading: dashboardState.isPointsLoading,
+                      ),
+                      const SizedBox(height: 22),
+                      Text(
+                        l10n.ventor_home_instant_section_title,
+                        style: GoogleFonts.inter(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      const SizedBox(height: 6),
+                      Text(
+                        l10n.ventor_home_instant_section_subtitle,
+                        style: GoogleFonts.inter(
+                          color: VentorProfileTheme.muted,
+                          fontSize: 13,
+                          height: 1.35,
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      _InstantCallCard(
+                        matching: _matchingInstant,
+                        title: l10n.ventor_home_instant_title,
+                        subtitle: l10n.ventor_home_instant_subtitle,
+                        matchingLabel: l10n.ventor_home_instant_matching,
+                        ctaLabel: l10n.ventor_home_instant_cta,
+                        onTap: _bookInstantCall,
+                      ),
+                      const SizedBox(height: 22),
+                      if (dashboardState.hasRecentSessions) ...[
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                l10n.ventor_home_recent_title,
+                                style: GoogleFonts.inter(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ),
+                            TextButton(
+                              onPressed: _goSessions,
+                              style: TextButton.styleFrom(
+                                foregroundColor: SplashColors.purpleMid,
+                                padding: EdgeInsets.zero,
+                                minimumSize: Size.zero,
+                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                              ),
+                              child: Text(
+                                l10n.ventor_home_see_all,
+                                style: GoogleFonts.inter(
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 13,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+                        for (final session
+                            in dashboardState.recentSessions) ...[
+                          _RecentSessionCard(
+                            listenerName: session.listenerName,
+                            avatarUrl: session.listenerAvatarUrl,
+                            meta: l10n.ventor_home_recent_meta(
+                              session.whenLabel.isNotEmpty
+                                  ? session.whenLabel
+                                  : l10n.ventor_home_yesterday,
+                              session.durationMinutes,
+                            ),
+                            isFavorite: session.isFavorite,
+                            onTap: _goSessions,
+                          ),
+                          const SizedBox(height: 10),
+                        ],
+                        const SizedBox(height: 8),
+                      ],
 
-            // P4 — 7-day mood streak (progress from daily check-ins above).
-            _StreakCard(
-              title: l10n.ventor_home_streak_title(_streakCount),
-              subtitle: l10n.ventor_home_streak_subtitle,
-              checked: _streakChecked,
-              dayLabels: [
-                l10n.ventor_home_day_mon,
-                l10n.ventor_home_day_tue,
-                l10n.ventor_home_day_wed,
-                l10n.ventor_home_day_thu,
-                l10n.ventor_home_day_fri,
-                l10n.ventor_home_day_sat,
-                l10n.ventor_home_day_sun,
-              ],
-              claimLabel: _streakClaimed
-                  ? l10n.ventor_home_streak_claimed_badge
-                  : l10n.ventor_home_streak_claim,
-              canClaim: _canClaim,
-              onClaim: _onClaimStreak,
-            ),
-            const SizedBox(height: 18),
-
-            // P5 — Mood-based listener recommendation.
-            _RecommendationCard(
-              message: _recommendation(l10n, _todayMood),
-              cta: l10n.ventor_home_find_listener,
-              onTap: _goSessions,
-            ),
-            const SizedBox(height: 14),
-
-            // P6 — Points balance and purchase/redemption entry.
-            const VentorPointsHomeCard(),
-            const SizedBox(height: 22),
-
-            // P7 — Session history preview.
-            Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    l10n.ventor_home_recent_title,
-                    style: GoogleFonts.inter(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                    ),
+                      // P8 — Inspirational footer.
+                      if (dashboardState.hasMotivation)
+                        _MotivationCard(quote: dashboardState.motivation!),
+                    ],
                   ),
                 ),
-                TextButton(
-                  onPressed: _goSessions,
-                  style: TextButton.styleFrom(
-                    foregroundColor: SplashColors.purpleMid,
-                    padding: EdgeInsets.zero,
-                    minimumSize: Size.zero,
-                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  ),
-                  child: Text(
-                    l10n.ventor_home_see_all,
-                    style: GoogleFonts.inter(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 13,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 10),
-            for (final session in VentorHomeCatalog.mockRecentSessions) ...[
-              _RecentSessionCard(
-                listenerName: session.listenerName,
-                avatarUrl: session.listenerAvatarUrl,
-                meta: l10n.ventor_home_recent_meta(
-                  l10n.ventor_home_yesterday,
-                  session.durationMinutes,
-                ),
-                isFavorite: session.isFavorite,
-                onTap: _goSessions,
-              ),
-              const SizedBox(height: 10),
-            ],
-            const SizedBox(height: 8),
-
-            // P8 — Inspirational footer.
-            _MotivationCard(quote: l10n.ventor_home_motivation),
-          ],
+              );
+            },
+          ),
         ),
       ),
     );
@@ -540,6 +550,213 @@ class _HomeHeader extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class _MoodAndStreakCard extends StatelessWidget {
+  const _MoodAndStreakCard({
+    required this.moodPrompt,
+    required this.selectedMood,
+    required this.onMoodTap,
+    required this.moodLabelFor,
+    required this.streakTitle,
+    required this.streakSubtitle,
+    required this.streakChecked,
+    required this.streakDayLabels,
+    required this.streakClaimLabel,
+    required this.canClaimStreak,
+    required this.onClaimStreak,
+    this.todayNote,
+    this.isSubmittingMood = false,
+    this.isClaimingStreak = false,
+  });
+
+  final String moodPrompt;
+  final VentorMoodKind? selectedMood;
+  final ValueChanged<VentorMoodOption> onMoodTap;
+  final String Function(VentorMoodKind) moodLabelFor;
+  final String? todayNote;
+  final String streakTitle;
+  final String streakSubtitle;
+  final List<bool> streakChecked;
+  final List<String> streakDayLabels;
+  final String streakClaimLabel;
+  final bool canClaimStreak;
+  final bool isSubmittingMood;
+  final bool isClaimingStreak;
+  final VoidCallback onClaimStreak;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: VentorProfileTheme.cardFill,
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: VentorProfileTheme.cardBorder),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(
+            moodPrompt,
+            style: GoogleFonts.inter(
+              color: Colors.white,
+              fontSize: 16,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          const SizedBox(height: 8),
+          IgnorePointer(
+            ignoring: isSubmittingMood,
+            child: Opacity(
+              opacity: isSubmittingMood ? 0.55 : 1,
+              child: _MoodRow(
+                selected: selectedMood,
+                onTap: onMoodTap,
+                labelFor: moodLabelFor,
+              ),
+            ),
+          ),
+          if (todayNote != null && todayNote!.trim().isNotEmpty) ...[
+            const SizedBox(height: 12),
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: Colors.white.withValues(alpha: 0.04),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Text(
+                todayNote!,
+                style: GoogleFonts.inter(
+                  color: Colors.white.withValues(alpha: 0.9),
+                  fontSize: 13,
+                  height: 1.4,
+                ),
+              ),
+            ),
+          ],
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: 8),
+            child: Divider(height: 1, color: VentorProfileTheme.cardBorder),
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      streakTitle,
+                      style: GoogleFonts.inter(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      streakSubtitle,
+                      style: GoogleFonts.inter(
+                        color: VentorProfileTheme.muted,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 36,
+                child: FilledButton.icon(
+                  onPressed: canClaimStreak && !isClaimingStreak
+                      ? onClaimStreak
+                      : null,
+                  style: FilledButton.styleFrom(
+                    backgroundColor: canClaimStreak
+                        ? SplashColors.purpleMid
+                        : Colors.white.withValues(alpha: 0.08),
+                    disabledBackgroundColor: Colors.white.withValues(
+                      alpha: 0.08,
+                    ),
+                    foregroundColor: Colors.white,
+                    disabledForegroundColor: VentorProfileTheme.muted,
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(999),
+                    ),
+                  ),
+                  icon: isClaimingStreak
+                      ? const SizedBox(
+                          width: 16,
+                          height: 16,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            color: Colors.white,
+                          ),
+                        )
+                      : Icon(
+                          canClaimStreak
+                              ? Icons.card_giftcard_rounded
+                              : Icons.check_rounded,
+                          size: 16,
+                        ),
+                  label: Text(
+                    streakClaimLabel,
+                    style: GoogleFonts.inter(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              for (var i = 0; i < streakChecked.length; i++)
+                Column(
+                  children: [
+                    Container(
+                      width: 34,
+                      height: 34,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: streakChecked[i]
+                            ? SplashColors.purpleMid.withValues(alpha: 0.22)
+                            : Colors.white.withValues(alpha: 0.05),
+                        border: Border.all(
+                          color: streakChecked[i]
+                              ? SplashColors.purpleMid
+                              : VentorProfileTheme.cardBorder,
+                        ),
+                      ),
+                      child: Icon(
+                        streakChecked[i] ? Icons.check_rounded : Icons.remove,
+                        size: 16,
+                        color: streakChecked[i]
+                            ? SplashColors.purpleMid
+                            : VentorProfileTheme.muted,
+                      ),
+                    ),
+                    const SizedBox(height: 6),
+                    Text(
+                      streakDayLabels[i],
+                      style: GoogleFonts.inter(
+                        color: VentorProfileTheme.muted,
+                        fontSize: 10,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
+                ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
@@ -643,33 +860,6 @@ class _MoodAvatar extends StatelessWidget {
   }
 }
 
-class _TodayNoteCard extends StatelessWidget {
-  const _TodayNoteCard({required this.note});
-
-  final String note;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(14),
-      decoration: BoxDecoration(
-        color: VentorProfileTheme.cardFill,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: VentorProfileTheme.cardBorder),
-      ),
-      child: Text(
-        note,
-        style: GoogleFonts.inter(
-          color: Colors.white.withValues(alpha: 0.9),
-          fontSize: 13,
-          height: 1.4,
-        ),
-      ),
-    );
-  }
-}
-
 class _RecommendationCard extends StatelessWidget {
   const _RecommendationCard({
     required this.message,
@@ -752,145 +942,6 @@ class _RecommendationCard extends StatelessWidget {
               color: SplashColors.purpleMid,
               size: 40,
             ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _StreakCard extends StatelessWidget {
-  const _StreakCard({
-    required this.title,
-    required this.subtitle,
-    required this.checked,
-    required this.dayLabels,
-    required this.claimLabel,
-    required this.canClaim,
-    required this.onClaim,
-  });
-
-  final String title;
-  final String subtitle;
-  final List<bool> checked;
-  final List<String> dayLabels;
-  final String claimLabel;
-  final bool canClaim;
-  final VoidCallback onClaim;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: VentorProfileTheme.cardFill,
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: VentorProfileTheme.cardBorder),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Row(
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      style: GoogleFonts.inter(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      subtitle,
-                      style: GoogleFonts.inter(
-                        color: VentorProfileTheme.muted,
-                        fontSize: 12,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 36,
-                child: FilledButton.icon(
-                  onPressed: canClaim ? onClaim : null,
-                  style: FilledButton.styleFrom(
-                    backgroundColor: canClaim
-                        ? SplashColors.purpleMid
-                        : Colors.white.withValues(alpha: 0.08),
-                    disabledBackgroundColor: Colors.white.withValues(
-                      alpha: 0.08,
-                    ),
-                    foregroundColor: Colors.white,
-                    disabledForegroundColor: VentorProfileTheme.muted,
-                    padding: const EdgeInsets.symmetric(horizontal: 12),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(999),
-                    ),
-                  ),
-                  icon: Icon(
-                    canClaim
-                        ? Icons.card_giftcard_rounded
-                        : Icons.check_rounded,
-                    size: 16,
-                  ),
-                  label: Text(
-                    claimLabel,
-                    style: GoogleFonts.inter(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 16),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              for (var i = 0; i < checked.length; i++)
-                Column(
-                  children: [
-                    Container(
-                      width: 34,
-                      height: 34,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: checked[i]
-                            ? SplashColors.purpleMid.withValues(alpha: 0.22)
-                            : Colors.white.withValues(alpha: 0.05),
-                        border: Border.all(
-                          color: checked[i]
-                              ? SplashColors.purpleMid
-                              : VentorProfileTheme.cardBorder,
-                        ),
-                      ),
-                      child: Icon(
-                        checked[i] ? Icons.check_rounded : Icons.remove,
-                        size: 16,
-                        color: checked[i]
-                            ? SplashColors.purpleMid
-                            : VentorProfileTheme.muted,
-                      ),
-                    ),
-                    const SizedBox(height: 6),
-                    Text(
-                      dayLabels[i],
-                      style: GoogleFonts.inter(
-                        color: VentorProfileTheme.muted,
-                        fontSize: 10,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ],
-                ),
-            ],
           ),
         ],
       ),

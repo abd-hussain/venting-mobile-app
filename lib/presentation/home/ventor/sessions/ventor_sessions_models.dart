@@ -274,7 +274,7 @@ abstract final class VentorSessionsCatalog {
 
   static const availableLanguages = <String>['English', 'Arabic', 'French'];
 
-  // TODO: Replace with listeners discovery API.
+  // Kept for booking funnel / dashboard helpers until those APIs are wired.
   static const mockListeners = <VentorFindListener>[
     VentorFindListener(
       id: 'lina',

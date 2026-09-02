@@ -2,13 +2,17 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:phone_numbers_parser/phone_numbers_parser.dart';
+import 'package:shimmer_manager/shimmer_manager.dart';
+import 'package:venting_mobile_app/di/di_container.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/call/ventor_call_args.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/call/ventor_call_flow.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/profile/ventor_profile_theme.dart';
+import 'package:venting_mobile_app/presentation/home/ventor/sessions/bloc/ventor_find_listeners/ventor_find_listeners_bloc.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/sessions/ventor_booked_session_details_screen.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/sessions/ventor_listener_profile_screen.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/sessions/ventor_sessions_filter_sheet.dart';
@@ -38,25 +42,24 @@ class VentorSessionsTabState extends State<VentorSessionsTab> {
 
   final _searchController = TextEditingController();
   final _rng = Random();
+  late final VentorFindListenersBloc _findBloc;
 
-  // TODO: Load listeners / booked sessions from APIs.
-  late List<VentorFindListener> _listeners;
+  // TODO: Load booked sessions from APIs.
   late List<VentorBookedSession> _bookedSessions;
   var _section = _SessionsSection.find;
-  var _query = '';
-  var _topicIndex = 0;
-  var _filters = const VentorSessionFilters();
 
   @override
   void initState() {
     super.initState();
-    _listeners = List.of(VentorSessionsCatalog.mockListeners);
+    _findBloc = diContainer<VentorFindListenersBloc>()
+      ..add(const VentorFindListenersEvent.started());
     _bookedSessions = VentorSessionsCatalog.mockBookedSessions();
   }
 
   @override
   void dispose() {
     _searchController.dispose();
+    _findBloc.close();
     super.dispose();
   }
 
@@ -119,15 +122,6 @@ class VentorSessionsTabState extends State<VentorSessionsTab> {
     }
   }
 
-  List<VentorFindListener> get _filtered {
-    return VentorSessionsCatalog.filterListeners(
-      source: _listeners,
-      query: _query,
-      topicId: VentorSessionsCatalog.topicIds[_topicIndex],
-      filters: _filters,
-    );
-  }
-
   List<VentorBookedSession> get _sortedBooked {
     final list = List.of(_bookedSessions);
     int rank(VentorBookedSessionStatus status) => switch (status) {
@@ -150,32 +144,22 @@ class VentorSessionsTabState extends State<VentorSessionsTab> {
     return list;
   }
 
-  void _updateFavorite(VentorFindListener updated) {
-    setState(() {
-      _listeners = [
-        for (final listener in _listeners)
-          if (listener.id == updated.id) updated else listener,
-      ];
-    });
-  }
-
-  Future<void> _openFilters() async {
+  Future<void> _openFilters(VentorSessionFilters current) async {
     final next = await showVentorSessionsFilterSheet(
       context: context,
-      initial: _filters,
+      initial: current,
     );
     if (!mounted || next == null) return;
-    setState(() => _filters = next);
+    _findBloc.add(VentorFindListenersEvent.filtersChanged(next));
   }
 
-  void _onSurpriseMe() {
-    final pool = _filtered.isNotEmpty ? _filtered : _listeners;
-    if (pool.isEmpty) return;
-    final pick = pool[_rng.nextInt(pool.length)];
+  void _onSurpriseMe(List<VentorFindListener> listeners) {
+    if (listeners.isEmpty) return;
+    final pick = listeners[_rng.nextInt(listeners.length)];
     openVentorListenerProfileScreen(
       context: context,
       listener: pick,
-      onFavoriteChanged: _updateFavorite,
+      onFavoriteChanged: _onFavoriteChangedFromProfile,
     );
   }
 
@@ -294,11 +278,34 @@ class VentorSessionsTabState extends State<VentorSessionsTab> {
     VentorHomeShell.goToDashboard(context);
   }
 
-  List<Widget> _findChildren(VentingMobLocalizations l10n) {
+  void _onFavoriteChangedFromProfile(VentorFindListener updated) {
+    VentorFindListener? current;
+    for (final listener in _findBloc.state.listeners) {
+      if (listener.id == updated.id) {
+        current = listener;
+        break;
+      }
+    }
+    if (current == null || current.isFavorite == updated.isFavorite) {
+      _findBloc.add(
+        VentorFindListenersEvent.listenerFavoriteUpdated(updated),
+      );
+      return;
+    }
+    _findBloc.add(
+      VentorFindListenersEvent.favoriteToggled(listenerId: updated.id),
+    );
+  }
+
+  List<Widget> _findChildren(
+    VentingMobLocalizations l10n,
+    VentorFindListenersState findState,
+  ) {
     final topicLabels = [
       for (final id in VentorSessionsCatalog.topicIds) _topicLabel(l10n, id),
     ];
-    final listeners = _filtered;
+    final listeners = findState.listeners;
+
     return [
       Text(
         l10n.ventor_sessions_subtitle,
@@ -312,15 +319,19 @@ class VentorSessionsTabState extends State<VentorSessionsTab> {
       VentorSessionsSearchBar(
         controller: _searchController,
         hint: l10n.ventor_sessions_search_hint,
-        onChanged: (value) => setState(() => _query = value),
-        onFilterTap: _openFilters,
-        filterActive: !_filters.isDefault,
+        onChanged: (value) => _findBloc.add(
+          VentorFindListenersEvent.queryChanged(value),
+        ),
+        onFilterTap: () => _openFilters(findState.filters),
+        filterActive: !findState.filters.isDefault,
       ),
       const SizedBox(height: 14),
       VentorTopicChips(
         labels: topicLabels,
-        selectedIndex: _topicIndex,
-        onSelected: (index) => setState(() => _topicIndex = index),
+        selectedIndex: findState.topicIndex,
+        onSelected: (index) => _findBloc.add(
+          VentorFindListenersEvent.topicChanged(index),
+        ),
       ),
       const SizedBox(height: 20),
       Text(
@@ -332,7 +343,44 @@ class VentorSessionsTabState extends State<VentorSessionsTab> {
         ),
       ),
       const SizedBox(height: 8),
-      if (listeners.isEmpty)
+      if (findState.isLoadingOrInitial)
+        const Padding(
+          padding: EdgeInsets.symmetric(vertical: 12),
+          child: _FindListenersShimmer(),
+        )
+      else if (findState.isLoadFailure)
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 28),
+          child: Column(
+            children: [
+              Text(
+                findState.errorMessage.isNotEmpty
+                    ? findState.errorMessage
+                    : l10n.common_unknown_error,
+                textAlign: TextAlign.center,
+                style: GoogleFonts.inter(
+                  color: VentorProfileTheme.muted,
+                  fontSize: 14,
+                  height: 1.4,
+                ),
+              ),
+              const SizedBox(height: 12),
+              TextButton(
+                onPressed: () => _findBloc.add(
+                  const VentorFindListenersEvent.retryLoad(),
+                ),
+                child: Text(
+                  l10n.common_retry,
+                  style: GoogleFonts.inter(
+                    color: SplashColors.purpleMid,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        )
+      else if (listeners.isEmpty)
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 28),
           child: Column(
@@ -373,12 +421,14 @@ class VentorSessionsTabState extends State<VentorSessionsTab> {
               openVentorListenerProfileScreen(
                 context: context,
                 listener: listener,
-                onFavoriteChanged: _updateFavorite,
+                onFavoriteChanged: _onFavoriteChangedFromProfile,
               );
             },
             onFavorite: () {
-              _updateFavorite(
-                listener.copyWith(isFavorite: !listener.isFavorite),
+              _findBloc.add(
+                VentorFindListenersEvent.favoriteToggled(
+                  listenerId: listener.id,
+                ),
               );
             },
           ),
@@ -388,7 +438,7 @@ class VentorSessionsTabState extends State<VentorSessionsTab> {
       VentorSurpriseMeCard(
         title: l10n.ventor_sessions_surprise_title,
         buttonLabel: l10n.ventor_sessions_surprise_cta,
-        onTap: _onSurpriseMe,
+        onTap: () => _onSurpriseMe(listeners),
       ),
     ];
   }
@@ -492,37 +542,99 @@ class VentorSessionsTabState extends State<VentorSessionsTab> {
   @override
   Widget build(BuildContext context) {
     final l10n = VentingMobLocalizations.of(context);
-    final children = _section == _SessionsSection.find
-        ? _findChildren(l10n)
-        : _bookedChildren(l10n);
 
-    return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: _overlayStyle,
-      child: SafeArea(
-        child: ListView(
-          padding: const EdgeInsets.fromLTRB(16, 12, 16, 28),
-          children: [
-            Text(
-              l10n.ventor_sessions_title,
-              style: GoogleFonts.inter(
-                color: Colors.white,
-                fontSize: 28,
-                fontWeight: FontWeight.w700,
-                height: 1.15,
+    return BlocProvider.value(
+      value: _findBloc,
+      child: AnnotatedRegion<SystemUiOverlayStyle>(
+        value: _overlayStyle,
+        child: SafeArea(
+          child: BlocConsumer<VentorFindListenersBloc, VentorFindListenersState>(
+            listenWhen: (previous, current) =>
+                previous.favoriteErrorMessage != current.favoriteErrorMessage &&
+                current.favoriteErrorMessage.isNotEmpty,
+            listener: (context, state) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(state.favoriteErrorMessage),
+                  behavior: SnackBarBehavior.floating,
+                ),
+              );
+            },
+            builder: (context, findState) {
+              final children = _section == _SessionsSection.find
+                  ? _findChildren(l10n, findState)
+                  : _bookedChildren(l10n);
+
+              return RefreshIndicator(
+                onRefresh: _section == _SessionsSection.find
+                    ? () async {
+                        _findBloc.add(
+                          const VentorFindListenersEvent.refreshRequested(),
+                        );
+                        await _findBloc.stream.firstWhere(
+                          (s) => !s.isRefreshing,
+                        );
+                      }
+                    : () async {},
+                color: SplashColors.purpleMid,
+                backgroundColor: const Color(0xFF1C1826),
+                child: ListView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  padding: const EdgeInsets.fromLTRB(16, 12, 16, 28),
+                  children: [
+                    Text(
+                      l10n.ventor_sessions_title,
+                      style: GoogleFonts.inter(
+                        color: Colors.white,
+                        fontSize: 28,
+                        fontWeight: FontWeight.w700,
+                        height: 1.15,
+                      ),
+                    ),
+                    const SizedBox(height: 14),
+                    VentorSessionsSectionTabs(
+                      findSelected: _section == _SessionsSection.find,
+                      findLabel: l10n.ventor_sessions_tab_find,
+                      bookedLabel: l10n.ventor_sessions_tab_booked,
+                      onFind: () =>
+                          setState(() => _section = _SessionsSection.find),
+                      onBooked: () =>
+                          setState(() => _section = _SessionsSection.booked),
+                    ),
+                    const SizedBox(height: 16),
+                    ...children,
+                  ],
+                ),
+              );
+            },
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _FindListenersShimmer extends StatelessWidget {
+  const _FindListenersShimmer();
+
+  @override
+  Widget build(BuildContext context) {
+    return Shimmer.fromColors(
+      baseColor: Colors.white.withValues(alpha: 0.08),
+      highlightColor: Colors.white.withValues(alpha: 0.16),
+      child: Column(
+        children: List.generate(
+          3,
+          (_) => Padding(
+            padding: const EdgeInsets.only(bottom: 12),
+            child: Container(
+              height: 120,
+              decoration: BoxDecoration(
+                color: VentorProfileTheme.cardFill,
+                borderRadius: BorderRadius.circular(18),
               ),
             ),
-            const SizedBox(height: 14),
-            VentorSessionsSectionTabs(
-              findSelected: _section == _SessionsSection.find,
-              findLabel: l10n.ventor_sessions_tab_find,
-              bookedLabel: l10n.ventor_sessions_tab_booked,
-              onFind: () => setState(() => _section = _SessionsSection.find),
-              onBooked: () =>
-                  setState(() => _section = _SessionsSection.booked),
-            ),
-            const SizedBox(height: 16),
-            ...children,
-          ],
+          ),
         ),
       ),
     );

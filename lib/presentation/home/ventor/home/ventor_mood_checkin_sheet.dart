@@ -32,9 +32,8 @@ class _VentorMoodCheckInSheet extends StatefulWidget {
 
 class _VentorMoodCheckInSheetState extends State<_VentorMoodCheckInSheet> {
   final _controller = TextEditingController();
-  var _submitting = false;
 
-  bool get _canSubmit => !_submitting && _controller.text.trim().isNotEmpty;
+  bool get _canSubmit => _controller.text.trim().isNotEmpty;
 
   @override
   void dispose() {
@@ -52,12 +51,8 @@ class _VentorMoodCheckInSheetState extends State<_VentorMoodCheckInSheet> {
     };
   }
 
-  Future<void> _submit() async {
+  void _submit() {
     if (!_canSubmit) return;
-    setState(() => _submitting = true);
-    // TODO: Persist mood check-in via ventor wellness API.
-    await Future<void>.delayed(const Duration(milliseconds: 350));
-    if (!mounted) return;
     Navigator.of(context).pop(
       VentorMoodCheckIn(
         mood: widget.mood.kind,
@@ -144,7 +139,6 @@ class _VentorMoodCheckInSheetState extends State<_VentorMoodCheckInSheet> {
               const SizedBox(height: 16),
               TextField(
                 controller: _controller,
-                enabled: !_submitting,
                 maxLines: 5,
                 maxLength: 400,
                 autofocus: true,
@@ -195,22 +189,13 @@ class _VentorMoodCheckInSheetState extends State<_VentorMoodCheckInSheet> {
                       borderRadius: BorderRadius.circular(14),
                     ),
                   ),
-                  child: _submitting
-                      ? const SizedBox(
-                          width: 22,
-                          height: 22,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2,
-                            color: Colors.white,
-                          ),
-                        )
-                      : Text(
-                          l10n.ventor_home_mood_submit,
-                          style: GoogleFonts.inter(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
+                  child: Text(
+                    l10n.ventor_home_mood_submit,
+                    style: GoogleFonts.inter(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
                 ),
               ),
             ],

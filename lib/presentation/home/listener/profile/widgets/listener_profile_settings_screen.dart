@@ -68,8 +68,6 @@ class _ListenerProfileSettingsScreenState
     systemNavigationBarIconBrightness: Brightness.light,
   );
 
-  // TODO: Load account details from listener profile API / repository.
-
   String? _appVersion;
   late IsoCode _phoneCountry;
   late String _phoneNational;
