@@ -70,10 +70,10 @@ class ListenerDashboardBloc
 
     try {
       final displayNameFuture = _resolveListenerDisplayName();
-      final dashboardFuture = _resolveDailyReminder();
+      final dashboardFuture = _resolveDashboard();
       final result = await _getListenerSetupProgressUsecase().run();
       final listenerDisplayName = await displayNameFuture;
-      final dailyReminder = await dashboardFuture;
+      final dashboard = await dashboardFuture;
       if (emit.isDone) return;
 
       result.match(
@@ -88,7 +88,8 @@ class ListenerDashboardBloc
               setupStatus: ListenerDashboardSetupStatus.loadFailure,
               setupErrorMessage: message,
               listenerDisplayName: listenerDisplayName,
-              dailyReminder: dailyReminder,
+              dailyReminder: dashboard?.reminder,
+              nextUpcomingSession: dashboard?.nextUpcomingSession,
             ),
           );
         },
@@ -99,7 +100,8 @@ class ListenerDashboardBloc
               setupProgress: progress,
               setupErrorMessage: '',
               listenerDisplayName: listenerDisplayName,
-              dailyReminder: dailyReminder,
+              dailyReminder: dashboard?.reminder,
+              nextUpcomingSession: dashboard?.nextUpcomingSession,
             ),
           );
         },
@@ -120,15 +122,15 @@ class ListenerDashboardBloc
     }
   }
 
-  Future<ListenerDashboardReminder?> _resolveDailyReminder() async {
+  Future<ListenerDashboard?> _resolveDashboard() async {
     final dashboardResult = await _getListenerDashboardUsecase().run();
     return dashboardResult.match((error) {
       LoggerManagerBase.logErrorMessage(
         error: error,
-        message: 'ListenerDashboardBloc: load daily reminder failed',
+        message: 'ListenerDashboardBloc: load dashboard failed',
       );
       return null;
-    }, (dashboard) => dashboard.reminder);
+    }, (dashboard) => dashboard);
   }
 
   Future<String> _resolveListenerDisplayName() async {

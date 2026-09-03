@@ -299,7 +299,7 @@ $ListenerAvailabilityDataCopyWith<$Res> get data {
 /// @nodoc
 mixin _$ListenerAvailabilityData {
 
- bool get accept_instant_calls; int get break_length_minutes; String get time_zone_id; List<String> get language_ids; List<ListenerAvailabilityDayData> get days; Object? get session_minutes; int? get session_length_minutes;
+ int get break_length_minutes; String get time_zone_id; List<String> get language_ids; List<ListenerAvailabilityDayData> get days; Object? get session_minutes; int? get session_length_minutes;
 /// Create a copy of ListenerAvailabilityData
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -312,16 +312,16 @@ $ListenerAvailabilityDataCopyWith<ListenerAvailabilityData> get copyWith => _$Li
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ListenerAvailabilityData&&(identical(other.accept_instant_calls, accept_instant_calls) || other.accept_instant_calls == accept_instant_calls)&&(identical(other.break_length_minutes, break_length_minutes) || other.break_length_minutes == break_length_minutes)&&(identical(other.time_zone_id, time_zone_id) || other.time_zone_id == time_zone_id)&&const DeepCollectionEquality().equals(other.language_ids, language_ids)&&const DeepCollectionEquality().equals(other.days, days)&&const DeepCollectionEquality().equals(other.session_minutes, session_minutes)&&(identical(other.session_length_minutes, session_length_minutes) || other.session_length_minutes == session_length_minutes));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ListenerAvailabilityData&&(identical(other.break_length_minutes, break_length_minutes) || other.break_length_minutes == break_length_minutes)&&(identical(other.time_zone_id, time_zone_id) || other.time_zone_id == time_zone_id)&&const DeepCollectionEquality().equals(other.language_ids, language_ids)&&const DeepCollectionEquality().equals(other.days, days)&&const DeepCollectionEquality().equals(other.session_minutes, session_minutes)&&(identical(other.session_length_minutes, session_length_minutes) || other.session_length_minutes == session_length_minutes));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,accept_instant_calls,break_length_minutes,time_zone_id,const DeepCollectionEquality().hash(language_ids),const DeepCollectionEquality().hash(days),const DeepCollectionEquality().hash(session_minutes),session_length_minutes);
+int get hashCode => Object.hash(runtimeType,break_length_minutes,time_zone_id,const DeepCollectionEquality().hash(language_ids),const DeepCollectionEquality().hash(days),const DeepCollectionEquality().hash(session_minutes),session_length_minutes);
 
 @override
 String toString() {
-  return 'ListenerAvailabilityData(accept_instant_calls: $accept_instant_calls, break_length_minutes: $break_length_minutes, time_zone_id: $time_zone_id, language_ids: $language_ids, days: $days, session_minutes: $session_minutes, session_length_minutes: $session_length_minutes)';
+  return 'ListenerAvailabilityData(break_length_minutes: $break_length_minutes, time_zone_id: $time_zone_id, language_ids: $language_ids, days: $days, session_minutes: $session_minutes, session_length_minutes: $session_length_minutes)';
 }
 
 
@@ -332,7 +332,7 @@ abstract mixin class $ListenerAvailabilityDataCopyWith<$Res>  {
   factory $ListenerAvailabilityDataCopyWith(ListenerAvailabilityData value, $Res Function(ListenerAvailabilityData) _then) = _$ListenerAvailabilityDataCopyWithImpl;
 @useResult
 $Res call({
- bool accept_instant_calls, int break_length_minutes, String time_zone_id, List<String> language_ids, List<ListenerAvailabilityDayData> days, Object? session_minutes, int? session_length_minutes
+ int break_length_minutes, String time_zone_id, List<String> language_ids, List<ListenerAvailabilityDayData> days, Object? session_minutes, int? session_length_minutes
 });
 
 
@@ -349,10 +349,9 @@ class _$ListenerAvailabilityDataCopyWithImpl<$Res>
 
 /// Create a copy of ListenerAvailabilityData
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? accept_instant_calls = null,Object? break_length_minutes = null,Object? time_zone_id = null,Object? language_ids = null,Object? days = null,Object? session_minutes = freezed,Object? session_length_minutes = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? break_length_minutes = null,Object? time_zone_id = null,Object? language_ids = null,Object? days = null,Object? session_minutes = freezed,Object? session_length_minutes = freezed,}) {
   return _then(_self.copyWith(
-accept_instant_calls: null == accept_instant_calls ? _self.accept_instant_calls : accept_instant_calls // ignore: cast_nullable_to_non_nullable
-as bool,break_length_minutes: null == break_length_minutes ? _self.break_length_minutes : break_length_minutes // ignore: cast_nullable_to_non_nullable
+break_length_minutes: null == break_length_minutes ? _self.break_length_minutes : break_length_minutes // ignore: cast_nullable_to_non_nullable
 as int,time_zone_id: null == time_zone_id ? _self.time_zone_id : time_zone_id // ignore: cast_nullable_to_non_nullable
 as String,language_ids: null == language_ids ? _self.language_ids : language_ids // ignore: cast_nullable_to_non_nullable
 as List<String>,days: null == days ? _self.days : days // ignore: cast_nullable_to_non_nullable
@@ -442,10 +441,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool accept_instant_calls,  int break_length_minutes,  String time_zone_id,  List<String> language_ids,  List<ListenerAvailabilityDayData> days,  Object? session_minutes,  int? session_length_minutes)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int break_length_minutes,  String time_zone_id,  List<String> language_ids,  List<ListenerAvailabilityDayData> days,  Object? session_minutes,  int? session_length_minutes)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ListenerAvailabilityData() when $default != null:
-return $default(_that.accept_instant_calls,_that.break_length_minutes,_that.time_zone_id,_that.language_ids,_that.days,_that.session_minutes,_that.session_length_minutes);case _:
+return $default(_that.break_length_minutes,_that.time_zone_id,_that.language_ids,_that.days,_that.session_minutes,_that.session_length_minutes);case _:
   return orElse();
 
 }
@@ -463,10 +462,10 @@ return $default(_that.accept_instant_calls,_that.break_length_minutes,_that.time
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool accept_instant_calls,  int break_length_minutes,  String time_zone_id,  List<String> language_ids,  List<ListenerAvailabilityDayData> days,  Object? session_minutes,  int? session_length_minutes)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int break_length_minutes,  String time_zone_id,  List<String> language_ids,  List<ListenerAvailabilityDayData> days,  Object? session_minutes,  int? session_length_minutes)  $default,) {final _that = this;
 switch (_that) {
 case _ListenerAvailabilityData():
-return $default(_that.accept_instant_calls,_that.break_length_minutes,_that.time_zone_id,_that.language_ids,_that.days,_that.session_minutes,_that.session_length_minutes);case _:
+return $default(_that.break_length_minutes,_that.time_zone_id,_that.language_ids,_that.days,_that.session_minutes,_that.session_length_minutes);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -483,10 +482,10 @@ return $default(_that.accept_instant_calls,_that.break_length_minutes,_that.time
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool accept_instant_calls,  int break_length_minutes,  String time_zone_id,  List<String> language_ids,  List<ListenerAvailabilityDayData> days,  Object? session_minutes,  int? session_length_minutes)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int break_length_minutes,  String time_zone_id,  List<String> language_ids,  List<ListenerAvailabilityDayData> days,  Object? session_minutes,  int? session_length_minutes)?  $default,) {final _that = this;
 switch (_that) {
 case _ListenerAvailabilityData() when $default != null:
-return $default(_that.accept_instant_calls,_that.break_length_minutes,_that.time_zone_id,_that.language_ids,_that.days,_that.session_minutes,_that.session_length_minutes);case _:
+return $default(_that.break_length_minutes,_that.time_zone_id,_that.language_ids,_that.days,_that.session_minutes,_that.session_length_minutes);case _:
   return null;
 
 }
@@ -498,10 +497,9 @@ return $default(_that.accept_instant_calls,_that.break_length_minutes,_that.time
 @JsonSerializable()
 
 class _ListenerAvailabilityData implements ListenerAvailabilityData {
-  const _ListenerAvailabilityData({this.accept_instant_calls = true, this.break_length_minutes = 30, this.time_zone_id = '', final  List<String> language_ids = const <String>[], final  List<ListenerAvailabilityDayData> days = const <ListenerAvailabilityDayData>[], this.session_minutes, this.session_length_minutes}): _language_ids = language_ids,_days = days;
+  const _ListenerAvailabilityData({this.break_length_minutes = 30, this.time_zone_id = '', final  List<String> language_ids = const <String>[], final  List<ListenerAvailabilityDayData> days = const <ListenerAvailabilityDayData>[], this.session_minutes, this.session_length_minutes}): _language_ids = language_ids,_days = days;
   factory _ListenerAvailabilityData.fromJson(Map<String, dynamic> json) => _$ListenerAvailabilityDataFromJson(json);
 
-@override@JsonKey() final  bool accept_instant_calls;
 @override@JsonKey() final  int break_length_minutes;
 @override@JsonKey() final  String time_zone_id;
  final  List<String> _language_ids;
@@ -534,16 +532,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ListenerAvailabilityData&&(identical(other.accept_instant_calls, accept_instant_calls) || other.accept_instant_calls == accept_instant_calls)&&(identical(other.break_length_minutes, break_length_minutes) || other.break_length_minutes == break_length_minutes)&&(identical(other.time_zone_id, time_zone_id) || other.time_zone_id == time_zone_id)&&const DeepCollectionEquality().equals(other._language_ids, _language_ids)&&const DeepCollectionEquality().equals(other._days, _days)&&const DeepCollectionEquality().equals(other.session_minutes, session_minutes)&&(identical(other.session_length_minutes, session_length_minutes) || other.session_length_minutes == session_length_minutes));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ListenerAvailabilityData&&(identical(other.break_length_minutes, break_length_minutes) || other.break_length_minutes == break_length_minutes)&&(identical(other.time_zone_id, time_zone_id) || other.time_zone_id == time_zone_id)&&const DeepCollectionEquality().equals(other._language_ids, _language_ids)&&const DeepCollectionEquality().equals(other._days, _days)&&const DeepCollectionEquality().equals(other.session_minutes, session_minutes)&&(identical(other.session_length_minutes, session_length_minutes) || other.session_length_minutes == session_length_minutes));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,accept_instant_calls,break_length_minutes,time_zone_id,const DeepCollectionEquality().hash(_language_ids),const DeepCollectionEquality().hash(_days),const DeepCollectionEquality().hash(session_minutes),session_length_minutes);
+int get hashCode => Object.hash(runtimeType,break_length_minutes,time_zone_id,const DeepCollectionEquality().hash(_language_ids),const DeepCollectionEquality().hash(_days),const DeepCollectionEquality().hash(session_minutes),session_length_minutes);
 
 @override
 String toString() {
-  return 'ListenerAvailabilityData(accept_instant_calls: $accept_instant_calls, break_length_minutes: $break_length_minutes, time_zone_id: $time_zone_id, language_ids: $language_ids, days: $days, session_minutes: $session_minutes, session_length_minutes: $session_length_minutes)';
+  return 'ListenerAvailabilityData(break_length_minutes: $break_length_minutes, time_zone_id: $time_zone_id, language_ids: $language_ids, days: $days, session_minutes: $session_minutes, session_length_minutes: $session_length_minutes)';
 }
 
 
@@ -554,7 +552,7 @@ abstract mixin class _$ListenerAvailabilityDataCopyWith<$Res> implements $Listen
   factory _$ListenerAvailabilityDataCopyWith(_ListenerAvailabilityData value, $Res Function(_ListenerAvailabilityData) _then) = __$ListenerAvailabilityDataCopyWithImpl;
 @override @useResult
 $Res call({
- bool accept_instant_calls, int break_length_minutes, String time_zone_id, List<String> language_ids, List<ListenerAvailabilityDayData> days, Object? session_minutes, int? session_length_minutes
+ int break_length_minutes, String time_zone_id, List<String> language_ids, List<ListenerAvailabilityDayData> days, Object? session_minutes, int? session_length_minutes
 });
 
 
@@ -571,10 +569,9 @@ class __$ListenerAvailabilityDataCopyWithImpl<$Res>
 
 /// Create a copy of ListenerAvailabilityData
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? accept_instant_calls = null,Object? break_length_minutes = null,Object? time_zone_id = null,Object? language_ids = null,Object? days = null,Object? session_minutes = freezed,Object? session_length_minutes = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? break_length_minutes = null,Object? time_zone_id = null,Object? language_ids = null,Object? days = null,Object? session_minutes = freezed,Object? session_length_minutes = freezed,}) {
   return _then(_ListenerAvailabilityData(
-accept_instant_calls: null == accept_instant_calls ? _self.accept_instant_calls : accept_instant_calls // ignore: cast_nullable_to_non_nullable
-as bool,break_length_minutes: null == break_length_minutes ? _self.break_length_minutes : break_length_minutes // ignore: cast_nullable_to_non_nullable
+break_length_minutes: null == break_length_minutes ? _self.break_length_minutes : break_length_minutes // ignore: cast_nullable_to_non_nullable
 as int,time_zone_id: null == time_zone_id ? _self.time_zone_id : time_zone_id // ignore: cast_nullable_to_non_nullable
 as String,language_ids: null == language_ids ? _self._language_ids : language_ids // ignore: cast_nullable_to_non_nullable
 as List<String>,days: null == days ? _self._days : days // ignore: cast_nullable_to_non_nullable

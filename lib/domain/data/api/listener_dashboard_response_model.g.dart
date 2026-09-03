@@ -22,6 +22,27 @@ Map<String, dynamic> _$ListenerDashboardDataToJson(
 ) => <String, dynamic>{
   'display_name': instance.display_name,
   'reminder': instance.reminder,
+  'next_upcoming_session': instance.next_upcoming_session,
+};
+
+_ListenerDashboardUpcomingSessionModel
+_$ListenerDashboardUpcomingSessionModelFromJson(Map<String, dynamic> json) =>
+    _ListenerDashboardUpcomingSessionModel(
+      id: json['id'] as String? ?? '',
+      ventor_name: json['ventor_name'] as String? ?? '',
+      when_label: json['when_label'] as String? ?? '',
+      duration_minutes: (json['duration_minutes'] as num?)?.toInt() ?? 0,
+      ventor_avatar_url: json['ventor_avatar_url'] as String?,
+    );
+
+Map<String, dynamic> _$ListenerDashboardUpcomingSessionModelToJson(
+  _ListenerDashboardUpcomingSessionModel instance,
+) => <String, dynamic>{
+  'id': instance.id,
+  'ventor_name': instance.ventor_name,
+  'when_label': instance.when_label,
+  'duration_minutes': instance.duration_minutes,
+  'ventor_avatar_url': instance.ventor_avatar_url,
 };
 
 _ListenerDashboardReminderModel _$ListenerDashboardReminderModelFromJson(

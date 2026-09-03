@@ -44,27 +44,7 @@ class _ListenerDashboardTabState extends State<ListenerDashboardTab> {
     systemNavigationBarIconBrightness: Brightness.light,
   );
 
-  ListenerDashboardPeriod _period = ListenerDashboardPeriod.today;
   bool _isOnline = false;
-
-  // TODO: Load today's impact stats / chart from listener dashboard API.
-  static const _sessions = 5;
-  static const _hours = 4.8;
-  static const _peopleHelped = 12;
-
-  static const _chartPoints = <ListenerDashboardImpactPoint>[
-    ListenerDashboardImpactPoint(label: '12 AM', value: 1.2),
-    ListenerDashboardImpactPoint(label: '6 AM', value: 0.6),
-    ListenerDashboardImpactPoint(label: '12 PM', value: 2.8),
-    ListenerDashboardImpactPoint(label: '6 PM', value: 4.1),
-    ListenerDashboardImpactPoint(label: '12 AM', value: 3.2),
-  ];
-
-  // TODO: Load next upcoming session from sessions API.
-  static const _upcomingName = 'Emma';
-  static const _upcomingAvatar = 'https://i.pravatar.cc/120?u=ventor-emma';
-  static const _upcomingTime = '7:30 PM';
-  static const _upcomingDuration = 30;
 
   String _userEmail() => diContainer<GetCachedAuthMeUsecase>()()?.email ?? '';
 
@@ -83,14 +63,6 @@ class _ListenerDashboardTabState extends State<ListenerDashboardTab> {
       return l10n.listener_dashboard_greeting_afternoon(listenerName);
     }
     return l10n.listener_dashboard_greeting_evening(listenerName);
-  }
-
-  String _periodLabel(VentingMobLocalizations l10n) {
-    return switch (_period) {
-      ListenerDashboardPeriod.today => l10n.listener_dashboard_period_today,
-      ListenerDashboardPeriod.week => l10n.listener_dashboard_period_week,
-      ListenerDashboardPeriod.month => l10n.listener_dashboard_period_month,
-    };
   }
 
   Future<void> _openRegistrationStep(ListenerRegistrationStep step) async {
@@ -132,56 +104,6 @@ class _ListenerDashboardTabState extends State<ListenerDashboardTab> {
     final next = progress?.firstActionableStep;
     if (next == null) return;
     await _handleSetupStep(next);
-  }
-
-  Future<void> _pickPeriod() async {
-    final l10n = VentingMobLocalizations.of(context);
-    final selected = await showModalBottomSheet<ListenerDashboardPeriod>(
-      context: context,
-      backgroundColor: const Color(0xFF16121F),
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-      ),
-      builder: (context) {
-        return SafeArea(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const SizedBox(height: 10),
-              Container(
-                width: 40,
-                height: 4,
-                decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: 0.2),
-                  borderRadius: BorderRadius.circular(999),
-                ),
-              ),
-              for (final period in ListenerDashboardPeriod.values)
-                ListTile(
-                  title: Text(switch (period) {
-                    ListenerDashboardPeriod.today =>
-                      l10n.listener_dashboard_period_today,
-                    ListenerDashboardPeriod.week =>
-                      l10n.listener_dashboard_period_week,
-                    ListenerDashboardPeriod.month =>
-                      l10n.listener_dashboard_period_month,
-                  }, style: const TextStyle(color: Colors.white)),
-                  trailing: period == _period
-                      ? const Icon(
-                          Icons.check_rounded,
-                          color: SplashColors.purpleMid,
-                        )
-                      : null,
-                  onTap: () => Navigator.of(context).pop(period),
-                ),
-              const SizedBox(height: 8),
-            ],
-          ),
-        );
-      },
-    );
-    if (selected == null || !mounted) return;
-    setState(() => _period = selected);
   }
 
   void _toggleAvailability(ListenerDashboardSetupProgress? progress) {
@@ -302,6 +224,7 @@ class _ListenerDashboardTabState extends State<ListenerDashboardTab> {
     ListenerDashboardSetupProgress? progress,
     String listenerDisplayName,
     ListenerDashboardReminder? dailyReminder,
+    ListenerDashboardUpcomingSession? nextUpcomingSession,
   ) {
     final canGoOnline = progress?.canGoOnline ?? false;
     final displayOnline = canGoOnline && _isOnline;
@@ -319,21 +242,6 @@ class _ListenerDashboardTabState extends State<ListenerDashboardTab> {
         l10n,
         progress,
       ).expand((card) => [card, const SizedBox(height: 14)]),
-      if (!isProfileUnderReview) ...[
-        ListenerDashboardImpactCard(
-          title: l10n.listener_dashboard_impact_title,
-          periodLabel: _periodLabel(l10n),
-          onPeriodTap: _pickPeriod,
-          sessionsValue: '$_sessions',
-          sessionsLabel: l10n.listener_dashboard_sessions,
-          hoursValue: _hours.toStringAsFixed(1),
-          hoursLabel: l10n.listener_dashboard_hours,
-          peopleValue: '$_peopleHelped',
-          peopleLabel: l10n.listener_dashboard_people_helped,
-          points: _chartPoints,
-        ),
-        const SizedBox(height: 14),
-      ],
       ListenerDashboardAvailabilityCard(
         isOnline: displayOnline,
         canGoOnline: canGoOnline,
@@ -349,7 +257,7 @@ class _ListenerDashboardTabState extends State<ListenerDashboardTab> {
         onToggle: () => _toggleAvailability(progress),
       ),
       const SizedBox(height: 14),
-      if (isProfileUnderReview)
+      if (isProfileUnderReview || nextUpcomingSession == null)
         ListenerDashboardUpcomingCard.empty(
           title: l10n.listener_dashboard_upcoming_title,
           emptyMessage: l10n.listener_sessions_no_scheduled,
@@ -357,14 +265,16 @@ class _ListenerDashboardTabState extends State<ListenerDashboardTab> {
       else
         ListenerDashboardUpcomingCard(
           title: l10n.listener_dashboard_upcoming_title,
-          timeLabel: l10n.listener_dashboard_at_time(_upcomingTime),
+          timeLabel: nextUpcomingSession.whenLabel.isEmpty
+              ? l10n.listener_dashboard_at_time('—')
+              : nextUpcomingSession.whenLabel,
           durationLabel: l10n.listener_dashboard_session_minutes(
-            _upcomingDuration,
+            nextUpcomingSession.durationMinutes,
           ),
           waitingLabel: l10n.listener_dashboard_waiting,
           viewLabel: l10n.listener_dashboard_view,
-          avatarUrl: _upcomingAvatar,
-          ventorName: _upcomingName,
+          avatarUrl: nextUpcomingSession.ventorAvatarUrl,
+          ventorName: nextUpcomingSession.ventorName,
           onView: () => widget.onOpenSessions?.call(),
         ),
       const SizedBox(height: 16),
@@ -408,6 +318,7 @@ class _ListenerDashboardTabState extends State<ListenerDashboardTab> {
               state.setupProgress,
               state.listenerDisplayName,
               state.dailyReminder,
+              state.nextUpcomingSession,
             )
           : _buildSetupDashboard(l10n, state),
     );

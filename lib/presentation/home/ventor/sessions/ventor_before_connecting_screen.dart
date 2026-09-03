@@ -284,12 +284,10 @@ class _VentorBeforeConnectingScreenState
   String _timeSummary(VentingMobLocalizations l10n) {
     final choice = widget.timeChoice;
     switch (choice.mode) {
-      case VentorSessionTimeMode.instant:
-        return l10n.ventor_sessions_time_summary_instant;
       case VentorSessionTimeMode.nearest:
       case VentorSessionTimeMode.scheduled:
         final at = choice.scheduledAt;
-        if (at == null) return l10n.ventor_sessions_time_summary_instant;
+        if (at == null) return '—';
         final locale = Localizations.localeOf(context).toString();
         final label =
             '${DateFormat.MMMEd(locale).format(at)} · '

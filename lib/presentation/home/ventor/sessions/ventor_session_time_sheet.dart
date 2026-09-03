@@ -46,9 +46,7 @@ class _TimeSheetState extends State<_TimeSheet> {
       durationMinutes: widget.durationMinutes,
     );
     _nearest = _slots.isEmpty ? null : _slots.first;
-    if (widget.listener.availability.acceptInstantCall) {
-      _mode = VentorSessionTimeMode.instant;
-    } else if (_nearest != null) {
+    if (_nearest != null) {
       _mode = VentorSessionTimeMode.nearest;
       _selectedSlot = _nearest;
     } else if (_slots.isNotEmpty) {
@@ -60,8 +58,6 @@ class _TimeSheetState extends State<_TimeSheet> {
   bool get _canContinue {
     if (_mode == null) return false;
     return switch (_mode!) {
-      VentorSessionTimeMode.instant =>
-        widget.listener.availability.acceptInstantCall,
       VentorSessionTimeMode.nearest => _nearest != null,
       VentorSessionTimeMode.scheduled => _selectedSlot != null,
     };
@@ -71,8 +67,6 @@ class _TimeSheetState extends State<_TimeSheet> {
     final mode = _mode;
     if (mode == null) return null;
     switch (mode) {
-      case VentorSessionTimeMode.instant:
-        return const VentorSessionTimeChoice.instant();
       case VentorSessionTimeMode.nearest:
         final nearest = _nearest;
         if (nearest == null) return null;
@@ -161,18 +155,6 @@ class _TimeSheetState extends State<_TimeSheet> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    if (avail.acceptInstantCall)
-                      _ModeCard(
-                        selected: _mode == VentorSessionTimeMode.instant,
-                        icon: Icons.flash_on_rounded,
-                        title: l10n.ventor_sessions_time_instant_title,
-                        subtitle: l10n.ventor_sessions_time_instant_subtitle,
-                        onTap: () => setState(() {
-                          _mode = VentorSessionTimeMode.instant;
-                          _selectedSlot = null;
-                        }),
-                      ),
-                    if (avail.acceptInstantCall) const SizedBox(height: 10),
                     Builder(
                       builder: (context) {
                         final nearest = _nearest;

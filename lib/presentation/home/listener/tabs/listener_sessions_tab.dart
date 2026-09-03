@@ -81,13 +81,6 @@ class _ListenerSessionsTabViewState extends State<_ListenerSessionsTabView> {
               }
 
               switch (state.actionFeedback) {
-                case ListenerSessionsActionFeedback.instantRequestAccepted:
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(l10n.listener_sessions_assigned_snackbar),
-                      behavior: SnackBarBehavior.floating,
-                    ),
-                  );
                 case ListenerSessionsActionFeedback.scheduledRequestAccepted:
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
@@ -256,9 +249,11 @@ class _ListenerSessionsContent extends StatelessWidget {
   String _dateTimeLabel(
     BuildContext context,
     DateTime date, {
-    bool isInstant = false,
+    bool canJoinNow = false,
   }) {
-    if (isInstant) return '${l10n.listener_sessions_now} · ${_timeLabel(date)}';
+    if (canJoinNow) {
+      return '${l10n.listener_sessions_now} · ${_timeLabel(date)}';
+    }
     return '${_dateGroupLabel(context, date)} · ${_timeLabel(date)}';
   }
 
@@ -416,7 +411,7 @@ class _ListenerSessionsContent extends StatelessWidget {
       dateTimeLabel: _dateTimeLabel(
         context,
         session.scheduledAt,
-        isInstant: session.isInstant || session.canJoinNow,
+        canJoinNow: session.canJoinNow,
       ),
       durationLabel: l10n.listener_avail_min_value(session.durationMinutes),
       tags: session.tags,
@@ -462,25 +457,17 @@ class _ListenerSessionsContent extends StatelessWidget {
         message: request.message,
         chosenReasonLabel: l10n.listener_sessions_chosen_you,
         chosenReason: request.chosenReason,
-        dateTimeLabel: _dateTimeLabel(
-          context,
-          request.scheduledAt,
-          isInstant: request.isInstant,
-        ),
+        dateTimeLabel: _dateTimeLabel(context, request.scheduledAt),
         durationLabel: l10n.listener_avail_min_value(request.durationMinutes),
         tags: request.tags,
         badgeLabel: callModeLabel,
-        headerLabel: request.isInstant
-            ? l10n.listener_sessions_instant_incoming
-            : l10n.listener_sessions_scheduled_request,
+        headerLabel: l10n.listener_sessions_scheduled_request,
         headerTrailing: _timeAgoLabel(request.receivedAt),
         isVideoCall: request.isVideoCall,
         speechLanguageLabel: l10n.listener_sessions_speech_language,
         speechLanguage: request.speechLanguage,
         declineLabel: l10n.listener_sessions_decline,
-        acceptLabel: request.isInstant
-            ? l10n.listener_sessions_accept_instant
-            : l10n.listener_sessions_accept,
+        acceptLabel: l10n.listener_sessions_accept,
         onDecline: isProcessing
             ? null
             : () => _onDeclineRequest(context, request.id),
@@ -492,55 +479,19 @@ class _ListenerSessionsContent extends StatelessWidget {
   }
 
   Widget _buildUpcomingContent(BuildContext context) {
-    final instantRequests = overview.requests
-        .where((r) => r.isInstant)
-        .toList();
-    final scheduledRequests = overview.requests
-        .where((r) => !r.isInstant)
-        .toList();
-    final instantSessions = overview.upcomingSessions
-        .where((s) => s.isInstant)
-        .toList();
-    final scheduledSessions = overview.upcomingSessions
-        .where((s) => !s.isInstant)
-        .toList();
-    final scheduledGrouped = _groupByDate(context, scheduledSessions);
-
-    final hasInstant = instantRequests.isNotEmpty || instantSessions.isNotEmpty;
-    final hasScheduled =
-        scheduledRequests.isNotEmpty || scheduledSessions.isNotEmpty;
+    final requests = overview.requests;
+    final upcomingSessions = overview.upcomingSessions;
+    final scheduledGrouped = _groupByDate(context, upcomingSessions);
+    final hasContent = requests.isNotEmpty || upcomingSessions.isNotEmpty;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        _sectionTitle(l10n.listener_sessions_instant_section_title),
-        if (instantRequests.isNotEmpty)
-          ListenerSessionPenaltyNote(
-            message: l10n.listener_sessions_instant_note,
-          ),
-        if (!hasInstant)
-          _emptySectionMessage(l10n.listener_sessions_no_instant)
-        else ...[
-          ...instantRequests.map((r) => _requestCard(context, r)),
-          ...instantSessions.map((session) {
-            return Padding(
-              padding: const EdgeInsets.only(bottom: 10),
-              child: _sessionCard(
-                context,
-                session: session,
-                onJoinNow: session.canJoinNow
-                    ? () => _onJoinSession(context, session)
-                    : null,
-              ),
-            );
-          }),
-        ],
-        const SizedBox(height: 8),
         _sectionTitle(l10n.listener_sessions_scheduled_section_title),
-        if (!hasScheduled)
+        if (!hasContent)
           _emptySectionMessage(l10n.listener_sessions_no_scheduled)
         else ...[
-          ...scheduledRequests.map((r) => _requestCard(context, r)),
+          ...requests.map((r) => _requestCard(context, r)),
           ...scheduledGrouped.entries.expand((entry) {
             return [
               _dateHeader(entry.key),

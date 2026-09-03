@@ -67,6 +67,7 @@ _VentorFindListenerModel _$VentorFindListenerModelFromJson(
       (json['help_with'] as List<dynamic>?)?.map((e) => e as String).toList() ??
       const <String>[],
   voice_preview_seconds: (json['voice_preview_seconds'] as num?)?.toInt() ?? 0,
+  voice_intro_url: json['voice_intro_url'] as String? ?? '',
   is_online: json['is_online'] as bool? ?? false,
   is_verified: json['is_verified'] as bool? ?? false,
   rating_breakdown: json['rating_breakdown'] as Map<String, dynamic>?,
@@ -99,6 +100,7 @@ Map<String, dynamic> _$VentorFindListenerModelToJson(
   'bio': instance.bio,
   'help_with': instance.help_with,
   'voice_preview_seconds': instance.voice_preview_seconds,
+  'voice_intro_url': instance.voice_intro_url,
   'is_online': instance.is_online,
   'is_verified': instance.is_verified,
   'rating_breakdown': instance.rating_breakdown,
@@ -120,7 +122,6 @@ _$VentorFindListenerAvailabilityModelFromJson(Map<String, dynamic> json) =>
       from_hour: json['from_hour'] as String? ?? '',
       to_hour: json['to_hour'] as String? ?? '',
       time_zone_id: json['time_zone_id'] as String? ?? '',
-      accept_instant_call: json['accept_instant_call'] as bool? ?? false,
       session_minutes:
           (json['session_minutes'] as List<dynamic>?)
               ?.map((e) => (e as num).toInt())
@@ -135,6 +136,5 @@ Map<String, dynamic> _$VentorFindListenerAvailabilityModelToJson(
   'from_hour': instance.from_hour,
   'to_hour': instance.to_hour,
   'time_zone_id': instance.time_zone_id,
-  'accept_instant_call': instance.accept_instant_call,
   'session_minutes': instance.session_minutes,
 };

@@ -13,6 +13,7 @@ import 'package:venting_mobile_app/domain/usecase/auth_logout_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/auth_me_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/auth_register_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/auth_social_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/cancel_ventor_session_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/clear_auth_session_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/complete_listener_training_module_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/decline_listener_session_request_usecase.dart';
@@ -33,9 +34,12 @@ import 'package:venting_mobile_app/domain/usecase/get_listener_reviews_usecase.d
 import 'package:venting_mobile_app/domain/usecase/get_listener_sessions_overview_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_listener_setup_progress_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_listener_training_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/get_ventor_booked_session_detail_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/get_ventor_booked_sessions_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_ventor_find_listeners_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_ventor_home_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_ventor_invites_overview_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/get_ventor_listener_profile_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_ventor_mood_journey_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_ventor_notification_preferences_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_ventor_notifications_usecase.dart';
@@ -43,6 +47,7 @@ import 'package:venting_mobile_app/domain/usecase/get_ventor_point_packages_usec
 import 'package:venting_mobile_app/domain/usecase/get_ventor_profile_overview_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_ventor_reward_trades_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_ventor_rewards_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/join_session_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/mark_all_listener_notifications_read_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/mark_all_ventor_notifications_read_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/purchase_ventor_points_usecase.dart';
@@ -51,7 +56,11 @@ import 'package:venting_mobile_app/domain/usecase/remove_ventor_favorite_listene
 import 'package:venting_mobile_app/domain/usecase/request_listener_payout_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/sign_in_with_apple_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/sign_in_with_google_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/submit_listener_session_feedback_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/submit_listener_session_report_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/submit_ventor_mood_checkin_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/submit_ventor_session_rating_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/submit_ventor_session_report_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/update_listener_about_me_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/update_listener_availability_day_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/update_listener_availability_usecase.dart';
@@ -72,6 +81,9 @@ import 'package:venting_mobile_app/presentation/auth/bloc/forgot_password_bloc.d
 import 'package:venting_mobile_app/presentation/auth/forgot_password_screen.dart';
 import 'package:venting_mobile_app/presentation/change_password/bloc/change_password_bloc.dart';
 import 'package:venting_mobile_app/presentation/home/listener/availability/bloc/listener_availability_bloc.dart';
+import 'package:venting_mobile_app/presentation/home/listener/call/bloc/listener_call_join/listener_call_join_bloc.dart';
+import 'package:venting_mobile_app/presentation/home/listener/call/bloc/listener_call_rating/listener_call_rating_bloc.dart';
+import 'package:venting_mobile_app/presentation/home/listener/call/bloc/listener_call_report/listener_call_report_bloc.dart';
 import 'package:venting_mobile_app/presentation/home/listener/dashboard/bloc/listener_dashboard/listener_dashboard_bloc.dart';
 import 'package:venting_mobile_app/presentation/home/listener/dashboard/bloc/listener_first_session_tutorial/listener_first_session_tutorial_bloc.dart';
 import 'package:venting_mobile_app/presentation/home/listener/dashboard/bloc/listener_notifications/listener_notifications_bloc.dart';
@@ -84,6 +96,8 @@ import 'package:venting_mobile_app/presentation/home/listener/profile/bloc/payme
 import 'package:venting_mobile_app/presentation/home/listener/profile/bloc/payout_history/listener_payout_history_bloc.dart';
 import 'package:venting_mobile_app/presentation/home/listener/profile/bloc/privacy_visibility/listener_privacy_visibility_bloc.dart';
 import 'package:venting_mobile_app/presentation/home/listener/sessions/bloc/listener_sessions/listener_sessions_bloc.dart';
+import 'package:venting_mobile_app/presentation/home/ventor/call/bloc/ventor_call_rating/ventor_call_rating_bloc.dart';
+import 'package:venting_mobile_app/presentation/home/ventor/call/bloc/ventor_call_report/ventor_call_report_bloc.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/dashboard/bloc/ventor_dashboard/ventor_dashboard_bloc.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/dashboard/bloc/ventor_notifications_bloc.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/profile/bloc/notification_preferences/ventor_notification_preferences_bloc.dart';
@@ -91,7 +105,11 @@ import 'package:venting_mobile_app/presentation/home/ventor/profile/bloc/ventor_
 import 'package:venting_mobile_app/presentation/home/ventor/rewards/bloc/ventor_buy_points/ventor_buy_points_bloc.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/rewards/bloc/ventor_invites/ventor_invites_bloc.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/rewards/bloc/ventor_rewards/ventor_rewards_bloc.dart';
+import 'package:venting_mobile_app/presentation/home/ventor/sessions/bloc/ventor_booked_session_detail/ventor_booked_session_detail_bloc.dart';
+import 'package:venting_mobile_app/presentation/home/ventor/sessions/bloc/ventor_booked_sessions/ventor_booked_sessions_bloc.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/sessions/bloc/ventor_find_listeners/ventor_find_listeners_bloc.dart';
+import 'package:venting_mobile_app/presentation/home/ventor/sessions/bloc/ventor_listener_profile/ventor_listener_profile_bloc.dart';
+import 'package:venting_mobile_app/presentation/home/ventor/sessions/ventor_sessions_models.dart';
 import 'package:venting_mobile_app/presentation/splash/bloc/splash_bloc.dart';
 import 'package:venting_mobile_app/shared_widgets/bottom_sheets/logout_delete_account_confirm/bloc/logout_delete_account_confirm_bloc.dart';
 
@@ -199,6 +217,22 @@ mixin VentingModuleBlocs on VentingModule {
         getIt<DeclineListenerSessionRequestUsecase>(),
       ),
     );
+    getIt.registerFactory<ListenerCallRatingBloc>(
+      () =>
+          ListenerCallRatingBloc(getIt<SubmitListenerSessionFeedbackUsecase>()),
+    );
+    getIt.registerFactory<ListenerCallJoinBloc>(
+      () => ListenerCallJoinBloc(getIt<JoinSessionUsecase>()),
+    );
+    getIt.registerFactory<ListenerCallReportBloc>(
+      () => ListenerCallReportBloc(getIt<SubmitListenerSessionReportUsecase>()),
+    );
+    getIt.registerFactory<VentorCallReportBloc>(
+      () => VentorCallReportBloc(getIt<SubmitVentorSessionReportUsecase>()),
+    );
+    getIt.registerFactory<VentorCallRatingBloc>(
+      () => VentorCallRatingBloc(getIt<SubmitVentorSessionRatingUsecase>()),
+    );
     getIt.registerFactory<ListenerTrainingBloc>(
       () => ListenerTrainingBloc(
         getIt<GetListenerTrainingUsecase>(),
@@ -231,6 +265,32 @@ mixin VentingModuleBlocs on VentingModule {
         getIt<GetVentorFindListenersUsecase>(),
         getIt<AddVentorFavoriteListenerUsecase>(),
         getIt<RemoveVentorFavoriteListenerUsecase>(),
+      ),
+    );
+    getIt.registerFactory<VentorBookedSessionsBloc>(
+      () => VentorBookedSessionsBloc(getIt<GetVentorBookedSessionsUsecase>()),
+    );
+    getIt.registerFactoryParam<
+      VentorBookedSessionDetailBloc,
+      VentorBookedSession,
+      void
+    >(
+      (session, _) => VentorBookedSessionDetailBloc(
+        getIt<GetVentorBookedSessionDetailUsecase>(),
+        getIt<CancelVentorSessionUsecase>(),
+        initialSession: session,
+      ),
+    );
+    getIt.registerFactoryParam<
+      VentorListenerProfileBloc,
+      VentorFindListener,
+      void
+    >(
+      (listener, _) => VentorListenerProfileBloc(
+        getIt<GetVentorListenerProfileUsecase>(),
+        getIt<AddVentorFavoriteListenerUsecase>(),
+        getIt<RemoveVentorFavoriteListenerUsecase>(),
+        initialListener: listener,
       ),
     );
     getIt.registerFactory<VentorProfileBloc>(

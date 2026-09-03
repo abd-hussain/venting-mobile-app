@@ -13,7 +13,6 @@ class VentorListenerAvailability {
     required this.fromHour,
     required this.toHour,
     required this.timeZoneId,
-    required this.acceptInstantCall,
     required this.sessionMinutes,
   });
 
@@ -22,7 +21,6 @@ class VentorListenerAvailability {
   final String fromHour;
   final String toHour;
   final String timeZoneId;
-  final bool acceptInstantCall;
   final List<int> sessionMinutes;
 }
 
@@ -41,6 +39,7 @@ class VentorFindListener {
     required this.bio,
     required this.helpWith,
     required this.voicePreviewSeconds,
+    this.voiceIntroUrl = '',
     required this.isOnline,
     required this.isVerified,
     required this.ratingBreakdown,
@@ -66,6 +65,7 @@ class VentorFindListener {
   final String bio;
   final List<String> helpWith;
   final int voicePreviewSeconds;
+  final String voiceIntroUrl;
   final bool isOnline;
   final bool isVerified;
   final Map<int, int> ratingBreakdown;
@@ -100,6 +100,7 @@ class VentorFindListener {
       bio: bio,
       helpWith: helpWith,
       voicePreviewSeconds: voicePreviewSeconds,
+      voiceIntroUrl: voiceIntroUrl,
       isOnline: isOnline,
       isVerified: isVerified,
       ratingBreakdown: ratingBreakdown,
@@ -179,13 +180,9 @@ class VentorSessionDurationOption {
   final bool isPopular;
 }
 
-enum VentorSessionTimeMode { instant, nearest, scheduled }
+enum VentorSessionTimeMode { nearest, scheduled }
 
 class VentorSessionTimeChoice {
-  const VentorSessionTimeChoice.instant()
-    : mode = VentorSessionTimeMode.instant,
-      scheduledAt = null;
-
   const VentorSessionTimeChoice.nearest(this.scheduledAt)
     : mode = VentorSessionTimeMode.nearest;
 
@@ -213,7 +210,6 @@ class VentorBookedSession {
     required this.amountPaid,
     required this.voiceChangeEnabled,
     this.scheduledAt,
-    this.isInstant = false,
     this.refundedToBalance,
   });
 
@@ -228,7 +224,6 @@ class VentorBookedSession {
   final double amountPaid;
   final bool voiceChangeEnabled;
   final DateTime? scheduledAt;
-  final bool isInstant;
   final double? refundedToBalance;
 
   /// Full paid amount credited back to the ventor balance when cancelled.
@@ -250,7 +245,6 @@ class VentorBookedSession {
       amountPaid: amountPaid,
       voiceChangeEnabled: voiceChangeEnabled,
       scheduledAt: scheduledAt,
-      isInstant: isInstant,
       refundedToBalance: refundedToBalance ?? this.refundedToBalance,
     );
   }
@@ -306,7 +300,6 @@ abstract final class VentorSessionsCatalog {
         fromHour: '10:00 AM',
         toHour: '10:00 PM',
         timeZoneId: 'Asia/Beirut',
-        acceptInstantCall: true,
         sessionMinutes: [30, 45, 60],
       ),
       isFavorite: true,
@@ -340,7 +333,6 @@ abstract final class VentorSessionsCatalog {
         fromHour: '06:00 PM',
         toHour: '11:00 PM',
         timeZoneId: 'Africa/Cairo',
-        acceptInstantCall: true,
         sessionMinutes: [30, 60],
       ),
     ),
@@ -373,7 +365,6 @@ abstract final class VentorSessionsCatalog {
         fromHour: '09:00 AM',
         toHour: '05:00 PM',
         timeZoneId: 'America/Chicago',
-        acceptInstantCall: false,
         sessionMinutes: [45, 60],
       ),
     ),
@@ -404,7 +395,6 @@ abstract final class VentorSessionsCatalog {
         fromHour: '04:00 PM',
         toHour: '11:00 PM',
         timeZoneId: 'Asia/Amman',
-        acceptInstantCall: true,
         sessionMinutes: [15, 30, 60],
       ),
     ),
@@ -435,7 +425,6 @@ abstract final class VentorSessionsCatalog {
         fromHour: '08:00 AM',
         toHour: '08:00 PM',
         timeZoneId: 'Europe/Paris',
-        acceptInstantCall: true,
         sessionMinutes: [30, 45],
       ),
     ),
@@ -466,7 +455,6 @@ abstract final class VentorSessionsCatalog {
         fromHour: '02:00 PM',
         toHour: '09:00 PM',
         timeZoneId: 'Africa/Casablanca',
-        acceptInstantCall: false,
         sessionMinutes: [30, 60],
       ),
     ),
@@ -623,118 +611,5 @@ abstract final class VentorSessionsCatalog {
       if (listener.id == id) return listener;
     }
     return null;
-  }
-
-  /// Best available listener for an instant match (online + accepts instant).
-  static VentorFindListener? bestInstantListener() {
-    final pool = mockListeners
-        .where((l) => l.isOnline && l.availability.acceptInstantCall)
-        .toList();
-    if (pool.isEmpty) return null;
-
-    pool.sort((a, b) {
-      final byRating = b.rating.compareTo(a.rating);
-      if (byRating != 0) return byRating;
-      return b.sessionCount.compareTo(a.sessionCount);
-    });
-    return pool.first;
-  }
-
-  /// Nearest actionable session: live first, else soonest upcoming.
-  static VentorBookedSession? nearestUpcomingSession({DateTime? now}) {
-    final base = now ?? DateTime.now();
-    final candidates = mockBookedSessions(now: base).where((s) {
-      return s.status == VentorBookedSessionStatus.live ||
-          s.status == VentorBookedSessionStatus.upcoming;
-    }).toList();
-    if (candidates.isEmpty) return null;
-
-    candidates.sort((a, b) {
-      int rank(VentorBookedSessionStatus status) => switch (status) {
-        VentorBookedSessionStatus.live => 0,
-        VentorBookedSessionStatus.upcoming => 1,
-        _ => 2,
-      };
-      final byStatus = rank(a.status).compareTo(rank(b.status));
-      if (byStatus != 0) return byStatus;
-      final aTime = a.scheduledAt ?? base;
-      final bTime = b.scheduledAt ?? base;
-      return aTime.compareTo(bTime);
-    });
-    return candidates.first;
-  }
-
-  // TODO: Replace with booked sessions API.
-  static List<VentorBookedSession> mockBookedSessions({DateTime? now}) {
-    final base = now ?? DateTime.now();
-    return [
-      VentorBookedSession(
-        id: 'b1',
-        listenerId: 'lina',
-        listenerName: 'Lina',
-        listenerAvatarUrl: 'https://i.pravatar.cc/240?u=ventor-find-lina',
-        durationMinutes: 30,
-        status: VentorBookedSessionStatus.upcoming,
-        callMode: VentorBookedCallMode.voice,
-        speechLanguage: 'English',
-        amountPaid: 39,
-        voiceChangeEnabled: true,
-        scheduledAt: base.add(const Duration(hours: 2, minutes: 15)),
-      ),
-      VentorBookedSession(
-        id: 'b2',
-        listenerId: 'omar',
-        listenerName: 'Omar',
-        listenerAvatarUrl: 'https://i.pravatar.cc/240?u=ventor-find-omar',
-        durationMinutes: 45,
-        status: VentorBookedSessionStatus.live,
-        callMode: VentorBookedCallMode.video,
-        speechLanguage: 'Arabic',
-        amountPaid: 47.25,
-        voiceChangeEnabled: false,
-        isInstant: true,
-        scheduledAt: base.subtract(const Duration(minutes: 5)),
-      ),
-      VentorBookedSession(
-        id: 'b3',
-        listenerId: 'sara',
-        listenerName: 'Sara',
-        listenerAvatarUrl: 'https://i.pravatar.cc/240?u=ventor-find-sara',
-        durationMinutes: 60,
-        status: VentorBookedSessionStatus.upcoming,
-        callMode: VentorBookedCallMode.voice,
-        speechLanguage: 'English',
-        amountPaid: 57,
-        voiceChangeEnabled: false,
-        scheduledAt: base.add(const Duration(days: 1, hours: 4)),
-      ),
-      VentorBookedSession(
-        id: 'b4',
-        listenerId: 'karim',
-        listenerName: 'Karim',
-        listenerAvatarUrl: 'https://i.pravatar.cc/240?u=ventor-find-karim',
-        durationMinutes: 30,
-        status: VentorBookedSessionStatus.completed,
-        callMode: VentorBookedCallMode.video,
-        speechLanguage: 'French',
-        amountPaid: 40.5,
-        voiceChangeEnabled: false,
-        scheduledAt: base.subtract(const Duration(days: 2, hours: 3)),
-      ),
-      VentorBookedSession(
-        id: 'b5',
-        listenerId: 'nour',
-        listenerName: 'Nour',
-        listenerAvatarUrl: 'https://i.pravatar.cc/240?u=ventor-find-nour',
-        durationMinutes: 15,
-        status: VentorBookedSessionStatus.cancelled,
-        callMode: VentorBookedCallMode.voice,
-        speechLanguage: 'Arabic',
-        amountPaid: 12.75,
-        voiceChangeEnabled: true,
-        scheduledAt: base.subtract(const Duration(days: 1)),
-        refundedToBalance: 12.75,
-      ),
-    ];
   }
 }

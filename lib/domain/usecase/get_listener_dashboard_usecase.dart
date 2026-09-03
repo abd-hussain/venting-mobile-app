@@ -1,5 +1,6 @@
 import 'package:fpdart/fpdart.dart';
 import 'package:preferences/preferences.dart';
+import 'package:venting_mobile_app/config/app_config.dart';
 import 'package:venting_mobile_app/domain/data/app/listener_dashboard.dart';
 import 'package:venting_mobile_app/domain/data/exceptions/main_api_exception.dart';
 import 'package:venting_mobile_app/domain/repository/api/listener/listener_dashboard_repository.dart';
@@ -7,10 +8,12 @@ import 'package:venting_mobile_app/domain/repository/api/listener/listener_dashb
 class GetListenerDashboardUsecase {
   final ListenerDashboardRepository listenerDashboardRepository;
   final VentingPreferences ventingPreferences;
+  final AppConfig appConfig;
 
   const GetListenerDashboardUsecase(
     this.listenerDashboardRepository,
     this.ventingPreferences,
+    this.appConfig,
   );
 
   TaskEither<Exception, ListenerDashboard> call() {
@@ -30,7 +33,10 @@ class GetListenerDashboardUsecase {
     }
 
     return listenerDashboardRepository.getDashboard().map(
-      (response) => listenerDashboardFromApi(response.data),
+      (response) => listenerDashboardFromApi(
+        response.data,
+        apiBaseUrl: appConfig.baseUrl,
+      ),
     );
   }
 }

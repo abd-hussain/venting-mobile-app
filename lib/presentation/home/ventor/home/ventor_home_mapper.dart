@@ -36,7 +36,6 @@ VentorBookedSession ventorBookedSessionFromData(VentorBookedSessionData data) {
     amountPaid: data.amountPaid,
     voiceChangeEnabled: data.voiceChangeEnabled,
     scheduledAt: data.scheduledAt,
-    isInstant: data.isInstant,
     refundedToBalance: data.refundedToBalance,
   );
 }
@@ -54,7 +53,6 @@ VentorBookedSessionData ventorBookedSessionToData(VentorBookedSession session) {
     amountPaid: session.amountPaid,
     voiceChangeEnabled: session.voiceChangeEnabled,
     scheduledAt: session.scheduledAt,
-    isInstant: session.isInstant,
     refundedToBalance: session.refundedToBalance,
   );
 }

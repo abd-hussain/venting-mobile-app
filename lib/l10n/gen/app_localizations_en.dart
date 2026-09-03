@@ -613,13 +613,6 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
   String get listener_reg_avail_to => 'To';
 
   @override
-  String get listener_reg_avail_instant_call => 'Accept instant call';
-
-  @override
-  String get listener_reg_avail_instant_call_hint =>
-      'Instant calls can help you earn more income.';
-
-  @override
   String get listener_reg_avail_session_length => 'Session length';
 
   @override
@@ -2242,17 +2235,6 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
   }
 
   @override
-  String get listener_avail_instant_calls => 'Accept Instant Calls';
-
-  @override
-  String get listener_avail_instant_calls_hint =>
-      'Allow ventors to reach you for immediate sessions without scheduling.';
-
-  @override
-  String get listener_avail_instant_calls_earnings_highlight =>
-      'Instant calls can help you earn extra income.';
-
-  @override
   String get listener_avail_online_status => 'Appear Online';
 
   @override
@@ -2299,23 +2281,10 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
   String get listener_sessions_history_title => 'Past Sessions';
 
   @override
-  String get listener_sessions_instant_section_title => 'Instant Calls';
-
-  @override
   String get listener_sessions_scheduled_section_title => 'Scheduled Sessions';
 
   @override
-  String get listener_sessions_instant_note =>
-      'Instant calls notify available listeners at the same time. The first listener who accepts is assigned the call — others lose the request.';
-
-  @override
-  String get listener_sessions_no_instant => 'No instant calls right now.';
-
-  @override
   String get listener_sessions_no_scheduled => 'No scheduled sessions yet.';
-
-  @override
-  String get listener_sessions_instant_incoming => 'Incoming instant call';
 
   @override
   String get listener_sessions_voice_call => 'Voice call';
@@ -2337,9 +2306,6 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
 
   @override
   String get listener_sessions_accept => 'Accept';
-
-  @override
-  String get listener_sessions_accept_instant => 'Accept call';
 
   @override
   String get listener_sessions_assigned_snackbar =>
@@ -2574,27 +2540,6 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
 
   @override
   String get listener_dashboard_subtitle => 'You\'re making a real difference.';
-
-  @override
-  String get listener_dashboard_impact_title => 'Today\'s Impact';
-
-  @override
-  String get listener_dashboard_period_today => 'Today';
-
-  @override
-  String get listener_dashboard_period_week => 'This week';
-
-  @override
-  String get listener_dashboard_period_month => 'This month';
-
-  @override
-  String get listener_dashboard_sessions => 'Sessions';
-
-  @override
-  String get listener_dashboard_hours => 'Hours';
-
-  @override
-  String get listener_dashboard_people_helped => 'People helped';
 
   @override
   String get listener_dashboard_currently => 'You\'re Currently';
@@ -3052,17 +2997,6 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
   String get ventor_sessions_availability_timezone => 'Time zone';
 
   @override
-  String get ventor_sessions_availability_instant => 'Instant calls';
-
-  @override
-  String get ventor_sessions_availability_instant_yes =>
-      'Accepts instant calls';
-
-  @override
-  String get ventor_sessions_availability_instant_no =>
-      'Scheduled sessions only';
-
-  @override
   String get ventor_sessions_session_lengths => 'Session lengths';
 
   @override
@@ -3103,13 +3037,6 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
   }
 
   @override
-  String get ventor_sessions_time_instant_title => 'Instant call';
-
-  @override
-  String get ventor_sessions_time_instant_subtitle =>
-      'Connect as soon as the listener accepts.';
-
-  @override
   String get ventor_sessions_time_nearest_title => 'Nearest available time';
 
   @override
@@ -3127,9 +3054,6 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
   @override
   String get ventor_sessions_time_no_slots =>
       'No upcoming slots match this listener’s availability.';
-
-  @override
-  String get ventor_sessions_time_summary_instant => 'Instant call';
 
   @override
   String ventor_sessions_time_summary_nearest(String slot) {
@@ -3351,9 +3275,6 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
 
   @override
   String get ventor_sessions_booked_status_cancelled => 'Cancelled';
-
-  @override
-  String get ventor_sessions_booked_instant_now => 'Instant · happening now';
 
   @override
   String ventor_sessions_booked_speech_language(String language) {
@@ -3720,30 +3641,6 @@ class VentingMobLocalizationsEn extends VentingMobLocalizations {
 
   @override
   String get ventor_home_day_sun => 'S';
-
-  @override
-  String get ventor_home_instant_section_title => 'Book an instant call';
-
-  @override
-  String get ventor_home_instant_section_subtitle =>
-      'We’ll match you with the best available listener right now.';
-
-  @override
-  String get ventor_home_instant_title => 'Instant match';
-
-  @override
-  String get ventor_home_instant_subtitle =>
-      'Let the system find a great listener for you.';
-
-  @override
-  String get ventor_home_instant_matching => 'Finding your best listener…';
-
-  @override
-  String get ventor_home_instant_cta => 'Book now';
-
-  @override
-  String get ventor_home_instant_none =>
-      'No listeners are available for an instant call right now. Try again shortly.';
 
   @override
   String get ventor_home_upcoming_title => 'Upcoming session';

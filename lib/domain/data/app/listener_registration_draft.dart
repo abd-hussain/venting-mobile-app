@@ -46,7 +46,6 @@ class ListenerRegistrationDraft {
   List<String> availabilityDays = const ['mon', 'tue', 'wed', 'thu', 'fri'];
   String availabilityFrom = '09:00 AM';
   String availabilityTo = '11:00 PM';
-  bool acceptInstantCalls = true;
   List<int> sessionMinutes = const [30, 60];
 
   // Step 9 — Notifications (FCM token only; optional if permission denied)
@@ -209,7 +208,6 @@ class ListenerRegistrationStep8Data {
     required this.availabilityDays,
     required this.availabilityFrom,
     required this.availabilityTo,
-    required this.acceptInstantCalls,
     required this.sessionMinutes,
   });
 
@@ -217,7 +215,6 @@ class ListenerRegistrationStep8Data {
   final List<String> availabilityDays;
   final String availabilityFrom;
   final String availabilityTo;
-  final bool acceptInstantCalls;
   final List<int> sessionMinutes;
 }
 
@@ -269,7 +266,6 @@ extension ListenerRegistrationDraftMerge on ListenerRegistrationDraft {
     availabilityDays = List<String>.from(data.availabilityDays);
     availabilityFrom = data.availabilityFrom;
     availabilityTo = data.availabilityTo;
-    acceptInstantCalls = data.acceptInstantCalls;
     sessionMinutes = List<int>.from(data.sessionMinutes);
   }
 

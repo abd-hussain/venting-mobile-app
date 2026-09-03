@@ -1211,18 +1211,6 @@ abstract class VentingMobLocalizations {
   /// **'To'**
   String get listener_reg_avail_to;
 
-  /// No description provided for @listener_reg_avail_instant_call.
-  ///
-  /// In en, this message translates to:
-  /// **'Accept instant call'**
-  String get listener_reg_avail_instant_call;
-
-  /// No description provided for @listener_reg_avail_instant_call_hint.
-  ///
-  /// In en, this message translates to:
-  /// **'Instant calls can help you earn more income.'**
-  String get listener_reg_avail_instant_call_hint;
-
   /// No description provided for @listener_reg_avail_session_length.
   ///
   /// In en, this message translates to:
@@ -4106,24 +4094,6 @@ abstract class VentingMobLocalizations {
   /// **'{minutes} min'**
   String listener_avail_min_value(int minutes);
 
-  /// No description provided for @listener_avail_instant_calls.
-  ///
-  /// In en, this message translates to:
-  /// **'Accept Instant Calls'**
-  String get listener_avail_instant_calls;
-
-  /// No description provided for @listener_avail_instant_calls_hint.
-  ///
-  /// In en, this message translates to:
-  /// **'Allow ventors to reach you for immediate sessions without scheduling.'**
-  String get listener_avail_instant_calls_hint;
-
-  /// No description provided for @listener_avail_instant_calls_earnings_highlight.
-  ///
-  /// In en, this message translates to:
-  /// **'Instant calls can help you earn extra income.'**
-  String get listener_avail_instant_calls_earnings_highlight;
-
   /// No description provided for @listener_avail_online_status.
   ///
   /// In en, this message translates to:
@@ -4202,41 +4172,17 @@ abstract class VentingMobLocalizations {
   /// **'Past Sessions'**
   String get listener_sessions_history_title;
 
-  /// No description provided for @listener_sessions_instant_section_title.
-  ///
-  /// In en, this message translates to:
-  /// **'Instant Calls'**
-  String get listener_sessions_instant_section_title;
-
   /// No description provided for @listener_sessions_scheduled_section_title.
   ///
   /// In en, this message translates to:
   /// **'Scheduled Sessions'**
   String get listener_sessions_scheduled_section_title;
 
-  /// No description provided for @listener_sessions_instant_note.
-  ///
-  /// In en, this message translates to:
-  /// **'Instant calls notify available listeners at the same time. The first listener who accepts is assigned the call — others lose the request.'**
-  String get listener_sessions_instant_note;
-
-  /// No description provided for @listener_sessions_no_instant.
-  ///
-  /// In en, this message translates to:
-  /// **'No instant calls right now.'**
-  String get listener_sessions_no_instant;
-
   /// No description provided for @listener_sessions_no_scheduled.
   ///
   /// In en, this message translates to:
   /// **'No scheduled sessions yet.'**
   String get listener_sessions_no_scheduled;
-
-  /// No description provided for @listener_sessions_instant_incoming.
-  ///
-  /// In en, this message translates to:
-  /// **'Incoming instant call'**
-  String get listener_sessions_instant_incoming;
 
   /// No description provided for @listener_sessions_voice_call.
   ///
@@ -4279,12 +4225,6 @@ abstract class VentingMobLocalizations {
   /// In en, this message translates to:
   /// **'Accept'**
   String get listener_sessions_accept;
-
-  /// No description provided for @listener_sessions_accept_instant.
-  ///
-  /// In en, this message translates to:
-  /// **'Accept call'**
-  String get listener_sessions_accept_instant;
 
   /// No description provided for @listener_sessions_assigned_snackbar.
   ///
@@ -4687,48 +4627,6 @@ abstract class VentingMobLocalizations {
   /// In en, this message translates to:
   /// **'You\'re making a real difference.'**
   String get listener_dashboard_subtitle;
-
-  /// No description provided for @listener_dashboard_impact_title.
-  ///
-  /// In en, this message translates to:
-  /// **'Today\'s Impact'**
-  String get listener_dashboard_impact_title;
-
-  /// No description provided for @listener_dashboard_period_today.
-  ///
-  /// In en, this message translates to:
-  /// **'Today'**
-  String get listener_dashboard_period_today;
-
-  /// No description provided for @listener_dashboard_period_week.
-  ///
-  /// In en, this message translates to:
-  /// **'This week'**
-  String get listener_dashboard_period_week;
-
-  /// No description provided for @listener_dashboard_period_month.
-  ///
-  /// In en, this message translates to:
-  /// **'This month'**
-  String get listener_dashboard_period_month;
-
-  /// No description provided for @listener_dashboard_sessions.
-  ///
-  /// In en, this message translates to:
-  /// **'Sessions'**
-  String get listener_dashboard_sessions;
-
-  /// No description provided for @listener_dashboard_hours.
-  ///
-  /// In en, this message translates to:
-  /// **'Hours'**
-  String get listener_dashboard_hours;
-
-  /// No description provided for @listener_dashboard_people_helped.
-  ///
-  /// In en, this message translates to:
-  /// **'People helped'**
-  String get listener_dashboard_people_helped;
 
   /// No description provided for @listener_dashboard_currently.
   ///
@@ -5534,24 +5432,6 @@ abstract class VentingMobLocalizations {
   /// **'Time zone'**
   String get ventor_sessions_availability_timezone;
 
-  /// No description provided for @ventor_sessions_availability_instant.
-  ///
-  /// In en, this message translates to:
-  /// **'Instant calls'**
-  String get ventor_sessions_availability_instant;
-
-  /// No description provided for @ventor_sessions_availability_instant_yes.
-  ///
-  /// In en, this message translates to:
-  /// **'Accepts instant calls'**
-  String get ventor_sessions_availability_instant_yes;
-
-  /// No description provided for @ventor_sessions_availability_instant_no.
-  ///
-  /// In en, this message translates to:
-  /// **'Scheduled sessions only'**
-  String get ventor_sessions_availability_instant_no;
-
   /// No description provided for @ventor_sessions_session_lengths.
   ///
   /// In en, this message translates to:
@@ -5624,18 +5504,6 @@ abstract class VentingMobLocalizations {
   /// **'Listener availability: {hours} ({timezone})'**
   String ventor_sessions_choose_time_window(String hours, String timezone);
 
-  /// No description provided for @ventor_sessions_time_instant_title.
-  ///
-  /// In en, this message translates to:
-  /// **'Instant call'**
-  String get ventor_sessions_time_instant_title;
-
-  /// No description provided for @ventor_sessions_time_instant_subtitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Connect as soon as the listener accepts.'**
-  String get ventor_sessions_time_instant_subtitle;
-
   /// No description provided for @ventor_sessions_time_nearest_title.
   ///
   /// In en, this message translates to:
@@ -5665,12 +5533,6 @@ abstract class VentingMobLocalizations {
   /// In en, this message translates to:
   /// **'No upcoming slots match this listener’s availability.'**
   String get ventor_sessions_time_no_slots;
-
-  /// No description provided for @ventor_sessions_time_summary_instant.
-  ///
-  /// In en, this message translates to:
-  /// **'Instant call'**
-  String get ventor_sessions_time_summary_instant;
 
   /// No description provided for @ventor_sessions_time_summary_nearest.
   ///
@@ -6042,12 +5904,6 @@ abstract class VentingMobLocalizations {
   /// In en, this message translates to:
   /// **'Cancelled'**
   String get ventor_sessions_booked_status_cancelled;
-
-  /// No description provided for @ventor_sessions_booked_instant_now.
-  ///
-  /// In en, this message translates to:
-  /// **'Instant · happening now'**
-  String get ventor_sessions_booked_instant_now;
 
   /// No description provided for @ventor_sessions_booked_speech_language.
   ///
@@ -6666,48 +6522,6 @@ abstract class VentingMobLocalizations {
   /// In en, this message translates to:
   /// **'S'**
   String get ventor_home_day_sun;
-
-  /// No description provided for @ventor_home_instant_section_title.
-  ///
-  /// In en, this message translates to:
-  /// **'Book an instant call'**
-  String get ventor_home_instant_section_title;
-
-  /// No description provided for @ventor_home_instant_section_subtitle.
-  ///
-  /// In en, this message translates to:
-  /// **'We’ll match you with the best available listener right now.'**
-  String get ventor_home_instant_section_subtitle;
-
-  /// No description provided for @ventor_home_instant_title.
-  ///
-  /// In en, this message translates to:
-  /// **'Instant match'**
-  String get ventor_home_instant_title;
-
-  /// No description provided for @ventor_home_instant_subtitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Let the system find a great listener for you.'**
-  String get ventor_home_instant_subtitle;
-
-  /// No description provided for @ventor_home_instant_matching.
-  ///
-  /// In en, this message translates to:
-  /// **'Finding your best listener…'**
-  String get ventor_home_instant_matching;
-
-  /// No description provided for @ventor_home_instant_cta.
-  ///
-  /// In en, this message translates to:
-  /// **'Book now'**
-  String get ventor_home_instant_cta;
-
-  /// No description provided for @ventor_home_instant_none.
-  ///
-  /// In en, this message translates to:
-  /// **'No listeners are available for an instant call right now. Try again shortly.'**
-  String get ventor_home_instant_none;
 
   /// No description provided for @ventor_home_upcoming_title.
   ///

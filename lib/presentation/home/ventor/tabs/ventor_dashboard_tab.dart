@@ -16,9 +16,7 @@ import 'package:venting_mobile_app/presentation/home/ventor/home/ventor_mood_che
 import 'package:venting_mobile_app/presentation/home/ventor/home/ventor_points_home_card.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/profile/ventor_profile_theme.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/rewards/ventor_points_scope.dart';
-import 'package:venting_mobile_app/presentation/home/ventor/sessions/ventor_before_connecting_screen.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/sessions/ventor_booked_session_details_screen.dart';
-import 'package:venting_mobile_app/presentation/home/ventor/sessions/ventor_session_duration_sheet.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/sessions/ventor_sessions_models.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/ventor_home_shell.dart';
 import 'package:venting_mobile_app/presentation/splash/widgets/splash_colors.dart';
@@ -57,8 +55,6 @@ class VentorDashboardTabState extends State<VentorDashboardTab> {
     systemNavigationBarColor: SplashColors.backgroundBottom,
     systemNavigationBarIconBrightness: Brightness.light,
   );
-
-  var _matchingInstant = false;
 
   String _greeting(VentingMobLocalizations l10n) {
     final hour = DateTime.now().hour;
@@ -131,12 +127,10 @@ class VentorDashboardTabState extends State<VentorDashboardTab> {
     VentorBookedSession session,
   ) {
     if (session.status == VentorBookedSessionStatus.live) {
-      return session.isInstant
-          ? l10n.ventor_sessions_booked_instant_now
-          : l10n.ventor_home_upcoming_live_now;
+      return l10n.ventor_home_upcoming_live_now;
     }
     final at = session.scheduledAt;
-    if (at == null) return l10n.ventor_sessions_time_summary_instant;
+    if (at == null) return '—';
     final locale = Localizations.localeOf(context).toString();
     return '${DateFormat.MMMEd(locale).format(at)} · '
         '${DateFormat.jm(locale).format(at)}';
@@ -179,44 +173,6 @@ class VentorDashboardTabState extends State<VentorDashboardTab> {
         ),
       );
     }
-  }
-
-  // TODO: Wire book instant match — POST /v1/sessions/instant-match, then book
-  // session flow (#42). Replace mock listener lookup below.
-  Future<void> _bookInstantCall() async {
-    if (_matchingInstant) return;
-    final l10n = VentingMobLocalizations.of(context);
-    setState(() => _matchingInstant = true);
-
-    // TODO: Call instant-match API (best available listener for ventor).
-    await Future<void>.delayed(const Duration(milliseconds: 1100));
-    if (!mounted) return;
-
-    final listener = VentorSessionsCatalog.bestInstantListener();
-    setState(() => _matchingInstant = false);
-
-    if (listener == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(l10n.ventor_home_instant_none),
-          behavior: SnackBarBehavior.floating,
-        ),
-      );
-      return;
-    }
-
-    final minutes = await showVentorSessionDurationSheet(
-      context: context,
-      listener: listener,
-    );
-    if (!mounted || minutes == null) return;
-
-    await openVentorBeforeConnectingScreen(
-      context: context,
-      listener: listener,
-      durationMinutes: minutes,
-      timeChoice: const VentorSessionTimeChoice.instant(),
-    );
   }
 
   @override
@@ -403,33 +359,6 @@ class VentorDashboardTabState extends State<VentorDashboardTab> {
                       // P6 — Points balance and purchase/redemption entry.
                       VentorPointsHomeCard(
                         isLoading: dashboardState.isPointsLoading,
-                      ),
-                      const SizedBox(height: 22),
-                      Text(
-                        l10n.ventor_home_instant_section_title,
-                        style: GoogleFonts.inter(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                      const SizedBox(height: 6),
-                      Text(
-                        l10n.ventor_home_instant_section_subtitle,
-                        style: GoogleFonts.inter(
-                          color: VentorProfileTheme.muted,
-                          fontSize: 13,
-                          height: 1.35,
-                        ),
-                      ),
-                      const SizedBox(height: 12),
-                      _InstantCallCard(
-                        matching: _matchingInstant,
-                        title: l10n.ventor_home_instant_title,
-                        subtitle: l10n.ventor_home_instant_subtitle,
-                        matchingLabel: l10n.ventor_home_instant_matching,
-                        ctaLabel: l10n.ventor_home_instant_cta,
-                        onTap: _bookInstantCall,
                       ),
                       const SizedBox(height: 22),
                       if (dashboardState.hasRecentSessions) ...[
@@ -944,121 +873,6 @@ class _RecommendationCard extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _InstantCallCard extends StatelessWidget {
-  const _InstantCallCard({
-    required this.matching,
-    required this.title,
-    required this.subtitle,
-    required this.matchingLabel,
-    required this.ctaLabel,
-    required this.onTap,
-  });
-
-  final bool matching;
-  final String title;
-  final String subtitle;
-  final String matchingLabel;
-  final String ctaLabel;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        onTap: matching ? null : onTap,
-        borderRadius: BorderRadius.circular(20),
-        child: Ink(
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                SplashColors.purpleMid.withValues(alpha: 0.32),
-                const Color(0xFF1A1328),
-              ],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-            borderRadius: BorderRadius.circular(20),
-            border: Border.all(
-              color: SplashColors.purpleMid.withValues(alpha: 0.4),
-            ),
-          ),
-          child: Row(
-            children: [
-              Container(
-                width: 56,
-                height: 56,
-                decoration: BoxDecoration(
-                  color: SplashColors.purpleMid.withValues(alpha: 0.2),
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: matching
-                    ? const Padding(
-                        padding: EdgeInsets.all(14),
-                        child: CircularProgressIndicator(
-                          strokeWidth: 2.5,
-                          color: SplashColors.purpleMid,
-                        ),
-                      )
-                    : const Icon(
-                        Icons.bolt_rounded,
-                        color: SplashColors.purpleMid,
-                        size: 30,
-                      ),
-              ),
-              const SizedBox(width: 14),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      matching ? matchingLabel : title,
-                      style: GoogleFonts.inter(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      subtitle,
-                      style: GoogleFonts.inter(
-                        color: VentorProfileTheme.muted,
-                        fontSize: 12,
-                        height: 1.35,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              if (!matching)
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 10,
-                  ),
-                  decoration: BoxDecoration(
-                    color: SplashColors.purpleMid,
-                    borderRadius: BorderRadius.circular(999),
-                  ),
-                  child: Text(
-                    ctaLabel,
-                    style: GoogleFonts.inter(
-                      color: Colors.white,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ),
-            ],
-          ),
-        ),
       ),
     );
   }

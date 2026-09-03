@@ -311,7 +311,7 @@ class _SessionSettingRow extends StatelessWidget {
 }
 
 // ---------------------------------------------------------------------------
-// Online + Instant Call Section
+// Online Status Section
 // ---------------------------------------------------------------------------
 
 class OnlineAvailabilitySectionCard extends StatelessWidget {
@@ -325,12 +325,6 @@ class OnlineAvailabilitySectionCard extends StatelessWidget {
     required this.isOnlineLoading,
     required this.isOnlineSaving,
     this.onOnlineChanged,
-    required this.instantTitle,
-    required this.instantSubtitle,
-    required this.earningsHighlight,
-    required this.acceptInstantCalls,
-    this.isInstantCallsSaving = false,
-    this.onInstantCallsChanged,
   });
 
   final String onlineTitle;
@@ -341,12 +335,6 @@ class OnlineAvailabilitySectionCard extends StatelessWidget {
   final bool isOnlineLoading;
   final bool isOnlineSaving;
   final ValueChanged<bool>? onOnlineChanged;
-  final String instantTitle;
-  final String instantSubtitle;
-  final String earningsHighlight;
-  final bool acceptInstantCalls;
-  final bool isInstantCallsSaving;
-  final ValueChanged<bool>? onInstantCallsChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -356,34 +344,15 @@ class OnlineAvailabilitySectionCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: ListenerProfileTheme.cardBorder),
       ),
-      child: Column(
-        children: [
-          _OnlineStatusContent(
-            title: onlineTitle,
-            subtitle: onlineSubtitle,
-            onlineLabel: onlineLabel,
-            offlineLabel: offlineLabel,
-            value: isOnline,
-            isLoading: isOnlineLoading,
-            isSaving: isOnlineSaving,
-            onChanged: onOnlineChanged,
-          ),
-          const Divider(
-            height: 1,
-            thickness: 1,
-            color: ListenerProfileTheme.cardBorder,
-            indent: 16,
-            endIndent: 16,
-          ),
-          _InstantCallContent(
-            title: instantTitle,
-            subtitle: instantSubtitle,
-            earningsHighlight: earningsHighlight,
-            value: acceptInstantCalls,
-            isSaving: isInstantCallsSaving,
-            onChanged: onInstantCallsChanged,
-          ),
-        ],
+      child: _OnlineStatusContent(
+        title: onlineTitle,
+        subtitle: onlineSubtitle,
+        onlineLabel: onlineLabel,
+        offlineLabel: offlineLabel,
+        value: isOnline,
+        isLoading: isOnlineLoading,
+        isSaving: isOnlineSaving,
+        onChanged: onOnlineChanged,
       ),
     );
   }
@@ -496,107 +465,6 @@ class _OnlineStatusContent extends StatelessWidget {
               onChanged: onChanged,
               activeThumbColor: ListenerProfileTheme.success,
             ),
-        ],
-      ),
-    );
-  }
-}
-
-class _InstantCallContent extends StatelessWidget {
-  const _InstantCallContent({
-    required this.title,
-    required this.subtitle,
-    required this.earningsHighlight,
-    required this.value,
-    this.isSaving = false,
-    this.onChanged,
-  });
-
-  final String title;
-  final String subtitle;
-  final String earningsHighlight;
-  final bool value;
-  final bool isSaving;
-  final ValueChanged<bool>? onChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 14, 12, 14),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Expanded(
-                child: Text(
-                  title,
-                  style: GoogleFonts.inter(
-                    color: Colors.white,
-                    fontSize: 15,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-              if (isSaving)
-                const SizedBox(
-                  width: 24,
-                  height: 24,
-                  child: Padding(
-                    padding: EdgeInsets.all(2),
-                    child: CircularProgressIndicator(strokeWidth: 2),
-                  ),
-                )
-              else
-                Switch(
-                  value: value,
-                  onChanged: onChanged,
-                  activeThumbColor: ListenerProfileTheme.success,
-                ),
-            ],
-          ),
-          const SizedBox(height: 4),
-          Text(
-            subtitle,
-            style: GoogleFonts.inter(
-              color: ListenerProfileTheme.muted,
-              fontSize: 12,
-            ),
-          ),
-          const SizedBox(height: 10),
-          Container(
-            width: double.infinity,
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: ListenerProfileTheme.gold.withValues(alpha: 0.08),
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(
-                color: ListenerProfileTheme.gold.withValues(alpha: 0.35),
-              ),
-            ),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Icon(
-                  Icons.payments_outlined,
-                  size: 18,
-                  color: ListenerProfileTheme.gold,
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: Text(
-                    earningsHighlight,
-                    style: GoogleFonts.inter(
-                      color: ListenerProfileTheme.gold,
-                      fontSize: 13,
-                      fontWeight: FontWeight.w600,
-                      height: 1.35,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
         ],
       ),
     );

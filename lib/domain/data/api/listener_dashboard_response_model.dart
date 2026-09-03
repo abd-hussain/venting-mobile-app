@@ -28,18 +28,41 @@ ListenerDashboardReminderModel? _reminderFromJson(Object? json) {
   return null;
 }
 
+ListenerDashboardUpcomingSessionModel? _upcomingFromJson(Object? json) {
+  if (json is! Map<String, dynamic>) return null;
+  return ListenerDashboardUpcomingSessionModel.fromJson(json);
+}
+
 @Freezed(fromJson: false)
 abstract class ListenerDashboardData with _$ListenerDashboardData {
   const factory ListenerDashboardData({
     @Default('') String display_name,
     ListenerDashboardReminderModel? reminder,
+    ListenerDashboardUpcomingSessionModel? next_upcoming_session,
   }) = _ListenerDashboardData;
 
   factory ListenerDashboardData.fromJson(Map<String, dynamic> json) =>
       ListenerDashboardData(
         display_name: json['display_name'] as String? ?? '',
         reminder: _reminderFromJson(json['reminder']),
+        next_upcoming_session: _upcomingFromJson(json['next_upcoming_session']),
       );
+}
+
+@freezed
+abstract class ListenerDashboardUpcomingSessionModel
+    with _$ListenerDashboardUpcomingSessionModel {
+  const factory ListenerDashboardUpcomingSessionModel({
+    @Default('') String id,
+    @Default('') String ventor_name,
+    @Default('') String when_label,
+    @Default(0) int duration_minutes,
+    String? ventor_avatar_url,
+  }) = _ListenerDashboardUpcomingSessionModel;
+
+  factory ListenerDashboardUpcomingSessionModel.fromJson(
+    Map<String, dynamic> json,
+  ) => _$ListenerDashboardUpcomingSessionModelFromJson(json);
 }
 
 @freezed

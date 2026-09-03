@@ -276,7 +276,7 @@ String toString() {
 /// @nodoc
 mixin _$ListenerDashboardState {
 
- ListenerDashboardSetupStatus get setupStatus; ListenerDashboardSetupProgress? get setupProgress; String get setupErrorMessage; String get listenerDisplayName; ListenerDashboardReminder? get dailyReminder;
+ ListenerDashboardSetupStatus get setupStatus; ListenerDashboardSetupProgress? get setupProgress; String get setupErrorMessage; String get listenerDisplayName; ListenerDashboardReminder? get dailyReminder; ListenerDashboardUpcomingSession? get nextUpcomingSession;
 /// Create a copy of ListenerDashboardState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -287,16 +287,16 @@ $ListenerDashboardStateCopyWith<ListenerDashboardState> get copyWith => _$Listen
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ListenerDashboardState&&(identical(other.setupStatus, setupStatus) || other.setupStatus == setupStatus)&&(identical(other.setupProgress, setupProgress) || other.setupProgress == setupProgress)&&(identical(other.setupErrorMessage, setupErrorMessage) || other.setupErrorMessage == setupErrorMessage)&&(identical(other.listenerDisplayName, listenerDisplayName) || other.listenerDisplayName == listenerDisplayName)&&(identical(other.dailyReminder, dailyReminder) || other.dailyReminder == dailyReminder));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ListenerDashboardState&&(identical(other.setupStatus, setupStatus) || other.setupStatus == setupStatus)&&(identical(other.setupProgress, setupProgress) || other.setupProgress == setupProgress)&&(identical(other.setupErrorMessage, setupErrorMessage) || other.setupErrorMessage == setupErrorMessage)&&(identical(other.listenerDisplayName, listenerDisplayName) || other.listenerDisplayName == listenerDisplayName)&&(identical(other.dailyReminder, dailyReminder) || other.dailyReminder == dailyReminder)&&(identical(other.nextUpcomingSession, nextUpcomingSession) || other.nextUpcomingSession == nextUpcomingSession));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,setupStatus,setupProgress,setupErrorMessage,listenerDisplayName,dailyReminder);
+int get hashCode => Object.hash(runtimeType,setupStatus,setupProgress,setupErrorMessage,listenerDisplayName,dailyReminder,nextUpcomingSession);
 
 @override
 String toString() {
-  return 'ListenerDashboardState(setupStatus: $setupStatus, setupProgress: $setupProgress, setupErrorMessage: $setupErrorMessage, listenerDisplayName: $listenerDisplayName, dailyReminder: $dailyReminder)';
+  return 'ListenerDashboardState(setupStatus: $setupStatus, setupProgress: $setupProgress, setupErrorMessage: $setupErrorMessage, listenerDisplayName: $listenerDisplayName, dailyReminder: $dailyReminder, nextUpcomingSession: $nextUpcomingSession)';
 }
 
 
@@ -307,7 +307,7 @@ abstract mixin class $ListenerDashboardStateCopyWith<$Res>  {
   factory $ListenerDashboardStateCopyWith(ListenerDashboardState value, $Res Function(ListenerDashboardState) _then) = _$ListenerDashboardStateCopyWithImpl;
 @useResult
 $Res call({
- ListenerDashboardSetupStatus setupStatus, ListenerDashboardSetupProgress? setupProgress, String setupErrorMessage, String listenerDisplayName, ListenerDashboardReminder? dailyReminder
+ ListenerDashboardSetupStatus setupStatus, ListenerDashboardSetupProgress? setupProgress, String setupErrorMessage, String listenerDisplayName, ListenerDashboardReminder? dailyReminder, ListenerDashboardUpcomingSession? nextUpcomingSession
 });
 
 
@@ -324,14 +324,15 @@ class _$ListenerDashboardStateCopyWithImpl<$Res>
 
 /// Create a copy of ListenerDashboardState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? setupStatus = null,Object? setupProgress = freezed,Object? setupErrorMessage = null,Object? listenerDisplayName = null,Object? dailyReminder = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? setupStatus = null,Object? setupProgress = freezed,Object? setupErrorMessage = null,Object? listenerDisplayName = null,Object? dailyReminder = freezed,Object? nextUpcomingSession = freezed,}) {
   return _then(_self.copyWith(
 setupStatus: null == setupStatus ? _self.setupStatus : setupStatus // ignore: cast_nullable_to_non_nullable
 as ListenerDashboardSetupStatus,setupProgress: freezed == setupProgress ? _self.setupProgress : setupProgress // ignore: cast_nullable_to_non_nullable
 as ListenerDashboardSetupProgress?,setupErrorMessage: null == setupErrorMessage ? _self.setupErrorMessage : setupErrorMessage // ignore: cast_nullable_to_non_nullable
 as String,listenerDisplayName: null == listenerDisplayName ? _self.listenerDisplayName : listenerDisplayName // ignore: cast_nullable_to_non_nullable
 as String,dailyReminder: freezed == dailyReminder ? _self.dailyReminder : dailyReminder // ignore: cast_nullable_to_non_nullable
-as ListenerDashboardReminder?,
+as ListenerDashboardReminder?,nextUpcomingSession: freezed == nextUpcomingSession ? _self.nextUpcomingSession : nextUpcomingSession // ignore: cast_nullable_to_non_nullable
+as ListenerDashboardUpcomingSession?,
   ));
 }
 
@@ -413,10 +414,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( ListenerDashboardSetupStatus setupStatus,  ListenerDashboardSetupProgress? setupProgress,  String setupErrorMessage,  String listenerDisplayName,  ListenerDashboardReminder? dailyReminder)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( ListenerDashboardSetupStatus setupStatus,  ListenerDashboardSetupProgress? setupProgress,  String setupErrorMessage,  String listenerDisplayName,  ListenerDashboardReminder? dailyReminder,  ListenerDashboardUpcomingSession? nextUpcomingSession)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ListenerDashboardState() when $default != null:
-return $default(_that.setupStatus,_that.setupProgress,_that.setupErrorMessage,_that.listenerDisplayName,_that.dailyReminder);case _:
+return $default(_that.setupStatus,_that.setupProgress,_that.setupErrorMessage,_that.listenerDisplayName,_that.dailyReminder,_that.nextUpcomingSession);case _:
   return orElse();
 
 }
@@ -434,10 +435,10 @@ return $default(_that.setupStatus,_that.setupProgress,_that.setupErrorMessage,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( ListenerDashboardSetupStatus setupStatus,  ListenerDashboardSetupProgress? setupProgress,  String setupErrorMessage,  String listenerDisplayName,  ListenerDashboardReminder? dailyReminder)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( ListenerDashboardSetupStatus setupStatus,  ListenerDashboardSetupProgress? setupProgress,  String setupErrorMessage,  String listenerDisplayName,  ListenerDashboardReminder? dailyReminder,  ListenerDashboardUpcomingSession? nextUpcomingSession)  $default,) {final _that = this;
 switch (_that) {
 case _ListenerDashboardState():
-return $default(_that.setupStatus,_that.setupProgress,_that.setupErrorMessage,_that.listenerDisplayName,_that.dailyReminder);}
+return $default(_that.setupStatus,_that.setupProgress,_that.setupErrorMessage,_that.listenerDisplayName,_that.dailyReminder,_that.nextUpcomingSession);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -451,10 +452,10 @@ return $default(_that.setupStatus,_that.setupProgress,_that.setupErrorMessage,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( ListenerDashboardSetupStatus setupStatus,  ListenerDashboardSetupProgress? setupProgress,  String setupErrorMessage,  String listenerDisplayName,  ListenerDashboardReminder? dailyReminder)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( ListenerDashboardSetupStatus setupStatus,  ListenerDashboardSetupProgress? setupProgress,  String setupErrorMessage,  String listenerDisplayName,  ListenerDashboardReminder? dailyReminder,  ListenerDashboardUpcomingSession? nextUpcomingSession)?  $default,) {final _that = this;
 switch (_that) {
 case _ListenerDashboardState() when $default != null:
-return $default(_that.setupStatus,_that.setupProgress,_that.setupErrorMessage,_that.listenerDisplayName,_that.dailyReminder);case _:
+return $default(_that.setupStatus,_that.setupProgress,_that.setupErrorMessage,_that.listenerDisplayName,_that.dailyReminder,_that.nextUpcomingSession);case _:
   return null;
 
 }
@@ -466,7 +467,7 @@ return $default(_that.setupStatus,_that.setupProgress,_that.setupErrorMessage,_t
 
 
 class _ListenerDashboardState extends ListenerDashboardState {
-  const _ListenerDashboardState({this.setupStatus = ListenerDashboardSetupStatus.initial, this.setupProgress, this.setupErrorMessage = '', this.listenerDisplayName = '', this.dailyReminder}): super._();
+  const _ListenerDashboardState({this.setupStatus = ListenerDashboardSetupStatus.initial, this.setupProgress, this.setupErrorMessage = '', this.listenerDisplayName = '', this.dailyReminder, this.nextUpcomingSession}): super._();
   
 
 @override@JsonKey() final  ListenerDashboardSetupStatus setupStatus;
@@ -474,6 +475,7 @@ class _ListenerDashboardState extends ListenerDashboardState {
 @override@JsonKey() final  String setupErrorMessage;
 @override@JsonKey() final  String listenerDisplayName;
 @override final  ListenerDashboardReminder? dailyReminder;
+@override final  ListenerDashboardUpcomingSession? nextUpcomingSession;
 
 /// Create a copy of ListenerDashboardState
 /// with the given fields replaced by the non-null parameter values.
@@ -485,16 +487,16 @@ _$ListenerDashboardStateCopyWith<_ListenerDashboardState> get copyWith => __$Lis
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ListenerDashboardState&&(identical(other.setupStatus, setupStatus) || other.setupStatus == setupStatus)&&(identical(other.setupProgress, setupProgress) || other.setupProgress == setupProgress)&&(identical(other.setupErrorMessage, setupErrorMessage) || other.setupErrorMessage == setupErrorMessage)&&(identical(other.listenerDisplayName, listenerDisplayName) || other.listenerDisplayName == listenerDisplayName)&&(identical(other.dailyReminder, dailyReminder) || other.dailyReminder == dailyReminder));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ListenerDashboardState&&(identical(other.setupStatus, setupStatus) || other.setupStatus == setupStatus)&&(identical(other.setupProgress, setupProgress) || other.setupProgress == setupProgress)&&(identical(other.setupErrorMessage, setupErrorMessage) || other.setupErrorMessage == setupErrorMessage)&&(identical(other.listenerDisplayName, listenerDisplayName) || other.listenerDisplayName == listenerDisplayName)&&(identical(other.dailyReminder, dailyReminder) || other.dailyReminder == dailyReminder)&&(identical(other.nextUpcomingSession, nextUpcomingSession) || other.nextUpcomingSession == nextUpcomingSession));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,setupStatus,setupProgress,setupErrorMessage,listenerDisplayName,dailyReminder);
+int get hashCode => Object.hash(runtimeType,setupStatus,setupProgress,setupErrorMessage,listenerDisplayName,dailyReminder,nextUpcomingSession);
 
 @override
 String toString() {
-  return 'ListenerDashboardState(setupStatus: $setupStatus, setupProgress: $setupProgress, setupErrorMessage: $setupErrorMessage, listenerDisplayName: $listenerDisplayName, dailyReminder: $dailyReminder)';
+  return 'ListenerDashboardState(setupStatus: $setupStatus, setupProgress: $setupProgress, setupErrorMessage: $setupErrorMessage, listenerDisplayName: $listenerDisplayName, dailyReminder: $dailyReminder, nextUpcomingSession: $nextUpcomingSession)';
 }
 
 
@@ -505,7 +507,7 @@ abstract mixin class _$ListenerDashboardStateCopyWith<$Res> implements $Listener
   factory _$ListenerDashboardStateCopyWith(_ListenerDashboardState value, $Res Function(_ListenerDashboardState) _then) = __$ListenerDashboardStateCopyWithImpl;
 @override @useResult
 $Res call({
- ListenerDashboardSetupStatus setupStatus, ListenerDashboardSetupProgress? setupProgress, String setupErrorMessage, String listenerDisplayName, ListenerDashboardReminder? dailyReminder
+ ListenerDashboardSetupStatus setupStatus, ListenerDashboardSetupProgress? setupProgress, String setupErrorMessage, String listenerDisplayName, ListenerDashboardReminder? dailyReminder, ListenerDashboardUpcomingSession? nextUpcomingSession
 });
 
 
@@ -522,14 +524,15 @@ class __$ListenerDashboardStateCopyWithImpl<$Res>
 
 /// Create a copy of ListenerDashboardState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? setupStatus = null,Object? setupProgress = freezed,Object? setupErrorMessage = null,Object? listenerDisplayName = null,Object? dailyReminder = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? setupStatus = null,Object? setupProgress = freezed,Object? setupErrorMessage = null,Object? listenerDisplayName = null,Object? dailyReminder = freezed,Object? nextUpcomingSession = freezed,}) {
   return _then(_ListenerDashboardState(
 setupStatus: null == setupStatus ? _self.setupStatus : setupStatus // ignore: cast_nullable_to_non_nullable
 as ListenerDashboardSetupStatus,setupProgress: freezed == setupProgress ? _self.setupProgress : setupProgress // ignore: cast_nullable_to_non_nullable
 as ListenerDashboardSetupProgress?,setupErrorMessage: null == setupErrorMessage ? _self.setupErrorMessage : setupErrorMessage // ignore: cast_nullable_to_non_nullable
 as String,listenerDisplayName: null == listenerDisplayName ? _self.listenerDisplayName : listenerDisplayName // ignore: cast_nullable_to_non_nullable
 as String,dailyReminder: freezed == dailyReminder ? _self.dailyReminder : dailyReminder // ignore: cast_nullable_to_non_nullable
-as ListenerDashboardReminder?,
+as ListenerDashboardReminder?,nextUpcomingSession: freezed == nextUpcomingSession ? _self.nextUpcomingSession : nextUpcomingSession // ignore: cast_nullable_to_non_nullable
+as ListenerDashboardUpcomingSession?,
   ));
 }
 

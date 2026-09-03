@@ -220,7 +220,7 @@ Append-only. Never update/delete from app code.
 
 | Column | Type | Notes |
 |--------|------|-------|
-| `key` | VARCHAR(64) | **PK** e.g. `instant_match_enabled` |
+| `key` | VARCHAR(64) | **PK** e.g. `maintenance_mode_enabled` |
 | `description` | TEXT | |
 | `enabled` | BOOLEAN | |
 | `rollout_percent` | INT | 0–100 |
