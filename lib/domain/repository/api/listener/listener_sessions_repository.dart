@@ -1,5 +1,6 @@
 import 'package:fpdart/fpdart.dart';
 import 'package:venting_mobile_app/domain/data/api/listener_sessions_response_model.dart';
+import 'package:venting_mobile_app/domain/data/api/session_join_response_model.dart';
 import 'package:venting_mobile_app/domain/repository/api/base_repository.dart';
 
 class ListenerSessionsRepository extends BaseRepository {
@@ -46,6 +47,16 @@ class ListenerSessionsRepository extends BaseRepository {
         if (reason != null && reason.trim().isNotEmpty) 'reason': reason.trim(),
       },
     ),
+  );
+
+  TaskEither<Exception, SessionJoinResponseModel> joinSession({
+    required String sessionId,
+  }) => executeRequest(
+    request: apiClient.post<Object?>(
+      'v1/sessions/$sessionId/join',
+      data: const <String, dynamic>{},
+    ),
+    fromJson: SessionJoinResponseModel.fromJson,
   );
 
   TaskEither<Exception, void> submitSessionFeedback({

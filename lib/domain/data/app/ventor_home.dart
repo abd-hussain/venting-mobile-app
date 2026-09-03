@@ -5,10 +5,7 @@ import 'package:venting_mobile_app/domain/data/api/ventor_mood_journey_response_
 enum VentorMoodKindData { great, okay, anxious, sad, angry }
 
 class VentorMoodCheckInTodayData {
-  const VentorMoodCheckInTodayData({
-    required this.mood,
-    this.note,
-  });
+  const VentorMoodCheckInTodayData({required this.mood, this.note});
 
   final VentorMoodKindData mood;
   final String? note;
@@ -61,7 +58,6 @@ class VentorBookedSessionData {
     required this.amountPaid,
     required this.voiceChangeEnabled,
     this.scheduledAt,
-    this.isInstant = false,
     this.refundedToBalance,
   });
 
@@ -76,7 +72,6 @@ class VentorBookedSessionData {
   final double amountPaid;
   final bool voiceChangeEnabled;
   final DateTime? scheduledAt;
-  final bool isInstant;
   final double? refundedToBalance;
 
   VentorBookedSessionData copyWith({
@@ -95,7 +90,6 @@ class VentorBookedSessionData {
       amountPaid: amountPaid,
       voiceChangeEnabled: voiceChangeEnabled,
       scheduledAt: scheduledAt,
-      isInstant: isInstant,
       refundedToBalance: refundedToBalance ?? this.refundedToBalance,
     );
   }
@@ -127,7 +121,15 @@ class VentorHomeOverview {
     this.motivation,
     this.moodCheckInToday,
     this.streak,
-    this.streakWeekChecked = const [false, false, false, false, false, false, false],
+    this.streakWeekChecked = const [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+    ],
   });
 
   final String displayName;
@@ -173,8 +175,7 @@ VentorHomeOverview ventorHomeOverviewFromApi(
     streak: streak == null ? null : ventorHomeStreakFromApi(streak),
     streakWeekChecked: _mergeTodayIntoWeekChecked(
       streakWeekChecked,
-      hasCheckedInToday:
-          moodToday != null && moodToday.mood.trim().isNotEmpty,
+      hasCheckedInToday: moodToday != null && moodToday.mood.trim().isNotEmpty,
     ),
   );
 }
@@ -208,7 +209,11 @@ VentorMoodCheckinResult ventorMoodCheckinResultFromApi(
     mood: ventorMoodKindFromApi(data.mood),
     note: note != null && note.isNotEmpty ? note : null,
     streak: streak == null
-        ? const VentorHomeStreakData(currentDays: 0, targetDays: 7, discountPercent: 0)
+        ? const VentorHomeStreakData(
+            currentDays: 0,
+            targetDays: 7,
+            discountPercent: 0,
+          )
         : VentorHomeStreakData(
             currentDays: streak.current_days,
             targetDays: 7,
@@ -297,7 +302,6 @@ VentorBookedSessionData ventorBookedSessionFromApi(
     scheduledAt: model.scheduled_at == null
         ? null
         : DateTime.tryParse(model.scheduled_at!)?.toLocal(),
-    isInstant: model.is_instant,
     refundedToBalance: model.refunded_to_balance?.toDouble(),
   );
 }

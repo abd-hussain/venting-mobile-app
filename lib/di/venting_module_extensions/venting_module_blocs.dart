@@ -47,6 +47,7 @@ import 'package:venting_mobile_app/domain/usecase/get_ventor_point_packages_usec
 import 'package:venting_mobile_app/domain/usecase/get_ventor_profile_overview_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_ventor_reward_trades_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_ventor_rewards_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/join_session_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/mark_all_listener_notifications_read_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/mark_all_ventor_notifications_read_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/purchase_ventor_points_usecase.dart';
@@ -58,6 +59,8 @@ import 'package:venting_mobile_app/domain/usecase/sign_in_with_google_usecase.da
 import 'package:venting_mobile_app/domain/usecase/submit_listener_session_feedback_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/submit_listener_session_report_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/submit_ventor_mood_checkin_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/submit_ventor_session_rating_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/submit_ventor_session_report_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/update_listener_about_me_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/update_listener_availability_day_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/update_listener_availability_usecase.dart';
@@ -78,6 +81,7 @@ import 'package:venting_mobile_app/presentation/auth/bloc/forgot_password_bloc.d
 import 'package:venting_mobile_app/presentation/auth/forgot_password_screen.dart';
 import 'package:venting_mobile_app/presentation/change_password/bloc/change_password_bloc.dart';
 import 'package:venting_mobile_app/presentation/home/listener/availability/bloc/listener_availability_bloc.dart';
+import 'package:venting_mobile_app/presentation/home/listener/call/bloc/listener_call_join/listener_call_join_bloc.dart';
 import 'package:venting_mobile_app/presentation/home/listener/call/bloc/listener_call_rating/listener_call_rating_bloc.dart';
 import 'package:venting_mobile_app/presentation/home/listener/call/bloc/listener_call_report/listener_call_report_bloc.dart';
 import 'package:venting_mobile_app/presentation/home/listener/dashboard/bloc/listener_dashboard/listener_dashboard_bloc.dart';
@@ -92,6 +96,8 @@ import 'package:venting_mobile_app/presentation/home/listener/profile/bloc/payme
 import 'package:venting_mobile_app/presentation/home/listener/profile/bloc/payout_history/listener_payout_history_bloc.dart';
 import 'package:venting_mobile_app/presentation/home/listener/profile/bloc/privacy_visibility/listener_privacy_visibility_bloc.dart';
 import 'package:venting_mobile_app/presentation/home/listener/sessions/bloc/listener_sessions/listener_sessions_bloc.dart';
+import 'package:venting_mobile_app/presentation/home/ventor/call/bloc/ventor_call_rating/ventor_call_rating_bloc.dart';
+import 'package:venting_mobile_app/presentation/home/ventor/call/bloc/ventor_call_report/ventor_call_report_bloc.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/dashboard/bloc/ventor_dashboard/ventor_dashboard_bloc.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/dashboard/bloc/ventor_notifications_bloc.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/profile/bloc/notification_preferences/ventor_notification_preferences_bloc.dart';
@@ -215,8 +221,17 @@ mixin VentingModuleBlocs on VentingModule {
       () =>
           ListenerCallRatingBloc(getIt<SubmitListenerSessionFeedbackUsecase>()),
     );
+    getIt.registerFactory<ListenerCallJoinBloc>(
+      () => ListenerCallJoinBloc(getIt<JoinSessionUsecase>()),
+    );
     getIt.registerFactory<ListenerCallReportBloc>(
       () => ListenerCallReportBloc(getIt<SubmitListenerSessionReportUsecase>()),
+    );
+    getIt.registerFactory<VentorCallReportBloc>(
+      () => VentorCallReportBloc(getIt<SubmitVentorSessionReportUsecase>()),
+    );
+    getIt.registerFactory<VentorCallRatingBloc>(
+      () => VentorCallRatingBloc(getIt<SubmitVentorSessionRatingUsecase>()),
     );
     getIt.registerFactory<ListenerTrainingBloc>(
       () => ListenerTrainingBloc(

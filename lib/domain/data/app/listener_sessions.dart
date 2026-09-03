@@ -15,7 +15,6 @@ class ListenerSession {
     this.speechLanguage,
     this.isWaiting = false,
     this.canJoinNow = false,
-    this.isInstant = false,
     this.isVideoCall = false,
     this.ventorRating = 0,
     this.statusLabel,
@@ -35,7 +34,6 @@ class ListenerSession {
   final String? speechLanguage;
   final bool isWaiting;
   final bool canJoinNow;
-  final bool isInstant;
   final bool isVideoCall;
   final double ventorRating;
   final String? statusLabel;
@@ -58,7 +56,6 @@ class ListenerSessionRequest {
     required this.receivedAt,
     required this.speechLanguage,
     this.ventorAvatarUrl,
-    this.isInstant = false,
     this.isVideoCall = false,
     this.ventorRating = 0,
   });
@@ -73,7 +70,6 @@ class ListenerSessionRequest {
   final List<String> tags;
   final DateTime receivedAt;
   final String speechLanguage;
-  final bool isInstant;
   final bool isVideoCall;
   final double ventorRating;
 }
@@ -184,7 +180,6 @@ ListenerSession listenerSessionFromApi(ListenerSessionModel model) {
         : null,
     isWaiting: model.is_waiting,
     canJoinNow: model.can_join_now,
-    isInstant: model.is_instant,
     isVideoCall: model.is_video_call,
     ventorRating: model.ventor_rating.toDouble(),
     statusLabel: model.status_label?.trim().isNotEmpty == true
@@ -219,7 +214,6 @@ ListenerSessionRequest listenerSessionRequestFromApi(
     speechLanguage: model.speech_language?.trim().isNotEmpty == true
         ? model.speech_language!.trim()
         : '',
-    isInstant: model.is_instant,
     isVideoCall: model.is_video_call,
     ventorRating: model.ventor_rating.toDouble(),
   );

@@ -166,9 +166,6 @@ extension ListenerRegistrationProgressApply
     if (availability is Map<String, dynamic>) {
       draft.timeZoneId =
           availability['time_zone_id'] as String? ?? draft.timeZoneId;
-      draft.acceptInstantCalls =
-          availability['accept_instant_calls'] as bool? ??
-          draft.acceptInstantCalls;
 
       final sessionMinutes = availability['session_minutes'];
       if (sessionMinutes is List) {

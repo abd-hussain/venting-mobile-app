@@ -1,4 +1,5 @@
 import 'package:fpdart/fpdart.dart';
+import 'package:venting_mobile_app/domain/data/api/session_rating_response_model.dart';
 import 'package:venting_mobile_app/domain/data/api/ventor_sessions_response_model.dart';
 import 'package:venting_mobile_app/domain/repository/api/base_repository.dart';
 
@@ -41,5 +42,53 @@ class VentorSessionsRepository extends BaseRepository {
       },
     ),
     fromJson: VentorCancelSessionResponseModel.fromJson,
+  );
+
+  TaskEither<Exception, SessionRatingResponseModel> submitSessionRating({
+    required String sessionId,
+    required int stars,
+    String? review,
+    int? tipAmount,
+    String? reportReason,
+    String? reportDetails,
+  }) {
+    final trimmedReview = review?.trim();
+    final data = <String, dynamic>{
+      'stars': stars,
+      if (trimmedReview != null && trimmedReview.isNotEmpty)
+        'review': trimmedReview,
+      if (tipAmount != null) 'tip_amount': tipAmount,
+      if (reportReason != null && reportReason.trim().isNotEmpty)
+        'report': {
+          'reason': reportReason.trim(),
+          if (reportDetails != null && reportDetails.trim().isNotEmpty)
+            'details': reportDetails.trim(),
+        },
+    };
+
+    return executeRequest(
+      request: apiClient.post<Object?>(
+        'v1/sessions/$sessionId/rating',
+        data: data,
+      ),
+      fromJson: SessionRatingResponseModel.fromJson,
+    );
+  }
+
+  TaskEither<Exception, void> submitSessionReport({
+    required String sessionId,
+    required String reason,
+    required String reportedRole,
+    String? details,
+  }) => executeVoidRequest(
+    request: apiClient.post<Object?>(
+      'v1/sessions/$sessionId/reports',
+      data: {
+        'reason': reason,
+        'reported_role': reportedRole,
+        if (details != null && details.trim().isNotEmpty)
+          'details': details.trim(),
+      },
+    ),
   );
 }

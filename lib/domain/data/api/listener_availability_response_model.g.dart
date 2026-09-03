@@ -20,7 +20,6 @@ Map<String, dynamic> _$ListenerAvailabilityResponseModelToJson(
 _ListenerAvailabilityData _$ListenerAvailabilityDataFromJson(
   Map<String, dynamic> json,
 ) => _ListenerAvailabilityData(
-  accept_instant_calls: json['accept_instant_calls'] as bool? ?? true,
   break_length_minutes: (json['break_length_minutes'] as num?)?.toInt() ?? 30,
   time_zone_id: json['time_zone_id'] as String? ?? '',
   language_ids:
@@ -43,7 +42,6 @@ _ListenerAvailabilityData _$ListenerAvailabilityDataFromJson(
 Map<String, dynamic> _$ListenerAvailabilityDataToJson(
   _ListenerAvailabilityData instance,
 ) => <String, dynamic>{
-  'accept_instant_calls': instance.accept_instant_calls,
   'break_length_minutes': instance.break_length_minutes,
   'time_zone_id': instance.time_zone_id,
   'language_ids': instance.language_ids,

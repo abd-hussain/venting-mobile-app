@@ -369,7 +369,6 @@ class _ListenerRegistrationScreenState
           initialSelectedDays: _draft.availabilityDays,
           initialFromHour: _draft.availabilityFrom,
           initialToHour: _draft.availabilityTo,
-          initialAcceptInstantCall: _draft.acceptInstantCalls,
           initialSessionMinutes: _draft.sessionMinutes,
           onContinue: _onStep8Continue,
         ),

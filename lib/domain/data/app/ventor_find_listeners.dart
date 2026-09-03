@@ -11,7 +11,6 @@ class VentorFindListenerAvailabilityData {
     required this.fromHour,
     required this.toHour,
     required this.timeZoneId,
-    required this.acceptInstantCall,
     required this.sessionMinutes,
   });
 
@@ -19,7 +18,6 @@ class VentorFindListenerAvailabilityData {
   final String fromHour;
   final String toHour;
   final String timeZoneId;
-  final bool acceptInstantCall;
   final List<int> sessionMinutes;
 }
 
@@ -287,7 +285,6 @@ VentorFindListenerAvailabilityData _availabilityFromApi(
       fromHour: '',
       toHour: '',
       timeZoneId: '',
-      acceptInstantCall: false,
       sessionMinutes: <int>[],
     );
   }
@@ -297,7 +294,6 @@ VentorFindListenerAvailabilityData _availabilityFromApi(
     fromHour: model.from_hour.trim(),
     toHour: model.to_hour.trim(),
     timeZoneId: model.time_zone_id.trim(),
-    acceptInstantCall: model.accept_instant_call,
     sessionMinutes: List<int>.from(model.session_minutes),
   );
 }

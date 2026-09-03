@@ -100,7 +100,6 @@ _VentorHomeBookedSessionModel _$VentorHomeBookedSessionModelFromJson(
   amount_paid: json['amount_paid'] as num? ?? 0,
   voice_change_enabled: json['voice_change_enabled'] as bool? ?? false,
   scheduled_at: json['scheduled_at'] as String?,
-  is_instant: json['is_instant'] as bool? ?? false,
   refunded_to_balance: json['refunded_to_balance'] as num?,
 );
 
@@ -118,7 +117,6 @@ Map<String, dynamic> _$VentorHomeBookedSessionModelToJson(
   'amount_paid': instance.amount_paid,
   'voice_change_enabled': instance.voice_change_enabled,
   'scheduled_at': instance.scheduled_at,
-  'is_instant': instance.is_instant,
   'refunded_to_balance': instance.refunded_to_balance,
 };
 

@@ -56,11 +56,8 @@ class VentorBookedSessionDetailsScreen extends StatelessWidget {
     VentingMobLocalizations l10n,
     VentorBookedSession session,
   ) {
-    if (session.isInstant) {
-      return l10n.ventor_sessions_time_summary_instant;
-    }
     final at = session.scheduledAt;
-    if (at == null) return l10n.ventor_sessions_time_summary_instant;
+    if (at == null) return '—';
     final locale = Localizations.localeOf(context).toString();
     final label =
         '${DateFormat.MMMEd(locale).format(at)} · ${DateFormat.jm(locale).format(at)}';

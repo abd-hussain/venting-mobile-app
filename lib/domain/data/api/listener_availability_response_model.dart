@@ -19,7 +19,6 @@ abstract class ListenerAvailabilityResponseModel
 @freezed
 abstract class ListenerAvailabilityData with _$ListenerAvailabilityData {
   const factory ListenerAvailabilityData({
-    @Default(true) bool accept_instant_calls,
     @Default(30) int break_length_minutes,
     @Default('') String time_zone_id,
     @Default(<String>[]) List<String> language_ids,

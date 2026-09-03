@@ -35,7 +35,6 @@ VentorFindListener ventorFindListenerFromDomain(VentorFindListenerData data) {
       fromHour: data.availability.fromHour,
       toHour: data.availability.toHour,
       timeZoneId: data.availability.timeZoneId,
-      acceptInstantCall: data.availability.acceptInstantCall,
       sessionMinutes: List<int>.from(data.availability.sessionMinutes),
     ),
     isFavorite: data.isFavorite,

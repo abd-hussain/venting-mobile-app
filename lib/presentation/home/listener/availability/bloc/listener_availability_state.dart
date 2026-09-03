@@ -4,7 +4,6 @@ enum ListenerAvailabilityStatus { initial, loading, ready, loadFailure }
 
 enum ListenerAvailabilitySavingTarget {
   online,
-  instantCalls,
   sessionLength,
   breakLength,
   day,
@@ -32,9 +31,6 @@ sealed class ListenerAvailabilityState with _$ListenerAvailabilityState {
 
   bool get isSavingOnline =>
       savingTarget == ListenerAvailabilitySavingTarget.online;
-
-  bool get isSavingInstantCalls =>
-      savingTarget == ListenerAvailabilitySavingTarget.instantCalls;
 
   bool get isSavingSessionLength =>
       savingTarget == ListenerAvailabilitySavingTarget.sessionLength;

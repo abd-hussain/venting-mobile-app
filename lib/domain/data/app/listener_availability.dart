@@ -60,28 +60,24 @@ class ListenerAvailabilityDay {
 
 class ListenerAvailability {
   const ListenerAvailability({
-    required this.acceptInstantCalls,
     required this.sessionLength,
     required this.breakLengthMinutes,
     required this.timeZoneId,
     required this.days,
   });
 
-  final bool acceptInstantCalls;
   final PreferredSessionLengthSelection sessionLength;
   final int breakLengthMinutes;
   final String timeZoneId;
   final List<ListenerAvailabilityDay> days;
 
   ListenerAvailability copyWith({
-    bool? acceptInstantCalls,
     PreferredSessionLengthSelection? sessionLength,
     int? breakLengthMinutes,
     String? timeZoneId,
     List<ListenerAvailabilityDay>? days,
   }) {
     return ListenerAvailability(
-      acceptInstantCalls: acceptInstantCalls ?? this.acceptInstantCalls,
       sessionLength: sessionLength ?? this.sessionLength,
       breakLengthMinutes: breakLengthMinutes ?? this.breakLengthMinutes,
       timeZoneId: timeZoneId ?? this.timeZoneId,
@@ -129,7 +125,6 @@ ListenerAvailability listenerAvailabilityFromApi(
   }
 
   return ListenerAvailability(
-    acceptInstantCalls: data.accept_instant_calls,
     sessionLength: preferredSessionLengthFromApi(
       sessionMinutes: data.session_minutes,
       sessionLengthMinutes: data.session_length_minutes,
@@ -195,7 +190,6 @@ Map<String, dynamic> listenerAvailabilityToApiBody(
       : (availability.sessionLength.minutes.toList()..sort());
 
   return <String, dynamic>{
-    'accept_instant_calls': availability.acceptInstantCalls,
     'session_minutes': sessionMinutes,
     'break_length_minutes': availability.breakLengthMinutes,
     'time_zone_id': availability.timeZoneId,

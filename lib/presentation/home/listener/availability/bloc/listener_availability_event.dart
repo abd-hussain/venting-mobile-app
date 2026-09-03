@@ -10,10 +10,6 @@ sealed class ListenerAvailabilityEvent with _$ListenerAvailabilityEvent {
     required bool isOnline,
   }) = _OnlineStatusChanged;
 
-  const factory ListenerAvailabilityEvent.instantCallsChanged({
-    required bool acceptInstantCalls,
-  }) = _InstantCallsChanged;
-
   const factory ListenerAvailabilityEvent.sessionLengthChanged({
     required PreferredSessionLengthSelection sessionLength,
   }) = _SessionLengthChanged;

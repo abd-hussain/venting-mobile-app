@@ -149,7 +149,6 @@ Map<String, dynamic> _normalizeDetailData(Map<String, dynamic> json) {
       'amount_paid': json['amount_paid'],
       'voice_change_enabled': json['voice_change_enabled'],
       'scheduled_at': json['scheduled_at'],
-      'is_instant': json['is_instant'],
       'refunded_to_balance': json['refunded_to_balance'],
     };
   }

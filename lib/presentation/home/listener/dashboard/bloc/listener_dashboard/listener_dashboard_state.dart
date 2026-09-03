@@ -11,6 +11,7 @@ sealed class ListenerDashboardState with _$ListenerDashboardState {
     @Default('') String setupErrorMessage,
     @Default('') String listenerDisplayName,
     ListenerDashboardReminder? dailyReminder,
+    ListenerDashboardUpcomingSession? nextUpcomingSession,
   }) = _ListenerDashboardState;
 
   const ListenerDashboardState._();

@@ -28,7 +28,6 @@ class ListenerRegistrationStep8Availability extends StatefulWidget {
     this.initialSelectedDays = const ['mon', 'tue', 'wed', 'thu', 'fri'],
     this.initialFromHour = '09:00 AM',
     this.initialToHour = '11:00 PM',
-    this.initialAcceptInstantCall = true,
     this.initialSessionMinutes = const [30, 60],
   });
 
@@ -37,7 +36,6 @@ class ListenerRegistrationStep8Availability extends StatefulWidget {
   final List<String> initialSelectedDays;
   final String initialFromHour;
   final String initialToHour;
-  final bool initialAcceptInstantCall;
   final List<int> initialSessionMinutes;
 
   @override
@@ -89,7 +87,6 @@ class _ListenerRegistrationStep8AvailabilityState
   final Set<String> _selectedDays = {'mon', 'tue', 'wed', 'thu', 'fri'};
   String _fromHour = '09:00 AM';
   String _toHour = '11:00 PM';
-  bool _acceptInstantCall = true;
   final Set<int> _sessionMinutes = {30, 60};
 
   bool get _canContinue {
@@ -331,7 +328,6 @@ class _ListenerRegistrationStep8AvailabilityState
       ..addAll(widget.initialSelectedDays);
     _fromHour = widget.initialFromHour;
     _toHour = widget.initialToHour;
-    _acceptInstantCall = widget.initialAcceptInstantCall;
     _sessionMinutes
       ..clear()
       ..addAll(widget.initialSessionMinutes);
@@ -345,7 +341,6 @@ class _ListenerRegistrationStep8AvailabilityState
         availabilityDays: _selectedDays.toList(growable: false),
         availabilityFrom: _fromHour,
         availabilityTo: _toHour,
-        acceptInstantCalls: _acceptInstantCall,
         sessionMinutes: _sessionMinutes.toList(growable: false),
       ),
     );
@@ -452,58 +447,6 @@ class _ListenerRegistrationStep8AvailabilityState
                         ),
                       ),
                     ],
-                  ),
-                  const SizedBox(height: 20),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 14,
-                    ),
-                    decoration: BoxDecoration(
-                      color: _fieldFill,
-                      borderRadius: BorderRadius.circular(16),
-                      border: Border.all(color: _border.withValues(alpha: 0.7)),
-                    ),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                l10n.listener_reg_avail_instant_call,
-                                style: GoogleFonts.inter(
-                                  color: Colors.white,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                              const SizedBox(height: 4),
-                              Text(
-                                l10n.listener_reg_avail_instant_call_hint,
-                                style: GoogleFonts.inter(
-                                  color: _muted,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w400,
-                                  height: 1.35,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        Switch.adaptive(
-                          value: _acceptInstantCall,
-                          activeThumbColor: _accent,
-                          activeTrackColor: const Color(0xFF4A2A8A),
-                          inactiveThumbColor: _muted,
-                          inactiveTrackColor: const Color(0xFF2A2140),
-                          onChanged: (value) {
-                            setState(() => _acceptInstantCall = value);
-                          },
-                        ),
-                      ],
-                    ),
                   ),
                   const SizedBox(height: 20),
                   _FieldLabel(l10n.listener_reg_avail_session_length),

@@ -29,7 +29,6 @@ class ListenerAvailabilityBloc
     on<_Started>(_onStarted);
     on<_RetryLoad>(_onRetryLoad);
     on<_OnlineStatusChanged>(_onOnlineStatusChanged);
-    on<_InstantCallsChanged>(_onInstantCallsChanged);
     on<_SessionLengthChanged>(_onSessionLengthChanged);
     on<_BreakLengthChanged>(_onBreakLengthChanged);
     on<_DayScheduleChanged>(_onDayScheduleChanged);
@@ -191,20 +190,6 @@ class ListenerAvailabilityBloc
         ),
       );
     }
-  }
-
-  Future<void> _onInstantCallsChanged(
-    _InstantCallsChanged event,
-    Emitter<ListenerAvailabilityState> emit,
-  ) async {
-    final current = state.availability;
-    if (!state.isReady || current == null || state.savingTarget != null) return;
-
-    await _persistAvailability(
-      emit,
-      current.copyWith(acceptInstantCalls: event.acceptInstantCalls),
-      savingTarget: ListenerAvailabilitySavingTarget.instantCalls,
-    );
   }
 
   Future<void> _onSessionLengthChanged(

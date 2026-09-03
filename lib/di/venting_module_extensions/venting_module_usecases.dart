@@ -94,6 +94,7 @@ import 'package:venting_mobile_app/domain/usecase/get_ventor_profile_overview_us
 import 'package:venting_mobile_app/domain/usecase/get_ventor_registration_progress_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_ventor_reward_trades_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_ventor_rewards_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/join_session_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/mark_all_listener_notifications_read_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/mark_all_ventor_notifications_read_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/purchase_ventor_points_usecase.dart';
@@ -107,6 +108,8 @@ import 'package:venting_mobile_app/domain/usecase/sign_in_with_google_usecase.da
 import 'package:venting_mobile_app/domain/usecase/submit_listener_session_feedback_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/submit_listener_session_report_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/submit_ventor_mood_checkin_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/submit_ventor_session_rating_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/submit_ventor_session_report_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/update_listener_about_me_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/update_listener_availability_day_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/update_listener_availability_usecase.dart';
@@ -492,9 +495,11 @@ mixin VentingModuleUsecases on VentingModule {
   GetListenerDashboardUsecase getListenerDashboardUsecase(
     ListenerDashboardRepository listenerDashboardRepository,
     VentingPreferences ventingPreferences,
+    AppConfig appConfig,
   ) => GetListenerDashboardUsecase(
     listenerDashboardRepository,
     ventingPreferences,
+    appConfig,
   );
 
   GetListenerEarningsOverviewUsecase getListenerEarningsOverviewUsecase(
@@ -544,6 +549,27 @@ mixin VentingModuleUsecases on VentingModule {
     listenerSessionsRepository,
     ventingPreferences,
   );
+
+  SubmitVentorSessionReportUsecase submitVentorSessionReportUsecase(
+    VentorSessionsRepository ventorSessionsRepository,
+    VentingPreferences ventingPreferences,
+  ) => SubmitVentorSessionReportUsecase(
+    ventorSessionsRepository,
+    ventingPreferences,
+  );
+
+  SubmitVentorSessionRatingUsecase submitVentorSessionRatingUsecase(
+    VentorSessionsRepository ventorSessionsRepository,
+    VentingPreferences ventingPreferences,
+  ) => SubmitVentorSessionRatingUsecase(
+    ventorSessionsRepository,
+    ventingPreferences,
+  );
+
+  JoinSessionUsecase joinSessionUsecase(
+    ListenerSessionsRepository listenerSessionsRepository,
+    VentingPreferences ventingPreferences,
+  ) => JoinSessionUsecase(listenerSessionsRepository, ventingPreferences);
 
   AcknowledgeListenerFirstSessionTutorialUsecase
   acknowledgeListenerFirstSessionTutorialUsecase(
@@ -969,6 +995,7 @@ mixin VentingModuleUsecases on VentingModule {
       () => getListenerDashboardUsecase(
         getIt<ListenerDashboardRepository>(),
         getIt<VentingPreferences>(),
+        getIt<AppConfig>(),
       ),
     );
     getIt.registerFactory<GetListenerEarningsOverviewUsecase>(
@@ -1013,6 +1040,24 @@ mixin VentingModuleUsecases on VentingModule {
     );
     getIt.registerFactory<SubmitListenerSessionReportUsecase>(
       () => submitListenerSessionReportUsecase(
+        getIt<ListenerSessionsRepository>(),
+        getIt<VentingPreferences>(),
+      ),
+    );
+    getIt.registerFactory<SubmitVentorSessionReportUsecase>(
+      () => submitVentorSessionReportUsecase(
+        getIt<VentorSessionsRepository>(),
+        getIt<VentingPreferences>(),
+      ),
+    );
+    getIt.registerFactory<SubmitVentorSessionRatingUsecase>(
+      () => submitVentorSessionRatingUsecase(
+        getIt<VentorSessionsRepository>(),
+        getIt<VentingPreferences>(),
+      ),
+    );
+    getIt.registerFactory<JoinSessionUsecase>(
+      () => joinSessionUsecase(
         getIt<ListenerSessionsRepository>(),
         getIt<VentingPreferences>(),
       ),

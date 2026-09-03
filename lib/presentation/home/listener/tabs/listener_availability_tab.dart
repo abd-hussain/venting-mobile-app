@@ -257,20 +257,6 @@ class _ListenerAvailabilityTabView extends StatelessWidget {
                                   ),
                                 )
                           : null,
-                      instantTitle: l10n.listener_avail_instant_calls,
-                      instantSubtitle: l10n.listener_avail_instant_calls_hint,
-                      earningsHighlight:
-                          l10n.listener_avail_instant_calls_earnings_highlight,
-                      acceptInstantCalls: availability.acceptInstantCalls,
-                      isInstantCallsSaving: state.isSavingInstantCalls,
-                      onInstantCallsChanged: state.savingTarget == null
-                          ? (value) =>
-                                context.read<ListenerAvailabilityBloc>().add(
-                                  ListenerAvailabilityEvent.instantCallsChanged(
-                                    acceptInstantCalls: value,
-                                  ),
-                                )
-                          : null,
                     ),
                     const SizedBox(height: 14),
                     WeeklyScheduleCard(

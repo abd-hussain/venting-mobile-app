@@ -1233,7 +1233,7 @@ $VentorFindListenerAvailabilityModelCopyWith<$Res>? get availability {
 /// @nodoc
 mixin _$VentorFindListenerAvailabilityModel {
 
- List<String> get days; String get from_hour; String get to_hour; String get time_zone_id; bool get accept_instant_call; List<int> get session_minutes;
+ List<String> get days; String get from_hour; String get to_hour; String get time_zone_id; List<int> get session_minutes;
 /// Create a copy of VentorFindListenerAvailabilityModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -1246,16 +1246,16 @@ $VentorFindListenerAvailabilityModelCopyWith<VentorFindListenerAvailabilityModel
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is VentorFindListenerAvailabilityModel&&const DeepCollectionEquality().equals(other.days, days)&&(identical(other.from_hour, from_hour) || other.from_hour == from_hour)&&(identical(other.to_hour, to_hour) || other.to_hour == to_hour)&&(identical(other.time_zone_id, time_zone_id) || other.time_zone_id == time_zone_id)&&(identical(other.accept_instant_call, accept_instant_call) || other.accept_instant_call == accept_instant_call)&&const DeepCollectionEquality().equals(other.session_minutes, session_minutes));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is VentorFindListenerAvailabilityModel&&const DeepCollectionEquality().equals(other.days, days)&&(identical(other.from_hour, from_hour) || other.from_hour == from_hour)&&(identical(other.to_hour, to_hour) || other.to_hour == to_hour)&&(identical(other.time_zone_id, time_zone_id) || other.time_zone_id == time_zone_id)&&const DeepCollectionEquality().equals(other.session_minutes, session_minutes));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(days),from_hour,to_hour,time_zone_id,accept_instant_call,const DeepCollectionEquality().hash(session_minutes));
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(days),from_hour,to_hour,time_zone_id,const DeepCollectionEquality().hash(session_minutes));
 
 @override
 String toString() {
-  return 'VentorFindListenerAvailabilityModel(days: $days, from_hour: $from_hour, to_hour: $to_hour, time_zone_id: $time_zone_id, accept_instant_call: $accept_instant_call, session_minutes: $session_minutes)';
+  return 'VentorFindListenerAvailabilityModel(days: $days, from_hour: $from_hour, to_hour: $to_hour, time_zone_id: $time_zone_id, session_minutes: $session_minutes)';
 }
 
 
@@ -1266,7 +1266,7 @@ abstract mixin class $VentorFindListenerAvailabilityModelCopyWith<$Res>  {
   factory $VentorFindListenerAvailabilityModelCopyWith(VentorFindListenerAvailabilityModel value, $Res Function(VentorFindListenerAvailabilityModel) _then) = _$VentorFindListenerAvailabilityModelCopyWithImpl;
 @useResult
 $Res call({
- List<String> days, String from_hour, String to_hour, String time_zone_id, bool accept_instant_call, List<int> session_minutes
+ List<String> days, String from_hour, String to_hour, String time_zone_id, List<int> session_minutes
 });
 
 
@@ -1283,14 +1283,13 @@ class _$VentorFindListenerAvailabilityModelCopyWithImpl<$Res>
 
 /// Create a copy of VentorFindListenerAvailabilityModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? days = null,Object? from_hour = null,Object? to_hour = null,Object? time_zone_id = null,Object? accept_instant_call = null,Object? session_minutes = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? days = null,Object? from_hour = null,Object? to_hour = null,Object? time_zone_id = null,Object? session_minutes = null,}) {
   return _then(_self.copyWith(
 days: null == days ? _self.days : days // ignore: cast_nullable_to_non_nullable
 as List<String>,from_hour: null == from_hour ? _self.from_hour : from_hour // ignore: cast_nullable_to_non_nullable
 as String,to_hour: null == to_hour ? _self.to_hour : to_hour // ignore: cast_nullable_to_non_nullable
 as String,time_zone_id: null == time_zone_id ? _self.time_zone_id : time_zone_id // ignore: cast_nullable_to_non_nullable
-as String,accept_instant_call: null == accept_instant_call ? _self.accept_instant_call : accept_instant_call // ignore: cast_nullable_to_non_nullable
-as bool,session_minutes: null == session_minutes ? _self.session_minutes : session_minutes // ignore: cast_nullable_to_non_nullable
+as String,session_minutes: null == session_minutes ? _self.session_minutes : session_minutes // ignore: cast_nullable_to_non_nullable
 as List<int>,
   ));
 }
@@ -1376,10 +1375,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<String> days,  String from_hour,  String to_hour,  String time_zone_id,  bool accept_instant_call,  List<int> session_minutes)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<String> days,  String from_hour,  String to_hour,  String time_zone_id,  List<int> session_minutes)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _VentorFindListenerAvailabilityModel() when $default != null:
-return $default(_that.days,_that.from_hour,_that.to_hour,_that.time_zone_id,_that.accept_instant_call,_that.session_minutes);case _:
+return $default(_that.days,_that.from_hour,_that.to_hour,_that.time_zone_id,_that.session_minutes);case _:
   return orElse();
 
 }
@@ -1397,10 +1396,10 @@ return $default(_that.days,_that.from_hour,_that.to_hour,_that.time_zone_id,_tha
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<String> days,  String from_hour,  String to_hour,  String time_zone_id,  bool accept_instant_call,  List<int> session_minutes)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<String> days,  String from_hour,  String to_hour,  String time_zone_id,  List<int> session_minutes)  $default,) {final _that = this;
 switch (_that) {
 case _VentorFindListenerAvailabilityModel():
-return $default(_that.days,_that.from_hour,_that.to_hour,_that.time_zone_id,_that.accept_instant_call,_that.session_minutes);case _:
+return $default(_that.days,_that.from_hour,_that.to_hour,_that.time_zone_id,_that.session_minutes);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -1417,10 +1416,10 @@ return $default(_that.days,_that.from_hour,_that.to_hour,_that.time_zone_id,_tha
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<String> days,  String from_hour,  String to_hour,  String time_zone_id,  bool accept_instant_call,  List<int> session_minutes)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<String> days,  String from_hour,  String to_hour,  String time_zone_id,  List<int> session_minutes)?  $default,) {final _that = this;
 switch (_that) {
 case _VentorFindListenerAvailabilityModel() when $default != null:
-return $default(_that.days,_that.from_hour,_that.to_hour,_that.time_zone_id,_that.accept_instant_call,_that.session_minutes);case _:
+return $default(_that.days,_that.from_hour,_that.to_hour,_that.time_zone_id,_that.session_minutes);case _:
   return null;
 
 }
@@ -1432,7 +1431,7 @@ return $default(_that.days,_that.from_hour,_that.to_hour,_that.time_zone_id,_tha
 @JsonSerializable()
 
 class _VentorFindListenerAvailabilityModel implements VentorFindListenerAvailabilityModel {
-  const _VentorFindListenerAvailabilityModel({final  List<String> days = const <String>[], this.from_hour = '', this.to_hour = '', this.time_zone_id = '', this.accept_instant_call = false, final  List<int> session_minutes = const <int>[]}): _days = days,_session_minutes = session_minutes;
+  const _VentorFindListenerAvailabilityModel({final  List<String> days = const <String>[], this.from_hour = '', this.to_hour = '', this.time_zone_id = '', final  List<int> session_minutes = const <int>[]}): _days = days,_session_minutes = session_minutes;
   factory _VentorFindListenerAvailabilityModel.fromJson(Map<String, dynamic> json) => _$VentorFindListenerAvailabilityModelFromJson(json);
 
  final  List<String> _days;
@@ -1445,7 +1444,6 @@ class _VentorFindListenerAvailabilityModel implements VentorFindListenerAvailabi
 @override@JsonKey() final  String from_hour;
 @override@JsonKey() final  String to_hour;
 @override@JsonKey() final  String time_zone_id;
-@override@JsonKey() final  bool accept_instant_call;
  final  List<int> _session_minutes;
 @override@JsonKey() List<int> get session_minutes {
   if (_session_minutes is EqualUnmodifiableListView) return _session_minutes;
@@ -1467,16 +1465,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _VentorFindListenerAvailabilityModel&&const DeepCollectionEquality().equals(other._days, _days)&&(identical(other.from_hour, from_hour) || other.from_hour == from_hour)&&(identical(other.to_hour, to_hour) || other.to_hour == to_hour)&&(identical(other.time_zone_id, time_zone_id) || other.time_zone_id == time_zone_id)&&(identical(other.accept_instant_call, accept_instant_call) || other.accept_instant_call == accept_instant_call)&&const DeepCollectionEquality().equals(other._session_minutes, _session_minutes));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _VentorFindListenerAvailabilityModel&&const DeepCollectionEquality().equals(other._days, _days)&&(identical(other.from_hour, from_hour) || other.from_hour == from_hour)&&(identical(other.to_hour, to_hour) || other.to_hour == to_hour)&&(identical(other.time_zone_id, time_zone_id) || other.time_zone_id == time_zone_id)&&const DeepCollectionEquality().equals(other._session_minutes, _session_minutes));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_days),from_hour,to_hour,time_zone_id,accept_instant_call,const DeepCollectionEquality().hash(_session_minutes));
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_days),from_hour,to_hour,time_zone_id,const DeepCollectionEquality().hash(_session_minutes));
 
 @override
 String toString() {
-  return 'VentorFindListenerAvailabilityModel(days: $days, from_hour: $from_hour, to_hour: $to_hour, time_zone_id: $time_zone_id, accept_instant_call: $accept_instant_call, session_minutes: $session_minutes)';
+  return 'VentorFindListenerAvailabilityModel(days: $days, from_hour: $from_hour, to_hour: $to_hour, time_zone_id: $time_zone_id, session_minutes: $session_minutes)';
 }
 
 
@@ -1487,7 +1485,7 @@ abstract mixin class _$VentorFindListenerAvailabilityModelCopyWith<$Res> impleme
   factory _$VentorFindListenerAvailabilityModelCopyWith(_VentorFindListenerAvailabilityModel value, $Res Function(_VentorFindListenerAvailabilityModel) _then) = __$VentorFindListenerAvailabilityModelCopyWithImpl;
 @override @useResult
 $Res call({
- List<String> days, String from_hour, String to_hour, String time_zone_id, bool accept_instant_call, List<int> session_minutes
+ List<String> days, String from_hour, String to_hour, String time_zone_id, List<int> session_minutes
 });
 
 
@@ -1504,14 +1502,13 @@ class __$VentorFindListenerAvailabilityModelCopyWithImpl<$Res>
 
 /// Create a copy of VentorFindListenerAvailabilityModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? days = null,Object? from_hour = null,Object? to_hour = null,Object? time_zone_id = null,Object? accept_instant_call = null,Object? session_minutes = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? days = null,Object? from_hour = null,Object? to_hour = null,Object? time_zone_id = null,Object? session_minutes = null,}) {
   return _then(_VentorFindListenerAvailabilityModel(
 days: null == days ? _self._days : days // ignore: cast_nullable_to_non_nullable
 as List<String>,from_hour: null == from_hour ? _self.from_hour : from_hour // ignore: cast_nullable_to_non_nullable
 as String,to_hour: null == to_hour ? _self.to_hour : to_hour // ignore: cast_nullable_to_non_nullable
 as String,time_zone_id: null == time_zone_id ? _self.time_zone_id : time_zone_id // ignore: cast_nullable_to_non_nullable
-as String,accept_instant_call: null == accept_instant_call ? _self.accept_instant_call : accept_instant_call // ignore: cast_nullable_to_non_nullable
-as bool,session_minutes: null == session_minutes ? _self._session_minutes : session_minutes // ignore: cast_nullable_to_non_nullable
+as String,session_minutes: null == session_minutes ? _self._session_minutes : session_minutes // ignore: cast_nullable_to_non_nullable
 as List<int>,
   ));
 }

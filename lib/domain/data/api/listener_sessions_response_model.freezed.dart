@@ -568,7 +568,7 @@ as List<ListenerSessionModel>,
 /// @nodoc
 mixin _$ListenerSessionModel {
 
- String get id; String get scheduled_at; int get duration_minutes; String get ventor_name; String? get ventor_avatar_url; String get message; String get chosen_reason; List<String> get tags; String? get speech_language; bool get is_waiting; bool get can_join_now; bool get is_instant; bool get is_video_call; num get ventor_rating; String? get status_label; num? get session_cost; bool get is_missed; String? get history_outcome;
+ String get id; String get scheduled_at; int get duration_minutes; String get ventor_name; String? get ventor_avatar_url; String get message; String get chosen_reason; List<String> get tags; String? get speech_language; bool get is_waiting; bool get can_join_now; bool get is_video_call; num get ventor_rating; String? get status_label; num? get session_cost; bool get is_missed; String? get history_outcome;
 /// Create a copy of ListenerSessionModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -581,16 +581,16 @@ $ListenerSessionModelCopyWith<ListenerSessionModel> get copyWith => _$ListenerSe
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ListenerSessionModel&&(identical(other.id, id) || other.id == id)&&(identical(other.scheduled_at, scheduled_at) || other.scheduled_at == scheduled_at)&&(identical(other.duration_minutes, duration_minutes) || other.duration_minutes == duration_minutes)&&(identical(other.ventor_name, ventor_name) || other.ventor_name == ventor_name)&&(identical(other.ventor_avatar_url, ventor_avatar_url) || other.ventor_avatar_url == ventor_avatar_url)&&(identical(other.message, message) || other.message == message)&&(identical(other.chosen_reason, chosen_reason) || other.chosen_reason == chosen_reason)&&const DeepCollectionEquality().equals(other.tags, tags)&&(identical(other.speech_language, speech_language) || other.speech_language == speech_language)&&(identical(other.is_waiting, is_waiting) || other.is_waiting == is_waiting)&&(identical(other.can_join_now, can_join_now) || other.can_join_now == can_join_now)&&(identical(other.is_instant, is_instant) || other.is_instant == is_instant)&&(identical(other.is_video_call, is_video_call) || other.is_video_call == is_video_call)&&(identical(other.ventor_rating, ventor_rating) || other.ventor_rating == ventor_rating)&&(identical(other.status_label, status_label) || other.status_label == status_label)&&(identical(other.session_cost, session_cost) || other.session_cost == session_cost)&&(identical(other.is_missed, is_missed) || other.is_missed == is_missed)&&(identical(other.history_outcome, history_outcome) || other.history_outcome == history_outcome));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ListenerSessionModel&&(identical(other.id, id) || other.id == id)&&(identical(other.scheduled_at, scheduled_at) || other.scheduled_at == scheduled_at)&&(identical(other.duration_minutes, duration_minutes) || other.duration_minutes == duration_minutes)&&(identical(other.ventor_name, ventor_name) || other.ventor_name == ventor_name)&&(identical(other.ventor_avatar_url, ventor_avatar_url) || other.ventor_avatar_url == ventor_avatar_url)&&(identical(other.message, message) || other.message == message)&&(identical(other.chosen_reason, chosen_reason) || other.chosen_reason == chosen_reason)&&const DeepCollectionEquality().equals(other.tags, tags)&&(identical(other.speech_language, speech_language) || other.speech_language == speech_language)&&(identical(other.is_waiting, is_waiting) || other.is_waiting == is_waiting)&&(identical(other.can_join_now, can_join_now) || other.can_join_now == can_join_now)&&(identical(other.is_video_call, is_video_call) || other.is_video_call == is_video_call)&&(identical(other.ventor_rating, ventor_rating) || other.ventor_rating == ventor_rating)&&(identical(other.status_label, status_label) || other.status_label == status_label)&&(identical(other.session_cost, session_cost) || other.session_cost == session_cost)&&(identical(other.is_missed, is_missed) || other.is_missed == is_missed)&&(identical(other.history_outcome, history_outcome) || other.history_outcome == history_outcome));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,scheduled_at,duration_minutes,ventor_name,ventor_avatar_url,message,chosen_reason,const DeepCollectionEquality().hash(tags),speech_language,is_waiting,can_join_now,is_instant,is_video_call,ventor_rating,status_label,session_cost,is_missed,history_outcome);
+int get hashCode => Object.hash(runtimeType,id,scheduled_at,duration_minutes,ventor_name,ventor_avatar_url,message,chosen_reason,const DeepCollectionEquality().hash(tags),speech_language,is_waiting,can_join_now,is_video_call,ventor_rating,status_label,session_cost,is_missed,history_outcome);
 
 @override
 String toString() {
-  return 'ListenerSessionModel(id: $id, scheduled_at: $scheduled_at, duration_minutes: $duration_minutes, ventor_name: $ventor_name, ventor_avatar_url: $ventor_avatar_url, message: $message, chosen_reason: $chosen_reason, tags: $tags, speech_language: $speech_language, is_waiting: $is_waiting, can_join_now: $can_join_now, is_instant: $is_instant, is_video_call: $is_video_call, ventor_rating: $ventor_rating, status_label: $status_label, session_cost: $session_cost, is_missed: $is_missed, history_outcome: $history_outcome)';
+  return 'ListenerSessionModel(id: $id, scheduled_at: $scheduled_at, duration_minutes: $duration_minutes, ventor_name: $ventor_name, ventor_avatar_url: $ventor_avatar_url, message: $message, chosen_reason: $chosen_reason, tags: $tags, speech_language: $speech_language, is_waiting: $is_waiting, can_join_now: $can_join_now, is_video_call: $is_video_call, ventor_rating: $ventor_rating, status_label: $status_label, session_cost: $session_cost, is_missed: $is_missed, history_outcome: $history_outcome)';
 }
 
 
@@ -601,7 +601,7 @@ abstract mixin class $ListenerSessionModelCopyWith<$Res>  {
   factory $ListenerSessionModelCopyWith(ListenerSessionModel value, $Res Function(ListenerSessionModel) _then) = _$ListenerSessionModelCopyWithImpl;
 @useResult
 $Res call({
- String id, String scheduled_at, int duration_minutes, String ventor_name, String? ventor_avatar_url, String message, String chosen_reason, List<String> tags, String? speech_language, bool is_waiting, bool can_join_now, bool is_instant, bool is_video_call, num ventor_rating, String? status_label, num? session_cost, bool is_missed, String? history_outcome
+ String id, String scheduled_at, int duration_minutes, String ventor_name, String? ventor_avatar_url, String message, String chosen_reason, List<String> tags, String? speech_language, bool is_waiting, bool can_join_now, bool is_video_call, num ventor_rating, String? status_label, num? session_cost, bool is_missed, String? history_outcome
 });
 
 
@@ -618,7 +618,7 @@ class _$ListenerSessionModelCopyWithImpl<$Res>
 
 /// Create a copy of ListenerSessionModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? scheduled_at = null,Object? duration_minutes = null,Object? ventor_name = null,Object? ventor_avatar_url = freezed,Object? message = null,Object? chosen_reason = null,Object? tags = null,Object? speech_language = freezed,Object? is_waiting = null,Object? can_join_now = null,Object? is_instant = null,Object? is_video_call = null,Object? ventor_rating = null,Object? status_label = freezed,Object? session_cost = freezed,Object? is_missed = null,Object? history_outcome = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? scheduled_at = null,Object? duration_minutes = null,Object? ventor_name = null,Object? ventor_avatar_url = freezed,Object? message = null,Object? chosen_reason = null,Object? tags = null,Object? speech_language = freezed,Object? is_waiting = null,Object? can_join_now = null,Object? is_video_call = null,Object? ventor_rating = null,Object? status_label = freezed,Object? session_cost = freezed,Object? is_missed = null,Object? history_outcome = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,scheduled_at: null == scheduled_at ? _self.scheduled_at : scheduled_at // ignore: cast_nullable_to_non_nullable
@@ -631,7 +631,6 @@ as String,tags: null == tags ? _self.tags : tags // ignore: cast_nullable_to_non
 as List<String>,speech_language: freezed == speech_language ? _self.speech_language : speech_language // ignore: cast_nullable_to_non_nullable
 as String?,is_waiting: null == is_waiting ? _self.is_waiting : is_waiting // ignore: cast_nullable_to_non_nullable
 as bool,can_join_now: null == can_join_now ? _self.can_join_now : can_join_now // ignore: cast_nullable_to_non_nullable
-as bool,is_instant: null == is_instant ? _self.is_instant : is_instant // ignore: cast_nullable_to_non_nullable
 as bool,is_video_call: null == is_video_call ? _self.is_video_call : is_video_call // ignore: cast_nullable_to_non_nullable
 as bool,ventor_rating: null == ventor_rating ? _self.ventor_rating : ventor_rating // ignore: cast_nullable_to_non_nullable
 as num,status_label: freezed == status_label ? _self.status_label : status_label // ignore: cast_nullable_to_non_nullable
@@ -723,10 +722,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String scheduled_at,  int duration_minutes,  String ventor_name,  String? ventor_avatar_url,  String message,  String chosen_reason,  List<String> tags,  String? speech_language,  bool is_waiting,  bool can_join_now,  bool is_instant,  bool is_video_call,  num ventor_rating,  String? status_label,  num? session_cost,  bool is_missed,  String? history_outcome)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String scheduled_at,  int duration_minutes,  String ventor_name,  String? ventor_avatar_url,  String message,  String chosen_reason,  List<String> tags,  String? speech_language,  bool is_waiting,  bool can_join_now,  bool is_video_call,  num ventor_rating,  String? status_label,  num? session_cost,  bool is_missed,  String? history_outcome)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ListenerSessionModel() when $default != null:
-return $default(_that.id,_that.scheduled_at,_that.duration_minutes,_that.ventor_name,_that.ventor_avatar_url,_that.message,_that.chosen_reason,_that.tags,_that.speech_language,_that.is_waiting,_that.can_join_now,_that.is_instant,_that.is_video_call,_that.ventor_rating,_that.status_label,_that.session_cost,_that.is_missed,_that.history_outcome);case _:
+return $default(_that.id,_that.scheduled_at,_that.duration_minutes,_that.ventor_name,_that.ventor_avatar_url,_that.message,_that.chosen_reason,_that.tags,_that.speech_language,_that.is_waiting,_that.can_join_now,_that.is_video_call,_that.ventor_rating,_that.status_label,_that.session_cost,_that.is_missed,_that.history_outcome);case _:
   return orElse();
 
 }
@@ -744,10 +743,10 @@ return $default(_that.id,_that.scheduled_at,_that.duration_minutes,_that.ventor_
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String scheduled_at,  int duration_minutes,  String ventor_name,  String? ventor_avatar_url,  String message,  String chosen_reason,  List<String> tags,  String? speech_language,  bool is_waiting,  bool can_join_now,  bool is_instant,  bool is_video_call,  num ventor_rating,  String? status_label,  num? session_cost,  bool is_missed,  String? history_outcome)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String scheduled_at,  int duration_minutes,  String ventor_name,  String? ventor_avatar_url,  String message,  String chosen_reason,  List<String> tags,  String? speech_language,  bool is_waiting,  bool can_join_now,  bool is_video_call,  num ventor_rating,  String? status_label,  num? session_cost,  bool is_missed,  String? history_outcome)  $default,) {final _that = this;
 switch (_that) {
 case _ListenerSessionModel():
-return $default(_that.id,_that.scheduled_at,_that.duration_minutes,_that.ventor_name,_that.ventor_avatar_url,_that.message,_that.chosen_reason,_that.tags,_that.speech_language,_that.is_waiting,_that.can_join_now,_that.is_instant,_that.is_video_call,_that.ventor_rating,_that.status_label,_that.session_cost,_that.is_missed,_that.history_outcome);case _:
+return $default(_that.id,_that.scheduled_at,_that.duration_minutes,_that.ventor_name,_that.ventor_avatar_url,_that.message,_that.chosen_reason,_that.tags,_that.speech_language,_that.is_waiting,_that.can_join_now,_that.is_video_call,_that.ventor_rating,_that.status_label,_that.session_cost,_that.is_missed,_that.history_outcome);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -764,10 +763,10 @@ return $default(_that.id,_that.scheduled_at,_that.duration_minutes,_that.ventor_
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String scheduled_at,  int duration_minutes,  String ventor_name,  String? ventor_avatar_url,  String message,  String chosen_reason,  List<String> tags,  String? speech_language,  bool is_waiting,  bool can_join_now,  bool is_instant,  bool is_video_call,  num ventor_rating,  String? status_label,  num? session_cost,  bool is_missed,  String? history_outcome)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String scheduled_at,  int duration_minutes,  String ventor_name,  String? ventor_avatar_url,  String message,  String chosen_reason,  List<String> tags,  String? speech_language,  bool is_waiting,  bool can_join_now,  bool is_video_call,  num ventor_rating,  String? status_label,  num? session_cost,  bool is_missed,  String? history_outcome)?  $default,) {final _that = this;
 switch (_that) {
 case _ListenerSessionModel() when $default != null:
-return $default(_that.id,_that.scheduled_at,_that.duration_minutes,_that.ventor_name,_that.ventor_avatar_url,_that.message,_that.chosen_reason,_that.tags,_that.speech_language,_that.is_waiting,_that.can_join_now,_that.is_instant,_that.is_video_call,_that.ventor_rating,_that.status_label,_that.session_cost,_that.is_missed,_that.history_outcome);case _:
+return $default(_that.id,_that.scheduled_at,_that.duration_minutes,_that.ventor_name,_that.ventor_avatar_url,_that.message,_that.chosen_reason,_that.tags,_that.speech_language,_that.is_waiting,_that.can_join_now,_that.is_video_call,_that.ventor_rating,_that.status_label,_that.session_cost,_that.is_missed,_that.history_outcome);case _:
   return null;
 
 }
@@ -779,7 +778,7 @@ return $default(_that.id,_that.scheduled_at,_that.duration_minutes,_that.ventor_
 @JsonSerializable()
 
 class _ListenerSessionModel implements ListenerSessionModel {
-  const _ListenerSessionModel({this.id = '', this.scheduled_at = '', this.duration_minutes = 0, this.ventor_name = '', this.ventor_avatar_url, this.message = '', this.chosen_reason = '', final  List<String> tags = const <String>[], this.speech_language, this.is_waiting = false, this.can_join_now = false, this.is_instant = false, this.is_video_call = false, this.ventor_rating = 0, this.status_label, this.session_cost, this.is_missed = false, this.history_outcome}): _tags = tags;
+  const _ListenerSessionModel({this.id = '', this.scheduled_at = '', this.duration_minutes = 0, this.ventor_name = '', this.ventor_avatar_url, this.message = '', this.chosen_reason = '', final  List<String> tags = const <String>[], this.speech_language, this.is_waiting = false, this.can_join_now = false, this.is_video_call = false, this.ventor_rating = 0, this.status_label, this.session_cost, this.is_missed = false, this.history_outcome}): _tags = tags;
   factory _ListenerSessionModel.fromJson(Map<String, dynamic> json) => _$ListenerSessionModelFromJson(json);
 
 @override@JsonKey() final  String id;
@@ -799,7 +798,6 @@ class _ListenerSessionModel implements ListenerSessionModel {
 @override final  String? speech_language;
 @override@JsonKey() final  bool is_waiting;
 @override@JsonKey() final  bool can_join_now;
-@override@JsonKey() final  bool is_instant;
 @override@JsonKey() final  bool is_video_call;
 @override@JsonKey() final  num ventor_rating;
 @override final  String? status_label;
@@ -820,16 +818,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ListenerSessionModel&&(identical(other.id, id) || other.id == id)&&(identical(other.scheduled_at, scheduled_at) || other.scheduled_at == scheduled_at)&&(identical(other.duration_minutes, duration_minutes) || other.duration_minutes == duration_minutes)&&(identical(other.ventor_name, ventor_name) || other.ventor_name == ventor_name)&&(identical(other.ventor_avatar_url, ventor_avatar_url) || other.ventor_avatar_url == ventor_avatar_url)&&(identical(other.message, message) || other.message == message)&&(identical(other.chosen_reason, chosen_reason) || other.chosen_reason == chosen_reason)&&const DeepCollectionEquality().equals(other._tags, _tags)&&(identical(other.speech_language, speech_language) || other.speech_language == speech_language)&&(identical(other.is_waiting, is_waiting) || other.is_waiting == is_waiting)&&(identical(other.can_join_now, can_join_now) || other.can_join_now == can_join_now)&&(identical(other.is_instant, is_instant) || other.is_instant == is_instant)&&(identical(other.is_video_call, is_video_call) || other.is_video_call == is_video_call)&&(identical(other.ventor_rating, ventor_rating) || other.ventor_rating == ventor_rating)&&(identical(other.status_label, status_label) || other.status_label == status_label)&&(identical(other.session_cost, session_cost) || other.session_cost == session_cost)&&(identical(other.is_missed, is_missed) || other.is_missed == is_missed)&&(identical(other.history_outcome, history_outcome) || other.history_outcome == history_outcome));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ListenerSessionModel&&(identical(other.id, id) || other.id == id)&&(identical(other.scheduled_at, scheduled_at) || other.scheduled_at == scheduled_at)&&(identical(other.duration_minutes, duration_minutes) || other.duration_minutes == duration_minutes)&&(identical(other.ventor_name, ventor_name) || other.ventor_name == ventor_name)&&(identical(other.ventor_avatar_url, ventor_avatar_url) || other.ventor_avatar_url == ventor_avatar_url)&&(identical(other.message, message) || other.message == message)&&(identical(other.chosen_reason, chosen_reason) || other.chosen_reason == chosen_reason)&&const DeepCollectionEquality().equals(other._tags, _tags)&&(identical(other.speech_language, speech_language) || other.speech_language == speech_language)&&(identical(other.is_waiting, is_waiting) || other.is_waiting == is_waiting)&&(identical(other.can_join_now, can_join_now) || other.can_join_now == can_join_now)&&(identical(other.is_video_call, is_video_call) || other.is_video_call == is_video_call)&&(identical(other.ventor_rating, ventor_rating) || other.ventor_rating == ventor_rating)&&(identical(other.status_label, status_label) || other.status_label == status_label)&&(identical(other.session_cost, session_cost) || other.session_cost == session_cost)&&(identical(other.is_missed, is_missed) || other.is_missed == is_missed)&&(identical(other.history_outcome, history_outcome) || other.history_outcome == history_outcome));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,scheduled_at,duration_minutes,ventor_name,ventor_avatar_url,message,chosen_reason,const DeepCollectionEquality().hash(_tags),speech_language,is_waiting,can_join_now,is_instant,is_video_call,ventor_rating,status_label,session_cost,is_missed,history_outcome);
+int get hashCode => Object.hash(runtimeType,id,scheduled_at,duration_minutes,ventor_name,ventor_avatar_url,message,chosen_reason,const DeepCollectionEquality().hash(_tags),speech_language,is_waiting,can_join_now,is_video_call,ventor_rating,status_label,session_cost,is_missed,history_outcome);
 
 @override
 String toString() {
-  return 'ListenerSessionModel(id: $id, scheduled_at: $scheduled_at, duration_minutes: $duration_minutes, ventor_name: $ventor_name, ventor_avatar_url: $ventor_avatar_url, message: $message, chosen_reason: $chosen_reason, tags: $tags, speech_language: $speech_language, is_waiting: $is_waiting, can_join_now: $can_join_now, is_instant: $is_instant, is_video_call: $is_video_call, ventor_rating: $ventor_rating, status_label: $status_label, session_cost: $session_cost, is_missed: $is_missed, history_outcome: $history_outcome)';
+  return 'ListenerSessionModel(id: $id, scheduled_at: $scheduled_at, duration_minutes: $duration_minutes, ventor_name: $ventor_name, ventor_avatar_url: $ventor_avatar_url, message: $message, chosen_reason: $chosen_reason, tags: $tags, speech_language: $speech_language, is_waiting: $is_waiting, can_join_now: $can_join_now, is_video_call: $is_video_call, ventor_rating: $ventor_rating, status_label: $status_label, session_cost: $session_cost, is_missed: $is_missed, history_outcome: $history_outcome)';
 }
 
 
@@ -840,7 +838,7 @@ abstract mixin class _$ListenerSessionModelCopyWith<$Res> implements $ListenerSe
   factory _$ListenerSessionModelCopyWith(_ListenerSessionModel value, $Res Function(_ListenerSessionModel) _then) = __$ListenerSessionModelCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String scheduled_at, int duration_minutes, String ventor_name, String? ventor_avatar_url, String message, String chosen_reason, List<String> tags, String? speech_language, bool is_waiting, bool can_join_now, bool is_instant, bool is_video_call, num ventor_rating, String? status_label, num? session_cost, bool is_missed, String? history_outcome
+ String id, String scheduled_at, int duration_minutes, String ventor_name, String? ventor_avatar_url, String message, String chosen_reason, List<String> tags, String? speech_language, bool is_waiting, bool can_join_now, bool is_video_call, num ventor_rating, String? status_label, num? session_cost, bool is_missed, String? history_outcome
 });
 
 
@@ -857,7 +855,7 @@ class __$ListenerSessionModelCopyWithImpl<$Res>
 
 /// Create a copy of ListenerSessionModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? scheduled_at = null,Object? duration_minutes = null,Object? ventor_name = null,Object? ventor_avatar_url = freezed,Object? message = null,Object? chosen_reason = null,Object? tags = null,Object? speech_language = freezed,Object? is_waiting = null,Object? can_join_now = null,Object? is_instant = null,Object? is_video_call = null,Object? ventor_rating = null,Object? status_label = freezed,Object? session_cost = freezed,Object? is_missed = null,Object? history_outcome = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? scheduled_at = null,Object? duration_minutes = null,Object? ventor_name = null,Object? ventor_avatar_url = freezed,Object? message = null,Object? chosen_reason = null,Object? tags = null,Object? speech_language = freezed,Object? is_waiting = null,Object? can_join_now = null,Object? is_video_call = null,Object? ventor_rating = null,Object? status_label = freezed,Object? session_cost = freezed,Object? is_missed = null,Object? history_outcome = freezed,}) {
   return _then(_ListenerSessionModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,scheduled_at: null == scheduled_at ? _self.scheduled_at : scheduled_at // ignore: cast_nullable_to_non_nullable
@@ -870,7 +868,6 @@ as String,tags: null == tags ? _self._tags : tags // ignore: cast_nullable_to_no
 as List<String>,speech_language: freezed == speech_language ? _self.speech_language : speech_language // ignore: cast_nullable_to_non_nullable
 as String?,is_waiting: null == is_waiting ? _self.is_waiting : is_waiting // ignore: cast_nullable_to_non_nullable
 as bool,can_join_now: null == can_join_now ? _self.can_join_now : can_join_now // ignore: cast_nullable_to_non_nullable
-as bool,is_instant: null == is_instant ? _self.is_instant : is_instant // ignore: cast_nullable_to_non_nullable
 as bool,is_video_call: null == is_video_call ? _self.is_video_call : is_video_call // ignore: cast_nullable_to_non_nullable
 as bool,ventor_rating: null == ventor_rating ? _self.ventor_rating : ventor_rating // ignore: cast_nullable_to_non_nullable
 as num,status_label: freezed == status_label ? _self.status_label : status_label // ignore: cast_nullable_to_non_nullable
@@ -1994,7 +1991,7 @@ as List<ListenerSessionRequestModel>,
 /// @nodoc
 mixin _$ListenerSessionRequestModel {
 
- String get id; String get ventor_name; String? get ventor_avatar_url; String get message; String get chosen_reason; String get scheduled_at; int get duration_minutes; List<String> get tags; String get received_at; String? get speech_language; bool get is_instant; bool get is_video_call; num get ventor_rating;
+ String get id; String get ventor_name; String? get ventor_avatar_url; String get message; String get chosen_reason; String get scheduled_at; int get duration_minutes; List<String> get tags; String get received_at; String? get speech_language; bool get is_video_call; num get ventor_rating;
 /// Create a copy of ListenerSessionRequestModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -2007,16 +2004,16 @@ $ListenerSessionRequestModelCopyWith<ListenerSessionRequestModel> get copyWith =
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ListenerSessionRequestModel&&(identical(other.id, id) || other.id == id)&&(identical(other.ventor_name, ventor_name) || other.ventor_name == ventor_name)&&(identical(other.ventor_avatar_url, ventor_avatar_url) || other.ventor_avatar_url == ventor_avatar_url)&&(identical(other.message, message) || other.message == message)&&(identical(other.chosen_reason, chosen_reason) || other.chosen_reason == chosen_reason)&&(identical(other.scheduled_at, scheduled_at) || other.scheduled_at == scheduled_at)&&(identical(other.duration_minutes, duration_minutes) || other.duration_minutes == duration_minutes)&&const DeepCollectionEquality().equals(other.tags, tags)&&(identical(other.received_at, received_at) || other.received_at == received_at)&&(identical(other.speech_language, speech_language) || other.speech_language == speech_language)&&(identical(other.is_instant, is_instant) || other.is_instant == is_instant)&&(identical(other.is_video_call, is_video_call) || other.is_video_call == is_video_call)&&(identical(other.ventor_rating, ventor_rating) || other.ventor_rating == ventor_rating));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ListenerSessionRequestModel&&(identical(other.id, id) || other.id == id)&&(identical(other.ventor_name, ventor_name) || other.ventor_name == ventor_name)&&(identical(other.ventor_avatar_url, ventor_avatar_url) || other.ventor_avatar_url == ventor_avatar_url)&&(identical(other.message, message) || other.message == message)&&(identical(other.chosen_reason, chosen_reason) || other.chosen_reason == chosen_reason)&&(identical(other.scheduled_at, scheduled_at) || other.scheduled_at == scheduled_at)&&(identical(other.duration_minutes, duration_minutes) || other.duration_minutes == duration_minutes)&&const DeepCollectionEquality().equals(other.tags, tags)&&(identical(other.received_at, received_at) || other.received_at == received_at)&&(identical(other.speech_language, speech_language) || other.speech_language == speech_language)&&(identical(other.is_video_call, is_video_call) || other.is_video_call == is_video_call)&&(identical(other.ventor_rating, ventor_rating) || other.ventor_rating == ventor_rating));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,ventor_name,ventor_avatar_url,message,chosen_reason,scheduled_at,duration_minutes,const DeepCollectionEquality().hash(tags),received_at,speech_language,is_instant,is_video_call,ventor_rating);
+int get hashCode => Object.hash(runtimeType,id,ventor_name,ventor_avatar_url,message,chosen_reason,scheduled_at,duration_minutes,const DeepCollectionEquality().hash(tags),received_at,speech_language,is_video_call,ventor_rating);
 
 @override
 String toString() {
-  return 'ListenerSessionRequestModel(id: $id, ventor_name: $ventor_name, ventor_avatar_url: $ventor_avatar_url, message: $message, chosen_reason: $chosen_reason, scheduled_at: $scheduled_at, duration_minutes: $duration_minutes, tags: $tags, received_at: $received_at, speech_language: $speech_language, is_instant: $is_instant, is_video_call: $is_video_call, ventor_rating: $ventor_rating)';
+  return 'ListenerSessionRequestModel(id: $id, ventor_name: $ventor_name, ventor_avatar_url: $ventor_avatar_url, message: $message, chosen_reason: $chosen_reason, scheduled_at: $scheduled_at, duration_minutes: $duration_minutes, tags: $tags, received_at: $received_at, speech_language: $speech_language, is_video_call: $is_video_call, ventor_rating: $ventor_rating)';
 }
 
 
@@ -2027,7 +2024,7 @@ abstract mixin class $ListenerSessionRequestModelCopyWith<$Res>  {
   factory $ListenerSessionRequestModelCopyWith(ListenerSessionRequestModel value, $Res Function(ListenerSessionRequestModel) _then) = _$ListenerSessionRequestModelCopyWithImpl;
 @useResult
 $Res call({
- String id, String ventor_name, String? ventor_avatar_url, String message, String chosen_reason, String scheduled_at, int duration_minutes, List<String> tags, String received_at, String? speech_language, bool is_instant, bool is_video_call, num ventor_rating
+ String id, String ventor_name, String? ventor_avatar_url, String message, String chosen_reason, String scheduled_at, int duration_minutes, List<String> tags, String received_at, String? speech_language, bool is_video_call, num ventor_rating
 });
 
 
@@ -2044,7 +2041,7 @@ class _$ListenerSessionRequestModelCopyWithImpl<$Res>
 
 /// Create a copy of ListenerSessionRequestModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? ventor_name = null,Object? ventor_avatar_url = freezed,Object? message = null,Object? chosen_reason = null,Object? scheduled_at = null,Object? duration_minutes = null,Object? tags = null,Object? received_at = null,Object? speech_language = freezed,Object? is_instant = null,Object? is_video_call = null,Object? ventor_rating = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? ventor_name = null,Object? ventor_avatar_url = freezed,Object? message = null,Object? chosen_reason = null,Object? scheduled_at = null,Object? duration_minutes = null,Object? tags = null,Object? received_at = null,Object? speech_language = freezed,Object? is_video_call = null,Object? ventor_rating = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,ventor_name: null == ventor_name ? _self.ventor_name : ventor_name // ignore: cast_nullable_to_non_nullable
@@ -2056,8 +2053,7 @@ as String,duration_minutes: null == duration_minutes ? _self.duration_minutes : 
 as int,tags: null == tags ? _self.tags : tags // ignore: cast_nullable_to_non_nullable
 as List<String>,received_at: null == received_at ? _self.received_at : received_at // ignore: cast_nullable_to_non_nullable
 as String,speech_language: freezed == speech_language ? _self.speech_language : speech_language // ignore: cast_nullable_to_non_nullable
-as String?,is_instant: null == is_instant ? _self.is_instant : is_instant // ignore: cast_nullable_to_non_nullable
-as bool,is_video_call: null == is_video_call ? _self.is_video_call : is_video_call // ignore: cast_nullable_to_non_nullable
+as String?,is_video_call: null == is_video_call ? _self.is_video_call : is_video_call // ignore: cast_nullable_to_non_nullable
 as bool,ventor_rating: null == ventor_rating ? _self.ventor_rating : ventor_rating // ignore: cast_nullable_to_non_nullable
 as num,
   ));
@@ -2144,10 +2140,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String ventor_name,  String? ventor_avatar_url,  String message,  String chosen_reason,  String scheduled_at,  int duration_minutes,  List<String> tags,  String received_at,  String? speech_language,  bool is_instant,  bool is_video_call,  num ventor_rating)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String ventor_name,  String? ventor_avatar_url,  String message,  String chosen_reason,  String scheduled_at,  int duration_minutes,  List<String> tags,  String received_at,  String? speech_language,  bool is_video_call,  num ventor_rating)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ListenerSessionRequestModel() when $default != null:
-return $default(_that.id,_that.ventor_name,_that.ventor_avatar_url,_that.message,_that.chosen_reason,_that.scheduled_at,_that.duration_minutes,_that.tags,_that.received_at,_that.speech_language,_that.is_instant,_that.is_video_call,_that.ventor_rating);case _:
+return $default(_that.id,_that.ventor_name,_that.ventor_avatar_url,_that.message,_that.chosen_reason,_that.scheduled_at,_that.duration_minutes,_that.tags,_that.received_at,_that.speech_language,_that.is_video_call,_that.ventor_rating);case _:
   return orElse();
 
 }
@@ -2165,10 +2161,10 @@ return $default(_that.id,_that.ventor_name,_that.ventor_avatar_url,_that.message
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String ventor_name,  String? ventor_avatar_url,  String message,  String chosen_reason,  String scheduled_at,  int duration_minutes,  List<String> tags,  String received_at,  String? speech_language,  bool is_instant,  bool is_video_call,  num ventor_rating)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String ventor_name,  String? ventor_avatar_url,  String message,  String chosen_reason,  String scheduled_at,  int duration_minutes,  List<String> tags,  String received_at,  String? speech_language,  bool is_video_call,  num ventor_rating)  $default,) {final _that = this;
 switch (_that) {
 case _ListenerSessionRequestModel():
-return $default(_that.id,_that.ventor_name,_that.ventor_avatar_url,_that.message,_that.chosen_reason,_that.scheduled_at,_that.duration_minutes,_that.tags,_that.received_at,_that.speech_language,_that.is_instant,_that.is_video_call,_that.ventor_rating);case _:
+return $default(_that.id,_that.ventor_name,_that.ventor_avatar_url,_that.message,_that.chosen_reason,_that.scheduled_at,_that.duration_minutes,_that.tags,_that.received_at,_that.speech_language,_that.is_video_call,_that.ventor_rating);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -2185,10 +2181,10 @@ return $default(_that.id,_that.ventor_name,_that.ventor_avatar_url,_that.message
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String ventor_name,  String? ventor_avatar_url,  String message,  String chosen_reason,  String scheduled_at,  int duration_minutes,  List<String> tags,  String received_at,  String? speech_language,  bool is_instant,  bool is_video_call,  num ventor_rating)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String ventor_name,  String? ventor_avatar_url,  String message,  String chosen_reason,  String scheduled_at,  int duration_minutes,  List<String> tags,  String received_at,  String? speech_language,  bool is_video_call,  num ventor_rating)?  $default,) {final _that = this;
 switch (_that) {
 case _ListenerSessionRequestModel() when $default != null:
-return $default(_that.id,_that.ventor_name,_that.ventor_avatar_url,_that.message,_that.chosen_reason,_that.scheduled_at,_that.duration_minutes,_that.tags,_that.received_at,_that.speech_language,_that.is_instant,_that.is_video_call,_that.ventor_rating);case _:
+return $default(_that.id,_that.ventor_name,_that.ventor_avatar_url,_that.message,_that.chosen_reason,_that.scheduled_at,_that.duration_minutes,_that.tags,_that.received_at,_that.speech_language,_that.is_video_call,_that.ventor_rating);case _:
   return null;
 
 }
@@ -2200,7 +2196,7 @@ return $default(_that.id,_that.ventor_name,_that.ventor_avatar_url,_that.message
 @JsonSerializable()
 
 class _ListenerSessionRequestModel implements ListenerSessionRequestModel {
-  const _ListenerSessionRequestModel({this.id = '', this.ventor_name = '', this.ventor_avatar_url, this.message = '', this.chosen_reason = '', this.scheduled_at = '', this.duration_minutes = 0, final  List<String> tags = const <String>[], this.received_at = '', this.speech_language, this.is_instant = false, this.is_video_call = false, this.ventor_rating = 0}): _tags = tags;
+  const _ListenerSessionRequestModel({this.id = '', this.ventor_name = '', this.ventor_avatar_url, this.message = '', this.chosen_reason = '', this.scheduled_at = '', this.duration_minutes = 0, final  List<String> tags = const <String>[], this.received_at = '', this.speech_language, this.is_video_call = false, this.ventor_rating = 0}): _tags = tags;
   factory _ListenerSessionRequestModel.fromJson(Map<String, dynamic> json) => _$ListenerSessionRequestModelFromJson(json);
 
 @override@JsonKey() final  String id;
@@ -2219,7 +2215,6 @@ class _ListenerSessionRequestModel implements ListenerSessionRequestModel {
 
 @override@JsonKey() final  String received_at;
 @override final  String? speech_language;
-@override@JsonKey() final  bool is_instant;
 @override@JsonKey() final  bool is_video_call;
 @override@JsonKey() final  num ventor_rating;
 
@@ -2236,16 +2231,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ListenerSessionRequestModel&&(identical(other.id, id) || other.id == id)&&(identical(other.ventor_name, ventor_name) || other.ventor_name == ventor_name)&&(identical(other.ventor_avatar_url, ventor_avatar_url) || other.ventor_avatar_url == ventor_avatar_url)&&(identical(other.message, message) || other.message == message)&&(identical(other.chosen_reason, chosen_reason) || other.chosen_reason == chosen_reason)&&(identical(other.scheduled_at, scheduled_at) || other.scheduled_at == scheduled_at)&&(identical(other.duration_minutes, duration_minutes) || other.duration_minutes == duration_minutes)&&const DeepCollectionEquality().equals(other._tags, _tags)&&(identical(other.received_at, received_at) || other.received_at == received_at)&&(identical(other.speech_language, speech_language) || other.speech_language == speech_language)&&(identical(other.is_instant, is_instant) || other.is_instant == is_instant)&&(identical(other.is_video_call, is_video_call) || other.is_video_call == is_video_call)&&(identical(other.ventor_rating, ventor_rating) || other.ventor_rating == ventor_rating));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ListenerSessionRequestModel&&(identical(other.id, id) || other.id == id)&&(identical(other.ventor_name, ventor_name) || other.ventor_name == ventor_name)&&(identical(other.ventor_avatar_url, ventor_avatar_url) || other.ventor_avatar_url == ventor_avatar_url)&&(identical(other.message, message) || other.message == message)&&(identical(other.chosen_reason, chosen_reason) || other.chosen_reason == chosen_reason)&&(identical(other.scheduled_at, scheduled_at) || other.scheduled_at == scheduled_at)&&(identical(other.duration_minutes, duration_minutes) || other.duration_minutes == duration_minutes)&&const DeepCollectionEquality().equals(other._tags, _tags)&&(identical(other.received_at, received_at) || other.received_at == received_at)&&(identical(other.speech_language, speech_language) || other.speech_language == speech_language)&&(identical(other.is_video_call, is_video_call) || other.is_video_call == is_video_call)&&(identical(other.ventor_rating, ventor_rating) || other.ventor_rating == ventor_rating));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,ventor_name,ventor_avatar_url,message,chosen_reason,scheduled_at,duration_minutes,const DeepCollectionEquality().hash(_tags),received_at,speech_language,is_instant,is_video_call,ventor_rating);
+int get hashCode => Object.hash(runtimeType,id,ventor_name,ventor_avatar_url,message,chosen_reason,scheduled_at,duration_minutes,const DeepCollectionEquality().hash(_tags),received_at,speech_language,is_video_call,ventor_rating);
 
 @override
 String toString() {
-  return 'ListenerSessionRequestModel(id: $id, ventor_name: $ventor_name, ventor_avatar_url: $ventor_avatar_url, message: $message, chosen_reason: $chosen_reason, scheduled_at: $scheduled_at, duration_minutes: $duration_minutes, tags: $tags, received_at: $received_at, speech_language: $speech_language, is_instant: $is_instant, is_video_call: $is_video_call, ventor_rating: $ventor_rating)';
+  return 'ListenerSessionRequestModel(id: $id, ventor_name: $ventor_name, ventor_avatar_url: $ventor_avatar_url, message: $message, chosen_reason: $chosen_reason, scheduled_at: $scheduled_at, duration_minutes: $duration_minutes, tags: $tags, received_at: $received_at, speech_language: $speech_language, is_video_call: $is_video_call, ventor_rating: $ventor_rating)';
 }
 
 
@@ -2256,7 +2251,7 @@ abstract mixin class _$ListenerSessionRequestModelCopyWith<$Res> implements $Lis
   factory _$ListenerSessionRequestModelCopyWith(_ListenerSessionRequestModel value, $Res Function(_ListenerSessionRequestModel) _then) = __$ListenerSessionRequestModelCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String ventor_name, String? ventor_avatar_url, String message, String chosen_reason, String scheduled_at, int duration_minutes, List<String> tags, String received_at, String? speech_language, bool is_instant, bool is_video_call, num ventor_rating
+ String id, String ventor_name, String? ventor_avatar_url, String message, String chosen_reason, String scheduled_at, int duration_minutes, List<String> tags, String received_at, String? speech_language, bool is_video_call, num ventor_rating
 });
 
 
@@ -2273,7 +2268,7 @@ class __$ListenerSessionRequestModelCopyWithImpl<$Res>
 
 /// Create a copy of ListenerSessionRequestModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? ventor_name = null,Object? ventor_avatar_url = freezed,Object? message = null,Object? chosen_reason = null,Object? scheduled_at = null,Object? duration_minutes = null,Object? tags = null,Object? received_at = null,Object? speech_language = freezed,Object? is_instant = null,Object? is_video_call = null,Object? ventor_rating = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? ventor_name = null,Object? ventor_avatar_url = freezed,Object? message = null,Object? chosen_reason = null,Object? scheduled_at = null,Object? duration_minutes = null,Object? tags = null,Object? received_at = null,Object? speech_language = freezed,Object? is_video_call = null,Object? ventor_rating = null,}) {
   return _then(_ListenerSessionRequestModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,ventor_name: null == ventor_name ? _self.ventor_name : ventor_name // ignore: cast_nullable_to_non_nullable
@@ -2285,8 +2280,7 @@ as String,duration_minutes: null == duration_minutes ? _self.duration_minutes : 
 as int,tags: null == tags ? _self._tags : tags // ignore: cast_nullable_to_non_nullable
 as List<String>,received_at: null == received_at ? _self.received_at : received_at // ignore: cast_nullable_to_non_nullable
 as String,speech_language: freezed == speech_language ? _self.speech_language : speech_language // ignore: cast_nullable_to_non_nullable
-as String?,is_instant: null == is_instant ? _self.is_instant : is_instant // ignore: cast_nullable_to_non_nullable
-as bool,is_video_call: null == is_video_call ? _self.is_video_call : is_video_call // ignore: cast_nullable_to_non_nullable
+as String?,is_video_call: null == is_video_call ? _self.is_video_call : is_video_call // ignore: cast_nullable_to_non_nullable
 as bool,ventor_rating: null == ventor_rating ? _self.ventor_rating : ventor_rating // ignore: cast_nullable_to_non_nullable
 as num,
   ));

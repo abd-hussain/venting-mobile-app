@@ -80,7 +80,6 @@ abstract class VentorFindListenerAvailabilityModel
     @Default('') String from_hour,
     @Default('') String to_hour,
     @Default('') String time_zone_id,
-    @Default(false) bool accept_instant_call,
     @Default(<int>[]) List<int> session_minutes,
   }) = _VentorFindListenerAvailabilityModel;
 
@@ -134,8 +133,6 @@ Map<String, dynamic> _normalizeFindListenerAvailabilityJson(
     'time_zone_id': _asString(
       json['time_zone_id'] ?? json['timeZoneId'] ?? json['timezone'],
     ),
-    'accept_instant_call':
-        json['accept_instant_call'] ?? json['accept_instant_calls'] ?? false,
     'session_minutes': _asIntList(
       json['session_minutes'] ?? json['sessionMinutes'],
     ),

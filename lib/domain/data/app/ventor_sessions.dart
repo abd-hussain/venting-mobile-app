@@ -122,7 +122,6 @@ VentorBookedSessionData ventorBookedSessionFromApiResolved(
     amountPaid: base.amountPaid,
     voiceChangeEnabled: base.voiceChangeEnabled,
     scheduledAt: base.scheduledAt,
-    isInstant: base.isInstant,
     refundedToBalance: base.refundedToBalance,
   );
 }

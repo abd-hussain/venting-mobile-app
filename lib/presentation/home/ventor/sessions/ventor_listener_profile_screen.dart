@@ -651,13 +651,6 @@ class _VentorListenerProfileScreenState
                           label: l10n.ventor_sessions_availability_timezone,
                           value: _timezoneLabel(listener),
                         ),
-                        _InfoRow(
-                          icon: Icons.flash_on_rounded,
-                          label: l10n.ventor_sessions_availability_instant,
-                          value: listener.availability.acceptInstantCall
-                              ? l10n.ventor_sessions_availability_instant_yes
-                              : l10n.ventor_sessions_availability_instant_no,
-                        ),
                         const SizedBox(height: 8),
                         Text(
                           l10n.ventor_sessions_session_lengths,

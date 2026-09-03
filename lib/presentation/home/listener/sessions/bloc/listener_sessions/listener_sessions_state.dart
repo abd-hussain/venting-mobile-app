@@ -4,7 +4,6 @@ enum ListenerSessionsStatus { initial, loading, ready, loadFailure }
 
 enum ListenerSessionsActionFeedback {
   none,
-  instantRequestAccepted,
   scheduledRequestAccepted,
   requestAlreadyTaken,
   requestDeclined,

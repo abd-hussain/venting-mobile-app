@@ -1193,7 +1193,7 @@ as int,
 /// @nodoc
 mixin _$VentorHomeBookedSessionModel {
 
- String get id; String get listener_id; String get listener_name; String get listener_avatar_url; int get duration_minutes; String get status; String get call_mode; String get speech_language; num get amount_paid; bool get voice_change_enabled; String? get scheduled_at; bool get is_instant; num? get refunded_to_balance;
+ String get id; String get listener_id; String get listener_name; String get listener_avatar_url; int get duration_minutes; String get status; String get call_mode; String get speech_language; num get amount_paid; bool get voice_change_enabled; String? get scheduled_at; num? get refunded_to_balance;
 /// Create a copy of VentorHomeBookedSessionModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -1206,16 +1206,16 @@ $VentorHomeBookedSessionModelCopyWith<VentorHomeBookedSessionModel> get copyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is VentorHomeBookedSessionModel&&(identical(other.id, id) || other.id == id)&&(identical(other.listener_id, listener_id) || other.listener_id == listener_id)&&(identical(other.listener_name, listener_name) || other.listener_name == listener_name)&&(identical(other.listener_avatar_url, listener_avatar_url) || other.listener_avatar_url == listener_avatar_url)&&(identical(other.duration_minutes, duration_minutes) || other.duration_minutes == duration_minutes)&&(identical(other.status, status) || other.status == status)&&(identical(other.call_mode, call_mode) || other.call_mode == call_mode)&&(identical(other.speech_language, speech_language) || other.speech_language == speech_language)&&(identical(other.amount_paid, amount_paid) || other.amount_paid == amount_paid)&&(identical(other.voice_change_enabled, voice_change_enabled) || other.voice_change_enabled == voice_change_enabled)&&(identical(other.scheduled_at, scheduled_at) || other.scheduled_at == scheduled_at)&&(identical(other.is_instant, is_instant) || other.is_instant == is_instant)&&(identical(other.refunded_to_balance, refunded_to_balance) || other.refunded_to_balance == refunded_to_balance));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is VentorHomeBookedSessionModel&&(identical(other.id, id) || other.id == id)&&(identical(other.listener_id, listener_id) || other.listener_id == listener_id)&&(identical(other.listener_name, listener_name) || other.listener_name == listener_name)&&(identical(other.listener_avatar_url, listener_avatar_url) || other.listener_avatar_url == listener_avatar_url)&&(identical(other.duration_minutes, duration_minutes) || other.duration_minutes == duration_minutes)&&(identical(other.status, status) || other.status == status)&&(identical(other.call_mode, call_mode) || other.call_mode == call_mode)&&(identical(other.speech_language, speech_language) || other.speech_language == speech_language)&&(identical(other.amount_paid, amount_paid) || other.amount_paid == amount_paid)&&(identical(other.voice_change_enabled, voice_change_enabled) || other.voice_change_enabled == voice_change_enabled)&&(identical(other.scheduled_at, scheduled_at) || other.scheduled_at == scheduled_at)&&(identical(other.refunded_to_balance, refunded_to_balance) || other.refunded_to_balance == refunded_to_balance));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,listener_id,listener_name,listener_avatar_url,duration_minutes,status,call_mode,speech_language,amount_paid,voice_change_enabled,scheduled_at,is_instant,refunded_to_balance);
+int get hashCode => Object.hash(runtimeType,id,listener_id,listener_name,listener_avatar_url,duration_minutes,status,call_mode,speech_language,amount_paid,voice_change_enabled,scheduled_at,refunded_to_balance);
 
 @override
 String toString() {
-  return 'VentorHomeBookedSessionModel(id: $id, listener_id: $listener_id, listener_name: $listener_name, listener_avatar_url: $listener_avatar_url, duration_minutes: $duration_minutes, status: $status, call_mode: $call_mode, speech_language: $speech_language, amount_paid: $amount_paid, voice_change_enabled: $voice_change_enabled, scheduled_at: $scheduled_at, is_instant: $is_instant, refunded_to_balance: $refunded_to_balance)';
+  return 'VentorHomeBookedSessionModel(id: $id, listener_id: $listener_id, listener_name: $listener_name, listener_avatar_url: $listener_avatar_url, duration_minutes: $duration_minutes, status: $status, call_mode: $call_mode, speech_language: $speech_language, amount_paid: $amount_paid, voice_change_enabled: $voice_change_enabled, scheduled_at: $scheduled_at, refunded_to_balance: $refunded_to_balance)';
 }
 
 
@@ -1226,7 +1226,7 @@ abstract mixin class $VentorHomeBookedSessionModelCopyWith<$Res>  {
   factory $VentorHomeBookedSessionModelCopyWith(VentorHomeBookedSessionModel value, $Res Function(VentorHomeBookedSessionModel) _then) = _$VentorHomeBookedSessionModelCopyWithImpl;
 @useResult
 $Res call({
- String id, String listener_id, String listener_name, String listener_avatar_url, int duration_minutes, String status, String call_mode, String speech_language, num amount_paid, bool voice_change_enabled, String? scheduled_at, bool is_instant, num? refunded_to_balance
+ String id, String listener_id, String listener_name, String listener_avatar_url, int duration_minutes, String status, String call_mode, String speech_language, num amount_paid, bool voice_change_enabled, String? scheduled_at, num? refunded_to_balance
 });
 
 
@@ -1243,7 +1243,7 @@ class _$VentorHomeBookedSessionModelCopyWithImpl<$Res>
 
 /// Create a copy of VentorHomeBookedSessionModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? listener_id = null,Object? listener_name = null,Object? listener_avatar_url = null,Object? duration_minutes = null,Object? status = null,Object? call_mode = null,Object? speech_language = null,Object? amount_paid = null,Object? voice_change_enabled = null,Object? scheduled_at = freezed,Object? is_instant = null,Object? refunded_to_balance = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? listener_id = null,Object? listener_name = null,Object? listener_avatar_url = null,Object? duration_minutes = null,Object? status = null,Object? call_mode = null,Object? speech_language = null,Object? amount_paid = null,Object? voice_change_enabled = null,Object? scheduled_at = freezed,Object? refunded_to_balance = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,listener_id: null == listener_id ? _self.listener_id : listener_id // ignore: cast_nullable_to_non_nullable
@@ -1256,8 +1256,7 @@ as String,speech_language: null == speech_language ? _self.speech_language : spe
 as String,amount_paid: null == amount_paid ? _self.amount_paid : amount_paid // ignore: cast_nullable_to_non_nullable
 as num,voice_change_enabled: null == voice_change_enabled ? _self.voice_change_enabled : voice_change_enabled // ignore: cast_nullable_to_non_nullable
 as bool,scheduled_at: freezed == scheduled_at ? _self.scheduled_at : scheduled_at // ignore: cast_nullable_to_non_nullable
-as String?,is_instant: null == is_instant ? _self.is_instant : is_instant // ignore: cast_nullable_to_non_nullable
-as bool,refunded_to_balance: freezed == refunded_to_balance ? _self.refunded_to_balance : refunded_to_balance // ignore: cast_nullable_to_non_nullable
+as String?,refunded_to_balance: freezed == refunded_to_balance ? _self.refunded_to_balance : refunded_to_balance // ignore: cast_nullable_to_non_nullable
 as num?,
   ));
 }
@@ -1343,10 +1342,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String listener_id,  String listener_name,  String listener_avatar_url,  int duration_minutes,  String status,  String call_mode,  String speech_language,  num amount_paid,  bool voice_change_enabled,  String? scheduled_at,  bool is_instant,  num? refunded_to_balance)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String listener_id,  String listener_name,  String listener_avatar_url,  int duration_minutes,  String status,  String call_mode,  String speech_language,  num amount_paid,  bool voice_change_enabled,  String? scheduled_at,  num? refunded_to_balance)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _VentorHomeBookedSessionModel() when $default != null:
-return $default(_that.id,_that.listener_id,_that.listener_name,_that.listener_avatar_url,_that.duration_minutes,_that.status,_that.call_mode,_that.speech_language,_that.amount_paid,_that.voice_change_enabled,_that.scheduled_at,_that.is_instant,_that.refunded_to_balance);case _:
+return $default(_that.id,_that.listener_id,_that.listener_name,_that.listener_avatar_url,_that.duration_minutes,_that.status,_that.call_mode,_that.speech_language,_that.amount_paid,_that.voice_change_enabled,_that.scheduled_at,_that.refunded_to_balance);case _:
   return orElse();
 
 }
@@ -1364,10 +1363,10 @@ return $default(_that.id,_that.listener_id,_that.listener_name,_that.listener_av
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String listener_id,  String listener_name,  String listener_avatar_url,  int duration_minutes,  String status,  String call_mode,  String speech_language,  num amount_paid,  bool voice_change_enabled,  String? scheduled_at,  bool is_instant,  num? refunded_to_balance)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String listener_id,  String listener_name,  String listener_avatar_url,  int duration_minutes,  String status,  String call_mode,  String speech_language,  num amount_paid,  bool voice_change_enabled,  String? scheduled_at,  num? refunded_to_balance)  $default,) {final _that = this;
 switch (_that) {
 case _VentorHomeBookedSessionModel():
-return $default(_that.id,_that.listener_id,_that.listener_name,_that.listener_avatar_url,_that.duration_minutes,_that.status,_that.call_mode,_that.speech_language,_that.amount_paid,_that.voice_change_enabled,_that.scheduled_at,_that.is_instant,_that.refunded_to_balance);case _:
+return $default(_that.id,_that.listener_id,_that.listener_name,_that.listener_avatar_url,_that.duration_minutes,_that.status,_that.call_mode,_that.speech_language,_that.amount_paid,_that.voice_change_enabled,_that.scheduled_at,_that.refunded_to_balance);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -1384,10 +1383,10 @@ return $default(_that.id,_that.listener_id,_that.listener_name,_that.listener_av
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String listener_id,  String listener_name,  String listener_avatar_url,  int duration_minutes,  String status,  String call_mode,  String speech_language,  num amount_paid,  bool voice_change_enabled,  String? scheduled_at,  bool is_instant,  num? refunded_to_balance)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String listener_id,  String listener_name,  String listener_avatar_url,  int duration_minutes,  String status,  String call_mode,  String speech_language,  num amount_paid,  bool voice_change_enabled,  String? scheduled_at,  num? refunded_to_balance)?  $default,) {final _that = this;
 switch (_that) {
 case _VentorHomeBookedSessionModel() when $default != null:
-return $default(_that.id,_that.listener_id,_that.listener_name,_that.listener_avatar_url,_that.duration_minutes,_that.status,_that.call_mode,_that.speech_language,_that.amount_paid,_that.voice_change_enabled,_that.scheduled_at,_that.is_instant,_that.refunded_to_balance);case _:
+return $default(_that.id,_that.listener_id,_that.listener_name,_that.listener_avatar_url,_that.duration_minutes,_that.status,_that.call_mode,_that.speech_language,_that.amount_paid,_that.voice_change_enabled,_that.scheduled_at,_that.refunded_to_balance);case _:
   return null;
 
 }
@@ -1399,7 +1398,7 @@ return $default(_that.id,_that.listener_id,_that.listener_name,_that.listener_av
 @JsonSerializable()
 
 class _VentorHomeBookedSessionModel implements VentorHomeBookedSessionModel {
-  const _VentorHomeBookedSessionModel({this.id = '', this.listener_id = '', this.listener_name = '', this.listener_avatar_url = '', this.duration_minutes = 0, this.status = 'upcoming', this.call_mode = 'voice', this.speech_language = '', this.amount_paid = 0, this.voice_change_enabled = false, this.scheduled_at, this.is_instant = false, this.refunded_to_balance});
+  const _VentorHomeBookedSessionModel({this.id = '', this.listener_id = '', this.listener_name = '', this.listener_avatar_url = '', this.duration_minutes = 0, this.status = 'upcoming', this.call_mode = 'voice', this.speech_language = '', this.amount_paid = 0, this.voice_change_enabled = false, this.scheduled_at, this.refunded_to_balance});
   factory _VentorHomeBookedSessionModel.fromJson(Map<String, dynamic> json) => _$VentorHomeBookedSessionModelFromJson(json);
 
 @override@JsonKey() final  String id;
@@ -1413,7 +1412,6 @@ class _VentorHomeBookedSessionModel implements VentorHomeBookedSessionModel {
 @override@JsonKey() final  num amount_paid;
 @override@JsonKey() final  bool voice_change_enabled;
 @override final  String? scheduled_at;
-@override@JsonKey() final  bool is_instant;
 @override final  num? refunded_to_balance;
 
 /// Create a copy of VentorHomeBookedSessionModel
@@ -1429,16 +1427,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _VentorHomeBookedSessionModel&&(identical(other.id, id) || other.id == id)&&(identical(other.listener_id, listener_id) || other.listener_id == listener_id)&&(identical(other.listener_name, listener_name) || other.listener_name == listener_name)&&(identical(other.listener_avatar_url, listener_avatar_url) || other.listener_avatar_url == listener_avatar_url)&&(identical(other.duration_minutes, duration_minutes) || other.duration_minutes == duration_minutes)&&(identical(other.status, status) || other.status == status)&&(identical(other.call_mode, call_mode) || other.call_mode == call_mode)&&(identical(other.speech_language, speech_language) || other.speech_language == speech_language)&&(identical(other.amount_paid, amount_paid) || other.amount_paid == amount_paid)&&(identical(other.voice_change_enabled, voice_change_enabled) || other.voice_change_enabled == voice_change_enabled)&&(identical(other.scheduled_at, scheduled_at) || other.scheduled_at == scheduled_at)&&(identical(other.is_instant, is_instant) || other.is_instant == is_instant)&&(identical(other.refunded_to_balance, refunded_to_balance) || other.refunded_to_balance == refunded_to_balance));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _VentorHomeBookedSessionModel&&(identical(other.id, id) || other.id == id)&&(identical(other.listener_id, listener_id) || other.listener_id == listener_id)&&(identical(other.listener_name, listener_name) || other.listener_name == listener_name)&&(identical(other.listener_avatar_url, listener_avatar_url) || other.listener_avatar_url == listener_avatar_url)&&(identical(other.duration_minutes, duration_minutes) || other.duration_minutes == duration_minutes)&&(identical(other.status, status) || other.status == status)&&(identical(other.call_mode, call_mode) || other.call_mode == call_mode)&&(identical(other.speech_language, speech_language) || other.speech_language == speech_language)&&(identical(other.amount_paid, amount_paid) || other.amount_paid == amount_paid)&&(identical(other.voice_change_enabled, voice_change_enabled) || other.voice_change_enabled == voice_change_enabled)&&(identical(other.scheduled_at, scheduled_at) || other.scheduled_at == scheduled_at)&&(identical(other.refunded_to_balance, refunded_to_balance) || other.refunded_to_balance == refunded_to_balance));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,listener_id,listener_name,listener_avatar_url,duration_minutes,status,call_mode,speech_language,amount_paid,voice_change_enabled,scheduled_at,is_instant,refunded_to_balance);
+int get hashCode => Object.hash(runtimeType,id,listener_id,listener_name,listener_avatar_url,duration_minutes,status,call_mode,speech_language,amount_paid,voice_change_enabled,scheduled_at,refunded_to_balance);
 
 @override
 String toString() {
-  return 'VentorHomeBookedSessionModel(id: $id, listener_id: $listener_id, listener_name: $listener_name, listener_avatar_url: $listener_avatar_url, duration_minutes: $duration_minutes, status: $status, call_mode: $call_mode, speech_language: $speech_language, amount_paid: $amount_paid, voice_change_enabled: $voice_change_enabled, scheduled_at: $scheduled_at, is_instant: $is_instant, refunded_to_balance: $refunded_to_balance)';
+  return 'VentorHomeBookedSessionModel(id: $id, listener_id: $listener_id, listener_name: $listener_name, listener_avatar_url: $listener_avatar_url, duration_minutes: $duration_minutes, status: $status, call_mode: $call_mode, speech_language: $speech_language, amount_paid: $amount_paid, voice_change_enabled: $voice_change_enabled, scheduled_at: $scheduled_at, refunded_to_balance: $refunded_to_balance)';
 }
 
 
@@ -1449,7 +1447,7 @@ abstract mixin class _$VentorHomeBookedSessionModelCopyWith<$Res> implements $Ve
   factory _$VentorHomeBookedSessionModelCopyWith(_VentorHomeBookedSessionModel value, $Res Function(_VentorHomeBookedSessionModel) _then) = __$VentorHomeBookedSessionModelCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String listener_id, String listener_name, String listener_avatar_url, int duration_minutes, String status, String call_mode, String speech_language, num amount_paid, bool voice_change_enabled, String? scheduled_at, bool is_instant, num? refunded_to_balance
+ String id, String listener_id, String listener_name, String listener_avatar_url, int duration_minutes, String status, String call_mode, String speech_language, num amount_paid, bool voice_change_enabled, String? scheduled_at, num? refunded_to_balance
 });
 
 
@@ -1466,7 +1464,7 @@ class __$VentorHomeBookedSessionModelCopyWithImpl<$Res>
 
 /// Create a copy of VentorHomeBookedSessionModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? listener_id = null,Object? listener_name = null,Object? listener_avatar_url = null,Object? duration_minutes = null,Object? status = null,Object? call_mode = null,Object? speech_language = null,Object? amount_paid = null,Object? voice_change_enabled = null,Object? scheduled_at = freezed,Object? is_instant = null,Object? refunded_to_balance = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? listener_id = null,Object? listener_name = null,Object? listener_avatar_url = null,Object? duration_minutes = null,Object? status = null,Object? call_mode = null,Object? speech_language = null,Object? amount_paid = null,Object? voice_change_enabled = null,Object? scheduled_at = freezed,Object? refunded_to_balance = freezed,}) {
   return _then(_VentorHomeBookedSessionModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,listener_id: null == listener_id ? _self.listener_id : listener_id // ignore: cast_nullable_to_non_nullable
@@ -1479,8 +1477,7 @@ as String,speech_language: null == speech_language ? _self.speech_language : spe
 as String,amount_paid: null == amount_paid ? _self.amount_paid : amount_paid // ignore: cast_nullable_to_non_nullable
 as num,voice_change_enabled: null == voice_change_enabled ? _self.voice_change_enabled : voice_change_enabled // ignore: cast_nullable_to_non_nullable
 as bool,scheduled_at: freezed == scheduled_at ? _self.scheduled_at : scheduled_at // ignore: cast_nullable_to_non_nullable
-as String?,is_instant: null == is_instant ? _self.is_instant : is_instant // ignore: cast_nullable_to_non_nullable
-as bool,refunded_to_balance: freezed == refunded_to_balance ? _self.refunded_to_balance : refunded_to_balance // ignore: cast_nullable_to_non_nullable
+as String?,refunded_to_balance: freezed == refunded_to_balance ? _self.refunded_to_balance : refunded_to_balance // ignore: cast_nullable_to_non_nullable
 as num?,
   ));
 }

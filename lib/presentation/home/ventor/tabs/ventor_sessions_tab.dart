@@ -203,11 +203,11 @@ class VentorSessionsTabState extends State<VentorSessionsTab> {
     VentingMobLocalizations l10n,
     VentorBookedSession session,
   ) {
-    if (session.isInstant && session.status == VentorBookedSessionStatus.live) {
-      return l10n.ventor_sessions_booked_instant_now;
+    if (session.status == VentorBookedSessionStatus.live) {
+      return l10n.ventor_home_upcoming_live_now;
     }
     final at = session.scheduledAt;
-    if (at == null) return l10n.ventor_sessions_time_summary_instant;
+    if (at == null) return '—';
     final locale = Localizations.localeOf(context).toString();
     return '${DateFormat.MMMEd(locale).format(at)} · '
         '${DateFormat.jm(locale).format(at)}';

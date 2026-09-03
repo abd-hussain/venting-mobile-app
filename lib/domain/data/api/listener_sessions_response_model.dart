@@ -40,7 +40,6 @@ abstract class ListenerSessionModel with _$ListenerSessionModel {
     String? speech_language,
     @Default(false) bool is_waiting,
     @Default(false) bool can_join_now,
-    @Default(false) bool is_instant,
     @Default(false) bool is_video_call,
     @Default(0) num ventor_rating,
     String? status_label,
@@ -115,7 +114,6 @@ abstract class ListenerSessionRequestModel with _$ListenerSessionRequestModel {
     @Default(<String>[]) List<String> tags,
     @Default('') String received_at,
     String? speech_language,
-    @Default(false) bool is_instant,
     @Default(false) bool is_video_call,
     @Default(0) num ventor_rating,
   }) = _ListenerSessionRequestModel;

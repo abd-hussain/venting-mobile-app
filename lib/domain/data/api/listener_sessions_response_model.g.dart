@@ -47,7 +47,6 @@ _ListenerSessionModel _$ListenerSessionModelFromJson(
   speech_language: json['speech_language'] as String?,
   is_waiting: json['is_waiting'] as bool? ?? false,
   can_join_now: json['can_join_now'] as bool? ?? false,
-  is_instant: json['is_instant'] as bool? ?? false,
   is_video_call: json['is_video_call'] as bool? ?? false,
   ventor_rating: json['ventor_rating'] as num? ?? 0,
   status_label: json['status_label'] as String?,
@@ -70,7 +69,6 @@ Map<String, dynamic> _$ListenerSessionModelToJson(
   'speech_language': instance.speech_language,
   'is_waiting': instance.is_waiting,
   'can_join_now': instance.can_join_now,
-  'is_instant': instance.is_instant,
   'is_video_call': instance.is_video_call,
   'ventor_rating': instance.ventor_rating,
   'status_label': instance.status_label,
@@ -151,7 +149,6 @@ _ListenerSessionRequestModel _$ListenerSessionRequestModelFromJson(
       const <String>[],
   received_at: json['received_at'] as String? ?? '',
   speech_language: json['speech_language'] as String?,
-  is_instant: json['is_instant'] as bool? ?? false,
   is_video_call: json['is_video_call'] as bool? ?? false,
   ventor_rating: json['ventor_rating'] as num? ?? 0,
 );
@@ -169,7 +166,6 @@ Map<String, dynamic> _$ListenerSessionRequestModelToJson(
   'tags': instance.tags,
   'received_at': instance.received_at,
   'speech_language': instance.speech_language,
-  'is_instant': instance.is_instant,
   'is_video_call': instance.is_video_call,
   'ventor_rating': instance.ventor_rating,
 };

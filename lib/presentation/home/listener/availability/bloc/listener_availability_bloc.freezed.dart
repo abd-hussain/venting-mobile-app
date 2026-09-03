@@ -55,14 +55,13 @@ extension ListenerAvailabilityEventPatterns on ListenerAvailabilityEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Started value)?  started,TResult Function( _RetryLoad value)?  retryLoad,TResult Function( _OnlineStatusChanged value)?  onlineStatusChanged,TResult Function( _InstantCallsChanged value)?  instantCallsChanged,TResult Function( _SessionLengthChanged value)?  sessionLengthChanged,TResult Function( _BreakLengthChanged value)?  breakLengthChanged,TResult Function( _DayScheduleChanged value)?  dayScheduleChanged,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Started value)?  started,TResult Function( _RetryLoad value)?  retryLoad,TResult Function( _OnlineStatusChanged value)?  onlineStatusChanged,TResult Function( _SessionLengthChanged value)?  sessionLengthChanged,TResult Function( _BreakLengthChanged value)?  breakLengthChanged,TResult Function( _DayScheduleChanged value)?  dayScheduleChanged,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case _Started() when started != null:
 return started(_that);case _RetryLoad() when retryLoad != null:
 return retryLoad(_that);case _OnlineStatusChanged() when onlineStatusChanged != null:
-return onlineStatusChanged(_that);case _InstantCallsChanged() when instantCallsChanged != null:
-return instantCallsChanged(_that);case _SessionLengthChanged() when sessionLengthChanged != null:
+return onlineStatusChanged(_that);case _SessionLengthChanged() when sessionLengthChanged != null:
 return sessionLengthChanged(_that);case _BreakLengthChanged() when breakLengthChanged != null:
 return breakLengthChanged(_that);case _DayScheduleChanged() when dayScheduleChanged != null:
 return dayScheduleChanged(_that);case _:
@@ -83,14 +82,13 @@ return dayScheduleChanged(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Started value)  started,required TResult Function( _RetryLoad value)  retryLoad,required TResult Function( _OnlineStatusChanged value)  onlineStatusChanged,required TResult Function( _InstantCallsChanged value)  instantCallsChanged,required TResult Function( _SessionLengthChanged value)  sessionLengthChanged,required TResult Function( _BreakLengthChanged value)  breakLengthChanged,required TResult Function( _DayScheduleChanged value)  dayScheduleChanged,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Started value)  started,required TResult Function( _RetryLoad value)  retryLoad,required TResult Function( _OnlineStatusChanged value)  onlineStatusChanged,required TResult Function( _SessionLengthChanged value)  sessionLengthChanged,required TResult Function( _BreakLengthChanged value)  breakLengthChanged,required TResult Function( _DayScheduleChanged value)  dayScheduleChanged,}){
 final _that = this;
 switch (_that) {
 case _Started():
 return started(_that);case _RetryLoad():
 return retryLoad(_that);case _OnlineStatusChanged():
-return onlineStatusChanged(_that);case _InstantCallsChanged():
-return instantCallsChanged(_that);case _SessionLengthChanged():
+return onlineStatusChanged(_that);case _SessionLengthChanged():
 return sessionLengthChanged(_that);case _BreakLengthChanged():
 return breakLengthChanged(_that);case _DayScheduleChanged():
 return dayScheduleChanged(_that);}
@@ -107,14 +105,13 @@ return dayScheduleChanged(_that);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Started value)?  started,TResult? Function( _RetryLoad value)?  retryLoad,TResult? Function( _OnlineStatusChanged value)?  onlineStatusChanged,TResult? Function( _InstantCallsChanged value)?  instantCallsChanged,TResult? Function( _SessionLengthChanged value)?  sessionLengthChanged,TResult? Function( _BreakLengthChanged value)?  breakLengthChanged,TResult? Function( _DayScheduleChanged value)?  dayScheduleChanged,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Started value)?  started,TResult? Function( _RetryLoad value)?  retryLoad,TResult? Function( _OnlineStatusChanged value)?  onlineStatusChanged,TResult? Function( _SessionLengthChanged value)?  sessionLengthChanged,TResult? Function( _BreakLengthChanged value)?  breakLengthChanged,TResult? Function( _DayScheduleChanged value)?  dayScheduleChanged,}){
 final _that = this;
 switch (_that) {
 case _Started() when started != null:
 return started(_that);case _RetryLoad() when retryLoad != null:
 return retryLoad(_that);case _OnlineStatusChanged() when onlineStatusChanged != null:
-return onlineStatusChanged(_that);case _InstantCallsChanged() when instantCallsChanged != null:
-return instantCallsChanged(_that);case _SessionLengthChanged() when sessionLengthChanged != null:
+return onlineStatusChanged(_that);case _SessionLengthChanged() when sessionLengthChanged != null:
 return sessionLengthChanged(_that);case _BreakLengthChanged() when breakLengthChanged != null:
 return breakLengthChanged(_that);case _DayScheduleChanged() when dayScheduleChanged != null:
 return dayScheduleChanged(_that);case _:
@@ -134,13 +131,12 @@ return dayScheduleChanged(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  started,TResult Function()?  retryLoad,TResult Function( bool isOnline)?  onlineStatusChanged,TResult Function( bool acceptInstantCalls)?  instantCallsChanged,TResult Function( PreferredSessionLengthSelection sessionLength)?  sessionLengthChanged,TResult Function( int breakLengthMinutes)?  breakLengthChanged,TResult Function( String dayId,  bool enabled,  List<TimeSlot> slots)?  dayScheduleChanged,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  started,TResult Function()?  retryLoad,TResult Function( bool isOnline)?  onlineStatusChanged,TResult Function( PreferredSessionLengthSelection sessionLength)?  sessionLengthChanged,TResult Function( int breakLengthMinutes)?  breakLengthChanged,TResult Function( String dayId,  bool enabled,  List<TimeSlot> slots)?  dayScheduleChanged,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Started() when started != null:
 return started();case _RetryLoad() when retryLoad != null:
 return retryLoad();case _OnlineStatusChanged() when onlineStatusChanged != null:
-return onlineStatusChanged(_that.isOnline);case _InstantCallsChanged() when instantCallsChanged != null:
-return instantCallsChanged(_that.acceptInstantCalls);case _SessionLengthChanged() when sessionLengthChanged != null:
+return onlineStatusChanged(_that.isOnline);case _SessionLengthChanged() when sessionLengthChanged != null:
 return sessionLengthChanged(_that.sessionLength);case _BreakLengthChanged() when breakLengthChanged != null:
 return breakLengthChanged(_that.breakLengthMinutes);case _DayScheduleChanged() when dayScheduleChanged != null:
 return dayScheduleChanged(_that.dayId,_that.enabled,_that.slots);case _:
@@ -161,13 +157,12 @@ return dayScheduleChanged(_that.dayId,_that.enabled,_that.slots);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  started,required TResult Function()  retryLoad,required TResult Function( bool isOnline)  onlineStatusChanged,required TResult Function( bool acceptInstantCalls)  instantCallsChanged,required TResult Function( PreferredSessionLengthSelection sessionLength)  sessionLengthChanged,required TResult Function( int breakLengthMinutes)  breakLengthChanged,required TResult Function( String dayId,  bool enabled,  List<TimeSlot> slots)  dayScheduleChanged,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  started,required TResult Function()  retryLoad,required TResult Function( bool isOnline)  onlineStatusChanged,required TResult Function( PreferredSessionLengthSelection sessionLength)  sessionLengthChanged,required TResult Function( int breakLengthMinutes)  breakLengthChanged,required TResult Function( String dayId,  bool enabled,  List<TimeSlot> slots)  dayScheduleChanged,}) {final _that = this;
 switch (_that) {
 case _Started():
 return started();case _RetryLoad():
 return retryLoad();case _OnlineStatusChanged():
-return onlineStatusChanged(_that.isOnline);case _InstantCallsChanged():
-return instantCallsChanged(_that.acceptInstantCalls);case _SessionLengthChanged():
+return onlineStatusChanged(_that.isOnline);case _SessionLengthChanged():
 return sessionLengthChanged(_that.sessionLength);case _BreakLengthChanged():
 return breakLengthChanged(_that.breakLengthMinutes);case _DayScheduleChanged():
 return dayScheduleChanged(_that.dayId,_that.enabled,_that.slots);}
@@ -184,13 +179,12 @@ return dayScheduleChanged(_that.dayId,_that.enabled,_that.slots);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  started,TResult? Function()?  retryLoad,TResult? Function( bool isOnline)?  onlineStatusChanged,TResult? Function( bool acceptInstantCalls)?  instantCallsChanged,TResult? Function( PreferredSessionLengthSelection sessionLength)?  sessionLengthChanged,TResult? Function( int breakLengthMinutes)?  breakLengthChanged,TResult? Function( String dayId,  bool enabled,  List<TimeSlot> slots)?  dayScheduleChanged,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  started,TResult? Function()?  retryLoad,TResult? Function( bool isOnline)?  onlineStatusChanged,TResult? Function( PreferredSessionLengthSelection sessionLength)?  sessionLengthChanged,TResult? Function( int breakLengthMinutes)?  breakLengthChanged,TResult? Function( String dayId,  bool enabled,  List<TimeSlot> slots)?  dayScheduleChanged,}) {final _that = this;
 switch (_that) {
 case _Started() when started != null:
 return started();case _RetryLoad() when retryLoad != null:
 return retryLoad();case _OnlineStatusChanged() when onlineStatusChanged != null:
-return onlineStatusChanged(_that.isOnline);case _InstantCallsChanged() when instantCallsChanged != null:
-return instantCallsChanged(_that.acceptInstantCalls);case _SessionLengthChanged() when sessionLengthChanged != null:
+return onlineStatusChanged(_that.isOnline);case _SessionLengthChanged() when sessionLengthChanged != null:
 return sessionLengthChanged(_that.sessionLength);case _BreakLengthChanged() when breakLengthChanged != null:
 return breakLengthChanged(_that.breakLengthMinutes);case _DayScheduleChanged() when dayScheduleChanged != null:
 return dayScheduleChanged(_that.dayId,_that.enabled,_that.slots);case _:
@@ -324,72 +318,6 @@ class __$OnlineStatusChangedCopyWithImpl<$Res>
 @pragma('vm:prefer-inline') $Res call({Object? isOnline = null,}) {
   return _then(_OnlineStatusChanged(
 isOnline: null == isOnline ? _self.isOnline : isOnline // ignore: cast_nullable_to_non_nullable
-as bool,
-  ));
-}
-
-
-}
-
-/// @nodoc
-
-
-class _InstantCallsChanged implements ListenerAvailabilityEvent {
-  const _InstantCallsChanged({required this.acceptInstantCalls});
-  
-
- final  bool acceptInstantCalls;
-
-/// Create a copy of ListenerAvailabilityEvent
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-_$InstantCallsChangedCopyWith<_InstantCallsChanged> get copyWith => __$InstantCallsChangedCopyWithImpl<_InstantCallsChanged>(this, _$identity);
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _InstantCallsChanged&&(identical(other.acceptInstantCalls, acceptInstantCalls) || other.acceptInstantCalls == acceptInstantCalls));
-}
-
-
-@override
-int get hashCode => Object.hash(runtimeType,acceptInstantCalls);
-
-@override
-String toString() {
-  return 'ListenerAvailabilityEvent.instantCallsChanged(acceptInstantCalls: $acceptInstantCalls)';
-}
-
-
-}
-
-/// @nodoc
-abstract mixin class _$InstantCallsChangedCopyWith<$Res> implements $ListenerAvailabilityEventCopyWith<$Res> {
-  factory _$InstantCallsChangedCopyWith(_InstantCallsChanged value, $Res Function(_InstantCallsChanged) _then) = __$InstantCallsChangedCopyWithImpl;
-@useResult
-$Res call({
- bool acceptInstantCalls
-});
-
-
-
-
-}
-/// @nodoc
-class __$InstantCallsChangedCopyWithImpl<$Res>
-    implements _$InstantCallsChangedCopyWith<$Res> {
-  __$InstantCallsChangedCopyWithImpl(this._self, this._then);
-
-  final _InstantCallsChanged _self;
-  final $Res Function(_InstantCallsChanged) _then;
-
-/// Create a copy of ListenerAvailabilityEvent
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? acceptInstantCalls = null,}) {
-  return _then(_InstantCallsChanged(
-acceptInstantCalls: null == acceptInstantCalls ? _self.acceptInstantCalls : acceptInstantCalls // ignore: cast_nullable_to_non_nullable
 as bool,
   ));
 }

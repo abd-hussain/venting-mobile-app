@@ -13,7 +13,6 @@ class VentorListenerAvailability {
     required this.fromHour,
     required this.toHour,
     required this.timeZoneId,
-    required this.acceptInstantCall,
     required this.sessionMinutes,
   });
 
@@ -22,7 +21,6 @@ class VentorListenerAvailability {
   final String fromHour;
   final String toHour;
   final String timeZoneId;
-  final bool acceptInstantCall;
   final List<int> sessionMinutes;
 }
 
@@ -182,13 +180,9 @@ class VentorSessionDurationOption {
   final bool isPopular;
 }
 
-enum VentorSessionTimeMode { instant, nearest, scheduled }
+enum VentorSessionTimeMode { nearest, scheduled }
 
 class VentorSessionTimeChoice {
-  const VentorSessionTimeChoice.instant()
-    : mode = VentorSessionTimeMode.instant,
-      scheduledAt = null;
-
   const VentorSessionTimeChoice.nearest(this.scheduledAt)
     : mode = VentorSessionTimeMode.nearest;
 
@@ -216,7 +210,6 @@ class VentorBookedSession {
     required this.amountPaid,
     required this.voiceChangeEnabled,
     this.scheduledAt,
-    this.isInstant = false,
     this.refundedToBalance,
   });
 
@@ -231,7 +224,6 @@ class VentorBookedSession {
   final double amountPaid;
   final bool voiceChangeEnabled;
   final DateTime? scheduledAt;
-  final bool isInstant;
   final double? refundedToBalance;
 
   /// Full paid amount credited back to the ventor balance when cancelled.
@@ -253,7 +245,6 @@ class VentorBookedSession {
       amountPaid: amountPaid,
       voiceChangeEnabled: voiceChangeEnabled,
       scheduledAt: scheduledAt,
-      isInstant: isInstant,
       refundedToBalance: refundedToBalance ?? this.refundedToBalance,
     );
   }
@@ -309,7 +300,6 @@ abstract final class VentorSessionsCatalog {
         fromHour: '10:00 AM',
         toHour: '10:00 PM',
         timeZoneId: 'Asia/Beirut',
-        acceptInstantCall: true,
         sessionMinutes: [30, 45, 60],
       ),
       isFavorite: true,
@@ -343,7 +333,6 @@ abstract final class VentorSessionsCatalog {
         fromHour: '06:00 PM',
         toHour: '11:00 PM',
         timeZoneId: 'Africa/Cairo',
-        acceptInstantCall: true,
         sessionMinutes: [30, 60],
       ),
     ),
@@ -376,7 +365,6 @@ abstract final class VentorSessionsCatalog {
         fromHour: '09:00 AM',
         toHour: '05:00 PM',
         timeZoneId: 'America/Chicago',
-        acceptInstantCall: false,
         sessionMinutes: [45, 60],
       ),
     ),
@@ -407,7 +395,6 @@ abstract final class VentorSessionsCatalog {
         fromHour: '04:00 PM',
         toHour: '11:00 PM',
         timeZoneId: 'Asia/Amman',
-        acceptInstantCall: true,
         sessionMinutes: [15, 30, 60],
       ),
     ),
@@ -438,7 +425,6 @@ abstract final class VentorSessionsCatalog {
         fromHour: '08:00 AM',
         toHour: '08:00 PM',
         timeZoneId: 'Europe/Paris',
-        acceptInstantCall: true,
         sessionMinutes: [30, 45],
       ),
     ),
@@ -469,7 +455,6 @@ abstract final class VentorSessionsCatalog {
         fromHour: '02:00 PM',
         toHour: '09:00 PM',
         timeZoneId: 'Africa/Casablanca',
-        acceptInstantCall: false,
         sessionMinutes: [30, 60],
       ),
     ),
@@ -626,20 +611,5 @@ abstract final class VentorSessionsCatalog {
       if (listener.id == id) return listener;
     }
     return null;
-  }
-
-  /// Best available listener for an instant match (online + accepts instant).
-  static VentorFindListener? bestInstantListener() {
-    final pool = mockListeners
-        .where((l) => l.isOnline && l.availability.acceptInstantCall)
-        .toList();
-    if (pool.isEmpty) return null;
-
-    pool.sort((a, b) {
-      final byRating = b.rating.compareTo(a.rating);
-      if (byRating != 0) return byRating;
-      return b.sessionCount.compareTo(a.sessionCount);
-    });
-    return pool.first;
   }
 }

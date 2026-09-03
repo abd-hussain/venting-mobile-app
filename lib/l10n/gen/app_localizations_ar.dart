@@ -612,13 +612,6 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
   String get listener_reg_avail_to => 'إلى';
 
   @override
-  String get listener_reg_avail_instant_call => 'قبول المكالمات الفورية';
-
-  @override
-  String get listener_reg_avail_instant_call_hint =>
-      'المكالمات الفورية تساعدك على زيادة دخلك.';
-
-  @override
   String get listener_reg_avail_session_length => 'مدة الجلسة';
 
   @override
@@ -2228,17 +2221,6 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
   }
 
   @override
-  String get listener_avail_instant_calls => 'قبول المكالمات الفورية';
-
-  @override
-  String get listener_avail_instant_calls_hint =>
-      'اسمح للمتحدثين بالوصول إليك لجلسات فورية بدون حجز مسبق.';
-
-  @override
-  String get listener_avail_instant_calls_earnings_highlight =>
-      'المكالمات الفورية تساعدك على كسب دخل إضافي.';
-
-  @override
   String get listener_avail_online_status => 'الظهور كمتصل';
 
   @override
@@ -2285,23 +2267,10 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
   String get listener_sessions_history_title => 'الجلسات الماضية';
 
   @override
-  String get listener_sessions_instant_section_title => 'المكالمات الفورية';
-
-  @override
   String get listener_sessions_scheduled_section_title => 'الجلسات المجدولة';
 
   @override
-  String get listener_sessions_instant_note =>
-      'المكالمات الفورية تُشعر المستمعين المتاحين في الوقت نفسه. أول مستمع يقبل يُعيَّن له المكالمة — ويفقد الباقون الطلب.';
-
-  @override
-  String get listener_sessions_no_instant => 'لا توجد مكالمات فورية حالياً.';
-
-  @override
   String get listener_sessions_no_scheduled => 'لا توجد جلسات مجدولة بعد.';
-
-  @override
-  String get listener_sessions_instant_incoming => 'مكالمة فورية واردة';
 
   @override
   String get listener_sessions_voice_call => 'مكالمة صوتية';
@@ -2323,9 +2292,6 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
 
   @override
   String get listener_sessions_accept => 'قبول';
-
-  @override
-  String get listener_sessions_accept_instant => 'قبول المكالمة';
 
   @override
   String get listener_sessions_assigned_snackbar =>
@@ -2556,27 +2522,6 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
 
   @override
   String get listener_dashboard_subtitle => 'أنت تحدث فرقاً حقيقياً.';
-
-  @override
-  String get listener_dashboard_impact_title => 'أثر اليوم';
-
-  @override
-  String get listener_dashboard_period_today => 'اليوم';
-
-  @override
-  String get listener_dashboard_period_week => 'هذا الأسبوع';
-
-  @override
-  String get listener_dashboard_period_month => 'هذا الشهر';
-
-  @override
-  String get listener_dashboard_sessions => 'جلسات';
-
-  @override
-  String get listener_dashboard_hours => 'ساعات';
-
-  @override
-  String get listener_dashboard_people_helped => 'أشخاص ساعدتهم';
 
   @override
   String get listener_dashboard_currently => 'أنت حالياً';
@@ -3027,16 +2972,6 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
   String get ventor_sessions_availability_timezone => 'المنطقة الزمنية';
 
   @override
-  String get ventor_sessions_availability_instant => 'المكالمات الفورية';
-
-  @override
-  String get ventor_sessions_availability_instant_yes =>
-      'يقبل المكالمات الفورية';
-
-  @override
-  String get ventor_sessions_availability_instant_no => 'جلسات مجدولة فقط';
-
-  @override
   String get ventor_sessions_session_lengths => 'مدد الجلسات';
 
   @override
@@ -3077,12 +3012,6 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
   }
 
   @override
-  String get ventor_sessions_time_instant_title => 'مكالمة فورية';
-
-  @override
-  String get ventor_sessions_time_instant_subtitle => 'اتصل فور قبول المستمع.';
-
-  @override
   String get ventor_sessions_time_nearest_title => 'أقرب وقت متاح';
 
   @override
@@ -3100,9 +3029,6 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
   @override
   String get ventor_sessions_time_no_slots =>
       'لا توجد أوقات قادمة تطابق توفر هذا المستمع.';
-
-  @override
-  String get ventor_sessions_time_summary_instant => 'مكالمة فورية';
 
   @override
   String ventor_sessions_time_summary_nearest(String slot) {
@@ -3321,9 +3247,6 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
 
   @override
   String get ventor_sessions_booked_status_cancelled => 'ملغاة';
-
-  @override
-  String get ventor_sessions_booked_instant_now => 'فورية · جارية الآن';
 
   @override
   String ventor_sessions_booked_speech_language(String language) {
@@ -3687,30 +3610,6 @@ class VentingMobLocalizationsAr extends VentingMobLocalizations {
 
   @override
   String get ventor_home_day_sun => 'ح';
-
-  @override
-  String get ventor_home_instant_section_title => 'احجز مكالمة فورية';
-
-  @override
-  String get ventor_home_instant_section_subtitle =>
-      'سنطابقك مع أفضل مستمع متاح الآن.';
-
-  @override
-  String get ventor_home_instant_title => 'مطابقة فورية';
-
-  @override
-  String get ventor_home_instant_subtitle =>
-      'دع النظام يجد لك مستمعًا مناسبًا.';
-
-  @override
-  String get ventor_home_instant_matching => 'جارٍ إيجاد أفضل مستمع لك…';
-
-  @override
-  String get ventor_home_instant_cta => 'احجز الآن';
-
-  @override
-  String get ventor_home_instant_none =>
-      'لا يوجد مستمعون متاحون لمكالمة فورية الآن. حاول مجددًا بعد قليل.';
 
   @override
   String get ventor_home_upcoming_title => 'الجلسة القادمة';

@@ -298,7 +298,7 @@ $ListenerDashboardDataCopyWith<$Res> get data {
 /// @nodoc
 mixin _$ListenerDashboardData {
 
- String get display_name; ListenerDashboardReminderModel? get reminder;
+ String get display_name; ListenerDashboardReminderModel? get reminder; ListenerDashboardUpcomingSessionModel? get next_upcoming_session;
 /// Create a copy of ListenerDashboardData
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -311,16 +311,16 @@ $ListenerDashboardDataCopyWith<ListenerDashboardData> get copyWith => _$Listener
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ListenerDashboardData&&(identical(other.display_name, display_name) || other.display_name == display_name)&&(identical(other.reminder, reminder) || other.reminder == reminder));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ListenerDashboardData&&(identical(other.display_name, display_name) || other.display_name == display_name)&&(identical(other.reminder, reminder) || other.reminder == reminder)&&(identical(other.next_upcoming_session, next_upcoming_session) || other.next_upcoming_session == next_upcoming_session));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,display_name,reminder);
+int get hashCode => Object.hash(runtimeType,display_name,reminder,next_upcoming_session);
 
 @override
 String toString() {
-  return 'ListenerDashboardData(display_name: $display_name, reminder: $reminder)';
+  return 'ListenerDashboardData(display_name: $display_name, reminder: $reminder, next_upcoming_session: $next_upcoming_session)';
 }
 
 
@@ -331,11 +331,11 @@ abstract mixin class $ListenerDashboardDataCopyWith<$Res>  {
   factory $ListenerDashboardDataCopyWith(ListenerDashboardData value, $Res Function(ListenerDashboardData) _then) = _$ListenerDashboardDataCopyWithImpl;
 @useResult
 $Res call({
- String display_name, ListenerDashboardReminderModel? reminder
+ String display_name, ListenerDashboardReminderModel? reminder, ListenerDashboardUpcomingSessionModel? next_upcoming_session
 });
 
 
-$ListenerDashboardReminderModelCopyWith<$Res>? get reminder;
+$ListenerDashboardReminderModelCopyWith<$Res>? get reminder;$ListenerDashboardUpcomingSessionModelCopyWith<$Res>? get next_upcoming_session;
 
 }
 /// @nodoc
@@ -348,11 +348,12 @@ class _$ListenerDashboardDataCopyWithImpl<$Res>
 
 /// Create a copy of ListenerDashboardData
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? display_name = null,Object? reminder = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? display_name = null,Object? reminder = freezed,Object? next_upcoming_session = freezed,}) {
   return _then(_self.copyWith(
 display_name: null == display_name ? _self.display_name : display_name // ignore: cast_nullable_to_non_nullable
 as String,reminder: freezed == reminder ? _self.reminder : reminder // ignore: cast_nullable_to_non_nullable
-as ListenerDashboardReminderModel?,
+as ListenerDashboardReminderModel?,next_upcoming_session: freezed == next_upcoming_session ? _self.next_upcoming_session : next_upcoming_session // ignore: cast_nullable_to_non_nullable
+as ListenerDashboardUpcomingSessionModel?,
   ));
 }
 /// Create a copy of ListenerDashboardData
@@ -366,6 +367,18 @@ $ListenerDashboardReminderModelCopyWith<$Res>? get reminder {
 
   return $ListenerDashboardReminderModelCopyWith<$Res>(_self.reminder!, (value) {
     return _then(_self.copyWith(reminder: value));
+  });
+}/// Create a copy of ListenerDashboardData
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$ListenerDashboardUpcomingSessionModelCopyWith<$Res>? get next_upcoming_session {
+    if (_self.next_upcoming_session == null) {
+    return null;
+  }
+
+  return $ListenerDashboardUpcomingSessionModelCopyWith<$Res>(_self.next_upcoming_session!, (value) {
+    return _then(_self.copyWith(next_upcoming_session: value));
   });
 }
 }
@@ -449,10 +462,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String display_name,  ListenerDashboardReminderModel? reminder)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String display_name,  ListenerDashboardReminderModel? reminder,  ListenerDashboardUpcomingSessionModel? next_upcoming_session)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ListenerDashboardData() when $default != null:
-return $default(_that.display_name,_that.reminder);case _:
+return $default(_that.display_name,_that.reminder,_that.next_upcoming_session);case _:
   return orElse();
 
 }
@@ -470,10 +483,10 @@ return $default(_that.display_name,_that.reminder);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String display_name,  ListenerDashboardReminderModel? reminder)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String display_name,  ListenerDashboardReminderModel? reminder,  ListenerDashboardUpcomingSessionModel? next_upcoming_session)  $default,) {final _that = this;
 switch (_that) {
 case _ListenerDashboardData():
-return $default(_that.display_name,_that.reminder);case _:
+return $default(_that.display_name,_that.reminder,_that.next_upcoming_session);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -490,10 +503,10 @@ return $default(_that.display_name,_that.reminder);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String display_name,  ListenerDashboardReminderModel? reminder)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String display_name,  ListenerDashboardReminderModel? reminder,  ListenerDashboardUpcomingSessionModel? next_upcoming_session)?  $default,) {final _that = this;
 switch (_that) {
 case _ListenerDashboardData() when $default != null:
-return $default(_that.display_name,_that.reminder);case _:
+return $default(_that.display_name,_that.reminder,_that.next_upcoming_session);case _:
   return null;
 
 }
@@ -505,11 +518,12 @@ return $default(_that.display_name,_that.reminder);case _:
 @JsonSerializable(createFactory: false)
 
 class _ListenerDashboardData implements ListenerDashboardData {
-  const _ListenerDashboardData({this.display_name = '', this.reminder});
+  const _ListenerDashboardData({this.display_name = '', this.reminder, this.next_upcoming_session});
   
 
 @override@JsonKey() final  String display_name;
 @override final  ListenerDashboardReminderModel? reminder;
+@override final  ListenerDashboardUpcomingSessionModel? next_upcoming_session;
 
 /// Create a copy of ListenerDashboardData
 /// with the given fields replaced by the non-null parameter values.
@@ -524,16 +538,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ListenerDashboardData&&(identical(other.display_name, display_name) || other.display_name == display_name)&&(identical(other.reminder, reminder) || other.reminder == reminder));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ListenerDashboardData&&(identical(other.display_name, display_name) || other.display_name == display_name)&&(identical(other.reminder, reminder) || other.reminder == reminder)&&(identical(other.next_upcoming_session, next_upcoming_session) || other.next_upcoming_session == next_upcoming_session));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,display_name,reminder);
+int get hashCode => Object.hash(runtimeType,display_name,reminder,next_upcoming_session);
 
 @override
 String toString() {
-  return 'ListenerDashboardData(display_name: $display_name, reminder: $reminder)';
+  return 'ListenerDashboardData(display_name: $display_name, reminder: $reminder, next_upcoming_session: $next_upcoming_session)';
 }
 
 
@@ -544,11 +558,11 @@ abstract mixin class _$ListenerDashboardDataCopyWith<$Res> implements $ListenerD
   factory _$ListenerDashboardDataCopyWith(_ListenerDashboardData value, $Res Function(_ListenerDashboardData) _then) = __$ListenerDashboardDataCopyWithImpl;
 @override @useResult
 $Res call({
- String display_name, ListenerDashboardReminderModel? reminder
+ String display_name, ListenerDashboardReminderModel? reminder, ListenerDashboardUpcomingSessionModel? next_upcoming_session
 });
 
 
-@override $ListenerDashboardReminderModelCopyWith<$Res>? get reminder;
+@override $ListenerDashboardReminderModelCopyWith<$Res>? get reminder;@override $ListenerDashboardUpcomingSessionModelCopyWith<$Res>? get next_upcoming_session;
 
 }
 /// @nodoc
@@ -561,11 +575,12 @@ class __$ListenerDashboardDataCopyWithImpl<$Res>
 
 /// Create a copy of ListenerDashboardData
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? display_name = null,Object? reminder = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? display_name = null,Object? reminder = freezed,Object? next_upcoming_session = freezed,}) {
   return _then(_ListenerDashboardData(
 display_name: null == display_name ? _self.display_name : display_name // ignore: cast_nullable_to_non_nullable
 as String,reminder: freezed == reminder ? _self.reminder : reminder // ignore: cast_nullable_to_non_nullable
-as ListenerDashboardReminderModel?,
+as ListenerDashboardReminderModel?,next_upcoming_session: freezed == next_upcoming_session ? _self.next_upcoming_session : next_upcoming_session // ignore: cast_nullable_to_non_nullable
+as ListenerDashboardUpcomingSessionModel?,
   ));
 }
 
@@ -581,7 +596,294 @@ $ListenerDashboardReminderModelCopyWith<$Res>? get reminder {
   return $ListenerDashboardReminderModelCopyWith<$Res>(_self.reminder!, (value) {
     return _then(_self.copyWith(reminder: value));
   });
+}/// Create a copy of ListenerDashboardData
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$ListenerDashboardUpcomingSessionModelCopyWith<$Res>? get next_upcoming_session {
+    if (_self.next_upcoming_session == null) {
+    return null;
+  }
+
+  return $ListenerDashboardUpcomingSessionModelCopyWith<$Res>(_self.next_upcoming_session!, (value) {
+    return _then(_self.copyWith(next_upcoming_session: value));
+  });
 }
+}
+
+
+/// @nodoc
+mixin _$ListenerDashboardUpcomingSessionModel {
+
+ String get id; String get ventor_name; String get when_label; int get duration_minutes; String? get ventor_avatar_url;
+/// Create a copy of ListenerDashboardUpcomingSessionModel
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$ListenerDashboardUpcomingSessionModelCopyWith<ListenerDashboardUpcomingSessionModel> get copyWith => _$ListenerDashboardUpcomingSessionModelCopyWithImpl<ListenerDashboardUpcomingSessionModel>(this as ListenerDashboardUpcomingSessionModel, _$identity);
+
+  /// Serializes this ListenerDashboardUpcomingSessionModel to a JSON map.
+  Map<String, dynamic> toJson();
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ListenerDashboardUpcomingSessionModel&&(identical(other.id, id) || other.id == id)&&(identical(other.ventor_name, ventor_name) || other.ventor_name == ventor_name)&&(identical(other.when_label, when_label) || other.when_label == when_label)&&(identical(other.duration_minutes, duration_minutes) || other.duration_minutes == duration_minutes)&&(identical(other.ventor_avatar_url, ventor_avatar_url) || other.ventor_avatar_url == ventor_avatar_url));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,id,ventor_name,when_label,duration_minutes,ventor_avatar_url);
+
+@override
+String toString() {
+  return 'ListenerDashboardUpcomingSessionModel(id: $id, ventor_name: $ventor_name, when_label: $when_label, duration_minutes: $duration_minutes, ventor_avatar_url: $ventor_avatar_url)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $ListenerDashboardUpcomingSessionModelCopyWith<$Res>  {
+  factory $ListenerDashboardUpcomingSessionModelCopyWith(ListenerDashboardUpcomingSessionModel value, $Res Function(ListenerDashboardUpcomingSessionModel) _then) = _$ListenerDashboardUpcomingSessionModelCopyWithImpl;
+@useResult
+$Res call({
+ String id, String ventor_name, String when_label, int duration_minutes, String? ventor_avatar_url
+});
+
+
+
+
+}
+/// @nodoc
+class _$ListenerDashboardUpcomingSessionModelCopyWithImpl<$Res>
+    implements $ListenerDashboardUpcomingSessionModelCopyWith<$Res> {
+  _$ListenerDashboardUpcomingSessionModelCopyWithImpl(this._self, this._then);
+
+  final ListenerDashboardUpcomingSessionModel _self;
+  final $Res Function(ListenerDashboardUpcomingSessionModel) _then;
+
+/// Create a copy of ListenerDashboardUpcomingSessionModel
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? ventor_name = null,Object? when_label = null,Object? duration_minutes = null,Object? ventor_avatar_url = freezed,}) {
+  return _then(_self.copyWith(
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as String,ventor_name: null == ventor_name ? _self.ventor_name : ventor_name // ignore: cast_nullable_to_non_nullable
+as String,when_label: null == when_label ? _self.when_label : when_label // ignore: cast_nullable_to_non_nullable
+as String,duration_minutes: null == duration_minutes ? _self.duration_minutes : duration_minutes // ignore: cast_nullable_to_non_nullable
+as int,ventor_avatar_url: freezed == ventor_avatar_url ? _self.ventor_avatar_url : ventor_avatar_url // ignore: cast_nullable_to_non_nullable
+as String?,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [ListenerDashboardUpcomingSessionModel].
+extension ListenerDashboardUpcomingSessionModelPatterns on ListenerDashboardUpcomingSessionModel {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _ListenerDashboardUpcomingSessionModel value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _ListenerDashboardUpcomingSessionModel() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _ListenerDashboardUpcomingSessionModel value)  $default,){
+final _that = this;
+switch (_that) {
+case _ListenerDashboardUpcomingSessionModel():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _ListenerDashboardUpcomingSessionModel value)?  $default,){
+final _that = this;
+switch (_that) {
+case _ListenerDashboardUpcomingSessionModel() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String ventor_name,  String when_label,  int duration_minutes,  String? ventor_avatar_url)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _ListenerDashboardUpcomingSessionModel() when $default != null:
+return $default(_that.id,_that.ventor_name,_that.when_label,_that.duration_minutes,_that.ventor_avatar_url);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String ventor_name,  String when_label,  int duration_minutes,  String? ventor_avatar_url)  $default,) {final _that = this;
+switch (_that) {
+case _ListenerDashboardUpcomingSessionModel():
+return $default(_that.id,_that.ventor_name,_that.when_label,_that.duration_minutes,_that.ventor_avatar_url);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String ventor_name,  String when_label,  int duration_minutes,  String? ventor_avatar_url)?  $default,) {final _that = this;
+switch (_that) {
+case _ListenerDashboardUpcomingSessionModel() when $default != null:
+return $default(_that.id,_that.ventor_name,_that.when_label,_that.duration_minutes,_that.ventor_avatar_url);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+@JsonSerializable()
+
+class _ListenerDashboardUpcomingSessionModel implements ListenerDashboardUpcomingSessionModel {
+  const _ListenerDashboardUpcomingSessionModel({this.id = '', this.ventor_name = '', this.when_label = '', this.duration_minutes = 0, this.ventor_avatar_url});
+  factory _ListenerDashboardUpcomingSessionModel.fromJson(Map<String, dynamic> json) => _$ListenerDashboardUpcomingSessionModelFromJson(json);
+
+@override@JsonKey() final  String id;
+@override@JsonKey() final  String ventor_name;
+@override@JsonKey() final  String when_label;
+@override@JsonKey() final  int duration_minutes;
+@override final  String? ventor_avatar_url;
+
+/// Create a copy of ListenerDashboardUpcomingSessionModel
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$ListenerDashboardUpcomingSessionModelCopyWith<_ListenerDashboardUpcomingSessionModel> get copyWith => __$ListenerDashboardUpcomingSessionModelCopyWithImpl<_ListenerDashboardUpcomingSessionModel>(this, _$identity);
+
+@override
+Map<String, dynamic> toJson() {
+  return _$ListenerDashboardUpcomingSessionModelToJson(this, );
+}
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ListenerDashboardUpcomingSessionModel&&(identical(other.id, id) || other.id == id)&&(identical(other.ventor_name, ventor_name) || other.ventor_name == ventor_name)&&(identical(other.when_label, when_label) || other.when_label == when_label)&&(identical(other.duration_minutes, duration_minutes) || other.duration_minutes == duration_minutes)&&(identical(other.ventor_avatar_url, ventor_avatar_url) || other.ventor_avatar_url == ventor_avatar_url));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,id,ventor_name,when_label,duration_minutes,ventor_avatar_url);
+
+@override
+String toString() {
+  return 'ListenerDashboardUpcomingSessionModel(id: $id, ventor_name: $ventor_name, when_label: $when_label, duration_minutes: $duration_minutes, ventor_avatar_url: $ventor_avatar_url)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$ListenerDashboardUpcomingSessionModelCopyWith<$Res> implements $ListenerDashboardUpcomingSessionModelCopyWith<$Res> {
+  factory _$ListenerDashboardUpcomingSessionModelCopyWith(_ListenerDashboardUpcomingSessionModel value, $Res Function(_ListenerDashboardUpcomingSessionModel) _then) = __$ListenerDashboardUpcomingSessionModelCopyWithImpl;
+@override @useResult
+$Res call({
+ String id, String ventor_name, String when_label, int duration_minutes, String? ventor_avatar_url
+});
+
+
+
+
+}
+/// @nodoc
+class __$ListenerDashboardUpcomingSessionModelCopyWithImpl<$Res>
+    implements _$ListenerDashboardUpcomingSessionModelCopyWith<$Res> {
+  __$ListenerDashboardUpcomingSessionModelCopyWithImpl(this._self, this._then);
+
+  final _ListenerDashboardUpcomingSessionModel _self;
+  final $Res Function(_ListenerDashboardUpcomingSessionModel) _then;
+
+/// Create a copy of ListenerDashboardUpcomingSessionModel
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? ventor_name = null,Object? when_label = null,Object? duration_minutes = null,Object? ventor_avatar_url = freezed,}) {
+  return _then(_ListenerDashboardUpcomingSessionModel(
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as String,ventor_name: null == ventor_name ? _self.ventor_name : ventor_name // ignore: cast_nullable_to_non_nullable
+as String,when_label: null == when_label ? _self.when_label : when_label // ignore: cast_nullable_to_non_nullable
+as String,duration_minutes: null == duration_minutes ? _self.duration_minutes : duration_minutes // ignore: cast_nullable_to_non_nullable
+as int,ventor_avatar_url: freezed == ventor_avatar_url ? _self.ventor_avatar_url : ventor_avatar_url // ignore: cast_nullable_to_non_nullable
+as String?,
+  ));
+}
+
+
 }
 
 

@@ -134,7 +134,6 @@ class ListenerRegisterRepository extends BaseRepository {
     return _saveJsonStep(
       slug: ListenerRegistrationStepSlug.availability,
       body: {
-        'accept_instant_calls': data.acceptInstantCalls,
         'session_minutes': _resolveSessionMinutes(data.sessionMinutes),
         'availability': _availabilityPayload(data),
       },

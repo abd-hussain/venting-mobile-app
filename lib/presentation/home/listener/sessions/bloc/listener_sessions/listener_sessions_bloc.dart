@@ -152,16 +152,11 @@ class ListenerSessionsBloc
           );
         },
         (acceptResult) async {
-          final request = state.overview?.requests
-              .where((item) => item.id == event.requestId)
-              .firstOrNull;
           final feedback = switch (acceptResult.status) {
             ListenerSessionRequestAcceptStatus.alreadyTaken =>
               ListenerSessionsActionFeedback.requestAlreadyTaken,
             ListenerSessionRequestAcceptStatus.accepted =>
-              request?.isInstant == true
-                  ? ListenerSessionsActionFeedback.instantRequestAccepted
-                  : ListenerSessionsActionFeedback.scheduledRequestAccepted,
+              ListenerSessionsActionFeedback.scheduledRequestAccepted,
           };
 
           await _load(emit, showLoading: false);

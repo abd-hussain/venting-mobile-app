@@ -69,7 +69,6 @@ abstract class VentorHomeBookedSessionModel
     @Default(0) num amount_paid,
     @Default(false) bool voice_change_enabled,
     String? scheduled_at,
-    @Default(false) bool is_instant,
     num? refunded_to_balance,
   }) = _VentorHomeBookedSessionModel;
 

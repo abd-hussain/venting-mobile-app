@@ -190,9 +190,8 @@ Listener (`POST /v1/listeners/register/complete`):
 |---|----------|----------------|------|
 | 40 | `GET /v1/listeners` | Ventor sessions tab — **Find** | Search, filter chips, pagination (`q`, topic, price, languages, genders, rating, favorites, online_only) |
 | 28 | `GET /v1/listeners/{listenerId}` | Ventor listener profile screen | Open a specific listener’s public card |
-| 41 | `POST /v1/sessions/instant-match` | “Surprise me” / instant match | User wants an auto-matched listener |
 | 73 | `POST /v1/promo/validate` | Before connecting — checkout | User enters a promo code; validate before pay |
-| 42 | `POST /v1/sessions` | Before connecting → pay & book | Confirm booking (instant / nearest / scheduled, voice/video, voice change, promo, reward offer) |
+| 42 | `POST /v1/sessions` | Before connecting → pay & book | Confirm booking (nearest / scheduled, voice/video, voice change, promo, reward offer) |
 
 ### B6. Ventor sessions list & cancel
 
@@ -243,7 +242,7 @@ Listener (`POST /v1/listeners/register/complete`):
 
 | # | Endpoint | Screen / place | When |
 |---|----------|----------------|------|
-| **32** | `GET /v1/listeners/me/dashboard` | **Listener dashboard tab** | On open / refresh — aggregate: setup, impact, next session, online flag, reminder |
+| **32** | `GET /v1/listeners/me/dashboard` | **Listener dashboard tab** | On open / refresh — aggregate: setup, next session, online flag, reminder |
 | 29 | `GET /v1/listeners/me/setup-progress` | Dashboard setup checklist | All 11 steps + `profile_status`, `registration_complete`, `can_go_online`, `steps_to_refill`. Training modules are not sequentially locked in the app during `under_review` |
 | 30 | `POST /v1/listeners/me/setup/first-session-tutorial` | First-session tutorial sheet → CTA | Acknowledge tutorial; returns updated setup progress (#29) |
 | 71 | `GET /v1/listeners/me/training` | Training bottom sheet open | Load module list + statuses |
@@ -254,8 +253,8 @@ Listener (`POST /v1/listeners/register/complete`):
 
 | # | Endpoint | Screen / place | When |
 |---|----------|----------------|------|
-| 37 | `GET /v1/listeners/me/availability` | Availability tab | Load week schedule + instant/session/break settings |
-| 38 | `PUT /v1/listeners/me/availability` | Same — save all settings | Persist full object (session length, break, languages, instant, week) |
+| 37 | `GET /v1/listeners/me/availability` | Availability tab | Load week schedule + session/break settings |
+| 38 | `PUT /v1/listeners/me/availability` | Same — save all settings | Persist full object (session length, break, week) |
 | 39 | `PUT /v1/listeners/me/availability/days/{day}` | Day schedule bottom sheet | Edit slots for one day (`mon`…`sun`) |
 
 ### C4. Listener sessions & requests
@@ -265,7 +264,7 @@ Listener (`POST /v1/listeners/register/complete`):
 | 46 | `GET /v1/listeners/me/sessions` | Listener sessions tab | `filter`: upcoming / missed / history |
 | 47 | `GET /v1/listeners/me/session-stats` | Sessions stats card | Load accepted / declined / missed counts |
 | 48 | `GET /v1/listeners/me/session-requests` | Pending requests UI | List incoming requests |
-| 49 | `POST /v1/listeners/me/session-requests/{requestId}/accept` | Request card — Accept | Instant: first accept wins; handle `already_taken` |
+| 49 | `POST /v1/listeners/me/session-requests/{requestId}/accept` | Request card — Accept | Handle `already_taken` when another listener accepted first |
 | 50 | `POST /v1/listeners/me/session-requests/{requestId}/decline` | Request card — Decline | Optional reason |
 
 ### C5. Call, feedback, report (listener)
@@ -425,7 +424,7 @@ Module ids: `art_of_listening`, `empathy`, `boundaries`, `difficult_situations`,
 | Prefer | Avoid |
 |--------|--------|
 | `#11` ventor home | Many separate calls for streak + upcoming + recent on first paint |
-| `#32` listener dashboard | Separate setup + impact + next session calls for first paint |
+| `#32` listener dashboard | Separate setup + next session calls for first paint |
 | `#40` with query filters | One endpoint per filter chip |
 | `#25` / `#10` PATCH partial (JSON) | Re-uploading the whole profile for one text field |
 | `#25b` / `#26` POST multipart | Sending avatar/voice as JSON or via `PATCH /v1/listeners/me` |

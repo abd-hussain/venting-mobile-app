@@ -20,7 +20,6 @@ class ListenerSessionItem {
     this.speechLanguage,
     this.isWaiting = false,
     this.canJoinNow = false,
-    this.isInstant = false,
     this.isVideoCall = false,
     this.ventorRating = 4.9,
     this.statusLabel,
@@ -40,7 +39,6 @@ class ListenerSessionItem {
   final String? speechLanguage;
   final bool isWaiting;
   final bool canJoinNow;
-  final bool isInstant;
   final bool isVideoCall;
   final double ventorRating;
   final String? statusLabel;
@@ -63,7 +61,6 @@ class ListenerSessionRequest {
     required this.receivedAt,
     required this.speechLanguage,
     this.ventorAvatarUrl,
-    this.isInstant = false,
     this.isVideoCall = false,
     this.ventorRating = 4.9,
   });
@@ -78,7 +75,6 @@ class ListenerSessionRequest {
   final List<String> tags;
   final DateTime receivedAt;
   final String speechLanguage;
-  final bool isInstant;
   final bool isVideoCall;
   final double ventorRating;
 }

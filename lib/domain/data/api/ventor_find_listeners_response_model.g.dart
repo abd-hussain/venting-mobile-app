@@ -122,7 +122,6 @@ _$VentorFindListenerAvailabilityModelFromJson(Map<String, dynamic> json) =>
       from_hour: json['from_hour'] as String? ?? '',
       to_hour: json['to_hour'] as String? ?? '',
       time_zone_id: json['time_zone_id'] as String? ?? '',
-      accept_instant_call: json['accept_instant_call'] as bool? ?? false,
       session_minutes:
           (json['session_minutes'] as List<dynamic>?)
               ?.map((e) => (e as num).toInt())
@@ -137,6 +136,5 @@ Map<String, dynamic> _$VentorFindListenerAvailabilityModelToJson(
   'from_hour': instance.from_hour,
   'to_hour': instance.to_hour,
   'time_zone_id': instance.time_zone_id,
-  'accept_instant_call': instance.accept_instant_call,
   'session_minutes': instance.session_minutes,
 };
