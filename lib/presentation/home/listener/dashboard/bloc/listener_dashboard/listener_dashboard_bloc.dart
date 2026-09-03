@@ -10,6 +10,7 @@ import 'package:venting_mobile_app/domain/usecase/get_cached_auth_me_usecase.dar
 import 'package:venting_mobile_app/domain/usecase/get_listener_dashboard_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_listener_profile_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_listener_setup_progress_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/update_listener_online_status_usecase.dart';
 import 'package:venting_mobile_app/l10n/venting_mob_localizations_holder.dart';
 
 part 'listener_dashboard_bloc.freezed.dart';
@@ -23,16 +24,19 @@ class ListenerDashboardBloc
     this._getListenerDashboardUsecase,
     this._getListenerProfileUsecase,
     this._getCachedAuthMeUsecase,
+    this._updateListenerOnlineStatusUsecase,
   ) : super(const ListenerDashboardState()) {
     on<_Started>(_onStarted);
     on<_RetrySetupLoad>(_onRetrySetupLoad);
     on<_SetupRefreshRequested>(_onSetupRefreshRequested);
+    on<_OnlineStatusChanged>(_onOnlineStatusChanged);
   }
 
   final GetListenerSetupProgressUsecase _getListenerSetupProgressUsecase;
   final GetListenerDashboardUsecase _getListenerDashboardUsecase;
   final GetListenerProfileUsecase _getListenerProfileUsecase;
   final GetCachedAuthMeUsecase _getCachedAuthMeUsecase;
+  final UpdateListenerOnlineStatusUsecase _updateListenerOnlineStatusUsecase;
 
   Future<void> _onStarted(
     _Started event,
@@ -64,6 +68,7 @@ class ListenerDashboardBloc
         state.copyWith(
           setupStatus: ListenerDashboardSetupStatus.loading,
           setupErrorMessage: '',
+          onlineStatusErrorMessage: '',
         ),
       );
     }
@@ -88,6 +93,7 @@ class ListenerDashboardBloc
               setupStatus: ListenerDashboardSetupStatus.loadFailure,
               setupErrorMessage: message,
               listenerDisplayName: listenerDisplayName,
+              isOnline: dashboard?.isOnline ?? state.isOnline,
               dailyReminder: dashboard?.reminder,
               nextUpcomingSession: dashboard?.nextUpcomingSession,
             ),
@@ -100,6 +106,7 @@ class ListenerDashboardBloc
               setupProgress: progress,
               setupErrorMessage: '',
               listenerDisplayName: listenerDisplayName,
+              isOnline: dashboard?.isOnline ?? state.isOnline,
               dailyReminder: dashboard?.reminder,
               nextUpcomingSession: dashboard?.nextUpcomingSession,
             ),
@@ -117,6 +124,70 @@ class ListenerDashboardBloc
         state.copyWith(
           setupStatus: ListenerDashboardSetupStatus.loadFailure,
           setupErrorMessage: _mapError(error),
+        ),
+      );
+    }
+  }
+
+  Future<void> _onOnlineStatusChanged(
+    _OnlineStatusChanged event,
+    Emitter<ListenerDashboardState> emit,
+  ) async {
+    if (state.isUpdatingOnlineStatus) return;
+
+    final previous = state.isOnline;
+    emit(
+      state.copyWith(
+        isOnline: event.isOnline,
+        isUpdatingOnlineStatus: true,
+        onlineStatusErrorMessage: '',
+      ),
+    );
+
+    try {
+      final result = await _updateListenerOnlineStatusUsecase(
+        isOnline: event.isOnline,
+      ).run();
+      if (emit.isDone) return;
+
+      result.match(
+        (error) {
+          final message = _mapError(error);
+          LoggerManagerBase.logErrorMessage(
+            error: error,
+            message:
+                'ListenerDashboardBloc: update online status failed — $message',
+          );
+          emit(
+            state.copyWith(
+              isOnline: previous,
+              isUpdatingOnlineStatus: false,
+              onlineStatusErrorMessage: message,
+            ),
+          );
+        },
+        (isOnline) {
+          emit(
+            state.copyWith(
+              isOnline: isOnline,
+              isUpdatingOnlineStatus: false,
+              onlineStatusErrorMessage: '',
+            ),
+          );
+        },
+      );
+    } on Object catch (error, stackTrace) {
+      LoggerManagerBase.logErrorMessage(
+        error: error,
+        message: 'ListenerDashboardBloc: unexpected online status error',
+        stackTrace: stackTrace,
+      );
+      if (emit.isDone) return;
+      emit(
+        state.copyWith(
+          isOnline: previous,
+          isUpdatingOnlineStatus: false,
+          onlineStatusErrorMessage: _mapError(error),
         ),
       );
     }

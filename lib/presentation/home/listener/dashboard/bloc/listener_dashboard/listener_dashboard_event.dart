@@ -8,4 +8,8 @@ sealed class ListenerDashboardEvent with _$ListenerDashboardEvent {
 
   const factory ListenerDashboardEvent.setupRefreshRequested() =
       _SetupRefreshRequested;
+
+  const factory ListenerDashboardEvent.onlineStatusChanged({
+    required bool isOnline,
+  }) = _OnlineStatusChanged;
 }

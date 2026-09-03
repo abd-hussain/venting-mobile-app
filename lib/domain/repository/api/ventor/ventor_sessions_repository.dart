@@ -1,10 +1,37 @@
 import 'package:fpdart/fpdart.dart';
+import 'package:venting_mobile_app/domain/data/api/session_end_response_model.dart';
+import 'package:venting_mobile_app/domain/data/api/session_join_response_model.dart';
 import 'package:venting_mobile_app/domain/data/api/session_rating_response_model.dart';
 import 'package:venting_mobile_app/domain/data/api/ventor_sessions_response_model.dart';
 import 'package:venting_mobile_app/domain/repository/api/base_repository.dart';
 
 class VentorSessionsRepository extends BaseRepository {
   const VentorSessionsRepository(super.apiClient);
+
+  TaskEither<Exception, SessionJoinResponseModel> joinSession({
+    required String sessionId,
+  }) => executeRequest(
+    request: apiClient.post<Object?>(
+      'v1/sessions/$sessionId/join',
+      data: const <String, dynamic>{},
+    ),
+    fromJson: SessionJoinResponseModel.fromJson,
+  );
+
+  TaskEither<Exception, SessionEndResponseModel> endSession({
+    required String sessionId,
+    required String endedBy,
+    int? durationSeconds,
+  }) => executeRequest(
+    request: apiClient.post<Object?>(
+      'v1/sessions/$sessionId/end',
+      data: <String, dynamic>{
+        'ended_by': endedBy,
+        if (durationSeconds != null) 'duration_seconds': durationSeconds,
+      },
+    ),
+    fromJson: SessionEndResponseModel.fromJson,
+  );
 
   TaskEither<Exception, VentorSessionsListResponseModel> getSessions({
     String? status,

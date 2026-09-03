@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shimmer_manager/shimmer_manager.dart';
 import 'package:venting_mobile_app/di/di_container.dart';
-import 'package:venting_mobile_app/domain/data/app/listener_dashboard.dart';
 import 'package:venting_mobile_app/domain/data/app/listener_dashboard_setup.dart';
 import 'package:venting_mobile_app/domain/usecase/get_cached_auth_me_usecase.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
@@ -43,8 +42,6 @@ class _ListenerDashboardTabState extends State<ListenerDashboardTab> {
     systemNavigationBarColor: SplashColors.backgroundBottom,
     systemNavigationBarIconBrightness: Brightness.light,
   );
-
-  bool _isOnline = false;
 
   String _userEmail() => diContainer<GetCachedAuthMeUsecase>()()?.email ?? '';
 
@@ -106,9 +103,15 @@ class _ListenerDashboardTabState extends State<ListenerDashboardTab> {
     await _handleSetupStep(next);
   }
 
-  void _toggleAvailability(ListenerDashboardSetupProgress? progress) {
+  void _toggleAvailability(
+    ListenerDashboardState state,
+    ListenerDashboardSetupProgress? progress,
+  ) {
     final l10n = VentingMobLocalizations.of(context);
-    if (progress != null && !progress.canGoOnline && !_isOnline) {
+    if (state.isUpdatingOnlineStatus) return;
+
+    final nextOnline = !state.isOnline;
+    if (progress != null && !progress.canGoOnline && nextOnline) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(l10n.listener_dashboard_go_online_requires_approval),
@@ -116,8 +119,10 @@ class _ListenerDashboardTabState extends State<ListenerDashboardTab> {
       );
       return;
     }
-    // TODO: Update listener online status via availability API (#31).
-    setState(() => _isOnline = !_isOnline);
+
+    context.read<ListenerDashboardBloc>().add(
+      ListenerDashboardEvent.onlineStatusChanged(isOnline: nextOnline),
+    );
   }
 
   void _onNotifications() {
@@ -221,14 +226,15 @@ class _ListenerDashboardTabState extends State<ListenerDashboardTab> {
 
   List<Widget> _buildLiveDashboard(
     VentingMobLocalizations l10n,
-    ListenerDashboardSetupProgress? progress,
-    String listenerDisplayName,
-    ListenerDashboardReminder? dailyReminder,
-    ListenerDashboardUpcomingSession? nextUpcomingSession,
+    ListenerDashboardState state,
   ) {
+    final progress = state.setupProgress;
     final canGoOnline = progress?.canGoOnline ?? false;
-    final displayOnline = canGoOnline && _isOnline;
+    final displayOnline = canGoOnline && state.isOnline;
     final isProfileUnderReview = progress?.isProfileUnderReview ?? false;
+    final nextUpcomingSession = state.nextUpcomingSession;
+    final dailyReminder = state.dailyReminder;
+    final listenerDisplayName = state.listenerDisplayName;
 
     return [
       ListenerDashboardHeader(
@@ -245,6 +251,7 @@ class _ListenerDashboardTabState extends State<ListenerDashboardTab> {
       ListenerDashboardAvailabilityCard(
         isOnline: displayOnline,
         canGoOnline: canGoOnline,
+        isUpdating: state.isUpdatingOnlineStatus,
         currentlyLabel: l10n.listener_dashboard_currently,
         availableLabel: l10n.listener_dashboard_available,
         offlineLabel: l10n.listener_dashboard_offline,
@@ -254,7 +261,9 @@ class _ListenerDashboardTabState extends State<ListenerDashboardTab> {
         goOnlineLabel: l10n.listener_dashboard_go_online,
         blockedFootnote:
             l10n.listener_dashboard_availability_hidden_until_approved,
-        onToggle: () => _toggleAvailability(progress),
+        onToggle: state.isUpdatingOnlineStatus
+            ? null
+            : () => _toggleAvailability(state, progress),
       ),
       const SizedBox(height: 14),
       if (isProfileUnderReview || nextUpcomingSession == null)
@@ -313,13 +322,7 @@ class _ListenerDashboardTabState extends State<ListenerDashboardTab> {
     return ListView(
       padding: const EdgeInsets.fromLTRB(20, 16, 20, 28),
       children: showLiveDashboard
-          ? _buildLiveDashboard(
-              l10n,
-              state.setupProgress,
-              state.listenerDisplayName,
-              state.dailyReminder,
-              state.nextUpcomingSession,
-            )
+          ? _buildLiveDashboard(l10n, state)
           : _buildSetupDashboard(l10n, state),
     );
   }
@@ -328,7 +331,15 @@ class _ListenerDashboardTabState extends State<ListenerDashboardTab> {
   Widget build(BuildContext context) {
     final l10n = VentingMobLocalizations.of(context);
 
-    return BlocBuilder<ListenerDashboardBloc, ListenerDashboardState>(
+    return BlocConsumer<ListenerDashboardBloc, ListenerDashboardState>(
+      listenWhen: (previous, current) =>
+          previous.onlineStatusErrorMessage != current.onlineStatusErrorMessage,
+      listener: (context, state) {
+        if (state.onlineStatusErrorMessage.isEmpty) return;
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(state.onlineStatusErrorMessage)));
+      },
       builder: (context, state) {
         return AnnotatedRegion<SystemUiOverlayStyle>(
           value: _overlayStyle,

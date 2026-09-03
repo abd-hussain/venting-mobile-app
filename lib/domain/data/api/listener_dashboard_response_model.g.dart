@@ -21,6 +21,7 @@ Map<String, dynamic> _$ListenerDashboardDataToJson(
   _ListenerDashboardData instance,
 ) => <String, dynamic>{
   'display_name': instance.display_name,
+  'is_online': instance.is_online,
   'reminder': instance.reminder,
   'next_upcoming_session': instance.next_upcoming_session,
 };

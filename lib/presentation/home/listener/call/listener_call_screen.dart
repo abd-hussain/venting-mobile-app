@@ -2,8 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:venting_mobile_app/di/di_container.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
+import 'package:venting_mobile_app/presentation/home/listener/call/bloc/listener_call_end/listener_call_end_bloc.dart';
 import 'package:venting_mobile_app/presentation/home/listener/call/listener_call_args.dart';
 import 'package:venting_mobile_app/presentation/home/listener/call/listener_call_rating_screen.dart';
 import 'package:venting_mobile_app/presentation/home/listener/call/listener_call_report_bottom_sheet.dart';
@@ -28,6 +31,8 @@ class _ListenerCallScreenState extends State<ListenerCallScreen>
   );
 
   late final AnimationController _pulseController;
+  late final ListenerCallEndBloc _endBloc;
+  late final DateTime _startedAt;
   Timer? _timer;
   late Duration _remaining;
   bool _muted = false;
@@ -37,6 +42,8 @@ class _ListenerCallScreenState extends State<ListenerCallScreen>
   @override
   void initState() {
     super.initState();
+    _startedAt = DateTime.now();
+    _endBloc = diContainer<ListenerCallEndBloc>();
     _remaining = Duration(minutes: widget.args.durationMinutes);
     _pulseController = AnimationController(
       vsync: this,
@@ -47,10 +54,10 @@ class _ListenerCallScreenState extends State<ListenerCallScreen>
 
   void _startTimer() {
     _timer = Timer.periodic(const Duration(seconds: 1), (_) {
-      if (!mounted) return;
+      if (!mounted || _endBloc.state.isEnding) return;
       if (_remaining.inSeconds <= 0) {
         _timer?.cancel();
-        _endCall();
+        _requestEndCall();
         return;
       }
       setState(() => _remaining -= const Duration(seconds: 1));
@@ -63,9 +70,23 @@ class _ListenerCallScreenState extends State<ListenerCallScreen>
     return '$m:$s';
   }
 
-  Future<void> _endCall() async {
+  int _elapsedSeconds() {
+    final seconds = DateTime.now().difference(_startedAt).inSeconds;
+    return seconds < 0 ? 0 : seconds;
+  }
+
+  void _requestEndCall() {
+    if (_endBloc.state.isEnding || _endBloc.state.endSucceeded) return;
     _timer?.cancel();
-    // TODO: End call via signaling / WebRTC service.
+    _endBloc.add(
+      ListenerCallEndEvent.endRequested(
+        sessionId: widget.args.sessionId,
+        durationSeconds: _elapsedSeconds(),
+      ),
+    );
+  }
+
+  Future<void> _openRatingScreen() async {
     if (!mounted) return;
     await Navigator.of(context).pushReplacement(
       MaterialPageRoute(
@@ -94,6 +115,7 @@ class _ListenerCallScreenState extends State<ListenerCallScreen>
   void dispose() {
     _timer?.cancel();
     _pulseController.dispose();
+    _endBloc.close();
     super.dispose();
   }
 
@@ -102,66 +124,90 @@ class _ListenerCallScreenState extends State<ListenerCallScreen>
     final l10n = VentingMobLocalizations.of(context);
     final args = widget.args;
 
-    return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: _overlayStyle,
-      child: Scaffold(
-        backgroundColor: SplashColors.backgroundBottom,
-        body: SafeArea(
-          child: Column(
-            children: [
-              _CallHeader(
-                name: args.ventorName,
-                avatarUrl: args.ventorAvatarUrl,
-                rating: args.ventorRating,
-                timerText: _formatDuration(_remaining),
-                endLabel: l10n.listener_call_end,
-                onEnd: _endCall,
-              ),
-              Expanded(
-                child: args.isVideoCall
-                    ? _VideoCallBody(
-                        remoteAvatarUrl: args.ventorAvatarUrl,
-                        remoteName: args.ventorName,
-                        frontCamera: _frontCamera,
-                      )
-                    : _AudioCallBody(
-                        avatarUrl: args.ventorAvatarUrl,
-                        name: args.ventorName,
-                        pulseController: _pulseController,
+    return BlocProvider.value(
+      value: _endBloc,
+      child: AnnotatedRegion<SystemUiOverlayStyle>(
+        value: _overlayStyle,
+        child: BlocConsumer<ListenerCallEndBloc, ListenerCallEndState>(
+          listenWhen: (previous, current) =>
+              previous.endSucceeded != current.endSucceeded,
+          listener: (context, state) {
+            if (!state.endSucceeded) return;
+            if (state.errorMessage.isNotEmpty) {
+              ScaffoldMessenger.of(
+                context,
+              ).showSnackBar(SnackBar(content: Text(state.errorMessage)));
+            }
+            _openRatingScreen();
+          },
+          builder: (context, endState) {
+            return Scaffold(
+              backgroundColor: SplashColors.backgroundBottom,
+              body: SafeArea(
+                child: Column(
+                  children: [
+                    _CallHeader(
+                      name: args.ventorName,
+                      avatarUrl: args.ventorAvatarUrl,
+                      rating: args.ventorRating,
+                      timerText: _formatDuration(_remaining),
+                      endLabel: l10n.listener_call_end,
+                      isEnding: endState.isEnding,
+                      onEnd: endState.isEnding ? null : _requestEndCall,
+                    ),
+                    Expanded(
+                      child: args.isVideoCall
+                          ? _VideoCallBody(
+                              remoteAvatarUrl: args.ventorAvatarUrl,
+                              remoteName: args.ventorName,
+                              frontCamera: _frontCamera,
+                            )
+                          : _AudioCallBody(
+                              avatarUrl: args.ventorAvatarUrl,
+                              name: args.ventorName,
+                              pulseController: _pulseController,
+                            ),
+                    ),
+                    _CallControls(
+                      isVideoCall: args.isVideoCall,
+                      muted: _muted,
+                      speakerOn: _speakerOn,
+                      muteLabel: l10n.listener_call_mute,
+                      speakerLabel: l10n.listener_call_speaker,
+                      flipLabel: l10n.listener_call_flip,
+                      onToggleMute: endState.isEnding
+                          ? null
+                          : () => setState(() => _muted = !_muted),
+                      onToggleSpeaker: endState.isEnding
+                          ? null
+                          : () => setState(() => _speakerOn = !_speakerOn),
+                      onFlipCamera: endState.isEnding
+                          ? null
+                          : () => setState(() => _frontCamera = !_frontCamera),
+                    ),
+                    const SizedBox(height: 12),
+                    TextButton.icon(
+                      onPressed: endState.isEnding ? null : _onReportSession,
+                      icon: const Icon(
+                        Icons.flag_outlined,
+                        size: 16,
+                        color: ListenerProfileTheme.muted,
                       ),
-              ),
-              _CallControls(
-                isVideoCall: args.isVideoCall,
-                muted: _muted,
-                speakerOn: _speakerOn,
-                muteLabel: l10n.listener_call_mute,
-                speakerLabel: l10n.listener_call_speaker,
-                flipLabel: l10n.listener_call_flip,
-                onToggleMute: () => setState(() => _muted = !_muted),
-                onToggleSpeaker: () => setState(() => _speakerOn = !_speakerOn),
-                onFlipCamera: () =>
-                    setState(() => _frontCamera = !_frontCamera),
-              ),
-              const SizedBox(height: 12),
-              TextButton.icon(
-                onPressed: _onReportSession,
-                icon: const Icon(
-                  Icons.flag_outlined,
-                  size: 16,
-                  color: ListenerProfileTheme.muted,
-                ),
-                label: Text(
-                  l10n.listener_call_report_session,
-                  style: GoogleFonts.inter(
-                    color: ListenerProfileTheme.muted,
-                    fontSize: 13,
-                    fontWeight: FontWeight.w600,
-                  ),
+                      label: Text(
+                        l10n.listener_call_report_session,
+                        style: GoogleFonts.inter(
+                          color: ListenerProfileTheme.muted,
+                          fontSize: 13,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                  ],
                 ),
               ),
-              const SizedBox(height: 12),
-            ],
-          ),
+            );
+          },
         ),
       ),
     );
@@ -175,6 +221,7 @@ class _CallHeader extends StatelessWidget {
     required this.rating,
     required this.timerText,
     required this.endLabel,
+    required this.isEnding,
     required this.onEnd,
   });
 
@@ -183,7 +230,8 @@ class _CallHeader extends StatelessWidget {
   final double rating;
   final String timerText;
   final String endLabel;
-  final VoidCallback onEnd;
+  final bool isEnding;
+  final VoidCallback? onEnd;
 
   @override
   Widget build(BuildContext context) {
@@ -248,18 +296,30 @@ class _CallHeader extends StatelessWidget {
             style: TextButton.styleFrom(
               backgroundColor: const Color(0xFFEF4444),
               foregroundColor: Colors.white,
+              disabledBackgroundColor: const Color(
+                0xFFEF4444,
+              ).withValues(alpha: 0.5),
               padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20),
               ),
             ),
-            child: Text(
-              endLabel,
-              style: GoogleFonts.inter(
-                fontWeight: FontWeight.w700,
-                fontSize: 14,
-              ),
-            ),
+            child: isEnding
+                ? const SizedBox(
+                    width: 16,
+                    height: 16,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      color: Colors.white,
+                    ),
+                  )
+                : Text(
+                    endLabel,
+                    style: GoogleFonts.inter(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 14,
+                    ),
+                  ),
           ),
         ],
       ),
@@ -418,9 +478,9 @@ class _CallControls extends StatelessWidget {
   final String muteLabel;
   final String speakerLabel;
   final String flipLabel;
-  final VoidCallback onToggleMute;
-  final VoidCallback onToggleSpeaker;
-  final VoidCallback onFlipCamera;
+  final VoidCallback? onToggleMute;
+  final VoidCallback? onToggleSpeaker;
+  final VoidCallback? onFlipCamera;
 
   @override
   Widget build(BuildContext context) {
@@ -461,7 +521,7 @@ class _ControlButton extends StatelessWidget {
 
   final IconData icon;
   final String label;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
   final bool active;
 
   @override

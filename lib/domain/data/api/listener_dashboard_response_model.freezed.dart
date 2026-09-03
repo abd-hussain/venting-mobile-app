@@ -298,7 +298,7 @@ $ListenerDashboardDataCopyWith<$Res> get data {
 /// @nodoc
 mixin _$ListenerDashboardData {
 
- String get display_name; ListenerDashboardReminderModel? get reminder; ListenerDashboardUpcomingSessionModel? get next_upcoming_session;
+ String get display_name; bool get is_online; ListenerDashboardReminderModel? get reminder; ListenerDashboardUpcomingSessionModel? get next_upcoming_session;
 /// Create a copy of ListenerDashboardData
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -311,16 +311,16 @@ $ListenerDashboardDataCopyWith<ListenerDashboardData> get copyWith => _$Listener
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ListenerDashboardData&&(identical(other.display_name, display_name) || other.display_name == display_name)&&(identical(other.reminder, reminder) || other.reminder == reminder)&&(identical(other.next_upcoming_session, next_upcoming_session) || other.next_upcoming_session == next_upcoming_session));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ListenerDashboardData&&(identical(other.display_name, display_name) || other.display_name == display_name)&&(identical(other.is_online, is_online) || other.is_online == is_online)&&(identical(other.reminder, reminder) || other.reminder == reminder)&&(identical(other.next_upcoming_session, next_upcoming_session) || other.next_upcoming_session == next_upcoming_session));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,display_name,reminder,next_upcoming_session);
+int get hashCode => Object.hash(runtimeType,display_name,is_online,reminder,next_upcoming_session);
 
 @override
 String toString() {
-  return 'ListenerDashboardData(display_name: $display_name, reminder: $reminder, next_upcoming_session: $next_upcoming_session)';
+  return 'ListenerDashboardData(display_name: $display_name, is_online: $is_online, reminder: $reminder, next_upcoming_session: $next_upcoming_session)';
 }
 
 
@@ -331,7 +331,7 @@ abstract mixin class $ListenerDashboardDataCopyWith<$Res>  {
   factory $ListenerDashboardDataCopyWith(ListenerDashboardData value, $Res Function(ListenerDashboardData) _then) = _$ListenerDashboardDataCopyWithImpl;
 @useResult
 $Res call({
- String display_name, ListenerDashboardReminderModel? reminder, ListenerDashboardUpcomingSessionModel? next_upcoming_session
+ String display_name, bool is_online, ListenerDashboardReminderModel? reminder, ListenerDashboardUpcomingSessionModel? next_upcoming_session
 });
 
 
@@ -348,10 +348,11 @@ class _$ListenerDashboardDataCopyWithImpl<$Res>
 
 /// Create a copy of ListenerDashboardData
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? display_name = null,Object? reminder = freezed,Object? next_upcoming_session = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? display_name = null,Object? is_online = null,Object? reminder = freezed,Object? next_upcoming_session = freezed,}) {
   return _then(_self.copyWith(
 display_name: null == display_name ? _self.display_name : display_name // ignore: cast_nullable_to_non_nullable
-as String,reminder: freezed == reminder ? _self.reminder : reminder // ignore: cast_nullable_to_non_nullable
+as String,is_online: null == is_online ? _self.is_online : is_online // ignore: cast_nullable_to_non_nullable
+as bool,reminder: freezed == reminder ? _self.reminder : reminder // ignore: cast_nullable_to_non_nullable
 as ListenerDashboardReminderModel?,next_upcoming_session: freezed == next_upcoming_session ? _self.next_upcoming_session : next_upcoming_session // ignore: cast_nullable_to_non_nullable
 as ListenerDashboardUpcomingSessionModel?,
   ));
@@ -462,10 +463,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String display_name,  ListenerDashboardReminderModel? reminder,  ListenerDashboardUpcomingSessionModel? next_upcoming_session)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String display_name,  bool is_online,  ListenerDashboardReminderModel? reminder,  ListenerDashboardUpcomingSessionModel? next_upcoming_session)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ListenerDashboardData() when $default != null:
-return $default(_that.display_name,_that.reminder,_that.next_upcoming_session);case _:
+return $default(_that.display_name,_that.is_online,_that.reminder,_that.next_upcoming_session);case _:
   return orElse();
 
 }
@@ -483,10 +484,10 @@ return $default(_that.display_name,_that.reminder,_that.next_upcoming_session);c
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String display_name,  ListenerDashboardReminderModel? reminder,  ListenerDashboardUpcomingSessionModel? next_upcoming_session)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String display_name,  bool is_online,  ListenerDashboardReminderModel? reminder,  ListenerDashboardUpcomingSessionModel? next_upcoming_session)  $default,) {final _that = this;
 switch (_that) {
 case _ListenerDashboardData():
-return $default(_that.display_name,_that.reminder,_that.next_upcoming_session);case _:
+return $default(_that.display_name,_that.is_online,_that.reminder,_that.next_upcoming_session);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -503,10 +504,10 @@ return $default(_that.display_name,_that.reminder,_that.next_upcoming_session);c
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String display_name,  ListenerDashboardReminderModel? reminder,  ListenerDashboardUpcomingSessionModel? next_upcoming_session)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String display_name,  bool is_online,  ListenerDashboardReminderModel? reminder,  ListenerDashboardUpcomingSessionModel? next_upcoming_session)?  $default,) {final _that = this;
 switch (_that) {
 case _ListenerDashboardData() when $default != null:
-return $default(_that.display_name,_that.reminder,_that.next_upcoming_session);case _:
+return $default(_that.display_name,_that.is_online,_that.reminder,_that.next_upcoming_session);case _:
   return null;
 
 }
@@ -518,10 +519,11 @@ return $default(_that.display_name,_that.reminder,_that.next_upcoming_session);c
 @JsonSerializable(createFactory: false)
 
 class _ListenerDashboardData implements ListenerDashboardData {
-  const _ListenerDashboardData({this.display_name = '', this.reminder, this.next_upcoming_session});
+  const _ListenerDashboardData({this.display_name = '', this.is_online = false, this.reminder, this.next_upcoming_session});
   
 
 @override@JsonKey() final  String display_name;
+@override@JsonKey() final  bool is_online;
 @override final  ListenerDashboardReminderModel? reminder;
 @override final  ListenerDashboardUpcomingSessionModel? next_upcoming_session;
 
@@ -538,16 +540,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ListenerDashboardData&&(identical(other.display_name, display_name) || other.display_name == display_name)&&(identical(other.reminder, reminder) || other.reminder == reminder)&&(identical(other.next_upcoming_session, next_upcoming_session) || other.next_upcoming_session == next_upcoming_session));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ListenerDashboardData&&(identical(other.display_name, display_name) || other.display_name == display_name)&&(identical(other.is_online, is_online) || other.is_online == is_online)&&(identical(other.reminder, reminder) || other.reminder == reminder)&&(identical(other.next_upcoming_session, next_upcoming_session) || other.next_upcoming_session == next_upcoming_session));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,display_name,reminder,next_upcoming_session);
+int get hashCode => Object.hash(runtimeType,display_name,is_online,reminder,next_upcoming_session);
 
 @override
 String toString() {
-  return 'ListenerDashboardData(display_name: $display_name, reminder: $reminder, next_upcoming_session: $next_upcoming_session)';
+  return 'ListenerDashboardData(display_name: $display_name, is_online: $is_online, reminder: $reminder, next_upcoming_session: $next_upcoming_session)';
 }
 
 
@@ -558,7 +560,7 @@ abstract mixin class _$ListenerDashboardDataCopyWith<$Res> implements $ListenerD
   factory _$ListenerDashboardDataCopyWith(_ListenerDashboardData value, $Res Function(_ListenerDashboardData) _then) = __$ListenerDashboardDataCopyWithImpl;
 @override @useResult
 $Res call({
- String display_name, ListenerDashboardReminderModel? reminder, ListenerDashboardUpcomingSessionModel? next_upcoming_session
+ String display_name, bool is_online, ListenerDashboardReminderModel? reminder, ListenerDashboardUpcomingSessionModel? next_upcoming_session
 });
 
 
@@ -575,10 +577,11 @@ class __$ListenerDashboardDataCopyWithImpl<$Res>
 
 /// Create a copy of ListenerDashboardData
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? display_name = null,Object? reminder = freezed,Object? next_upcoming_session = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? display_name = null,Object? is_online = null,Object? reminder = freezed,Object? next_upcoming_session = freezed,}) {
   return _then(_ListenerDashboardData(
 display_name: null == display_name ? _self.display_name : display_name // ignore: cast_nullable_to_non_nullable
-as String,reminder: freezed == reminder ? _self.reminder : reminder // ignore: cast_nullable_to_non_nullable
+as String,is_online: null == is_online ? _self.is_online : is_online // ignore: cast_nullable_to_non_nullable
+as bool,reminder: freezed == reminder ? _self.reminder : reminder // ignore: cast_nullable_to_non_nullable
 as ListenerDashboardReminderModel?,next_upcoming_session: freezed == next_upcoming_session ? _self.next_upcoming_session : next_upcoming_session // ignore: cast_nullable_to_non_nullable
 as ListenerDashboardUpcomingSessionModel?,
   ));

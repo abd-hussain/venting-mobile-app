@@ -37,6 +37,7 @@ ListenerDashboardUpcomingSessionModel? _upcomingFromJson(Object? json) {
 abstract class ListenerDashboardData with _$ListenerDashboardData {
   const factory ListenerDashboardData({
     @Default('') String display_name,
+    @Default(false) bool is_online,
     ListenerDashboardReminderModel? reminder,
     ListenerDashboardUpcomingSessionModel? next_upcoming_session,
   }) = _ListenerDashboardData;
@@ -44,6 +45,7 @@ abstract class ListenerDashboardData with _$ListenerDashboardData {
   factory ListenerDashboardData.fromJson(Map<String, dynamic> json) =>
       ListenerDashboardData(
         display_name: json['display_name'] as String? ?? '',
+        is_online: json['is_online'] as bool? ?? false,
         reminder: _reminderFromJson(json['reminder']),
         next_upcoming_session: _upcomingFromJson(json['next_upcoming_session']),
       );

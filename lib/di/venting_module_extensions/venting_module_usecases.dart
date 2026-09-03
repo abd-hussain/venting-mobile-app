@@ -60,6 +60,7 @@ import 'package:venting_mobile_app/domain/usecase/complete_ventor_registration_u
 import 'package:venting_mobile_app/domain/usecase/decline_listener_session_request_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/delete_listener_notification_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/delete_ventor_notification_usecase.dart';
+import 'package:venting_mobile_app/domain/usecase/end_session_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_cached_auth_me_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_catalog_boundaries_usecase.dart';
 import 'package:venting_mobile_app/domain/usecase/get_catalog_categories_usecase.dart';
@@ -571,6 +572,11 @@ mixin VentingModuleUsecases on VentingModule {
     VentingPreferences ventingPreferences,
   ) => JoinSessionUsecase(listenerSessionsRepository, ventingPreferences);
 
+  EndSessionUsecase endSessionUsecase(
+    ListenerSessionsRepository listenerSessionsRepository,
+    VentingPreferences ventingPreferences,
+  ) => EndSessionUsecase(listenerSessionsRepository, ventingPreferences);
+
   AcknowledgeListenerFirstSessionTutorialUsecase
   acknowledgeListenerFirstSessionTutorialUsecase(
     ListenerSetupRepository listenerSetupRepository,
@@ -1058,6 +1064,12 @@ mixin VentingModuleUsecases on VentingModule {
     );
     getIt.registerFactory<JoinSessionUsecase>(
       () => joinSessionUsecase(
+        getIt<ListenerSessionsRepository>(),
+        getIt<VentingPreferences>(),
+      ),
+    );
+    getIt.registerFactory<EndSessionUsecase>(
+      () => endSessionUsecase(
         getIt<ListenerSessionsRepository>(),
         getIt<VentingPreferences>(),
       ),

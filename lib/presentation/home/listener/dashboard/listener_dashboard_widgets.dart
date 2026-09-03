@@ -95,11 +95,13 @@ class ListenerDashboardAvailabilityCard extends StatelessWidget {
     required this.goOnlineLabel,
     required this.onToggle,
     this.canGoOnline = true,
+    this.isUpdating = false,
     this.blockedFootnote,
   });
 
   final bool isOnline;
   final bool canGoOnline;
+  final bool isUpdating;
   final String currentlyLabel;
   final String availableLabel;
   final String offlineLabel;
@@ -108,7 +110,7 @@ class ListenerDashboardAvailabilityCard extends StatelessWidget {
   final String goOfflineLabel;
   final String goOnlineLabel;
   final String? blockedFootnote;
-  final VoidCallback onToggle;
+  final VoidCallback? onToggle;
 
   @override
   Widget build(BuildContext context) {
@@ -199,13 +201,22 @@ class ListenerDashboardAvailabilityCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
               ),
             ),
-            child: Text(
-              isOnline ? goOfflineLabel : goOnlineLabel,
-              style: GoogleFonts.inter(
-                fontSize: 13,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
+            child: isUpdating
+                ? const SizedBox(
+                    width: 18,
+                    height: 18,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      color: Colors.white,
+                    ),
+                  )
+                : Text(
+                    isOnline ? goOfflineLabel : goOnlineLabel,
+                    style: GoogleFonts.inter(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
           ),
         ],
       ),

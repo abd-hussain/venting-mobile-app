@@ -27,8 +27,13 @@ class ListenerDashboardUpcomingSession {
 }
 
 class ListenerDashboard {
-  const ListenerDashboard({this.reminder, this.nextUpcomingSession});
+  const ListenerDashboard({
+    this.isOnline = false,
+    this.reminder,
+    this.nextUpcomingSession,
+  });
 
+  final bool isOnline;
   final ListenerDashboardReminder? reminder;
   final ListenerDashboardUpcomingSession? nextUpcomingSession;
 }
@@ -38,6 +43,7 @@ ListenerDashboard listenerDashboardFromApi(
   required String apiBaseUrl,
 }) {
   return ListenerDashboard(
+    isOnline: data.is_online,
     reminder: _reminderFromApi(data.reminder),
     nextUpcomingSession: _upcomingFromApi(
       data.next_upcoming_session,

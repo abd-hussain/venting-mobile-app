@@ -10,6 +10,9 @@ sealed class ListenerDashboardState with _$ListenerDashboardState {
     ListenerDashboardSetupProgress? setupProgress,
     @Default('') String setupErrorMessage,
     @Default('') String listenerDisplayName,
+    @Default(false) bool isOnline,
+    @Default(false) bool isUpdatingOnlineStatus,
+    @Default('') String onlineStatusErrorMessage,
     ListenerDashboardReminder? dailyReminder,
     ListenerDashboardUpcomingSession? nextUpcomingSession,
   }) = _ListenerDashboardState;

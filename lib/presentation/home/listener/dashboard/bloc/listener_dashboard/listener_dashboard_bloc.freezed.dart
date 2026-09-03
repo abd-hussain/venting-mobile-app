@@ -55,13 +55,14 @@ extension ListenerDashboardEventPatterns on ListenerDashboardEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Started value)?  started,TResult Function( _RetrySetupLoad value)?  retrySetupLoad,TResult Function( _SetupRefreshRequested value)?  setupRefreshRequested,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Started value)?  started,TResult Function( _RetrySetupLoad value)?  retrySetupLoad,TResult Function( _SetupRefreshRequested value)?  setupRefreshRequested,TResult Function( _OnlineStatusChanged value)?  onlineStatusChanged,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case _Started() when started != null:
 return started(_that);case _RetrySetupLoad() when retrySetupLoad != null:
 return retrySetupLoad(_that);case _SetupRefreshRequested() when setupRefreshRequested != null:
-return setupRefreshRequested(_that);case _:
+return setupRefreshRequested(_that);case _OnlineStatusChanged() when onlineStatusChanged != null:
+return onlineStatusChanged(_that);case _:
   return orElse();
 
 }
@@ -79,13 +80,14 @@ return setupRefreshRequested(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Started value)  started,required TResult Function( _RetrySetupLoad value)  retrySetupLoad,required TResult Function( _SetupRefreshRequested value)  setupRefreshRequested,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Started value)  started,required TResult Function( _RetrySetupLoad value)  retrySetupLoad,required TResult Function( _SetupRefreshRequested value)  setupRefreshRequested,required TResult Function( _OnlineStatusChanged value)  onlineStatusChanged,}){
 final _that = this;
 switch (_that) {
 case _Started():
 return started(_that);case _RetrySetupLoad():
 return retrySetupLoad(_that);case _SetupRefreshRequested():
-return setupRefreshRequested(_that);}
+return setupRefreshRequested(_that);case _OnlineStatusChanged():
+return onlineStatusChanged(_that);}
 }
 /// A variant of `map` that fallback to returning `null`.
 ///
@@ -99,13 +101,14 @@ return setupRefreshRequested(_that);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Started value)?  started,TResult? Function( _RetrySetupLoad value)?  retrySetupLoad,TResult? Function( _SetupRefreshRequested value)?  setupRefreshRequested,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Started value)?  started,TResult? Function( _RetrySetupLoad value)?  retrySetupLoad,TResult? Function( _SetupRefreshRequested value)?  setupRefreshRequested,TResult? Function( _OnlineStatusChanged value)?  onlineStatusChanged,}){
 final _that = this;
 switch (_that) {
 case _Started() when started != null:
 return started(_that);case _RetrySetupLoad() when retrySetupLoad != null:
 return retrySetupLoad(_that);case _SetupRefreshRequested() when setupRefreshRequested != null:
-return setupRefreshRequested(_that);case _:
+return setupRefreshRequested(_that);case _OnlineStatusChanged() when onlineStatusChanged != null:
+return onlineStatusChanged(_that);case _:
   return null;
 
 }
@@ -122,12 +125,13 @@ return setupRefreshRequested(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  started,TResult Function()?  retrySetupLoad,TResult Function()?  setupRefreshRequested,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  started,TResult Function()?  retrySetupLoad,TResult Function()?  setupRefreshRequested,TResult Function( bool isOnline)?  onlineStatusChanged,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Started() when started != null:
 return started();case _RetrySetupLoad() when retrySetupLoad != null:
 return retrySetupLoad();case _SetupRefreshRequested() when setupRefreshRequested != null:
-return setupRefreshRequested();case _:
+return setupRefreshRequested();case _OnlineStatusChanged() when onlineStatusChanged != null:
+return onlineStatusChanged(_that.isOnline);case _:
   return orElse();
 
 }
@@ -145,12 +149,13 @@ return setupRefreshRequested();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  started,required TResult Function()  retrySetupLoad,required TResult Function()  setupRefreshRequested,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  started,required TResult Function()  retrySetupLoad,required TResult Function()  setupRefreshRequested,required TResult Function( bool isOnline)  onlineStatusChanged,}) {final _that = this;
 switch (_that) {
 case _Started():
 return started();case _RetrySetupLoad():
 return retrySetupLoad();case _SetupRefreshRequested():
-return setupRefreshRequested();}
+return setupRefreshRequested();case _OnlineStatusChanged():
+return onlineStatusChanged(_that.isOnline);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -164,12 +169,13 @@ return setupRefreshRequested();}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  started,TResult? Function()?  retrySetupLoad,TResult? Function()?  setupRefreshRequested,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  started,TResult? Function()?  retrySetupLoad,TResult? Function()?  setupRefreshRequested,TResult? Function( bool isOnline)?  onlineStatusChanged,}) {final _that = this;
 switch (_that) {
 case _Started() when started != null:
 return started();case _RetrySetupLoad() when retrySetupLoad != null:
 return retrySetupLoad();case _SetupRefreshRequested() when setupRefreshRequested != null:
-return setupRefreshRequested();case _:
+return setupRefreshRequested();case _OnlineStatusChanged() when onlineStatusChanged != null:
+return onlineStatusChanged(_that.isOnline);case _:
   return null;
 
 }
@@ -274,9 +280,75 @@ String toString() {
 
 
 /// @nodoc
+
+
+class _OnlineStatusChanged implements ListenerDashboardEvent {
+  const _OnlineStatusChanged({required this.isOnline});
+  
+
+ final  bool isOnline;
+
+/// Create a copy of ListenerDashboardEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$OnlineStatusChangedCopyWith<_OnlineStatusChanged> get copyWith => __$OnlineStatusChangedCopyWithImpl<_OnlineStatusChanged>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _OnlineStatusChanged&&(identical(other.isOnline, isOnline) || other.isOnline == isOnline));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,isOnline);
+
+@override
+String toString() {
+  return 'ListenerDashboardEvent.onlineStatusChanged(isOnline: $isOnline)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$OnlineStatusChangedCopyWith<$Res> implements $ListenerDashboardEventCopyWith<$Res> {
+  factory _$OnlineStatusChangedCopyWith(_OnlineStatusChanged value, $Res Function(_OnlineStatusChanged) _then) = __$OnlineStatusChangedCopyWithImpl;
+@useResult
+$Res call({
+ bool isOnline
+});
+
+
+
+
+}
+/// @nodoc
+class __$OnlineStatusChangedCopyWithImpl<$Res>
+    implements _$OnlineStatusChangedCopyWith<$Res> {
+  __$OnlineStatusChangedCopyWithImpl(this._self, this._then);
+
+  final _OnlineStatusChanged _self;
+  final $Res Function(_OnlineStatusChanged) _then;
+
+/// Create a copy of ListenerDashboardEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? isOnline = null,}) {
+  return _then(_OnlineStatusChanged(
+isOnline: null == isOnline ? _self.isOnline : isOnline // ignore: cast_nullable_to_non_nullable
+as bool,
+  ));
+}
+
+
+}
+
+/// @nodoc
 mixin _$ListenerDashboardState {
 
- ListenerDashboardSetupStatus get setupStatus; ListenerDashboardSetupProgress? get setupProgress; String get setupErrorMessage; String get listenerDisplayName; ListenerDashboardReminder? get dailyReminder; ListenerDashboardUpcomingSession? get nextUpcomingSession;
+ ListenerDashboardSetupStatus get setupStatus; ListenerDashboardSetupProgress? get setupProgress; String get setupErrorMessage; String get listenerDisplayName; bool get isOnline; bool get isUpdatingOnlineStatus; String get onlineStatusErrorMessage; ListenerDashboardReminder? get dailyReminder; ListenerDashboardUpcomingSession? get nextUpcomingSession;
 /// Create a copy of ListenerDashboardState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -287,16 +359,16 @@ $ListenerDashboardStateCopyWith<ListenerDashboardState> get copyWith => _$Listen
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ListenerDashboardState&&(identical(other.setupStatus, setupStatus) || other.setupStatus == setupStatus)&&(identical(other.setupProgress, setupProgress) || other.setupProgress == setupProgress)&&(identical(other.setupErrorMessage, setupErrorMessage) || other.setupErrorMessage == setupErrorMessage)&&(identical(other.listenerDisplayName, listenerDisplayName) || other.listenerDisplayName == listenerDisplayName)&&(identical(other.dailyReminder, dailyReminder) || other.dailyReminder == dailyReminder)&&(identical(other.nextUpcomingSession, nextUpcomingSession) || other.nextUpcomingSession == nextUpcomingSession));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ListenerDashboardState&&(identical(other.setupStatus, setupStatus) || other.setupStatus == setupStatus)&&(identical(other.setupProgress, setupProgress) || other.setupProgress == setupProgress)&&(identical(other.setupErrorMessage, setupErrorMessage) || other.setupErrorMessage == setupErrorMessage)&&(identical(other.listenerDisplayName, listenerDisplayName) || other.listenerDisplayName == listenerDisplayName)&&(identical(other.isOnline, isOnline) || other.isOnline == isOnline)&&(identical(other.isUpdatingOnlineStatus, isUpdatingOnlineStatus) || other.isUpdatingOnlineStatus == isUpdatingOnlineStatus)&&(identical(other.onlineStatusErrorMessage, onlineStatusErrorMessage) || other.onlineStatusErrorMessage == onlineStatusErrorMessage)&&(identical(other.dailyReminder, dailyReminder) || other.dailyReminder == dailyReminder)&&(identical(other.nextUpcomingSession, nextUpcomingSession) || other.nextUpcomingSession == nextUpcomingSession));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,setupStatus,setupProgress,setupErrorMessage,listenerDisplayName,dailyReminder,nextUpcomingSession);
+int get hashCode => Object.hash(runtimeType,setupStatus,setupProgress,setupErrorMessage,listenerDisplayName,isOnline,isUpdatingOnlineStatus,onlineStatusErrorMessage,dailyReminder,nextUpcomingSession);
 
 @override
 String toString() {
-  return 'ListenerDashboardState(setupStatus: $setupStatus, setupProgress: $setupProgress, setupErrorMessage: $setupErrorMessage, listenerDisplayName: $listenerDisplayName, dailyReminder: $dailyReminder, nextUpcomingSession: $nextUpcomingSession)';
+  return 'ListenerDashboardState(setupStatus: $setupStatus, setupProgress: $setupProgress, setupErrorMessage: $setupErrorMessage, listenerDisplayName: $listenerDisplayName, isOnline: $isOnline, isUpdatingOnlineStatus: $isUpdatingOnlineStatus, onlineStatusErrorMessage: $onlineStatusErrorMessage, dailyReminder: $dailyReminder, nextUpcomingSession: $nextUpcomingSession)';
 }
 
 
@@ -307,7 +379,7 @@ abstract mixin class $ListenerDashboardStateCopyWith<$Res>  {
   factory $ListenerDashboardStateCopyWith(ListenerDashboardState value, $Res Function(ListenerDashboardState) _then) = _$ListenerDashboardStateCopyWithImpl;
 @useResult
 $Res call({
- ListenerDashboardSetupStatus setupStatus, ListenerDashboardSetupProgress? setupProgress, String setupErrorMessage, String listenerDisplayName, ListenerDashboardReminder? dailyReminder, ListenerDashboardUpcomingSession? nextUpcomingSession
+ ListenerDashboardSetupStatus setupStatus, ListenerDashboardSetupProgress? setupProgress, String setupErrorMessage, String listenerDisplayName, bool isOnline, bool isUpdatingOnlineStatus, String onlineStatusErrorMessage, ListenerDashboardReminder? dailyReminder, ListenerDashboardUpcomingSession? nextUpcomingSession
 });
 
 
@@ -324,12 +396,15 @@ class _$ListenerDashboardStateCopyWithImpl<$Res>
 
 /// Create a copy of ListenerDashboardState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? setupStatus = null,Object? setupProgress = freezed,Object? setupErrorMessage = null,Object? listenerDisplayName = null,Object? dailyReminder = freezed,Object? nextUpcomingSession = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? setupStatus = null,Object? setupProgress = freezed,Object? setupErrorMessage = null,Object? listenerDisplayName = null,Object? isOnline = null,Object? isUpdatingOnlineStatus = null,Object? onlineStatusErrorMessage = null,Object? dailyReminder = freezed,Object? nextUpcomingSession = freezed,}) {
   return _then(_self.copyWith(
 setupStatus: null == setupStatus ? _self.setupStatus : setupStatus // ignore: cast_nullable_to_non_nullable
 as ListenerDashboardSetupStatus,setupProgress: freezed == setupProgress ? _self.setupProgress : setupProgress // ignore: cast_nullable_to_non_nullable
 as ListenerDashboardSetupProgress?,setupErrorMessage: null == setupErrorMessage ? _self.setupErrorMessage : setupErrorMessage // ignore: cast_nullable_to_non_nullable
 as String,listenerDisplayName: null == listenerDisplayName ? _self.listenerDisplayName : listenerDisplayName // ignore: cast_nullable_to_non_nullable
+as String,isOnline: null == isOnline ? _self.isOnline : isOnline // ignore: cast_nullable_to_non_nullable
+as bool,isUpdatingOnlineStatus: null == isUpdatingOnlineStatus ? _self.isUpdatingOnlineStatus : isUpdatingOnlineStatus // ignore: cast_nullable_to_non_nullable
+as bool,onlineStatusErrorMessage: null == onlineStatusErrorMessage ? _self.onlineStatusErrorMessage : onlineStatusErrorMessage // ignore: cast_nullable_to_non_nullable
 as String,dailyReminder: freezed == dailyReminder ? _self.dailyReminder : dailyReminder // ignore: cast_nullable_to_non_nullable
 as ListenerDashboardReminder?,nextUpcomingSession: freezed == nextUpcomingSession ? _self.nextUpcomingSession : nextUpcomingSession // ignore: cast_nullable_to_non_nullable
 as ListenerDashboardUpcomingSession?,
@@ -414,10 +489,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( ListenerDashboardSetupStatus setupStatus,  ListenerDashboardSetupProgress? setupProgress,  String setupErrorMessage,  String listenerDisplayName,  ListenerDashboardReminder? dailyReminder,  ListenerDashboardUpcomingSession? nextUpcomingSession)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( ListenerDashboardSetupStatus setupStatus,  ListenerDashboardSetupProgress? setupProgress,  String setupErrorMessage,  String listenerDisplayName,  bool isOnline,  bool isUpdatingOnlineStatus,  String onlineStatusErrorMessage,  ListenerDashboardReminder? dailyReminder,  ListenerDashboardUpcomingSession? nextUpcomingSession)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ListenerDashboardState() when $default != null:
-return $default(_that.setupStatus,_that.setupProgress,_that.setupErrorMessage,_that.listenerDisplayName,_that.dailyReminder,_that.nextUpcomingSession);case _:
+return $default(_that.setupStatus,_that.setupProgress,_that.setupErrorMessage,_that.listenerDisplayName,_that.isOnline,_that.isUpdatingOnlineStatus,_that.onlineStatusErrorMessage,_that.dailyReminder,_that.nextUpcomingSession);case _:
   return orElse();
 
 }
@@ -435,10 +510,10 @@ return $default(_that.setupStatus,_that.setupProgress,_that.setupErrorMessage,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( ListenerDashboardSetupStatus setupStatus,  ListenerDashboardSetupProgress? setupProgress,  String setupErrorMessage,  String listenerDisplayName,  ListenerDashboardReminder? dailyReminder,  ListenerDashboardUpcomingSession? nextUpcomingSession)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( ListenerDashboardSetupStatus setupStatus,  ListenerDashboardSetupProgress? setupProgress,  String setupErrorMessage,  String listenerDisplayName,  bool isOnline,  bool isUpdatingOnlineStatus,  String onlineStatusErrorMessage,  ListenerDashboardReminder? dailyReminder,  ListenerDashboardUpcomingSession? nextUpcomingSession)  $default,) {final _that = this;
 switch (_that) {
 case _ListenerDashboardState():
-return $default(_that.setupStatus,_that.setupProgress,_that.setupErrorMessage,_that.listenerDisplayName,_that.dailyReminder,_that.nextUpcomingSession);}
+return $default(_that.setupStatus,_that.setupProgress,_that.setupErrorMessage,_that.listenerDisplayName,_that.isOnline,_that.isUpdatingOnlineStatus,_that.onlineStatusErrorMessage,_that.dailyReminder,_that.nextUpcomingSession);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -452,10 +527,10 @@ return $default(_that.setupStatus,_that.setupProgress,_that.setupErrorMessage,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( ListenerDashboardSetupStatus setupStatus,  ListenerDashboardSetupProgress? setupProgress,  String setupErrorMessage,  String listenerDisplayName,  ListenerDashboardReminder? dailyReminder,  ListenerDashboardUpcomingSession? nextUpcomingSession)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( ListenerDashboardSetupStatus setupStatus,  ListenerDashboardSetupProgress? setupProgress,  String setupErrorMessage,  String listenerDisplayName,  bool isOnline,  bool isUpdatingOnlineStatus,  String onlineStatusErrorMessage,  ListenerDashboardReminder? dailyReminder,  ListenerDashboardUpcomingSession? nextUpcomingSession)?  $default,) {final _that = this;
 switch (_that) {
 case _ListenerDashboardState() when $default != null:
-return $default(_that.setupStatus,_that.setupProgress,_that.setupErrorMessage,_that.listenerDisplayName,_that.dailyReminder,_that.nextUpcomingSession);case _:
+return $default(_that.setupStatus,_that.setupProgress,_that.setupErrorMessage,_that.listenerDisplayName,_that.isOnline,_that.isUpdatingOnlineStatus,_that.onlineStatusErrorMessage,_that.dailyReminder,_that.nextUpcomingSession);case _:
   return null;
 
 }
@@ -467,13 +542,16 @@ return $default(_that.setupStatus,_that.setupProgress,_that.setupErrorMessage,_t
 
 
 class _ListenerDashboardState extends ListenerDashboardState {
-  const _ListenerDashboardState({this.setupStatus = ListenerDashboardSetupStatus.initial, this.setupProgress, this.setupErrorMessage = '', this.listenerDisplayName = '', this.dailyReminder, this.nextUpcomingSession}): super._();
+  const _ListenerDashboardState({this.setupStatus = ListenerDashboardSetupStatus.initial, this.setupProgress, this.setupErrorMessage = '', this.listenerDisplayName = '', this.isOnline = false, this.isUpdatingOnlineStatus = false, this.onlineStatusErrorMessage = '', this.dailyReminder, this.nextUpcomingSession}): super._();
   
 
 @override@JsonKey() final  ListenerDashboardSetupStatus setupStatus;
 @override final  ListenerDashboardSetupProgress? setupProgress;
 @override@JsonKey() final  String setupErrorMessage;
 @override@JsonKey() final  String listenerDisplayName;
+@override@JsonKey() final  bool isOnline;
+@override@JsonKey() final  bool isUpdatingOnlineStatus;
+@override@JsonKey() final  String onlineStatusErrorMessage;
 @override final  ListenerDashboardReminder? dailyReminder;
 @override final  ListenerDashboardUpcomingSession? nextUpcomingSession;
 
@@ -487,16 +565,16 @@ _$ListenerDashboardStateCopyWith<_ListenerDashboardState> get copyWith => __$Lis
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ListenerDashboardState&&(identical(other.setupStatus, setupStatus) || other.setupStatus == setupStatus)&&(identical(other.setupProgress, setupProgress) || other.setupProgress == setupProgress)&&(identical(other.setupErrorMessage, setupErrorMessage) || other.setupErrorMessage == setupErrorMessage)&&(identical(other.listenerDisplayName, listenerDisplayName) || other.listenerDisplayName == listenerDisplayName)&&(identical(other.dailyReminder, dailyReminder) || other.dailyReminder == dailyReminder)&&(identical(other.nextUpcomingSession, nextUpcomingSession) || other.nextUpcomingSession == nextUpcomingSession));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ListenerDashboardState&&(identical(other.setupStatus, setupStatus) || other.setupStatus == setupStatus)&&(identical(other.setupProgress, setupProgress) || other.setupProgress == setupProgress)&&(identical(other.setupErrorMessage, setupErrorMessage) || other.setupErrorMessage == setupErrorMessage)&&(identical(other.listenerDisplayName, listenerDisplayName) || other.listenerDisplayName == listenerDisplayName)&&(identical(other.isOnline, isOnline) || other.isOnline == isOnline)&&(identical(other.isUpdatingOnlineStatus, isUpdatingOnlineStatus) || other.isUpdatingOnlineStatus == isUpdatingOnlineStatus)&&(identical(other.onlineStatusErrorMessage, onlineStatusErrorMessage) || other.onlineStatusErrorMessage == onlineStatusErrorMessage)&&(identical(other.dailyReminder, dailyReminder) || other.dailyReminder == dailyReminder)&&(identical(other.nextUpcomingSession, nextUpcomingSession) || other.nextUpcomingSession == nextUpcomingSession));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,setupStatus,setupProgress,setupErrorMessage,listenerDisplayName,dailyReminder,nextUpcomingSession);
+int get hashCode => Object.hash(runtimeType,setupStatus,setupProgress,setupErrorMessage,listenerDisplayName,isOnline,isUpdatingOnlineStatus,onlineStatusErrorMessage,dailyReminder,nextUpcomingSession);
 
 @override
 String toString() {
-  return 'ListenerDashboardState(setupStatus: $setupStatus, setupProgress: $setupProgress, setupErrorMessage: $setupErrorMessage, listenerDisplayName: $listenerDisplayName, dailyReminder: $dailyReminder, nextUpcomingSession: $nextUpcomingSession)';
+  return 'ListenerDashboardState(setupStatus: $setupStatus, setupProgress: $setupProgress, setupErrorMessage: $setupErrorMessage, listenerDisplayName: $listenerDisplayName, isOnline: $isOnline, isUpdatingOnlineStatus: $isUpdatingOnlineStatus, onlineStatusErrorMessage: $onlineStatusErrorMessage, dailyReminder: $dailyReminder, nextUpcomingSession: $nextUpcomingSession)';
 }
 
 
@@ -507,7 +585,7 @@ abstract mixin class _$ListenerDashboardStateCopyWith<$Res> implements $Listener
   factory _$ListenerDashboardStateCopyWith(_ListenerDashboardState value, $Res Function(_ListenerDashboardState) _then) = __$ListenerDashboardStateCopyWithImpl;
 @override @useResult
 $Res call({
- ListenerDashboardSetupStatus setupStatus, ListenerDashboardSetupProgress? setupProgress, String setupErrorMessage, String listenerDisplayName, ListenerDashboardReminder? dailyReminder, ListenerDashboardUpcomingSession? nextUpcomingSession
+ ListenerDashboardSetupStatus setupStatus, ListenerDashboardSetupProgress? setupProgress, String setupErrorMessage, String listenerDisplayName, bool isOnline, bool isUpdatingOnlineStatus, String onlineStatusErrorMessage, ListenerDashboardReminder? dailyReminder, ListenerDashboardUpcomingSession? nextUpcomingSession
 });
 
 
@@ -524,12 +602,15 @@ class __$ListenerDashboardStateCopyWithImpl<$Res>
 
 /// Create a copy of ListenerDashboardState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? setupStatus = null,Object? setupProgress = freezed,Object? setupErrorMessage = null,Object? listenerDisplayName = null,Object? dailyReminder = freezed,Object? nextUpcomingSession = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? setupStatus = null,Object? setupProgress = freezed,Object? setupErrorMessage = null,Object? listenerDisplayName = null,Object? isOnline = null,Object? isUpdatingOnlineStatus = null,Object? onlineStatusErrorMessage = null,Object? dailyReminder = freezed,Object? nextUpcomingSession = freezed,}) {
   return _then(_ListenerDashboardState(
 setupStatus: null == setupStatus ? _self.setupStatus : setupStatus // ignore: cast_nullable_to_non_nullable
 as ListenerDashboardSetupStatus,setupProgress: freezed == setupProgress ? _self.setupProgress : setupProgress // ignore: cast_nullable_to_non_nullable
 as ListenerDashboardSetupProgress?,setupErrorMessage: null == setupErrorMessage ? _self.setupErrorMessage : setupErrorMessage // ignore: cast_nullable_to_non_nullable
 as String,listenerDisplayName: null == listenerDisplayName ? _self.listenerDisplayName : listenerDisplayName // ignore: cast_nullable_to_non_nullable
+as String,isOnline: null == isOnline ? _self.isOnline : isOnline // ignore: cast_nullable_to_non_nullable
+as bool,isUpdatingOnlineStatus: null == isUpdatingOnlineStatus ? _self.isUpdatingOnlineStatus : isUpdatingOnlineStatus // ignore: cast_nullable_to_non_nullable
+as bool,onlineStatusErrorMessage: null == onlineStatusErrorMessage ? _self.onlineStatusErrorMessage : onlineStatusErrorMessage // ignore: cast_nullable_to_non_nullable
 as String,dailyReminder: freezed == dailyReminder ? _self.dailyReminder : dailyReminder // ignore: cast_nullable_to_non_nullable
 as ListenerDashboardReminder?,nextUpcomingSession: freezed == nextUpcomingSession ? _self.nextUpcomingSession : nextUpcomingSession // ignore: cast_nullable_to_non_nullable
 as ListenerDashboardUpcomingSession?,

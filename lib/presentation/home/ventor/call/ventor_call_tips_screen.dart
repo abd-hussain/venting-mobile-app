@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:venting_mobile_app/di/di_container.dart';
 import 'package:venting_mobile_app/l10n/gen/app_localizations.dart';
+import 'package:venting_mobile_app/presentation/home/ventor/call/bloc/ventor_call_join/ventor_call_join_bloc.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/call/ventor_call_args.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/call/ventor_call_screen.dart';
 import 'package:venting_mobile_app/presentation/home/ventor/profile/ventor_profile_theme.dart';
@@ -26,12 +29,11 @@ class _VentorCallTipsScreenState extends State<VentorCallTipsScreen> {
 
   var _micGranted = false;
   var _cameraGranted = false;
-  var _joining = false;
 
   bool get _needsCamera => widget.args.isVideoCall;
 
-  bool get _canJoin =>
-      !_joining && _micGranted && (!_needsCamera || _cameraGranted);
+  bool _canJoin(bool isJoining) =>
+      !isJoining && _micGranted && (!_needsCamera || _cameraGranted);
 
   @override
   void initState() {
@@ -54,12 +56,8 @@ class _VentorCallTipsScreenState extends State<VentorCallTipsScreen> {
     if (status.isGranted) return true;
     if (status.isPermanentlyDenied) {
       if (!mounted) return false;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            VentingMobLocalizations.of(context).ventor_call_permission_settings,
-          ),
-        ),
+      _showSnack(
+        VentingMobLocalizations.of(context).ventor_call_permission_settings,
       );
       await openAppSettings();
       return false;
@@ -80,14 +78,27 @@ class _VentorCallTipsScreenState extends State<VentorCallTipsScreen> {
     setState(() => _cameraGranted = granted);
   }
 
-  Future<void> _onEnterCall() async {
-    if (!_canJoin) return;
-    setState(() => _joining = true);
-    // TODO: Notify backend that ventor joined the session.
+  void _showSnack(String message) {
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(message)));
+  }
+
+  void _onEnterCall(BuildContext context) {
+    context.read<VentorCallJoinBloc>().add(
+      VentorCallJoinEvent.joinRequested(sessionId: widget.args.sessionId),
+    );
+  }
+
+  Future<void> _openCallScreen(VentorCallJoinState state) async {
+    final credentials = state.callCredentials;
+    if (credentials == null) return;
     if (!mounted) return;
     await Navigator.of(context).pushReplacement(
       MaterialPageRoute(
-        builder: (_) => VentorCallScreen(args: widget.args),
+        builder: (_) => VentorCallScreen(
+          args: widget.args.copyWith(callCredentials: credentials),
+        ),
       ),
     );
   }
@@ -97,147 +108,172 @@ class _VentorCallTipsScreenState extends State<VentorCallTipsScreen> {
     final l10n = VentingMobLocalizations.of(context);
     final args = widget.args;
 
-    return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: _overlayStyle,
-      child: Scaffold(
-        backgroundColor: SplashColors.backgroundBottom,
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          leading: IconButton(
-            onPressed: () => Navigator.of(context).pop(),
-            icon: const Icon(Icons.arrow_back_ios_new_rounded, size: 18),
-            color: Colors.white,
-          ),
-          title: Text(
-            l10n.ventor_call_tips_title,
-            style: GoogleFonts.inter(
-              color: Colors.white,
-              fontSize: 17,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-        ),
-        body: Column(
-          children: [
-            Expanded(
-              child: ListView(
-                padding: const EdgeInsets.fromLTRB(20, 8, 20, 24),
-                children: [
-                  _ListenerHeader(
-                    name: args.listenerName,
-                    avatarUrl: args.listenerAvatarUrl,
-                    rating: args.listenerRating,
-                    durationMinutes: args.durationMinutes,
-                    speechLanguage: args.speechLanguage,
-                    isVideoCall: args.isVideoCall,
-                    l10n: l10n,
+    return BlocProvider(
+      create: (_) => diContainer<VentorCallJoinBloc>(),
+      child: AnnotatedRegion<SystemUiOverlayStyle>(
+        value: _overlayStyle,
+        child: BlocConsumer<VentorCallJoinBloc, VentorCallJoinState>(
+          listenWhen: (previous, current) =>
+              previous.joinSucceeded != current.joinSucceeded ||
+              previous.errorMessage != current.errorMessage,
+          listener: (context, state) {
+            if (state.errorMessage.isNotEmpty) {
+              _showSnack(state.errorMessage);
+              return;
+            }
+            if (state.joinSucceeded) {
+              _openCallScreen(state);
+            }
+          },
+          builder: (context, joinState) {
+            return Scaffold(
+              backgroundColor: SplashColors.backgroundBottom,
+              appBar: AppBar(
+                backgroundColor: Colors.transparent,
+                elevation: 0,
+                leading: IconButton(
+                  onPressed: joinState.isJoining
+                      ? null
+                      : () => Navigator.of(context).pop(),
+                  icon: const Icon(Icons.arrow_back_ios_new_rounded, size: 18),
+                  color: Colors.white,
+                ),
+                title: Text(
+                  l10n.ventor_call_tips_title,
+                  style: GoogleFonts.inter(
+                    color: Colors.white,
+                    fontSize: 17,
+                    fontWeight: FontWeight.w700,
                   ),
-                  const SizedBox(height: 22),
-                  Text(
-                    l10n.ventor_sessions_confirm_tips_title,
-                    style: GoogleFonts.inter(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-                  _TipTile(
-                    icon: Icons.volume_off_rounded,
-                    text: l10n.ventor_sessions_confirm_tip_quiet,
-                  ),
-                  _TipTile(
-                    icon: Icons.favorite_outline_rounded,
-                    text: l10n.ventor_sessions_confirm_tip_honest,
-                  ),
-                  _TipTile(
-                    icon: Icons.shield_outlined,
-                    text: l10n.ventor_sessions_confirm_tip_boundaries,
-                  ),
-                  _TipTile(
-                    icon: Icons.exit_to_app_rounded,
-                    text: l10n.ventor_sessions_confirm_tip_leave,
-                  ),
-                  const SizedBox(height: 22),
-                  Text(
-                    l10n.ventor_call_permissions_heading,
-                    style: GoogleFonts.inter(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  const SizedBox(height: 6),
-                  Text(
-                    _needsCamera
-                        ? l10n.ventor_call_permissions_subtitle_video
-                        : l10n.ventor_call_permissions_subtitle_voice,
-                    style: GoogleFonts.inter(
-                      color: VentorProfileTheme.muted,
-                      fontSize: 13,
-                      height: 1.35,
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-                  _PermissionRow(
-                    icon: Icons.mic_rounded,
-                    label: l10n.ventor_call_permission_mic,
-                    granted: _micGranted,
-                    allowLabel: l10n.ventor_call_permission_allow,
-                    grantedLabel: l10n.ventor_call_permission_granted,
-                    onAllow: _requestMic,
-                  ),
-                  if (_needsCamera) ...[
-                    const SizedBox(height: 10),
-                    _PermissionRow(
-                      icon: Icons.videocam_rounded,
-                      label: l10n.ventor_call_permission_camera,
-                      granted: _cameraGranted,
-                      allowLabel: l10n.ventor_call_permission_allow,
-                      grantedLabel: l10n.ventor_call_permission_granted,
-                      onAllow: _requestCamera,
-                    ),
-                  ],
-                ],
+                ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20, 8, 20, 20),
-              child: SizedBox(
-                width: double.infinity,
-                height: 54,
-                child: FilledButton(
-                  onPressed: _canJoin ? _onEnterCall : null,
-                  style: FilledButton.styleFrom(
-                    backgroundColor: SplashColors.purpleMid,
-                    disabledBackgroundColor:
-                        SplashColors.purpleMid.withValues(alpha: 0.4),
-                    foregroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(14),
-                    ),
-                  ),
-                  child: _joining
-                      ? const SizedBox(
-                          width: 22,
-                          height: 22,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2,
-                            color: Colors.white,
-                          ),
-                        )
-                      : Text(
-                          l10n.ventor_call_enter,
+              body: Column(
+                children: [
+                  Expanded(
+                    child: ListView(
+                      padding: const EdgeInsets.fromLTRB(20, 8, 20, 24),
+                      children: [
+                        _ListenerHeader(
+                          name: args.listenerName,
+                          avatarUrl: args.listenerAvatarUrl,
+                          rating: args.listenerRating,
+                          durationMinutes: args.durationMinutes,
+                          speechLanguage: args.speechLanguage,
+                          isVideoCall: args.isVideoCall,
+                          l10n: l10n,
+                        ),
+                        const SizedBox(height: 22),
+                        Text(
+                          l10n.ventor_sessions_confirm_tips_title,
                           style: GoogleFonts.inter(
+                            color: Colors.white,
                             fontSize: 16,
                             fontWeight: FontWeight.w700,
                           ),
                         ),
-                ),
+                        const SizedBox(height: 12),
+                        _TipTile(
+                          icon: Icons.volume_off_rounded,
+                          text: l10n.ventor_sessions_confirm_tip_quiet,
+                        ),
+                        _TipTile(
+                          icon: Icons.favorite_outline_rounded,
+                          text: l10n.ventor_sessions_confirm_tip_honest,
+                        ),
+                        _TipTile(
+                          icon: Icons.shield_outlined,
+                          text: l10n.ventor_sessions_confirm_tip_boundaries,
+                        ),
+                        _TipTile(
+                          icon: Icons.exit_to_app_rounded,
+                          text: l10n.ventor_sessions_confirm_tip_leave,
+                        ),
+                        const SizedBox(height: 22),
+                        Text(
+                          l10n.ventor_call_permissions_heading,
+                          style: GoogleFonts.inter(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        const SizedBox(height: 6),
+                        Text(
+                          _needsCamera
+                              ? l10n.ventor_call_permissions_subtitle_video
+                              : l10n.ventor_call_permissions_subtitle_voice,
+                          style: GoogleFonts.inter(
+                            color: VentorProfileTheme.muted,
+                            fontSize: 13,
+                            height: 1.35,
+                          ),
+                        ),
+                        const SizedBox(height: 12),
+                        _PermissionRow(
+                          icon: Icons.mic_rounded,
+                          label: l10n.ventor_call_permission_mic,
+                          granted: _micGranted,
+                          allowLabel: l10n.ventor_call_permission_allow,
+                          grantedLabel: l10n.ventor_call_permission_granted,
+                          onAllow: joinState.isJoining ? null : _requestMic,
+                        ),
+                        if (_needsCamera) ...[
+                          const SizedBox(height: 10),
+                          _PermissionRow(
+                            icon: Icons.videocam_rounded,
+                            label: l10n.ventor_call_permission_camera,
+                            granted: _cameraGranted,
+                            allowLabel: l10n.ventor_call_permission_allow,
+                            grantedLabel: l10n.ventor_call_permission_granted,
+                            onAllow: joinState.isJoining
+                                ? null
+                                : _requestCamera,
+                          ),
+                        ],
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(20, 8, 20, 20),
+                    child: SizedBox(
+                      width: double.infinity,
+                      height: 54,
+                      child: FilledButton(
+                        onPressed: _canJoin(joinState.isJoining)
+                            ? () => _onEnterCall(context)
+                            : null,
+                        style: FilledButton.styleFrom(
+                          backgroundColor: SplashColors.purpleMid,
+                          disabledBackgroundColor: SplashColors.purpleMid
+                              .withValues(alpha: 0.4),
+                          foregroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(14),
+                          ),
+                        ),
+                        child: joinState.isJoining
+                            ? const SizedBox(
+                                width: 22,
+                                height: 22,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                  color: Colors.white,
+                                ),
+                              )
+                            : Text(
+                                l10n.ventor_call_enter,
+                                style: GoogleFonts.inter(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ),
-          ],
+            );
+          },
         ),
       ),
     );
@@ -276,8 +312,9 @@ class _ListenerHeader extends StatelessWidget {
         children: [
           CircleAvatar(
             radius: 28,
-            backgroundImage:
-                avatarUrl != null ? NetworkImage(avatarUrl!) : null,
+            backgroundImage: avatarUrl != null
+                ? NetworkImage(avatarUrl!)
+                : null,
             child: avatarUrl == null
                 ? Text(
                     name.isNotEmpty ? name[0].toUpperCase() : '?',
@@ -405,7 +442,7 @@ class _PermissionRow extends StatelessWidget {
   final bool granted;
   final String allowLabel;
   final String grantedLabel;
-  final VoidCallback onAllow;
+  final VoidCallback? onAllow;
 
   @override
   Widget build(BuildContext context) {
